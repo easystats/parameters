@@ -17,7 +17,7 @@ different levels."><meta property="og:image" content="https://easystats.github.i
 
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.22.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.22.2.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -60,7 +60,7 @@ different levels."><meta property="og:image" content="https://easystats.github.i
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>p-value or consonance function</h1>
-      <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/v0.22.2/R/p_function.R" class="external-link"><code>R/p_function.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/main/R/p_function.R" class="external-link"><code>R/p_function.R</code></a></small>
       <div class="d-none name"><code>p_function.Rd</code></div>
     </div>
 
@@ -319,6 +319,29 @@ probability properties, from which we can draw <em>epistemic</em> probabilistic
 statements of uncertainty (<em>Schweder and Hjort 2016</em>).</p>
 </div>
 
+<div class="section">
+<h3 id="functions-in-the-parameters-package-to-check-for-effect-existence-and-significance">Functions in the parameters package to check for effect existence and significance<a class="anchor" aria-label="anchor" href="#functions-in-the-parameters-package-to-check-for-effect-existence-and-significance"></a></h3>
+
+
+<p>The <strong>parameters</strong> package provides several options or functions to aid
+statistical inference. Beyond <code>p_function()</code>, there are, for example:</p><ul><li><p><code><a href="equivalence_test.lm.html">equivalence_test()</a></code>, to compute the (conditional)
+equivalence test for frequentist models</p></li>
+<li><p><code><a href="p_significance.lm.html">p_significance()</a></code>, to compute the probability of
+<em>practical significance</em>, which can be conceptualized as a unidirectional
+equivalence test</p></li>
+<li><p>the <code>pd</code> argument (setting <code>pd = TRUE</code>) in <code><a href="model_parameters.html">model_parameters()</a></code> includes
+a column with the <em>probability of direction</em>, i.e. the probability that a
+parameter is strictly positive or negative. See <code><a href="https://easystats.github.io/bayestestR/reference/p_direction.html" class="external-link">bayestestR::p_direction()</a></code>
+for details.</p></li>
+<li><p>the <code>s_value</code> argument (setting <code>s_value = TRUE</code>) in <code><a href="model_parameters.html">model_parameters()</a></code>
+replaces the p-values with their related <em>S</em>-values (<em>Rafi and Greenland 2020</em>)</p></li>
+<li><p>finally, it is possible to generate distributions of model coefficients by
+generating bootstrap-samples (setting <code>bootstrap = TRUE</code>) or simulating
+draws from model coefficients using <code><a href="simulate_model.html">simulate_model()</a></code>. These samples
+can then be treated as "posterior samples" and used in many functions from
+the <strong>bayestestR</strong> package.</p></li>
+</ul></div>
+
     </div>
     <div class="section level2">
     <h2 id="note">Note<a class="anchor" aria-label="anchor" href="#note"></a></h2>
@@ -357,6 +380,11 @@ inference with confidence distributions. Cambridge University Press, 2016.</p></
 <li><p>Vos P, Holbert D. Frequentist statistical inference without repeated sampling.
 Synthese 200, 89 (2022). <a href="https://doi.org/10.1007/s11229-022-03560-x" class="external-link">doi:10.1007/s11229-022-03560-x</a></p></li>
 </ul></div>
+    <div class="section level2">
+    <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
+    <div class="dont-index"><p>See also <code><a href="https://easystats.github.io/bayestestR/reference/equivalence_test.html" class="external-link">equivalence_test()</a></code> and <code><a href="https://easystats.github.io/bayestestR/reference/p_significance.html" class="external-link">p_significance()</a></code> for
+functions related to checking effect existence and significance.</p></div>
+    </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>

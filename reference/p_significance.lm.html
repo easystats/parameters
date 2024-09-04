@@ -3,23 +3,29 @@
 which can be conceptualized as a unidirectional equivalence test. It returns
 the probability that an effect is above a given threshold corresponding to a
 negligible effect in the median's direction, considering a parameter's full
-confidence interval. In comparison the the equivalence_test() function,
-where the SGPV (second generation p-value) describes the proportion of the
-full confidence interval that is inside the ROPE, the value returned by
-p_significance() describes the larger proportion of the full confidence
-interval that is outside the ROPE. This makes p_significance() comparable
-to bayestestR::p_direction(), however, while p_direction() compares to
-a point-null by default, p_significance() compares to a range-null."><meta property="og:description" content="Compute the probability of Practical Significance (ps),
+confidence interval. In other words, it returns the probability of a clear
+direction of an effect, which is larger than the smalles effect size of
+interest (e.g., a minimal important difference). In comparison the the
+equivalence_test() function, where the SGPV (second generation p-value)
+describes the proportion of the full confidence interval that is inside
+the ROPE, the value returned by p_significance() describes the larger
+proportion of the full confidence interval that is outside the ROPE. This
+makes p_significance() comparable to bayestestR::p_direction(),
+however, while p_direction() compares to a point-null by default,
+p_significance() compares to a range-null."><meta property="og:description" content="Compute the probability of Practical Significance (ps),
 which can be conceptualized as a unidirectional equivalence test. It returns
 the probability that an effect is above a given threshold corresponding to a
 negligible effect in the median's direction, considering a parameter's full
-confidence interval. In comparison the the equivalence_test() function,
-where the SGPV (second generation p-value) describes the proportion of the
-full confidence interval that is inside the ROPE, the value returned by
-p_significance() describes the larger proportion of the full confidence
-interval that is outside the ROPE. This makes p_significance() comparable
-to bayestestR::p_direction(), however, while p_direction() compares to
-a point-null by default, p_significance() compares to a range-null."><meta property="og:image" content="https://easystats.github.io/parameters/reference/figures/card.png"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:creator" content="@easystats4u"><meta name="twitter:site" content="@easystats4u"></head><body>
+confidence interval. In other words, it returns the probability of a clear
+direction of an effect, which is larger than the smalles effect size of
+interest (e.g., a minimal important difference). In comparison the the
+equivalence_test() function, where the SGPV (second generation p-value)
+describes the proportion of the full confidence interval that is inside
+the ROPE, the value returned by p_significance() describes the larger
+proportion of the full confidence interval that is outside the ROPE. This
+makes p_significance() comparable to bayestestR::p_direction(),
+however, while p_direction() compares to a point-null by default,
+p_significance() compares to a range-null."><meta property="og:image" content="https://easystats.github.io/parameters/reference/figures/card.png"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:creator" content="@easystats4u"><meta name="twitter:site" content="@easystats4u"></head><body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
@@ -27,7 +33,7 @@ a point-null by default, p_significance() compares to a range-null."><meta prope
 
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.22.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.22.2.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -70,7 +76,7 @@ a point-null by default, p_significance() compares to a range-null."><meta prope
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Practical Significance (ps)</h1>
-      <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/v0.22.2/R/p_significance.R" class="external-link"><code>R/p_significance.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/main/R/p_significance.R" class="external-link"><code>R/p_significance.R</code></a></small>
       <div class="d-none name"><code>p_significance.lm.Rd</code></div>
     </div>
 
@@ -79,13 +85,16 @@ a point-null by default, p_significance() compares to a range-null."><meta prope
 which can be conceptualized as a unidirectional equivalence test. It returns
 the probability that an effect is above a given threshold corresponding to a
 negligible effect in the median's direction, considering a parameter's <em>full</em>
-confidence interval. In comparison the the <code><a href="https://easystats.github.io/bayestestR/reference/equivalence_test.html" class="external-link">equivalence_test()</a></code> function,
-where the <em>SGPV</em> (second generation p-value) describes the proportion of the
-<em>full</em> confidence interval that is <em>inside</em> the ROPE, the value returned by
-<code><a href="https://easystats.github.io/bayestestR/reference/p_significance.html" class="external-link">p_significance()</a></code> describes the <em>larger</em> proportion of the <em>full</em> confidence
-interval that is <em>outside</em> the ROPE. This makes <code><a href="https://easystats.github.io/bayestestR/reference/p_significance.html" class="external-link">p_significance()</a></code> comparable
-to <code><a href="https://easystats.github.io/bayestestR/reference/p_direction.html" class="external-link">bayestestR::p_direction()</a></code>, however, while <code>p_direction()</code> compares to
-a point-null by default, <code><a href="https://easystats.github.io/bayestestR/reference/p_significance.html" class="external-link">p_significance()</a></code> compares to a range-null.</p>
+confidence interval. In other words, it returns the probability of a clear
+direction of an effect, which is larger than the smalles effect size of
+interest (e.g., a minimal important difference). In comparison the the
+<code><a href="https://easystats.github.io/bayestestR/reference/equivalence_test.html" class="external-link">equivalence_test()</a></code> function, where the <em>SGPV</em> (second generation p-value)
+describes the proportion of the <em>full</em> confidence interval that is <em>inside</em>
+the ROPE, the value returned by <code><a href="https://easystats.github.io/bayestestR/reference/p_significance.html" class="external-link">p_significance()</a></code> describes the <em>larger</em>
+proportion of the <em>full</em> confidence interval that is <em>outside</em> the ROPE. This
+makes <code><a href="https://easystats.github.io/bayestestR/reference/p_significance.html" class="external-link">p_significance()</a></code> comparable to <code><a href="https://easystats.github.io/bayestestR/reference/p_direction.html" class="external-link">bayestestR::p_direction()</a></code>,
+however, while <code>p_direction()</code> compares to a point-null by default,
+<code><a href="https://easystats.github.io/bayestestR/reference/p_significance.html" class="external-link">p_significance()</a></code> compares to a range-null.</p>
     </div>
 
     <div class="section level2">
@@ -191,10 +200,11 @@ probabilities, similar to the usual approach in Bayesian statistics
 (<em>Greenland et al. 2022; Rafi and Greenland 2020; Schweder 2018; Schweder and
 Hjort 2003; Vos 2022</em>).</p>
 <p>The <strong>parameters</strong> package provides several options or functions to aid
-statistical inference. These are, for example:</p><ul><li><p><code><a href="https://easystats.github.io/bayestestR/reference/equivalence_test.html" class="external-link">equivalence_test()</a></code>, to compute the (conditional) equivalence test for
-frequentist models</p></li>
-<li><p><code><a href="https://easystats.github.io/bayestestR/reference/p_significance.html" class="external-link">p_significance()</a></code>, to compute the probability of <em>practical significance</em>,
-which can be conceptualized as a unidirectional equivalence test</p></li>
+statistical inference. These are, for example:</p><ul><li><p><code><a href="equivalence_test.lm.html">equivalence_test()</a></code>, to compute the (conditional)
+equivalence test for frequentist models</p></li>
+<li><p><code><a href="https://easystats.github.io/bayestestR/reference/p_significance.html" class="external-link">p_significance()</a></code>, to compute the probability of
+<em>practical significance</em>, which can be conceptualized as a unidirectional
+equivalence test</p></li>
 <li><p><code><a href="p_function.html">p_function()</a></code>, or <em>consonance function</em>, to compute p-values and
 compatibility (confidence) intervals for statistical models</p></li>
 <li><p>the <code>pd</code> argument (setting <code>pd = TRUE</code>) in <code><a href="model_parameters.html">model_parameters()</a></code> includes
@@ -217,9 +227,41 @@ results from classical frequentist models in a "Bayesian way" (more details:
 documentation in <code><a href="p_function.html">p_function()</a></code>).</p>
     </div>
     <div class="section level2">
+    <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
+
+<ul><li><p>Amrhein, V., Korner-Nievergelt, F., and Roth, T. (2017). The earth is
+flat (p &gt; 0.05): Significance thresholds and the crisis of unreplicable
+research. PeerJ, 5, e3544. <a href="https://doi.org/10.7717/peerj.3544" class="external-link">doi:10.7717/peerj.3544</a></p></li>
+<li><p>Greenland S, Rafi Z, Matthews R, Higgs M. To Aid Scientific Inference,
+Emphasize Unconditional Compatibility Descriptions of Statistics. (2022)
+https://arxiv.org/abs/1909.08583v7 (Accessed November 10, 2022)</p></li>
+<li><p>Lakens, D. (2024). Improving Your Statistical Inferences (Version v1.5.1).
+Retrieved from https://lakens.github.io/statistical_inferences/.
+<a href="https://doi.org/10.5281/ZENODO.6409077" class="external-link">doi:10.5281/ZENODO.6409077</a></p></li>
+<li><p>Lakens, D., Scheel, A. M., and Isager, P. M. (2018). Equivalence Testing
+for Psychological Research: A Tutorial. Advances in Methods and Practices
+in Psychological Science, 1(2), 259–269. <a href="https://doi.org/10.1177/2515245918770963" class="external-link">doi:10.1177/2515245918770963</a></p></li>
+<li><p>Makowski, D., Ben-Shachar, M. S., Chen, S. H. A., and Lüdecke, D. (2019).
+Indices of Effect Existence and Significance in the Bayesian Framework.
+Frontiers in Psychology, 10, 2767. <a href="https://doi.org/10.3389/fpsyg.2019.02767" class="external-link">doi:10.3389/fpsyg.2019.02767</a></p></li>
+<li><p>Rafi Z, Greenland S. Semantic and cognitive tools to aid statistical
+science: replace confidence and significance by compatibility and surprise.
+BMC Medical Research Methodology (2020) 20:244.</p></li>
+<li><p>Schweder T. Confidence is epistemic probability for empirical science.
+Journal of Statistical Planning and Inference (2018) 195:116–125.
+<a href="https://doi.org/10.1016/j.jspi.2017.09.016" class="external-link">doi:10.1016/j.jspi.2017.09.016</a></p></li>
+<li><p>Schweder T, Hjort NL. Frequentist analogues of priors and posteriors.
+In Stigum, B. (ed.), Econometrics and the Philosophy of Economics: Theory
+Data Confrontation in Economics, pp. 285-217. Princeton University Press,
+Princeton, NJ, 2003</p></li>
+<li><p>Vos P, Holbert D. Frequentist statistical inference without repeated sampling.
+Synthese 200, 89 (2022). <a href="https://doi.org/10.1007/s11229-022-03560-x" class="external-link">doi:10.1007/s11229-022-03560-x</a></p></li>
+</ul></div>
+    <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index"><p>For more details, see <code><a href="https://easystats.github.io/bayestestR/reference/p_significance.html" class="external-link">bayestestR::p_significance()</a></code>. See also
-<code><a href="https://easystats.github.io/bayestestR/reference/equivalence_test.html" class="external-link">equivalence_test()</a></code>.</p></div>
+<code><a href="https://easystats.github.io/bayestestR/reference/equivalence_test.html" class="external-link">equivalence_test()</a></code>, <code><a href="p_function.html">p_function()</a></code> and <code><a href="https://easystats.github.io/bayestestR/reference/p_direction.html" class="external-link">bayestestR::p_direction()</a></code>
+for functions related to checking effect existence and significance.</p></div>
     </div>
 
     <div class="section level2">

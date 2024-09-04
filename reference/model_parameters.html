@@ -69,7 +69,7 @@ WRS2, bfsl, deltaMethod, fitdistr, mjoint, mle, model.avg, ...
 
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.22.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.22.2.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -112,7 +112,7 @@ WRS2, bfsl, deltaMethod, fitdistr, mjoint, mle, model.avg, ...
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Model Parameters</h1>
-      <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/v0.22.2/R/1_model_parameters.R" class="external-link"><code>R/1_model_parameters.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/main/R/1_model_parameters.R" class="external-link"><code>R/1_model_parameters.R</code></a></small>
       <div class="d-none name"><code>model_parameters.Rd</code></div>
     </div>
 
@@ -394,10 +394,11 @@ probabilities, similar to the usual approach in Bayesian statistics
 (<em>Greenland et al. 2022; Rafi and Greenland 2020; Schweder 2018; Schweder and
 Hjort 2003; Vos 2022</em>).</p>
 <p>The <strong>parameters</strong> package provides several options or functions to aid
-statistical inference. These are, for example:</p><ul><li><p><code><a href="https://easystats.github.io/bayestestR/reference/equivalence_test.html" class="external-link">equivalence_test()</a></code>, to compute the (conditional) equivalence test for
-frequentist models</p></li>
-<li><p><code><a href="https://easystats.github.io/bayestestR/reference/p_significance.html" class="external-link">p_significance()</a></code>, to compute the probability of <em>practical significance</em>,
-which can be conceptualized as a unidirectional equivalence test</p></li>
+statistical inference. These are, for example:</p><ul><li><p><code><a href="equivalence_test.lm.html">equivalence_test()</a></code>, to compute the (conditional)
+equivalence test for frequentist models</p></li>
+<li><p><code><a href="p_significance.lm.html">p_significance()</a></code>, to compute the probability of
+<em>practical significance</em>, which can be conceptualized as a unidirectional
+equivalence test</p></li>
 <li><p><code><a href="p_function.html">p_function()</a></code>, or <em>consonance function</em>, to compute p-values and
 compatibility (confidence) intervals for statistical models</p></li>
 <li><p>the <code>pd</code> argument (setting <code>pd = TRUE</code>) in <code>model_parameters()</code> includes
