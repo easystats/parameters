@@ -105,7 +105,9 @@ bayestestR::equivalence_test
 #' represents _the proportion of data-supported hypotheses that are also null
 #' hypotheses_ _(Blume et al. 2018, Lakens and Delacre 2020)_. It represents the
 #' proportion of the _full_ confidence interval range (assuming a normally
-#' distributed, equal-tailed interval) that is inside the ROPE.
+#' distributed, equal-tailed interval) that is inside the ROPE. The SGPV ranges
+#' from zero to one. Higher values indicate that the effect is more likely to be
+#' practically equivalent ("not of interest").
 #'
 #' Note that the assumed interval, which is used to calculate the SGPV, is an
 #' estimation of the _full interval_ based on the chosen confidence level. For

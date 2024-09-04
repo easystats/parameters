@@ -150,7 +150,9 @@ Second generation p-values (SGPV) were proposed as a statistic that
 represents \emph{the proportion of data-supported hypotheses that are also null
 hypotheses} \emph{(Blume et al. 2018, Lakens and Delacre 2020)}. It represents the
 proportion of the \emph{full} confidence interval range (assuming a normally
-distributed, equal-tailed interval) that is inside the ROPE.
+distributed, equal-tailed interval) that is inside the ROPE. The SGPV ranges
+from zero to one. Higher values indicate that the effect is more likely to be
+practically equivalent ("not of interest").
 
 Note that the assumed interval, which is used to calculate the SGPV, is an
 estimation of the \emph{full interval} based on the chosen confidence level. For
