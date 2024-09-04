@@ -11,8 +11,8 @@ bayestestR::p_significance
 #' the probability that an effect is above a given threshold corresponding to a
 #' negligible effect in the median's direction, considering a parameter's _full_
 #' confidence interval. In other words, it returns the probability of a clear
-#' direction of an effect, which is larger than the smalles effect size of
-#' interest (e.g., a minimal important difference). Its theoeretical range is
+#' direction of an effect, which is larger than the smallest effect size of
+#' interest (e.g., a minimal important difference). Its theoretical range is
 #' from zero to one, but the *ps* is typically larger than 0.5 (to indicate
 #' practical significance).
 #'

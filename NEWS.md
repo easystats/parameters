@@ -6,7 +6,7 @@
   the SGPV in `equivalence_test()` and used in `p_significance()`.
 
 * Added `p_direction()` methods for frequentist models. This is a convenient
-  way to test the direction of the effect, which formlery was already (and still
+  way to test the direction of the effect, which formerly was already (and still
   is) possible with `pd = TRUE` in `model_parameters()`.
 
 # parameters 0.22.2
