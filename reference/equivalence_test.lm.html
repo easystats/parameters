@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.22.2.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.22.2.3</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -226,7 +226,9 @@ practical equivalence and accept the alternative hypothesis.</p>
 represents <em>the proportion of data-supported hypotheses that are also null
 hypotheses</em> <em>(Blume et al. 2018, Lakens and Delacre 2020)</em>. It represents the
 proportion of the <em>full</em> confidence interval range (assuming a normally
-distributed, equal-tailed interval) that is inside the ROPE.</p>
+distributed, equal-tailed interval) that is inside the ROPE. The SGPV ranges
+from zero to one. Higher values indicate that the effect is more likely to be
+practically equivalent ("not of interest").</p>
 <p>Note that the assumed interval, which is used to calculate the SGPV, is an
 estimation of the <em>full interval</em> based on the chosen confidence level. For
 example, if the 95% confidence interval of a coefficient ranges from -1 to 1,

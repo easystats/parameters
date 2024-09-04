@@ -4,28 +4,32 @@ which can be conceptualized as a unidirectional equivalence test. It returns
 the probability that an effect is above a given threshold corresponding to a
 negligible effect in the median's direction, considering a parameter's full
 confidence interval. In other words, it returns the probability of a clear
-direction of an effect, which is larger than the smalles effect size of
-interest (e.g., a minimal important difference). In comparison the the
-equivalence_test() function, where the SGPV (second generation p-value)
-describes the proportion of the full confidence interval that is inside
-the ROPE, the value returned by p_significance() describes the larger
-proportion of the full confidence interval that is outside the ROPE. This
-makes p_significance() comparable to bayestestR::p_direction(),
-however, while p_direction() compares to a point-null by default,
-p_significance() compares to a range-null."><meta property="og:description" content="Compute the probability of Practical Significance (ps),
+direction of an effect, which is larger than the smallest effect size of
+interest (e.g., a minimal important difference). Its theoretical range is
+from zero to one, but the ps is typically larger than 0.5 (to indicate
+practical significance).
+In comparison the the equivalence_test() function, where the SGPV
+(second generation p-value) describes the proportion of the full confidence
+interval that is inside the ROPE, the value returned by p_significance()
+describes the larger proportion of the full confidence interval that is
+outside the ROPE. This makes p_significance() comparable to
+bayestestR::p_direction(), however, while p_direction() compares to a
+point-null by default, p_significance() compares to a range-null."><meta property="og:description" content="Compute the probability of Practical Significance (ps),
 which can be conceptualized as a unidirectional equivalence test. It returns
 the probability that an effect is above a given threshold corresponding to a
 negligible effect in the median's direction, considering a parameter's full
 confidence interval. In other words, it returns the probability of a clear
-direction of an effect, which is larger than the smalles effect size of
-interest (e.g., a minimal important difference). In comparison the the
-equivalence_test() function, where the SGPV (second generation p-value)
-describes the proportion of the full confidence interval that is inside
-the ROPE, the value returned by p_significance() describes the larger
-proportion of the full confidence interval that is outside the ROPE. This
-makes p_significance() comparable to bayestestR::p_direction(),
-however, while p_direction() compares to a point-null by default,
-p_significance() compares to a range-null."><meta property="og:image" content="https://easystats.github.io/parameters/reference/figures/card.png"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:creator" content="@easystats4u"><meta name="twitter:site" content="@easystats4u"></head><body>
+direction of an effect, which is larger than the smallest effect size of
+interest (e.g., a minimal important difference). Its theoretical range is
+from zero to one, but the ps is typically larger than 0.5 (to indicate
+practical significance).
+In comparison the the equivalence_test() function, where the SGPV
+(second generation p-value) describes the proportion of the full confidence
+interval that is inside the ROPE, the value returned by p_significance()
+describes the larger proportion of the full confidence interval that is
+outside the ROPE. This makes p_significance() comparable to
+bayestestR::p_direction(), however, while p_direction() compares to a
+point-null by default, p_significance() compares to a range-null."><meta property="og:image" content="https://easystats.github.io/parameters/reference/figures/card.png"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:creator" content="@easystats4u"><meta name="twitter:site" content="@easystats4u"></head><body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
@@ -33,7 +37,7 @@ p_significance() compares to a range-null."><meta property="og:image" content="h
 
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.22.2.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.22.2.3</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -86,15 +90,17 @@ which can be conceptualized as a unidirectional equivalence test. It returns
 the probability that an effect is above a given threshold corresponding to a
 negligible effect in the median's direction, considering a parameter's <em>full</em>
 confidence interval. In other words, it returns the probability of a clear
-direction of an effect, which is larger than the smalles effect size of
-interest (e.g., a minimal important difference). In comparison the the
-<code><a href="https://easystats.github.io/bayestestR/reference/equivalence_test.html" class="external-link">equivalence_test()</a></code> function, where the <em>SGPV</em> (second generation p-value)
-describes the proportion of the <em>full</em> confidence interval that is <em>inside</em>
-the ROPE, the value returned by <code><a href="https://easystats.github.io/bayestestR/reference/p_significance.html" class="external-link">p_significance()</a></code> describes the <em>larger</em>
-proportion of the <em>full</em> confidence interval that is <em>outside</em> the ROPE. This
-makes <code><a href="https://easystats.github.io/bayestestR/reference/p_significance.html" class="external-link">p_significance()</a></code> comparable to <code><a href="https://easystats.github.io/bayestestR/reference/p_direction.html" class="external-link">bayestestR::p_direction()</a></code>,
-however, while <code>p_direction()</code> compares to a point-null by default,
-<code><a href="https://easystats.github.io/bayestestR/reference/p_significance.html" class="external-link">p_significance()</a></code> compares to a range-null.</p>
+direction of an effect, which is larger than the smallest effect size of
+interest (e.g., a minimal important difference). Its theoretical range is
+from zero to one, but the <em>ps</em> is typically larger than 0.5 (to indicate
+practical significance).</p>
+<p>In comparison the the <code><a href="https://easystats.github.io/bayestestR/reference/equivalence_test.html" class="external-link">equivalence_test()</a></code> function, where the <em>SGPV</em>
+(second generation p-value) describes the proportion of the <em>full</em> confidence
+interval that is <em>inside</em> the ROPE, the value returned by <code><a href="https://easystats.github.io/bayestestR/reference/p_significance.html" class="external-link">p_significance()</a></code>
+describes the <em>larger</em> proportion of the <em>full</em> confidence interval that is
+<em>outside</em> the ROPE. This makes <code><a href="https://easystats.github.io/bayestestR/reference/p_significance.html" class="external-link">p_significance()</a></code> comparable to
+<code><a href="https://easystats.github.io/bayestestR/reference/p_direction.html" class="external-link">bayestestR::p_direction()</a></code>, however, while <code><a href="https://easystats.github.io/bayestestR/reference/p_direction.html" class="external-link">p_direction()</a></code> compares to a
+point-null by default, <code><a href="https://easystats.github.io/bayestestR/reference/p_significance.html" class="external-link">p_significance()</a></code> compares to a range-null.</p>
     </div>
 
     <div class="section level2">
@@ -137,7 +143,9 @@ asymmetric intervals.</p></li>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A data frame.</p>
+    <p>A data frame with columns for the parameter names, the confidence
+intervals and the values for practical significance. Higher values indicate
+more practical significance (upper bound is one).</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
