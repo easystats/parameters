@@ -83,39 +83,16 @@ p_direction.lm <- function(x,
                            method = "direct",
                            null = 0,
                            ...) {
-  # first, we need CIs
-  out <- ci(x, ci = ci, ...)
-  # we now iterate all confidence intervals and create an approximate normal
-  # distribution that covers the CI-range.
-  posterior <- as.data.frame(lapply(seq_len(nrow(out)), function(i) {
-    ci_range <- as.numeric(out[i, c("CI_low", "CI_high")])
-    .generate_posterior_from_ci(ci, ci_range)
-  }))
-  colnames(posterior) <- out$Parameter
+  # generate normal distribution based on CI range
+  out <- .posterior_ci(x, ci, ...)
 
+  # add pd
   out$pd <- as.numeric(bayestestR::p_direction(
     posterior,
     method = method,
     null = null,
     ...
   ))
-
-  # check we don't have duplicated columns in "posterior" we need this for
-  # plotting
-  if (anyDuplicated(colnames(posterior)) > 0 && !is.null(out$Component)) {
-    comps <- .rename_values(out$Component, "zero_inflated", "zi")
-    comps <- .rename_values(comps, "conditional", "cond")
-    colnames(posterior) <- paste0(out$Parameter, "_", comps)
-    out$Parameter <- paste0(out$Parameter, "_", comps)
-  }
-
-  # we need these for plotting
-  if (!"Effects" %in% colnames(out)) {
-    out$Effects <- "fixed"
-  }
-  if (!"Component" %in% colnames(out)) {
-    out$Component <- "conditional"
-  }
 
   # reorder
   out <- out[intersect(c("Parameter", "CI", "CI_low", "CI_high", "pd", "Effects", "Component"), colnames(out))]
@@ -136,14 +113,6 @@ print.p_direction_lm <- function(x, digits = 2, p_digits = 3, ...) {
     "Probability of Direction (null: %s)",
     insight::format_value(null, digits = digits, protect_integer = TRUE)
   )
-
-  # deal with Effects and Component columns
-  if ("Effects" %in% colnames(x) && insight::n_unique(x$Effects) == 1) {
-    x$Effects <- NULL
-  }
-  if ("Component" %in% colnames(x) && insight::n_unique(x$Component) == 1) {
-    x$Component <- NULL
-  }
 
   x <- insight::format_table(x, digits = digits, p_digits = p_digits)
   cat(insight::export_table(x, title = caption, ...))

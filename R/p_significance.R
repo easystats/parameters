@@ -139,6 +139,39 @@ bayestestR::p_significance
 #' }
 #' @export
 p_significance.lm <- function(x, threshold = "default", ci = 0.95, verbose = TRUE, ...) {
+  # generate normal distribution based on CI range
+  out <- .posterior_ci(x, ci, ...)
+
+  # calculate the ROPE range
+  if (all(threshold == "default")) {
+    threshold <- bayestestR::rope_range(x, verbose = verbose)
+  }
+
+  # add ps
+  out$ps <- as.numeric(bayestestR::p_significance(
+    posterior,
+    threshold = threshold,
+    verbose = verbose
+  ))
+
+  # for plot, we need to have it numeric
+  if (!is.numeric(threshold)) {
+    threshold <- 0.1
+  }
+
+  # reorder
+  out <- out[intersect(c("Parameter", "CI", "CI_low", "CI_high", "ps", "Effects", "Component"), colnames(out))]
+
+  attr(out, "data") <- posterior
+  attr(out, "threshold") <- threshold
+  class(out) <- c("p_significance_lm", "p_significance", "see_p_significance", "data.frame")
+  out
+}
+
+
+# helper ----------------------------------------------------------------------
+
+.posterior_ci <- function(x, ci, ...) {
   # first, we need CIs
   out <- ci(x, ci = ci, ...)
   # we now iterate all confidence intervals and create an approximate normal
@@ -165,29 +198,6 @@ p_significance.lm <- function(x, threshold = "default", ci = 0.95, verbose = TRU
     colnames(posterior) <- paste0(out$Parameter, "_", comps)
     out$Parameter <- paste0(out$Parameter, "_", comps)
   }
-
-  # calculate the ROPE range
-  if (all(threshold == "default")) {
-    threshold <- bayestestR::rope_range(x, verbose = verbose)
-  }
-
-  out$ps <- as.numeric(bayestestR::p_significance(
-    posterior,
-    threshold = threshold,
-    verbose = verbose
-  ))
-
-  # for plot, we need to have it numeric
-  if (!is.numeric(threshold)) {
-    threshold <- 0.1
-  }
-
-  # reorder
-  out <- out[intersect(c("Parameter", "CI", "CI_low", "CI_high", "ps", "Effects", "Component"), colnames(out))]
-
-  attr(out, "data") <- posterior
-  attr(out, "threshold") <- threshold
-  class(out) <- c("p_significance_lm", "p_significance", "see_p_significance", "data.frame")
   out
 }
 

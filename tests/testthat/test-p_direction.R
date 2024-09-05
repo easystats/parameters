@@ -6,8 +6,8 @@ test_that("p_direction", {
   m <- lm(mpg ~ gear + wt + cyl + hp, data = mtcars)
   set.seed(123)
   x <- p_direction(m)
-  expect_identical(c(nrow(x), ncol(x)), c(5L, 7L))
-  expect_named(x, c("Parameter", "CI", "CI_low", "CI_high", "pd", "Effects", "Component"))
+  expect_identical(c(nrow(x), ncol(x)), c(5L, 5L))
+  expect_named(x, c("Parameter", "CI", "CI_low", "CI_high", "pd"))
   expect_snapshot(print(x))
 
   set.seed(123)
@@ -28,8 +28,8 @@ test_that("p_direction, glmmTMB", {
     data = Salamanders
   )
   out <- p_direction(m1)
-  expect_identical(c(nrow(out), ncol(out)), c(5L, 7L))
-  expect_named(out, c("Parameter", "CI", "CI_low", "CI_high", "pd", "Effects", "Component"))
+  expect_identical(c(nrow(out), ncol(out)), c(5L, 6L))
+  expect_named(out, c("Parameter", "CI", "CI_low", "CI_high", "pd", "Component"))
   expect_equal(out$pd, c(0.8245, 1, 0.9974, 1, 1), tolerance = 1e-4)
   expect_identical(
     out$Parameter,
