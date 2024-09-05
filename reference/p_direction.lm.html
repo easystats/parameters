@@ -17,7 +17,7 @@ most probable). Although differently expressed, this index is fairly similar
 
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.22.2.4</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.22.2.5</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -255,19 +255,14 @@ significance.</p></div>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">qol_cancer</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">QoL</span> <span class="op">~</span> <span class="va">time</span> <span class="op">+</span> <span class="va">age</span> <span class="op">+</span> <span class="va">education</span>, data <span class="op">=</span> <span class="va">qol_cancer</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://easystats.github.io/bayestestR/reference/p_direction.html" class="external-link">p_direction</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Probability of Direction (null: 0)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter     |         95% CI |     pd</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)   | [58.46, 69.28] |   100%</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> time          | [-1.07,  2.85] | 81.23%</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> age           | [-0.32,  0.37] | 55.67%</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> educationmid  | [ 4.43, 13.09] |   100%</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> educationhigh | [ 9.33, 19.38] |   100%</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> 'p_direction()' is not yet implemented for objects of class</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span>   'standardGeneric'.</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://easystats.github.io/bayestestR/reference/p_direction.html" class="external-link">p_direction</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> 'p_direction()' is not yet implemented for objects of class</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span>   'standardGeneric'.</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="p_direction.lm-1.png" alt="" width="700" height="433"></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in h(simpleError(msg, call)):</span> error in evaluating the argument 'x' in selecting a method for function 'plot': object 'result' not found</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
