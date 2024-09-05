@@ -140,7 +140,11 @@ bayestestR::p_significance
 #' @export
 p_significance.lm <- function(x, threshold = "default", ci = 0.95, verbose = TRUE, ...) {
   # generate normal distribution based on CI range
-  out <- .posterior_ci(x, ci, ...)
+  result <- .posterior_ci(x, ci, ...)
+
+  # copy
+  out <- result$out
+  posterior <- result$posterior
 
   # calculate the ROPE range
   if (all(threshold == "default")) {
@@ -198,7 +202,7 @@ p_significance.lm <- function(x, threshold = "default", ci = 0.95, verbose = TRU
     colnames(posterior) <- paste0(out$Parameter, "_", comps)
     out$Parameter <- paste0(out$Parameter, "_", comps)
   }
-  out
+  list(out = out, posterior = posterior)
 }
 
 

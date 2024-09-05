@@ -84,7 +84,11 @@ p_direction.lm <- function(x,
                            null = 0,
                            ...) {
   # generate normal distribution based on CI range
-  out <- .posterior_ci(x, ci, ...)
+  result <- .posterior_ci(x, ci, ...)
+
+  # copy
+  out <- result$out
+  posterior <- result$posterior
 
   # add pd
   out$pd <- as.numeric(bayestestR::p_direction(
