@@ -352,7 +352,8 @@ compatibility (confidence) intervals for statistical models
 \item the \code{pd} argument (setting \code{pd = TRUE}) in \code{model_parameters()} includes
 a column with the \emph{probability of direction}, i.e. the probability that a
 parameter is strictly positive or negative. See \code{\link[bayestestR:p_direction]{bayestestR::p_direction()}}
-for details.
+for details. If plotting is desired, the \code{\link[=p_direction.lm]{p_direction()}}
+function can be used, together with \code{plot()}.
 \item the \code{s_value} argument (setting \code{s_value = TRUE}) in \code{model_parameters()}
 replaces the p-values with their related \emph{S}-values (\emph{Rafi and Greenland 2020})
 \item finally, it is possible to generate distributions of model coefficients by

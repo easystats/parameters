@@ -306,7 +306,8 @@
 #' - the `pd` argument (setting `pd = TRUE`) in `model_parameters()` includes
 #'   a column with the *probability of direction*, i.e. the probability that a
 #'   parameter is strictly positive or negative. See [`bayestestR::p_direction()`]
-#'   for details.
+#'   for details. If plotting is desired, the [`p_direction()`][p_direction.lm]
+#'   function can be used, together with `plot()`.
 #' - the `s_value` argument (setting `s_value = TRUE`) in `model_parameters()`
 #'   replaces the p-values with their related _S_-values (*Rafi and Greenland 2020*)
 #' - finally, it is possible to generate distributions of model coefficients by
