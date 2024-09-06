@@ -215,11 +215,11 @@ interval at a given confidence level with (1) the observed data and (2) model
 assumptions. The observed point estimate (\emph{p}-value = 1) is the value
 estimated to be \emph{most compatible} with the data and model assumptions,
 whereas values values far from the observed point estimate (where \emph{p}
-approaches 0) are least compatible with the data and model assumptions. They
-are statements about confidence/compatibility, not probability per se
+approaches 0) are least compatible with the data and model assumptions
 (\emph{Schweder and Hjort 2016, pp. 60-61; Amrhein and Greenland 2022}). In this
-regard, interpretation of \emph{p}-values might be guided using
-\code{\link[bayestestR:pd_to_p]{bayestestR::p_to_pd()}}.
+regards, \emph{p}-values are are statements about confidence/compatibility, not
+probability per se, but still the interpretation of \emph{p}-values might be
+guided using \code{\link[bayestestR:pd_to_p]{bayestestR::p_to_pd()}}
 }
 
 \subsection{Compatibility intervals - is their interpretation conditional or not?}{

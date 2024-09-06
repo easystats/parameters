@@ -116,11 +116,11 @@
 #' assumptions. The observed point estimate (_p_-value = 1) is the value
 #' estimated to be _most compatible_ with the data and model assumptions,
 #' whereas values values far from the observed point estimate (where _p_
-#' approaches 0) are least compatible with the data and model assumptions. They
-#' are statements about confidence/compatibility, not probability per se
+#' approaches 0) are least compatible with the data and model assumptions
 #' (_Schweder and Hjort 2016, pp. 60-61; Amrhein and Greenland 2022_). In this
-#' regard, interpretation of _p_-values might be guided using
-#' [`bayestestR::p_to_pd()`].
+#' regards, _p_-values are are statements about confidence/compatibility, not
+#' probability per se, but still the interpretation of _p_-values might be
+#' guided using [`bayestestR::p_to_pd()`]
 #'
 #' ## Compatibility intervals - is their interpretation conditional or not?
 #'
