@@ -17,7 +17,7 @@ different levels."><meta property="og:image" content="https://easystats.github.i
 
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.22.2.6</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.22.2.7</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -263,7 +263,7 @@ study is null" (<em>Gelman/Greenland 2019</em>).</p>
 </div>
 
 <div class="section">
-<h3 id="probabilistic-interpretation-of-compatibility-intervals">Probabilistic interpretation of compatibility intervals<a class="anchor" aria-label="anchor" href="#probabilistic-interpretation-of-compatibility-intervals"></a></h3>
+<h3 id="probabilistic-interpretation-of-p-values-and-compatibility-intervals">Probabilistic interpretation of p-values and compatibility intervals<a class="anchor" aria-label="anchor" href="#probabilistic-interpretation-of-p-values-and-compatibility-intervals"></a></h3>
 
 
 <p>Schweder (2018) resp. Schweder and Hjort (2016) (and others) argue that
@@ -292,8 +292,17 @@ distribution is appropriate.</p>
 <p>"The realized confidence distribution is clearly an epistemic probability
 distribution" (<em>Schweder 2018</em>). In Bayesian words, compatibility intervals
 (or confidence distributons, or consonance curves) are "posteriors without
-priors" (<em>Schweder, Hjort, 2003</em>). In this regard, interpretation of <em>p</em>-values
-might be guided using <code><a href="https://easystats.github.io/bayestestR/reference/pd_to_p.html" class="external-link">bayestestR::p_to_pd()</a></code>.</p>
+priors" (<em>Schweder, Hjort, 2003</em>).</p>
+<p>The <em>p</em>-value indicates the degree of compatibility of the endpoints of the
+interval at a given confidence level with (1) the observed data and (2) model
+assumptions. The observed point estimate (<em>p</em>-value = 1) is the value
+estimated to be <em>most compatible</em> with the data and model assumptions,
+whereas values values far from the observed point estimate (where <em>p</em>
+approaches 0) are least compatible with the data and model assumptions. They
+are statements about confidence/compatibility, not probability per se
+(<em>Schweder and Hjort 2016, pp. 60-61; Amrhein and Greenland 2022</em>). In this
+regard, interpretation of <em>p</em>-values might be guided using
+<code><a href="https://easystats.github.io/bayestestR/reference/pd_to_p.html" class="external-link">bayestestR::p_to_pd()</a></code>.</p>
 </div>
 
 <div class="section">
