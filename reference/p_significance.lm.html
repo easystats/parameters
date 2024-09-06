@@ -218,7 +218,8 @@ compatibility (confidence) intervals for statistical models</p></li>
 <li><p>the <code>pd</code> argument (setting <code>pd = TRUE</code>) in <code><a href="model_parameters.html">model_parameters()</a></code> includes
 a column with the <em>probability of direction</em>, i.e. the probability that a
 parameter is strictly positive or negative. See <code><a href="https://easystats.github.io/bayestestR/reference/p_direction.html" class="external-link">bayestestR::p_direction()</a></code>
-for details.</p></li>
+for details. If plotting is desired, the <code><a href="p_direction.lm.html">p_direction()</a></code>
+function can be used, together with <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code>.</p></li>
 <li><p>the <code>s_value</code> argument (setting <code>s_value = TRUE</code>) in <code><a href="model_parameters.html">model_parameters()</a></code>
 replaces the p-values with their related <em>S</em>-values (<em>Rafi and Greenland 2020</em>)</p></li>
 <li><p>finally, it is possible to generate distributions of model coefficients by
