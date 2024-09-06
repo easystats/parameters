@@ -177,7 +177,7 @@ of the \emph{p}-value on the assumptions as well as on the data, recognizing tha
 study is null" (\emph{Gelman/Greenland 2019}).
 }
 
-\subsection{Probabilistic interpretation of compatibility intervals}{
+\subsection{Probabilistic interpretation of p-values and compatibility intervals}{
 
 Schweder (2018) resp. Schweder and Hjort (2016) (and others) argue that
 confidence curves (as produced by \code{p_function()}) have a valid probabilistic
@@ -208,8 +208,18 @@ distribution is appropriate.
 "The realized confidence distribution is clearly an epistemic probability
 distribution" (\emph{Schweder 2018}). In Bayesian words, compatibility intervals
 (or confidence distributons, or consonance curves) are "posteriors without
-priors" (\emph{Schweder, Hjort, 2003}). In this regard, interpretation of \emph{p}-values
-might be guided using \code{\link[bayestestR:pd_to_p]{bayestestR::p_to_pd()}}.
+priors" (\emph{Schweder, Hjort, 2003}).
+
+The \emph{p}-value indicates the degree of compatibility of the endpoints of the
+interval at a given confidence level with (1) the observed data and (2) model
+assumptions. The observed point estimate (\emph{p}-value = 1) is the value
+estimated to be \emph{most compatible} with the data and model assumptions,
+whereas values values far from the observed point estimate (where \emph{p}
+approaches 0) are least compatible with the data and model assumptions. They
+are statements about confidence/compatibility, not probability per se
+(\emph{Schweder and Hjort 2016, pp. 60-61; Amrhein and Greenland 2022}). In this
+regard, interpretation of \emph{p}-values might be guided using
+\code{\link[bayestestR:pd_to_p]{bayestestR::p_to_pd()}}.
 }
 
 \subsection{Compatibility intervals - is their interpretation conditional or not?}{

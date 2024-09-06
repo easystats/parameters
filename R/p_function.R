@@ -78,7 +78,7 @@
 #' _p_<0.05 can arise from assumption violations even if the effect under
 #' study is null" (_Gelman/Greenland 2019_).
 #'
-#' ## Probabilistic interpretation of compatibility intervals
+#' ## Probabilistic interpretation of p-values and compatibility intervals
 #'
 #' Schweder (2018) resp. Schweder and Hjort (2016) (and others) argue that
 #' confidence curves (as produced by `p_function()`) have a valid probabilistic
@@ -109,8 +109,18 @@
 #' "The realized confidence distribution is clearly an epistemic probability
 #' distribution" (_Schweder 2018_). In Bayesian words, compatibility intervals
 #' (or confidence distributons, or consonance curves) are "posteriors without
-#' priors" (_Schweder, Hjort, 2003_). In this regard, interpretation of _p_-values
-#' might be guided using [`bayestestR::p_to_pd()`].
+#' priors" (_Schweder, Hjort, 2003_).
+#'
+#' The _p_-value indicates the degree of compatibility of the endpoints of the
+#' interval at a given confidence level with (1) the observed data and (2) model
+#' assumptions. The observed point estimate (_p_-value = 1) is the value
+#' estimated to be _most compatible_ with the data and model assumptions,
+#' whereas values values far from the observed point estimate (where _p_
+#' approaches 0) are least compatible with the data and model assumptions. They
+#' are statements about confidence/compatibility, not probability per se
+#' (_Schweder and Hjort 2016, pp. 60-61; Amrhein and Greenland 2022_). In this
+#' regard, interpretation of _p_-values might be guided using
+#' [`bayestestR::p_to_pd()`].
 #'
 #' ## Compatibility intervals - is their interpretation conditional or not?
 #'
