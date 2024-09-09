@@ -53,7 +53,7 @@ standardize_info.default <- function(model,
   # model_matrix <- as.data.frame(stats::model.matrix(model))
   model_matrix <- as.data.frame(insight::get_modelmatrix(model))
   model_data <- insight::get_data(model, source = "mf", verbose = FALSE)
-  wgts <- insight::get_weights(model, na_rm = TRUE)
+  wgts <- insight::get_weights(model, remove_na = TRUE)
 
   # validation check for ZI
   if (mi$is_zero_inflated && verbose) {
@@ -428,7 +428,7 @@ standardize_info.default <- function(model,
 
   within_vars <- unclass(performance::check_heterogeneity_bias(model))
   id <- insight::get_random(model)[[1]]
-  w <- insight::get_weights(model, na_rm = TRUE)
+  w <- insight::get_weights(model, remove_na = TRUE)
 
   ## Find which parameters vary on level 1 ("within")
   is_within <- logical(length = length(params))

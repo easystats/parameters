@@ -98,7 +98,7 @@
 
   # weighted nobs
   weighted_nobs <- .safe({
-    w <- insight::get_weights(model, na_rm = TRUE, null_as_ones = TRUE)
+    w <- insight::get_weights(model, remove_na = TRUE, null_as_ones = TRUE)
     round(sum(w))
   })
   attr(params, "weighted_nobs") <- weighted_nobs
