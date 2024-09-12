@@ -150,20 +150,21 @@ more practical significance (upper bound is one).</p>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p><code><a href="https://easystats.github.io/bayestestR/reference/p_significance.html" class="external-link">p_significance()</a></code> returns the proportion of the <em>full</em> confidence
-interval range (assuming a normally distributed, equal-tailed interval) that
-is outside a certain range (the negligible effect, or ROPE, see argument
-<code>threshold</code>). If there are values of the distribution both below and above
-the ROPE, <code><a href="https://easystats.github.io/bayestestR/reference/p_significance.html" class="external-link">p_significance()</a></code> returns the higher probability of a value being
-outside the ROPE. Typically, this value should be larger than 0.5 to indicate
-practical significance. However, if the range of the negligible effect is
-rather large compared to the range of the confidence interval,
-<code><a href="https://easystats.github.io/bayestestR/reference/p_significance.html" class="external-link">p_significance()</a></code> will be less than 0.5, which indicates no clear practical
-significance.</p>
+interval range (assuming a normally or t-distributed, equal-tailed interval,
+based on the model) that is outside a certain range (the negligible effect,
+or ROPE, see argument <code>threshold</code>). If there are values of the distribution
+both below and above the ROPE, <code><a href="https://easystats.github.io/bayestestR/reference/p_significance.html" class="external-link">p_significance()</a></code> returns the higher
+probability of a value being outside the ROPE. Typically, this value should
+be larger than 0.5 to indicate practical significance. However, if the range
+of the negligible effect is rather large compared to the range of the
+confidence interval, <code><a href="https://easystats.github.io/bayestestR/reference/p_significance.html" class="external-link">p_significance()</a></code> will be less than 0.5, which
+indicates no clear practical significance.</p>
 <p>Note that the assumed interval, which is used to calculate the practical
 significance, is an estimation of the <em>full interval</em> based on the chosen
 confidence level. For example, if the 95% confidence interval of a
-coefficient ranges from -1 to 1, the underlying <em>full (normally distributed)
-interval</em> approximately ranges from -1.9 to 1.9, see also following code:</p>
+coefficient ranges from -1 to 1, the underlying <em>full (normally or
+t-distributed) interval</em> approximately ranges from -1.9 to 1.9, see also
+following code:</p>
 <p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="co"># simulate full normal distribution</span></span>
 <span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>out <span class="ot">&lt;-</span> bayestestR<span class="sc">::</span><span class="fu">distribution_normal</span>(<span class="dv">10000</span>, <span class="dv">0</span>, <span class="fl">0.5</span>)</span>
 <span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="co"># range of "full" distribution</span></span>
@@ -275,19 +276,36 @@ for functions related to checking effect existence and significance.</p></div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># requireNamespace("bayestestR") &amp;&amp; packageVersion("bayestestR") &gt; "0.14.0"</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">qol_cancer</span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">qol_cancer</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">QoL</span> <span class="op">~</span> <span class="va">time</span> <span class="op">+</span> <span class="va">age</span> <span class="op">+</span> <span class="va">education</span>, data <span class="op">=</span> <span class="va">qol_cancer</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://easystats.github.io/bayestestR/reference/p_significance.html" class="external-link">p_significance</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Practical Significance (threshold: -1.99, 1.99)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter     |         95% CI |     ps</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)   | [58.46, 69.28] |   100%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> time          | [-1.07,  2.85] | 13.17%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> age           | [-0.32,  0.37] |  0.00%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> educationmid  | [ 4.43, 13.09] | 99.91%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> educationhigh | [ 9.33, 19.38] |   100%</span>
 <span class="r-in"><span><span class="fu"><a href="https://easystats.github.io/bayestestR/reference/p_significance.html" class="external-link">p_significance</a></span><span class="op">(</span><span class="va">model</span>, threshold <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">0.5</span>, <span class="fl">1.5</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Practical Significance (threshold: -0.50, 1.50)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter     |         95% CI |     ps</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)   | [58.46, 69.28] |   100%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> time          | [-1.07,  2.85] | 26.57%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> age           | [-0.32,  0.37] |  0.18%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> educationmid  | [ 4.43, 13.09] | 99.97%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> educationhigh | [ 9.33, 19.38] |   100%</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># plot method</span></span></span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://easystats.github.io/see/" class="external-link">"see"</a></span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span>  <span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://easystats.github.io/bayestestR/reference/p_significance.html" class="external-link">p_significance</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
-<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-plt img"><img src="p_significance.lm-1.png" alt="" width="700" height="433"></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

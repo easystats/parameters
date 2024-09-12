@@ -136,7 +136,7 @@ with Bayesian statistics (Makowski et al., 2019).</p></li>
 
 <p>In most cases, it seems that the <em>pd</em> has a direct correspondence with the
 frequentist one-sided <em>p</em>-value through the formula (for two-sided <em>p</em>):
-$$p = 2 \times (1 - p_d)$$
+p = 2 * (1 - p<sub>d</sub>)
 Thus, a two-sided p-value of respectively <code>.1</code>, <code>.05</code>, <code>.01</code> and <code>.001</code> would
 correspond approximately to a <em>pd</em> of <code>95%</code>, <code>97.5%</code>, <code>99.5%</code> and <code>99.95%</code>.
 See <code><a href="https://easystats.github.io/bayestestR/reference/pd_to_p.html" class="external-link">pd_to_p()</a></code> for details.</p>
@@ -261,9 +261,9 @@ significance.</p></div>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameter     |         95% CI |     pd</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)   | [58.46, 69.28] |   100%</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> time          | [-1.07,  2.85] | 81.23%</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> age           | [-0.32,  0.37] | 55.67%</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> educationmid  | [ 4.43, 13.09] |   100%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> time          | [-1.07,  2.85] | 81.46%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> age           | [-0.32,  0.37] | 55.95%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> educationmid  | [ 4.43, 13.09] | 99.99%</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> educationhigh | [ 9.33, 19.38] |   100%</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://easystats.github.io/bayestestR/reference/p_direction.html" class="external-link">p_direction</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span></span>
