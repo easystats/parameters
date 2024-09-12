@@ -113,6 +113,7 @@ Suggests:
     coxme,
     cplm,
     dbscan,
+    distributional,
     domir (>= 0.2.0),
     drc,
     DRR,

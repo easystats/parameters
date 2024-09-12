@@ -44,8 +44,7 @@ model's data.}
 \item{ci}{Confidence Interval (CI) level. Default to \code{0.95} (\verb{95\%}).}
 
 \item{rule}{Character, indicating the rules when testing for practical
-equivalence. Can be \code{"bayes"}, \code{"classic"} or \code{"cet"}. See
-'Details'.}
+equivalence. Can be \code{"bayes"}, \code{"classic"} or \code{"cet"}. See 'Details'.}
 
 \item{verbose}{Toggle warnings and messages.}
 
@@ -67,17 +66,17 @@ A data frame.
 Compute the (conditional) equivalence test for frequentist models.
 }
 \details{
-In classical null hypothesis significance testing (NHST) within a frequentist
-framework, it is not possible to accept the null hypothesis, H0 - unlike
-in Bayesian statistics, where such probability statements are possible.
-"\link{...} one can only reject the null hypothesis if the test
+In classical null hypothesis significance testing (NHST) within a
+frequentist framework, it is not possible to accept the null hypothesis, H0 -
+unlike in Bayesian statistics, where such probability statements are
+possible. "\link{...} one can only reject the null hypothesis if the test
 statistics falls into the critical region(s), or fail to reject this
 hypothesis. In the latter case, all we can say is that no significant effect
 was observed, but one cannot conclude that the null hypothesis is true."
-(\emph{Pernet 2017}). One way to address this issues without Bayesian methods
-is \emph{Equivalence Testing}, as implemented in \code{equivalence_test()}.
-While you either can reject the null hypothesis or claim an inconclusive result
-in NHST, the equivalence test - according to \emph{Pernet} - adds a third category,
+(\emph{Pernet 2017}). One way to address this issues without Bayesian methods is
+\emph{Equivalence Testing}, as implemented in \code{equivalence_test()}. While you
+either can reject the null hypothesis or claim an inconclusive result in
+NHST, the equivalence test - according to \emph{Pernet} - adds a third category,
 \emph{"accept"}. Roughly speaking, the idea behind equivalence testing in a
 frequentist framework is to check whether an estimate and its uncertainty
 (i.e. confidence interval) falls within a region of "practical equivalence".
@@ -138,10 +137,10 @@ only uses the regular intervals.
 
 The equivalence p-value is the area of the (cumulative) confidence
 distribution that is outside of the region of equivalence. It can be
-interpreted as p-value for \emph{rejecting} the alternative hypothesis
-and \emph{accepting} the "null hypothesis" (i.e. assuming practical
-equivalence). That is, a high p-value means we reject the assumption of
-practical equivalence and accept the alternative hypothesis.
+interpreted as p-value for \emph{rejecting} the alternative hypothesis and
+\emph{accepting} the "null hypothesis" (i.e. assuming practical equivalence). That
+is, a high p-value means we reject the assumption of practical equivalence
+and accept the alternative hypothesis.
 }
 
 \subsection{Second Generation p-Value (SGPV)}{
@@ -149,16 +148,16 @@ practical equivalence and accept the alternative hypothesis.
 Second generation p-values (SGPV) were proposed as a statistic that
 represents \emph{the proportion of data-supported hypotheses that are also null
 hypotheses} \emph{(Blume et al. 2018, Lakens and Delacre 2020)}. It represents the
-proportion of the \emph{full} confidence interval range (assuming a normally
-distributed, equal-tailed interval) that is inside the ROPE. The SGPV ranges
-from zero to one. Higher values indicate that the effect is more likely to be
-practically equivalent ("not of interest").
+proportion of the \emph{full} confidence interval range (assuming a normally or
+t-distributed, equal-tailed interval, based on the model) that is inside the
+ROPE. The SGPV ranges from zero to one. Higher values indicate that the
+effect is more likely to be practically equivalent ("not of interest").
 
 Note that the assumed interval, which is used to calculate the SGPV, is an
 estimation of the \emph{full interval} based on the chosen confidence level. For
 example, if the 95\% confidence interval of a coefficient ranges from -1 to 1,
-the underlying \emph{full (normally distributed) interval} approximately ranges
-from -1.9 to 1.9, see also following code:
+the underlying \emph{full (normally or t-distributed) interval} approximately
+ranges from -1.9 to 1.9, see also following code:
 
 \if{html}{\out{<div class="sourceCode">}}\preformatted{# simulate full normal distribution
 out <- bayestestR::distribution_normal(10000, 0, 0.5)
