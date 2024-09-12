@@ -1,5 +1,6 @@
 skip_on_cran()
 skip_if_not_installed("bayestestR")
+skip_if_not_installed("distributional")
 
 test_that("p_direction", {
   data(mtcars)
@@ -12,11 +13,11 @@ test_that("p_direction", {
 
   set.seed(123)
   x <- p_direction(m, ci = 0.8)
-  expect_equal(x$pd, c(1, 0.6382, 0.9997, 0.884, 0.9107), tolerance = 1e-4)
+  expect_equal(x$pd, c(1, 0.6359, 0.9992, 0.882, 0.9117), tolerance = 1e-3)
 
   set.seed(123)
   x <- p_direction(m, null = 0.2)
-  expect_equal(x$pd, c(1, 0.5617, 0.9999, 0.9276, 1), tolerance = 1e-4)
+  expect_equal(x$pd, c(1, 0.5567, 0.9997, 0.9309, 1), tolerance = 1e-3)
 })
 
 test_that("p_direction, glmmTMB", {

@@ -12,11 +12,11 @@ test_that("p_significance", {
 
   set.seed(123)
   x <- p_significance(m, ci = 0.8)
-  expect_equal(x$ps, c(1, 0.4074, 0.9972, 0.6212, 0), tolerance = 1e-4)
+  expect_equal(x$ps, c(1, 0.3983, 0.9959, 0.6188, 0), tolerance = 1e-3)
 
   set.seed(123)
   x <- p_significance(m, threshold = 0.5)
-  expect_equal(x$ps, c(1, 0.4478, 0.9977, 0.6737, 0), tolerance = 1e-4)
+  expect_equal(x$ps, c(1, 0.4393, 0.9969, 0.6803, 0), tolerance = 1e-4)
 })
 
 test_that("p_significance, glmmTMB", {

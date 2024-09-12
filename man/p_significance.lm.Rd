@@ -53,21 +53,22 @@ point-null by default, \code{p_significance()} compares to a range-null.
 }
 \details{
 \code{p_significance()} returns the proportion of the \emph{full} confidence
-interval range (assuming a normally distributed, equal-tailed interval) that
-is outside a certain range (the negligible effect, or ROPE, see argument
-\code{threshold}). If there are values of the distribution both below and above
-the ROPE, \code{p_significance()} returns the higher probability of a value being
-outside the ROPE. Typically, this value should be larger than 0.5 to indicate
-practical significance. However, if the range of the negligible effect is
-rather large compared to the range of the confidence interval,
-\code{p_significance()} will be less than 0.5, which indicates no clear practical
-significance.
+interval range (assuming a normally or t-distributed, equal-tailed interval,
+based on the model) that is outside a certain range (the negligible effect,
+or ROPE, see argument \code{threshold}). If there are values of the distribution
+both below and above the ROPE, \code{p_significance()} returns the higher
+probability of a value being outside the ROPE. Typically, this value should
+be larger than 0.5 to indicate practical significance. However, if the range
+of the negligible effect is rather large compared to the range of the
+confidence interval, \code{p_significance()} will be less than 0.5, which
+indicates no clear practical significance.
 
 Note that the assumed interval, which is used to calculate the practical
 significance, is an estimation of the \emph{full interval} based on the chosen
 confidence level. For example, if the 95\% confidence interval of a
-coefficient ranges from -1 to 1, the underlying \emph{full (normally distributed)
-interval} approximately ranges from -1.9 to 1.9, see also following code:
+coefficient ranges from -1 to 1, the underlying \emph{full (normally or
+t-distributed) interval} approximately ranges from -1.9 to 1.9, see also
+following code:
 
 \if{html}{\out{<div class="sourceCode">}}\preformatted{# simulate full normal distribution
 out <- bayestestR::distribution_normal(10000, 0, 0.5)
