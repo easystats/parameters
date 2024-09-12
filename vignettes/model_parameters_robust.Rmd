@@ -1,6 +1,6 @@
 ---
 title: "Robust Estimation of Standard Errors, Confidence Intervals, and p-values"
-output: 
+output:
   rmarkdown::html_vignette:
     toc: true
     fig_width: 10.08
@@ -10,7 +10,7 @@ vignette: >
   %\VignetteIndexEntry{Robust Estimation of Standard Errors, Confidence Intervals, and p-values}
   \usepackage[utf8]{inputenc}
   %\VignetteEngine{knitr::rmarkdown}
-editor_options: 
+editor_options:
   chunk_output_type: console
 bibliography: bibliography.bib
 ---
@@ -72,12 +72,13 @@ There are two arguments (see
 [`?standard_error`](https://easystats.github.io/parameters/reference/standard_error.html)
 for further details) that allow for choosing different methods and options of
 robust estimation:
+
 - `vcov`
 - `vcov_args`
 
 Let us start with a simple example, which uses a heteroskedasticity-consistent
 covariance matrix estimation with estimation-type "HC3" (i.e.
-`sandwich::vcovHC(type = "HC3")`). 
+`sandwich::vcovHC(type = "HC3")`).
 
 First let's create a simple linear regression model, which we know violates
 homoscedasticity assumption, and thus robust estimation methods are to be
@@ -92,8 +93,8 @@ check_heteroscedasticity(model)
 ```
 
 We would extract model parameters both with and without robust estimation to
-highlight the difference it makes to standard errors, confidence intervals, 
-*t*-statistic, and *p*-values. Also, note that the coefficient estimate remains 
+highlight the difference it makes to standard errors, confidence intervals,
+*t*-statistic, and *p*-values. Also, note that the coefficient estimate remains
 unchanged.
 
 ```{r}
@@ -115,7 +116,7 @@ If a different type of covariance matrix estimation is required, use the
 `vcov`-argument. This argument accepts the name of a function from the
 *sandwich* or *clubSandwich* packages as a string, such as `"vcovCL"` (or just
 its suffix `"CL"`). *parameters* will then call the corresponding function with
-the content of `vcov_args` as arguments. 
+the content of `vcov_args` as arguments.
 
 The specific estimation type can be controlled by passing a `type` argument via `vcov_args`. See `?sandwich::vcovCL` for information about the different types of covariance matrices that this function can produce (`HC0` to `HC3`). In the next
 example, we use a clustered covariance matrix estimation with `HC1`-estimation
@@ -231,7 +232,7 @@ model_parameters(
 ```
 
 Notice that robust estimation returns different standard errors, confidence
-intervals, test statistic and *p*-values compared to the standard estimation. 
+intervals, test statistic and *p*-values compared to the standard estimation.
 Also, note that the coefficient estimate remains unchanged.
 
 ### Robust Covariance Matrix Estimation on Standardized Mixed Model Parameters
