@@ -9,6 +9,11 @@
   way to test the direction of the effect, which formerly was already (and still
   is) possible with `pd = TRUE` in `model_parameters()`.
 
+* `p_function()` gets a `vcov` and `vcov_args` argument to compute robust
+  standard errors for the confidence curves.
+
+* Revision / enhancement of some documentation.
+
 # parameters 0.22.2
 
 ## New supported models
