@@ -119,9 +119,11 @@
 #' whereas values values far from the observed point estimate (where _p_
 #' approaches 0) are least compatible with the data and model assumptions
 #' (_Schweder and Hjort 2016, pp. 60-61; Amrhein and Greenland 2022_). In this
-#' regards, _p_-values are are statements about confidence/compatibility, not
-#' probability per se, but still the interpretation of _p_-values might be
-#' guided using [`bayestestR::p_to_pd()`]
+#' regards, _p_-values are statements about _confidence_ or _compatibility_ and
+#' can be considered as _epistemic probability_ - "not necessarily of the
+#' hypothesis being true, but of it _possibly_ being true" (_Schweder 2018_).
+#' Hence, the interpretation of _p_-values might be guided using
+#' [`bayestestR::p_to_pd()`]
 #'
 #' ## Compatibility intervals - is their interpretation conditional or not?
 #'
