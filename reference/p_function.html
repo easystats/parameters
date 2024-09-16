@@ -17,7 +17,7 @@ different levels."><meta property="og:image" content="https://easystats.github.i
 
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.22.2.8</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.22.2.9</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -331,9 +331,11 @@ estimated to be <em>most compatible</em> with the data and model assumptions,
 whereas values values far from the observed point estimate (where <em>p</em>
 approaches 0) are least compatible with the data and model assumptions
 (<em>Schweder and Hjort 2016, pp. 60-61; Amrhein and Greenland 2022</em>). In this
-regards, <em>p</em>-values are are statements about confidence/compatibility, not
-probability per se, but still the interpretation of <em>p</em>-values might be
-guided using <code><a href="https://easystats.github.io/bayestestR/reference/pd_to_p.html" class="external-link">bayestestR::p_to_pd()</a></code></p>
+regards, <em>p</em>-values are statements about <em>confidence</em> or <em>compatibility</em> and
+can be considered as <em>epistemic probability</em> - "not necessarily of the
+hypothesis being true, but of it <em>possibly</em> being true" (<em>Schweder 2018</em>).
+Hence, the interpretation of <em>p</em>-values might be guided using
+<code><a href="https://easystats.github.io/bayestestR/reference/pd_to_p.html" class="external-link">bayestestR::p_to_pd()</a></code></p>
 </div>
 
 <div class="section">
