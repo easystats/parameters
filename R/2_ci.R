@@ -24,13 +24,25 @@
 #' @param iterations The number of bootstrap replicates. Only applies to models
 #'   of class `merMod` when `method=boot`.
 #' @param verbose Toggle warnings and messages.
-#' @param ... Additional arguments
+#' @param ... Additional arguments passed down to the underlying functions.
+#' E.g., arguments like `vcov` or `vcov_args` can be used to compute confidence
+#' intervals using a specific variance-covariance matrix for the standard
+#' errors.
 #'
 #' @return A data frame containing the CI bounds.
 #'
 #' @inheritSection model_parameters Confidence intervals and approximation of degrees of freedom
 #'
-#' @examplesIf require("glmmTMB")
+#' @examplesIf require("glmmTMB") && requireNamespace("sandwich")
+#' data(qol_cancer)
+#' model <- lm(QoL ~ time + age + education, data = qol_cancer)
+#'
+#' # regular confidence intervals
+#' ci(model)
+#'
+#' # using heteroscedasticity-robust standard errors
+#' ci(model, vcov = "HC3")
+#'
 #' \donttest{
 #' library(parameters)
 #' data(Salamanders, package = "glmmTMB")

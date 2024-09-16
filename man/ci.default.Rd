@@ -40,7 +40,10 @@ options (which vary depending on the model class): \code{"residual"},
 \emph{Confidence intervals and approximation of degrees of freedom} in
 \code{\link[=model_parameters]{model_parameters()}} for further details.}
 
-\item{...}{Additional arguments}
+\item{...}{Additional arguments passed down to the underlying functions.
+E.g., arguments like \code{vcov} or \code{vcov_args} can be used to compute confidence
+intervals using a specific variance-covariance matrix for the standard
+errors.}
 
 \item{component}{Model component for which parameters should be shown. See
 the documentation for your object's class in \code{\link[=model_parameters]{model_parameters()}} or
@@ -224,7 +227,16 @@ which is converted into a p-value using \code{\link[bayestestR:pd_to_p]{bayestes
 }
 
 \examples{
-\dontshow{if (require("glmmTMB")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (require("glmmTMB") && requireNamespace("sandwich")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+data(qol_cancer)
+model <- lm(QoL ~ time + age + education, data = qol_cancer)
+
+# regular confidence intervals
+ci(model)
+
+# using heteroscedasticity-robust standard errors
+ci(model, vcov = "HC3")
+
 \donttest{
 library(parameters)
 data(Salamanders, package = "glmmTMB")

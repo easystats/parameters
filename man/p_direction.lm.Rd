@@ -17,7 +17,9 @@ such as \code{"kernel"}, \code{"logspline"} or \code{"KernSmooth"}. See details.
 \item{null}{The value considered as a "null" effect. Traditionally 0, but
 could also be 1 in the case of ratios of change (OR, IRR, ...).}
 
-\item{...}{Arguments passed to other methods, e.g. \code{ci()}.}
+\item{...}{Arguments passed to other methods, e.g. \code{ci()}. Arguments like
+\code{vcov} or \code{vcov_args} can be used to compute confidence intervals using a
+specific variance-covariance matrix for the standard errors.}
 }
 \value{
 A data frame.
@@ -150,10 +152,13 @@ documentation in \code{\link[=p_function]{p_function()}}).
 }
 
 \examples{
-\dontshow{if (requireNamespace("bayestestR") && require("see", quietly = TRUE)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (requireNamespace("bayestestR") && require("see", quietly = TRUE) && requireNamespace("sandwich")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 data(qol_cancer)
 model <- lm(QoL ~ time + age + education, data = qol_cancer)
 p_direction(model)
+
+# based on heteroscedasticity-robust standard errors
+p_direction(model, vcov = "HC3")
 
 result <- p_direction(model)
 plot(result)

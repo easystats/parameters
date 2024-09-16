@@ -16,7 +16,9 @@ bayestestR::p_direction
 #' @param x A statistical model.
 #' @inheritParams bayestestR::p_direction
 #' @inheritParams model_parameters.default
-#' @param ... Arguments passed to other methods, e.g. `ci()`.
+#' @param ... Arguments passed to other methods, e.g. `ci()`. Arguments like
+#' `vcov` or `vcov_args` can be used to compute confidence intervals using a
+#' specific variance-covariance matrix for the standard errors.
 #'
 #' @seealso See also [`equivalence_test()`], [`p_function()`] and
 #' [`p_significance()`] for functions related to checking effect existence and
@@ -70,10 +72,13 @@ bayestestR::p_direction
 #'
 #' @return A data frame.
 #'
-#' @examplesIf requireNamespace("bayestestR") && require("see", quietly = TRUE)
+#' @examplesIf requireNamespace("bayestestR") && require("see", quietly = TRUE) && requireNamespace("sandwich")
 #' data(qol_cancer)
 #' model <- lm(QoL ~ time + age + education, data = qol_cancer)
 #' p_direction(model)
+#'
+#' # based on heteroscedasticity-robust standard errors
+#' p_direction(model, vcov = "HC3")
 #'
 #' result <- p_direction(model)
 #' plot(result)
