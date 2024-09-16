@@ -18,6 +18,7 @@
 #' @inheritParams model_parameters
 #' @inheritParams model_parameters.default
 #' @inheritParams model_parameters.glmmTMB
+#' @inheritParams standard_error
 #'
 #' @note
 #' Curently, `p_function()` computes intervals based on Wald t- or z-statistic.
@@ -223,6 +224,8 @@ p_function <- function(model,
                        exponentiate = FALSE,
                        effects = "fixed",
                        component = "all",
+                       vcov = NULL,
+                       vcov_args = NULL,
                        keep = NULL,
                        drop = NULL,
                        verbose = TRUE,
@@ -234,7 +237,9 @@ p_function <- function(model,
   se <- standard_error(
     model,
     effects = effects,
-    component = component
+    component = component,
+    vcov = vcov,
+    vcov_args = vcov_args
   )$SE
 
   if (is.null(dof) || length(dof) == 0 || .is_chi2_model(model, dof)) {
