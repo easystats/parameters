@@ -1,3 +1,5 @@
+skip_if_not_installed("sandwich")
+
 data(iris)
 model <- lm(Sepal.Length ~ Species, data = iris)
 
