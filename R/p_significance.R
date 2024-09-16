@@ -182,8 +182,27 @@ p_significance.lm <- function(x, threshold = "default", ci = 0.95, verbose = TRU
 
 .posterior_ci <- function(x, ci, ...) {
   # first, we need CIs
-  out <- ci(x, ci = ci, ...)
-  dof <- .safe(insight::get_df(x, type = "wald"), Inf)
+  if (inherits(x, "parameters_model")) {
+    # for model_parameters objects, directly extract CIs
+    out <- as.data.frame(x)[intersect(
+      c("Parameter", "CI_low", "CI_high", "Component", "Effects"),
+      colnames(x)
+    )]
+    ci <- attributes(x)$ci
+    # and extract degrees of freedom
+    df_column <- grep("(df|df_error)", colnames(x))
+    if (length(df_column) > 0) {
+      dof <- unique(x[[df_column]])
+      if (length(dof) > 1) {
+        dof <- Inf
+      }
+    } else {
+      dof <- Inf
+    }
+  } else {
+    out <- ci(x, ci = ci, ...)
+    dof <- .safe(insight::get_df(x, type = "wald"), Inf)
+  }
   # we now iterate all confidence intervals and create an approximate normal
   # distribution that covers the CI-range.
   posterior <- as.data.frame(lapply(seq_len(nrow(out)), function(i) {
@@ -281,3 +300,6 @@ p_significance.zeroinfl <- p_significance.lm
 
 #' @export
 p_significance.rma <- p_significance.lm
+
+#' @export
+p_significance.parameters_model <- p_significance.lm

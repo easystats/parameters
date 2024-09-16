@@ -10,6 +10,11 @@ test_that("p_significance", {
   expect_named(x, c("Parameter", "CI", "CI_low", "CI_high", "ps"))
   expect_snapshot(print(x))
 
+  mp <- model_parameters(m)
+  set.seed(123)
+  x2 <- p_significance(mp)
+  expect_equal(x$ps, x2$ps, tolerance = 1e-4)
+
   set.seed(123)
   x <- p_significance(m, ci = 0.8)
   expect_equal(x$ps, c(1, 0.3983, 0.9959, 0.6188, 0), tolerance = 1e-3)
