@@ -380,6 +380,18 @@ equivalence_test.parameters_simulate_model <- function(x,
 }
 
 
+#' @export
+equivalence_test.parameters_model <- function(x,
+                                              range = "default",
+                                              ci = 0.95,
+                                              rule = "classic",
+                                              verbose = TRUE,
+                                              ...) {
+  model <- .get_object(x)
+  equivalence_test(x = model, range = range, ci = ci, rule = rule, verbose = verbose, ...)
+}
+
+
 #' @rdname equivalence_test.lm
 #' @export
 equivalence_test.ggeffects <- function(x,

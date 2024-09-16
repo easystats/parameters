@@ -16,6 +16,9 @@
   `vcov` and `vcov_args` to `p_value()` and `ci()`, hence, tests can be based
   on robust standard errors.
 
+* `equivalence_test()` and `p_significance()` work with objects returned by
+  `model_parameters()`.
+
 * Revision / enhancement of some documentation.
 
 # parameters 0.22.2
