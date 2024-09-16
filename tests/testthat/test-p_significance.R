@@ -39,3 +39,12 @@ test_that("p_significance, glmmTMB", {
     )
   )
 })
+
+test_that("p_significance, robust", {
+  skip_if_not_installed("sandwich")
+  data(mtcars)
+  m <- lm(mpg ~ gear + wt + cyl + hp, data = mtcars)
+  set.seed(123)
+  x <- p_significance(m, vcov = "HC3")
+  expect_snapshot(print(x))
+})

@@ -19,7 +19,10 @@ bayestestR::equivalence_test
 #' See [`?ggeffects::test_predictions`](https://strengejacke.github.io/ggeffects/reference/test_predictions.html)
 #' for details.
 #' @param verbose Toggle warnings and messages.
-#' @param ... Arguments passed to or from other methods.
+#' @param ... Arguments passed to or from other methods, e.g. `ci()`. Arguments
+#' like `vcov` or `vcov_args` can be used to compute confidence intervals or
+#' p-values using a specific variance-covariance matrix for the standard
+#' errors..
 #' @inheritParams model_parameters.merMod
 #' @inheritParams p_value
 #'
@@ -218,12 +221,15 @@ bayestestR::equivalence_test
 #'     Synthese 200, 89 (2022). \doi{10.1007/s11229-022-03560-x}
 #'
 #' @return A data frame.
-#' @examples
+#' @examplesIf requireNamespace("sandwich")
 #' data(qol_cancer)
 #' model <- lm(QoL ~ time + age + education, data = qol_cancer)
 #'
 #' # default rule
 #' equivalence_test(model)
+#'
+#' # using heteroscedasticity-robust standard errors
+#' equivalence_test(model, vcov = "HC3")
 #'
 #' # conditional equivalence test
 #' equivalence_test(model, rule = "cet")
@@ -504,14 +510,14 @@ equivalence_test.ggeffects <- function(x,
 
   # ==== requested confidence intervals ====
 
-  params <- conf_int <- .ci_generic(x, ci = ci)
+  params <- conf_int <- .ci_generic(x, ci = ci, ...)
   conf_int <- as.data.frame(t(conf_int[, c("CI_low", "CI_high")]))
 
 
   # ==== the "narrower" intervals (1-2*alpha) for CET-rules. ====
 
   alpha <- 1 - ci
-  conf_int2 <- .ci_generic(x, ci = (ci - alpha))
+  conf_int2 <- .ci_generic(x, ci = (ci - alpha), ...)
   conf_int2 <- as.data.frame(t(conf_int2[, c("CI_low", "CI_high")]))
 
 
@@ -544,7 +550,7 @@ equivalence_test.ggeffects <- function(x,
 
   # ==== (adjusted) p-values for tests ====
 
-  out$p <- .add_p_to_equitest(x, ci, range)
+  out$p <- .add_p_to_equitest(x, ci, range, ...)
 
   attr(out, "rope") <- range
   out
@@ -786,7 +792,7 @@ equivalence_test.ggeffects <- function(x,
 }
 
 
-.add_p_to_equitest <- function(model, ci, range) {
+.add_p_to_equitest <- function(model, ci, range, ...) {
   tryCatch(
     {
       params <- insight::get_parameters(model)
@@ -798,7 +804,7 @@ equivalence_test.ggeffects <- function(x,
       params$mu <- params$Estimate * -1
 
       # se
-      se <- standard_error(model)
+      se <- standard_error(model, ...)
 
       stats::pt((range[1] - params$mu) / se$SE, df = dof, lower.tail = TRUE) +
         stats::pt((range[2] - params$mu) / se$SE, df = dof, lower.tail = FALSE)

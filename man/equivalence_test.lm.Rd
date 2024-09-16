@@ -48,7 +48,10 @@ equivalence. Can be \code{"bayes"}, \code{"classic"} or \code{"cet"}. See 'Detai
 
 \item{verbose}{Toggle warnings and messages.}
 
-\item{...}{Arguments passed to or from other methods.}
+\item{...}{Arguments passed to or from other methods, e.g. \code{ci()}. Arguments
+like \code{vcov} or \code{vcov_args} can be used to compute confidence intervals or
+p-values using a specific variance-covariance matrix for the standard
+errors..}
 
 \item{effects}{Should parameters for fixed effects (\code{"fixed"}), random
 effects (\code{"random"}), or both (\code{"all"}) be returned? Only applies
@@ -249,11 +252,15 @@ documentation in \code{\link[=p_function]{p_function()}}).
 }
 
 \examples{
+\dontshow{if (requireNamespace("sandwich")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 data(qol_cancer)
 model <- lm(QoL ~ time + age + education, data = qol_cancer)
 
 # default rule
 equivalence_test(model)
+
+# using heteroscedasticity-robust standard errors
+equivalence_test(model, vcov = "HC3")
 
 # conditional equivalence test
 equivalence_test(model, rule = "cet")
@@ -263,6 +270,7 @@ if (require("see", quietly = TRUE)) {
   result <- equivalence_test(model)
   plot(result)
 }
+\dontshow{\}) # examplesIf}
 }
 \references{
 \itemize{

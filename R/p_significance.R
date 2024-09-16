@@ -28,7 +28,9 @@ bayestestR::p_significance
 #' @inheritParams bayestestR::p_significance
 #' @inheritParams model_parameters.default
 #' @param verbose Toggle warnings and messages.
-#' @param ... Arguments passed to other methods, e.g. `ci()`.
+#' @param ... Arguments passed to other methods, e.g. `ci()`. Arguments like
+#' `vcov` or `vcov_args` can be used to compute confidence intervals using a
+#' specific variance-covariance matrix for the standard errors.
 #'
 #' @seealso For more details, see [`bayestestR::p_significance()`]. See also
 #' [`equivalence_test()`], [`p_function()`] and [`bayestestR::p_direction()`]
@@ -126,14 +128,16 @@ bayestestR::p_significance
 #' intervals and the values for practical significance. Higher values indicate
 #' more practical significance (upper bound is one).
 #'
-#' @examplesIf requireNamespace("bayestestR") && packageVersion("bayestestR") > "0.14.0"
+#' @examplesIf requireNamespace("bayestestR") && packageVersion("bayestestR") > "0.14.0" && requireNamespace("sandwich")
 #' data(qol_cancer)
 #' model <- lm(QoL ~ time + age + education, data = qol_cancer)
 #'
 #' p_significance(model)
 #' p_significance(model, threshold = c(-0.5, 1.5))
 #'
-#' # plot method
+#' # based on heteroscedasticity-robust standard errors
+#' p_significance(model, vcov = "HC3")
+#'
 #' if (require("see", quietly = TRUE)) {
 #'   result <- p_significance(model)
 #'   plot(result)

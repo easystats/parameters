@@ -10,6 +10,14 @@ test_that("equivalence_test", {
   expect_snapshot(print(x))
 })
 
+test_that("equivalence_test, robust", {
+  skip_if_not_installed("sandwich")
+  data(mtcars)
+  m <- lm(mpg ~ gear + wt + cyl + hp, data = mtcars)
+  x <- equivalence_test(m, vcov = "HC3")
+  expect_snapshot(print(x))
+})
+
 test_that("equivalence_test, unequal rope-range", {
   data(iris)
   m <- lm(Sepal.Length ~ Species, data = iris)

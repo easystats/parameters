@@ -25,7 +25,9 @@ asymmetric intervals.
 
 \item{verbose}{Toggle warnings and messages.}
 
-\item{...}{Arguments passed to other methods, e.g. \code{ci()}.}
+\item{...}{Arguments passed to other methods, e.g. \code{ci()}. Arguments like
+\code{vcov} or \code{vcov_args} can be used to compute confidence intervals using a
+specific variance-covariance matrix for the standard errors.}
 }
 \value{
 A data frame with columns for the parameter names, the confidence
@@ -151,14 +153,16 @@ documentation in \code{\link[=p_function]{p_function()}}).
 }
 
 \examples{
-\dontshow{if (requireNamespace("bayestestR") && packageVersion("bayestestR") > "0.14.0") (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (requireNamespace("bayestestR") && packageVersion("bayestestR") > "0.14.0" && requireNamespace("sandwich")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 data(qol_cancer)
 model <- lm(QoL ~ time + age + education, data = qol_cancer)
 
 p_significance(model)
 p_significance(model, threshold = c(-0.5, 1.5))
 
-# plot method
+# based on heteroscedasticity-robust standard errors
+p_significance(model, vcov = "HC3")
+
 if (require("see", quietly = TRUE)) {
   result <- p_significance(model)
   plot(result)

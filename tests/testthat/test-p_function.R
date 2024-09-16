@@ -1,5 +1,3 @@
-skip_if_not_installed("sandwich")
-
 data(iris)
 model <- lm(Sepal.Length ~ Species, data = iris)
 
@@ -43,6 +41,7 @@ test_that("p_function ci-levels", {
     tolerance = 1e-4
   )
 
+  skip_if_not_installed("sandwich")
   out <- p_function(model, vcov = "HC3")
   expect_equal(
     out$CI_low,
