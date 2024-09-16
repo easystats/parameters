@@ -12,6 +12,10 @@
 * `p_function()` gets a `vcov` and `vcov_args` argument to compute robust
   standard errors for the confidence curves.
 
+* Functions `p_significance()` and `equivalence_test()` now pass arguments
+  `vcov` and `vcov_args` to `p_value()` and `ci()`, hence, tests can be based
+  on robust standard errors.
+
 * Revision / enhancement of some documentation.
 
 # parameters 0.22.2
