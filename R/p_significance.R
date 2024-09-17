@@ -183,7 +183,7 @@ p_significance.lm <- function(x, threshold = "default", ci = 0.95, verbose = TRU
     threshold <- 0.1
   }
 
-  # reorder
+  # Reorder columns of 'out' to keep only the relevant ones
   out <- out[intersect(keep, colnames(out))]
 
   attr(out, "data") <- posterior
@@ -251,7 +251,7 @@ p_significance.lm <- function(x, threshold = "default", ci = 0.95, verbose = TRU
 #' @export
 print.p_significance_lm <- function(x, digits = 2, ...) {
   threshold <- attributes(x)$threshold
-  # multiple thresholds?
+  # Check if threshold is a list, which indicates multiple thresholds
   if (is.list(threshold)) {
     caption <- "Practical Significance"
   } else {

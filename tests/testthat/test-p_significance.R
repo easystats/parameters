@@ -24,6 +24,7 @@ test_that("p_significance", {
   expect_equal(x$ps, c(1, 0.4393, 0.9969, 0.6803, 0), tolerance = 1e-4)
 
   set.seed(123)
+  # Test p_significance with custom thresholds for specific parameters
   x <- p_significance(m, threshold = list(cyl = 0.5, wt = 0.7))
   expect_equal(x$ps, c(1, 0.6002, 0.995, 0.6805, 0), tolerance = 1e-4)
 })
