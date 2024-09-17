@@ -151,8 +151,16 @@ p_significance.lm <- function(x, threshold = "default", ci = 0.95, verbose = TRU
   out <- result$out
   posterior <- result$posterior
 
-  # calculate the ROPE range
-  if (all(threshold == "default")) {
+  # calculate the ROPE range - for multiple thresholds, we have to check
+  # each list element for "default", to replace it with the appropriate range
+  if (is.list(threshold)) {
+    threshold <- lapply(threshold, function(i) {
+      if (all(i == "default")) {
+        i <- bayestestR::rope_range(x, verbose = verbose)
+      }
+      i
+    })
+  } else if (all(threshold == "default")) {
     threshold <- bayestestR::rope_range(x, verbose = verbose)
   }
 
