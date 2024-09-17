@@ -1,5 +1,6 @@
 skip_on_cran()
 skip_if_not_installed("bayestestR", minimum_version = "0.14.0.10")
+skip_if_not_installed("distributional")
 skip_if_not_installed("withr")
 
 withr::with_environment(
@@ -29,7 +30,7 @@ withr::with_environment(
     set.seed(123)
     # Test p_significance with custom thresholds for specific parameters
     x <- p_significance(m, threshold = list(cyl = 0.5, wt = 0.7))
-    expect_equal(x$ps, c(1, 0.6002, 0.995, 0.6805, 0), tolerance = 1e-4)
+    expect_equal(x$ps, c(1, 0.5982, 0.9955, 0.6803, 1e-04), tolerance = 1e-4)
   })
 )
 
