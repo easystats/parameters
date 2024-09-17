@@ -6,7 +6,7 @@ withr::with_environment(
   new.env(),
   test_that("p_significance", {
     data(mtcars)
-    m <- lm(mpg ~ gear + wt + cyl + hp, data = mtcars)
+    m <<- lm(mpg ~ gear + wt + cyl + hp, data = mtcars)
     set.seed(123)
     x <- p_significance(m)
     expect_identical(c(nrow(x), ncol(x)), c(5L, 5L))
