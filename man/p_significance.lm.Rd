@@ -18,7 +18,11 @@ and based on \code{\link[bayestestR:rope_range]{rope_range()}} if a (Bayesian) m
 (i.e. the threshold range is set to -0.1 and 0.1, i.e. reflects a symmetric
 interval)
 \item a numeric vector of length two (e.g., \code{c(-0.2, 0.1)}), useful for
-asymmetric intervals.
+asymmetric intervals
+\item a list of numeric vectors, where each vector corresponds to a parameter
+\item a list of \emph{named} numeric vectors, where names correspond to parameter
+names. In this case, all parameters that have no matching name in \code{threshold}
+will be set to \code{"default"}.
 }}
 
 \item{ci}{Confidence Interval (CI) level. Default to \code{0.95} (\verb{95\%}).}
