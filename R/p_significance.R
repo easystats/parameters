@@ -157,19 +157,34 @@ p_significance.lm <- function(x, threshold = "default", ci = 0.95, verbose = TRU
   }
 
   # add ps
-  out$ps <- as.numeric(bayestestR::p_significance(
+  result_ps <- bayestestR::p_significance(
     posterior,
     threshold = threshold,
     verbose = verbose
-  ))
+  )
+  out$ps <- as.numeric(result_ps)
+
+  # for list-thresholds, we have the list as attribute and need to save it as
+  # data.frame
+  if (is.list(threshold)) {
+    # save for later
+    threshold_data <- stats::setNames(
+      as.data.frame(do.call(rbind, attributes(result_ps)$threshold)),
+      c("ROPE_low", "ROPE_high")
+    )
+    out <- cbind(out, threshold_data)
+    keep <- c("Parameter", "CI", "CI_low", "CI_high", "ROPE_low", "ROPE_high", "ps", "Effects", "Component")
+  } else {
+    keep <- c("Parameter", "CI", "CI_low", "CI_high", "ps", "Effects", "Component")
+  }
 
   # for plot, we need to have it numeric
-  if (!is.numeric(threshold)) {
+  if (!is.numeric(threshold) && !is.list(threshold)) {
     threshold <- 0.1
   }
 
-  # reorder
-  out <- out[intersect(c("Parameter", "CI", "CI_low", "CI_high", "ps", "Effects", "Component"), colnames(out))]
+  # Reorder columns of 'out' to keep only the relevant ones
+  out <- out[intersect(keep, colnames(out))]
 
   attr(out, "data") <- posterior
   attr(out, "threshold") <- threshold
@@ -236,18 +251,23 @@ p_significance.lm <- function(x, threshold = "default", ci = 0.95, verbose = TRU
 #' @export
 print.p_significance_lm <- function(x, digits = 2, ...) {
   threshold <- attributes(x)$threshold
-  # make sure it's numeric
-  if (!is.numeric(threshold)) {
-    threshold <- 0.1
+  # Check if threshold is a list, which indicates multiple thresholds
+  if (is.list(threshold)) {
+    caption <- "Practical Significance"
+  } else {
+    # make sure it's numeric
+    if (!is.numeric(threshold)) {
+      threshold <- 0.1
+    }
+    # make sure we have both bounds for the range
+    if (length(threshold) == 1) {
+      threshold <- c(threshold * -1, threshold)
+    }
+    caption <- sprintf(
+      "Practical Significance (threshold: %s)",
+      toString(insight::format_value(threshold, digits = 2))
+    )
   }
-  # make sure we have both bounds for the range
-  if (length(threshold) == 1) {
-    threshold <- c(threshold * -1, threshold)
-  }
-  caption <- sprintf(
-    "Practical Significance (threshold: %s)",
-    toString(insight::format_value(threshold, digits = 2))
-  )
   x$ps <- insight::format_pd(x$ps, name = NULL)
   x <- insight::format_table(x, digits = digits)
   cat(insight::export_table(x, title = caption, ...))
