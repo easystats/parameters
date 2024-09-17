@@ -37,7 +37,7 @@ point-null by default, p_significance() compares to a range-null."><meta propert
 
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.22.2.10</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.22.2.11</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -125,7 +125,11 @@ and based on <code><a href="https://easystats.github.io/bayestestR/reference/rop
 (i.e. the threshold range is set to -0.1 and 0.1, i.e. reflects a symmetric
 interval)</p></li>
 <li><p>a numeric vector of length two (e.g., <code>c(-0.2, 0.1)</code>), useful for
-asymmetric intervals.</p></li>
+asymmetric intervals</p></li>
+<li><p>a list of numeric vectors, where each vector corresponds to a parameter</p></li>
+<li><p>a list of <em>named</em> numeric vectors, where names correspond to parameter
+names. In this case, all parameters that have no matching name in <code>threshold</code>
+will be set to <code>"default"</code>.</p></li>
 </ul></dd>
 
 

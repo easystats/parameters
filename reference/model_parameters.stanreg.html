@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.22.2.10</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.22.2.11</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -204,9 +204,10 @@ included in the summary output.</p></dd>
 
 
 <dt id="arg-rope-range">rope_range<a class="anchor" aria-label="anchor" href="#arg-rope-range"></a></dt>
-<dd><p>ROPE's lower and higher bounds. Should be a list of two
-values (e.g., <code>c(-0.1, 0.1)</code>) or <code>"default"</code>. If <code>"default"</code>,
-the bounds are set to <code>x +- 0.1*SD(response)</code>.</p></dd>
+<dd><p>ROPE's lower and higher bounds. Should be a vector of two
+values (e.g., <code>c(-0.1, 0.1)</code>), <code>"default"</code> or a list of numeric vectors of
+the same length as numbers of parameters. If <code>"default"</code>, the bounds are
+set to <code>x +- 0.1*SD(response)</code>.</p></dd>
 
 
 <dt id="arg-rope-ci">rope_ci<a class="anchor" aria-label="anchor" href="#arg-rope-ci"></a></dt>
