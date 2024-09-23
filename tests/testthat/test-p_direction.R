@@ -20,6 +20,20 @@ test_that("p_direction", {
   expect_equal(x$pd, c(1, 0.5567, 0.9997, 0.9309, 1), tolerance = 1e-3)
 })
 
+test_that("p_direction", {
+  skip_if_not_installed("sandwich")
+  data(mtcars)
+  m <- lm(mpg ~ gear + wt + cyl + hp, data = mtcars)
+
+  set.seed(123)
+  x <- p_direction(m, ci = 0.8, vcov = "HC3")
+  expect_equal(x$pd, c(1, 0.6162, 0.9984, 0.8323, 0.8962), tolerance = 1e-3)
+
+  set.seed(123)
+  x <- p_direction(m, null = 0.2, vcov = "HC3")
+  expect_equal(x$pd, c(1, 0.5464, 0.9989, 0.88, 1), tolerance = 1e-3)
+})
+
 test_that("p_direction, glmmTMB", {
   skip_if_not_installed("glmmTMB")
   data(Salamanders, package = "glmmTMB")

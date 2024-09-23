@@ -28,9 +28,7 @@ bayestestR::p_significance
 #' @inheritParams bayestestR::p_significance
 #' @inheritParams model_parameters.default
 #' @param verbose Toggle warnings and messages.
-#' @param ... Arguments passed to other methods, e.g. `ci()`. Arguments like
-#' `vcov` or `vcov_args` can be used to compute confidence intervals using a
-#' specific variance-covariance matrix for the standard errors.
+#' @param ... Arguments passed to other methods.
 #'
 #' @seealso For more details, see [`bayestestR::p_significance()`]. See also
 #' [`equivalence_test()`], [`p_function()`] and [`bayestestR::p_direction()`]
@@ -143,9 +141,15 @@ bayestestR::p_significance
 #'   plot(result)
 #' }
 #' @export
-p_significance.lm <- function(x, threshold = "default", ci = 0.95, verbose = TRUE, ...) {
+p_significance.lm <- function(x,
+                              threshold = "default",
+                              ci = 0.95,
+                              vcov = NULL,
+                              vcov_args = NULL,
+                              verbose = TRUE,
+                              ...) {
   # generate normal distribution based on CI range
-  result <- .posterior_ci(x, ci, ...)
+  result <- .posterior_ci(x, ci, vcov = vcov, vcov_args = vcov_args, ...)
 
   # copy
   out <- result$out
@@ -203,7 +207,7 @@ p_significance.lm <- function(x, threshold = "default", ci = 0.95, verbose = TRU
 
 # helper ----------------------------------------------------------------------
 
-.posterior_ci <- function(x, ci, ...) {
+.posterior_ci <- function(x, ci, vcov = NULL, vcov_args = NULL, ...) {
   # first, we need CIs
   if (inherits(x, "parameters_model")) {
     # for model_parameters objects, directly extract CIs
@@ -223,7 +227,7 @@ p_significance.lm <- function(x, threshold = "default", ci = 0.95, verbose = TRU
       dof <- Inf
     }
   } else {
-    out <- ci(x, ci = ci, ...)
+    out <- ci(x, ci = ci, vcov = vcov, vcov_args = vcov_args, ...)
     dof <- .safe(insight::get_df(x, type = "wald"), Inf)
   }
   # we now iterate all confidence intervals and create an approximate normal

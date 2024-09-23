@@ -19,10 +19,7 @@ bayestestR::equivalence_test
 #' See [`?ggeffects::test_predictions`](https://strengejacke.github.io/ggeffects/reference/test_predictions.html)
 #' for details.
 #' @param verbose Toggle warnings and messages.
-#' @param ... Arguments passed to or from other methods, e.g. `ci()`. Arguments
-#' like `vcov` or `vcov_args` can be used to compute confidence intervals or
-#' p-values using a specific variance-covariance matrix for the standard
-#' errors..
+#' @param ... Arguments passed to or from other methods.
 #' @inheritParams model_parameters.merMod
 #' @inheritParams p_value
 #'
@@ -244,10 +241,21 @@ equivalence_test.lm <- function(x,
                                 range = "default",
                                 ci = 0.95,
                                 rule = "classic",
+                                vcov = NULL,
+                                vcov_args = NULL,
                                 verbose = TRUE,
                                 ...) {
   rule <- match.arg(tolower(rule), choices = c("bayes", "classic", "cet"))
-  out <- .equivalence_test_frequentist(x, range, ci, rule, verbose, ...)
+  out <- .equivalence_test_frequentist(
+    x,
+    range = range,
+    ci = ci,
+    rule = rule,
+    vcov = vcov,
+    vcov_args = vcov_args,
+    verbose,
+    ...
+  )
 
   if (is.null(attr(out, "pretty_names", exact = TRUE))) {
     attr(out, "pretty_names") <- format_parameters(x)
@@ -308,6 +316,8 @@ equivalence_test.merMod <- function(x,
                                     ci = 0.95,
                                     rule = "classic",
                                     effects = c("fixed", "random"),
+                                    vcov = NULL,
+                                    vcov_args = NULL,
                                     verbose = TRUE,
                                     ...) {
   # ==== argument matching ====
@@ -319,7 +329,16 @@ equivalence_test.merMod <- function(x,
   # ==== equivalent testing for fixed or random effects ====
 
   if (effects == "fixed") {
-    out <- .equivalence_test_frequentist(x, range, ci, rule, verbose, ...)
+    out <- .equivalence_test_frequentist(
+      x,
+      range = range,
+      ci = ci,
+      rule = rule,
+      vcov = vcov,
+      vcov_args = vcov_args,
+      verbose,
+      ...
+    )
   } else {
     out <- .equivalence_test_frequentist_random(x, range, ci, rule, verbose, ...)
   }
@@ -496,6 +515,8 @@ equivalence_test.ggeffects <- function(x,
                                           range = "default",
                                           ci = 0.95,
                                           rule = "classic",
+                                          vcov = NULL,
+                                          vcov_args = NULL,
                                           verbose = TRUE,
                                           ...) {
   # ==== define rope range ====
@@ -522,14 +543,14 @@ equivalence_test.ggeffects <- function(x,
 
   # ==== requested confidence intervals ====
 
-  params <- conf_int <- .ci_generic(x, ci = ci, ...)
+  params <- conf_int <- .ci_generic(x, ci = ci, vcov = vcov, vcov_args = vcov_args, ...)
   conf_int <- as.data.frame(t(conf_int[, c("CI_low", "CI_high")]))
 
 
   # ==== the "narrower" intervals (1-2*alpha) for CET-rules. ====
 
   alpha <- 1 - ci
-  conf_int2 <- .ci_generic(x, ci = (ci - alpha), ...)
+  conf_int2 <- .ci_generic(x, ci = (ci - alpha), vcov = vcov, vcov_args = vcov_args, ...)
   conf_int2 <- as.data.frame(t(conf_int2[, c("CI_low", "CI_high")]))
 
 
@@ -562,7 +583,7 @@ equivalence_test.ggeffects <- function(x,
 
   # ==== (adjusted) p-values for tests ====
 
-  out$p <- .add_p_to_equitest(x, ci, range, ...)
+  out$p <- .add_p_to_equitest(x, ci, range, vcov = vcov, vcov_args = vcov_args, ...)
 
   attr(out, "rope") <- range
   out
@@ -804,7 +825,7 @@ equivalence_test.ggeffects <- function(x,
 }
 
 
-.add_p_to_equitest <- function(model, ci, range, ...) {
+.add_p_to_equitest <- function(model, ci, range, vcov = NULL, vcov_args = NULL, ...) {
   tryCatch(
     {
       params <- insight::get_parameters(model)
@@ -816,7 +837,7 @@ equivalence_test.ggeffects <- function(x,
       params$mu <- params$Estimate * -1
 
       # se
-      se <- standard_error(model, ...)
+      se <- standard_error(model, vcov = vcov, vcov_args = vcov_args, ...)
 
       stats::pt((range[1] - params$mu) / se$SE, df = dof, lower.tail = TRUE) +
         stats::pt((range[2] - params$mu) / se$SE, df = dof, lower.tail = FALSE)
