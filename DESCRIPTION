@@ -194,6 +194,7 @@ Suggests:
     RcppEigen,
     rmarkdown,
     rms,
+    rstan,
     rstanarm,
     sandwich,
     see (>= 0.8.1),
