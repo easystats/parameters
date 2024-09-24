@@ -107,6 +107,7 @@ test_that("pooled parameters, glmmTMB, components", {
 test_that("pooled parameters, glmmTMB, zero-inflated", {
   skip_if_not_installed("mice")
   skip_if_not_installed("glmmTMB")
+  skip_if_not_installed("broom.mixed")
   data(Salamanders, package = "glmmTMB")
   set.seed(123)
   Salamanders$cover[sample.int(nrow(Salamanders), 50)] <- NA
@@ -135,6 +136,17 @@ test_that("pooled parameters, glmmTMB, zero-inflated", {
     c(0.13409, 1.198551, -0.181912, 1.253029, -1.844026),
     tolerance = 1e-3
   )
+
+  # validate against mice ---------------
+  m_mice <- suppressWarnings(with(data = impdat, exp = glmmTMB::glmmTMB(
+    count ~ mined + cover + (1 | site),
+    ziformula = ~mined,
+    family = poisson()
+  )))
+  mice_summ <- summary(mice::pool(m_mice, dfcom = Inf))
+  expect_equal(out$Coefficient, mice_summ$estimate, tolerance = 1e-3)
+  expect_equal(out$SE, mice_summ$std.error, tolerance = 1e-3)
+  expect_equal(out$p, mice_summ$p.value, tolerance = 1e-3)
 
   out <- pool_parameters(models, component = "all", effects = "all")
   expect_named(

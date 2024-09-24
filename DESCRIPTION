@@ -101,6 +101,7 @@ Suggests:
     brglm2,
     brms,
     broom,
+    broom.mixed,
     cAIC4,
     car,
     carData,
