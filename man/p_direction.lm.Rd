@@ -4,7 +4,15 @@
 \alias{p_direction.lm}
 \title{Probability of Direction (pd)}
 \usage{
-\method{p_direction}{lm}(x, ci = 0.95, method = "direct", null = 0, ...)
+\method{p_direction}{lm}(
+  x,
+  ci = 0.95,
+  method = "direct",
+  null = 0,
+  vcov = NULL,
+  vcov_args = NULL,
+  ...
+)
 }
 \arguments{
 \item{x}{A statistical model.}
@@ -16,6 +24,31 @@ such as \code{"kernel"}, \code{"logspline"} or \code{"KernSmooth"}. See details.
 
 \item{null}{The value considered as a "null" effect. Traditionally 0, but
 could also be 1 in the case of ratios of change (OR, IRR, ...).}
+
+\item{vcov}{Variance-covariance matrix used to compute uncertainty estimates
+(e.g., for robust standard errors). This argument accepts a covariance matrix,
+a function which returns a covariance matrix, or a string which identifies
+the function to be used to compute the covariance matrix.
+\itemize{
+\item A covariance matrix
+\item A function which returns a covariance matrix (e.g., \code{stats::vcov()})
+\item A string which indicates the kind of uncertainty estimates to return.
+\itemize{
+\item Heteroskedasticity-consistent: \code{"vcovHC"}, \code{"HC"}, \code{"HC0"}, \code{"HC1"},
+\code{"HC2"}, \code{"HC3"}, \code{"HC4"}, \code{"HC4m"}, \code{"HC5"}. See \code{?sandwich::vcovHC}.
+\item Cluster-robust: \code{"vcovCR"}, \code{"CR0"}, \code{"CR1"}, \code{"CR1p"}, \code{"CR1S"},
+\code{"CR2"}, \code{"CR3"}. See \code{?clubSandwich::vcovCR}.
+\item Bootstrap: \code{"vcovBS"}, \code{"xy"}, \code{"residual"}, \code{"wild"}, \code{"mammen"},
+\code{"webb"}. See \code{?sandwich::vcovBS}.
+\item Other \code{sandwich} package functions: \code{"vcovHAC"}, \code{"vcovPC"}, \code{"vcovCL"},
+\code{"vcovPL"}.
+}
+}}
+
+\item{vcov_args}{List of arguments to be passed to the function identified by
+the \code{vcov} argument. This function is typically supplied by the \strong{sandwich}
+or \strong{clubSandwich} packages. Please refer to their documentation (e.g.,
+\code{?sandwich::vcovHAC}) to see the list of available arguments.}
 
 \item{...}{Arguments passed to other methods, e.g. \code{ci()}. Arguments like
 \code{vcov} or \code{vcov_args} can be used to compute confidence intervals using a

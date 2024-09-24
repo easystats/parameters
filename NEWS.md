@@ -9,12 +9,9 @@
   way to test the direction of the effect, which formerly was already (and still
   is) possible with `pd = TRUE` in `model_parameters()`.
 
-* `p_function()` gets a `vcov` and `vcov_args` argument to compute robust
-  standard errors for the confidence curves.
-
-* Functions `p_significance()` and `equivalence_test()` now pass arguments
-  `vcov` and `vcov_args` to `p_value()` and `ci()`, hence, tests can be based
-  on robust standard errors.
+* `p_function()`, `p_significance()` and `equivalence_test()` get a `vcov` and
+  `vcov_args` argument, so that results can be based on robust standard errors
+  and confidence intervals.
 
 * `equivalence_test()` and `p_significance()` work with objects returned by
   `model_parameters()`.

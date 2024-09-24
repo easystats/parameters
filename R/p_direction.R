@@ -87,9 +87,11 @@ p_direction.lm <- function(x,
                            ci = 0.95,
                            method = "direct",
                            null = 0,
+                           vcov = NULL,
+                           vcov_args = NULL,
                            ...) {
   # generate normal distribution based on CI range
-  result <- .posterior_ci(x, ci, ...)
+  result <- .posterior_ci(x, ci, vcov = vcov, vcov_args = vcov_args, ...)
 
   # copy
   out <- result$out

@@ -69,10 +69,7 @@ this argument.}
 
 \item{iterations}{The number of replications.}
 
-\item{...}{Arguments passed to or from other methods, e.g. \code{ci()}. Arguments
-like \code{vcov} or \code{vcov_args} can be used to compute confidence intervals or
-p-values using a specific variance-covariance matrix for the standard
-errors..}
+\item{...}{Arguments passed to or from other methods.}
 }
 \value{
 The group classification for each observation as vector. The

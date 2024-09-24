@@ -5,6 +5,7 @@ skip_if_not_installed("curl")
 skip_if_offline()
 skip_if_not_installed("withr")
 skip_if_not_installed("brms")
+skip_if_not_installed("rstan")
 
 withr::with_options(
   list(parameters_warning_exponentiate = TRUE),
