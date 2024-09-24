@@ -16,6 +16,9 @@
 * `equivalence_test()` and `p_significance()` work with objects returned by
   `model_parameters()`.
 
+* `pool_parameters()` now better deals with models with multiple components
+  (e.g. zero-inflation or dispersion).
+
 * Revision / enhancement of some documentation.
 
 # parameters 0.22.2
