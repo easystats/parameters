@@ -66,7 +66,7 @@ small samples (\emph{Barnard and Rubin, 1999}).
 Models with multiple components, (for instance, models with zero-inflation,
 where predictors appear in the count and zero-inflation part, or models with
 dispersion component) may fail in rare situations. In this case, compute
-the pooled parameters for components seperately, using the \code{component}
+the pooled parameters for components separately, using the \code{component}
 argument.
 
 Some model objects do not return standard errors (e.g. objects of class
