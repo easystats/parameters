@@ -13,7 +13,7 @@ model_parameters().'><meta property="og:image" content="https://easystats.github
 
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.22.2.12</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.22.2.13</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -73,7 +73,7 @@ as <code><a href="https://amices.org/mice/reference/pool.html" class="external-l
 <span>  <span class="va">x</span>,</span>
 <span>  exponentiate <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  effects <span class="op">=</span> <span class="st">"fixed"</span>,</span>
-<span>  component <span class="op">=</span> <span class="st">"conditional"</span>,</span>
+<span>  component <span class="op">=</span> <span class="st">"all"</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -142,12 +142,10 @@ small samples (<em>Barnard and Rubin, 1999</em>).</p>
     <div class="section level2">
     <h2 id="note">Note<a class="anchor" aria-label="anchor" href="#note"></a></h2>
     <p>Models with multiple components, (for instance, models with zero-inflation,
-where predictors appear in the count and zero-inflation part) may fail in
-case of identical names for coefficients in the different model components,
-since the coefficient table is grouped by coefficient names for pooling. In
-such cases, coefficients of count and zero-inflation model parts would be
-combined. Therefore, the <code>component</code> argument defaults to
-<code>"conditional"</code> to avoid this.</p>
+where predictors appear in the count and zero-inflation part, or models with
+dispersion component) may fail in rare situations. In this case, compute
+the pooled parameters for components separately, using the <code>component</code>
+argument.</p>
 <p>Some model objects do not return standard errors (e.g. objects of class
 <code>htest</code>). For these models, no pooled confidence intervals nor p-values
 are returned.</p>
