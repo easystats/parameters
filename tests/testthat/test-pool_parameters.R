@@ -55,7 +55,7 @@ test_that("pooled parameters, glmmTMB, components", {
   dat$x[sample.int(nrow(dat), 10)] <- NA
   dat$sd[sample.int(nrow(dat), 10)] <- NA
 
-  impdat <- mice::mice(dat, printFlag = FALSE)
+  impdat <- suppressWarnings(mice::mice(dat, printFlag = FALSE))
   models <- lapply(1:5, function(i) {
     glmmTMB::glmmTMB(
       x ~ sd + (1 | t),
@@ -112,7 +112,7 @@ test_that("pooled parameters, glmmTMB, zero-inflated", {
   Salamanders$cover[sample.int(nrow(Salamanders), 50)] <- NA
   Salamanders$mined[sample.int(nrow(Salamanders), 10)] <- NA
 
-  impdat <- mice::mice(Salamanders, printFlag = FALSE)
+  impdat <- suppressWarnings(mice::mice(Salamanders, printFlag = FALSE))
   models <- lapply(1:5, function(i) {
     glmmTMB::glmmTMB(
       count ~ mined + cover + (1 | site),
