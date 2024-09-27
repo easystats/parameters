@@ -1,10 +1,10 @@
 #' @export
 standard_error.coxme <- function(model, ...) {
-  beta <- model$coefficients
+  beta_coef <- model$coefficients
 
-  if (length(beta) > 0) {
+  if (length(beta_coef) > 0) {
     .data_frame(
-      Parameter = .remove_backticks_from_string(names(beta)),
+      Parameter = .remove_backticks_from_string(names(beta_coef)),
       SE = sqrt(diag(stats::vcov(model)))
     )
   }
