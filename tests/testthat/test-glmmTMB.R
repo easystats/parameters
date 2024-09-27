@@ -683,5 +683,23 @@ withr::with_options(
       mp <- model_parameters(m1, effects = "all", verbose = FALSE)
       expect_snapshot(mp)
     })
+
+    test_that("print-model_parameters, random dispersion", {
+      data(Salamanders, package = "glmmTMB")
+      m <- glmmTMB::glmmTMB(
+        count ~ spp + cover + mined + (1 | site),
+        ziformula = ~ spp + mined,
+        dispformula = ~ DOY + (1 | site),
+        data = Salamanders,
+        family = glmmTMB::nbinom1()
+      )
+      out <- as.data.frame(model_parameters(m, effects = "fixed", component = "all"))
+      expect_identical(nrow(out), 19L)
+      out <- as.data.frame(model_parameters(m, effects = "random", component = "all"))
+      expect_identical(nrow(out), 1L)
+      out <- as.data.frame(model_parameters(m, effects = "random", component = "all", group_level = TRUE))
+      expect_identical(nrow(out), 46L)
+      expect_equal(out$Coefficient, unlist(glmmTMB::ranef(m)), ignore_attr = TRUE, tolerance = 1e-4)
+    })
   }
 )
