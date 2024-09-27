@@ -21,6 +21,8 @@
 
 * Revision / enhancement of some documentation.
 
+* Updated *glmmTMB* methods to work with the latest version of the package.
+
 # parameters 0.22.2
 
 ## New supported models
