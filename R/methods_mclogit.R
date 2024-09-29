@@ -53,3 +53,6 @@ p_value.mblogit <- function(model, ...) {
     row.names = NULL
   )
 }
+
+#' @export
+simulate_parameters.mblogit <- simulate_parameters.multinom

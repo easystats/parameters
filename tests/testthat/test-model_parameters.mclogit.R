@@ -31,5 +31,10 @@ withr::with_options(
       params <- model_parameters(m2)
       expect_snapshot(params)
     })
+    test_that("simulate_parameters.mblogit", {
+      set.seed(1234)
+      params <- simulate_parameters(m2)
+      expect_snapshot(params)
+    })
   }
 )

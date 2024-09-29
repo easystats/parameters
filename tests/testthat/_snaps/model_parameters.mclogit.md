@@ -45,3 +45,36 @@
       Uncertainty intervals (equal-tailed) and p-values (two-tailed) computed
         using a Wald z-distribution approximation.
 
+# simulate_parameters.mblogit
+
+    Code
+      params
+    Output
+      # Medium response
+      
+      Parameter     | Coefficient |         95% CI |      p
+      -----------------------------------------------------
+      (Intercept)   |       -0.42 | [-0.73, -0.09] | 0.020 
+      InflMedium    |        0.44 | [ 0.17,  0.71] | < .001
+      InflHigh      |        0.66 | [ 0.31,  1.02] | < .001
+      TypeApartment |       -0.43 | [-0.78, -0.11] | 0.012 
+      TypeAtrium    |        0.12 | [-0.28,  0.58] | 0.588 
+      TypeTerrace   |       -0.66 | [-1.07, -0.27] | 0.002 
+      ContHigh      |        0.35 | [ 0.10,  0.60] | 0.002 
+      
+      # High response
+      
+      Parameter     | Coefficient |         95% CI |      p
+      -----------------------------------------------------
+      (Intercept)   |       -0.13 | [-0.43,  0.18] | 0.390 
+      InflMedium    |        0.74 | [ 0.46,  0.99] | < .001
+      InflHigh      |        1.61 | [ 1.31,  1.94] | < .001
+      TypeApartment |       -0.74 | [-1.04, -0.42] | < .001
+      TypeAtrium    |       -0.41 | [-0.82, -0.01] | 0.048 
+      TypeTerrace   |       -1.42 | [-1.83, -1.04] | < .001
+      ContHigh      |        0.48 | [ 0.23,  0.72] | < .001
+    Message
+      
+      Uncertainty intervals (equal-tailed) and p-values (two-tailed) computed
+        using a MCMC distribution approximation.
+

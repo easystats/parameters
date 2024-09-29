@@ -23,6 +23,8 @@
 
 * Updated *glmmTMB* methods to work with the latest version of the package.
 
+* Improved printing for `simulate_parameters()` for models from packages *mclogit*.
+
 # parameters 0.22.2
 
 ## New supported models
