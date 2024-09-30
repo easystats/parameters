@@ -331,11 +331,31 @@ estimated to be <em>most compatible</em> with the data and model assumptions,
 whereas values values far from the observed point estimate (where <em>p</em>
 approaches 0) are least compatible with the data and model assumptions
 (<em>Schweder and Hjort 2016, pp. 60-61; Amrhein and Greenland 2022</em>). In this
-regards, <em>p</em>-values are statements about <em>confidence</em> or <em>compatibility</em> and
+regards, <em>p</em>-values are statements about <em>confidence</em> or <em>compatibility</em>:
+The p-value is not an absolute measure of evidence for a model (such as the
+null/alternative model), it is a continuous measure of the compatibility of
+the observed data with the model used to compute it (<em>Greenland et al. 2016</em>,
+<em>Greenland 2023</em>). Going one step further, and following <em>Schweder</em>, p-values
 can be considered as <em>epistemic probability</em> - "not necessarily of the
 hypothesis being true, but of it <em>possibly</em> being true" (<em>Schweder 2018</em>).
 Hence, the interpretation of <em>p</em>-values might be guided using
-<code><a href="https://easystats.github.io/bayestestR/reference/pd_to_p.html" class="external-link">bayestestR::p_to_pd()</a></code></p>
+<code><a href="https://easystats.github.io/bayestestR/reference/pd_to_p.html" class="external-link">bayestestR::p_to_pd()</a></code>.</p>
+</div>
+
+<div class="section">
+<h3 id="probability-or-compatibility-">Probability or compatibility?<a class="anchor" aria-label="anchor" href="#probability-or-compatibility-"></a></h3>
+
+
+<p>We here presented the discussion of p-values and confidence intervals from the
+perspective of two paradigms, one saying that probability statements can be
+made, one saying that interpretation is guided in terms of "compatibility".
+Cox and Hinkle say, "interval estimates cannot be taken as probability
+statements" (<em>Cox and Hinkley 1979: 208</em>), which conflicts with the Schweder
+and Hjort confidence distribution school. However, if you view interval
+estimates as being intervals of values being consistent with the data,
+this comes close to the idea to epistemic probability. We do not see these
+two paradigms as contradictions, it is maybe more a preference for the one
+or the other way of interpretation.</p>
 </div>
 
 <div class="section">
@@ -399,6 +419,8 @@ accurate, however, this is currently not supported.</p>
 interval estimates and p-value functions, not only on point estimates and
 null p-values. Journal of Information Technology 2022;37:316–20.
 <a href="https://doi.org/10.1177/02683962221105904" class="external-link">doi:10.1177/02683962221105904</a></p></li>
+<li><p>Cox DR, Hinkley DV. 1979. Theoretical Statistics. 6th edition.
+Chapman and Hall/CRC</p></li>
 <li><p>Fraser DAS. The P-value function and statistical inference. The American
 Statistician. 2019;73(sup1):135-147. <a href="https://doi.org/10.1080/00031305.2018.1556735" class="external-link">doi:10.1080/00031305.2018.1556735</a></p></li>
 <li><p>Gelman A, Greenland S. Are confidence intervals better termed "uncertainty
@@ -406,6 +428,14 @@ intervals"? BMJ (2019)l5381. <a href="https://doi.org/10.1136/bmj.l5381" class="
 <li><p>Greenland S, Rafi Z, Matthews R, Higgs M. To Aid Scientific Inference,
 Emphasize Unconditional Compatibility Descriptions of Statistics. (2022)
 https://arxiv.org/abs/1909.08583v7 (Accessed November 10, 2022)</p></li>
+<li><p>Greenland S, Senn SJ, Rothman KJ, Carlin JB, Poole C, Goodman SN, et al.
+(2016). Statistical tests, P values, confidence intervals, and power: A
+guide to misinterpretations. European Journal of Epidemiology. 31:337-350.
+<a href="https://doi.org/10.1007/s10654-016-0149-3" class="external-link">doi:10.1007/s10654-016-0149-3</a></p></li>
+<li><p>Greenland S (2023). Divergence versus decision P-values: A distinction
+worth making in theory and keeping in practice: Or, how divergence P-values
+measure evidence even when decision P-values do not. Scand J Statist, 50(1),
+54-88. <a href="https://doi.org/doi.org/10.1111/sjos.12625" class="external-link">doi:doi.org/10.1111/sjos.12625</a></p></li>
 <li><p>Rafi Z, Greenland S. Semantic and cognitive tools to aid statistical
 science: Replace confidence and significance by compatibility and surprise.
 BMC Medical Research Methodology. 2020;20(1):244. <a href="https://doi.org/10.1186/s12874-020-01105-9" class="external-link">doi:10.1186/s12874-020-01105-9</a></p></li>
