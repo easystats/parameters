@@ -119,11 +119,28 @@
 #' whereas values values far from the observed point estimate (where _p_
 #' approaches 0) are least compatible with the data and model assumptions
 #' (_Schweder and Hjort 2016, pp. 60-61; Amrhein and Greenland 2022_). In this
-#' regards, _p_-values are statements about _confidence_ or _compatibility_ and
+#' regards, _p_-values are statements about _confidence_ or _compatibility_:
+#' The p-value is not an absolute measure of evidence for a model (such as the
+#' null/alternative model), it is a continuous measure of the compatibility of
+#' the observed data with the model used to compute it (_Greenland et al. 2016_,
+#' _Greenland 2023_). Going one step further, and following _Schweder_, p-values
 #' can be considered as _epistemic probability_ - "not necessarily of the
 #' hypothesis being true, but of it _possibly_ being true" (_Schweder 2018_).
 #' Hence, the interpretation of _p_-values might be guided using
-#' [`bayestestR::p_to_pd()`]
+#' [`bayestestR::p_to_pd()`].
+#'
+#' ## Probability or compatibility?
+#'
+#' We here presented the discussion of p-values and confidence intervals from the
+#' perspective of two paradigms, one saying that probability statements can be
+#' made, one saying that interpretation is guided in terms of "compatibility".
+#' Cox and Hinkle say, "interval estimates cannot be taken as probability
+#' statements" (_Cox and Hinkley 1979: 208_), which conflicts with the Schweder
+#' and Hjort confidence distribution school. However, if you view interval
+#' estimates as being intervals of values being consistent with the data,
+#' this comes close to the idea to epistemic probability. We do not see these
+#' two paradigms as contradictions, it is maybe more a preference for the one
+#' or the other way of interpretation.
 #'
 #' ## Compatibility intervals - is their interpretation conditional or not?
 #'
@@ -176,6 +193,9 @@
 #'   null p-values. Journal of Information Technology 2022;37:316–20.
 #'   \doi{10.1177/02683962221105904}
 #'
+#' - Cox DR, Hinkley DV. 1979. Theoretical Statistics. 6th edition.
+#'   Chapman and Hall/CRC
+#'
 #' - Fraser DAS. The P-value function and statistical inference. The American
 #'   Statistician. 2019;73(sup1):135-147. \doi{10.1080/00031305.2018.1556735}
 #'
@@ -185,6 +205,16 @@
 #' - Greenland S, Rafi Z, Matthews R, Higgs M. To Aid Scientific Inference,
 #'   Emphasize Unconditional Compatibility Descriptions of Statistics. (2022)
 #'   https://arxiv.org/abs/1909.08583v7 (Accessed November 10, 2022)
+#'
+#' - Greenland S, Senn SJ, Rothman KJ, Carlin JB, Poole C, Goodman SN, et al.
+#'   (2016). Statistical tests, P values, confidence intervals, and power: A
+#'   guide to misinterpretations. European Journal of Epidemiology. 31:337-350.
+#'   \doi{10.1007/s10654-016-0149-3}
+#'
+#' - Greenland S (2023). Divergence versus decision P-values: A distinction
+#'   worth making in theory and keeping in practice: Or, how divergence P-values
+#'   measure evidence even when decision P-values do not. Scand J Statist, 50(1),
+#'   54-88. \doi{doi.org/10.1111/sjos.12625}
 #'
 #' - Rafi Z, Greenland S. Semantic and cognitive tools to aid statistical
 #'   science: Replace confidence and significance by compatibility and surprise.

@@ -248,11 +248,29 @@ estimated to be \emph{most compatible} with the data and model assumptions,
 whereas values values far from the observed point estimate (where \emph{p}
 approaches 0) are least compatible with the data and model assumptions
 (\emph{Schweder and Hjort 2016, pp. 60-61; Amrhein and Greenland 2022}). In this
-regards, \emph{p}-values are statements about \emph{confidence} or \emph{compatibility} and
+regards, \emph{p}-values are statements about \emph{confidence} or \emph{compatibility}:
+The p-value is not an absolute measure of evidence for a model (such as the
+null/alternative model), it is a continuous measure of the compatibility of
+the observed data with the model used to compute it (\emph{Greenland et al. 2016},
+\emph{Greenland 2023}). Going one step further, and following \emph{Schweder}, p-values
 can be considered as \emph{epistemic probability} - "not necessarily of the
 hypothesis being true, but of it \emph{possibly} being true" (\emph{Schweder 2018}).
 Hence, the interpretation of \emph{p}-values might be guided using
-\code{\link[bayestestR:pd_to_p]{bayestestR::p_to_pd()}}
+\code{\link[bayestestR:pd_to_p]{bayestestR::p_to_pd()}}.
+}
+
+\subsection{Probability or compatibility?}{
+
+We here presented the discussion of p-values and confidence intervals from the
+perspective of two paradigms, one saying that probability statements can be
+made, one saying that interpretation is guided in terms of "compatibility".
+Cox and Hinkle say, "interval estimates cannot be taken as probability
+statements" (\emph{Cox and Hinkley 1979: 208}), which conflicts with the Schweder
+and Hjort confidence distribution school. However, if you view interval
+estimates as being intervals of values being consistent with the data,
+this comes close to the idea to epistemic probability. We do not see these
+two paradigms as contradictions, it is maybe more a preference for the one
+or the other way of interpretation.
 }
 
 \subsection{Compatibility intervals - is their interpretation conditional or not?}{
@@ -328,6 +346,8 @@ plot(result)
 interval estimates and p-value functions, not only on point estimates and
 null p-values. Journal of Information Technology 2022;37:316–20.
 \doi{10.1177/02683962221105904}
+\item Cox DR, Hinkley DV. 1979. Theoretical Statistics. 6th edition.
+Chapman and Hall/CRC
 \item Fraser DAS. The P-value function and statistical inference. The American
 Statistician. 2019;73(sup1):135-147. \doi{10.1080/00031305.2018.1556735}
 \item Gelman A, Greenland S. Are confidence intervals better termed "uncertainty
@@ -335,6 +355,14 @@ intervals"? BMJ (2019)l5381. \doi{10.1136/bmj.l5381}
 \item Greenland S, Rafi Z, Matthews R, Higgs M. To Aid Scientific Inference,
 Emphasize Unconditional Compatibility Descriptions of Statistics. (2022)
 https://arxiv.org/abs/1909.08583v7 (Accessed November 10, 2022)
+\item Greenland S, Senn SJ, Rothman KJ, Carlin JB, Poole C, Goodman SN, et al.
+(2016). Statistical tests, P values, confidence intervals, and power: A
+guide to misinterpretations. European Journal of Epidemiology. 31:337-350.
+\doi{10.1007/s10654-016-0149-3}
+\item Greenland S (2023). Divergence versus decision P-values: A distinction
+worth making in theory and keeping in practice: Or, how divergence P-values
+measure evidence even when decision P-values do not. Scand J Statist, 50(1),
+54-88. \doi{doi.org/10.1111/sjos.12625}
 \item Rafi Z, Greenland S. Semantic and cognitive tools to aid statistical
 science: Replace confidence and significance by compatibility and surprise.
 BMC Medical Research Methodology. 2020;20(1):244. \doi{10.1186/s12874-020-01105-9}
