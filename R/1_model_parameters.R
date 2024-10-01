@@ -289,10 +289,15 @@
 #' but clinically or practically irrelevant (*Lakens et al. 2018, Lakens 2024*).
 #'
 #' A rather unconventional approach, which is nevertheless advocated by various
-#' authors, is to interpret results from classical regression models in terms of
-#' probabilities, similar to the usual approach in Bayesian statistics
-#' (*Greenland et al. 2022; Rafi and Greenland 2020; Schweder 2018; Schweder and
-#' Hjort 2003; Vos 2022*).
+#' authors, is to interpret results from classical regression models either in
+#' terms of probabilities, similar to the usual approach in Bayesian statistics
+#' (*Schweder 2018; Schweder and Hjort 2003; Vos 2022*) or in terms of relative
+#' measure of "evidence" or "compatibility" with the data (*Greenland et al. 2022;
+#' Rafi and Greenland 2020*), which nevertheless comes close to a probabilistic
+#' interpretation.
+#'
+#' A more detailed discussion of this topic is found in the documentation of
+#' [`p_function()`].
 #'
 #' The **parameters** package provides several options or functions to aid
 #' statistical inference. These are, for example:
