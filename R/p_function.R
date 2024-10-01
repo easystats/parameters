@@ -134,26 +134,31 @@
 #' We here presented the discussion of p-values and confidence intervals from the
 #' perspective of two paradigms, one saying that probability statements can be
 #' made, one saying that interpretation is guided in terms of "compatibility".
-#' Cox and Hinkle say, "interval estimates cannot be taken as probability
+#' Cox and Hinkley say, "interval estimates cannot be taken as probability
 #' statements" (_Cox and Hinkley 1979: 208_), which conflicts with the Schweder
 #' and Hjort confidence distribution school. However, if you view interval
 #' estimates as being intervals of values being consistent with the data,
-#' this comes close to the idea to epistemic probability. We do not see these
-#' two paradigms as contradictions, it is maybe more a preference for the one
-#' or the other way of interpretation.
+#' this comes close to the idea of (epistemic) probability. We do not believe that
+#' these two pardigms contradict or exclude each other. Rather, the aim is to
+#' emphasise one point of view or the other, i.e. to place the linguistic
+#' nuances either on 'compatibility' or 'probability'.
 #'
-#' ## Compatibility intervals - is their interpretation conditional or not?
+#' The main take-away is *not* to interpret p-values as dichotomous decisions
+#' that distinguish between "we found an effect" (statistically significant)" vs.
+#' "we found no effect" (statistically not significant) (_Altman and Bland 1995_).
 #'
-#' The fact that the term "conditional" is used in different meanings, is
-#' confusing and unfortunate. Thus, we would summarize the probabilistic
-#' interpretation of compatibility intervals as follows: The intervals are built
-#' from the data _and_ our modeling assumptions. The accuracy of the intervals
-#' depends on our model assumptions. If a value is outside the interval, that
-#' might be because (1) that parameter value isn't supported by the data, or
-#' (2) the modeling assumptions are a poor fit for the situation. When we make
-#' bad assumptions, the compatibility interval might be too wide or (more
-#' commonly and seriously) too narrow, making us think we know more about the
-#' parameter than is warranted.
+#' ## Compatibility intervals - is their interpretation "conditional" or not?
+#'
+#' The fact that the term "conditional" is used in different meanings in
+#' statistics, is confusing and unfortunate. Thus, we would summarize the
+#' (probabilistic) interpretation of compatibility intervals as follows: The
+#' intervals are built from the data _and_ our modeling assumptions. The
+#' accuracy of the intervals depends on our model assumptions. If a value is
+#' outside the interval, that might be because (1) that parameter value isn't
+#' supported by the data, or (2) the modeling assumptions are a poor fit for the
+#' situation. When we make bad assumptions, the compatibility interval might be
+#' too wide or (more commonly and seriously) too narrow, making us think we know
+#' more about the parameter than is warranted.
 #'
 #' When we say "there is a 95% chance the true value is in the interval", that is
 #' a statement of _epistemic probability_ (i.e. description of uncertainty related
@@ -188,6 +193,9 @@
 #' @return A data frame with p-values and compatibility intervals.
 #'
 #' @references
+#' - Altman DG, Bland JM. Absence of evidence is not evidence of absence. BMJ.
+#'   1995;311(7003):485. \doi{10.1136/bmj.311.7003.485}
+#'
 #' - Amrhein V, Greenland S. Discuss practical importance of results based on
 #'   interval estimates and p-value functions, not only on point estimates and
 #'   null p-values. Journal of Information Technology 2022;37:316–20.
