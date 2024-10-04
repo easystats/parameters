@@ -193,36 +193,24 @@ Topics in Signal Processing, 9(6), 1026-1036.</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                        -0.5883  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span><span class="fu">reduce_parameters</span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Call:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> lm(formula = Sepal.Width ~ `Petal.Width_0.98/Species.setosa_-0.90/Sepal.Length_0.89/Species.virginica_0.78` + </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     `Species.versicolor_-0.99`, data = cbind(model_data, y))</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Coefficients:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                                                      (Intercept)  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                                                          3.05733  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> `Petal.Width_0.98/Species.setosa_-0.90/Sepal.Length_0.89/Species.virginica_0.78`  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                                                         -0.08903  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                                       `Species.versicolor_-0.99`  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                                                          0.14879  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(predvars, data, env):</span> object 'Petal.Width_0.98/Species_0.96/Sepal.Length_0.91' not found</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">out</span> <span class="op">&lt;-</span> <span class="fu">reduce_data</span><span class="op">(</span><span class="va">iris</span>, method <span class="op">=</span> <span class="st">"PCA"</span>, n <span class="op">=</span> <span class="st">"max"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">out</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Petal.Length_0.99/Petal.Width_0.97/Species.setosa_-0.94/Sepal.Length_0.86/Species.virginica_0.73</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1                                                                                        -2.803852</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2                                                                                        -2.633035</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3                                                                                        -2.866923</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4                                                                                        -2.808656</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5                                                                                        -2.907343</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6                                                                                        -2.668523</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Species.versicolor_0.93 Sepal.Width_0.62</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1             -0.65195900        0.1365792</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2             -0.09924539       -0.8296167</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3             -0.26560467       -0.5984029</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4             -0.14622405       -0.8154592</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5             -0.73579102        0.2543209</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6             -1.14741717        1.0076406</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Petal.Length_0.99/Petal.Width_0.97/Species_0.97/Sepal.Length_0.87</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1                                                         -2.567519</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2                                                         -2.407258</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3                                                         -2.650453</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4                                                         -2.593303</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5                                                         -2.674783</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6                                                         -2.404139</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Sepal.Width_-0.88</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1        -0.4729150</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2         0.6758279</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3         0.3471191</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4         0.6012916</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5        -0.6380828</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6        -1.4799045</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
