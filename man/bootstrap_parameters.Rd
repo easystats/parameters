@@ -20,7 +20,8 @@ bootstrap_parameters(model, ...)
 \arguments{
 \item{model}{Statistical model.}
 
-\item{...}{Arguments passed to or from other methods.}
+\item{...}{Arguments passed to other methods, like \code{\link[=bootstrap_model]{bootstrap_model()}} or
+\code{\link[bayestestR:describe_posterior]{bayestestR::describe_posterior()}}.}
 
 \item{iterations}{The number of draws to simulate/bootstrap.}
 
@@ -84,6 +85,11 @@ to obtain non-parametric p-values.
 set.seed(2)
 model <- lm(Sepal.Length ~ Species * Petal.Width, data = iris)
 b <- bootstrap_parameters(model)
+print(b)
+
+# different type of bootstrapping
+set.seed(2)
+b <- bootstrap_parameters(model, type = "balanced")
 print(b)
 
 est <- emmeans::emmeans(b, trt.vs.ctrl ~ Species)
