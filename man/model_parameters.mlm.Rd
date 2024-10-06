@@ -166,9 +166,7 @@ interest mainly is to get a "tidy" data frame of model summaries, it is
 recommended to set \code{pretty_names = FALSE} to speed up computation of the
 summary table.}
 
-\item{summary}{Logical, if \code{TRUE}, prints summary information about the
-model (model formula, number of observations, residual standard deviation
-and more).}
+\item{summary}{Deprecated, please use \code{info} instead.}
 
 \item{vcov}{Variance-covariance matrix used to compute uncertainty estimates
 (e.g., for robust standard errors). This argument accepts a covariance matrix,

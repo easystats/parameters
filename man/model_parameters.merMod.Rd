@@ -47,6 +47,7 @@
   p_adjust = NULL,
   wb_component = TRUE,
   summary = getOption("parameters_mixed_summary", FALSE),
+  include_info = getOption("parameters_mixed_info", FALSE),
   keep = NULL,
   drop = NULL,
   verbose = TRUE,
@@ -92,6 +93,7 @@
   p_adjust = NULL,
   wb_component = TRUE,
   summary = getOption("parameters_mixed_summary", FALSE),
+  include_info = getOption("parameters_mixed_info", FALSE),
   keep = NULL,
   drop = NULL,
   verbose = TRUE,
@@ -114,6 +116,7 @@
   p_adjust = NULL,
   wb_component = TRUE,
   summary = getOption("parameters_mixed_summary", FALSE),
+  include_info = getOption("parameters_mixed_info", FALSE),
   keep = NULL,
   drop = NULL,
   verbose = TRUE,
@@ -316,7 +319,9 @@ between-effects, and cross-level interactions. By default, the
 \code{Component} column indicates, which parameters belong to the
 conditional or zero-inflation component of the model.}
 
-\item{summary}{Logical, if \code{TRUE}, prints summary information about the
+\item{summary}{Deprecated, please use \code{info} instead.}
+
+\item{include_info}{Logical, if \code{TRUE}, prints summary information about the
 model (model formula, number of observations, residual standard deviation
 and more).}
 

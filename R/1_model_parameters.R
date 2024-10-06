@@ -466,9 +466,10 @@ parameters <- model_parameters
 #'   _Confidence intervals and approximation of degrees of freedom_ in
 #'   [`model_parameters()`] for further details. When `ci_method=NULL`, in most
 #'   cases `"wald"` is used then.
-#' @param summary Logical, if `TRUE`, prints summary information about the
+#' @param include_info Logical, if `TRUE`, prints summary information about the
 #'   model (model formula, number of observations, residual standard deviation
 #'   and more).
+#' @param summary Deprecated, please use `info` instead.
 #' @param keep Character containing a regular expression pattern that
 #'   describes the parameters that should be included (for `keep`) or excluded
 #'   (for `drop`) in the returned data frame. `keep` may also be a
@@ -567,6 +568,7 @@ model_parameters.default <- function(model,
                                      exponentiate = FALSE,
                                      p_adjust = NULL,
                                      summary = getOption("parameters_summary", FALSE),
+                                     include_info = getOption("parameters_info", FALSE),
                                      keep = NULL,
                                      drop = NULL,
                                      verbose = TRUE,
@@ -654,7 +656,7 @@ model_parameters.default <- function(model,
                                       component = "conditional",
                                       ci_method = NULL,
                                       p_adjust = NULL,
-                                      summary = FALSE,
+                                      include_info = FALSE,
                                       keep_parameters = NULL,
                                       drop_parameters = NULL,
                                       verbose = TRUE,
@@ -726,7 +728,7 @@ model_parameters.default <- function(model,
     iterations,
     ci_method = ci_method,
     p_adjust = p_adjust,
-    summary = summary,
+    include_info = include_info,
     verbose = verbose,
     ...
   )

@@ -17,6 +17,7 @@
   keep = NULL,
   drop = NULL,
   summary = getOption("parameters_summary", FALSE),
+  include_info = getOption("parameters_info", FALSE),
   verbose = TRUE,
   ...
 )
@@ -110,7 +111,9 @@ names.}
 
 \item{drop}{See \code{keep}.}
 
-\item{summary}{Logical, if \code{TRUE}, prints summary information about the
+\item{summary}{Deprecated, please use \code{info} instead.}
+
+\item{include_info}{Logical, if \code{TRUE}, prints summary information about the
 model (model formula, number of observations, residual standard deviation
 and more).}
 

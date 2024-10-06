@@ -10,7 +10,7 @@
                                              iterations = 1000,
                                              ci_method = NULL,
                                              p_adjust = NULL,
-                                             summary = FALSE,
+                                             include_info = FALSE,
                                              verbose = TRUE,
                                              group_level = FALSE,
                                              wb_component = FALSE,
@@ -54,7 +54,7 @@
   attr(params, "robust_vcov") <- isTRUE(list(...)$robust) || "vcov" %in% names(list(...))
   attr(params, "ignore_group") <- isFALSE(group_level)
   attr(params, "ran_pars") <- isFALSE(group_level)
-  attr(params, "show_summary") <- isTRUE(summary)
+  attr(params, "show_summary") <- isTRUE(include_info)
   attr(params, "log_link") <- isTRUE(grepl("log", info$link_function, fixed = TRUE))
   attr(params, "logit_link") <- isTRUE(identical(info$link_function, "logit"))
 
@@ -77,8 +77,8 @@
   }
 
 
-  # for summaries, add R2
-  if (isTRUE(summary) && requireNamespace("performance", quietly = TRUE)) {
+  # for additional infos, add R2
+  if (isTRUE(include_info) && requireNamespace("performance", quietly = TRUE)) {
     rsq <- .safe(suppressWarnings(performance::r2(model)))
     attr(params, "r2") <- rsq
   }
