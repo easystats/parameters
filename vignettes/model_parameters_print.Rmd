@@ -1,6 +1,6 @@
 ---
 title: "Printing Model Parameters"
-output: 
+output:
   rmarkdown::html_vignette:
     toc: true
     fig_width: 10.08
@@ -10,7 +10,7 @@ vignette: >
   %\VignetteIndexEntry{Printing Model Parameters}
   \usepackage[utf8]{inputenc}
   %\VignetteEngine{knitr::rmarkdown}
-editor_options: 
+editor_options:
   chunk_output_type: console
 bibliography: bibliography.bib
 ---
@@ -122,13 +122,13 @@ mp <- model_parameters(model)
 print(mp, split_component = FALSE)
 ```
 
-## Adding model summaries
+## Adding model information
 
-A model summary can be added to the table when `summary = TRUE` in the call to `model_parameters()`:
+A model summary can be added to the table when `include_info = TRUE` in the call to `model_parameters()`:
 
 ```{r}
 model <- lm(Sepal.Length ~ Species * Petal.Length, data = iris)
-model_parameters(model, summary = TRUE)
+model_parameters(model, include_info = TRUE)
 ```
 
 ## Including the reference level of categorical variables
@@ -380,6 +380,6 @@ print(tab, table_width = 80)
 
 # More advances tables and markdown / HTML formatting
 
-The `print_md()` as well as `print_html()` functions can be used to create markdown (for knitting to PDF or Word) and HTML tables. 
+The `print_md()` as well as `print_html()` functions can be used to create markdown (for knitting to PDF or Word) and HTML tables.
 
 Meanwhile, there are a lot of additional packages that allow users to have even more flexibility regarding table layouts. One package we can recommend is the [*modelsummary* package](https://vincentarelbundock.github.io/modelsummary/).
