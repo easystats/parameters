@@ -81,7 +81,7 @@
   if (isTRUE(include_info) && requireNamespace("performance", quietly = TRUE)) {
     rsq <- .safe(suppressWarnings(performance::r2(model)))
     attr(params, "r2") <- rsq
-    rmse <-.safe(performance::performance_rmse(model))
+    rmse <- .safe(performance::performance_rmse(model))
     attr(params, "rmse") <- rmse
   }
 
