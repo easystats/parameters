@@ -1,4 +1,13 @@
-# parameters 0.22.3
+# parameters 0.23.0
+
+## Breaking Changes
+
+* Argument `summary` in `model_parameters()` is now deprecated. Please use
+  `include_info` instead.
+
+* Changed output style for the included additional information on model formula,
+  sigma and R2 when printing model parameters. This information now also includes
+  the RMSE.
 
 ## Changes
 
