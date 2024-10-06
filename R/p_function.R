@@ -139,8 +139,8 @@
 #' and Hjort confidence distribution school. However, if you view interval
 #' estimates as being intervals of values being consistent with the data,
 #' this comes close to the idea of (epistemic) probability. We do not believe that
-#' these two pardigms contradict or exclude each other. Rather, the aim is to
-#' emphasise one point of view or the other, i.e. to place the linguistic
+#' these two paradigms contradict or exclude each other. Rather, the aim is to
+#' emphasize one point of view or the other, i.e. to place the linguistic
 #' nuances either on 'compatibility' or 'probability'.
 #'
 #' The main take-away is *not* to interpret p-values as dichotomous decisions

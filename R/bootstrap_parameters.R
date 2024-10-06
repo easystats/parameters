@@ -9,6 +9,8 @@
 #' or `"all"` to compute all tests. For each "test", the corresponding
 #' **bayestestR** function is called (e.g. [bayestestR::rope()] or
 #' [bayestestR::p_direction()]) and its results included in the summary output.
+#' @param ... Arguments passed to other methods, like [`bootstrap_model()`] or
+#' [`bayestestR::describe_posterior()`].
 #' @inheritParams bootstrap_model
 #' @inheritParams bayestestR::describe_posterior
 #'
@@ -38,6 +40,11 @@
 #' set.seed(2)
 #' model <- lm(Sepal.Length ~ Species * Petal.Width, data = iris)
 #' b <- bootstrap_parameters(model)
+#' print(b)
+#'
+#' # different type of bootstrapping
+#' set.seed(2)
+#' b <- bootstrap_parameters(model, type = "balanced")
 #' print(b)
 #'
 #' est <- emmeans::emmeans(b, trt.vs.ctrl ~ Species)

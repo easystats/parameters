@@ -32,25 +32,25 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Daniel Lüdecke \email{d.luedecke@uke.de} (\href{https://orcid.org/0000-0002-8895-3206}{ORCID}) (@strengejacke)
+\strong{Maintainer}: Daniel Lüdecke \email{d.luedecke@uke.de} (\href{https://orcid.org/0000-0002-8895-3206}{ORCID})
 
 Authors:
 \itemize{
-  \item Dominique Makowski \email{dom.makowski@gmail.com} (\href{https://orcid.org/0000-0001-5375-9967}{ORCID}) (@Dom_Makowski)
+  \item Dominique Makowski \email{dom.makowski@gmail.com} (\href{https://orcid.org/0000-0001-5375-9967}{ORCID})
   \item Mattan S. Ben-Shachar \email{matanshm@post.bgu.ac.il} (\href{https://orcid.org/0000-0002-4287-4801}{ORCID})
-  \item Indrajeet Patil \email{patilindrajeet.science@gmail.com} (\href{https://orcid.org/0000-0003-1995-6531}{ORCID}) (@patilindrajeets)
+  \item Indrajeet Patil \email{patilindrajeet.science@gmail.com} (\href{https://orcid.org/0000-0003-1995-6531}{ORCID})
   \item Søren Højsgaard \email{sorenh@math.aau.dk}
-  \item Brenton M. Wiernik \email{brenton@wiernik.org} (\href{https://orcid.org/0000-0001-9560-6336}{ORCID}) (@bmwiernik)
+  \item Brenton M. Wiernik \email{brenton@wiernik.org} (\href{https://orcid.org/0000-0001-9560-6336}{ORCID})
 }
 
 Other contributors:
 \itemize{
   \item Zen J. Lau \email{zenjuen.lau@ntu.edu.sg} [contributor]
-  \item Vincent Arel-Bundock \email{vincent.arel-bundock@umontreal.ca} (\href{https://orcid.org/0000-0003-2042-7063}{ORCID}) (@vincentab) [contributor]
-  \item Jeffrey Girard \email{me@jmgirard.com} (\href{https://orcid.org/0000-0002-7359-3746}{ORCID}) (@jeffreymgirard) [contributor]
+  \item Vincent Arel-Bundock \email{vincent.arel-bundock@umontreal.ca} (\href{https://orcid.org/0000-0003-2042-7063}{ORCID}) [contributor]
+  \item Jeffrey Girard \email{me@jmgirard.com} (\href{https://orcid.org/0000-0002-7359-3746}{ORCID}) [contributor]
   \item Christina Maimone \email{christina.maimone@northwestern.edu} [reviewer]
   \item Niels Ohlsen (@Niels_Bremen) [reviewer]
-  \item Douglas Ezra Morrison \email{dmorrison01@ucla.edu} (\href{https://orcid.org/0000-0002-7195-830X}{ORCID}) (@demstats1) [contributor]
+  \item Douglas Ezra Morrison \email{dmorrison01@ucla.edu} (\href{https://orcid.org/0000-0002-7195-830X}{ORCID}) [contributor]
   \item Joseph Luchman \email{jluchman@gmail.com} (\href{https://orcid.org/0000-0002-8886-9717}{ORCID}) [contributor]
 }
 
