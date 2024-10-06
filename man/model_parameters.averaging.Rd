@@ -30,6 +30,7 @@
   exponentiate = FALSE,
   p_adjust = NULL,
   summary = getOption("parameters_summary", FALSE),
+  include_info = getOption("parameters_info", FALSE),
   keep = NULL,
   drop = NULL,
   verbose = TRUE,
@@ -43,6 +44,7 @@
   exponentiate = FALSE,
   p_adjust = NULL,
   summary = getOption("parameters_summary", FALSE),
+  include_info = getOption("parameters_info", FALSE),
   keep = NULL,
   drop = NULL,
   verbose = TRUE,
@@ -59,6 +61,7 @@
   exponentiate = FALSE,
   p_adjust = NULL,
   summary = getOption("parameters_summary", FALSE),
+  include_info = getOption("parameters_info", FALSE),
   keep = NULL,
   drop = NULL,
   verbose = TRUE,
@@ -253,6 +256,10 @@ possible adjustment methods are \code{"tukey"}, \code{"scheffe"},
 
 \item{summary}{Deprecated, please use \code{info} instead.}
 
+\item{include_info}{Logical, if \code{TRUE}, prints summary information about the
+model (model formula, number of observations, residual standard deviation
+and more).}
+
 \item{keep}{Character containing a regular expression pattern that
 describes the parameters that should be included (for \code{keep}) or excluded
 (for \code{drop}) in the returned data frame. \code{keep} may also be a
@@ -307,10 +314,6 @@ cases \code{"wald"} is used then.}
 
 \item{effects}{Should results for fixed effects, random effects or both be
 returned? Only applies to mixed models. May be abbreviated.}
-
-\item{include_info}{Logical, if \code{TRUE}, prints summary information about the
-model (model formula, number of observations, residual standard deviation
-and more).}
 }
 \value{
 A data frame of indices related to the model's parameters.

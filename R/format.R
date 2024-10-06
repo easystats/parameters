@@ -579,32 +579,33 @@ format.parameters_sem <- function(x,
 
   # footer: r-squared
   if (isTRUE(show_rmse)) {
-    footer <- .add_footer_rmse(footer, digits, rmse, type)
+    footer <- .add_footer_values(footer, digits, value = rmse, text = "RMSE ", type)
   }
 
   # footer: p-adjustment
-  if ("p" %in% colnames(x) && isTRUE(verbose)) {
-    footer <- .add_footer_padjust(footer, p_adjust, type)
+  if ("p" %in% colnames(x) && isTRUE(verbose) && !is.null(p_adjust) && p_adjust != "none") {
+    footer <- .add_footer_text(footer, text = paste("p-value adjustment method:", format_p_adjust(p_adjust)))
   }
 
   # footer: anova test
   if (!is.null(anova_test)) {
-    footer <- .add_footer_anova_test(footer, anova_test, type)
+    footer <- .add_footer_text(footer, text = sprintf("%s test statistic", anova_test))
   }
 
-  # footer: anova test
+  # footer: anova type
   if (!is.null(anova_type)) {
-    footer <- .add_footer_anova_type(footer, anova_type, type)
+    footer <- .add_footer_text(footer, text = sprintf("Anova Table (Type %s tests)", anova_type))
   }
+
 
   # footer: marginaleffects::comparisons()
   if (!is.null(prediction_type)) {
-    footer <- .add_footer_prediction_type(footer, prediction_type, type)
+    footer <- .add_footer_text(footer, text = sprintf("Prediction type: %s", prediction_type))
   }
 
   # footer: htest alternative
   if (!is.null(text_alternative)) {
-    footer <- .add_footer_alternative(footer, text_alternative, type)
+    footer <- .add_footer_text(footer, text = text_alternative)
   }
 
   # footer: generic text
@@ -634,7 +635,7 @@ format.parameters_sem <- function(x,
 
 # footer: generic text
 .add_footer_text <- function(footer = NULL, text = NULL, type = "text", is_ggeffects = FALSE) {
-  if (!is.null(text)) {
+  if (!is.null(text) && length(text)) {
     if (type == "text" || type == "markdown") {
       if (is.null(footer)) {
         fill <- "\n"
@@ -645,6 +646,29 @@ format.parameters_sem <- function(x,
     } else if (type == "html") {
       replacement <- ifelse(is_ggeffects, ";", "")
       footer <- c(footer, gsub("\n", replacement, text, fixed = TRUE))
+    }
+  }
+  footer
+}
+
+
+# footer: generic values
+.add_footer_values <- function(footer = NULL,
+                               digits = 3,
+                               value = NULL,
+                               text = NULL,
+                               type = "text") {
+  if (!is.null(value) && !is.null(text)) {
+    string <- sprintf("%s: %s", text, insight::format_value(value, digits = digits))
+    if (type == "text" || type == "markdown") {
+      if (is.null(footer)) {
+        fill <- "\n"
+      } else {
+        fill <- ""
+      }
+      footer <- paste0(footer, fill, string, "\n")
+    } else if (type == "html") {
+      footer <- c(footer, string)
     }
   }
   footer
@@ -667,9 +691,9 @@ format.parameters_sem <- function(x,
       } else {
         fill <- ""
       }
-      footer <- paste0(footer, sprintf("%sResidual standard deviation: %.*f%s\n", fill, digits, sigma, res_df))
+      footer <- paste0(footer, sprintf("%sSigma: %.*f%s\n", fill, digits, sigma, res_df))
     } else if (type == "html") {
-      footer <- c(footer, insight::trim_ws(sprintf("Residual standard deviation: %.*f%s", digits, sigma, res_df)))
+      footer <- c(footer, insight::trim_ws(sprintf("Sigma: %.*f%s", digits, sigma, res_df)))
     }
   }
   footer
@@ -694,115 +718,6 @@ format.parameters_sem <- function(x,
       } else if (type == "html") {
         footer <- c(footer, rsq)
       }
-    }
-  }
-  footer
-}
-
-
-# footer: RMSE
-.add_footer_rmse <- function(footer = NULL, digits = 3, rmse = NULL, type = "text") {
-  if (!is.null(rmse)) {
-    rmse_string <- paste0("RMSE: ", insight::format_value(rmse, digits = digits))
-    if (type == "text" || type == "markdown") {
-      if (is.null(footer)) {
-        fill <- "\n"
-      } else {
-        fill <- ""
-      }
-      footer <- paste0(footer, fill, rmse_string, "\n")
-    } else if (type == "html") {
-      footer <- c(footer, rmse_string)
-    }
-  }
-  footer
-}
-
-
-# footer: anova type
-.add_footer_anova_type <- function(footer = NULL, aov_type = NULL, type = "text") {
-  if (!is.null(aov_type)) {
-    if (type == "text" || type == "markdown") {
-      if (is.null(footer)) {
-        fill <- "\n"
-      } else {
-        fill <- ""
-      }
-      footer <- paste0(footer, sprintf("%sAnova Table (Type %s tests)\n", fill, aov_type))
-    } else if (type == "html") {
-      footer <- c(footer, sprintf("Anova Table (Type %s tests)", aov_type))
-    }
-  }
-  footer
-}
-
-
-# footer: marginaleffects::comparisions() prediction_type
-.add_footer_prediction_type <- function(footer = NULL, prediction_type = NULL, type = "text") {
-  if (!is.null(prediction_type)) {
-    if (type == "text" || type == "markdown") {
-      if (is.null(footer)) {
-        fill <- "\n"
-      } else {
-        fill <- ""
-      }
-      footer <- paste0(footer, sprintf("%sPrediction type: %s\n", fill, prediction_type))
-    } else if (type == "html") {
-      footer <- c(footer, sprintf("Prediction type: %s", prediction_type))
-    }
-  }
-  footer
-}
-
-
-# footer: anova test
-.add_footer_anova_test <- function(footer = NULL, test = NULL, type = "text") {
-  if (!is.null(test)) {
-    if (type == "text" || type == "markdown") {
-      if (is.null(footer)) {
-        fill <- "\n"
-      } else {
-        fill <- ""
-      }
-      footer <- paste0(footer, sprintf("%s%s test statistic\n", fill, test))
-    } else if (type == "html") {
-      footer <- c(footer, sprintf("%s test statistic", test))
-    }
-  }
-  footer
-}
-
-
-# footer: htest alternative
-.add_footer_alternative <- function(footer = NULL, text_alternative = NULL, type = "text") {
-  if (!is.null(text_alternative)) {
-    if (type == "text" || type == "markdown") {
-      if (is.null(footer)) {
-        fill <- "\n"
-      } else {
-        fill <- ""
-      }
-      footer <- paste0(footer, sprintf("%s%s\n", fill, text_alternative))
-    } else if (type == "html") {
-      footer <- c(footer, text_alternative)
-    }
-  }
-  footer
-}
-
-
-# footer: p-adjustment
-.add_footer_padjust <- function(footer = NULL, p_adjust = NULL, type = "text") {
-  if (!is.null(p_adjust) && p_adjust != "none") {
-    if (type == "text" || type == "markdown") {
-      if (is.null(footer)) {
-        fill <- "\n"
-      } else {
-        fill <- ""
-      }
-      footer <- paste0(footer, fill, "p-value adjustment method: ", format_p_adjust(p_adjust), "\n")
-    } else if (type == "html") {
-      footer <- c(footer, paste0("p-value adjustment method: ", format_p_adjust(p_adjust)))
     }
   }
   footer
