@@ -29,6 +29,12 @@ model_parameters.glmmTMB <- function(model,
                                      ...) {
   insight::check_if_installed("glmmTMB")
 
+  ## TODO remove deprecated later
+  if (!missing(summary)) {
+    .deprecated_warning("summary", "include_info", verbose)
+    include_info <- summary
+  }
+
   # validation check, warn if unsupported argument is used.
   dot_args <- .check_dots(
     dots = list(...),

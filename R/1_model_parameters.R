@@ -398,8 +398,8 @@ model_parameters <- function(model, ...) {
 
 # Add new options to the docs in "print.parameters_model"
 
-# getOption("parameters_summary"): show model summary
-# getOption("parameters_mixed_summary"): show model summary for mixed models
+# getOption("parameters_info"): show model summary
+# getOption("parameters_mixed_info"): show model summary for mixed models
 # getOption("parameters_cimethod"): show message about CI approximation
 # getOption("parameters_exponentiate"): show warning about exp for log/logit links
 # getOption("parameters_labels"): use value/variable labels instead pretty names
@@ -578,6 +578,12 @@ model_parameters.default <- function(model,
   # validation check for inputs
   .is_model_valid(model)
 
+  ## TODO remove deprecated later
+  if (!missing(summary)) {
+    .deprecated_warning("summary", "include_info", verbose)
+    include_info <- summary
+  }
+
   # validation check, warn if unsupported argument is used.
   # unsupported arguments will be removed from the argument list.
   dots <- .check_dots(
@@ -754,6 +760,7 @@ model_parameters.glm <- function(model,
                                  exponentiate = FALSE,
                                  p_adjust = NULL,
                                  summary = getOption("parameters_summary", FALSE),
+                                 include_info = getOption("parameters_info", FALSE),
                                  keep = NULL,
                                  drop = NULL,
                                  vcov = NULL,
@@ -761,6 +768,12 @@ model_parameters.glm <- function(model,
                                  verbose = TRUE,
                                  ...) {
   dots <- list(...)
+
+  ## TODO remove deprecated later
+  if (!missing(summary)) {
+    .deprecated_warning("summary", "include_info", verbose)
+    include_info <- summary
+  }
 
   # set default
   if (is.null(ci_method)) {
@@ -799,7 +812,7 @@ model_parameters.glm <- function(model,
     standardize = standardize,
     exponentiate = exponentiate,
     p_adjust = p_adjust,
-    summary = summary,
+    include_info = include_info,
     keep_parameters = keep,
     drop_parameters = drop,
     vcov = vcov,

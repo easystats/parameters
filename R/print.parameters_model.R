@@ -107,13 +107,13 @@
 #' some messages providing additional information can be displayed or suppressed
 #' using `options()`:
 #'
-#' - `parameters_summary`: `options(parameters_summary = TRUE)` will override the
-#' `summary` argument in `model_parameters()` and always show the model summary
-#' for non-mixed models.
+#' - `parameters_info`: `options(parameters_info = TRUE)` will override the
+#' `include_info` argument in `model_parameters()` and always show the model
+#' summary for non-mixed models.
 #'
-#' - `parameters_mixed_summary`: `options(parameters_mixed_summary = TRUE)` will
-#' override the `summary` argument in `model_parameters()` for mixed models, and
-#' will then always show the model summary.
+#' - `parameters_mixed_info`: `options(parameters_mixed_info = TRUE)` will
+#' override the `include_info` argument in `model_parameters()` for mixed
+#' models, and will then always show the model summary.
 #'
 #' - `parameters_cimethod`: `options(parameters_cimethod = TRUE)` will show the
 #' additional information about the approximation method used to calculate
@@ -430,6 +430,7 @@ print.parameters_random <- function(x, digits = 2, ...) {
   show_sigma <- ifelse(show_summary, TRUE, show_sigma)
   show_formula <- ifelse(show_summary, TRUE, show_formula)
   show_r2 <- .additional_arguments(x, "show_summary", FALSE)
+  show_rmse <- .additional_arguments(x, "show_summary", FALSE)
 
   # set defaults, if necessary
   if (is.null(model_sigma)) {
@@ -443,6 +444,7 @@ print.parameters_random <- function(x, digits = 2, ...) {
     show_sigma = show_sigma,
     show_formula = show_formula,
     show_r2 = show_r2,
+    show_rmse = show_rmse,
     format = format
   )
 }

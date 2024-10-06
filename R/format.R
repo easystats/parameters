@@ -542,6 +542,7 @@ format.parameters_sem <- function(x,
                            show_sigma = FALSE,
                            show_formula = FALSE,
                            show_r2 = FALSE,
+                           show_rmse = FALSE,
                            format = "text") {
   # prepare footer
   footer <- NULL
@@ -549,6 +550,7 @@ format.parameters_sem <- function(x,
 
   sigma_value <- attributes(x)$sigma
   r2 <- attributes(x)$r2
+  rmse <- attributes(x)$rmse
   residual_df <- attributes(x)$residual_df
   p_adjust <- attributes(x)$p_adjust
   model_formula <- attributes(x)$model_formula
@@ -573,6 +575,11 @@ format.parameters_sem <- function(x,
   # footer: r-squared
   if (isTRUE(show_r2)) {
     footer <- .add_footer_r2(footer, digits, r2, type)
+  }
+
+  # footer: r-squared
+  if (isTRUE(show_rmse)) {
+    footer <- .add_footer_rmse(footer, digits, rmse, type)
   }
 
   # footer: p-adjustment
@@ -687,6 +694,25 @@ format.parameters_sem <- function(x,
       } else if (type == "html") {
         footer <- c(footer, rsq)
       }
+    }
+  }
+  footer
+}
+
+
+# footer: RMSE
+.add_footer_rmse <- function(footer = NULL, digits = 3, rmse = NULL, type = "text") {
+  if (!is.null(rmse)) {
+    rmse_string <- paste0("RMSE: ", insight::format_value(rmse, digits = digits))
+    if (type == "text" || type == "markdown") {
+      if (is.null(footer)) {
+        fill <- "\n"
+      } else {
+        fill <- ""
+      }
+      footer <- paste0(footer, fill, rmse_string, "\n")
+    } else if (type == "html") {
+      footer <- c(footer, rmse_string)
     }
   }
   footer

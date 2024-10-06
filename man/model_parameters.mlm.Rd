@@ -67,6 +67,7 @@
   exponentiate = FALSE,
   p_adjust = NULL,
   summary = getOption("parameters_summary", FALSE),
+  include_info = getOption("parameters_info", FALSE),
   keep = NULL,
   drop = NULL,
   verbose = TRUE,
@@ -192,6 +193,10 @@ the function to be used to compute the covariance matrix.
 the \code{vcov} argument. This function is typically supplied by the \strong{sandwich}
 or \strong{clubSandwich} packages. Please refer to their documentation (e.g.,
 \code{?sandwich::vcovHAC}) to see the list of available arguments.}
+
+\item{include_info}{Logical, if \code{TRUE}, prints summary information about the
+model (model formula, number of observations, residual standard deviation
+and more).}
 }
 \value{
 A data frame of indices related to the model's parameters.

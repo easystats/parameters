@@ -190,6 +190,7 @@
   exponentiate = FALSE,
   p_adjust = NULL,
   summary = getOption("parameters_summary", FALSE),
+  include_info = getOption("parameters_info", FALSE),
   keep = NULL,
   drop = NULL,
   verbose = TRUE,
@@ -306,6 +307,10 @@ cases \code{"wald"} is used then.}
 
 \item{effects}{Should results for fixed effects, random effects or both be
 returned? Only applies to mixed models. May be abbreviated.}
+
+\item{include_info}{Logical, if \code{TRUE}, prints summary information about the
+model (model formula, number of observations, residual standard deviation
+and more).}
 }
 \value{
 A data frame of indices related to the model's parameters.

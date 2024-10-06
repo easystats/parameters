@@ -157,6 +157,7 @@
   exponentiate = FALSE,
   p_adjust = NULL,
   summary = getOption("parameters_summary", FALSE),
+  include_info = getOption("parameters_info", FALSE),
   keep = NULL,
   drop = NULL,
   verbose = TRUE,
