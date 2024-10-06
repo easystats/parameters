@@ -8,10 +8,17 @@ model_parameters.systemfit <- function(model,
                                        exponentiate = FALSE,
                                        p_adjust = NULL,
                                        summary = FALSE,
+                                       include_info = getOption("parameters_info", FALSE),
                                        keep = NULL,
                                        drop = NULL,
                                        verbose = TRUE,
                                        ...) {
+  ## TODO remove deprecated later
+  if (!missing(summary)) {
+    .deprecated_warning("summary", "include_info", verbose)
+    include_info <- summary
+  }
+
   out <- .model_parameters_generic(
     model = model,
     ci = ci,
@@ -24,7 +31,7 @@ model_parameters.systemfit <- function(model,
     p_adjust = p_adjust,
     keep_parameters = keep,
     drop_parameters = drop,
-    summary = summary,
+    include_info = include_info,
     ...
   )
 

@@ -160,10 +160,17 @@ model_parameters.multinom <- function(model,
                                       exponentiate = FALSE,
                                       p_adjust = NULL,
                                       summary = getOption("parameters_summary", FALSE),
+                                      include_info = getOption("parameters_info", FALSE),
                                       keep = NULL,
                                       drop = NULL,
                                       verbose = TRUE,
                                       ...) {
+  ## TODO remove deprecated later
+  if (!missing(summary)) {
+    .deprecated_warning("summary", "include_info", verbose)
+    include_info <- summary
+  }
+
   model_parameters.bracl(
     model,
     ci = ci,
@@ -173,7 +180,7 @@ model_parameters.multinom <- function(model,
     standardize = standardize,
     exponentiate = exponentiate,
     p_adjust = p_adjust,
-    summary = summary,
+    include_info = include_info,
     keep = keep,
     drop = drop,
     verbose = verbose,
