@@ -52,7 +52,7 @@
 ---
 
     Code
-      model_parameters(m1, effects = "fixed", summary = TRUE)
+      model_parameters(m1, effects = "fixed", include_info = TRUE)
     Output
       # Fixed Effects
       
@@ -62,8 +62,9 @@
       cyl         |        0.40 | 0.08 | [ 0.25, 0.56] |  5.29 | < .001
       
       Model: wt ~ cyl (32 Observations)
-      Residual standard deviation: 0.594 (df = 28)
+      Sigma: 0.594 (df = 28)
       Conditional R2: 0.628; Marginal R2: 0.550
+      RMSE : 0.564
     Message
       
       Uncertainty intervals (equal-tailed) and p-values (two-tailed) computed
