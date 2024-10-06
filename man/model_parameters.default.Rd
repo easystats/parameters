@@ -17,12 +17,13 @@
   standardize = NULL,
   exponentiate = FALSE,
   p_adjust = NULL,
+  vcov = NULL,
+  vcov_args = NULL,
   summary = getOption("parameters_summary", FALSE),
+  include_info = getOption("parameters_info", FALSE),
   keep = NULL,
   drop = NULL,
   verbose = TRUE,
-  vcov = NULL,
-  vcov_args = NULL,
   ...
 )
 
@@ -35,11 +36,12 @@
   standardize = NULL,
   exponentiate = FALSE,
   p_adjust = NULL,
-  summary = getOption("parameters_summary", FALSE),
-  keep = NULL,
-  drop = NULL,
   vcov = NULL,
   vcov_args = NULL,
+  summary = getOption("parameters_summary", FALSE),
+  include_info = getOption("parameters_info", FALSE),
+  keep = NULL,
+  drop = NULL,
   verbose = TRUE,
   ...
 )
@@ -53,12 +55,13 @@
   standardize = NULL,
   exponentiate = FALSE,
   p_adjust = NULL,
+  vcov = NULL,
+  vcov_args = NULL,
   summary = getOption("parameters_summary", FALSE),
+  include_info = getOption("parameters_info", FALSE),
   keep = NULL,
   drop = NULL,
   verbose = TRUE,
-  vcov = NULL,
-  vcov_args = NULL,
   ...
 )
 
@@ -122,7 +125,34 @@ possible adjustment methods are \code{"tukey"}, \code{"scheffe"},
 \code{"sidak"} and \code{"none"} to explicitly disable adjustment for
 \code{emmGrid} objects (from \strong{emmeans}).}
 
-\item{summary}{Logical, if \code{TRUE}, prints summary information about the
+\item{vcov}{Variance-covariance matrix used to compute uncertainty estimates
+(e.g., for robust standard errors). This argument accepts a covariance matrix,
+a function which returns a covariance matrix, or a string which identifies
+the function to be used to compute the covariance matrix.
+\itemize{
+\item A covariance matrix
+\item A function which returns a covariance matrix (e.g., \code{stats::vcov()})
+\item A string which indicates the kind of uncertainty estimates to return.
+\itemize{
+\item Heteroskedasticity-consistent: \code{"vcovHC"}, \code{"HC"}, \code{"HC0"}, \code{"HC1"},
+\code{"HC2"}, \code{"HC3"}, \code{"HC4"}, \code{"HC4m"}, \code{"HC5"}. See \code{?sandwich::vcovHC}.
+\item Cluster-robust: \code{"vcovCR"}, \code{"CR0"}, \code{"CR1"}, \code{"CR1p"}, \code{"CR1S"},
+\code{"CR2"}, \code{"CR3"}. See \code{?clubSandwich::vcovCR}.
+\item Bootstrap: \code{"vcovBS"}, \code{"xy"}, \code{"residual"}, \code{"wild"}, \code{"mammen"},
+\code{"webb"}. See \code{?sandwich::vcovBS}.
+\item Other \code{sandwich} package functions: \code{"vcovHAC"}, \code{"vcovPC"}, \code{"vcovCL"},
+\code{"vcovPL"}.
+}
+}}
+
+\item{vcov_args}{List of arguments to be passed to the function identified by
+the \code{vcov} argument. This function is typically supplied by the \strong{sandwich}
+or \strong{clubSandwich} packages. Please refer to their documentation (e.g.,
+\code{?sandwich::vcovHAC}) to see the list of available arguments.}
+
+\item{summary}{Deprecated, please use \code{info} instead.}
+
+\item{include_info}{Logical, if \code{TRUE}, prints summary information about the
 model (model formula, number of observations, residual standard deviation
 and more).}
 
@@ -149,31 +179,6 @@ names.}
 \item{drop}{See \code{keep}.}
 
 \item{verbose}{Toggle warnings and messages.}
-
-\item{vcov}{Variance-covariance matrix used to compute uncertainty estimates
-(e.g., for robust standard errors). This argument accepts a covariance matrix,
-a function which returns a covariance matrix, or a string which identifies
-the function to be used to compute the covariance matrix.
-\itemize{
-\item A covariance matrix
-\item A function which returns a covariance matrix (e.g., \code{stats::vcov()})
-\item A string which indicates the kind of uncertainty estimates to return.
-\itemize{
-\item Heteroskedasticity-consistent: \code{"vcovHC"}, \code{"HC"}, \code{"HC0"}, \code{"HC1"},
-\code{"HC2"}, \code{"HC3"}, \code{"HC4"}, \code{"HC4m"}, \code{"HC5"}. See \code{?sandwich::vcovHC}.
-\item Cluster-robust: \code{"vcovCR"}, \code{"CR0"}, \code{"CR1"}, \code{"CR1p"}, \code{"CR1S"},
-\code{"CR2"}, \code{"CR3"}. See \code{?clubSandwich::vcovCR}.
-\item Bootstrap: \code{"vcovBS"}, \code{"xy"}, \code{"residual"}, \code{"wild"}, \code{"mammen"},
-\code{"webb"}. See \code{?sandwich::vcovBS}.
-\item Other \code{sandwich} package functions: \code{"vcovHAC"}, \code{"vcovPC"}, \code{"vcovCL"},
-\code{"vcovPL"}.
-}
-}}
-
-\item{vcov_args}{List of arguments to be passed to the function identified by
-the \code{vcov} argument. This function is typically supplied by the \strong{sandwich}
-or \strong{clubSandwich} packages. Please refer to their documentation (e.g.,
-\code{?sandwich::vcovHAC}) to see the list of available arguments.}
 
 \item{...}{Arguments passed to or from other methods. For instance, when
 \code{bootstrap = TRUE}, arguments like \code{type} or \code{parallel} are passed down to

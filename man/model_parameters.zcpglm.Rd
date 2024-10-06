@@ -14,9 +14,10 @@
   standardize = NULL,
   exponentiate = FALSE,
   p_adjust = NULL,
+  summary = getOption("parameters_summary", FALSE),
+  include_info = getOption("parameters_info", FALSE),
   keep = NULL,
   drop = NULL,
-  summary = getOption("parameters_summary", FALSE),
   verbose = TRUE,
   ...
 )
@@ -88,6 +89,12 @@ possible adjustment methods are \code{"tukey"}, \code{"scheffe"},
 \code{"sidak"} and \code{"none"} to explicitly disable adjustment for
 \code{emmGrid} objects (from \strong{emmeans}).}
 
+\item{summary}{Deprecated, please use \code{info} instead.}
+
+\item{include_info}{Logical, if \code{TRUE}, prints summary information about the
+model (model formula, number of observations, residual standard deviation
+and more).}
+
 \item{keep}{Character containing a regular expression pattern that
 describes the parameters that should be included (for \code{keep}) or excluded
 (for \code{drop}) in the returned data frame. \code{keep} may also be a
@@ -109,10 +116,6 @@ frame, which can be different from how they are printed. Inspect the
 names.}
 
 \item{drop}{See \code{keep}.}
-
-\item{summary}{Logical, if \code{TRUE}, prints summary information about the
-model (model formula, number of observations, residual standard deviation
-and more).}
 
 \item{verbose}{Toggle warnings and messages.}
 

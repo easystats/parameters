@@ -10,6 +10,7 @@ model_parameters.mmrm <- function(model,
                                   exponentiate = FALSE,
                                   p_adjust = NULL,
                                   summary = getOption("parameters_summary", FALSE),
+                                  include_info = getOption("parameters_info", FALSE),
                                   keep = NULL,
                                   drop = NULL,
                                   verbose = TRUE,
@@ -18,6 +19,12 @@ model_parameters.mmrm <- function(model,
     Satterthwaite = "satterthwaite",
     "kenward"
   )
+
+  ## TODO remove deprecated later
+  if (!missing(summary)) {
+    .deprecated_warning("summary", "include_info", verbose)
+    include_info <- summary
+  }
 
   # extract model parameters table, as data frame
   out <- tryCatch(
@@ -31,7 +38,7 @@ model_parameters.mmrm <- function(model,
       standardize = standardize,
       exponentiate = exponentiate,
       p_adjust = p_adjust,
-      summary = summary,
+      include_info = include_info,
       keep_parameters = keep,
       drop_parameters = drop,
       vcov = NULL,

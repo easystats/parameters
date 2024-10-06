@@ -16,7 +16,7 @@
                                         keep_parameters = NULL,
                                         drop_parameters = NULL,
                                         include_sigma = TRUE,
-                                        summary = FALSE,
+                                        include_info = FALSE,
                                         vcov = NULL,
                                         vcov_args = NULL,
                                         ...) {
@@ -301,7 +301,7 @@
 
   # ==== add sigma and residual df
 
-  if (isTRUE(include_sigma) || isTRUE(summary)) {
+  if (isTRUE(include_sigma) || isTRUE(include_info)) {
     parameters <- .add_sigma_residual_df(parameters, model)
   }
 
@@ -424,7 +424,7 @@
                                       keep_parameters = NULL,
                                       drop_parameters = NULL,
                                       include_sigma = FALSE,
-                                      summary = FALSE,
+                                      include_info = FALSE,
                                       vcov = NULL,
                                       vcov_args = NULL,
                                       verbose = TRUE,
@@ -639,7 +639,7 @@
 
 
   # add sigma
-  if (isTRUE(include_sigma) || isTRUE(summary)) {
+  if (isTRUE(include_sigma) || isTRUE(include_info)) {
     parameters <- .add_sigma_residual_df(parameters, model)
   }
 

@@ -21,12 +21,19 @@ model_parameters.glmmTMB <- function(model,
                                      p_adjust = NULL,
                                      wb_component = TRUE,
                                      summary = getOption("parameters_mixed_summary", FALSE),
+                                     include_info = getOption("parameters_mixed_info", FALSE),
+                                     include_sigma = FALSE,
                                      keep = NULL,
                                      drop = NULL,
                                      verbose = TRUE,
-                                     include_sigma = FALSE,
                                      ...) {
   insight::check_if_installed("glmmTMB")
+
+  ## TODO remove deprecated later
+  if (!missing(summary)) {
+    .deprecated_warning("summary", "include_info", verbose)
+    include_info <- summary
+  }
 
   # validation check, warn if unsupported argument is used.
   dot_args <- .check_dots(
@@ -98,7 +105,7 @@ model_parameters.glmmTMB <- function(model,
         keep_component_column = component != "conditional",
         include_sigma = include_sigma,
         wb_component = wb_component,
-        summary = summary
+        include_info = include_info
       )
       fun_args <- c(fun_args, dot_args)
       params <- do.call(".extract_parameters_generic", fun_args)
@@ -236,7 +243,7 @@ model_parameters.glmmTMB <- function(model,
     p_adjust = p_adjust,
     verbose = verbose,
     group_level = group_level,
-    summary = summary,
+    include_info = include_info,
     wb_component = wb_component,
     ...
   )

@@ -36,10 +36,10 @@ test_that("print digits model_parameters.lm", {
   skip_if_not_installed("performance")
   model <- lm(mpg ~ wt, data = mtcars)
 
-  params <- model_parameters(model, summary = TRUE, verbose = FALSE)
+  params <- model_parameters(model, include_info = TRUE, verbose = FALSE)
   expect_snapshot(params)
 
-  params <- model_parameters(model, summary = FALSE, verbose = FALSE)
+  params <- model_parameters(model, include_info = FALSE, verbose = FALSE)
   expect_snapshot(params)
 })
 

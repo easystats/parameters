@@ -35,7 +35,7 @@ test_that("model_parameters.fixest", {
   # currently, a bug for fixest 10.4 on R >= 4.3
   # skip_if_not(getRversion() < "4.2.0")
   expect_snapshot(
-    model_parameters(m1, summary = TRUE, verbose = FALSE)
+    model_parameters(m1, include_info = TRUE, verbose = FALSE)
   )
 
   # Poission, df = Inf

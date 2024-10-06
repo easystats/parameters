@@ -398,8 +398,8 @@ model_parameters <- function(model, ...) {
 
 # Add new options to the docs in "print.parameters_model"
 
-# getOption("parameters_summary"): show model summary
-# getOption("parameters_mixed_summary"): show model summary for mixed models
+# getOption("parameters_info"): show model summary
+# getOption("parameters_mixed_info"): show model summary for mixed models
 # getOption("parameters_cimethod"): show message about CI approximation
 # getOption("parameters_exponentiate"): show warning about exp for log/logit links
 # getOption("parameters_labels"): use value/variable labels instead pretty names
@@ -466,9 +466,10 @@ parameters <- model_parameters
 #'   _Confidence intervals and approximation of degrees of freedom_ in
 #'   [`model_parameters()`] for further details. When `ci_method=NULL`, in most
 #'   cases `"wald"` is used then.
-#' @param summary Logical, if `TRUE`, prints summary information about the
+#' @param include_info Logical, if `TRUE`, prints summary information about the
 #'   model (model formula, number of observations, residual standard deviation
 #'   and more).
+#' @param summary Deprecated, please use `info` instead.
 #' @param keep Character containing a regular expression pattern that
 #'   describes the parameters that should be included (for `keep`) or excluded
 #'   (for `drop`) in the returned data frame. `keep` may also be a
@@ -566,15 +567,22 @@ model_parameters.default <- function(model,
                                      standardize = NULL,
                                      exponentiate = FALSE,
                                      p_adjust = NULL,
+                                     vcov = NULL,
+                                     vcov_args = NULL,
                                      summary = getOption("parameters_summary", FALSE),
+                                     include_info = getOption("parameters_info", FALSE),
                                      keep = NULL,
                                      drop = NULL,
                                      verbose = TRUE,
-                                     vcov = NULL,
-                                     vcov_args = NULL,
                                      ...) {
   # validation check for inputs
   .is_model_valid(model)
+
+  ## TODO remove deprecated later
+  if (!missing(summary)) {
+    .deprecated_warning("summary", "include_info", verbose)
+    include_info <- summary
+  }
 
   # validation check, warn if unsupported argument is used.
   # unsupported arguments will be removed from the argument list.
@@ -597,7 +605,7 @@ model_parameters.default <- function(model,
       standardize = standardize,
       exponentiate = exponentiate,
       p_adjust = p_adjust,
-      summary = summary,
+      include_info = include_info,
       keep_parameters = keep,
       drop_parameters = drop,
       vcov = vcov,
@@ -654,12 +662,12 @@ model_parameters.default <- function(model,
                                       component = "conditional",
                                       ci_method = NULL,
                                       p_adjust = NULL,
-                                      summary = FALSE,
+                                      include_info = FALSE,
                                       keep_parameters = NULL,
                                       drop_parameters = NULL,
-                                      verbose = TRUE,
                                       vcov = NULL,
                                       vcov_args = NULL,
+                                      verbose = TRUE,
                                       ...) {
   dots <- list(...)
 
@@ -726,7 +734,7 @@ model_parameters.default <- function(model,
     iterations,
     ci_method = ci_method,
     p_adjust = p_adjust,
-    summary = summary,
+    include_info = include_info,
     verbose = verbose,
     ...
   )
@@ -751,14 +759,21 @@ model_parameters.glm <- function(model,
                                  standardize = NULL,
                                  exponentiate = FALSE,
                                  p_adjust = NULL,
-                                 summary = getOption("parameters_summary", FALSE),
-                                 keep = NULL,
-                                 drop = NULL,
                                  vcov = NULL,
                                  vcov_args = NULL,
+                                 summary = getOption("parameters_summary", FALSE),
+                                 include_info = getOption("parameters_info", FALSE),
+                                 keep = NULL,
+                                 drop = NULL,
                                  verbose = TRUE,
                                  ...) {
   dots <- list(...)
+
+  ## TODO remove deprecated later
+  if (!missing(summary)) {
+    .deprecated_warning("summary", "include_info", verbose)
+    include_info <- summary
+  }
 
   # set default
   if (is.null(ci_method)) {
@@ -797,7 +812,7 @@ model_parameters.glm <- function(model,
     standardize = standardize,
     exponentiate = exponentiate,
     p_adjust = p_adjust,
-    summary = summary,
+    include_info = include_info,
     keep_parameters = keep,
     drop_parameters = drop,
     vcov = vcov,

@@ -25,7 +25,7 @@ withr::with_options(
       # snapshot breaks between R CMD check "classic" and "strict"
       skip_if_not_installed("performance")
       model <- lm(Sepal.Length ~ Species * Petal.Length, data = iris)
-      out <- model_parameters(model, summary = TRUE)
+      out <- model_parameters(model, include_info = TRUE)
       expect_snapshot(print(out))
     })
 

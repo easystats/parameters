@@ -46,7 +46,7 @@ model_parameters.deltaMethod <- function(model, p_adjust = NULL, verbose = TRUE,
     iterations = NULL,
     ci_method = "residual",
     p_adjust = p_adjust,
-    summary = FALSE,
+    include_info = FALSE,
     verbose = verbose
   )
   fun_args <- c(fun_args, dots)

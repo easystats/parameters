@@ -159,16 +159,23 @@ model_parameters.merMod <- function(model,
                                     group_level = FALSE,
                                     exponentiate = FALSE,
                                     p_adjust = NULL,
+                                    vcov = NULL,
+                                    vcov_args = NULL,
                                     wb_component = TRUE,
                                     summary = getOption("parameters_mixed_summary", FALSE),
+                                    include_info = getOption("parameters_mixed_info", FALSE),
+                                    include_sigma = FALSE,
                                     keep = NULL,
                                     drop = NULL,
                                     verbose = TRUE,
-                                    include_sigma = FALSE,
-                                    vcov = NULL,
-                                    vcov_args = NULL,
                                     ...) {
   dots <- list(...)
+
+  ## TODO remove deprecated later
+  if (!missing(summary)) {
+    .deprecated_warning("summary", "include_info", verbose)
+    include_info <- summary
+  }
 
   # set default
   if (is.null(ci_method)) {
@@ -248,7 +255,7 @@ model_parameters.merMod <- function(model,
         drop_parameters = drop,
         verbose = verbose,
         include_sigma = include_sigma,
-        summary = summary,
+        include_info = include_info,
         vcov = vcov,
         vcov_args = vcov_args
       )
@@ -313,7 +320,7 @@ model_parameters.merMod <- function(model,
     ci_method = ci_method,
     p_adjust = p_adjust,
     verbose = verbose,
-    summary = summary,
+    include_info = include_info,
     group_level = group_level,
     wb_component = wb_component,
     ...

@@ -9,12 +9,13 @@ model_parameters.fixest <- function(model,
                                     standardize = NULL,
                                     exponentiate = FALSE,
                                     p_adjust = NULL,
+                                    vcov = NULL,
+                                    vcov_args = NULL,
                                     summary = getOption("parameters_summary", FALSE),
+                                    include_info = getOption("parameters_info", FALSE),
                                     keep = NULL,
                                     drop = NULL,
                                     verbose = TRUE,
-                                    vcov = NULL,
-                                    vcov_args = NULL,
                                     ...) {
   # default ci-method, based on statistic
   if (is.null(ci_method)) {
@@ -23,6 +24,12 @@ model_parameters.fixest <- function(model,
     } else {
       ci_method <- "normal"
     }
+  }
+
+  ## TODO remove deprecated later
+  if (!missing(summary)) {
+    .deprecated_warning("summary", "include_info", verbose)
+    include_info <- summary
   }
 
   # extract model parameters table, as data frame
@@ -38,7 +45,7 @@ model_parameters.fixest <- function(model,
         standardize = standardize,
         exponentiate = exponentiate,
         p_adjust = p_adjust,
-        summary = summary,
+        include_info = include_info,
         keep_parameters = keep,
         drop_parameters = drop,
         vcov = vcov,
@@ -65,14 +72,14 @@ model_parameters.fixest <- function(model,
 standard_error.fixest <- function(model, vcov = NULL, vcov_args = NULL, ...) {
   params <- insight::get_parameters(model)
 
-  if (!is.null(vcov)) {
+  if (is.null(vcov)) {
+    stats <- summary(model)
+    SE <- as.vector(stats$se)
+  } else {
     # we don't want to wrap this in a tryCatch because the `fixest` error is
     # informative when `vcov` is wrong.
     V <- insight::get_varcov(model, vcov = vcov, vcov_args = vcov_args)
     SE <- sqrt(diag(V))
-  } else {
-    stats <- summary(model)
-    SE <- as.vector(stats$se)
   }
 
   .data_frame(
@@ -124,13 +131,20 @@ model_parameters.fixest_multi <- function(model,
                                           standardize = NULL,
                                           exponentiate = FALSE,
                                           p_adjust = NULL,
+                                          vcov = NULL,
+                                          vcov_args = NULL,
                                           summary = getOption("parameters_summary", FALSE),
+                                          include_info = getOption("parameters_info", FALSE),
                                           keep = NULL,
                                           drop = NULL,
                                           verbose = TRUE,
-                                          vcov = NULL,
-                                          vcov_args = NULL,
                                           ...) {
+  ## TODO remove deprecated later
+  if (!missing(summary)) {
+    .deprecated_warning("summary", "include_info", verbose)
+    include_info <- summary
+  }
+
   # iterate over responses
   out <- lapply(
     model,
@@ -142,7 +156,7 @@ model_parameters.fixest_multi <- function(model,
     standardize = standardize,
     exponentiate = exponentiate,
     p_adjust = p_adjust,
-    summary = summary,
+    include_info = include_info,
     keep = keep,
     drop = drop,
     verbose = verbose,

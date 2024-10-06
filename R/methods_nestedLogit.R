@@ -8,14 +8,21 @@ model_parameters.nestedLogit <- function(model,
                                          standardize = NULL,
                                          exponentiate = FALSE,
                                          p_adjust = NULL,
-                                         summary = getOption("parameters_summary", FALSE),
-                                         keep = NULL,
-                                         drop = NULL,
                                          vcov = NULL,
                                          vcov_args = NULL,
+                                         summary = getOption("parameters_summary", FALSE),
+                                         include_info = getOption("parameters_info", FALSE),
+                                         keep = NULL,
+                                         drop = NULL,
                                          verbose = TRUE,
                                          ...) {
   dots <- list(...)
+
+  ## TODO remove deprecated later
+  if (!missing(summary)) {
+    .deprecated_warning("summary", "include_info", verbose)
+    include_info <- summary
+  }
 
   # set default
   if (is.null(ci_method)) {
@@ -61,7 +68,7 @@ model_parameters.nestedLogit <- function(model,
     standardize = standardize,
     exponentiate = exponentiate,
     p_adjust = p_adjust,
-    summary = summary,
+    include_info = include_info,
     keep_parameters = keep,
     drop_parameters = drop,
     vcov = vcov,

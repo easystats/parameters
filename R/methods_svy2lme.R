@@ -2,10 +2,10 @@
 model_parameters.svy2lme <- function(model,
                                      ci = 0.95,
                                      effects = "all",
+                                     include_sigma = FALSE,
                                      keep = NULL,
                                      drop = NULL,
                                      verbose = TRUE,
-                                     include_sigma = FALSE,
                                      ...) {
   dots <- list(...)
   # which component to return?

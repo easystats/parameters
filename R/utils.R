@@ -196,3 +196,14 @@
   }
   ifnotfound
 }
+
+.deprecated_warning <- function(old, new, verbose = TRUE) {
+  if (verbose) {
+    insight::format_warning(paste0(
+      "Argument `", old,
+      "` is deprecated and will be removed in the future. Please use `",
+      new,
+      "` instead."
+    ))
+  }
+}

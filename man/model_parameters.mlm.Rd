@@ -35,6 +35,7 @@
   exponentiate = FALSE,
   p_adjust = NULL,
   summary = getOption("parameters_summary", FALSE),
+  include_info = getOption("parameters_info", FALSE),
   keep = NULL,
   drop = NULL,
   verbose = TRUE,
@@ -67,6 +68,7 @@
   exponentiate = FALSE,
   p_adjust = NULL,
   summary = getOption("parameters_summary", FALSE),
+  include_info = getOption("parameters_info", FALSE),
   keep = NULL,
   drop = NULL,
   verbose = TRUE,
@@ -166,7 +168,9 @@ interest mainly is to get a "tidy" data frame of model summaries, it is
 recommended to set \code{pretty_names = FALSE} to speed up computation of the
 summary table.}
 
-\item{summary}{Logical, if \code{TRUE}, prints summary information about the
+\item{summary}{Deprecated, please use \code{info} instead.}
+
+\item{include_info}{Logical, if \code{TRUE}, prints summary information about the
 model (model formula, number of observations, residual standard deviation
 and more).}
 

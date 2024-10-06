@@ -172,7 +172,15 @@ model_parameters.emm_list <- function(model,
   # exponentiate coefficients and SE/CI, if requested
   params <- .exponentiate_parameters(params, model, exponentiate)
 
-  params <- .add_model_parameters_attributes(params, model, ci, exponentiate, p_adjust = p_adjust, verbose = verbose, ...)
+  params <- .add_model_parameters_attributes(
+    params,
+    model,
+    ci,
+    exponentiate,
+    p_adjust = p_adjust,
+    verbose = verbose,
+    ...
+  )
 
   attr(params, "object_name") <- insight::safe_deparse_symbol(substitute(model))
   class(params) <- c("parameters_model", "see_parameters_model", class(params))
