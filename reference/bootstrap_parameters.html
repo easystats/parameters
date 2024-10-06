@@ -83,7 +83,8 @@
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>Arguments passed to or from other methods.</p></dd>
+<dd><p>Arguments passed to other methods, like <code><a href="bootstrap_model.html">bootstrap_model()</a></code> or
+<code><a href="https://easystats.github.io/bayestestR/reference/describe_posterior.html" class="external-link">bayestestR::describe_posterior()</a></code>.</p></dd>
 
 
 <dt id="arg-iterations">iterations<a class="anchor" aria-label="anchor" href="#arg-iterations"></a></dt>
@@ -178,6 +179,21 @@ application (Vol. 1). Cambridge university press.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Speciesversicolor:Petal.Width |        0.50 | [-0.66, 1.52] | 0.390 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Speciesvirginica:Petal.Width  |       -0.27 | [-1.36, 0.67] | 0.558 </span>
 <span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># different type of bootstrapping</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">b</span> <span class="op">&lt;-</span> <span class="fu">bootstrap_parameters</span><span class="op">(</span><span class="va">model</span>, type <span class="op">=</span> <span class="st">"balanced"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">b</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># Fixed Effects</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter                     | Coefficient |        95% CI |      p</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> --------------------------------------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)                   |        4.77 | [ 4.53, 5.00] | &lt; .001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Speciesversicolor             |       -0.73 | [-1.67, 0.05] | 0.076 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Speciesvirginica              |        0.53 | [-0.71, 1.74] | 0.428 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Petal.Width                   |        0.93 | [ 0.24, 1.86] | 0.020 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Speciesversicolor:Petal.Width |        0.49 | [-0.56, 1.47] | 0.366 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Speciesvirginica:Petal.Width  |       -0.29 | [-1.34, 0.65] | 0.560 </span>
+<span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">est</span> <span class="op">&lt;-</span> <span class="fu">emmeans</span><span class="fu">::</span><span class="fu"><a href="https://rvlenth.github.io/emmeans/reference/emmeans.html" class="external-link">emmeans</a></span><span class="op">(</span><span class="va">b</span>, <span class="va">trt.vs.ctrl</span> <span class="op">~</span> <span class="va">Species</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> NOTE: Results may be misleading due to involvement in interactions</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">est</span><span class="op">)</span><span class="op">)</span></span></span>
@@ -185,16 +201,16 @@ application (Vol. 1). Cambridge university press.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameter  | Median |       95% CI |   pd</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -----------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> setosa     |   5.87 | [5.21, 6.87] | 100%</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> versicolor |   5.76 | [5.63, 5.89] | 100%</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> virginica  |   6.04 | [5.55, 6.55] | 100%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> setosa     |   5.89 | [5.25, 6.78] | 100%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> versicolor |   5.75 | [5.63, 5.89] | 100%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> virginica  |   6.05 | [5.52, 6.60] | 100%</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># Contrasts </span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameter           | Median |        95% CI |     pd</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -----------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> versicolor - setosa |  -0.12 | [-1.09, 0.54] | 61.60%</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> virginica - setosa  |   0.14 | [-0.91, 1.01] | 61.70%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> versicolor - setosa |  -0.14 | [-1.04, 0.53] | 64.20%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> virginica - setosa  |   0.13 | [-0.87, 1.01] | 60.10%</span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
