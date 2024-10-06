@@ -49,6 +49,11 @@ model_parameters.zcpglm <- function(model,
     component <- "conditional"
   }
 
+  ## TODO remove deprecated later
+  if (!missing(summary)) {
+    .deprecated_warning("summary", "include_info", verbose)
+    include_info <- summary
+  }
 
   # Processing
   if (bootstrap) {

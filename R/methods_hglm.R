@@ -23,6 +23,7 @@ model_parameters.hglm <- function(model,
                                   component = "all",
                                   p_adjust = NULL,
                                   summary = getOption("parameters_summary", FALSE),
+                                  include_info = getOption("parameters_info", FALSE),
                                   keep = NULL,
                                   drop = NULL,
                                   verbose = TRUE,
@@ -31,13 +32,19 @@ model_parameters.hglm <- function(model,
   effects <- match.arg(effects, choices = c("fixed", "random", "all"))
   component <- match.arg(component, choices = c("all", "conditional", "dispersion"))
 
+  ## TODO remove deprecated later
+  if (!missing(summary)) {
+    .deprecated_warning("summary", "include_info", verbose)
+    include_info <- summary
+  }
+
   # fixed effects
 
   mp <- model_parameters.default(
     model,
     ci = ci, ci_method = ci_method, bootstrap = bootstrap,
     effects = "fixed", component = "conditional", iterations = iterations,
-    exponentiate = exponentiate, p_adjust = p_adjust, summary = summary,
+    exponentiate = exponentiate, p_adjust = p_adjust, include_info = include_info,
     keep = keep, drop = drop, verbose = verbose, ...
   )
 
