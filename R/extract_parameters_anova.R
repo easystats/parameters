@@ -49,6 +49,7 @@
   names(parameters) <- gsub("Resid. Dev", "Deviance_error", names(parameters), fixed = TRUE)
   # error-df
   if (!"df_error" %in% names(parameters)) {
+    names(parameters) <- gsub("DenDF", "df_error", names(parameters), fixed = TRUE)
     names(parameters) <- gsub("den Df", "df_error", names(parameters), fixed = TRUE)
     names(parameters) <- gsub("Res.Df", "df_error", names(parameters), fixed = TRUE)
     names(parameters) <- gsub("Resid. Df", "df_error", names(parameters), fixed = TRUE)
@@ -68,8 +69,13 @@
 
   # Reorder
   row.names(parameters) <- NULL
-  order <- c("Response", "Group", "Parameter", "Coefficient", "SE", "Pillai", "AIC", "BIC", "Log_Likelihood", "Chi2", "Chi2_df", "RSS", "Sum_Squares", "Sum_Squares_Partial", "Sum_Squares_Error", "df", "Deviance", "Statistic", "df_num", "df_error", "Deviance_error", "Mean_Square", "F", "Rao", "p")
-  parameters <- parameters[order[order %in% names(parameters)]]
+  col_order <- c(
+    "Response", "Group", "Parameter", "Coefficient", "SE", "Pillai", "AIC",
+    "BIC", "Log_Likelihood", "Chi2", "Chi2_df", "RSS", "Sum_Squares",
+    "Sum_Squares_Partial", "Sum_Squares_Error", "df", "Deviance", "Statistic",
+    "df_num", "df_error", "Deviance_error", "Mean_Square", "F", "Rao", "p"
+  )
+  parameters <- parameters[col_order[col_order %in% names(parameters)]]
 
   insight::text_remove_backticks(parameters, verbose = FALSE)
 }
@@ -235,7 +241,7 @@
         Parameter = model$terms[i],
         df = model$df[i],
         Statistic = test[1],
-        `F` = test[2],
+        `F` = test[2], # nolint
         df_num = test[3],
         df_error = test[4],
         p = stats::pf(test[2], test[3], test[4], lower.tail = FALSE),
@@ -311,7 +317,7 @@
 
 .power_for_aov <- function(model, params) {
   if (requireNamespace("effectsize", quietly = TRUE)) {
-    power <- tryCatch(
+    power_aov <- tryCatch(
       {
         cohens_f2 <- effectsize::cohens_f_squared(model, partial = TRUE, verbose = FALSE)
 
@@ -329,8 +335,8 @@
     )
   }
 
-  if (!is.null(power)) {
-    params <- merge(params, cohens_f2[c("Parameter", "Power")], sort = FALSE, all = TRUE)
+  if (!is.null(power_aov)) {
+    params <- merge(params, power_aov[c("Parameter", "Power")], sort = FALSE, all = TRUE)
   }
 
   params

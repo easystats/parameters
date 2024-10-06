@@ -70,8 +70,8 @@ p_value.lme <- function(model,
     se <- standard_error(model, vcov = vcov, vcov_args = vcov_args, ...)
     tstat <- b$Estimate / se$SE
     # residuals are defined like this in `nlme:::summary.lme`
-    df <- model$fixDF[["X"]]
-    p <- 2 * stats::pt(-abs(tstat), df = df)
+    dof <- model$fixDF[["X"]]
+    p <- 2 * stats::pt(-abs(tstat), df = dof)
     param <- se$Parameter
   }
 
@@ -97,9 +97,3 @@ standard_error.gls <- standard_error.default
 
 #' @export
 p_value.gls <- p_value.default
-
-
-#' @export
-degrees_of_freedom.gls <- function(model, method = NULL, ...) {
-  .degrees_of_freedom_no_dfresid_method(model, method)
-}

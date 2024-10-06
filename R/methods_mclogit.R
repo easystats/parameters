@@ -7,10 +7,17 @@ model_parameters.mblogit <- function(model,
                                      exponentiate = FALSE,
                                      p_adjust = NULL,
                                      summary = getOption("parameters_summary", FALSE),
+                                     include_info = getOption("parameters_info", FALSE),
                                      keep = NULL,
                                      drop = NULL,
                                      verbose = TRUE,
                                      ...) {
+  ## TODO remove deprecated later
+  if (!missing(summary)) {
+    .deprecated_warning("summary", "include_info", verbose)
+    include_info <- summary
+  }
+
   out <- .model_parameters_generic(
     model = model,
     ci = ci,
@@ -22,7 +29,7 @@ model_parameters.mblogit <- function(model,
     p_adjust = p_adjust,
     keep_parameters = keep,
     drop_parameters = drop,
-    summary = summary,
+    include_info = include_info,
     ...
   )
 
@@ -53,3 +60,6 @@ p_value.mblogit <- function(model, ...) {
     row.names = NULL
   )
 }
+
+#' @export
+simulate_parameters.mblogit <- simulate_parameters.multinom

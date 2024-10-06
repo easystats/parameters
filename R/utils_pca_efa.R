@@ -178,7 +178,7 @@ predict.parameters_efa <- function(object,
     out <- as.matrix(newdata) %*% as.matrix(attri$model$loadings)
     out <- stats::setNames(as.data.frame(out), paste0("Component", seq_len(ncol(out))))
   } else if (inherits(attri$model, c("psych", "fa", "principal"))) {
-    out <- as.data.frame(stats::predict(attri$model, data = newdata, ...))
+    out <- as.data.frame(stats::predict(attri$model, data = newdata[rownames(attri$model$weights)], ...))
   } else {
     out <- as.data.frame(stats::predict(attri$model, newdata = newdata, ...))
   }
@@ -352,13 +352,20 @@ print.parameters_omega_summary <- function(x, ...) {
     footer <- c(.text_components_variance(x, sep = ifelse(format == "markdown", "", "\n")), "yellow")
   }
 
+  # alignment?
+  if (is.null(labels)) {
+    alignment <- NULL
+  } else {
+    alignment <- paste(c("ll", rep("r", ncol(x) - 2)), collapse = "")
+  }
+
   insight::export_table(
     x,
     digits = digits,
     format = format,
     caption = table_caption,
     footer = footer,
-    align = "firstleft",
+    align = alignment,
     ...
   )
 }

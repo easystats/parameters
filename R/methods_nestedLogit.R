@@ -8,14 +8,21 @@ model_parameters.nestedLogit <- function(model,
                                          standardize = NULL,
                                          exponentiate = FALSE,
                                          p_adjust = NULL,
-                                         summary = getOption("parameters_summary", FALSE),
-                                         keep = NULL,
-                                         drop = NULL,
                                          vcov = NULL,
                                          vcov_args = NULL,
+                                         summary = getOption("parameters_summary", FALSE),
+                                         include_info = getOption("parameters_info", FALSE),
+                                         keep = NULL,
+                                         drop = NULL,
                                          verbose = TRUE,
                                          ...) {
   dots <- list(...)
+
+  ## TODO remove deprecated later
+  if (!missing(summary)) {
+    .deprecated_warning("summary", "include_info", verbose)
+    include_info <- summary
+  }
 
   # set default
   if (is.null(ci_method)) {
@@ -61,7 +68,7 @@ model_parameters.nestedLogit <- function(model,
     standardize = standardize,
     exponentiate = exponentiate,
     p_adjust = p_adjust,
-    summary = summary,
+    include_info = include_info,
     keep_parameters = keep,
     drop_parameters = drop,
     vcov = vcov,
@@ -72,40 +79,6 @@ model_parameters.nestedLogit <- function(model,
 
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(model))
   out
-}
-
-
-#' @export
-degrees_of_freedom.nestedLogit <- function(model,
-                                           method = NULL,
-                                           component = "all",
-                                           verbose = TRUE,
-                                           ...) {
-  if (is.null(method)) {
-    method <- "wald"
-  }
-  if (tolower(method) == "residual") {
-    cf <- as.data.frame(stats::coef(model))
-    dof <- rep(vapply(model$models, stats::df.residual, numeric(1)), each = nrow(cf))
-    if (!is.null(component) && !identical(component, "all")) {
-      comp <- intersect(names(dof), component)
-      if (length(comp)) {
-        dof <- dof[comp]
-      } else {
-        if (verbose) {
-          insight::format_alert(paste0(
-            "No matching model found. Possible values for `component` are ",
-            toString(paste0("'", names(model$models), "'")),
-            "."
-          ))
-        }
-        dof <- Inf
-      }
-    }
-  } else {
-    dof <- Inf
-  }
-  dof
 }
 
 

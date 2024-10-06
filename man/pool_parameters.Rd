@@ -8,7 +8,7 @@ pool_parameters(
   x,
   exponentiate = FALSE,
   effects = "fixed",
-  component = "conditional",
+  component = "all",
   verbose = TRUE,
   ...
 )
@@ -64,12 +64,10 @@ small samples (\emph{Barnard and Rubin, 1999}).
 }
 \note{
 Models with multiple components, (for instance, models with zero-inflation,
-where predictors appear in the count and zero-inflation part) may fail in
-case of identical names for coefficients in the different model components,
-since the coefficient table is grouped by coefficient names for pooling. In
-such cases, coefficients of count and zero-inflation model parts would be
-combined. Therefore, the \code{component} argument defaults to
-\code{"conditional"} to avoid this.
+where predictors appear in the count and zero-inflation part, or models with
+dispersion component) may fail in rare situations. In this case, compute
+the pooled parameters for components separately, using the \code{component}
+argument.
 
 Some model objects do not return standard errors (e.g. objects of class
 \code{htest}). For these models, no pooled confidence intervals nor p-values

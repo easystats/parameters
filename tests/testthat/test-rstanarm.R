@@ -25,7 +25,7 @@ test_that("mp2", {
   data(pbcLong, package = "rstanarm")
   pbcLong$ybern <- as.integer(pbcLong$logBili >= mean(pbcLong$logBili))
   set.seed(123)
-  invisible(capture.output(
+  invisible(capture.output({
     model <- rstanarm::stan_mvmer(
       formula = list(
         ybern ~ year + (1 | id),
@@ -35,7 +35,7 @@ test_that("mp2", {
       refresh = 0,
       seed = 123
     )
-  ))
+  }))
 
   mp <- suppressWarnings(model_parameters(model, centrality = "mean"))
   s <- summary(model)

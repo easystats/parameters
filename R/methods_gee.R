@@ -26,13 +26,13 @@ p_value.gee <- function(model, method = NULL, ...) {
   if (isTRUE(list(...)$robust) || "vcov" %in% names(list(...))) {
     p <- 2 * stats::pt(
       abs(cs[, "Estimate"] / cs[, "Robust S.E."]),
-      df = degrees_of_freedom(model, method = method),
+      df = insight::get_df(x = model, type = method),
       lower.tail = FALSE
     )
   } else {
     p <- 2 * stats::pt(
       abs(cs[, "Estimate"] / cs[, "Naive S.E."]),
-      df = degrees_of_freedom(model, method = method),
+      df = insight::get_df(x = model, type = method),
       lower.tail = FALSE
     )
   }
@@ -56,7 +56,7 @@ p_value.geeglm <- function(model, method = "wald", ...) {
 
   if (!is.null(stat)) {
     if (identical(method, "residual")) {
-      dof <- degrees_of_freedom(model, method = "residual")
+      dof <- insight::get_df(model, type = "residual")
       p <- as.vector(2 * stats::pt(
         sqrt(abs(stat$Statistic)),
         df = dof,

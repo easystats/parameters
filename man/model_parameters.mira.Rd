@@ -87,38 +87,32 @@ similar to \code{summary(mice::pool())}, i.e. it generates the pooled summary
 of multiple imputed repeated regression analyses.
 }
 \examples{
+\dontshow{if (require("mice", quietly = TRUE) && require("gee", quietly = TRUE)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 library(parameters)
-if (require("mice", quietly = TRUE)) {
-  data(nhanes2)
-  imp <- mice(nhanes2)
-  fit <- with(data = imp, exp = lm(bmi ~ age + hyp + chl))
-  model_parameters(fit)
-}
+data(nhanes2, package = "mice")
+imp <- mice::mice(nhanes2)
+fit <- with(data = imp, exp = lm(bmi ~ age + hyp + chl))
+model_parameters(fit)
 \donttest{
 # model_parameters() also works for models that have no "tidy"-method in mice
-if (require("mice", quietly = TRUE) && require("gee", quietly = TRUE)) {
-  data(warpbreaks)
-  set.seed(1234)
-  warpbreaks$tension[sample(1:nrow(warpbreaks), size = 10)] <- NA
-  imp <- mice(warpbreaks)
-  fit <- with(data = imp, expr = gee(breaks ~ tension, id = wool))
+data(warpbreaks)
+set.seed(1234)
+warpbreaks$tension[sample(1:nrow(warpbreaks), size = 10)] <- NA
+imp <- mice::mice(warpbreaks)
+fit <- with(data = imp, expr = gee::gee(breaks ~ tension, id = wool))
 
-  # does not work:
-  # summary(pool(fit))
+# does not work:
+# summary(mice::pool(fit))
 
-  model_parameters(fit)
+model_parameters(fit)
 }
-}
-
-
 
 # and it works with pooled results
-if (require("mice")) {
-  data("nhanes2")
-  imp <- mice(nhanes2)
-  fit <- with(data = imp, exp = lm(bmi ~ age + hyp + chl))
-  pooled <- pool(fit)
+data("nhanes2", package = "mice")
+imp <- mice::mice(nhanes2)
+fit <- with(data = imp, exp = lm(bmi ~ age + hyp + chl))
+pooled <- mice::pool(fit)
 
-  model_parameters(pooled)
-}
+model_parameters(pooled)
+\dontshow{\}) # examplesIf}
 }

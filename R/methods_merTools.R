@@ -44,13 +44,6 @@ standard_error.merModList <- function(model, ...) {
 
 
 #' @export
-degrees_of_freedom.merModList <- function(model, ...) {
-  s <- suppressWarnings(summary(model))
-  s$fe$df
-}
-
-
-#' @export
 format_parameters.merModList <- function(model, brackets = c("[", "]"), ...) {
   .format_parameter_default(model[[1]], brackets = brackets)
 }

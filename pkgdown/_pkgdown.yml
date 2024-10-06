@@ -58,10 +58,11 @@ reference:
 
   - title: "Effect Existence and Significance"
     contents:
-      - equivalence_test
       - equivalence_test.lm
       - p_calibrate
+      - p_direction.lm
       - p_function
+      - p_significance.lm
 
   - title: "Parameter Sampling"
     contents:
@@ -102,6 +103,7 @@ reference:
       - format_parameters
       - format_p_adjust
       - format_df_adjust
+      - format.compare_parameters
       - parameters_type
       - print_md
 

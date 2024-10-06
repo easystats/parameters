@@ -24,7 +24,7 @@
     out$CI_high <- out$Coefficient + fac * out$SE
     ci_cols <- c("CI_low", "CI_high")
   } else {
-    ci_cols <- c()
+    ci_cols <- NULL
     for (i in ci) {
       fac <- stats::qnorm((1 + i) / 2)
       ci_low <- paste0("CI_low_", i)
@@ -66,7 +66,10 @@
   out <- switch(component,
     zi = ,
     zero_inflated = out[out$Component == "zi", ],
+    cond = ,
     conditional = out[out$Component == "cond", ],
+    disp = ,
+    dispersion = out[out$Component == "disp", ],
     out
   )
 
@@ -79,6 +82,7 @@
   # rename
   out$Component[out$Component == "zi"] <- "zero_inflated"
   out$Component[out$Component == "cond"] <- "conditional"
+  out$Component[out$Component == "disp"] <- "dispersion"
 
   if (length(ci) == 1) {
     fac <- stats::qnorm((1 + ci) / 2)
@@ -86,7 +90,7 @@
     out$CI_high <- out$Coefficient + fac * out$SE
     ci_cols <- c("CI_low", "CI_high")
   } else {
-    ci_cols <- c()
+    ci_cols <- NULL
     for (i in ci) {
       fac <- stats::qnorm((1 + i) / 2)
       ci_low <- paste0("CI_low_", i)
@@ -104,7 +108,10 @@
   out$df_error <- NA
   out$p <- NA
 
-  out <- out[c("Parameter", "Level", "Coefficient", "SE", ci_cols, stat_column, "df_error", "p", "Component", "Effects", "Group")]
+  out <- out[c(
+    "Parameter", "Level", "Coefficient", "SE", ci_cols, stat_column,
+    "df_error", "p", "Component", "Effects", "Group"
+  )]
 
   if (effects == "random") {
     out[c(stat_column, "df_error", "p")] <- NULL

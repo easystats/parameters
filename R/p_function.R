@@ -18,11 +18,15 @@
 #' @inheritParams model_parameters
 #' @inheritParams model_parameters.default
 #' @inheritParams model_parameters.glmmTMB
+#' @inheritParams standard_error
 #'
 #' @note
 #' Curently, `p_function()` computes intervals based on Wald t- or z-statistic.
 #' For certain models (like mixed models), profiled intervals may be more
 #' accurate, however, this is currently not supported.
+#'
+#' @seealso See also [`equivalence_test()`] and [`p_significance()`] for
+#' functions related to checking effect existence and significance.
 #'
 #' @details
 #' ## Compatibility intervals and continuous _p_-values for different estimate values
@@ -75,7 +79,7 @@
 #' _p_<0.05 can arise from assumption violations even if the effect under
 #' study is null" (_Gelman/Greenland 2019_).
 #'
-#' ## Probabilistic interpretation of compatibility intervals
+#' ## Probabilistic interpretation of p-values and compatibility intervals
 #'
 #' Schweder (2018) resp. Schweder and Hjort (2016) (and others) argue that
 #' confidence curves (as produced by `p_function()`) have a valid probabilistic
@@ -106,21 +110,55 @@
 #' "The realized confidence distribution is clearly an epistemic probability
 #' distribution" (_Schweder 2018_). In Bayesian words, compatibility intervals
 #' (or confidence distributons, or consonance curves) are "posteriors without
-#' priors" (_Schweder, Hjort, 2003_). In this regard, interpretation of _p_-values
-#' might be guided using [`bayestestR::p_to_pd()`].
+#' priors" (_Schweder, Hjort, 2003_).
 #'
-#' ## Compatibility intervals - is their interpretation conditional or not?
+#' The _p_-value indicates the degree of compatibility of the endpoints of the
+#' interval at a given confidence level with (1) the observed data and (2) model
+#' assumptions. The observed point estimate (_p_-value = 1) is the value
+#' estimated to be _most compatible_ with the data and model assumptions,
+#' whereas values values far from the observed point estimate (where _p_
+#' approaches 0) are least compatible with the data and model assumptions
+#' (_Schweder and Hjort 2016, pp. 60-61; Amrhein and Greenland 2022_). In this
+#' regards, _p_-values are statements about _confidence_ or _compatibility_:
+#' The p-value is not an absolute measure of evidence for a model (such as the
+#' null/alternative model), it is a continuous measure of the compatibility of
+#' the observed data with the model used to compute it (_Greenland et al. 2016_,
+#' _Greenland 2023_). Going one step further, and following _Schweder_, p-values
+#' can be considered as _epistemic probability_ - "not necessarily of the
+#' hypothesis being true, but of it _possibly_ being true" (_Schweder 2018_).
+#' Hence, the interpretation of _p_-values might be guided using
+#' [`bayestestR::p_to_pd()`].
 #'
-#' The fact that the term "conditional" is used in different meanings, is
-#' confusing and unfortunate. Thus, we would summarize the probabilistic
-#' interpretation of compatibility intervals as follows: The intervals are built
-#' from the data _and_ our modeling assumptions. The accuracy of the intervals
-#' depends on our model assumptions. If a value is outside the interval, that
-#' might be because (1) that parameter value isn't supported by the data, or
-#' (2) the modeling assumptions are a poor fit for the situation. When we make
-#' bad assumptions, the compatibility interval might be too wide or (more
-#' commonly and seriously) too narrow, making us think we know more about the
-#' parameter than is warranted.
+#' ## Probability or compatibility?
+#'
+#' We here presented the discussion of p-values and confidence intervals from the
+#' perspective of two paradigms, one saying that probability statements can be
+#' made, one saying that interpretation is guided in terms of "compatibility".
+#' Cox and Hinkley say, "interval estimates cannot be taken as probability
+#' statements" (_Cox and Hinkley 1979: 208_), which conflicts with the Schweder
+#' and Hjort confidence distribution school. However, if you view interval
+#' estimates as being intervals of values being consistent with the data,
+#' this comes close to the idea of (epistemic) probability. We do not believe that
+#' these two paradigms contradict or exclude each other. Rather, the aim is to
+#' emphasize one point of view or the other, i.e. to place the linguistic
+#' nuances either on 'compatibility' or 'probability'.
+#'
+#' The main take-away is *not* to interpret p-values as dichotomous decisions
+#' that distinguish between "we found an effect" (statistically significant)" vs.
+#' "we found no effect" (statistically not significant) (_Altman and Bland 1995_).
+#'
+#' ## Compatibility intervals - is their interpretation "conditional" or not?
+#'
+#' The fact that the term "conditional" is used in different meanings in
+#' statistics, is confusing and unfortunate. Thus, we would summarize the
+#' (probabilistic) interpretation of compatibility intervals as follows: The
+#' intervals are built from the data _and_ our modeling assumptions. The
+#' accuracy of the intervals depends on our model assumptions. If a value is
+#' outside the interval, that might be because (1) that parameter value isn't
+#' supported by the data, or (2) the modeling assumptions are a poor fit for the
+#' situation. When we make bad assumptions, the compatibility interval might be
+#' too wide or (more commonly and seriously) too narrow, making us think we know
+#' more about the parameter than is warranted.
 #'
 #' When we say "there is a 95% chance the true value is in the interval", that is
 #' a statement of _epistemic probability_ (i.e. description of uncertainty related
@@ -130,13 +168,41 @@
 #' probability properties, from which we can draw _epistemic_ probabilistic
 #' statements of uncertainty (_Schweder and Hjort 2016_).
 #'
+#' ## Functions in the parameters package to check for effect existence and significance
+#'
+#' The **parameters** package provides several options or functions to aid
+#' statistical inference. Beyond `p_function()`, there are, for example:
+#' - [`equivalence_test()`][equivalence_test.lm], to compute the (conditional)
+#'   equivalence test for frequentist models
+#' - [`p_significance()`][p_significance.lm], to compute the probability of
+#'   *practical significance*, which can be conceptualized as a unidirectional
+#'   equivalence test
+#' - the `pd` argument (setting `pd = TRUE`) in `model_parameters()` includes
+#'   a column with the *probability of direction*, i.e. the probability that a
+#'   parameter is strictly positive or negative. See [`bayestestR::p_direction()`]
+#'   for details. If plotting is desired, the [`p_direction()`][p_direction.lm]
+#'   function can be used, together with `plot()`.
+#' - the `s_value` argument (setting `s_value = TRUE`) in `model_parameters()`
+#'   replaces the p-values with their related _S_-values (*Rafi and Greenland 2020*)
+#' - finally, it is possible to generate distributions of model coefficients by
+#'   generating bootstrap-samples (setting `bootstrap = TRUE`) or simulating
+#'   draws from model coefficients using [`simulate_model()`]. These samples
+#'   can then be treated as "posterior samples" and used in many functions from
+#'   the **bayestestR** package.
+#'
 #' @return A data frame with p-values and compatibility intervals.
 #'
 #' @references
+#' - Altman DG, Bland JM. Absence of evidence is not evidence of absence. BMJ.
+#'   1995;311(7003):485. \doi{10.1136/bmj.311.7003.485}
+#'
 #' - Amrhein V, Greenland S. Discuss practical importance of results based on
 #'   interval estimates and p-value functions, not only on point estimates and
 #'   null p-values. Journal of Information Technology 2022;37:316–20.
 #'   \doi{10.1177/02683962221105904}
+#'
+#' - Cox DR, Hinkley DV. 1979. Theoretical Statistics. 6th edition.
+#'   Chapman and Hall/CRC
 #'
 #' - Fraser DAS. The P-value function and statistical inference. The American
 #'   Statistician. 2019;73(sup1):135-147. \doi{10.1080/00031305.2018.1556735}
@@ -147,6 +213,16 @@
 #' - Greenland S, Rafi Z, Matthews R, Higgs M. To Aid Scientific Inference,
 #'   Emphasize Unconditional Compatibility Descriptions of Statistics. (2022)
 #'   https://arxiv.org/abs/1909.08583v7 (Accessed November 10, 2022)
+#'
+#' - Greenland S, Senn SJ, Rothman KJ, Carlin JB, Poole C, Goodman SN, et al.
+#'   (2016). Statistical tests, P values, confidence intervals, and power: A
+#'   guide to misinterpretations. European Journal of Epidemiology. 31:337-350.
+#'   \doi{10.1007/s10654-016-0149-3}
+#'
+#' - Greenland S (2023). Divergence versus decision P-values: A distinction
+#'   worth making in theory and keeping in practice: Or, how divergence P-values
+#'   measure evidence even when decision P-values do not. Scand J Statist, 50(1),
+#'   54-88. \doi{doi.org/10.1111/sjos.12625}
 #'
 #' - Rafi Z, Greenland S. Semantic and cognitive tools to aid statistical
 #'   science: Replace confidence and significance by compatibility and surprise.
@@ -188,6 +264,8 @@ p_function <- function(model,
                        exponentiate = FALSE,
                        effects = "fixed",
                        component = "all",
+                       vcov = NULL,
+                       vcov_args = NULL,
                        keep = NULL,
                        drop = NULL,
                        verbose = TRUE,
@@ -199,7 +277,9 @@ p_function <- function(model,
   se <- standard_error(
     model,
     effects = effects,
-    component = component
+    component = component,
+    vcov = vcov,
+    vcov_args = vcov_args
   )$SE
 
   if (is.null(dof) || length(dof) == 0 || .is_chi2_model(model, dof)) {

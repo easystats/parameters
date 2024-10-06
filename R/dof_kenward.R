@@ -263,7 +263,7 @@ dof_kenward <- function(model) {
 
   Gp <- lme4::getME(model, "Gp")
   n.RT <- length(Gp) - 1 ## Number of random terms (i.e. of (|)'s)
-  n.lev.by.RT <- sapply(lme4::getME(model, "flist"), function(x) length(levels(x)))
+  n.lev.by.RT <- sapply(lme4::getME(model, "flist"), nlevels)
   n.comp.by.RT <- .get.RT.dim.by.RT(model)
   n.parm.by.RT <- (n.comp.by.RT + 1) * n.comp.by.RT / 2
   n.RE.by.RT <- diff(Gp)

@@ -1,6 +1,6 @@
 # normal print ----------------------------
 
-#' @rdname display.parameters_model
+#' @rdname print.parameters_model
 #' @export
 print_html.parameters_model <- function(x,
                                         pretty_names = TRUE,
@@ -138,6 +138,7 @@ print_html.parameters_simulate <- print_html.parameters_model
 #' @export
 print_html.parameters_sem <- print_html.parameters_model
 
+#' @rdname print.compare_parameters
 #' @export
 print_html.compare_parameters <- function(x,
                                           caption = NULL,

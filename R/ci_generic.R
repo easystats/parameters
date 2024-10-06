@@ -97,10 +97,14 @@
   }
   method <- tolower(method)
 
+  # Fist, we want standard errors for parameters
+  # --------------------------------------------
+
   # if we have adjusted SE, e.g. from kenward-roger, don't recompute
   # standard errors to save time...
   if (is.null(se)) {
     if (!is.null(vcov) || isTRUE(list(...)[["robust"]])) {
+      # robust (HC) standard errors?
       stderror <- standard_error(model,
         component = component,
         vcov = vcov,
@@ -109,6 +113,7 @@
         ...
       )
     } else {
+      # normal standard errors, including small-sample approximations
       stderror <- switch(method,
         kenward = se_kenward(model),
         kr = se_kenward(model),
@@ -133,10 +138,13 @@
     se <- stderror$SE
   }
 
+  # Next, we need degrees of freedom
+  # --------------------------------
+
   # check if we have a valid dof vector
   if (is.null(dof)) {
     # residual df
-    dof <- degrees_of_freedom(model, method = method, verbose = FALSE)
+    dof <- insight::get_df(x = model, type = method, verbose = FALSE)
     # make sure we have a value for degrees of freedom
     if (is.null(dof) || length(dof) == 0 || .is_chi2_model(model, dof)) {
       dof <- Inf
@@ -146,7 +154,9 @@
     }
   }
 
-  # calculate CIs
+  # Now we can calculate CIs
+  # ------------------------
+
   alpha <- (1 + ci) / 2
   fac <- suppressWarnings(stats::qt(alpha, df = dof))
   out <- cbind(
@@ -169,7 +179,6 @@
     out
   }
 }
-
 
 
 .is_chi2_model <- function(model, dof) {

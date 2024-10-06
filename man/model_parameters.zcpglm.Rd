@@ -14,9 +14,10 @@
   standardize = NULL,
   exponentiate = FALSE,
   p_adjust = NULL,
+  summary = getOption("parameters_summary", FALSE),
+  include_info = getOption("parameters_info", FALSE),
   keep = NULL,
   drop = NULL,
-  summary = getOption("parameters_summary", FALSE),
   verbose = TRUE,
   ...
 )
@@ -88,6 +89,12 @@ possible adjustment methods are \code{"tukey"}, \code{"scheffe"},
 \code{"sidak"} and \code{"none"} to explicitly disable adjustment for
 \code{emmGrid} objects (from \strong{emmeans}).}
 
+\item{summary}{Deprecated, please use \code{info} instead.}
+
+\item{include_info}{Logical, if \code{TRUE}, prints summary information about the
+model (model formula, number of observations, residual standard deviation
+and more).}
+
 \item{keep}{Character containing a regular expression pattern that
 describes the parameters that should be included (for \code{keep}) or excluded
 (for \code{drop}) in the returned data frame. \code{keep} may also be a
@@ -110,15 +117,22 @@ names.}
 
 \item{drop}{See \code{keep}.}
 
-\item{summary}{Logical, if \code{TRUE}, prints summary information about the
-model (model formula, number of observations, residual standard deviation
-and more).}
-
 \item{verbose}{Toggle warnings and messages.}
 
 \item{...}{Arguments passed to or from other methods. For instance, when
-\code{bootstrap = TRUE}, arguments like \code{type} or \code{parallel} are
-passed down to \code{bootstrap_model()}.}
+\code{bootstrap = TRUE}, arguments like \code{type} or \code{parallel} are passed down to
+\code{bootstrap_model()}. Further non-documented arguments are \code{digits},
+\code{p_digits}, \code{ci_digits} and \code{footer_digits} to set the number of digits for
+the output. If \code{s_value = TRUE}, the p-value will be replaced by the
+S-value in the output (cf. \emph{Rafi and Greenland 2020}). \code{pd} adds an
+additional column with the \emph{probability of direction} (see
+\code{\link[bayestestR:p_direction]{bayestestR::p_direction()}} for details). \code{groups} can be used to group
+coefficients. It will be passed to the print-method, or can directly be
+used in \code{print()}, see documentation in \code{\link[=print.parameters_model]{print.parameters_model()}}.
+Furthermore, see 'Examples' for this function. For developers, whose
+interest mainly is to get a "tidy" data frame of model summaries, it is
+recommended to set \code{pretty_names = FALSE} to speed up computation of the
+summary table.}
 }
 \value{
 A data frame of indices related to the model's parameters.

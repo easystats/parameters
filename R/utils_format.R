@@ -295,15 +295,15 @@
   }
 
   # fix coefficient column name for random effects
-  if (!is.null(x$Effects) && all(x$Effects == "random") && any(colnames(x) %in% .all_coefficient_types())) {
-    colnames(x)[colnames(x) %in% .all_coefficient_types()] <- "Coefficient"
+  if (!is.null(x$Effects) && all(x$Effects == "random") && any(colnames(x) %in% .all_coefficient_types)) {
+    colnames(x)[colnames(x) %in% .all_coefficient_types] <- "Coefficient"
   }
 
   # fix coefficient column name for mixed count and zi pars
   if (!is.null(x$Component) &&
     sum(c("conditional", "zero_inflated", "dispersion") %in% x$Component) >= 2 &&
-    any(colnames(x) %in% .all_coefficient_types())) {
-    colnames(x)[colnames(x) %in% .all_coefficient_types()] <- "Coefficient"
+    any(colnames(x) %in% .all_coefficient_types)) {
+    colnames(x)[colnames(x) %in% .all_coefficient_types] <- "Coefficient"
   }
 
   # random pars with level? combine into parameter column
@@ -476,13 +476,14 @@
 # components into different tables, we change the column name for those "tables"
 # that contain the random effects or zero-inflation parameters
 
-.all_coefficient_types <- function() {
-  c(
-    "Odds Ratio", "Risk Ratio", "Prevalence Ratio", "IRR", "Log-Odds",
-    "Log-Mean", "Log-Ratio", "Log-Prevalence", "Probability", "Marginal Means",
-    "Estimated Counts", "Ratio"
-  )
-}
+.all_coefficient_types <- c(
+  "Odds Ratio", "Risk Ratio", "Prevalence Ratio", "IRR", "Log-Odds",
+  "Log-Mean", "Log-Ratio", "Log-Prevalence", "Probability", "Marginal Means",
+  "Estimated Counts", "Ratio"
+)
+
+
+.all_coefficient_names <- c("Coefficient", "Std_Coefficient", "Estimate", "Median", "Mean", "MAP")
 
 
 .format_stan_parameters <- function(out) {
@@ -962,16 +963,16 @@
   }
 
   # fix column output
-  if (inherits(attributes(x)$model, c("lavaan", "blavaan")) && "Label" %in% colnames(x)) {
+  if (inherits(attributes(x)[["model"]], c("lavaan", "blavaan")) && "Label" %in% colnames(x)) {
     x$From <- ifelse(!nzchar(as.character(x$Label), keepNA = TRUE) | x$Label == x$To, x$From, paste0(x$From, " (", x$Label, ")")) # nolint
     x$Label <- NULL
   }
 
-  if (inherits(attributes(x)$model, c("lavaan", "blavaan")) && !"Parameter" %in% colnames(x)) {
+  if (inherits(attributes(x)[["model"]], c("lavaan", "blavaan")) && !"Parameter" %in% colnames(x)) {
     parameter_column <- colnames(x)[1]
   }
 
-  if (inherits(attributes(x)$model, c("lavaan", "blavaan")) && "Defined" %in% x$Component) {
+  if (inherits(attributes(x)[["model"]], c("lavaan", "blavaan")) && "Defined" %in% x$Component) {
     x$From[x$Component == "Defined"] <- ""
     x$Operator[x$Component == "Defined"] <- ""
     x$To <- ifelse(x$Component == "Defined", paste0("(", x$To, ")"), x$To)
@@ -1095,8 +1096,8 @@
     }
 
     # rename columns for random part
-    if (grepl("random", type, fixed = TRUE) && any(colnames(tables[[type]]) %in% .all_coefficient_types())) {
-      colnames(tables[[type]])[colnames(tables[[type]]) %in% .all_coefficient_types()] <- "Coefficient"
+    if (grepl("random", type, fixed = TRUE) && any(colnames(tables[[type]]) %in% .all_coefficient_types)) {
+      colnames(tables[[type]])[colnames(tables[[type]]) %in% .all_coefficient_types] <- "Coefficient"
     }
 
     if (grepl("random", type, fixed = TRUE) && isTRUE(ran_pars)) {
@@ -1183,7 +1184,7 @@
     # fix non-equal length of columns
     final_table <- .fix_nonmatching_columns(
       final_table,
-      is_lavaan = inherits(attributes(x)$model, c("lavaan", "blavaan"))
+      is_lavaan = inherits(attributes(x)[["model"]], c("lavaan", "blavaan"))
     )
     do.call(rbind, final_table)
   } else {

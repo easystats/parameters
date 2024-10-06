@@ -1,6 +1,6 @@
 ---
 title: "Summary of Model Parameters"
-output: 
+output:
   rmarkdown::html_vignette:
     toc: true
     fig_width: 10.08
@@ -10,7 +10,7 @@ vignette: >
   %\VignetteIndexEntry{Summary of Model Parameters}
   \usepackage[utf8]{inputenc}
   %\VignetteEngine{knitr::rmarkdown}
-editor_options: 
+editor_options:
   chunk_output_type: console
 bibliography: bibliography.bib
 ---
@@ -32,7 +32,8 @@ knitr::opts_chunk$set(
 
 pkgs <- c(
   "effectsize", "BayesFactor", "lme4", "metafor", "lavaan", "nFactors", "BH",
-  "EGAnet", "brms", "psych", "rstanarm", "glmmTMB", "GLMMadaptive", "FactoMineR"
+  "EGAnet", "brms", "psych", "rstanarm", "glmmTMB", "GLMMadaptive", "FactoMineR",
+  "RcppEigen"
 )
 
 successfully_loaded <- vapply(pkgs, requireNamespace, TRUE, quietly = TRUE)
@@ -106,7 +107,7 @@ summaries, including confidence intervals
 
 ```{r eval=successfully_loaded["effectsize"]}
 aov(Sepal.Length ~ Species, data = iris) |>
-  parameters(effectsize_type = c("omega", "eta", "epsilon"))
+  parameters(es_type = c("omega", "eta", "epsilon"))
 ```
 
 Let's complicate things further with an interaction term:
@@ -114,7 +115,7 @@ Let's complicate things further with an interaction term:
 ```{r eval=successfully_loaded["effectsize"]}
 aov(Sepal.Length ~ Species * Sepal.Width, data = iris) |>
   parameters(
-    effectsize_type = c("omega", "eta"),
+    es_type = c("omega", "eta"),
     ci = 0.8
   )
 ```
@@ -149,9 +150,9 @@ glm(vs ~ poly(mpg, 2) + cyl, data = mtcars, family = binomial()) |>
 ```
 
 ```{r}
-# show Odds Ratios and include model summary
+# show Odds Ratios and include model info
 glm(vs ~ poly(mpg, 2) + cyl, data = mtcars, family = binomial()) |>
-  parameters(exponentiate = TRUE, summary = TRUE)
+  parameters(exponentiate = TRUE, include_info = TRUE)
 ```
 
 ### Mixed Models
@@ -268,7 +269,7 @@ parameters(
 
 The **parameters** package extends the support to structural models.
 
-### Principal Component Analysis (PCA) and Exploratory Factor Analysis (EFA) 
+### Principal Component Analysis (PCA) and Exploratory Factor Analysis (EFA)
 
 ```{r eval=all(successfully_loaded[c("psych", "nFactors")])}
 psych::pca(mtcars, nfactors = 3) |>

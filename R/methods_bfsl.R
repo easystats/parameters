@@ -4,10 +4,17 @@ model_parameters.bfsl <- function(model,
                                   ci_method = "residual",
                                   p_adjust = NULL,
                                   summary = getOption("parameters_summary", FALSE),
+                                  include_info = getOption("parameters_info", FALSE),
                                   keep = NULL,
                                   drop = NULL,
                                   verbose = TRUE,
                                   ...) {
+  ## TODO remove deprecated later
+  if (!missing(summary)) {
+    .deprecated_warning("summary", "include_info", verbose)
+    include_info <- summary
+  }
+
   out <- .model_parameters_generic(
     model = model,
     ci = ci,
@@ -16,7 +23,7 @@ model_parameters.bfsl <- function(model,
     p_adjust = p_adjust,
     keep_parameters = keep,
     drop_parameters = drop,
-    summary = summary,
+    include_info = include_info,
     ...
   )
 
@@ -36,21 +43,4 @@ standard_error.bfsl <- function(model, ...) {
     row.names = NULL
   )
   insight::text_remove_backticks(params, verbose = FALSE)
-}
-
-
-
-#' @export
-degrees_of_freedom.bfsl <- function(model, method = "residual", ...) {
-  if (is.null(method)) {
-    method <- "wald"
-  }
-
-  method <- match.arg(tolower(method), choices = c("analytical", "any", "fit", "wald", "residual", "normal"))
-
-  if (method %in% c("wald", "residual", "fit")) {
-    model$df.residual
-  } else {
-    degrees_of_freedom.default(model, method = method, ...)
-  }
 }

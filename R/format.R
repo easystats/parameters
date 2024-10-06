@@ -1,7 +1,7 @@
 # usual models ---------------------------------
 
 #' @inheritParams print.parameters_model
-#' @rdname display.parameters_model
+#' @rdname print.parameters_model
 #' @export
 format.parameters_model <- function(x,
                                     pretty_names = TRUE,
@@ -240,6 +240,7 @@ format.parameters_brms_meta <- format.parameters_model
 # Compare parameters ----------------------
 
 
+#' @rdname print.compare_parameters
 #' @inheritParams print.parameters_model
 #' @export
 format.compare_parameters <- function(x,
@@ -311,7 +312,7 @@ format.compare_parameters <- function(x,
     # since we merged all models together, and we only have model-specific
     # columns for estimates, CI etc. but not for Effects and Component, we
     # extract "valid" rows via non-NA values in the coefficient column
-    coef_column <- which(colnames(cols) %in% c(.all_coefficient_types(), "Coefficient"))
+    coef_column <- which(colnames(cols) %in% c(.all_coefficient_types, "Coefficient"))
     valid_rows <- which(!is.na(cols[[coef_column]]))
     # check if we have mixed models with random variance parameters
     # in such cases, we don't need the group-column, but we rather
@@ -541,6 +542,7 @@ format.parameters_sem <- function(x,
                            show_sigma = FALSE,
                            show_formula = FALSE,
                            show_r2 = FALSE,
+                           show_rmse = FALSE,
                            format = "text") {
   # prepare footer
   footer <- NULL
@@ -548,6 +550,7 @@ format.parameters_sem <- function(x,
 
   sigma_value <- attributes(x)$sigma
   r2 <- attributes(x)$r2
+  rmse <- attributes(x)$rmse
   residual_df <- attributes(x)$residual_df
   p_adjust <- attributes(x)$p_adjust
   model_formula <- attributes(x)$model_formula
@@ -574,29 +577,35 @@ format.parameters_sem <- function(x,
     footer <- .add_footer_r2(footer, digits, r2, type)
   }
 
+  # footer: r-squared
+  if (isTRUE(show_rmse)) {
+    footer <- .add_footer_values(footer, digits, value = rmse, text = "RMSE ", type)
+  }
+
   # footer: p-adjustment
-  if ("p" %in% colnames(x) && isTRUE(verbose)) {
-    footer <- .add_footer_padjust(footer, p_adjust, type)
+  if ("p" %in% colnames(x) && isTRUE(verbose) && !is.null(p_adjust) && p_adjust != "none") {
+    footer <- .add_footer_text(footer, text = paste("p-value adjustment method:", format_p_adjust(p_adjust)))
   }
 
   # footer: anova test
   if (!is.null(anova_test)) {
-    footer <- .add_footer_anova_test(footer, anova_test, type)
+    footer <- .add_footer_text(footer, text = sprintf("%s test statistic", anova_test))
   }
 
-  # footer: anova test
+  # footer: anova type
   if (!is.null(anova_type)) {
-    footer <- .add_footer_anova_type(footer, anova_type, type)
+    footer <- .add_footer_text(footer, text = sprintf("Anova Table (Type %s tests)", anova_type))
   }
+
 
   # footer: marginaleffects::comparisons()
   if (!is.null(prediction_type)) {
-    footer <- .add_footer_prediction_type(footer, prediction_type, type)
+    footer <- .add_footer_text(footer, text = sprintf("Prediction type: %s", prediction_type))
   }
 
   # footer: htest alternative
   if (!is.null(text_alternative)) {
-    footer <- .add_footer_alternative(footer, text_alternative, type)
+    footer <- .add_footer_text(footer, text = text_alternative)
   }
 
   # footer: generic text
@@ -626,7 +635,7 @@ format.parameters_sem <- function(x,
 
 # footer: generic text
 .add_footer_text <- function(footer = NULL, text = NULL, type = "text", is_ggeffects = FALSE) {
-  if (!is.null(text)) {
+  if (!is.null(text) && length(text)) {
     if (type == "text" || type == "markdown") {
       if (is.null(footer)) {
         fill <- "\n"
@@ -637,6 +646,29 @@ format.parameters_sem <- function(x,
     } else if (type == "html") {
       replacement <- ifelse(is_ggeffects, ";", "")
       footer <- c(footer, gsub("\n", replacement, text, fixed = TRUE))
+    }
+  }
+  footer
+}
+
+
+# footer: generic values
+.add_footer_values <- function(footer = NULL,
+                               digits = 3,
+                               value = NULL,
+                               text = NULL,
+                               type = "text") {
+  if (!is.null(value) && !is.null(text)) {
+    string <- sprintf("%s: %s", text, insight::format_value(value, digits = digits))
+    if (type == "text" || type == "markdown") {
+      if (is.null(footer)) {
+        fill <- "\n"
+      } else {
+        fill <- ""
+      }
+      footer <- paste0(footer, fill, string, "\n")
+    } else if (type == "html") {
+      footer <- c(footer, string)
     }
   }
   footer
@@ -659,9 +691,9 @@ format.parameters_sem <- function(x,
       } else {
         fill <- ""
       }
-      footer <- paste0(footer, sprintf("%sResidual standard deviation: %.*f%s\n", fill, digits, sigma, res_df))
+      footer <- paste0(footer, sprintf("%sSigma: %.*f%s\n", fill, digits, sigma, res_df))
     } else if (type == "html") {
-      footer <- c(footer, insight::trim_ws(sprintf("Residual standard deviation: %.*f%s", digits, sigma, res_df)))
+      footer <- c(footer, insight::trim_ws(sprintf("Sigma: %.*f%s", digits, sigma, res_df)))
     }
   }
   footer
@@ -671,7 +703,7 @@ format.parameters_sem <- function(x,
 # footer: r-squared
 .add_footer_r2 <- function(footer = NULL, digits = 3, r2 = NULL, type = "text") {
   if (!is.null(r2)) {
-    rsq <- .safe(paste0(unlist(lapply(r2, function(i) {
+    rsq <- .safe(paste(unlist(lapply(r2, function(i) {
       paste0(attributes(i)$names, ": ", insight::format_value(i, digits = digits))
     })), collapse = "; "))
 
@@ -686,96 +718,6 @@ format.parameters_sem <- function(x,
       } else if (type == "html") {
         footer <- c(footer, rsq)
       }
-    }
-  }
-  footer
-}
-
-
-# footer: anova type
-.add_footer_anova_type <- function(footer = NULL, aov_type = NULL, type = "text") {
-  if (!is.null(aov_type)) {
-    if (type == "text" || type == "markdown") {
-      if (is.null(footer)) {
-        fill <- "\n"
-      } else {
-        fill <- ""
-      }
-      footer <- paste0(footer, sprintf("%sAnova Table (Type %s tests)\n", fill, aov_type))
-    } else if (type == "html") {
-      footer <- c(footer, sprintf("Anova Table (Type %s tests)", aov_type))
-    }
-  }
-  footer
-}
-
-
-# footer: marginaleffects::comparisions() prediction_type
-.add_footer_prediction_type <- function(footer = NULL, prediction_type = NULL, type = "text") {
-  if (!is.null(prediction_type)) {
-    if (type == "text" || type == "markdown") {
-      if (is.null(footer)) {
-        fill <- "\n"
-      } else {
-        fill <- ""
-      }
-      footer <- paste0(footer, sprintf("%sPrediction type: %s\n", fill, prediction_type))
-    } else if (type == "html") {
-      footer <- c(footer, sprintf("Prediction type: %s", prediction_type))
-    }
-  }
-  footer
-}
-
-
-# footer: anova test
-.add_footer_anova_test <- function(footer = NULL, test = NULL, type = "text") {
-  if (!is.null(test)) {
-    if (type == "text" || type == "markdown") {
-      if (is.null(footer)) {
-        fill <- "\n"
-      } else {
-        fill <- ""
-      }
-      footer <- paste0(footer, sprintf("%s%s test statistic\n", fill, test))
-    } else if (type == "html") {
-      footer <- c(footer, sprintf("%s test statistic", test))
-    }
-  }
-  footer
-}
-
-
-# footer: htest alternative
-.add_footer_alternative <- function(footer = NULL, text_alternative = NULL, type = "text") {
-  if (!is.null(text_alternative)) {
-    if (type == "text" || type == "markdown") {
-      if (is.null(footer)) {
-        fill <- "\n"
-      } else {
-        fill <- ""
-      }
-      footer <- paste0(footer, sprintf("%s%s\n", fill, text_alternative))
-    } else if (type == "html") {
-      footer <- c(footer, text_alternative)
-    }
-  }
-  footer
-}
-
-
-# footer: p-adjustment
-.add_footer_padjust <- function(footer = NULL, p_adjust = NULL, type = "text") {
-  if (!is.null(p_adjust) && p_adjust != "none") {
-    if (type == "text" || type == "markdown") {
-      if (is.null(footer)) {
-        fill <- "\n"
-      } else {
-        fill <- ""
-      }
-      footer <- paste0(footer, fill, "p-value adjustment method: ", format_p_adjust(p_adjust), "\n")
-    } else if (type == "html") {
-      footer <- c(footer, paste0("p-value adjustment method: ", format_p_adjust(p_adjust)))
     }
   }
   footer
@@ -918,11 +860,13 @@ format.parameters_sem <- function(x,
 
 
 .print_footer_exp <- function(x) {
+  # we need this to check whether we have extremely large cofficients
   if (isTRUE(getOption("parameters_exponentiate", TRUE))) {
     msg <- NULL
-    # we need this to check whether we have extremely large cofficients
-    if (all(c("Coefficient", "Parameter") %in% colnames(x))) {
-      spurious_coefficients <- abs(x$Coefficient[!.in_intercepts(x$Parameter)])
+    # try to find out the name of the coefficient column
+    coef_column <- intersect(colnames(x), .all_coefficient_names)
+    if (length(coef_column) && "Parameter" %in% colnames(x)) {
+      spurious_coefficients <- abs(x[[coef_column[1]]][!.in_intercepts(x$Parameter)])
     } else {
       spurious_coefficients <- NULL
     }
@@ -930,8 +874,10 @@ format.parameters_sem <- function(x,
     if (!.is_valid_exponentiate_argument(exponentiate)) {
       if (isTRUE(.additional_arguments(x, "log_link", FALSE))) {
         msg <- "The model has a log- or logit-link. Consider using `exponentiate = TRUE` to interpret coefficients as ratios." # nolint
-        # we only check for exp(coef), so exp() here soince coefficients are on logit-scale
-        spurious_coefficients <- exp(spurious_coefficients)
+        # we only check for exp(coef), so exp() here since coefficients are on logit-scale
+        if (!is.null(spurious_coefficients)) {
+          spurious_coefficients <- exp(spurious_coefficients)
+        }
       } else if (isTRUE(.additional_arguments(x, "log_response", FALSE))) {
         msg <- "The model has a log-transformed response variable. Consider using `exponentiate = TRUE` to interpret coefficients as ratios." # nolint
         # don't show warning about complete separation

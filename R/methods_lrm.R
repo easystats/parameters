@@ -47,13 +47,13 @@ p_value.lrm <- function(model, ...) {
   # Issue: 697: typically the degrees of freedom are the same for every
   # observation, but the value is repeated. This poses problems in multiple
   # imputation models with Hmisc when we get more df values than parameters.
-  df <- degrees_of_freedom(model, method = "any")
-  dfu <- unique(df)
+  dof <- insight::get_df(model, type = "wald")
+  dfu <- unique(dof)
   if (length(dfu) == 1) {
-    df <- dfu
+    dof <- dfu
   }
 
-  p <- 2 * stats::pt(abs(stat$Statistic), df = df, lower.tail = FALSE)
+  p <- 2 * stats::pt(abs(stat$Statistic), df = dof, lower.tail = FALSE)
 
   .data_frame(
     Parameter = .remove_backticks_from_string(stat$Parameter),

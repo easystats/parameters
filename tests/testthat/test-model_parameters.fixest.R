@@ -16,7 +16,7 @@ test_that("model_parameters.fixest", {
 
   qol_cancer <- cbind(
     qol_cancer,
-    datawizard::demean(qol_cancer, select = c("phq4", "QoL"), group = "ID")
+    datawizard::demean(qol_cancer, select = c("phq4", "QoL"), by = "ID")
   )
 
   m1 <- fixest::feols(QoL ~ time + phq4 | ID, data = qol_cancer)
@@ -35,7 +35,7 @@ test_that("model_parameters.fixest", {
   # currently, a bug for fixest 10.4 on R >= 4.3
   # skip_if_not(getRversion() < "4.2.0")
   expect_snapshot(
-    model_parameters(m1, summary = TRUE, verbose = FALSE)
+    model_parameters(m1, include_info = TRUE, verbose = FALSE)
   )
 
   # Poission, df = Inf

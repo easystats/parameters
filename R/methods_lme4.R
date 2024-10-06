@@ -33,8 +33,20 @@
 #'   intervals will be included. Set explicitly to `TRUE` or `FALSE` to enforce
 #'   or omit calculation of confidence intervals.
 #' @param ... Arguments passed to or from other methods. For instance, when
-#'   `bootstrap = TRUE`, arguments like `type` or `parallel` are
-#'   passed down to `bootstrap_model()`.
+#'   `bootstrap = TRUE`, arguments like `type` or `parallel` are passed down to
+#'   `bootstrap_model()`. Further non-documented arguments are `digits`,
+#'   `p_digits`, `ci_digits` and `footer_digits` to set the number of digits for
+#'   the output. If `s_value = TRUE`, the p-value will be replaced by the
+#'   S-value in the output (cf. _Rafi and Greenland 2020_). `pd` adds an
+#'   additional column with the _probability of direction_ (see
+#'   [`bayestestR::p_direction()`] for details). `groups` can be used to group
+#'   coefficients. It will be passed to the print-method, or can directly be
+#'   used in `print()`, see documentation in [`print.parameters_model()`].
+#'   Furthermore, see 'Examples' in [`model_parameters.default()`]. For
+#'   developers, whose interest mainly is to get a "tidy" data frame of model
+#'   summaries, it is recommended to set `pretty_names = FALSE` to speed up
+#'   computation of the summary table.
+#'
 #' @inheritParams model_parameters.default
 #' @inheritParams model_parameters.stanreg
 #'
@@ -147,16 +159,23 @@ model_parameters.merMod <- function(model,
                                     group_level = FALSE,
                                     exponentiate = FALSE,
                                     p_adjust = NULL,
+                                    vcov = NULL,
+                                    vcov_args = NULL,
                                     wb_component = TRUE,
                                     summary = getOption("parameters_mixed_summary", FALSE),
+                                    include_info = getOption("parameters_mixed_info", FALSE),
+                                    include_sigma = FALSE,
                                     keep = NULL,
                                     drop = NULL,
                                     verbose = TRUE,
-                                    include_sigma = FALSE,
-                                    vcov = NULL,
-                                    vcov_args = NULL,
                                     ...) {
   dots <- list(...)
+
+  ## TODO remove deprecated later
+  if (!missing(summary)) {
+    .deprecated_warning("summary", "include_info", verbose)
+    include_info <- summary
+  }
 
   # set default
   if (is.null(ci_method)) {
@@ -236,7 +255,7 @@ model_parameters.merMod <- function(model,
         drop_parameters = drop,
         verbose = verbose,
         include_sigma = include_sigma,
-        summary = summary,
+        include_info = include_info,
         vcov = vcov,
         vcov_args = vcov_args
       )
@@ -301,7 +320,7 @@ model_parameters.merMod <- function(model,
     ci_method = ci_method,
     p_adjust = p_adjust,
     verbose = verbose,
-    summary = summary,
+    include_info = include_info,
     group_level = group_level,
     wb_component = wb_component,
     ...

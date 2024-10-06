@@ -1,6 +1,6 @@
 # small wrapper around this commonly used try-catch
 .safe <- function(code, on_error = NULL) {
-  if (getOption("easystats_erros", FALSE) && is.null(on_error)) {
+  if (isTRUE(getOption("easystats_errors", FALSE)) && is.null(on_error)) {
     code
   } else {
     tryCatch(code, error = function(e) on_error)
@@ -218,4 +218,15 @@
     }
   }
   ifnotfound
+}
+
+.deprecated_warning <- function(old, new, verbose = TRUE) {
+  if (verbose) {
+    insight::format_warning(paste0(
+      "Argument `", old,
+      "` is deprecated and will be removed in the future. Please use `",
+      new,
+      "` instead."
+    ))
+  }
 }

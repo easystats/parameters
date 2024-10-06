@@ -2,11 +2,6 @@
 ci.ivprobit <- ci.default
 
 
-
-#' @export
-degrees_of_freedom.ivprobit <- degrees_of_freedom.ivFixed
-
-
 #' @export
 standard_error.ivprobit <- function(model, ...) {
   .data_frame(

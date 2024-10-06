@@ -1,4 +1,5 @@
 ADF
+AER
 Adressing
 Amrhein
 Analysing
@@ -13,6 +14,7 @@ Bayarri
 BayesFM
 BayesFactor
 Bentler
+Bergh
 Biometrics
 Biometrika
 Blume
@@ -21,6 +23,7 @@ Bundock
 CFA
 CMD
 CNG
+CRC
 Cattell
 Cattell's
 CrossValidated
@@ -28,6 +31,7 @@ Curently
 D'Agostino
 DAS
 DBSCAN
+DG
 DOI
 DRR
 Davison
@@ -39,6 +43,7 @@ DoFs
 Dom
 Dorie
 Dupont
+DV
 EFA
 EGAnet
 ESS
@@ -75,12 +80,17 @@ Hmisc
 Hofman
 Hofmann
 Hornik
+Isager
 ICA
 IRR
+JB
+JM
 JRM
 Jurs
+KJ
 KMO
 Kenward
+Korner
 Kruschke
 Kutner
 LMM
@@ -92,6 +102,7 @@ Liu
 MADs
 MCMCglmm
 MLM
+MPE
 MSA
 Maechler
 Malo
@@ -106,6 +117,7 @@ NL
 Neter
 Neyman
 Nieto
+Nievergelt
 Nondegenerate
 Nonresponse
 ORCID
@@ -114,6 +126,7 @@ PCoA
 PHQ
 PLOS
 PMCMRplus
+PeerJ
 Pernet
 Pettersson
 PloS
@@ -129,6 +142,10 @@ Rocklin
 Rosseel
 Rousseeuw
 Routledge
+Rothman
+Scand
+Senn
+Statist
 SBC
 SDs
 SEM
@@ -138,6 +155,7 @@ Sadana
 Satterthwaite
 Satterthwaite's
 Schaeffer
+Scheel
 Schweder
 Sellke
 Shachar
@@ -160,6 +178,7 @@ Valls
 Velicer
 Vos
 WRS
+WeightIt
 Wasserman
 Wisenbaker
 Zoski
@@ -228,8 +247,10 @@ ggeffects
 github
 glm
 glm's
+glmgee
 glmmTMB
 glmx
+glmtoolbox
 hclust
 heteroskedasticity
 hglm
@@ -249,6 +270,7 @@ joss
 jstatsoft
 kmeans
 labelled
+lakens
 lavaan
 lavaSearch
 lesslikely
@@ -296,6 +318,7 @@ posthoc
 pre
 priori
 probabilistically
+ps
 pscl
 quantreg
 quartiles
@@ -316,12 +339,15 @@ strengejacke
 subclusters
 subscale
 subscales
+svylme
 systemfit
 th
 tidymodels
 tinytable
+tobit
 tseries
 unicode
+unreplicable
 varEST
 varimax
 vincentab

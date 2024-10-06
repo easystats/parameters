@@ -106,7 +106,11 @@ frame.}
 with missing values from the original data, hence the number of rows of
 predicted data and original data is equal.}
 
-\item{digits, labels}{Arguments for \code{print()}.}
+\item{digits}{Argument for \code{print()}, indicates the number of digits
+(rounding) to be used.}
+
+\item{labels}{Argument for \code{print()}, character vector of same length as
+columns in \code{x}. If provided, adds an additional column with the labels.}
 }
 \value{
 A data frame of loadings.
@@ -219,6 +223,17 @@ principal_components(mtcars[, 1:7], n = "all", threshold = 0.2)
 
 # Automated number of components
 principal_components(mtcars[, 1:4], n = "auto")
+
+# labels can be useful if variable names are not self-explanatory
+print(
+  principal_components(mtcars[, 1:4], n = "auto"),
+  labels = c(
+    "Miles/(US) gallon",
+    "Number of cylinders",
+    "Displacement (cu.in.)",
+    "Gross horsepower"
+  )
+)
 
 # Sparse PCA
 principal_components(mtcars[, 1:7], n = 4, sparse = TRUE)

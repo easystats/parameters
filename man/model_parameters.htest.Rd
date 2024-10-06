@@ -10,19 +10,8 @@
   ci = 0.95,
   alternative = NULL,
   bootstrap = FALSE,
-  effectsize_type = NULL,
+  es_type = NULL,
   verbose = TRUE,
-  cramers_v = NULL,
-  phi = NULL,
-  standardized_d = NULL,
-  hedges_g = NULL,
-  omega_squared = NULL,
-  eta_squared = NULL,
-  epsilon_squared = NULL,
-  cohens_g = NULL,
-  rank_biserial = NULL,
-  rank_epsilon_squared = NULL,
-  kendalls_w = NULL,
   ...
 )
 
@@ -50,17 +39,26 @@ the \href{https://easystats.github.io/effectsize/}{effectsize_CIs vignette}.}
 
 \item{bootstrap}{Should estimates be bootstrapped?}
 
-\item{effectsize_type}{The effect size of interest. Not that possibly not all
+\item{es_type}{The effect size of interest. Not that possibly not all
 effect sizes are applicable to the model object. See 'Details'. For Anova
 models, can also be a character vector with multiple effect size names.}
 
 \item{verbose}{Toggle warnings and messages.}
 
-\item{cramers_v, phi, cohens_g, standardized_d, hedges_g, omega_squared, eta_squared, epsilon_squared, rank_biserial, rank_epsilon_squared, kendalls_w}{Deprecated. Please use \code{effectsize_type}.}
-
 \item{...}{Arguments passed to or from other methods. For instance, when
-\code{bootstrap = TRUE}, arguments like \code{type} or \code{parallel} are
-passed down to \code{bootstrap_model()}.}
+\code{bootstrap = TRUE}, arguments like \code{type} or \code{parallel} are passed down to
+\code{bootstrap_model()}. Further non-documented arguments are \code{digits},
+\code{p_digits}, \code{ci_digits} and \code{footer_digits} to set the number of digits for
+the output. If \code{s_value = TRUE}, the p-value will be replaced by the
+S-value in the output (cf. \emph{Rafi and Greenland 2020}). \code{pd} adds an
+additional column with the \emph{probability of direction} (see
+\code{\link[bayestestR:p_direction]{bayestestR::p_direction()}} for details). \code{groups} can be used to group
+coefficients. It will be passed to the print-method, or can directly be
+used in \code{print()}, see documentation in \code{\link[=print.parameters_model]{print.parameters_model()}}.
+Furthermore, see 'Examples' for this function. For developers, whose
+interest mainly is to get a "tidy" data frame of model summaries, it is
+recommended to set \code{pretty_names = FALSE} to speed up computation of the
+summary table.}
 
 \item{ci_method}{Method for computing degrees of freedom for
 confidence intervals (CI) and the related p-values. Allowed are following
@@ -137,13 +135,13 @@ model <- cor.test(mtcars$mpg, mtcars$cyl, method = "pearson")
 model_parameters(model)
 
 model <- t.test(iris$Sepal.Width, iris$Sepal.Length)
-model_parameters(model, effectsize_type = "hedges_g")
+model_parameters(model, es_type = "hedges_g")
 
 model <- t.test(mtcars$mpg ~ mtcars$vs)
-model_parameters(model, effectsize_type = "hedges_g")
+model_parameters(model, es_type = "hedges_g")
 
 model <- t.test(iris$Sepal.Width, mu = 1)
-model_parameters(model, effectsize_type = "cohens_d")
+model_parameters(model, es_type = "cohens_d")
 
 data(airquality)
 airquality$Month <- factor(airquality$Month, labels = month.abb[5:9])
@@ -156,6 +154,6 @@ model <- suppressWarnings(pairwise.prop.test(smokers, patients))
 model_parameters(model)
 
 model <- suppressWarnings(chisq.test(table(mtcars$am, mtcars$cyl)))
-model_parameters(model, effectsize_type = "cramers_v")
+model_parameters(model, es_type = "cramers_v")
 
 }

@@ -16,7 +16,7 @@
                                         keep_parameters = NULL,
                                         drop_parameters = NULL,
                                         include_sigma = TRUE,
-                                        summary = FALSE,
+                                        include_info = FALSE,
                                         vcov = NULL,
                                         vcov_args = NULL,
                                         ...) {
@@ -91,6 +91,9 @@
       c("intercept", "location", "scale"),
       lengths(model[c("Alpha", "beta", "zeta")])
     )
+  } else if (inherits(model, "ordinal_weightit")) {
+    intercept_groups <- rep("conditional", nrow(parameters))
+    intercept_groups[grep("|", parameters$Parameter, fixed = TRUE)] <- "intercept"
   } else {
     intercept_groups <- NULL
   }
@@ -103,9 +106,9 @@
 
   # ==== CI - only if we don't already have CI for std. parameters
 
-  if (is.null(ci)) {
-    ci_cols <- NULL
-  } else {
+  ci_cols <- NULL
+  if (!is.null(ci)) {
+    # set up arguments for CI function
     fun_args <- list(model,
       ci = ci,
       component = component,
@@ -114,14 +117,13 @@
       verbose = verbose
     )
     fun_args <- c(fun_args, dots)
+    # add method argument if provided
     if (!is.null(ci_method)) {
       fun_args[["method"]] <- ci_method
     }
     ci_df <- suppressMessages(do.call("ci", fun_args))
-
-    if (is.null(ci_df)) {
-      ci_cols <- NULL
-    } else {
+    # success? merge CI into parameters
+    if (!is.null(ci_df)) {
       # for multiple CI columns, reshape CI-dataframe to match parameters df
       if (length(ci) > 1) {
         ci_df <- datawizard::reshape_ci(ci_df)
@@ -145,7 +147,7 @@
   )
   fun_args <- c(fun_args, dots)
   pval <- do.call("p_value", fun_args)
-
+  # success? merge p-values into parameters
   if (!is.null(pval)) {
     parameters <- merge(parameters, pval, by = merge_by, sort = FALSE)
   }
@@ -166,14 +168,13 @@
     fun_args[["method"]] <- ci_method
   }
   std_err <- do.call("standard_error", fun_args)
-
+  # success? merge SE into parameters
   if (!is.null(std_err)) {
     parameters <- merge(parameters, std_err, by = merge_by, sort = FALSE)
   }
 
 
   # ==== test statistic - fix values for robust vcov
-
 
   # deprecated argument `robust = TRUE`
   if (!is.null(vcov) || isTRUE(dots[["robust"]])) {
@@ -186,9 +187,9 @@
   # ==== degrees of freedom
 
   if (is.null(ci_method)) {
-    df_error <- degrees_of_freedom(model, method = "any", verbose = FALSE)
+    df_error <- insight::get_df(x = model, type = "wald", verbose = FALSE)
   } else {
-    df_error <- degrees_of_freedom(model, method = ci_method, verbose = FALSE)
+    df_error <- insight::get_df(x = model, type = ci_method, verbose = FALSE)
   }
   if (!is.null(df_error) && (length(df_error) == 1 || length(df_error) == nrow(parameters))) {
     if (length(df_error) == 1) {
@@ -224,7 +225,7 @@
   if (inherits(model, "polr") && !is.null(intercept_groups)) {
     parameters$Component <- "beta"
     parameters$Component[intercept_groups] <- "alpha"
-  } else if (inherits(model, c("clm", "clm2")) && !is.null(intercept_groups)) {
+  } else if (inherits(model, c("clm", "clm2", "ordinal_weightit")) && !is.null(intercept_groups)) {
     parameters$Component <- intercept_groups
   }
 
@@ -300,7 +301,7 @@
 
   # ==== add sigma and residual df
 
-  if (isTRUE(include_sigma) || isTRUE(summary)) {
+  if (isTRUE(include_sigma) || isTRUE(include_info)) {
     parameters <- .add_sigma_residual_df(parameters, model)
   }
 
@@ -318,7 +319,7 @@
     sig <- .safe(suppressWarnings(insight::get_sigma(model, ci = NULL, verbose = FALSE)))
     attr(params, "sigma") <- as.numeric(sig)
 
-    resdf <- .safe(suppressWarnings(insight::get_df(model, type = "residual")))
+    resdf <- .safe(suppressWarnings(insight::get_df(x = model, type = "residual")))
     attr(params, "residual_df") <- as.numeric(resdf)
   }
   params
@@ -355,7 +356,7 @@
                                       verbose = TRUE) {
   # check pattern
   if (!is.null(keep) && length(keep) > 1) {
-    keep <- paste0("(", paste0(keep, collapse = "|"), ")")
+    keep <- paste0("(", paste(keep, collapse = "|"), ")")
     if (verbose) {
       insight::format_alert(
         sprintf("The `keep` argument has more than 1 element. Merging into following regular expression: `%s`.", keep)
@@ -365,7 +366,7 @@
 
   # check pattern
   if (!is.null(drop) && length(drop) > 1) {
-    drop <- paste0("(", paste0(drop, collapse = "|"), ")")
+    drop <- paste0("(", paste(drop, collapse = "|"), ")")
     if (verbose) {
       insight::format_alert(
         sprintf("The `drop` argument has more than 1 element. Merging into following regular expression: `%s`.", drop)
@@ -423,7 +424,7 @@
                                       keep_parameters = NULL,
                                       drop_parameters = NULL,
                                       include_sigma = FALSE,
-                                      summary = FALSE,
+                                      include_info = FALSE,
                                       vcov = NULL,
                                       vcov_args = NULL,
                                       verbose = TRUE,
@@ -451,7 +452,7 @@
 
   # Degrees of freedom
   if (.dof_method_ok(model, ci_method)) {
-    dof <- degrees_of_freedom(model, method = ci_method, verbose = FALSE)
+    dof <- insight::get_df(x = model, type = ci_method, verbose = FALSE)
   } else {
     dof <- Inf
   }
@@ -467,9 +468,8 @@
 
   # CI - only if we don't already have CI for std. parameters
 
-  if (is.null(ci)) {
-    ci_cols <- NULL
-  } else {
+  ci_cols <- NULL
+  if (!is.null(ci)) {
     # robust (current or deprecated)
     if (!is.null(vcov) || isTRUE(list(...)[["robust"]])) {
       fun_args <- list(model,
@@ -486,7 +486,9 @@
     } else {
       ci_df <- ci(model, ci = ci, method = ci_method, effects = "fixed")
     }
-    if (length(ci) > 1) ci_df <- datawizard::reshape_ci(ci_df)
+    if (length(ci) > 1) {
+      ci_df <- datawizard::reshape_ci(ci_df)
+    }
     ci_cols <- names(ci_df)[!names(ci_df) %in% c("CI", "Parameter")]
     parameters <- merge(parameters, ci_df, by = "Parameter", sort = FALSE)
   }
@@ -563,7 +565,7 @@
     if (!ci_method %in% special_ci_methods) {
       df_error <- data.frame(
         Parameter = parameters$Parameter,
-        df_error = degrees_of_freedom(model, method = "any"),
+        df_error = insight::get_df(x = model, type = "wald"),
         stringsAsFactors = FALSE
       )
     }
@@ -637,7 +639,7 @@
 
 
   # add sigma
-  if (isTRUE(include_sigma) || isTRUE(summary)) {
+  if (isTRUE(include_sigma) || isTRUE(include_info)) {
     parameters <- .add_sigma_residual_df(parameters, model)
   }
 

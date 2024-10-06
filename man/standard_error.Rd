@@ -59,11 +59,12 @@ the function to be used to compute the covariance matrix.
 \itemize{
 \item Heteroskedasticity-consistent: \code{"vcovHC"}, \code{"HC"}, \code{"HC0"}, \code{"HC1"},
 \code{"HC2"}, \code{"HC3"}, \code{"HC4"}, \code{"HC4m"}, \code{"HC5"}. See \code{?sandwich::vcovHC}.
-\item Cluster-robust: \code{"vcovCR"}, \code{"CR0"}, \code{"CR1"}, \code{"CR1p"}, \code{"CR1S"}, \code{"CR2"},
-\code{"CR3"}. See \code{?clubSandwich::vcovCR}.
-\item Bootstrap: \code{"vcovBS"}, \code{"xy"}, \code{"residual"}, \code{"wild"}, \code{"mammen"}, \code{"webb"}.
-See \code{?sandwich::vcovBS}.
-\item Other \code{sandwich} package functions: \code{"vcovHAC"}, \code{"vcovPC"}, \code{"vcovCL"}, \code{"vcovPL"}.
+\item Cluster-robust: \code{"vcovCR"}, \code{"CR0"}, \code{"CR1"}, \code{"CR1p"}, \code{"CR1S"},
+\code{"CR2"}, \code{"CR3"}. See \code{?clubSandwich::vcovCR}.
+\item Bootstrap: \code{"vcovBS"}, \code{"xy"}, \code{"residual"}, \code{"wild"}, \code{"mammen"},
+\code{"webb"}. See \code{?sandwich::vcovBS}.
+\item Other \code{sandwich} package functions: \code{"vcovHAC"}, \code{"vcovPC"}, \code{"vcovCL"},
+\code{"vcovPL"}.
 }
 }}
 
@@ -109,15 +110,17 @@ For Bayesian models (from \strong{rstanarm} or \strong{brms}), the standard
 error is the SD of the posterior samples.
 }
 \examples{
+\dontshow{if (require("sandwich") && require("clubSandwich")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 model <- lm(Petal.Length ~ Sepal.Length * Species, data = iris)
 standard_error(model)
 
-if (require("sandwich") && require("clubSandwich")) {
-  standard_error(model, vcov = "HC3")
+# robust standard errors
+standard_error(model, vcov = "HC3")
 
-  standard_error(model,
-    vcov = "vcovCL",
-    vcov_args = list(cluster = iris$Species)
-  )
-}
+# cluster-robust standard errors
+standard_error(model,
+  vcov = "vcovCL",
+  vcov_args = list(cluster = iris$Species)
+)
+\dontshow{\}) # examplesIf}
 }

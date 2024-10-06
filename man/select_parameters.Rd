@@ -30,11 +30,9 @@ select_parameters(model, ...)
     process early.
   }
 
-\item{k}{
-    the multiple of the number of degrees of freedom used for the penalty.
-    Only \code{k = 2} gives the genuine AIC: \code{k = log(n)} is sometimes
-    referred to as BIC or SBC.
-  }
+\item{k}{The multiple of the number of degrees of freedom used for the penalty.
+Only \code{k = 2} gives the genuine AIC: \code{k = log(n)} is sometimes referred to as
+BIC or SBC.}
 }
 \value{
 The model refitted with optimal number of parameters.
@@ -43,21 +41,22 @@ The model refitted with optimal number of parameters.
 This function performs an automated selection of the 'best' parameters,
 updating and returning the "best" model.
 }
-\details{
-\subsection{Classical lm and glm}{
-For frequentist GLMs, \code{select_parameters()} performs an AIC-based
-stepwise selection.
+\section{Classical lm and glm}{
+
+For frequentist GLMs, \code{select_parameters()} performs an AIC-based stepwise
+selection.
 }
 
-\subsection{Mixed models}{
-For mixed-effects models of class \code{merMod}, stepwise selection is
-based on \code{\link[cAIC4:stepcAIC]{cAIC4::stepcAIC()}}. This step function
-only searches the "best" model based on the random-effects structure,
-i.e. \code{select_parameters()} adds or excludes random-effects until
-the cAIC can't be improved further.
+\section{Mixed models}{
+
+For mixed-effects models of class \code{merMod}, stepwise selection is based on
+\code{\link[cAIC4:stepcAIC]{cAIC4::stepcAIC()}}. This step function only searches the "best" model
+based on the random-effects structure, i.e. \code{select_parameters()} adds or
+excludes random-effects until the cAIC can't be improved further.
 }
-}
+
 \examples{
+\dontshow{if (requireNamespace("lme4")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 model <- lm(mpg ~ ., data = mtcars)
 select_parameters(model)
 
@@ -65,13 +64,11 @@ model <- lm(mpg ~ cyl * disp * hp * wt, data = mtcars)
 select_parameters(model)
 \donttest{
 # lme4 -------------------------------------------
-if (require("lme4")) {
-  model <- lmer(
-    Sepal.Width ~ Sepal.Length * Petal.Width * Petal.Length + (1 | Species),
-    data = iris
-  )
-  select_parameters(model)
+model <- lme4::lmer(
+  Sepal.Width ~ Sepal.Length * Petal.Width * Petal.Length + (1 | Species),
+  data = iris
+)
+select_parameters(model)
 }
-}
-
+\dontshow{\}) # examplesIf}
 }

@@ -1,18 +1,18 @@
 Type: Package
 Package: parameters
 Title: Processing of Model Parameters
-Version: 0.21.6.7
+Version: 0.22.2.18
 Authors@R:
     c(person(given = "Daniel",
              family = "Lüdecke",
              role = c("aut", "cre"),
              email = "d.luedecke@uke.de",
-             comment = c(ORCID = "0000-0002-8895-3206", Twitter = "@strengejacke")),
+             comment = c(ORCID = "0000-0002-8895-3206")),
       person(given = "Dominique",
              family = "Makowski",
              role = "aut",
              email = "dom.makowski@gmail.com",
-             comment = c(ORCID = "0000-0001-5375-9967", Twitter = "@Dom_Makowski")),
+             comment = c(ORCID = "0000-0001-5375-9967")),
       person(given = "Mattan S.",
              family = "Ben-Shachar",
              role = "aut",
@@ -22,7 +22,7 @@ Authors@R:
              family = "Patil",
              role = "aut",
              email = "patilindrajeet.science@gmail.com",
-             comment = c(ORCID = "0000-0003-1995-6531", Twitter = "@patilindrajeets")),
+             comment = c(ORCID = "0000-0003-1995-6531")),
       person(given = "Søren",
              family = "Højsgaard",
              role = "aut",
@@ -31,7 +31,7 @@ Authors@R:
              family = "Wiernik",
              role = "aut",
              email = "brenton@wiernik.org",
-             comment = c(ORCID = "0000-0001-9560-6336", Twitter = "@bmwiernik")),
+             comment = c(ORCID = "0000-0001-9560-6336")),
       person(given = "Zen J.",
              family = "Lau",
              role = "ctb",
@@ -40,12 +40,12 @@ Authors@R:
              family = "Arel-Bundock",
              role = "ctb",
              email = "vincent.arel-bundock@umontreal.ca",
-             comment = c(ORCID = "0000-0003-1995-6531", Twitter = "@vincentab")),
+             comment = c(ORCID = "0000-0003-2042-7063")),
       person(given = "Jeffrey",
              family = "Girard",
              role = "ctb",
              email = "me@jmgirard.com",
-             comment = c(ORCID = "0000-0002-7359-3746", Twitter = "@jeffreymgirard")),
+             comment = c(ORCID = "0000-0002-7359-3746")),
       person(given = "Christina",
              family = "Maimone",
              role = "rev",
@@ -58,7 +58,7 @@ Authors@R:
              family = "Morrison",
              role = "ctb",
              email = "dmorrison01@ucla.edu",
-             comment = c(ORCID = "0000-0002-7195-830X", Twitter = "@demstats1")),
+             comment = c(ORCID = "0000-0002-7195-830X")),
       person(given = "Joseph",
              family = "Luchman",
              role = "ctb",
@@ -79,9 +79,9 @@ BugReports: https://github.com/easystats/parameters/issues
 Depends:
     R (>= 3.6)
 Imports:
-    bayestestR (>= 0.13.2),
-    datawizard (>= 0.10.0),
-    insight (>= 0.19.10),
+    bayestestR (>= 0.14.0),
+    datawizard (>= 0.13.0),
+    insight (>= 0.20.5),
     graphics,
     methods,
     stats,
@@ -101,6 +101,7 @@ Suggests:
     brglm2,
     brms,
     broom,
+    broom.mixed,
     cAIC4,
     car,
     carData,
@@ -108,10 +109,12 @@ Suggests:
     ClassDiscovery,
     clubSandwich,
     cluster,
+    cobalt,
     coda,
     coxme,
     cplm,
     dbscan,
+    distributional,
     domir (>= 0.2.0),
     drc,
     DRR,
@@ -133,11 +136,12 @@ Suggests:
     ggeffects (>= 1.3.2),
     ggplot2,
     GLMMadaptive,
-    glmmTMB,
+    glmmTMB (>= 1.1.10),
+    glmtoolbox,
     GPArotation,
     gt,
     haven,
-    httr,
+    httr2,
     Hmisc,
     ivreg,
     knitr,
@@ -151,7 +155,7 @@ Suggests:
     logspline,
     lqmm,
     M3C,
-    marginaleffects (>= 0.16.0),
+    marginaleffects (>= 0.20.1),
     MASS,
     Matrix,
     mclogit,
@@ -177,7 +181,7 @@ Suggests:
     panelr,
     pbkrtest,
     PCDimension,
-    performance (>= 0.10.8),
+    performance (>= 0.12.0),
     plm,
     PMCMRplus,
     poorman,
@@ -188,8 +192,10 @@ Suggests:
     pvclust,
     quantreg,
     randomForest,
+    RcppEigen,
     rmarkdown,
     rms,
+    rstan,
     rstanarm,
     sandwich,
     see (>= 0.8.1),
@@ -197,25 +203,25 @@ Suggests:
     sparsepca,
     survey,
     survival,
+    svylme,
     testthat (>= 3.2.1),
     tidyselect,
     tinytable (>= 0.1.0),
     TMB,
     truncreg,
+    vdiffr,
     VGAM,
+    WeightIt (>= 1.2.0),
     withr,
     WRS2
 VignetteBuilder:
     knitr
 Encoding: UTF-8
 Language: en-US
-RoxygenNote: 7.3.1
+RoxygenNote: 7.3.2
 Roxygen: list(markdown = TRUE)
 Config/testthat/edition: 3
 Config/testthat/parallel: true
-Config/Needs/website:
-    rstudio/bslib,
-    r-lib/pkgdown,
-    easystats/easystatstemplate
+Config/Needs/website: easystats/easystatstemplate
 Config/rcmdcheck/ignore-inconsequential-notes: true
-Remotes: easystats/insight
+Remotes: easystats/bayestestR#678

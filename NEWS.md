@@ -1,4 +1,121 @@
+# parameters 0.23.0
+
+## Breaking Changes
+
+* Argument `summary` in `model_parameters()` is now deprecated. Please use
+  `include_info` instead.
+
+* Changed output style for the included additional information on model formula,
+  sigma and R2 when printing model parameters. This information now also includes
+  the RMSE.
+
+## Changes
+
+* Used more accurate analytic approach to calculate normal distributions for
+  the SGPV in `equivalence_test()` and used in `p_significance()`.
+
+* Added `p_direction()` methods for frequentist models. This is a convenient
+  way to test the direction of the effect, which formerly was already (and still
+  is) possible with `pd = TRUE` in `model_parameters()`.
+
+* `p_function()`, `p_significance()` and `equivalence_test()` get a `vcov` and
+  `vcov_args` argument, so that results can be based on robust standard errors
+  and confidence intervals.
+
+* `equivalence_test()` and `p_significance()` work with objects returned by
+  `model_parameters()`.
+
+* `pool_parameters()` now better deals with models with multiple components
+  (e.g. zero-inflation or dispersion).
+
+* Revision / enhancement of some documentation.
+
+* Updated *glmmTMB* methods to work with the latest version of the package.
+
+* Improved printing for `simulate_parameters()` for models from packages *mclogit*.
+
+# parameters 0.22.2
+
+## New supported models
+
+* Support for models `glm_weightit`, `multinom_weightit` and `ordinal_weightit`
+  from package *WeightIt*.
+
+## Changes
+
+* Added `p_significance()` methods for frequentist models.
+
+* Methods for `degrees_of_freedom()` have been removed. `degrees_of_freedom()`
+  now calls `insight::get_df()`.
+
+* `model_parameters()` for data frames and `draws` objects from package
+  *posterior* also gets an `exponentiate` argument.
+
+## Bug fixes
+
+* Fixed issue with warning for spuriously high coefficients for Stan-models
+  (non-Gaussian).
+
+# parameters 0.22.1
+
+## Breaking changes
+
+* Revised calculation of the second generation p-value (SGPV) in `equivalence_test()`,
+  which should now be more accurate related to the proportion of the interval
+  that falls inside the ROPE. Formerly, the confidence interval was simply treated
+  as uniformly distributed when calculating the SGPV, now the interval is assumed
+  to be normally distributed.
+
+## New supported models
+
+* Support for `svy2lme` models from package *svylme*.
+
+## Changes
+
+* `standardize_parameters()` now also prettifies labels of factors.
+
+## Bug fixes
+
+* Fixed issue with `equivalence_test()` when ROPE range was not symmetrically
+  centered around zero (e.g., `range = c(-99, 0.1)`).
+
+* `model_parameters()` for `anova()` from mixed models now also includes the
+  denominator degrees of freedom in the output (`df_error`).
+
+* `print(..., pretty_names = "labels")` for tobit-models from package *AER* now
+  include value labels, if available.
+
+* Patch release, to ensure that performance runs with older version of datawizard
+  on Mac OS X with R (old-release).
+
+# parameters 0.22.0
+
+## Breaking changes
+
+* Deprecated arguments in `model_parameters()` for `htest`, `aov` and
+  `BFBayesFactor` objects were removed.
+
+* Argument `effectsize_type` is deprecated. Please use `es_type` now. This change
+  was necessary to avoid conflicts with partial matching of argument names (here:
+  `effects`).
+
+## New supported models
+
+* Support for objects from `stats::Box.test()`.
+
+* Support for `glmgee` models from package *glmtoolbox*.
+
+## Bug fix
+
+* Fixed edge case in `predict()` for `factor_analysis()`.
+
+* Fixed wrong ORCID in `DESCRIPTION`.
+
 # parameters 0.21.7
+
+## Changes
+
+* Fixed issues related to latest release from _marginaleffects_.
 
 ## Bug fixes
 
@@ -170,7 +287,7 @@
 
 * `as.data.frame` methods for extracting posterior draws via `bootstrap_model()`
   have been retired. Instead, directly using `bootstrap_model()` is recommended.
-  
+
 ## Changes to functions
 
 * `equivalence_test()` gets a method for `ggeffects` objects from package
@@ -322,7 +439,7 @@
 * Following functions were moved from package *parameters* to *performance*:
   `check_sphericity_bartlett()`, `check_kmo()`, `check_factorstructure()` and
   `check_clusterstructure()`.
-  
+
 ## Changes to functions
 
 * Added `sparse` option to `principal_components()` for sparse PCA.

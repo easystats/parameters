@@ -1,5 +1,5 @@
-iris$Cat1 <- rep(c("X", "X", "Y"), length.out = nrow(iris))
-iris$Cat2 <- rep(c("A", "B"), length.out = nrow(iris))
+iris$Cat1 <- rep_len(c("X", "X", "Y"), nrow(iris))
+iris$Cat2 <- rep_len(c("A", "B"), nrow(iris))
 
 # aov ----------------------------------
 
@@ -9,7 +9,7 @@ test_that("model_parameters.aov", {
   model <- aov(Sepal.Width ~ Species, data = iris)
   mp <- suppressMessages(model_parameters(
     model,
-    effectsize_type = c("omega", "eta", "epsilon"),
+    es_type = c("omega", "eta", "epsilon"),
     ci = 0.9,
     alternative = "greater"
   ))
@@ -28,7 +28,7 @@ test_that("model_parameters.aov", {
   ))
 
   model <- aov(Sepal.Length ~ Species * Cat1 * Cat2, data = iris)
-  mp <- model_parameters(model, effectsize_type = "eta", ci = 0.9, partial = FALSE, alternative = "greater")
+  mp <- model_parameters(model, es_type = "eta", ci = 0.9, partial = FALSE, alternative = "greater")
   es <- effectsize::eta_squared(model, partial = FALSE, ci = 0.9)
   expect_equal(na.omit(mp$Eta2_CI_low), es$CI_low, tolerance = 1e-3, ignore_attr = TRUE)
   expect_equal(mp$Eta2_CI_low, c(0.5572, 0, 0, 0, 0, 0, 0, NA), tolerance = 1e-3, ignore_attr = TRUE)
@@ -53,7 +53,7 @@ test_that("model_parameters.anova", {
   model <- anova(lm(Sepal.Length ~ Species * Cat1 * Cat2, data = iris))
   mp <- model_parameters(
     model,
-    effectsize_type = c("omega", "eta", "epsilon"),
+    es_type = c("omega", "eta", "epsilon"),
     partial = TRUE,
     ci = 0.9,
     alternative = "greater"
@@ -75,7 +75,7 @@ test_that("model_parameters.anova", {
   skip_if_not_installed("effectsize", minimum_version = "0.5.1")
   model <- aov(wt ~ cyl + Error(gear), data = mtcars)
   suppressWarnings({
-    mp <- model_parameters(model, effectsize_type = c("omega", "eta", "epsilon"), partial = TRUE, ci = 0.9)
+    mp <- model_parameters(model, es_type = c("omega", "eta", "epsilon"), partial = TRUE, ci = 0.9)
     es <- effectsize::omega_squared(model, partial = TRUE, ci = 0.9, verbose = FALSE)
   })
   expect_equal(na.omit(mp$Omega2_CI_low), es$CI_low[2], tolerance = 1e-3, ignore_attr = TRUE)
@@ -107,7 +107,7 @@ test_that("model_parameters.car-anova", {
       contrasts = list(fcategory = contr.sum, partner.status = contr.sum)
     ))
 
-  mp <- model_parameters(model, effectsize_type = c("omega", "eta", "epsilon"), partial = TRUE, ci = 0.9)
+  mp <- model_parameters(model, es_type = c("omega", "eta", "epsilon"), partial = TRUE, ci = 0.9)
   es <- effectsize::omega_squared(model, partial = TRUE, ci = 0.9)
   expect_equal(na.omit(mp$Omega2_CI_low), es$CI_low, tolerance = 1e-3, ignore_attr = TRUE)
   expect_equal(mp$Omega2_CI_low, c(0, 0.05110, 0.00666, NA), tolerance = 1e-3, ignore_attr = TRUE)
@@ -133,7 +133,7 @@ test_that("model_parameters.maov", {
 
   mp <- suppressMessages(model_parameters(
     model,
-    effectsize_type = c("omega", "eta", "epsilon"),
+    es_type = c("omega", "eta", "epsilon"),
     partial = TRUE,
     ci = 0.9
   ))
@@ -165,7 +165,7 @@ test_that("works with aov", {
   df_aov <-
     as.data.frame(parameters::model_parameters(npk.aov,
       ci = 0.95,
-      effectsize_type = c("eta", "omega"),
+      es_type = c("eta", "omega"),
       partial = FALSE
     ))
 
@@ -271,7 +271,8 @@ test_that("works with manova", {
 
   set.seed(123)
   # fake a 2nd response variable
-  npk2 <- within(npk, foo <- rnorm(24))
+  foo <- rnorm(24)
+  npk2 <- within(npk, foo)
 
   # model
   m <- manova(cbind(yield, foo) ~ block + N * P * K, npk2)
@@ -280,7 +281,7 @@ test_that("works with manova", {
   df_manova <-
     as.data.frame(model_parameters(m,
       ci = 0.99,
-      effectsize_type = c("epsilon", "omega"),
+      es_type = c("epsilon", "omega"),
       partial = TRUE
     ))
 
@@ -333,7 +334,7 @@ test_that("works with Gam", {
   df_Gam <-
     as.data.frame(model_parameters(g,
       ci = 0.50,
-      effectsize_type = "omega",
+      es_type = "omega",
       partial = TRUE
     ))
 
@@ -345,7 +346,7 @@ test_that("works with Gam", {
         Sum_Squares = c(678.37287, 202.23503, 6.87905, 238.56023),
         df = c(1, 1, 1, 28),
         Mean_Square = c(678.37287, 202.23503, 6.87905, 8.52001),
-        `F` = c(79.62115, 23.73648, 0.8074, NA),
+        `F` = c(79.62115, 23.73648, 0.8074, NA), # nolint
         p = c(0, 4e-05, 0.37655, NA),
         Omega2_partial = c(0.71072, 0.41538, -0.00606, NA),
         Omega2_CI_low = c(0.70634, 0.41067, 0, NA),
@@ -384,7 +385,7 @@ test_that("works with anova", {
   df_car <-
     as.data.frame(model_parameters(mod,
       ci = 0.89,
-      effectsize_type = c("eta", "epsilon"),
+      es_type = c("eta", "epsilon"),
       partial = FALSE
     ))
 

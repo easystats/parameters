@@ -4,8 +4,8 @@ skip_if_not_installed("effectsize")
 
 test_that("model_parameters.htest", {
   params <- model_parameters(cor.test(mtcars$mpg, mtcars$cyl, method = "pearson"))
-  expect_equal(
-    colnames(params),
+  expect_named(
+    params,
     c(
       "Parameter1", "Parameter2", "r", "CI", "CI_low", "CI_high",
       "t", "df_error", "p", "Method", "Alternative"
@@ -13,10 +13,14 @@ test_that("model_parameters.htest", {
   )
   expect_equal(params$r, -0.852, tolerance = 0.05)
 
-  expect_warning(params <- model_parameters(cor.test(mtcars$mpg, mtcars$cyl, method = "spearman")))
+  expect_warning({
+    params <- model_parameters(cor.test(mtcars$mpg, mtcars$cyl, method = "spearman"))
+  })
   expect_equal(params$rho, -0.9108, tolerance = 0.05)
 
-  expect_warning(params <- model_parameters(cor.test(mtcars$mpg, mtcars$cyl, method = "kendall")))
+  expect_warning({
+    params <- model_parameters(cor.test(mtcars$mpg, mtcars$cyl, method = "kendall"))
+  })
   expect_equal(params$tau, -0.795, tolerance = 0.05)
 
   params <- model_parameters(t.test(iris$Sepal.Width, iris$Sepal.Length))
@@ -32,21 +36,21 @@ test_that("model_parameters.htest", {
 test_that("model_parameters.htest-2", {
   x <- c(A = 20, B = 15, C = 25)
   mp <- model_parameters(chisq.test(x))
-  expect_equal(colnames(mp), c("Chi2", "df", "p", "Method"))
+  expect_named(mp, c("Chi2", "df", "p", "Method"))
 })
 
 
 test_that("model_parameters-chisq-test NULL", {
   mp <- model_parameters(stats::chisq.test(table(mtcars$am)))
   expect_equal(mp$Chi2, 1.125, tolerance = 1e-3)
-  expect_equal(colnames(mp), c("Chi2", "df", "p", "Method"))
+  expect_named(mp, c("Chi2", "df", "p", "Method"))
 })
 
 
 test_that("model_parameters-chisq-test two way table", {
   mp2 <- suppressWarnings(model_parameters(stats::chisq.test(table(mtcars$am, mtcars$cyl))))
   expect_equal(mp2$Chi2, 8.740733, tolerance = 1e-3)
-  expect_equal(colnames(mp2), c("Chi2", "df", "p", "Method"))
+  expect_named(mp2, c("Chi2", "df", "p", "Method"))
 })
 
 test_that("model_parameters-chisq-test works with `svychisq` objects", {
@@ -59,21 +63,23 @@ test_that("model_parameters-chisq-test works with `svychisq` objects", {
   mp <- model_parameters(m)
 
   expect_equal(mp$F, 5.19337, tolerance = 1e-3)
-  expect_equal(names(mp), c("F", "df", "df_error", "p", "Method"))
+  expect_named(mp, c("F", "df", "df_error", "p", "Method"))
 })
 
 test_that("model_parameters-chisq-test adjusted", {
-  expect_message(mp <- model_parameters(stats::chisq.test(table(mtcars$am)), effectsize_type = "phi", ci = 0.95))
+  expect_message({
+    mp <- model_parameters(stats::chisq.test(table(mtcars$am)), es_type = "phi", ci = 0.95)
+  })
   expect_equal(mp$Chi2, 1.125, tolerance = 1e-3)
-  expect_equal(colnames(mp), c("Chi2", "df", "p", "Method"))
+  expect_named(mp, c("Chi2", "df", "p", "Method"))
 })
 
 test_that("model_parameters-t-test standardized d", {
-  params <- model_parameters(t.test(iris$Sepal.Width, iris$Sepal.Length), effectsize_type = "cohens_d")
+  params <- model_parameters(t.test(iris$Sepal.Width, iris$Sepal.Length), es_type = "cohens_d")
   expect_equal(params$Cohens_d, -4.210417, tolerance = 0.05)
   expect_equal(params$d_CI_low, -4.655306, tolerance = 0.05)
-  expect_equal(
-    colnames(params),
+  expect_named(
+    params,
     c(
       "Parameter1", "Parameter2", "Mean_Parameter1", "Mean_Parameter2",
       "Difference", "CI", "CI_low", "CI_high", "Cohens_d", "d_CI_low",
@@ -83,10 +89,10 @@ test_that("model_parameters-t-test standardized d", {
 })
 
 test_that("model_parameters-t-test standardized d", {
-  mp <- model_parameters(t.test(mtcars$mpg ~ mtcars$vs), effectsize_type = "cohens_d", verbose = FALSE)
+  mp <- model_parameters(t.test(mtcars$mpg ~ mtcars$vs), es_type = "cohens_d", verbose = FALSE)
   expect_equal(mp$Cohens_d, -1.696032, tolerance = 1e-3)
-  expect_equal(
-    colnames(mp),
+  expect_named(
+    mp,
     c(
       "Parameter", "Group", "Mean_Group1", "Mean_Group2", "Difference", "CI",
       "CI_low", "CI_high", "Cohens_d", "d_CI_low", "d_CI_high", "t", "df_error",
@@ -102,5 +108,21 @@ test_that("model_parameters-t-test reports the same unregarding of interface", {
   compare_only <- c("Difference", "CI", "CI_low", "CI_high", "t", "df_error", "p", "Method")
   default_ttest <- model_parameters(t.test(x = g1, y = g2))[compare_only]
   formula_ttest <- model_parameters(t.test(y ~ x, df))[compare_only]
-  expect_equal(default_ttest, formula_ttest)
+  expect_equal(default_ttest, formula_ttest, ignore_attr = TRUE)
+})
+
+test_that("model_parameters-Box.test works, and ignores partial matching", {
+  set.seed(123)
+  ts1 <- ts(rnorm(200, mean = 10, sd = 3))
+  result1 <- Box.test(ts1, lag = 5, type = "Box-Pierce", fitdf = 2)
+  result2 <- Box.test(ts1, lag = 5, type = "Ljung-Box", fitdf = 2)
+
+  out1 <- model_parameters(result1)
+  out2 <- model_parameters(result1, effects = "all")
+  expect_equal(out1, out2, ignore_attr = TRUE)
+  expect_named(out1, c("Parameter", "Chi2", "df_error", "p", "Method"))
+
+  out1 <- model_parameters(result2)
+  out2 <- model_parameters(result2, effects = "all")
+  expect_equal(out1, out2, ignore_attr = TRUE)
 })

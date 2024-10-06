@@ -86,7 +86,7 @@ reduce_data <- function(x, method = "PCA", n = "max", distance = "euclidean", ..
 
 #' @export
 reduce_parameters.data.frame <- function(x, method = "PCA", n = "max", distance = "euclidean", ...) {
-  x <- datawizard::to_numeric(x)
+  x <- datawizard::to_numeric(x, dummy_factors = TRUE)
 
   # N factors
   if (n == "max") {
@@ -144,7 +144,7 @@ reduce_parameters.data.frame <- function(x, method = "PCA", n = "max", distance 
 #' @export
 reduce_parameters.lm <- function(x, method = "PCA", n = "max", distance = "euclidean", ...) {
   model_data <- reduce_parameters(
-    datawizard::to_numeric(insight::get_predictors(x, ...), ...),
+    datawizard::to_numeric(insight::get_predictors(x, ...), ..., dummy_factors = TRUE),
     method = method,
     n = n,
     distance = distance

@@ -17,7 +17,7 @@
 #'
 #' @family standardize
 #'
-#' @examples
+#' @examplesIf insight::check_if_installed("datawizard", minimum_version = "0.12.0", quietly = TRUE)
 #' model <- lm(mpg ~ ., data = mtcars)
 #' standardize_info(model)
 #' standardize_info(model, robust = TRUE)
@@ -52,8 +52,8 @@ standardize_info.default <- function(model,
   types <- parameters_type(model)
   # model_matrix <- as.data.frame(stats::model.matrix(model))
   model_matrix <- as.data.frame(insight::get_modelmatrix(model))
-  data <- insight::get_data(model, source = "mf", verbose = FALSE)
-  wgts <- insight::get_weights(model, na_rm = TRUE)
+  model_data <- insight::get_data(model, source = "mf", verbose = FALSE)
+  wgts <- insight::get_weights(model, remove_na = TRUE)
 
   # validation check for ZI
   if (mi$is_zero_inflated && verbose) {
@@ -94,7 +94,7 @@ standardize_info.default <- function(model,
   # Response - Smart
   out <- merge(
     out,
-    .std_info_response_smart(model, mi, data, model_matrix, types, robust = robust, w = wgts),
+    .std_info_response_smart(model, mi, data = model_data, model_matrix, types, robust = robust, w = wgts),
     by = "Parameter", all = TRUE
   )
 
@@ -109,7 +109,7 @@ standardize_info.default <- function(model,
   out <- merge(
     out,
     .std_info_predictors_smart(model,
-      data,
+      data = model_data,
       params,
       types,
       robust = robust,
@@ -134,7 +134,7 @@ standardize_info.default <- function(model,
         model, mi,
         params,
         model_matrix,
-        data,
+        data = model_data,
         types = types$Type,
         robust = robust,
         two_sd = two_sd,
@@ -181,11 +181,11 @@ standardize_info.default <- function(model,
   # Get deviations for all parameters
   means <- deviations <- rep(NA_real_, times = length(params))
   for (i in seq_along(params)) {
-    var <- params[i]
+    variable <- params[i]
     info <- .std_info_predictor_smart(
       data = data,
-      variable = types[types$Parameter == var, "Variable"],
-      type = types[types$Parameter == var, "Type"],
+      variable = types[types$Parameter == variable, "Variable"],
+      type = types[types$Parameter == variable, "Type"],
       robust = robust,
       two_sd = two_sd,
       weights = w
@@ -213,7 +213,7 @@ standardize_info.default <- function(model,
                                       two_sd = FALSE,
                                       weights = NULL,
                                       ...) {
-  if (type == "intercept") {
+  if (type == "intercept") { # nolint
     info <- list(sd = 0, mean = 0)
   } else if (type == "numeric") {
     info <- .compute_std_info(
@@ -272,12 +272,12 @@ standardize_info.default <- function(model,
   # Get deviations for all parameters
   means <- deviations <- rep(NA_real_, length = length(names(model_matrix)))
   for (i in seq_along(names(model_matrix))) {
-    var <- names(model_matrix)[i]
+    variable <- names(model_matrix)[i]
     if (types[i, "Type"] == "intercept") {
       means[i] <- deviations[i] <- 0
     } else {
       std_info <- .compute_std_info(
-        data = model_matrix, variable = var,
+        data = model_matrix, variable = variable,
         robust = robust, two_sd = two_sd, weights = w
       )
       deviations[i] <- std_info$sd
@@ -337,9 +337,9 @@ standardize_info.default <- function(model,
     }
     means <- deviations <- rep(NA_real_, length = length(names(model_matrix)))
     for (i in seq_along(names(model_matrix))) {
-      var <- names(model_matrix)[i]
-      if (any(types$Parameter == var) && types$Link[types$Parameter == var] == "Difference") {
-        parent_var <- types$Variable[types$Parameter == var]
+      variable <- names(model_matrix)[i]
+      if (any(types$Parameter == variable) && types$Link[types$Parameter == variable] == "Difference") {
+        parent_var <- types$Variable[types$Parameter == variable]
         intercept <- unique(data[[parent_var]])[1]
         response_at_intercept <- response[data[[parent_var]] == intercept]
         weights_at_intercept <- if (length(w)) w[data[[parent_var]] == intercept] else NULL
@@ -422,18 +422,19 @@ standardize_info.default <- function(model,
   }
 
   insight::check_if_installed("performance")
+  insight::check_if_installed("datawizard", minimum_version = "0.12.0")
 
   f <- if (two_sd) 2 else 1
 
   within_vars <- unclass(performance::check_heterogeneity_bias(model))
   id <- insight::get_random(model)[[1]]
-  w <- insight::get_weights(model, na_rm = TRUE)
+  w <- insight::get_weights(model, remove_na = TRUE)
 
   ## Find which parameters vary on level 1 ("within")
   is_within <- logical(length = length(params))
   is_within[] <- NA
   for (i in seq_along(params)) {
-    if (types[i] == "intercept") {
+    if (types[i] == "intercept") { # nolint
       is_within[i] <- FALSE
     } else if (types[i] == "numeric") {
       is_within[i] <- insight::clean_names(params[i]) %in% within_vars
@@ -459,7 +460,7 @@ standardize_info.default <- function(model,
 
     dm <- datawizard::demean(cbind(id, temp_d),
       select = colnames(temp_d),
-      group = "id"
+      by = "id"
     )
     dm <- dm[, paste0(colnames(temp_d), "_between"), drop = FALSE]
 

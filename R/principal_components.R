@@ -42,7 +42,10 @@
 #'   predicted data and original data is equal.
 #' @param ... Arguments passed to or from other methods.
 #' @param pca_results The output of the `principal_components()` function.
-#' @param digits,labels Arguments for `print()`.
+#' @param digits Argument for `print()`, indicates the number of digits
+#'   (rounding) to be used.
+#' @param labels Argument for `print()`, character vector of same length as
+#'   columns in `x`. If provided, adds an additional column with the labels.
 #' @param verbose Toggle warnings.
 #' @inheritParams n_factors
 #'
@@ -140,6 +143,17 @@
 #' # Automated number of components
 #' principal_components(mtcars[, 1:4], n = "auto")
 #'
+#' # labels can be useful if variable names are not self-explanatory
+#' print(
+#'   principal_components(mtcars[, 1:4], n = "auto"),
+#'   labels = c(
+#'     "Miles/(US) gallon",
+#'     "Number of cylinders",
+#'     "Displacement (cu.in.)",
+#'     "Gross horsepower"
+#'   )
+#' )
+#'
 #' # Sparse PCA
 #' principal_components(mtcars[, 1:7], n = 4, sparse = TRUE)
 #' principal_components(mtcars[, 1:7], n = 4, sparse = "robust")
@@ -214,24 +228,26 @@ rotated_data <- function(pca_results, verbose = TRUE) {
   rotated_matrix <- insight::get_predicted(attributes(pca_results)$model)
   out <- NULL
 
-  if (!is.null(original_data) && !is.null(rotated_matrix)) {
-    compl_cases <- attributes(pca_results)$complete_cases
-    if (is.null(compl_cases) && nrow(original_data) != nrow(rotated_matrix)) {
-      if (verbose) {
-        insight::format_warning("Could not retrieve information about missing data.")
-      }
-      return(NULL)
-    }
-    original_data$.parameters_merge_id <- seq_len(nrow(original_data))
-    rotated_matrix$.parameters_merge_id <- (seq_len(nrow(original_data)))[compl_cases]
-    out <- merge(original_data, rotated_matrix, by = ".parameters_merge_id", all = TRUE, sort = FALSE)
-    out$.parameters_merge_id <- NULL
-  } else {
+  if (is.null(original_data) || is.null(rotated_matrix)) {
     if (verbose) {
       insight::format_warning("Either the original or the rotated data could not be retrieved.")
     }
     return(NULL)
   }
+
+  compl_cases <- attributes(pca_results)$complete_cases
+  if (is.null(compl_cases) && nrow(original_data) != nrow(rotated_matrix)) {
+    if (verbose) {
+      insight::format_warning("Could not retrieve information about missing data.")
+    }
+    return(NULL)
+  }
+
+  original_data$.parameters_merge_id <- seq_len(nrow(original_data))
+  rotated_matrix$.parameters_merge_id <- (seq_len(nrow(original_data)))[compl_cases]
+  out <- merge(original_data, rotated_matrix, by = ".parameters_merge_id", all = TRUE, sort = FALSE)
+  out$.parameters_merge_id <- NULL
+
   out
 }
 
@@ -267,7 +283,7 @@ principal_components.data.frame <- function(x,
       insight::format_error("Sparse PCA is currently incompatible with rotation. Use either `sparse=TRUE` or `rotation`.")
     }
 
-    loadings <- .pca_rotate(
+    pca_loadings <- .pca_rotate(
       x,
       n,
       rotation = rotation,
@@ -277,8 +293,8 @@ principal_components.data.frame <- function(x,
       ...
     )
 
-    attr(loadings, "data") <- data_name
-    return(loadings)
+    attr(pca_loadings, "data") <- data_name
+    return(pca_loadings)
   }
 
   # Compute PCA
@@ -350,60 +366,62 @@ principal_components.data.frame <- function(x,
 
   # Compute loadings
   if (length(model$sdev) > 1) {
-    loadings <- as.data.frame(model$rotation %*% diag(model$sdev))
+    pca_loadings <- as.data.frame(model$rotation %*% diag(model$sdev))
   } else {
-    loadings <- as.data.frame(model$rotation %*% model$sdev)
+    pca_loadings <- as.data.frame(model$rotation %*% model$sdev)
   }
-  names(loadings) <- data_summary$Component
+  names(pca_loadings) <- data_summary$Component
 
 
   # Format
-  loadings <- cbind(data.frame(Variable = row.names(loadings)), loadings)
-  row.names(loadings) <- NULL
+  pca_loadings <- cbind(data.frame(Variable = row.names(pca_loadings)), pca_loadings)
+  row.names(pca_loadings) <- NULL
 
   # Add information
   loading_cols <- 2:(n + 1)
-  loadings$Complexity <- (apply(loadings[, loading_cols, drop = FALSE], 1, function(x) sum(x^2)))^2 /
-    apply(loadings[, loading_cols, drop = FALSE], 1, function(x) sum(x^4))
+  pca_loadings$Complexity <- (apply(pca_loadings[, loading_cols, drop = FALSE], 1, function(x) sum(x^2)))^2 /
+    apply(pca_loadings[, loading_cols, drop = FALSE], 1, function(x) sum(x^4))
 
   # Add attributes
-  attr(loadings, "summary") <- data_summary
-  attr(loadings, "model") <- model
-  attr(loadings, "rotation") <- "none"
-  attr(loadings, "scores") <- model$x
-  attr(loadings, "standardize") <- standardize
-  attr(loadings, "additional_arguments") <- list(...)
-  attr(loadings, "n") <- n
-  attr(loadings, "type") <- "prcomp"
-  attr(loadings, "loadings_columns") <- loading_cols
-  attr(loadings, "complete_cases") <- stats::complete.cases(original_data)
+  attr(pca_loadings, "summary") <- data_summary
+  attr(pca_loadings, "model") <- model
+  attr(pca_loadings, "rotation") <- "none"
+  attr(pca_loadings, "scores") <- model$x
+  attr(pca_loadings, "standardize") <- standardize
+  attr(pca_loadings, "additional_arguments") <- list(...)
+  attr(pca_loadings, "n") <- n
+  attr(pca_loadings, "type") <- "prcomp"
+  attr(pca_loadings, "loadings_columns") <- loading_cols
+  attr(pca_loadings, "complete_cases") <- stats::complete.cases(original_data)
 
   # Sorting
   if (isTRUE(sort)) {
-    loadings <- .sort_loadings(loadings)
+    pca_loadings <- .sort_loadings(pca_loadings)
   }
 
   # Replace by NA all cells below threshold
   if (!is.null(threshold)) {
-    loadings <- .filter_loadings(loadings, threshold = threshold)
+    pca_loadings <- .filter_loadings(pca_loadings, threshold = threshold)
   }
 
   # Add some more attributes
-  attr(loadings, "loadings_long") <- .long_loadings(loadings, threshold = threshold)
+  attr(pca_loadings, "loadings_long") <- .long_loadings(pca_loadings, threshold = threshold)
   # here we match the original columns in the data set with the assigned components
   # for each variable, so we know which column in the original data set belongs
   # to which extracted component...
 
-  attr(loadings, "closest_component") <-
-    .closest_component(loadings, loadings_columns = loading_cols, variable_names = colnames(x))
-  attr(loadings, "data") <- data_name
-
-  attr(loadings, "dataset") <- original_data
+  attr(pca_loadings, "closest_component") <- .closest_component(
+    pca_loadings,
+    loadings_columns = loading_cols,
+    variable_names = colnames(x)
+  )
+  attr(pca_loadings, "data") <- data_name
+  attr(pca_loadings, "dataset") <- original_data
 
   # add class-attribute for printing
-  class(loadings) <- unique(c("parameters_pca", "see_parameters_pca", class(loadings)))
+  class(pca_loadings) <- unique(c("parameters_pca", "see_parameters_pca", class(pca_loadings)))
 
-  loadings
+  pca_loadings
 }
 
 

@@ -104,12 +104,6 @@ standard_error.glht <- function(model, ...) {
 
 
 #' @export
-degrees_of_freedom.glht <- function(model, ...) {
-  model$df
-}
-
-
-#' @export
 p_value.glht <- function(model, ...) {
   s <- summary(model)
   .data_frame(

@@ -7,7 +7,7 @@
 #' @param model Object of class [aov()], [anova()],
 #'   `aovlist`, `Gam`, [manova()], `Anova.mlm`,
 #'   `afex_aov` or `maov`.
-#' @param effectsize_type The effect size of interest. Not that possibly not all
+#' @param es_type The effect size of interest. Not that possibly not all
 #'   effect sizes are applicable to the model object. See 'Details'. For Anova
 #'   models, can also be a character vector with multiple effect size names.
 #' @param df_error Denominator degrees of freedom (or degrees of freedom of the
@@ -18,7 +18,7 @@
 #'   ANOVA-tables using `car::Anova()` will be returned. (Ignored for
 #'   `afex_aov`.)
 #' @param ci Confidence Interval (CI) level for effect sizes specified in
-#'   `effectsize_type`. The default, `NULL`, will compute no confidence
+#'   `es_type`. The default, `NULL`, will compute no confidence
 #'   intervals. `ci` should be a scalar between 0 and 1.
 #' @param test String, indicating the type of test for `Anova.mlm` to be
 #'   returned. If `"multivariate"` (or `NULL`), returns the summary of
@@ -35,7 +35,6 @@
 #'   (e.g., `"g"`, `"l"`, `"two"`...). See section *One-Sided CIs* in
 #'   the [effectsize_CIs vignette](https://easystats.github.io/effectsize/).
 #' @inheritParams model_parameters.default
-#' @param omega_squared,eta_squared,epsilon_squared Deprecated. Please use `effectsize_type`.
 #' @param ... Arguments passed to [`effectsize::effectsize()`]. For example,
 #'   to calculate _partial_ effect sizes types, use `partial = TRUE`. For objects
 #'   of class `htest` or `BFBayesFactor`, `adjust = TRUE` can be used to return
@@ -66,13 +65,13 @@
 #' model <- aov(Sepal.Length ~ Sepal.Big, data = df)
 #' model_parameters(model)
 #'
-#' model_parameters(model, effectsize_type = c("omega", "eta"), ci = 0.9)
+#' model_parameters(model, es_type = c("omega", "eta"), ci = 0.9)
 #'
 #' model <- anova(lm(Sepal.Length ~ Sepal.Big, data = df))
 #' model_parameters(model)
 #' model_parameters(
 #'   model,
-#'   effectsize_type = c("omega", "eta", "epsilon"),
+#'   es_type = c("omega", "eta", "epsilon"),
 #'   alternative = "greater"
 #' )
 #'
@@ -92,7 +91,7 @@
 #' # parameters table including effect sizes
 #' model_parameters(
 #'   model,
-#'   effectsize_type = "eta",
+#'   es_type = "eta",
 #'   ci = 0.9,
 #'   df_error = dof_satterthwaite(mm)[2:3]
 #' )
@@ -105,48 +104,21 @@ model_parameters.aov <- function(model,
                                  alternative = NULL,
                                  test = NULL,
                                  power = FALSE,
-                                 effectsize_type = NULL,
+                                 es_type = NULL,
                                  keep = NULL,
                                  drop = NULL,
                                  table_wide = FALSE,
                                  verbose = TRUE,
-                                 omega_squared = NULL,
-                                 eta_squared = NULL,
-                                 epsilon_squared = NULL,
                                  ...) {
-  ## TODO: remove in a later update
-  # handle deprected arguments ------
-  if (!is.null(omega_squared)) {
-    insight::format_warning(
-      "Argument `omega_squared` is deprecated.",
-      "Please use `effectsize_type = \"omega\"` instead."
-    )
-    effectsize_type <- "omega"
-  }
-  if (!is.null(eta_squared)) {
-    insight::format_warning(
-      "Argument `eta_squared` is deprecated.",
-      "Please use `effectsize_type = \"eta\"` instead."
-    )
-    effectsize_type <- "eta"
-  }
-  if (!is.null(epsilon_squared)) {
-    insight::format_warning(
-      "Argument `epsilon_squared` is deprecated.",
-      "Please use `effectsize_type = \"epsilon\"` instead."
-    )
-    effectsize_type <- "epsilon"
-  }
-
   # save model object, for later checks
   original_model <- model
   object_name <- insight::safe_deparse_symbol(substitute(model))
 
   if (inherits(model, "aov") && !is.null(type) && type > 1) {
-    if (!requireNamespace("car", quietly = TRUE)) {
-      insight::format_warning("Package {.pkg car} required for type-2 or type-3 Anova. Defaulting to type-1.")
-    } else {
+    if (requireNamespace("car", quietly = TRUE)) {
       model <- car::Anova(model, type = type)
+    } else {
+      insight::format_warning("Package {.pkg car} required for type-2 or type-3 Anova. Defaulting to type-1.")
     }
   }
 
@@ -172,7 +144,7 @@ model_parameters.aov <- function(model,
   params <- .effectsizes_for_aov(
     model,
     params = params,
-    effectsize_type = effectsize_type,
+    es_type = es_type,
     df_error = df_error,
     ci = ci,
     alternative = alternative,
@@ -278,7 +250,7 @@ model_parameters.aovlist <- model_parameters.aov
 #' @rdname model_parameters.aov
 #' @export
 model_parameters.afex_aov <- function(model,
-                                      effectsize_type = NULL,
+                                      es_type = NULL,
                                       df_error = NULL,
                                       type = NULL,
                                       keep = NULL,
@@ -298,7 +270,7 @@ model_parameters.afex_aov <- function(model,
   out <- .effectsizes_for_aov(
     model,
     params = out,
-    effectsize_type = effectsize_type,
+    es_type = es_type,
     df_error = df_error,
     verbose = verbose,
     ...
@@ -349,6 +321,7 @@ model_parameters.maov <- model_parameters.aov
       if (is.numeric(type)) {
         return(type)
       }
+      # nolint start
       switch(type,
         `1` = ,
         `I` = 1,
@@ -358,6 +331,7 @@ model_parameters.maov <- model_parameters.aov
         `III` = 3,
         1
       )
+      # nolint end
     }
 
     # default to 1
@@ -430,28 +404,26 @@ model_parameters.maov <- model_parameters.aov
     predictors <- .safe(insight::get_predictors(model))
 
     # if data available, check contrasts and mean centering
-    if (!is.null(predictors)) {
+    if (is.null(predictors)) {
+      treatment_contrasts_or_not_centered <- FALSE
+    } else {
       treatment_contrasts_or_not_centered <- vapply(predictors, function(i) {
         if (is.factor(i)) {
           cn <- stats::contrasts(i)
           if (is.null(cn) || (all(cn %in% c(0, 1)))) {
             return(TRUE)
           }
-        } else {
-          if (abs(mean(i, na.rm = TRUE)) > 1e-2) {
-            return(TRUE)
-          }
+        } else if (abs(mean(i, na.rm = TRUE)) > 1e-2) {
+          return(TRUE)
         }
-        return(FALSE)
+        FALSE
       }, TRUE)
-    } else {
-      treatment_contrasts_or_not_centered <- FALSE
     }
 
     # successfully checked predictors, or if not possible, at least found interactions?
     if (!is.null(interaction_terms) && (any(treatment_contrasts_or_not_centered) || is.null(predictors))) {
       insight::format_alert(
-        "Type 3 ANOVAs only give sensible and informative results when covariates are mean-centered and factors are coded with orthogonal contrasts (such as those produced by `contr.sum`, `contr.poly`, or `contr.helmert`, but *not* by the default `contr.treatment`)."
+        "Type 3 ANOVAs only give sensible and informative results when covariates are mean-centered and factors are coded with orthogonal contrasts (such as those produced by `contr.sum`, `contr.poly`, or `contr.helmert`, but *not* by the default `contr.treatment`)." # nolint
       )
     }
   }
@@ -460,19 +432,19 @@ model_parameters.maov <- model_parameters.aov
 
 .effectsizes_for_aov <- function(model,
                                  params,
-                                 effectsize_type = NULL,
+                                 es_type = NULL,
                                  df_error = NULL,
                                  ci = NULL,
                                  alternative = NULL,
                                  verbose = TRUE,
                                  ...) {
   # user actually does not want to compute effect sizes
-  if (is.null(effectsize_type)) {
+  if (is.null(es_type)) {
     return(params)
   }
 
   # is valid effect size?
-  if (!all(effectsize_type %in% c("eta", "omega", "epsilon", "f", "f2"))) {
+  if (!all(es_type %in% c("eta", "omega", "epsilon", "f", "f2"))) {
     return(params)
   }
 
@@ -490,7 +462,7 @@ model_parameters.maov <- model_parameters.aov
   }
 
   # multiple effect sizes possible
-  for (es in effectsize_type) {
+  for (es in es_type) {
     fx <- effectsize::effectsize(
       model,
       type = es,

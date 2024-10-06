@@ -8,8 +8,6 @@
 #'   only applies to objects from `chisq.test()` or `oneway.test()`.
 #' @inheritParams model_parameters.default
 #' @inheritParams model_parameters.aov
-#' @param cramers_v,phi,cohens_g,standardized_d,hedges_g,omega_squared,eta_squared,epsilon_squared,rank_biserial,rank_epsilon_squared,kendalls_w Deprecated. Please use `effectsize_type`.
-#'
 #' @inherit effectsize::effectsize details
 #'
 #' @examples
@@ -18,13 +16,13 @@
 #' model_parameters(model)
 #'
 #' model <- t.test(iris$Sepal.Width, iris$Sepal.Length)
-#' model_parameters(model, effectsize_type = "hedges_g")
+#' model_parameters(model, es_type = "hedges_g")
 #'
 #' model <- t.test(mtcars$mpg ~ mtcars$vs)
-#' model_parameters(model, effectsize_type = "hedges_g")
+#' model_parameters(model, es_type = "hedges_g")
 #'
 #' model <- t.test(iris$Sepal.Width, mu = 1)
-#' model_parameters(model, effectsize_type = "cohens_d")
+#' model_parameters(model, es_type = "cohens_d")
 #'
 #' data(airquality)
 #' airquality$Month <- factor(airquality$Month, labels = month.abb[5:9])
@@ -37,7 +35,7 @@
 #' model_parameters(model)
 #'
 #' model <- suppressWarnings(chisq.test(table(mtcars$am, mtcars$cyl)))
-#' model_parameters(model, effectsize_type = "cramers_v")
+#' model_parameters(model, es_type = "cramers_v")
 #'
 #' @return A data frame of indices related to the model's parameters.
 #'
@@ -46,41 +44,15 @@ model_parameters.htest <- function(model,
                                    ci = 0.95,
                                    alternative = NULL,
                                    bootstrap = FALSE,
-                                   effectsize_type = NULL,
+                                   es_type = NULL,
                                    verbose = TRUE,
-                                   cramers_v = NULL,
-                                   phi = NULL,
-                                   standardized_d = NULL,
-                                   hedges_g = NULL,
-                                   omega_squared = NULL,
-                                   eta_squared = NULL,
-                                   epsilon_squared = NULL,
-                                   cohens_g = NULL,
-                                   rank_biserial = NULL,
-                                   rank_epsilon_squared = NULL,
-                                   kendalls_w = NULL,
                                    ...) {
-  ## TODO: remove in a later update
-  # handle deprected arguments ------
-  if (!is.null(cramers_v)) effectsize_type <- "cramers_v"
-  if (!is.null(phi)) effectsize_type <- "phi"
-  if (!is.null(standardized_d)) effectsize_type <- "standardized_d"
-  if (!is.null(hedges_g)) effectsize_type <- "hedges_g"
-  if (!is.null(omega_squared)) effectsize_type <- "omega_squared"
-  if (!is.null(eta_squared)) effectsize_type <- "eta_squared"
-  if (!is.null(epsilon_squared)) effectsize_type <- "epsilon_squared"
-  if (!is.null(cohens_g)) effectsize_type <- "cohens_g"
-  if (!is.null(rank_biserial)) effectsize_type <- "rank_biserial"
-  if (!is.null(rank_epsilon_squared)) effectsize_type <- "rank_epsilon_squared"
-  if (!is.null(kendalls_w)) effectsize_type <- "rank_epsilon_squared"
-
-
   if (bootstrap) {
     insight::format_error("Bootstrapped h-tests are not yet implemented.")
   } else {
     parameters <- .extract_parameters_htest(
       model,
-      effectsize_type = effectsize_type,
+      es_type = es_type,
       ci = ci,
       alternative = alternative,
       verbose = verbose,
@@ -149,14 +121,17 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
 
 #' @keywords internal
 .extract_parameters_htest <- function(model,
-                                      effectsize_type = NULL,
+                                      es_type = NULL,
                                       ci = 0.95,
                                       alternative = NULL,
                                       verbose = TRUE,
                                       ...) {
   m_info <- insight::model_info(model, verbose = FALSE)
 
-  if (m_info$is_correlation) {
+  if (!is.null(model$method) && startsWith(model$method, "Box-")) {
+    # Box-Pierce ---------
+    out <- .extract_htest_boxpierce(model)
+  } else if (m_info$is_correlation) {
     # correlation ---------
     out <- .extract_htest_correlation(model)
   } else if (.is_levenetest(model)) {
@@ -189,7 +164,7 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
 
   out <- .add_effectsize_htest(model,
     out,
-    effectsize_type = effectsize_type,
+    es_type = es_type,
     ci = ci,
     alternative = alternative,
     verbose = verbose,
@@ -203,14 +178,30 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
 
 
 
+# extract htest Box-Pierce ----------------------
+
+#' @keywords internal
+.extract_htest_boxpierce <- function(model) {
+  data.frame(
+    Parameter = model$data.name,
+    Chi2 = model$statistic,
+    df_error = model$parameter,
+    p = model$p.value,
+    Method = model$method,
+    stringsAsFactors = FALSE
+  )
+}
+
+
+
 # extract htest correlation ----------------------
 
 #' @keywords internal
 .extract_htest_correlation <- function(model) {
-  names <- unlist(strsplit(model$data.name, " (and|by) "))
+  data_names <- unlist(strsplit(model$data.name, " (and|by) "))
   out <- data.frame(
-    Parameter1 = names[1],
-    Parameter2 = names[2],
+    Parameter1 = data_names[1],
+    Parameter2 = data_names[2],
     stringsAsFactors = FALSE
   )
 
@@ -258,10 +249,10 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
 .extract_htest_ranktest <- function(model) {
   # survey
   if (grepl("design-based", tolower(model$method), fixed = TRUE)) {
-    names <- gsub("~", "", unlist(strsplit(model$data.name, " + ", fixed = TRUE)), fixed = TRUE)
+    data_names <- gsub("~", "", unlist(strsplit(model$data.name, " + ", fixed = TRUE)), fixed = TRUE)
     out <- data.frame(
-      Parameter1 = names[1],
-      Parameter2 = names[2],
+      Parameter1 = data_names[1],
+      Parameter2 = data_names[2],
       Statistic = model$statistic[[1]],
       df_error = model$parameter[[1]],
       Method = model$method,
@@ -272,10 +263,10 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
     colnames(out)[colnames(out) == "Statistic"] <- names(model$statistic)[1]
   } else {
     if (grepl(" (and|by) ", model$data.name)) {
-      names <- unlist(strsplit(model$data.name, " (and|by) "))
+      data_names <- unlist(strsplit(model$data.name, " (and|by) "))
       out <- data.frame(
-        Parameter1 = names[1],
-        Parameter2 = names[2],
+        Parameter1 = data_names[1],
+        Parameter2 = data_names[2],
         stringsAsFactors = FALSE
       )
     } else {
@@ -312,7 +303,7 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
   data.frame(
     df = model$Df[1],
     df_error = model$Df[2],
-    `F` = model$`F value`[1],
+    `F` = model$`F value`[1], # nolint
     p = model$`Pr(>F)`[1],
     Method = "Levene's Test for Homogeneity of Variance",
     stringsAsFactors = FALSE
@@ -331,7 +322,7 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
     Estimate = model$estimate,
     df = model$parameter[1],
     df_error = model$parameter[2],
-    `F` = model$statistic,
+    `F` = model$statistic, # nolint
     CI_low = model$conf.int[1],
     CI_high = model$conf.int[2],
     p = model$p.value,
@@ -349,10 +340,10 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
 .extract_htest_ttest <- function(model, standardized_d = NULL, hedges_g = NULL) {
   # survey
   if (grepl("design-based", tolower(model$method), fixed = TRUE)) {
-    names <- unlist(strsplit(model$data.name, " ~ ", fixed = TRUE))
+    data_names <- unlist(strsplit(model$data.name, " ~ ", fixed = TRUE))
     out <- data.frame(
-      Parameter1 = names[1],
-      Parameter2 = names[2],
+      Parameter1 = data_names[1],
+      Parameter2 = data_names[2],
       Difference = model$estimate[[1]],
       t = model$statistic[[1]],
       df_error = model$parameter[[1]],
@@ -365,10 +356,10 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
   } else {
     paired_test <- startsWith(model$method, "Paired") && length(model$estimate) == 1
     if (grepl(" and ", model$data.name, fixed = TRUE) && isFALSE(paired_test)) {
-      names <- unlist(strsplit(model$data.name, " and ", fixed = TRUE))
+      data_names <- unlist(strsplit(model$data.name, " and ", fixed = TRUE))
       out <- data.frame(
-        Parameter1 = names[1],
-        Parameter2 = names[2],
+        Parameter1 = data_names[1],
+        Parameter2 = data_names[2],
         Mean_Parameter1 = model$estimate[1],
         Mean_Parameter2 = model$estimate[2],
         Difference = model$estimate[1] - model$estimate[2],
@@ -382,10 +373,10 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
       )
       attr(out, "mean_group_values") <- gsub("mean in group ", "", names(model$estimate), fixed = TRUE)
     } else if (isTRUE(paired_test)) {
-      names <- unlist(strsplit(model$data.name, " (and|by) "))
+      data_names <- unlist(strsplit(model$data.name, " (and|by) "))
       out <- data.frame(
-        Parameter = names[1],
-        Group = names[2],
+        Parameter = data_names[1],
+        Group = data_names[2],
         Difference = model$estimate,
         t = model$statistic,
         df_error = model$parameter,
@@ -397,10 +388,10 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
       )
     } else if (grepl(" by ", model$data.name, fixed = TRUE)) {
       if (length(model$estimate) == 1) {
-        names <- unlist(strsplit(model$data.name, " by ", fixed = TRUE))
+        data_names <- unlist(strsplit(model$data.name, " by ", fixed = TRUE))
         out <- data.frame(
-          Parameter = names[1],
-          Group = names[2],
+          Parameter = data_names[1],
+          Group = data_names[2],
           Difference = model$estimate,
           CI = 0.95,
           CI_low = as.vector(model$conf.int[, 1]),
@@ -412,10 +403,10 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
           stringsAsFactors = FALSE
         )
       } else {
-        names <- unlist(strsplit(model$data.name, " by ", fixed = TRUE))
+        data_names <- unlist(strsplit(model$data.name, " by ", fixed = TRUE))
         out <- data.frame(
-          Parameter = names[1],
-          Group = names[2],
+          Parameter = data_names[1],
+          Group = data_names[2],
           Mean_Group1 = model$estimate[1],
           Mean_Group2 = model$estimate[2],
           Difference = model$estimate[1] - model$estimate[2],
@@ -458,7 +449,7 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
 #' @keywords internal
 .extract_htest_oneway <- function(model) {
   data.frame(
-    `F` = model$statistic,
+    `F` = model$statistic, # nolint
     df = model$parameter[1],
     df_error = model$parameter[2],
     p = model$p.value,
@@ -482,7 +473,7 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
     }
     if (names(model$statistic) == "F") {
       data.frame(
-        `F` = model$statistic,
+        `F` = model$statistic, # nolint
         df = model$parameter[1],
         df_error = model$parameter[2],
         p = model$p.value,
@@ -498,27 +489,25 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
         stringsAsFactors = FALSE
       )
     }
+  } else if (!is.null(model$estimate) && identical(names(model$estimate), "odds ratio")) {
+    data.frame(
+      `Odds Ratio` = model$estimate,
+      # CI = attributes(model$conf.int)$conf.level,
+      CI_low = model$conf.int[1],
+      CI_high = model$conf.int[2],
+      p = model$p.value,
+      Method = model$method,
+      stringsAsFactors = FALSE,
+      check.names = FALSE
+    )
   } else {
-    if (!is.null(model$estimate) && identical(names(model$estimate), "odds ratio")) {
-      data.frame(
-        `Odds Ratio` = model$estimate,
-        # CI = attributes(model$conf.int)$conf.level,
-        CI_low = model$conf.int[1],
-        CI_high = model$conf.int[2],
-        p = model$p.value,
-        Method = model$method,
-        stringsAsFactors = FALSE,
-        check.names = FALSE
-      )
-    } else {
-      data.frame(
-        Chi2 = model$statistic,
-        df = model$parameter,
-        p = model$p.value,
-        Method = model$method,
-        stringsAsFactors = FALSE
-      )
-    }
+    data.frame(
+      Chi2 = model$statistic,
+      df = model$parameter,
+      p = model$p.value,
+      Method = model$method,
+      stringsAsFactors = FALSE
+    )
   }
 }
 
@@ -530,7 +519,7 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
 #' @keywords internal
 .extract_htest_prop <- function(model) {
   out <- data.frame(
-    Proportion = paste0(insight::format_value(model$estimate, as_percent = TRUE), collapse = " / "),
+    Proportion = paste(insight::format_value(model$estimate, as_percent = TRUE), collapse = " / "),
     stringsAsFactors = FALSE
   )
   if (length(model$estimate) == 2) {
@@ -579,13 +568,20 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
 
 .add_effectsize_htest <- function(model,
                                   out,
-                                  effectsize_type = NULL,
+                                  es_type = NULL,
                                   ci = 0.95,
                                   alternative = NULL,
                                   verbose = TRUE,
                                   ...) {
   # check if effect sizes are requested
-  if (!requireNamespace("effectsize", quietly = TRUE) || is.null(effectsize_type)) {
+  if (!requireNamespace("effectsize", quietly = TRUE) || is.null(es_type)) {
+    return(out)
+  }
+
+  # return on invalid options. We may have partial matching with argument
+  # `effects` for `es_type`, and thus all "effects" options should be
+  # ignored.
+  if (es_type %in% c("fixed", "random", "all")) {
     return(out)
   }
 
@@ -594,7 +590,7 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
     {
       effectsize::effectsize(
         model,
-        type = effectsize_type,
+        type = es_type,
         ci = ci,
         alternative = alternative,
         verbose = verbose,
@@ -604,7 +600,7 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
     error = function(e) {
       if (verbose) {
         msg <- c(
-          paste0("Could not compute effectsize ", effectsize::get_effectsize_label(effectsize_type), "."),
+          paste0("Could not compute effectsize ", effectsize::get_effectsize_label(es_type), "."),
           paste0("Possible reason: ", e$message)
         )
         insight::format_alert(msg)
@@ -620,7 +616,7 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
   ## TODO: check if effectsize prefixes are correct @mattansb
 
   # Find prefix for CI-columns
-  prefix <- switch(effectsize_type,
+  prefix <- switch(es_type,
     cohens_g = "Cohens_",
     cramers_v = "Cramers_",
     phi = "phi_",
@@ -667,24 +663,22 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
 
   if (!is.null(model$alternative)) {
     h1_text <- "Alternative hypothesis: "
-    if (!is.null(model$null.value)) {
-      if (length(model$null.value) == 1L) {
-        alt.char <- switch(model$alternative,
-          two.sided = "not equal to",
-          less = "less than",
-          greater = "greater than"
-        )
-        h1_text <- paste0(h1_text, "true ", names(model$null.value), " is ", alt.char, " ", model$null.value)
-      } else {
-        h1_text <- paste0(h1_text, model$alternative)
-      }
+    if (is.null(model$null.value)) {
+      h1_text <- paste0(h1_text, model$alternative)
+    } else if (length(model$null.value) == 1L) {
+      alt.char <- switch(model$alternative,
+        two.sided = "not equal to",
+        less = "less than",
+        greater = "greater than"
+      )
+      h1_text <- paste0(h1_text, "true ", names(model$null.value), " is ", alt.char, " ", model$null.value)
     } else {
       h1_text <- paste0(h1_text, model$alternative)
     }
     attr(params, "text_alternative") <- h1_text
   }
 
-  dot.arguments <- lapply(match.call(expand.dots = FALSE)$`...`, function(x) x)
+  dot.arguments <- lapply(match.call(expand.dots = FALSE)[["..."]], function(x) x)
   if ("digits" %in% names(dot.arguments)) {
     attr(params, "digits") <- eval(dot.arguments[["digits"]])
   } else {
@@ -731,7 +725,7 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
                                   p_adjust = NULL,
                                   verbose = TRUE,
                                   ...) {
-  dot.arguments <- lapply(match.call(expand.dots = FALSE)$`...`, function(x) x)
+  dot.arguments <- lapply(match.call(expand.dots = FALSE)[["..."]], function(x) x)
 
   attr(params, "p_adjust") <- p_adjust
   attr(params, "model_class") <- class(model)

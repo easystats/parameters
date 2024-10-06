@@ -354,7 +354,7 @@ skip_if_not_installed("lme4")
 test_that("robust-se lmer", {
   data(iris)
   set.seed(1234)
-  iris$grp <- as.factor(sample(1:3, nrow(iris), replace = TRUE))
+  iris$grp <- as.factor(sample.int(3, nrow(iris), replace = TRUE))
 
   m <- lme4::lmer(
     Sepal.Length ~ Species * Sepal.Width + Petal.Length + (1 | grp),
@@ -368,7 +368,7 @@ test_that("robust-se lmer", {
 test_that("robust-p lmer", {
   data(iris)
   set.seed(1234)
-  iris$grp <- as.factor(sample(1:3, nrow(iris), replace = TRUE))
+  iris$grp <- as.factor(sample.int(3, nrow(iris), replace = TRUE))
 
   m <- lme4::lmer(
     Sepal.Length ~ Species * Sepal.Width + Petal.Length + (1 | grp),
@@ -385,7 +385,7 @@ test_that("robust-p lmer", {
 test_that("robust-ci lmer", {
   data(iris)
   set.seed(1234)
-  iris$grp <- as.factor(sample(1:3, nrow(iris), replace = TRUE))
+  iris$grp <- as.factor(sample.int(3, nrow(iris), replace = TRUE))
 
   m <- lme4::lmer(
     Sepal.Length ~ Species * Sepal.Width + Petal.Length + (1 | grp),

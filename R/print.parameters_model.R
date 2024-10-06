@@ -92,8 +92,11 @@
 #'   categorical predictors. The coefficient for the reference level is always
 #'   `0` (except when `exponentiate = TRUE`, then the coefficient will be `1`),
 #'   so this is just for completeness.
+#' @param ... Arguments passed down to [`format.parameters_model()`],
+#'   [`insight::format_table()`] and [`insight::export_table()`]
 #' @inheritParams insight::format_table
 #' @inheritParams compare_parameters
+#' @inheritParams display.parameters_model
 #'
 #' @inheritSection format_parameters Interpretation of Interaction Terms
 #' @inheritSection model_parameters Labeling the Degrees of Freedom
@@ -104,13 +107,13 @@
 #' some messages providing additional information can be displayed or suppressed
 #' using `options()`:
 #'
-#' - `parameters_summary`: `options(parameters_summary = TRUE)` will override the
-#' `summary` argument in `model_parameters()` and always show the model summary
-#' for non-mixed models.
+#' - `parameters_info`: `options(parameters_info = TRUE)` will override the
+#' `include_info` argument in `model_parameters()` and always show the model
+#' summary for non-mixed models.
 #'
-#' - `parameters_mixed_summary`: `options(parameters_mixed_summary = TRUE)` will
-#' override the `summary` argument in `model_parameters()` for mixed models, and
-#' will then always show the model summary.
+#' - `parameters_mixed_info`: `options(parameters_mixed_info = TRUE)` will
+#' override the `include_info` argument in `model_parameters()` for mixed
+#' models, and will then always show the model summary.
 #'
 #' - `parameters_cimethod`: `options(parameters_cimethod = TRUE)` will show the
 #' additional information about the approximation method used to calculate
@@ -141,14 +144,16 @@
 #' the default HTML engine for tables to `gt`, i.e. the _gt_ package is used to
 #' create HTML tables. If set to `tt`, the _tinytable_ package is used.
 #'
+#' - `insight_use_symbols`: `options(insight_use_symbols = TRUE)` will try to
+#' print unicode-chars for symbols as column names, wherever possible (e.g.,
+#' \ifelse{html}{\out{&omega;}}{\eqn{\omega}} instead of `Omega`).
+#'
 #' @details `summary()` is a convenient shortcut for
-#'   `print(object, select = "minimal", show_sigma = TRUE, show_formula = TRUE)`.
+#' `print(object, select = "minimal", show_sigma = TRUE, show_formula = TRUE)`.
 #'
 #' @return Invisibly returns the original input object.
 #'
-#' @seealso There is a dedicated method to use inside rmarkdown files,
-#'   [`print_md()`][print_md.parameters_model]. See also
-#'   [`display()`][display.parameters_model].
+#' @seealso See also [`display()`][display.parameters_model].
 #'
 #' @examplesIf require("gt", quietly = TRUE) && require("glmmTMB", quietly = TRUE)
 #' \donttest{
@@ -386,7 +391,7 @@ print.parameters_random <- function(x, digits = 2, ...) {
                         ci_width = "auto",
                         ci_brackets = TRUE,
                         format = "text",
-                        group = NULL,
+                        groups = NULL,
                         include_reference = FALSE,
                         ...) {
   format(
@@ -401,7 +406,7 @@ print.parameters_random <- function(x, digits = 2, ...) {
     ci_brackets = ci_brackets,
     zap_small = zap_small,
     format = format,
-    group = group,
+    groups = groups,
     include_reference = include_reference,
     ...
   )
@@ -425,6 +430,7 @@ print.parameters_random <- function(x, digits = 2, ...) {
   show_sigma <- ifelse(show_summary, TRUE, show_sigma)
   show_formula <- ifelse(show_summary, TRUE, show_formula)
   show_r2 <- .additional_arguments(x, "show_summary", FALSE)
+  show_rmse <- .additional_arguments(x, "show_summary", FALSE)
 
   # set defaults, if necessary
   if (is.null(model_sigma)) {
@@ -438,6 +444,7 @@ print.parameters_random <- function(x, digits = 2, ...) {
     show_sigma = show_sigma,
     show_formula = show_formula,
     show_r2 = show_r2,
+    show_rmse = show_rmse,
     format = format
   )
 }

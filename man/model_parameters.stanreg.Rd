@@ -27,7 +27,13 @@
   ...
 )
 
-\method{model_parameters}{data.frame}(model, as_draws = FALSE, verbose = TRUE, ...)
+\method{model_parameters}{data.frame}(
+  model,
+  as_draws = FALSE,
+  exponentiate = FALSE,
+  verbose = TRUE,
+  ...
+)
 
 \method{model_parameters}{brmsfit}(
   model,
@@ -61,6 +67,7 @@
   test = "pd",
   rope_range = "default",
   rope_ci = 0.95,
+  exponentiate = FALSE,
   keep = NULL,
   drop = NULL,
   verbose = TRUE,
@@ -124,9 +131,10 @@ For each "test", the corresponding \pkg{bayestestR} function is called
 (e.g. \code{\link[bayestestR:rope]{rope()}} or \code{\link[bayestestR:p_direction]{p_direction()}}) and its results
 included in the summary output.}
 
-\item{rope_range}{ROPE's lower and higher bounds. Should be a list of two
-values (e.g., \code{c(-0.1, 0.1)}) or \code{"default"}. If \code{"default"},
-the bounds are set to \code{x +- 0.1*SD(response)}.}
+\item{rope_range}{ROPE's lower and higher bounds. Should be a vector of two
+values (e.g., \code{c(-0.1, 0.1)}), \code{"default"} or a list of numeric vectors of
+the same length as numbers of parameters. If \code{"default"}, the bounds are
+set to \code{x +- 0.1*SD(response)}.}
 
 \item{rope_ci}{The Credible Interval (CI) probability, corresponding to the
 proportion of HDI, to use for the percentage in ROPE.}
@@ -171,6 +179,19 @@ the data frame is treated as posterior samples and handled similar to
 Bayesian models. All arguments in \code{...} are passed to
 \code{model_parameters.draws()}.}
 
+\item{exponentiate}{Logical, indicating whether or not to exponentiate the
+coefficients (and related confidence intervals). This is typical for
+logistic regression, or more generally speaking, for models with log or
+logit links. It is also recommended to use \code{exponentiate = TRUE} for models
+with log-transformed response values. \strong{Note:} Delta-method standard
+errors are also computed (by multiplying the standard errors by the
+transformed coefficients). This is to mimic behaviour of other software
+packages, such as Stata, but these standard errors poorly estimate
+uncertainty for the transformed coefficient. The transformed confidence
+interval more clearly captures this uncertainty. For \code{compare_parameters()},
+\code{exponentiate = "nongaussian"} will only exponentiate coefficients from
+non-Gaussian families.}
+
 \item{effects}{Should results for fixed effects, random effects or both be
 returned? Only applies to mixed models. May be abbreviated.}
 
@@ -187,19 +208,6 @@ such as \code{conditional}, \code{zero_inflated}, or \code{smooth_terms}, are re
 argument - but no auxiliary parameters). For \code{component = "distributional"}
 (or \code{"auxiliary"}), components like \code{sigma}, \code{dispersion}, or \code{beta}
 (and other auxiliary parameters) are returned.}
-
-\item{exponentiate}{Logical, indicating whether or not to exponentiate the
-coefficients (and related confidence intervals). This is typical for
-logistic regression, or more generally speaking, for models with log or
-logit links. It is also recommended to use \code{exponentiate = TRUE} for models
-with log-transformed response values. \strong{Note:} Delta-method standard
-errors are also computed (by multiplying the standard errors by the
-transformed coefficients). This is to mimic behaviour of other software
-packages, such as Stata, but these standard errors poorly estimate
-uncertainty for the transformed coefficient. The transformed confidence
-interval more clearly captures this uncertainty. For \code{compare_parameters()},
-\code{exponentiate = "nongaussian"} will only exponentiate coefficients from
-non-Gaussian families.}
 
 \item{standardize}{The method used for standardizing the parameters. Can be
 \code{NULL} (default; no standardization), \code{"refit"} (for re-fitting the model

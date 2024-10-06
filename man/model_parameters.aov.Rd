@@ -13,20 +13,17 @@
   alternative = NULL,
   test = NULL,
   power = FALSE,
-  effectsize_type = NULL,
+  es_type = NULL,
   keep = NULL,
   drop = NULL,
   table_wide = FALSE,
   verbose = TRUE,
-  omega_squared = NULL,
-  eta_squared = NULL,
-  epsilon_squared = NULL,
   ...
 )
 
 \method{model_parameters}{afex_aov}(
   model,
-  effectsize_type = NULL,
+  es_type = NULL,
   df_error = NULL,
   type = NULL,
   keep = NULL,
@@ -50,7 +47,7 @@ for ANOVA-tables from mixed models. See 'Examples'. (Ignored for
 \code{afex_aov}.)}
 
 \item{ci}{Confidence Interval (CI) level for effect sizes specified in
-\code{effectsize_type}. The default, \code{NULL}, will compute no confidence
+\code{es_type}. The default, \code{NULL}, will compute no confidence
 intervals. \code{ci} should be a scalar between 0 and 1.}
 
 \item{alternative}{A character string specifying the alternative hypothesis;
@@ -67,7 +64,7 @@ the multivariate test (that is also given by the \code{print}-method). If
 \item{power}{Logical, if \code{TRUE}, adds a column with power for each
 parameter.}
 
-\item{effectsize_type}{The effect size of interest. Not that possibly not all
+\item{es_type}{The effect size of interest. Not that possibly not all
 effect sizes are applicable to the model object. See 'Details'. For Anova
 models, can also be a character vector with multiple effect size names.}
 
@@ -98,8 +95,6 @@ wide format, i.e. should the numerator and denominator degrees of freedom
 be in the same row. Default: \code{FALSE}.}
 
 \item{verbose}{Toggle warnings and messages.}
-
-\item{omega_squared, eta_squared, epsilon_squared}{Deprecated. Please use \code{effectsize_type}.}
 
 \item{...}{Arguments passed to \code{\link[effectsize:effectsize]{effectsize::effectsize()}}. For example,
 to calculate \emph{partial} effect sizes types, use \code{partial = TRUE}. For objects
@@ -166,13 +161,13 @@ df$Sepal.Big <- ifelse(df$Sepal.Width >= 3, "Yes", "No")
 model <- aov(Sepal.Length ~ Sepal.Big, data = df)
 model_parameters(model)
 
-model_parameters(model, effectsize_type = c("omega", "eta"), ci = 0.9)
+model_parameters(model, es_type = c("omega", "eta"), ci = 0.9)
 
 model <- anova(lm(Sepal.Length ~ Sepal.Big, data = df))
 model_parameters(model)
 model_parameters(
   model,
-  effectsize_type = c("omega", "eta", "epsilon"),
+  es_type = c("omega", "eta", "epsilon"),
   alternative = "greater"
 )
 
@@ -192,7 +187,7 @@ model_parameters(model)
 # parameters table including effect sizes
 model_parameters(
   model,
-  effectsize_type = "eta",
+  es_type = "eta",
   ci = 0.9,
   df_error = dof_satterthwaite(mm)[2:3]
 )

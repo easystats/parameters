@@ -41,10 +41,10 @@
 #'   the number of digits for the output. If `s_value = TRUE`, the p-value will
 #'   be replaced by the S-value in the output (cf. _Rafi and Greenland 2020_).
 #'   `pd` adds an additional column with the _probability of direction_ (see
-#'   [bayestestR::p_direction()] for details). `groups` can be used to group
+#'   [`bayestestR::p_direction()`] for details). `groups` can be used to group
 #'   coefficients. It will be passed to the print-method, or can directly be used
-#'   in `print()`, see documentation in [print.parameters_model()]. Furthermore,
-#'   see 'Examples' in [model_parameters.default()]. For developers, whose
+#'   in `print()`, see documentation in [`print.parameters_model()`]. Furthermore,
+#'   see 'Examples' in [`model_parameters.default()`]. For developers, whose
 #'   interest mainly is to get a "tidy" data frame of model summaries, it is
 #'   recommended to set `pretty_names = FALSE` to speed up computation of the
 #'   summary table.
@@ -74,10 +74,7 @@
 #' packages or other software packages (like SPSS). To mimic behaviour of SPSS
 #' or packages such as **lm.beta**, use `standardize = "basic"`.
 #'
-#' @section
-#'
-#' Standardization Methods:
-#'
+#' @section Standardization Methods:
 #' - **refit**: This method is based on a complete model re-fit with a
 #' standardized version of the data. Hence, this method is equal to
 #' standardizing the variables before fitting the model. It is the "purest" and
@@ -87,7 +84,7 @@
 #' include interactions or transformations (e.g., polynomial or spline terms).
 #' The `robust` (default to `FALSE`) argument enables a robust standardization
 #' of data, i.e., based on the `median` and `MAD` instead of the `mean` and
-#' `SD`. **See [standardize()] for more details.**
+#' `SD`. **See [`datawizard::standardize()`] for more details.**
 #' **Note** that `standardize_parameters(method = "refit")` may not return
 #' the same results as fitting a model on data that has been standardized with
 #' `standardize()`; `standardize_parameters()` used the data used by the model
@@ -280,21 +277,105 @@
 #' p-values are based on the probability of direction ([`bayestestR::p_direction()`]),
 #' which is converted into a p-value using [`bayestestR::pd_to_p()`].
 #'
+#' @section Statistical inference - how to quantify evidence:
+#' There is no standardized approach to drawing conclusions based on the
+#' available data and statistical models. A frequently chosen but also much
+#' criticized approach is to evaluate results based on their statistical
+#' significance (*Amrhein et al. 2017*).
+#'
+#' A more sophisticated way would be to test whether estimated effects exceed
+#' the "smallest effect size of interest", to avoid even the smallest effects
+#' being considered relevant simply because they are statistically significant,
+#' but clinically or practically irrelevant (*Lakens et al. 2018, Lakens 2024*).
+#'
+#' A rather unconventional approach, which is nevertheless advocated by various
+#' authors, is to interpret results from classical regression models either in
+#' terms of probabilities, similar to the usual approach in Bayesian statistics
+#' (*Schweder 2018; Schweder and Hjort 2003; Vos 2022*) or in terms of relative
+#' measure of "evidence" or "compatibility" with the data (*Greenland et al. 2022;
+#' Rafi and Greenland 2020*), which nevertheless comes close to a probabilistic
+#' interpretation.
+#'
+#' A more detailed discussion of this topic is found in the documentation of
+#' [`p_function()`].
+#'
+#' The **parameters** package provides several options or functions to aid
+#' statistical inference. These are, for example:
+#' - [`equivalence_test()`][equivalence_test.lm], to compute the (conditional)
+#'   equivalence test for frequentist models
+#' - [`p_significance()`][p_significance.lm], to compute the probability of
+#'   *practical significance*, which can be conceptualized as a unidirectional
+#'   equivalence test
+#' - [`p_function()`], or _consonance function_, to compute p-values and
+#'   compatibility (confidence) intervals for statistical models
+#' - the `pd` argument (setting `pd = TRUE`) in `model_parameters()` includes
+#'   a column with the *probability of direction*, i.e. the probability that a
+#'   parameter is strictly positive or negative. See [`bayestestR::p_direction()`]
+#'   for details. If plotting is desired, the [`p_direction()`][p_direction.lm]
+#'   function can be used, together with `plot()`.
+#' - the `s_value` argument (setting `s_value = TRUE`) in `model_parameters()`
+#'   replaces the p-values with their related _S_-values (*Rafi and Greenland 2020*)
+#' - finally, it is possible to generate distributions of model coefficients by
+#'   generating bootstrap-samples (setting `bootstrap = TRUE`) or simulating
+#'   draws from model coefficients using [`simulate_model()`]. These samples
+#'   can then be treated as "posterior samples" and used in many functions from
+#'   the **bayestestR** package.
+#'
+#' Most of the above shown options or functions derive from methods originally
+#' implemented for Bayesian models (*Makowski et al. 2019*). However, assuming
+#' that model assumptions are met (which means, the model fits well to the data,
+#' the correct model is chosen that reflects the data generating process
+#' (distributional model family) etc.), it seems appropriate to interpret
+#' results from classical frequentist models in a "Bayesian way" (more details:
+#' documentation in [`p_function()`]).
+#'
 #' @inheritSection format_parameters Interpretation of Interaction Terms
 #' @inheritSection print.parameters_model Global Options to Customize Messages and Tables when Printing
 #'
 #' @references
 #'
-#'   - Hoffman, L. (2015). Longitudinal analysis: Modeling within-person
-#'   fluctuation and change. Routledge.
+#'   - Amrhein, V., Korner-Nievergelt, F., and Roth, T. (2017). The earth is
+#'     flat (p > 0.05): Significance thresholds and the crisis of unreplicable
+#'     research. PeerJ, 5, e3544. \doi{10.7717/peerj.3544}
 #'
-#'   - Neter, J., Wasserman, W., & Kutner, M. H. (1989). Applied linear
-#'   regression models.
+#'   - Greenland S, Rafi Z, Matthews R, Higgs M. To Aid Scientific Inference,
+#'     Emphasize Unconditional Compatibility Descriptions of Statistics. (2022)
+#'     https://arxiv.org/abs/1909.08583v7 (Accessed November 10, 2022)
+#'
+#'   - Hoffman, L. (2015). Longitudinal analysis: Modeling within-person
+#'     fluctuation and change. Routledge.
+#'
+#'   - Lakens, D. (2024). Improving Your Statistical Inferences (Version v1.5.1).
+#'     Retrieved from https://lakens.github.io/statistical_inferences/.
+#'     \doi{10.5281/ZENODO.6409077}
+#'
+#'   - Lakens, D., Scheel, A. M., and Isager, P. M. (2018). Equivalence Testing
+#'     for Psychological Research: A Tutorial. Advances in Methods and Practices
+#'     in Psychological Science, 1(2), 259–269. \doi{10.1177/2515245918770963}
+#'
+#'   - Makowski, D., Ben-Shachar, M. S., Chen, S. H. A., and Lüdecke, D. (2019).
+#'     Indices of Effect Existence and Significance in the Bayesian Framework.
+#'     Frontiers in Psychology, 10, 2767. \doi{10.3389/fpsyg.2019.02767}
+#'
+#'   - Neter, J., Wasserman, W., and Kutner, M. H. (1989). Applied linear
+#'     regression models.
 #'
 #'   - Rafi Z, Greenland S. Semantic and cognitive tools to aid statistical
-#'   science: replace confidence and significance by compatibility and surprise.
-#'   BMC Medical Research Methodology (2020) 20:244.
-
+#'     science: replace confidence and significance by compatibility and surprise.
+#'     BMC Medical Research Methodology (2020) 20:244.
+#'
+#'   - Schweder T. Confidence is epistemic probability for empirical science.
+#'     Journal of Statistical Planning and Inference (2018) 195:116–125.
+#'     \doi{10.1016/j.jspi.2017.09.016}
+#'
+#'   - Schweder T, Hjort NL. Frequentist analogues of priors and posteriors.
+#'     In Stigum, B. (ed.), Econometrics and the Philosophy of Economics: Theory
+#'     Data Confrontation in Economics, pp. 285-217. Princeton University Press,
+#'     Princeton, NJ, 2003
+#'
+#'   - Vos P, Holbert D. Frequentist statistical inference without repeated sampling.
+#'     Synthese 200, 89 (2022). \doi{10.1007/s11229-022-03560-x}
+#'
 #' @return A data frame of indices related to the model's parameters.
 #' @export
 model_parameters <- function(model, ...) {
@@ -317,8 +398,8 @@ model_parameters <- function(model, ...) {
 
 # Add new options to the docs in "print.parameters_model"
 
-# getOption("parameters_summary"): show model summary
-# getOption("parameters_mixed_summary"): show model summary for mixed models
+# getOption("parameters_info"): show model summary
+# getOption("parameters_mixed_info"): show model summary for mixed models
 # getOption("parameters_cimethod"): show message about CI approximation
 # getOption("parameters_exponentiate"): show warning about exp for log/logit links
 # getOption("parameters_labels"): use value/variable labels instead pretty names
@@ -331,10 +412,11 @@ model_parameters <- function(model, ...) {
 parameters <- model_parameters
 
 
-#' Parameters from (General) Linear Models
+#' @title Parameters from (General) Linear Models
+#' @name model_parameters.default
 #'
-#' Extract and compute indices and measures to describe parameters of (general)
-#' linear models (GLMs).
+#' @description Extract and compute indices and measures to describe parameters
+#' of (generalized) linear models (GLMs).
 #'
 #' @param model Model object.
 #' @param ci Confidence Interval (CI) level. Default to `0.95` (`95%`).
@@ -384,9 +466,10 @@ parameters <- model_parameters
 #'   _Confidence intervals and approximation of degrees of freedom_ in
 #'   [`model_parameters()`] for further details. When `ci_method=NULL`, in most
 #'   cases `"wald"` is used then.
-#' @param summary Logical, if `TRUE`, prints summary information about the
+#' @param include_info Logical, if `TRUE`, prints summary information about the
 #'   model (model formula, number of observations, residual standard deviation
 #'   and more).
+#' @param summary Deprecated, please use `info` instead.
 #' @param keep Character containing a regular expression pattern that
 #'   describes the parameters that should be included (for `keep`) or excluded
 #'   (for `drop`) in the returned data frame. `keep` may also be a
@@ -407,14 +490,25 @@ parameters <- model_parameters
 #'   `$Parameter` column of the parameters table to get the exact parameter
 #'   names.
 #' @param ... Arguments passed to or from other methods. For instance, when
-#'   `bootstrap = TRUE`, arguments like `type` or `parallel` are
-#'   passed down to `bootstrap_model()`.
+#'   `bootstrap = TRUE`, arguments like `type` or `parallel` are passed down to
+#'   `bootstrap_model()`. Further non-documented arguments are `digits`,
+#'   `p_digits`, `ci_digits` and `footer_digits` to set the number of digits for
+#'   the output. If `s_value = TRUE`, the p-value will be replaced by the
+#'   S-value in the output (cf. _Rafi and Greenland 2020_). `pd` adds an
+#'   additional column with the _probability of direction_ (see
+#'   [`bayestestR::p_direction()`] for details). `groups` can be used to group
+#'   coefficients. It will be passed to the print-method, or can directly be
+#'   used in `print()`, see documentation in [`print.parameters_model()`].
+#'   Furthermore, see 'Examples' for this function. For developers, whose
+#'   interest mainly is to get a "tidy" data frame of model summaries, it is
+#'   recommended to set `pretty_names = FALSE` to speed up computation of the
+#'   summary table.
 #' @param drop See `keep`.
 #' @param verbose Toggle warnings and messages.
 #' @inheritParams standard_error
 #'
-#' @seealso [`insight::standardize_names()`] to
-#'   rename columns into a consistent, standardized naming scheme.
+#' @seealso [`insight::standardize_names()`] to rename columns into a
+#'   consistent, standardized naming scheme.
 #'
 #' @inheritSection model_parameters Confidence intervals and approximation of degrees of freedom
 #'
@@ -441,6 +535,11 @@ parameters <- model_parameters
 #' # different p-value style in output
 #' model_parameters(model, p_digits = 5)
 #' model_parameters(model, digits = 3, ci_digits = 4, p_digits = "scientific")
+#'
+#' # report S-value or probability of direction for parameters
+#' model_parameters(model, s_value = TRUE)
+#' model_parameters(model, pd = TRUE)
+#'
 #' \donttest{
 #' # logistic regression model
 #' model <- glm(vs ~ wt + cyl, data = mtcars, family = "binomial")
@@ -468,15 +567,22 @@ model_parameters.default <- function(model,
                                      standardize = NULL,
                                      exponentiate = FALSE,
                                      p_adjust = NULL,
+                                     vcov = NULL,
+                                     vcov_args = NULL,
                                      summary = getOption("parameters_summary", FALSE),
+                                     include_info = getOption("parameters_info", FALSE),
                                      keep = NULL,
                                      drop = NULL,
                                      verbose = TRUE,
-                                     vcov = NULL,
-                                     vcov_args = NULL,
                                      ...) {
   # validation check for inputs
   .is_model_valid(model)
+
+  ## TODO remove deprecated later
+  if (!missing(summary)) {
+    .deprecated_warning("summary", "include_info", verbose)
+    include_info <- summary
+  }
 
   # validation check, warn if unsupported argument is used.
   # unsupported arguments will be removed from the argument list.
@@ -499,7 +605,7 @@ model_parameters.default <- function(model,
       standardize = standardize,
       exponentiate = exponentiate,
       p_adjust = p_adjust,
-      summary = summary,
+      include_info = include_info,
       keep_parameters = keep,
       drop_parameters = drop,
       vcov = vcov,
@@ -556,12 +662,12 @@ model_parameters.default <- function(model,
                                       component = "conditional",
                                       ci_method = NULL,
                                       p_adjust = NULL,
-                                      summary = FALSE,
+                                      include_info = FALSE,
                                       keep_parameters = NULL,
                                       drop_parameters = NULL,
-                                      verbose = TRUE,
                                       vcov = NULL,
                                       vcov_args = NULL,
+                                      verbose = TRUE,
                                       ...) {
   dots <- list(...)
 
@@ -628,7 +734,7 @@ model_parameters.default <- function(model,
     iterations,
     ci_method = ci_method,
     p_adjust = p_adjust,
-    summary = summary,
+    include_info = include_info,
     verbose = verbose,
     ...
   )
@@ -653,14 +759,21 @@ model_parameters.glm <- function(model,
                                  standardize = NULL,
                                  exponentiate = FALSE,
                                  p_adjust = NULL,
-                                 summary = getOption("parameters_summary", FALSE),
-                                 keep = NULL,
-                                 drop = NULL,
                                  vcov = NULL,
                                  vcov_args = NULL,
+                                 summary = getOption("parameters_summary", FALSE),
+                                 include_info = getOption("parameters_info", FALSE),
+                                 keep = NULL,
+                                 drop = NULL,
                                  verbose = TRUE,
                                  ...) {
   dots <- list(...)
+
+  ## TODO remove deprecated later
+  if (!missing(summary)) {
+    .deprecated_warning("summary", "include_info", verbose)
+    include_info <- summary
+  }
 
   # set default
   if (is.null(ci_method)) {
@@ -699,7 +812,7 @@ model_parameters.glm <- function(model,
     standardize = standardize,
     exponentiate = exponentiate,
     p_adjust = p_adjust,
-    summary = summary,
+    include_info = include_info,
     keep_parameters = keep,
     drop_parameters = drop,
     vcov = vcov,

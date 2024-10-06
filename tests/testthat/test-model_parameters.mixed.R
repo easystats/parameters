@@ -108,7 +108,7 @@ test_that("model_parameters.mixed-all_pars", {
 data("qol_cancer")
 qol_cancer <- cbind(
   qol_cancer,
-  demean(qol_cancer, select = c("phq4", "QoL"), group = "ID")
+  demean(qol_cancer, select = c("phq4", "QoL"), by = "ID")
 )
 model <- lme4::lmer(
   QoL ~ time + phq4_within + phq4_between + (1 | ID),
@@ -129,5 +129,5 @@ test_that("print-model_parameters", {
   skip_if_not_installed("merDeriv")
   expect_snapshot(model_parameters(m1, effects = "all"))
 
-  expect_snapshot(model_parameters(m1, effects = "fixed", summary = TRUE))
+  expect_snapshot(model_parameters(m1, effects = "fixed", include_info = TRUE))
 })

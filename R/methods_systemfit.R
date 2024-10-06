@@ -8,10 +8,17 @@ model_parameters.systemfit <- function(model,
                                        exponentiate = FALSE,
                                        p_adjust = NULL,
                                        summary = FALSE,
+                                       include_info = getOption("parameters_info", FALSE),
                                        keep = NULL,
                                        drop = NULL,
                                        verbose = TRUE,
                                        ...) {
+  ## TODO remove deprecated later
+  if (!missing(summary)) {
+    .deprecated_warning("summary", "include_info", verbose)
+    include_info <- summary
+  }
+
   out <- .model_parameters_generic(
     model = model,
     ci = ci,
@@ -24,14 +31,13 @@ model_parameters.systemfit <- function(model,
     p_adjust = p_adjust,
     keep_parameters = keep,
     drop_parameters = drop,
-    summary = summary,
+    include_info = include_info,
     ...
   )
 
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(model))
   out
 }
-
 
 
 #' @export
@@ -57,7 +63,6 @@ standard_error.systemfit <- function(model, ...) {
 }
 
 
-
 #' @export
 p_value.systemfit <- function(model, ...) {
   cf <- stats::coef(summary(model))
@@ -79,26 +84,6 @@ p_value.systemfit <- function(model, ...) {
 
   do.call(rbind, out)
 }
-
-
-
-#' @export
-degrees_of_freedom.systemfit <- function(model, ...) {
-  df <- NULL
-  s <- summary(model)$eq
-  params <- insight::find_parameters(model)
-  f <- insight::find_formula(model)
-  system_names <- names(f)
-
-  for (i in seq_along(system_names)) {
-    dfs <- rep(s[[i]]$df[2], length(params[[i]]))
-    df_names <- rep(names(params[i]), length(params[[i]]))
-    df <- c(df, stats::setNames(dfs, df_names))
-  }
-
-  df
-}
-
 
 
 #' @export

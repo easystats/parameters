@@ -6,7 +6,7 @@ skip_if_not_installed("insight")
 skip_if_not_installed("withr")
 
 withr::with_options(
-  list("parameters_exponentiate" = FALSE),
+  list(parameters_exponentiate = FALSE),
   {
     test_that("print brms", {
       m1 <- insight::download_model("brms_1")

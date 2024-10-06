@@ -102,10 +102,12 @@ model_parameters.hkmeans <- model_parameters.kmeans
 
 #' @export
 print.parameters_clusters <- function(x, digits = 2, ...) {
-  title <- "# Clustering Solution"
-  if ("title" %in% attributes(x)) title <- attributes(x)$title
+  clusterHeading <- "# Clustering Solution"
+  if ("title" %in% attributes(x)) {
+    clusterHeading <- attributes(x)$title
+  }
 
-  insight::print_color(title, "blue")
+  insight::print_color(clusterHeading, "blue")
 
   cat("\n\n")
   insight::print_colour(.text_components_variance(x), "yellow")

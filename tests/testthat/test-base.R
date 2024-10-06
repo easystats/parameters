@@ -11,6 +11,12 @@ test_that("model_parameters.data.frame as draws", {
   expect_identical(colnames(mp), c("Parameter", "Median", "CI_low", "CI_high", "pd"))
 })
 
+test_that("model_parameters.data.frame as draws, exponentiate", {
+  data(iris)
+  mp <- suppressWarnings(model_parameters(iris[1:4], as_draws = TRUE, exponentiate = TRUE))
+  expect_equal(mp$Median, c(330.29956, 20.08554, 77.47846, 3.6693), tolerance = 1e-2, ignore_attr = TRUE)
+})
+
 # require model input
 test_that("model_parameters", {
   expect_error(model_parameters())

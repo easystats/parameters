@@ -99,7 +99,7 @@ models). This method is particularly recommended for complex models that
 include interactions or transformations (e.g., polynomial or spline terms).
 The \code{robust} (default to \code{FALSE}) argument enables a robust standardization
 of data, i.e., based on the \code{median} and \code{MAD} instead of the \code{mean} and
-\code{SD}. \strong{See \code{\link[=standardize]{standardize()}} for more details.}
+\code{SD}. \strong{See \code{\link[datawizard:standardize]{datawizard::standardize()}} for more details.}
 \strong{Note} that \code{standardize_parameters(method = "refit")} may not return
 the same results as fitting a model on data that has been standardized with
 \code{standardize()}; \code{standardize_parameters()} used the data used by the model
@@ -321,11 +321,67 @@ p-values are based on the probability of direction (\code{\link[bayestestR:p_dir
 which is converted into a p-value using \code{\link[bayestestR:pd_to_p]{bayestestR::pd_to_p()}}.
 }
 
+\section{Statistical inference - how to quantify evidence}{
+
+There is no standardized approach to drawing conclusions based on the
+available data and statistical models. A frequently chosen but also much
+criticized approach is to evaluate results based on their statistical
+significance (\emph{Amrhein et al. 2017}).
+
+A more sophisticated way would be to test whether estimated effects exceed
+the "smallest effect size of interest", to avoid even the smallest effects
+being considered relevant simply because they are statistically significant,
+but clinically or practically irrelevant (\emph{Lakens et al. 2018, Lakens 2024}).
+
+A rather unconventional approach, which is nevertheless advocated by various
+authors, is to interpret results from classical regression models either in
+terms of probabilities, similar to the usual approach in Bayesian statistics
+(\emph{Schweder 2018; Schweder and Hjort 2003; Vos 2022}) or in terms of relative
+measure of "evidence" or "compatibility" with the data (\emph{Greenland et al. 2022;
+Rafi and Greenland 2020}), which nevertheless comes close to a probabilistic
+interpretation.
+
+A more detailed discussion of this topic is found in the documentation of
+\code{\link[=p_function]{p_function()}}.
+
+The \strong{parameters} package provides several options or functions to aid
+statistical inference. These are, for example:
+\itemize{
+\item \code{\link[=equivalence_test.lm]{equivalence_test()}}, to compute the (conditional)
+equivalence test for frequentist models
+\item \code{\link[=p_significance.lm]{p_significance()}}, to compute the probability of
+\emph{practical significance}, which can be conceptualized as a unidirectional
+equivalence test
+\item \code{\link[=p_function]{p_function()}}, or \emph{consonance function}, to compute p-values and
+compatibility (confidence) intervals for statistical models
+\item the \code{pd} argument (setting \code{pd = TRUE}) in \code{model_parameters()} includes
+a column with the \emph{probability of direction}, i.e. the probability that a
+parameter is strictly positive or negative. See \code{\link[bayestestR:p_direction]{bayestestR::p_direction()}}
+for details. If plotting is desired, the \code{\link[=p_direction.lm]{p_direction()}}
+function can be used, together with \code{plot()}.
+\item the \code{s_value} argument (setting \code{s_value = TRUE}) in \code{model_parameters()}
+replaces the p-values with their related \emph{S}-values (\emph{Rafi and Greenland 2020})
+\item finally, it is possible to generate distributions of model coefficients by
+generating bootstrap-samples (setting \code{bootstrap = TRUE}) or simulating
+draws from model coefficients using \code{\link[=simulate_model]{simulate_model()}}. These samples
+can then be treated as "posterior samples" and used in many functions from
+the \strong{bayestestR} package.
+}
+
+Most of the above shown options or functions derive from methods originally
+implemented for Bayesian models (\emph{Makowski et al. 2019}). However, assuming
+that model assumptions are met (which means, the model fits well to the data,
+the correct model is chosen that reflects the data generating process
+(distributional model family) etc.), it seems appropriate to interpret
+results from classical frequentist models in a "Bayesian way" (more details:
+documentation in \code{\link[=p_function]{p_function()}}).
+}
+
 \section{Interpretation of Interaction Terms}{
 
 Note that the \emph{interpretation} of interaction terms depends on many
 characteristics of the model. The number of parameters, and overall
-performance of the model, can differ \emph{or not} between \code{a * b}
+performance of the model, can differ \emph{or not} between \code{a * b},
 \code{a : b}, and \code{a / b}, suggesting that sometimes interaction terms
 give different parameterizations of the same model, but other times it gives
 completely different models (depending on \code{a} or \code{b} being factors
@@ -346,12 +402,12 @@ warnings for the different functions in the \strong{parameters} package. However
 some messages providing additional information can be displayed or suppressed
 using \code{options()}:
 \itemize{
-\item \code{parameters_summary}: \code{options(parameters_summary = TRUE)} will override the
-\code{summary} argument in \code{model_parameters()} and always show the model summary
-for non-mixed models.
-\item \code{parameters_mixed_summary}: \code{options(parameters_mixed_summary = TRUE)} will
-override the \code{summary} argument in \code{model_parameters()} for mixed models, and
-will then always show the model summary.
+\item \code{parameters_info}: \code{options(parameters_info = TRUE)} will override the
+\code{include_info} argument in \code{model_parameters()} and always show the model
+summary for non-mixed models.
+\item \code{parameters_mixed_info}: \code{options(parameters_mixed_info = TRUE)} will
+override the \code{include_info} argument in \code{model_parameters()} for mixed
+models, and will then always show the model summary.
 \item \code{parameters_cimethod}: \code{options(parameters_cimethod = TRUE)} will show the
 additional information about the approximation method used to calculate
 confidence intervals and p-values. Set to \code{FALSE} to hide this message when
@@ -377,18 +433,45 @@ options.
 \item \code{easystats_html_engine}: \code{options(easystats_html_engine = "gt")} will set
 the default HTML engine for tables to \code{gt}, i.e. the \emph{gt} package is used to
 create HTML tables. If set to \code{tt}, the \emph{tinytable} package is used.
+\item \code{insight_use_symbols}: \code{options(insight_use_symbols = TRUE)} will try to
+print unicode-chars for symbols as column names, wherever possible (e.g.,
+\ifelse{html}{\out{&omega;}}{\eqn{\omega}} instead of \code{Omega}).
 }
 }
 
 \references{
 \itemize{
+\item Amrhein, V., Korner-Nievergelt, F., and Roth, T. (2017). The earth is
+flat (p > 0.05): Significance thresholds and the crisis of unreplicable
+research. PeerJ, 5, e3544. \doi{10.7717/peerj.3544}
+\item Greenland S, Rafi Z, Matthews R, Higgs M. To Aid Scientific Inference,
+Emphasize Unconditional Compatibility Descriptions of Statistics. (2022)
+https://arxiv.org/abs/1909.08583v7 (Accessed November 10, 2022)
 \item Hoffman, L. (2015). Longitudinal analysis: Modeling within-person
 fluctuation and change. Routledge.
-\item Neter, J., Wasserman, W., & Kutner, M. H. (1989). Applied linear
+\item Lakens, D. (2024). Improving Your Statistical Inferences (Version v1.5.1).
+Retrieved from https://lakens.github.io/statistical_inferences/.
+\doi{10.5281/ZENODO.6409077}
+\item Lakens, D., Scheel, A. M., and Isager, P. M. (2018). Equivalence Testing
+for Psychological Research: A Tutorial. Advances in Methods and Practices
+in Psychological Science, 1(2), 259–269. \doi{10.1177/2515245918770963}
+\item Makowski, D., Ben-Shachar, M. S., Chen, S. H. A., and Lüdecke, D. (2019).
+Indices of Effect Existence and Significance in the Bayesian Framework.
+Frontiers in Psychology, 10, 2767. \doi{10.3389/fpsyg.2019.02767}
+\item Neter, J., Wasserman, W., and Kutner, M. H. (1989). Applied linear
 regression models.
 \item Rafi Z, Greenland S. Semantic and cognitive tools to aid statistical
 science: replace confidence and significance by compatibility and surprise.
 BMC Medical Research Methodology (2020) 20:244.
+\item Schweder T. Confidence is epistemic probability for empirical science.
+Journal of Statistical Planning and Inference (2018) 195:116–125.
+\doi{10.1016/j.jspi.2017.09.016}
+\item Schweder T, Hjort NL. Frequentist analogues of priors and posteriors.
+In Stigum, B. (ed.), Econometrics and the Philosophy of Economics: Theory
+Data Confrontation in Economics, pp. 285-217. Princeton University Press,
+Princeton, NJ, 2003
+\item Vos P, Holbert D. Frequentist statistical inference without repeated sampling.
+Synthese 200, 89 (2022). \doi{10.1007/s11229-022-03560-x}
 }
 }
 \seealso{

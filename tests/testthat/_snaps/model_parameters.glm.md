@@ -9,8 +9,9 @@
       wt          |       -5.34 | 0.56 | [-6.49, -4.20] | -9.56 | < .001
       
       Model: mpg ~ wt (32 Observations)
-      Residual standard deviation: 3.046 (df = 30)
+      Sigma: 3.046 (df = 30)
       R2: 0.753; adjusted R2: 0.745
+      RMSE : 2.949
 
 ---
 

@@ -54,16 +54,6 @@ standard_error.model_fit <- function(model, ...) {
 
 
 
-# degrees of freedom ------------------
-
-
-#' @export
-degrees_of_freedom.model_fit <- function(model, ...) {
-  degrees_of_freedom(model$fit, ...)
-}
-
-
-
 # p values ------------------
 
 

@@ -11,21 +11,6 @@ ci.mira <- function(x, ci = 0.95, ...) {
 }
 
 
-# degrees of freedom ----------------------------
-
-#' @export
-degrees_of_freedom.mira <- function(model, ...) {
-  insight::check_if_installed("mice")
-  degrees_of_freedom(mice::pool(model), ...)
-}
-
-
-#' @export
-degrees_of_freedom.mipo <- function(model, ...) {
-  as.vector(summary(model)$df)
-}
-
-
 # p values ---------------------------------------
 
 #' @export
@@ -140,41 +125,33 @@ model_parameters.mipo <- function(model,
 #'   similar to `summary(mice::pool())`, i.e. it generates the pooled summary
 #'   of multiple imputed repeated regression analyses.
 #'
-#' @examples
+#' @examplesIf require("mice", quietly = TRUE) && require("gee", quietly = TRUE)
 #' library(parameters)
-#' if (require("mice", quietly = TRUE)) {
-#'   data(nhanes2)
-#'   imp <- mice(nhanes2)
-#'   fit <- with(data = imp, exp = lm(bmi ~ age + hyp + chl))
-#'   model_parameters(fit)
-#' }
+#' data(nhanes2, package = "mice")
+#' imp <- mice::mice(nhanes2)
+#' fit <- with(data = imp, exp = lm(bmi ~ age + hyp + chl))
+#' model_parameters(fit)
 #' \donttest{
 #' # model_parameters() also works for models that have no "tidy"-method in mice
-#' if (require("mice", quietly = TRUE) && require("gee", quietly = TRUE)) {
-#'   data(warpbreaks)
-#'   set.seed(1234)
-#'   warpbreaks$tension[sample(1:nrow(warpbreaks), size = 10)] <- NA
-#'   imp <- mice(warpbreaks)
-#'   fit <- with(data = imp, expr = gee(breaks ~ tension, id = wool))
+#' data(warpbreaks)
+#' set.seed(1234)
+#' warpbreaks$tension[sample(1:nrow(warpbreaks), size = 10)] <- NA
+#' imp <- mice::mice(warpbreaks)
+#' fit <- with(data = imp, expr = gee::gee(breaks ~ tension, id = wool))
 #'
-#'   # does not work:
-#'   # summary(pool(fit))
+#' # does not work:
+#' # summary(mice::pool(fit))
 #'
-#'   model_parameters(fit)
+#' model_parameters(fit)
 #' }
-#' }
-#'
-#'
 #'
 #' # and it works with pooled results
-#' if (require("mice")) {
-#'   data("nhanes2")
-#'   imp <- mice(nhanes2)
-#'   fit <- with(data = imp, exp = lm(bmi ~ age + hyp + chl))
-#'   pooled <- pool(fit)
+#' data("nhanes2", package = "mice")
+#' imp <- mice::mice(nhanes2)
+#' fit <- with(data = imp, exp = lm(bmi ~ age + hyp + chl))
+#' pooled <- mice::pool(fit)
 #'
-#'   model_parameters(pooled)
-#' }
+#' model_parameters(pooled)
 #' @export
 model_parameters.mira <- function(model,
                                   ci = 0.95,

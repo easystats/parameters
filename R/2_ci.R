@@ -7,10 +7,9 @@
 #' @param ci Confidence Interval (CI) level. Default to `0.95` (`95%`).
 #' @param dof Number of degrees of freedom to be used when calculating
 #'   confidence intervals. If `NULL` (default), the degrees of freedom are
-#'   retrieved by calling [`degrees_of_freedom()`] with
-#'   approximation method defined in `method`. If not `NULL`, use this argument
-#'   to override the default degrees of freedom used to compute confidence
-#'   intervals.
+#'   retrieved by calling [`insight::get_df()`] with approximation method
+#'   defined in `method`. If not `NULL`, use this argument to override the
+#'   default degrees of freedom used to compute confidence intervals.
 #' @param method Method for computing degrees of freedom for
 #'   confidence intervals (CI) and the related p-values. Allowed are following
 #'   options (which vary depending on the model class): `"residual"`,
@@ -25,13 +24,25 @@
 #' @param iterations The number of bootstrap replicates. Only applies to models
 #'   of class `merMod` when `method=boot`.
 #' @param verbose Toggle warnings and messages.
-#' @param ... Additional arguments
+#' @param ... Additional arguments passed down to the underlying functions.
+#' E.g., arguments like `vcov` or `vcov_args` can be used to compute confidence
+#' intervals using a specific variance-covariance matrix for the standard
+#' errors.
 #'
 #' @return A data frame containing the CI bounds.
 #'
 #' @inheritSection model_parameters Confidence intervals and approximation of degrees of freedom
 #'
-#' @examplesIf require("glmmTMB")
+#' @examplesIf require("glmmTMB") && requireNamespace("sandwich")
+#' data(qol_cancer)
+#' model <- lm(QoL ~ time + age + education, data = qol_cancer)
+#'
+#' # regular confidence intervals
+#' ci(model)
+#'
+#' # using heteroscedasticity-robust standard errors
+#' ci(model, vcov = "HC3")
+#'
 #' \donttest{
 #' library(parameters)
 #' data(Salamanders, package = "glmmTMB")

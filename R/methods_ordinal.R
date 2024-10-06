@@ -12,6 +12,7 @@ model_parameters.clm2 <- function(model,
                                   exponentiate = FALSE,
                                   p_adjust = NULL,
                                   summary = getOption("parameters_summary", FALSE),
+                                  include_info = getOption("parameters_info", FALSE),
                                   keep = NULL,
                                   drop = NULL,
                                   verbose = TRUE,
@@ -21,6 +22,12 @@ model_parameters.clm2 <- function(model,
     merge_by <- c("Parameter", "Component")
   } else {
     merge_by <- "Parameter"
+  }
+
+  ## TODO remove deprecated later
+  if (!missing(summary)) {
+    .deprecated_warning("summary", "include_info", verbose)
+    include_info <- summary
   }
 
   ## TODO check merge by
@@ -37,7 +44,7 @@ model_parameters.clm2 <- function(model,
     p_adjust = p_adjust,
     keep_parameters = keep,
     drop_parameters = drop,
-    summary = summary,
+    include_info = include_info,
     ...
   )
 

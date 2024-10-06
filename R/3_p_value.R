@@ -48,6 +48,7 @@ p_value.default <- function(model,
   .is_model_valid(model)
 
   dots <- list(...)
+  p <- NULL
 
   if (is.character(method)) {
     method <- tolower(method)
@@ -66,33 +67,29 @@ p_value.default <- function(model,
   }
 
   if (method == "ml1") {
-    p <- p_value_ml1(model)
-    return(p)
+    return(p_value_ml1(model))
   }
 
   if (method == "betwithin") {
-    p <- p_value_betwithin(model)
-    return(p)
+    return(p_value_betwithin(model))
   }
 
   if (method %in% c("residual", "wald", "normal", "satterthwaite", "kenward", "kr")) {
     if (is.null(dof)) {
-      dof <- degrees_of_freedom(model, method = method, verbose = FALSE)
+      dof <- insight::get_df(x = model, type = method, verbose = FALSE)
     }
-    p <- .p_value_dof(
+    return(.p_value_dof(
       model,
       dof = dof,
       method = method,
       component = component,
       verbose = verbose,
       ...
-    )
-    return(p)
+    ))
   }
 
   if (method %in% c("hdi", "eti", "si", "bci", "bcai", "quantile")) {
-    p <- bayestestR::p_direction(model, ...)
-    return(p)
+    return(bayestestR::p_direction(model, ...))
   }
 
   # robust standard errors
@@ -114,7 +111,7 @@ p_value.default <- function(model,
       se <- do.call("standard_error", fun_args)
     }
 
-    dof <- degrees_of_freedom(model, method = "wald", verbose = FALSE)
+    dof <- insight::get_df(x = model, type = "wald", verbose = FALSE)
     se <- merge(se, co, sort = FALSE)
     se$Statistic <- se$Estimate / se$SE
     se$p <- 2 * stats::pt(abs(se$Statistic), df = dof, lower.tail = FALSE)
@@ -144,20 +141,20 @@ p_value.default <- function(model,
     })
   }
 
-  # output
-  if (!is.null(p)) {
-    params <- insight::get_parameters(model, component = component)
-    if (length(p) == nrow(params) && "Component" %in% colnames(params)) {
-      p <- .data_frame(Parameter = params$Parameter, p = as.vector(p), Component = params$Component)
-    } else {
-      p <- .data_frame(Parameter = names(p), p = as.vector(p))
+  # failure warning
+  if (is.null(p)) {
+    if (isTRUE(verbose)) {
+      insight::format_warning("Could not extract p-values from model object.")
     }
-    return(p)
+    return(NULL)
   }
 
-  # failure warning
-  if (is.null(p) && isTRUE(verbose)) {
-    insight::format_warning("Could not extract p-values from model object.")
+  # output
+  params <- insight::get_parameters(model, component = component)
+  if (length(p) == nrow(params) && "Component" %in% colnames(params)) {
+    .data_frame(Parameter = params$Parameter, p = as.vector(p), Component = params$Component)
+  } else {
+    .data_frame(Parameter = names(p), p = as.vector(p))
   }
 }
 
@@ -172,23 +169,22 @@ p_value.default <- function(model,
   if (ncol(cs) >= 4) {
     # do we have a p-value column based on t?
     pvcn <- which(colnames(cs) == "Pr(>|t|)")
-
     # if not, do we have a p-value column based on z?
     if (length(pvcn) == 0) {
       pvcn <- which(colnames(cs) == "Pr(>|z|)")
     }
-
     # if not, default to 4
-    if (length(pvcn) == 0) pvcn <- 4
-
+    if (length(pvcn) == 0) {
+      pvcn <- 4
+    }
     p <- cs[, pvcn]
-
     if (is.null(names(p))) {
       coef_names <- rownames(cs)
-      if (length(coef_names) == length(p)) names(p) <- coef_names
+      if (length(coef_names) == length(p)) {
+        names(p) <- coef_names
+      }
     }
   }
-
   names(p) <- .remove_backticks_from_string(names(p))
   p
 }

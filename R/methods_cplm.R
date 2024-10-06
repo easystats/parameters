@@ -36,9 +36,10 @@ model_parameters.zcpglm <- function(model,
                                     standardize = NULL,
                                     exponentiate = FALSE,
                                     p_adjust = NULL,
+                                    summary = getOption("parameters_summary", FALSE),
+                                    include_info = getOption("parameters_info", FALSE),
                                     keep = NULL,
                                     drop = NULL,
-                                    summary = getOption("parameters_summary", FALSE),
                                     verbose = TRUE,
                                     ...) {
   component <- match.arg(component)
@@ -48,6 +49,11 @@ model_parameters.zcpglm <- function(model,
     component <- "conditional"
   }
 
+  ## TODO remove deprecated later
+  if (!missing(summary)) {
+    .deprecated_warning("summary", "include_info", verbose)
+    include_info <- summary
+  }
 
   # Processing
   if (bootstrap) {
@@ -75,7 +81,7 @@ model_parameters.zcpglm <- function(model,
     ci,
     exponentiate,
     p_adjust = p_adjust,
-    summary = summary,
+    include_info = include_info,
     verbose = verbose,
     ...
   )

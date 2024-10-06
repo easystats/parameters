@@ -12,6 +12,8 @@ p_function(
   exponentiate = FALSE,
   effects = "fixed",
   component = "all",
+  vcov = NULL,
+  vcov_args = NULL,
   keep = NULL,
   drop = NULL,
   verbose = TRUE,
@@ -24,6 +26,8 @@ consonance_function(
   exponentiate = FALSE,
   effects = "fixed",
   component = "all",
+  vcov = NULL,
+  vcov_args = NULL,
   keep = NULL,
   drop = NULL,
   verbose = TRUE,
@@ -36,6 +40,8 @@ confidence_curve(
   exponentiate = FALSE,
   effects = "fixed",
   component = "all",
+  vcov = NULL,
+  vcov_args = NULL,
   keep = NULL,
   drop = NULL,
   verbose = TRUE,
@@ -75,6 +81,31 @@ for the zero-inflation part of the model, or the dispersion model be returned?
 Applies to models with zero-inflation and/or dispersion component. \code{component}
 may be one of \code{"conditional"}, \code{"zi"}, \code{"zero-inflated"}, \code{"dispersion"} or
 \code{"all"} (default). May be abbreviated.}
+
+\item{vcov}{Variance-covariance matrix used to compute uncertainty estimates
+(e.g., for robust standard errors). This argument accepts a covariance matrix,
+a function which returns a covariance matrix, or a string which identifies
+the function to be used to compute the covariance matrix.
+\itemize{
+\item A covariance matrix
+\item A function which returns a covariance matrix (e.g., \code{stats::vcov()})
+\item A string which indicates the kind of uncertainty estimates to return.
+\itemize{
+\item Heteroskedasticity-consistent: \code{"vcovHC"}, \code{"HC"}, \code{"HC0"}, \code{"HC1"},
+\code{"HC2"}, \code{"HC3"}, \code{"HC4"}, \code{"HC4m"}, \code{"HC5"}. See \code{?sandwich::vcovHC}.
+\item Cluster-robust: \code{"vcovCR"}, \code{"CR0"}, \code{"CR1"}, \code{"CR1p"}, \code{"CR1S"},
+\code{"CR2"}, \code{"CR3"}. See \code{?clubSandwich::vcovCR}.
+\item Bootstrap: \code{"vcovBS"}, \code{"xy"}, \code{"residual"}, \code{"wild"}, \code{"mammen"},
+\code{"webb"}. See \code{?sandwich::vcovBS}.
+\item Other \code{sandwich} package functions: \code{"vcovHAC"}, \code{"vcovPC"}, \code{"vcovCL"},
+\code{"vcovPL"}.
+}
+}}
+
+\item{vcov_args}{List of arguments to be passed to the function identified by
+the \code{vcov} argument. This function is typically supplied by the \strong{sandwich}
+or \strong{clubSandwich} packages. Please refer to their documentation (e.g.,
+\code{?sandwich::vcovHAC}) to see the list of available arguments.}
 
 \item{keep}{Character containing a regular expression pattern that
 describes the parameters that should be included (for \code{keep}) or excluded
@@ -177,7 +208,7 @@ of the \emph{p}-value on the assumptions as well as on the data, recognizing tha
 study is null" (\emph{Gelman/Greenland 2019}).
 }
 
-\subsection{Probabilistic interpretation of compatibility intervals}{
+\subsection{Probabilistic interpretation of p-values and compatibility intervals}{
 
 Schweder (2018) resp. Schweder and Hjort (2016) (and others) argue that
 confidence curves (as produced by \code{p_function()}) have a valid probabilistic
@@ -208,22 +239,57 @@ distribution is appropriate.
 "The realized confidence distribution is clearly an epistemic probability
 distribution" (\emph{Schweder 2018}). In Bayesian words, compatibility intervals
 (or confidence distributons, or consonance curves) are "posteriors without
-priors" (\emph{Schweder, Hjort, 2003}). In this regard, interpretation of \emph{p}-values
-might be guided using \code{\link[bayestestR:pd_to_p]{bayestestR::p_to_pd()}}.
+priors" (\emph{Schweder, Hjort, 2003}).
+
+The \emph{p}-value indicates the degree of compatibility of the endpoints of the
+interval at a given confidence level with (1) the observed data and (2) model
+assumptions. The observed point estimate (\emph{p}-value = 1) is the value
+estimated to be \emph{most compatible} with the data and model assumptions,
+whereas values values far from the observed point estimate (where \emph{p}
+approaches 0) are least compatible with the data and model assumptions
+(\emph{Schweder and Hjort 2016, pp. 60-61; Amrhein and Greenland 2022}). In this
+regards, \emph{p}-values are statements about \emph{confidence} or \emph{compatibility}:
+The p-value is not an absolute measure of evidence for a model (such as the
+null/alternative model), it is a continuous measure of the compatibility of
+the observed data with the model used to compute it (\emph{Greenland et al. 2016},
+\emph{Greenland 2023}). Going one step further, and following \emph{Schweder}, p-values
+can be considered as \emph{epistemic probability} - "not necessarily of the
+hypothesis being true, but of it \emph{possibly} being true" (\emph{Schweder 2018}).
+Hence, the interpretation of \emph{p}-values might be guided using
+\code{\link[bayestestR:pd_to_p]{bayestestR::p_to_pd()}}.
 }
 
-\subsection{Compatibility intervals - is their interpretation conditional or not?}{
+\subsection{Probability or compatibility?}{
 
-The fact that the term "conditional" is used in different meanings, is
-confusing and unfortunate. Thus, we would summarize the probabilistic
-interpretation of compatibility intervals as follows: The intervals are built
-from the data \emph{and} our modeling assumptions. The accuracy of the intervals
-depends on our model assumptions. If a value is outside the interval, that
-might be because (1) that parameter value isn't supported by the data, or
-(2) the modeling assumptions are a poor fit for the situation. When we make
-bad assumptions, the compatibility interval might be too wide or (more
-commonly and seriously) too narrow, making us think we know more about the
-parameter than is warranted.
+We here presented the discussion of p-values and confidence intervals from the
+perspective of two paradigms, one saying that probability statements can be
+made, one saying that interpretation is guided in terms of "compatibility".
+Cox and Hinkley say, "interval estimates cannot be taken as probability
+statements" (\emph{Cox and Hinkley 1979: 208}), which conflicts with the Schweder
+and Hjort confidence distribution school. However, if you view interval
+estimates as being intervals of values being consistent with the data,
+this comes close to the idea of (epistemic) probability. We do not believe that
+these two paradigms contradict or exclude each other. Rather, the aim is to
+emphasize one point of view or the other, i.e. to place the linguistic
+nuances either on 'compatibility' or 'probability'.
+
+The main take-away is \emph{not} to interpret p-values as dichotomous decisions
+that distinguish between "we found an effect" (statistically significant)" vs.
+"we found no effect" (statistically not significant) (\emph{Altman and Bland 1995}).
+}
+
+\subsection{Compatibility intervals - is their interpretation "conditional" or not?}{
+
+The fact that the term "conditional" is used in different meanings in
+statistics, is confusing and unfortunate. Thus, we would summarize the
+(probabilistic) interpretation of compatibility intervals as follows: The
+intervals are built from the data \emph{and} our modeling assumptions. The
+accuracy of the intervals depends on our model assumptions. If a value is
+outside the interval, that might be because (1) that parameter value isn't
+supported by the data, or (2) the modeling assumptions are a poor fit for the
+situation. When we make bad assumptions, the compatibility interval might be
+too wide or (more commonly and seriously) too narrow, making us think we know
+more about the parameter than is warranted.
 
 When we say "there is a 95\% chance the true value is in the interval", that is
 a statement of \emph{epistemic probability} (i.e. description of uncertainty related
@@ -232,6 +298,31 @@ distributions, that is referring to \emph{aleatoric} (physical properties) proba
 Frequentist inference is built on defining estimators with known \emph{aleatoric}
 probability properties, from which we can draw \emph{epistemic} probabilistic
 statements of uncertainty (\emph{Schweder and Hjort 2016}).
+}
+
+\subsection{Functions in the parameters package to check for effect existence and significance}{
+
+The \strong{parameters} package provides several options or functions to aid
+statistical inference. Beyond \code{p_function()}, there are, for example:
+\itemize{
+\item \code{\link[=equivalence_test.lm]{equivalence_test()}}, to compute the (conditional)
+equivalence test for frequentist models
+\item \code{\link[=p_significance.lm]{p_significance()}}, to compute the probability of
+\emph{practical significance}, which can be conceptualized as a unidirectional
+equivalence test
+\item the \code{pd} argument (setting \code{pd = TRUE}) in \code{model_parameters()} includes
+a column with the \emph{probability of direction}, i.e. the probability that a
+parameter is strictly positive or negative. See \code{\link[bayestestR:p_direction]{bayestestR::p_direction()}}
+for details. If plotting is desired, the \code{\link[=p_direction.lm]{p_direction()}}
+function can be used, together with \code{plot()}.
+\item the \code{s_value} argument (setting \code{s_value = TRUE}) in \code{model_parameters()}
+replaces the p-values with their related \emph{S}-values (\emph{Rafi and Greenland 2020})
+\item finally, it is possible to generate distributions of model coefficients by
+generating bootstrap-samples (setting \code{bootstrap = TRUE}) or simulating
+draws from model coefficients using \code{\link[=simulate_model]{simulate_model()}}. These samples
+can then be treated as "posterior samples" and used in many functions from
+the \strong{bayestestR} package.
+}
 }
 }
 \note{
@@ -256,10 +347,14 @@ plot(result)
 }
 \references{
 \itemize{
+\item Altman DG, Bland JM. Absence of evidence is not evidence of absence. BMJ.
+1995;311(7003):485. \doi{10.1136/bmj.311.7003.485}
 \item Amrhein V, Greenland S. Discuss practical importance of results based on
 interval estimates and p-value functions, not only on point estimates and
 null p-values. Journal of Information Technology 2022;37:316–20.
 \doi{10.1177/02683962221105904}
+\item Cox DR, Hinkley DV. 1979. Theoretical Statistics. 6th edition.
+Chapman and Hall/CRC
 \item Fraser DAS. The P-value function and statistical inference. The American
 Statistician. 2019;73(sup1):135-147. \doi{10.1080/00031305.2018.1556735}
 \item Gelman A, Greenland S. Are confidence intervals better termed "uncertainty
@@ -267,6 +362,14 @@ intervals"? BMJ (2019)l5381. \doi{10.1136/bmj.l5381}
 \item Greenland S, Rafi Z, Matthews R, Higgs M. To Aid Scientific Inference,
 Emphasize Unconditional Compatibility Descriptions of Statistics. (2022)
 https://arxiv.org/abs/1909.08583v7 (Accessed November 10, 2022)
+\item Greenland S, Senn SJ, Rothman KJ, Carlin JB, Poole C, Goodman SN, et al.
+(2016). Statistical tests, P values, confidence intervals, and power: A
+guide to misinterpretations. European Journal of Epidemiology. 31:337-350.
+\doi{10.1007/s10654-016-0149-3}
+\item Greenland S (2023). Divergence versus decision P-values: A distinction
+worth making in theory and keeping in practice: Or, how divergence P-values
+measure evidence even when decision P-values do not. Scand J Statist, 50(1),
+54-88. \doi{doi.org/10.1111/sjos.12625}
 \item Rafi Z, Greenland S. Semantic and cognitive tools to aid statistical
 science: Replace confidence and significance by compatibility and surprise.
 BMC Medical Research Methodology. 2020;20(1):244. \doi{10.1186/s12874-020-01105-9}
@@ -284,4 +387,8 @@ inference with confidence distributions. Cambridge University Press, 2016.
 \item Vos P, Holbert D. Frequentist statistical inference without repeated sampling.
 Synthese 200, 89 (2022). \doi{10.1007/s11229-022-03560-x}
 }
+}
+\seealso{
+See also \code{\link[=equivalence_test]{equivalence_test()}} and \code{\link[=p_significance]{p_significance()}} for
+functions related to checking effect existence and significance.
 }

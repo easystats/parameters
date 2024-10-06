@@ -1,5 +1,7 @@
 ---
 output: github_document
+bibliography: paper/paper.bib
+csl: paper/apa.csl
 ---
 
 ```{r, warning=FALSE, message=FALSE, echo = FALSE}
@@ -21,8 +23,7 @@ library(parameters)
 
 [![DOI](https://joss.theoj.org/papers/10.21105/joss.02445/status.svg)](https://doi.org/10.21105/joss.02445)
 [![downloads](https://cranlogs.r-pkg.org/badges/parameters)](https://cran.r-project.org/package=parameters)
-[![total](https://cranlogs.r-pkg.org/badges/grand-total/parameters)](https://cranlogs.r-pkg.org/) 
-[![status](https://tinyverse.netlify.com/badge/parameters)](https://CRAN.R-project.org/package=parameters)
+[![total](https://cranlogs.r-pkg.org/badges/grand-total/parameters)](https://cranlogs.r-pkg.org/)
 
 ***Describe and understand your model's parameters!***
 
@@ -50,7 +51,7 @@ Development | GitHub | `remotes::install_github("easystats/parameters")`
 
 [![Documentation](https://img.shields.io/badge/documentation-parameters-orange.svg?colorB=E91E63)](https://easystats.github.io/parameters/)
 [![Blog](https://img.shields.io/badge/blog-easystats-orange.svg?colorB=FF9800)](https://easystats.github.io/blog/posts/)
-[![Features](https://img.shields.io/badge/features-parameters-orange.svg?colorB=2196F3)](https://easystats.github.io/parameters/reference/index.html) 
+[![Features](https://img.shields.io/badge/features-parameters-orange.svg?colorB=2196F3)](https://easystats.github.io/parameters/reference/index.html)
 
 Click on the buttons above to access the package [documentation](https://easystats.github.io/parameters/) and the [easystats blog](https://easystats.github.io/blog/posts/), and check-out these vignettes:
 
@@ -70,14 +71,14 @@ In case you want to file an issue or contribute in another way to the package, p
 
 
 # Features
- 
+
 ## Model's parameters description
 
 ```{r echo=FALSE, fig.align='center', dpi=96}
 knitr::include_graphics("man/figures/figure1.png")
 ```
 
-The [`model_parameters()`](https://easystats.github.io/parameters/articles/model_parameters.html) function (that can be accessed via the `parameters()` shortcut) allows you to extract the parameters and their characteristics from various models in a consistent way. It can be considered as a lightweight alternative to [`broom::tidy()`](https://github.com/tidymodels/broom), with some notable differences: 
+The [`model_parameters()`](https://easystats.github.io/parameters/articles/model_parameters.html) function (that can be accessed via the `parameters()` shortcut) allows you to extract the parameters and their characteristics from various models in a consistent way. It can be considered as a lightweight alternative to [`broom::tidy()`](https://github.com/tidymodels/broom), with some notable differences:
 
 - The column names of the returned data frame are *specific* to their content. For instance, the column containing the statistic is named following the statistic name, i.e., *t*, *z*, etc., instead of a generic name such as *statistic* (however, you can get standardized (generic) column names using [`standardize_names()`](https://easystats.github.io/insight/reference/standardize_names.html)).
 - It is able to compute or extract indices not available by default, such as *p-values*, *CIs*, etc.
@@ -139,6 +140,23 @@ lm(disp ~ ., data = mtcars) |>
   model_parameters()
 ```
 
+
+## Statistical inference - how to quantify evidence
+There is no standardized approach to drawing conclusions based on the available data and statistical models. A frequently chosen but also much criticized approach is to evaluate results based on their statistical significance [@amrhein_earth_2017].
+
+A more sophisticated way would be to test whether estimated effects exceed the "smallest effect size of interest", to avoid even the smallest effects being considered relevant simply because they are statistically significant, but clinically or practically irrelevant [@lakens2020equivalence;@lakens_improving_2022]. A rather unconventional approach, which is nevertheless advocated by various authors, is to interpret results from classical regression models in terms of probabilities, similar to the usual approach in Bayesian statistics [@greenland_aid_2022;@rafi_semantic_2020;@schweder_confidence_2018;@schweder_frequentist_2003;@vos_frequentist_2022].
+
+The _parameters_ package provides several options or functions to aid statistical inference. These are, for example:
+
+- [`equivalence_test()`](https://easystats.github.io/parameters/reference/equivalence_test.lm.html), to compute the (conditional) equivalence test for frequentist models
+- [`p_significance()`](https://easystats.github.io/parameters/reference/p_significance.lm.html), to compute the probability of *practical significance*, which can be conceptualized as a unidirectional equivalence test
+- [`p_function()`](https://easystats.github.io/parameters/reference/p_function.html), or _consonance function_, to compute p-values and compatibility (confidence) intervals for statistical models
+- the `pd` argument (setting `pd = TRUE`) in `model_parameters()` includes a column with the *probability of direction*, i.e. the probability that a parameter is strictly positive or negative. See [`bayestestR::p_direction()`](https://easystats.github.io/bayestestR/reference/p_direction.html) for details.
+- the `s_value` argument (setting `s_value = TRUE`) in `model_parameters()` replaces the p-values with their related _S_-values [@@rafi_semantic_2020]
+- finally, it is possible to generate distributions of model coefficients by generating bootstrap-samples (setting `bootstrap = TRUE`) or simulating draws from model coefficients using [`simulate_model()`](https://easystats.github.io/parameters/reference/simulate_model.html). These samples can then be treated as "posterior samples" and used in many functions from the **bayestestR** package.
+
+Most of the above shown options or functions derive from methods originally implemented for Bayesian models [@makowski_indices_2019]. However, assuming that model assumptions are met (which means, the model fits well to the data, the correct model is chosen that reflects the data generating process (distributional model family) etc.), it seems appropriate to interpret results from classical frequentist models in a "Bayesian way" (more details: documentation in [`p_function()`](https://easystats.github.io/parameters/reference/p_function.html)).
+
 ## Citation
 
 In order to cite this package, please use the following command:
@@ -148,5 +166,7 @@ citation("parameters")
 ```
 
 ## Code of Conduct
-  
+
 Please note that the parameters project is released with a [Contributor Code of Conduct](https://www.contributor-covenant.org/version/2/1/code_of_conduct/). By contributing to this project, you agree to abide by its terms.
+
+## References
