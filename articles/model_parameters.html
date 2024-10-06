@@ -30,7 +30,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.22.2.16</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.22.2.17</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -251,9 +251,9 @@ models and Bayesian models.</p>
 <span><span class="co">#&gt; mpg [2nd degree] |       3.20 |    11.49 | [0.00,  3637.30] |  0.32 | 0.746</span></span>
 <span><span class="co">#&gt; cyl              |       0.10 |     0.12 | [0.01,     1.05] | -1.92 | 0.055</span></span></code></pre></div>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># show Odds Ratios and include model summary</span></span>
+<code class="sourceCode R"><span><span class="co"># show Odds Ratios and include model info</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/glm.html" class="external-link">glm</a></span><span class="op">(</span><span class="va">vs</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/stats/poly.html" class="external-link">poly</a></span><span class="op">(</span><span class="va">mpg</span>, <span class="fl">2</span><span class="op">)</span> <span class="op">+</span> <span class="va">cyl</span>, data <span class="op">=</span> <span class="va">mtcars</span>, family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html" class="external-link">binomial</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="../reference/model_parameters.html">parameters</a></span><span class="op">(</span>exponentiate <span class="op">=</span> <span class="cn">TRUE</span>, summary <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="../reference/model_parameters.html">parameters</a></span><span class="op">(</span>exponentiate <span class="op">=</span> <span class="cn">TRUE</span>, include_info <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Parameter        | Odds Ratio |       SE |            95% CI |     z |     p</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------------------------------</span></span>
 <span><span class="co">#&gt; (Intercept)      |   7.38e+05 | 5.31e+06 | [12.95, 3.26e+14] |  1.88 | 0.060</span></span>
@@ -262,8 +262,9 @@ models and Bayesian models.</p>
 <span><span class="co">#&gt; cyl              |       0.10 |     0.12 | [ 0.00,     0.60] | -1.92 | 0.055</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Model: vs ~ poly(mpg, 2) + cyl (32 Observations)</span></span>
-<span><span class="co">#&gt; Residual standard deviation: 1.000 (df = 28)</span></span>
-<span><span class="co">#&gt; Tjur's R2: 0.670</span></span></code></pre></div>
+<span><span class="co">#&gt; Sigma: 1.000 (df = 28)</span></span>
+<span><span class="co">#&gt; Tjur's R2: 0.670</span></span>
+<span><span class="co">#&gt; RMSE : 0.283</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="mixed-models">Mixed Models<a class="anchor" aria-label="anchor" href="#mixed-models"></a>

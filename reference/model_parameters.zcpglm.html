@@ -9,7 +9,7 @@ cplm or countreg)."><meta property="og:image" content="https://easystats.github.
 
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.22.2.16</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.22.2.17</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -73,9 +73,10 @@ cplm or countreg)."><meta property="og:image" content="https://easystats.github.
 <span>  standardize <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  exponentiate <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  p_adjust <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  summary <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"parameters_summary"</span>, <span class="cn">FALSE</span><span class="op">)</span>,</span>
+<span>  include_info <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"parameters_info"</span>, <span class="cn">FALSE</span><span class="op">)</span>,</span>
 <span>  keep <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  drop <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  summary <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"parameters_summary"</span>, <span class="cn">FALSE</span><span class="op">)</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span>
@@ -166,6 +167,16 @@ possible adjustment methods are <code>"tukey"</code>, <code>"scheffe"</code>,
 <code>emmGrid</code> objects (from <strong>emmeans</strong>).</p></dd>
 
 
+<dt id="arg-summary">summary<a class="anchor" aria-label="anchor" href="#arg-summary"></a></dt>
+<dd><p>Deprecated, please use <code>info</code> instead.</p></dd>
+
+
+<dt id="arg-include-info">include_info<a class="anchor" aria-label="anchor" href="#arg-include-info"></a></dt>
+<dd><p>Logical, if <code>TRUE</code>, prints summary information about the
+model (model formula, number of observations, residual standard deviation
+and more).</p></dd>
+
+
 <dt id="arg-keep">keep<a class="anchor" aria-label="anchor" href="#arg-keep"></a></dt>
 <dd><p>Character containing a regular expression pattern that
 describes the parameters that should be included (for <code>keep</code>) or excluded
@@ -190,12 +201,6 @@ names.</p></dd>
 
 <dt id="arg-drop">drop<a class="anchor" aria-label="anchor" href="#arg-drop"></a></dt>
 <dd><p>See <code>keep</code>.</p></dd>
-
-
-<dt id="arg-summary">summary<a class="anchor" aria-label="anchor" href="#arg-summary"></a></dt>
-<dd><p>Logical, if <code>TRUE</code>, prints summary information about the
-model (model formula, number of observations, residual standard deviation
-and more).</p></dd>
 
 
 <dt id="arg-verbose">verbose<a class="anchor" aria-label="anchor" href="#arg-verbose"></a></dt>

@@ -69,7 +69,7 @@ WRS2, bfsl, deltaMethod, fitdistr, mjoint, mle, model.avg, ...
 
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.22.2.16</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.22.2.17</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -451,12 +451,12 @@ of the <code><a href="print.parameters_model.html">print()</a></code> method for
 <p>The <code>verbose</code> argument can be used to display or silence messages and
 warnings for the different functions in the <strong>parameters</strong> package. However,
 some messages providing additional information can be displayed or suppressed
-using <code><a href="https://rdrr.io/r/base/options.html" class="external-link">options()</a></code>:</p><ul><li><p><code>parameters_summary</code>: <code>options(parameters_summary = TRUE)</code> will override the
-<code>summary</code> argument in <code>model_parameters()</code> and always show the model summary
-for non-mixed models.</p></li>
-<li><p><code>parameters_mixed_summary</code>: <code>options(parameters_mixed_summary = TRUE)</code> will
-override the <code>summary</code> argument in <code>model_parameters()</code> for mixed models, and
-will then always show the model summary.</p></li>
+using <code><a href="https://rdrr.io/r/base/options.html" class="external-link">options()</a></code>:</p><ul><li><p><code>parameters_info</code>: <code>options(parameters_info = TRUE)</code> will override the
+<code>include_info</code> argument in <code>model_parameters()</code> and always show the model
+summary for non-mixed models.</p></li>
+<li><p><code>parameters_mixed_info</code>: <code>options(parameters_mixed_info = TRUE)</code> will
+override the <code>include_info</code> argument in <code>model_parameters()</code> for mixed
+models, and will then always show the model summary.</p></li>
 <li><p><code>parameters_cimethod</code>: <code>options(parameters_cimethod = TRUE)</code> will show the
 additional information about the approximation method used to calculate
 confidence intervals and p-values. Set to <code>FALSE</code> to hide this message when
