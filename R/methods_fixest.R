@@ -9,13 +9,13 @@ model_parameters.fixest <- function(model,
                                     standardize = NULL,
                                     exponentiate = FALSE,
                                     p_adjust = NULL,
+                                    vcov = NULL,
+                                    vcov_args = NULL,
                                     summary = getOption("parameters_summary", FALSE),
                                     include_info = getOption("parameters_info", FALSE),
                                     keep = NULL,
                                     drop = NULL,
                                     verbose = TRUE,
-                                    vcov = NULL,
-                                    vcov_args = NULL,
                                     ...) {
   # default ci-method, based on statistic
   if (is.null(ci_method)) {
@@ -131,13 +131,13 @@ model_parameters.fixest_multi <- function(model,
                                           standardize = NULL,
                                           exponentiate = FALSE,
                                           p_adjust = NULL,
+                                          vcov = NULL,
+                                          vcov_args = NULL,
                                           summary = getOption("parameters_summary", FALSE),
                                           include_info = getOption("parameters_info", FALSE),
                                           keep = NULL,
                                           drop = NULL,
                                           verbose = TRUE,
-                                          vcov = NULL,
-                                          vcov_args = NULL,
                                           ...) {
   ## TODO remove deprecated later
   if (!missing(summary)) {

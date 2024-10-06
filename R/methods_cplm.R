@@ -36,10 +36,10 @@ model_parameters.zcpglm <- function(model,
                                     standardize = NULL,
                                     exponentiate = FALSE,
                                     p_adjust = NULL,
-                                    keep = NULL,
-                                    drop = NULL,
                                     summary = getOption("parameters_summary", FALSE),
                                     include_info = getOption("parameters_info", FALSE),
+                                    keep = NULL,
+                                    drop = NULL,
                                     verbose = TRUE,
                                     ...) {
   component <- match.arg(component)

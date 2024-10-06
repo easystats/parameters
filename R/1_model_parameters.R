@@ -567,13 +567,13 @@ model_parameters.default <- function(model,
                                      standardize = NULL,
                                      exponentiate = FALSE,
                                      p_adjust = NULL,
+                                     vcov = NULL,
+                                     vcov_args = NULL,
                                      summary = getOption("parameters_summary", FALSE),
                                      include_info = getOption("parameters_info", FALSE),
                                      keep = NULL,
                                      drop = NULL,
                                      verbose = TRUE,
-                                     vcov = NULL,
-                                     vcov_args = NULL,
                                      ...) {
   # validation check for inputs
   .is_model_valid(model)
@@ -665,9 +665,9 @@ model_parameters.default <- function(model,
                                       include_info = FALSE,
                                       keep_parameters = NULL,
                                       drop_parameters = NULL,
-                                      verbose = TRUE,
                                       vcov = NULL,
                                       vcov_args = NULL,
+                                      verbose = TRUE,
                                       ...) {
   dots <- list(...)
 
@@ -759,12 +759,12 @@ model_parameters.glm <- function(model,
                                  standardize = NULL,
                                  exponentiate = FALSE,
                                  p_adjust = NULL,
+                                 vcov = NULL,
+                                 vcov_args = NULL,
                                  summary = getOption("parameters_summary", FALSE),
                                  include_info = getOption("parameters_info", FALSE),
                                  keep = NULL,
                                  drop = NULL,
-                                 vcov = NULL,
-                                 vcov_args = NULL,
                                  verbose = TRUE,
                                  ...) {
   dots <- list(...)

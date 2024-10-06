@@ -159,15 +159,15 @@ model_parameters.merMod <- function(model,
                                     group_level = FALSE,
                                     exponentiate = FALSE,
                                     p_adjust = NULL,
+                                    vcov = NULL,
+                                    vcov_args = NULL,
                                     wb_component = TRUE,
                                     summary = getOption("parameters_mixed_summary", FALSE),
                                     include_info = getOption("parameters_mixed_info", FALSE),
+                                    include_sigma = FALSE,
                                     keep = NULL,
                                     drop = NULL,
                                     verbose = TRUE,
-                                    include_sigma = FALSE,
-                                    vcov = NULL,
-                                    vcov_args = NULL,
                                     ...) {
   dots <- list(...)
 

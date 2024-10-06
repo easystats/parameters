@@ -22,10 +22,10 @@ model_parameters.glmmTMB <- function(model,
                                      wb_component = TRUE,
                                      summary = getOption("parameters_mixed_summary", FALSE),
                                      include_info = getOption("parameters_mixed_info", FALSE),
+                                     include_sigma = FALSE,
                                      keep = NULL,
                                      drop = NULL,
                                      verbose = TRUE,
-                                     include_sigma = FALSE,
                                      ...) {
   insight::check_if_installed("glmmTMB")
 
