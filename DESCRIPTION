@@ -1,7 +1,7 @@
 Type: Package
 Package: parameters
 Title: Processing of Model Parameters
-Version: 0.22.2.16
+Version: 0.22.2.17
 Authors@R:
     c(person(given = "Daniel",
              family = "Lüdecke",
@@ -80,8 +80,8 @@ Depends:
     R (>= 3.6)
 Imports:
     bayestestR (>= 0.14.0),
-    datawizard (>= 0.12.3),
-    insight (>= 0.20.4),
+    datawizard (>= 0.13.0),
+    insight (>= 0.20.5),
     graphics,
     methods,
     stats,
@@ -224,4 +224,4 @@ Config/testthat/edition: 3
 Config/testthat/parallel: true
 Config/Needs/website: easystats/easystatstemplate
 Config/rcmdcheck/ignore-inconsequential-notes: true
-Remotes: easystats/bayestestR, easystats/datawizard
+Remotes: easystats/bayestestR#678
