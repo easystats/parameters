@@ -63,8 +63,8 @@
       
       Model: wt ~ cyl (32 Observations)
       Sigma: 0.594 (df = 28)
-      Conditional R2: 0.628; Marginal R2: 0.550
       RMSE : 0.564
+      Conditional R2: 0.628; Marginal R2: 0.550
     Message
       
       Uncertainty intervals (equal-tailed) and p-values (two-tailed) computed

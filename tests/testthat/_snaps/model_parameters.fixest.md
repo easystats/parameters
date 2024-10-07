@@ -12,6 +12,6 @@
       
       Model: QoL ~ time + phq4 (564 Observations)
       Sigma: 12.365 (df = 561)
-      r2: 0.743; ar2: 0.613; wr2: 0.180; war2: 0.175
       RMSE : 10.069
+      r2: 0.743; ar2: 0.613; wr2: 0.180; war2: 0.175
 
