@@ -45,6 +45,15 @@ model_parameters.marginaleffects <- function(model,
   # exponentiate coefficients and SE/CI, if requested
   out <- .exponentiate_parameters(out, model = NULL, exponentiate)
 
+  # add further information as attributes
+  out <- .add_model_parameters_attributes(
+    out,
+    model = model,
+    ci = ci,
+    exponentiate = exponentiate,
+    ...
+  )
+
   class(out) <- c("parameters_model", "see_parameters_model", class(out))
   out
 }
@@ -96,6 +105,15 @@ model_parameters.predictions <- function(model,
 
   # exponentiate coefficients and SE/CI, if requested
   out <- .exponentiate_parameters(out, model = NULL, exponentiate)
+
+  # add further information as attributes
+  out <- .add_model_parameters_attributes(
+    out,
+    model = model,
+    ci = ci,
+    exponentiate = exponentiate,
+    ...
+  )
 
   class(out) <- c("parameters_model", "see_parameters_model", class(out))
   out

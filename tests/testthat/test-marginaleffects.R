@@ -102,3 +102,13 @@ test_that("model_parameters defaults to FALSE: Issue #916", {
   out2 <- model_parameters(pred, exponentiate = FALSE)
   expect_equal(out1$Predicted, out2$Predicted, tolerance = 1e-4)
 })
+
+
+test_that("digits and ci_digits for marginaleffects", {
+  data(mtcars)
+  skip_if(getRversion() < "4.2.0")
+  out <- lm(mpg ~ wt, data = mtcars) |>
+    marginaleffects::hypotheses(hypothesis = "10*wt = 0") |>
+    model_parameters(digits = 1)
+  expect_snapshot(out)
+})
