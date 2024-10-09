@@ -371,13 +371,23 @@
 
   # check if we have model data, else return parameter table
   if (is.null(model_data)) {
-    params
+    return(params)
   }
 
   # find factors and factor levels and check if we have any factors in the data
   factors <- .find_factor_levels(model_data, model, model_call = attributes(params)$model_call)
   if (!length(factors)) {
-    params
+    # in case of "on-the-fly" factors, e.g.:
+    # m <- lm(mpg ~ cut(wt, c(0, 2.5, 3, 5)), data = mtcars)
+    # we need to receive the data from the model frame, in order to find factors
+    model_data <- insight::get_data(model, source = "mf", verbose = FALSE)
+    if (!is.null(model_data)) {
+      factors <- .find_factor_levels(model_data, model, model_call = attributes(params)$model_call)
+    }
+    # if we still didn't find anything, quit...
+    if (!length(factors)) {
+      return(params)
+    }
   }
 
   # we need some more information about prettified labels etc.
