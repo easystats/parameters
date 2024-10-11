@@ -2,7 +2,7 @@
 #' @name compare_parameters
 #'
 #' @description Compute and extract model parameters of multiple regression
-#'   models. See [model_parameters()] for further details.
+#'   models. See [`model_parameters()`] for further details.
 #'
 #' @param ... One or more regression model objects, or objects returned by
 #'   `model_parameters()`. Regression models may be of different model
@@ -10,7 +10,7 @@
 #'   If model objects are passed with names or the list has named elements,
 #'   these names will be used as column names.
 #' @param component Model component for which parameters should be shown. See
-#'   documentation for related model class in [model_parameters()].
+#'   documentation for related model class in [`model_parameters()`].
 #' @param column_names Character vector with strings that should be used as
 #'   column headers. Must be of same length as number of models in `...`.
 #' @param ci_method Method for computing degrees of freedom for p-values
@@ -303,11 +303,6 @@ compare_models <- compare_parameters
       }
     }
   }
-
-  if (!is.null(x$Parameter)) {
-    x$Parameter <- gsub("]", ")", gsub("[", "(", x$Parameter, fixed = TRUE), fixed = TRUE)
-  }
-
   x
 }
 

@@ -33,11 +33,9 @@ bootstrap_parameters(model, ...)
 \item{ci}{Value or vector of probability of the CI (between 0 and 1)
 to be estimated. Default to \code{0.95} (\verb{95\%}).}
 
-\item{ci_method}{The type of index used for Credible Interval. Can be
-\code{"ETI"} (default, see \code{\link[bayestestR:eti]{eti()}}), \code{"HDI"}
-(see \code{\link[bayestestR:hdi]{hdi()}}), \code{"BCI"} (see
-\code{\link[bayestestR:bci]{bci()}}), \code{"SPI"} (see \code{\link[bayestestR:spi]{spi()}}), or
-\code{"SI"} (see \code{\link[bayestestR:si]{si()}}).}
+\item{ci_method}{The type of index used for Credible Interval. Can be \code{"ETI"}
+(default, see \code{\link[bayestestR:eti]{eti()}}), \code{"HDI"} (see \code{\link[bayestestR:hdi]{hdi()}}), \code{"BCI"} (see \code{\link[bayestestR:bci]{bci()}}),
+\code{"SPI"} (see \code{\link[bayestestR:spi]{spi()}}), or \code{"SI"} (see \code{\link[bayestestR:si]{si()}}).}
 
 \item{test}{The indices to compute. Character (vector) with one or more of
 these options: \code{"p-value"} (or \code{"p"}), \code{"p_direction"} (or \code{"pd"}), \code{"rope"},

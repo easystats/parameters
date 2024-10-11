@@ -214,6 +214,12 @@ print_html.compare_parameters <- function(x,
     groups = groups
   )
 
+  # replace brackets by parenthesis
+  if (!is.null(ci_brackets) && "Parameter" %in% colnames(formatted_table)) {
+    formatted_table$Parameter <- gsub("[", ci_brackets[1], formatted_table$Parameter, fixed = TRUE)
+    formatted_table$Parameter <- gsub("]", ci_brackets[2], formatted_table$Parameter, fixed = TRUE)
+  }
+
   out <- insight::export_table(
     formatted_table,
     format = "html",
