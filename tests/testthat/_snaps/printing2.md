@@ -78,6 +78,69 @@
       -----------------------------------------------------------------------------------------------------------------------------------
       Observations                        |                 150 |         |                 150 |         |                 150 |        
 
+---
+
+    Code
+      print(out, groups = list(Species = c("Species [versicolor]",
+        "Species [virginica]"), Interactions = c(
+        "Species [versicolor] * Petal Length", "Species [virginica] * Petal Length"),
+      Controls = "Petal Length"))
+    Output
+      Parameter                             |                  lm1 |                  lm2
+      -----------------------------------------------------------------------------------
+      Species                               |                      |                     
+        Species [versicolor]                | -1.60 (-1.98, -1.22) | -1.69 (-2.80, -0.57)
+        Species [virginica]                 | -2.12 (-2.66, -1.58) | -1.19 (-2.37, -0.01)
+      Interactions                          |                      |                     
+        Species [versicolor] * Petal Length |                      | -0.01 (-0.56,  0.53)
+        Species [virginica] * Petal Length  |                      | -0.15 (-0.69,  0.39)
+      Controls                              |                      |                     
+        Petal Length                        |  0.90 ( 0.78,  1.03) |  0.39 (-0.13,  0.90)
+      -----------------------------------------------------------------------------------
+        Observations                        |                  150 |                  150
+
+---
+
+    Code
+      print(out, groups = list(Species = c("Species [versicolor]",
+        "Species [virginica]"), Interactions = c(
+        "Species [versicolor] * Petal Length", "Species [virginica] * Petal Length"),
+      Controls = "Petal Length"), select = "{estimate}{stars}")
+    Output
+      Parameter                             |      lm1 |     lm2
+      ----------------------------------------------------------
+      Species                               |          |        
+        Species [versicolor]                | -1.60*** | -1.69**
+        Species [virginica]                 | -2.12*** | -1.19 *
+      Interactions                          |          |        
+        Species [versicolor] * Petal Length |          |   -0.01
+        Species [virginica] * Petal Length  |          |   -0.15
+      Controls                              |          |        
+        Petal Length                        |  0.90*** |    0.39
+      ----------------------------------------------------------
+        Observations                        |      150 |     150
+
+---
+
+    Code
+      print(out, groups = list(Species = c("Species [versicolor]",
+        "Species [virginica]"), Interactions = c(
+        "Species [versicolor] * Petal Length", "Species [virginica] * Petal Length"),
+      Controls = "Petal Length"), select = "{estimate}|{p}")
+    Output
+      Parameter                             | Estimate (lm1) | p (lm1) | Estimate (lm2) | p (lm2)
+      -------------------------------------------------------------------------------------------
+      Species                               |                |         |                |        
+        Species [versicolor]                |          -1.60 |  <0.001 |          -1.69 |   0.003
+        Species [virginica]                 |          -2.12 |  <0.001 |          -1.19 |   0.048
+      Interactions                          |                |         |                |        
+        Species [versicolor] * Petal Length |                |         |          -0.01 |   0.961
+        Species [virginica] * Petal Length  |                |         |          -0.15 |   0.574
+      Controls                              |                |         |                |        
+        Petal Length                        |           0.90 |  <0.001 |           0.39 |   0.138
+      -------------------------------------------------------------------------------------------
+        Observations                        |            150 |         |            150 |        
+
 # combination of different models
 
     Code
