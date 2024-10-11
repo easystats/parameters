@@ -30,7 +30,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.22.2.18</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.22.2.19</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -583,11 +583,11 @@ models, aligned side by side.</p>
 <span><span class="co">#&gt; Parameter                           |               lm1 |                  lm2 |                  lm3</span></span>
 <span><span class="co">#&gt; -----------------------------------------------------------------------------------------------------</span></span>
 <span><span class="co">#&gt; (Intercept)                         | 5.01 (4.86, 5.15) |  3.68 ( 3.47,  3.89) |  4.21 ( 3.41,  5.02)</span></span>
-<span><span class="co">#&gt; Species (versicolor)                | 0.93 (0.73, 1.13) | -1.60 (-1.98, -1.22) | -1.81 (-2.99, -0.62)</span></span>
-<span><span class="co">#&gt; Species (virginica)                 | 1.58 (1.38, 1.79) | -2.12 (-2.66, -1.58) | -3.15 (-4.41, -1.90)</span></span>
+<span><span class="co">#&gt; Species [versicolor]                | 0.93 (0.73, 1.13) | -1.60 (-1.98, -1.22) | -1.81 (-2.99, -0.62)</span></span>
+<span><span class="co">#&gt; Species [virginica]                 | 1.58 (1.38, 1.79) | -2.12 (-2.66, -1.58) | -3.15 (-4.41, -1.90)</span></span>
 <span><span class="co">#&gt; Petal Length                        |                   |  0.90 ( 0.78,  1.03) |  0.54 ( 0.00,  1.09)</span></span>
-<span><span class="co">#&gt; Species (versicolor) × Petal Length |                   |                      |  0.29 (-0.30,  0.87)</span></span>
-<span><span class="co">#&gt; Species (virginica) × Petal Length  |                   |                      |  0.45 (-0.12,  1.03)</span></span>
+<span><span class="co">#&gt; Species [versicolor] × Petal Length |                   |                      |  0.29 (-0.30,  0.87)</span></span>
+<span><span class="co">#&gt; Species [virginica] × Petal Length  |                   |                      |  0.45 (-0.12,  1.03)</span></span>
 <span><span class="co">#&gt; -----------------------------------------------------------------------------------------------------</span></span>
 <span><span class="co">#&gt; Observations                        |               150 |                  150 |                  150</span></span></code></pre></div>
 <div class="section level3">
@@ -601,11 +601,11 @@ errors instead of confidence intervals, or including p-values.</p>
 <span><span class="co">#&gt; Parameter                           |            lm1 |             lm2 |             lm3</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------------------------------------------</span></span>
 <span><span class="co">#&gt; (Intercept)                         | 5.01*** (0.07) |  3.68*** (0.11) |  4.21*** (0.41)</span></span>
-<span><span class="co">#&gt; Species (versicolor)                | 0.93*** (0.10) | -1.60*** (0.19) | -1.81 ** (0.60)</span></span>
-<span><span class="co">#&gt; Species (virginica)                 | 1.58*** (0.10) | -2.12*** (0.27) | -3.15*** (0.63)</span></span>
+<span><span class="co">#&gt; Species [versicolor]                | 0.93*** (0.10) | -1.60*** (0.19) | -1.81 ** (0.60)</span></span>
+<span><span class="co">#&gt; Species [virginica]                 | 1.58*** (0.10) | -2.12*** (0.27) | -3.15*** (0.63)</span></span>
 <span><span class="co">#&gt; Petal Length                        |                |  0.90*** (0.06) |     0.54 (0.28)</span></span>
-<span><span class="co">#&gt; Species (versicolor) × Petal Length |                |                 |     0.29 (0.30)</span></span>
-<span><span class="co">#&gt; Species (virginica) × Petal Length  |                |                 |     0.45 (0.29)</span></span>
+<span><span class="co">#&gt; Species [versicolor] × Petal Length |                |                 |     0.29 (0.30)</span></span>
+<span><span class="co">#&gt; Species [virginica] × Petal Length  |                |                 |     0.45 (0.29)</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------------------------------------------</span></span>
 <span><span class="co">#&gt; Observations                        |            150 |             150 |             150</span></span></code></pre></div>
 <p>The <code>select</code> argument also has a basic support for
@@ -636,11 +636,11 @@ confidence intervals.</p>
 <span><span class="co">#&gt; Parameter                           |            lm1 |             lm2 |             lm3</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------------------------------------------</span></span>
 <span><span class="co">#&gt; (Intercept)                         | 5.01*** (0.07) |  3.68*** (0.11) |  4.21*** (0.41)</span></span>
-<span><span class="co">#&gt; Species (versicolor)                | 0.93*** (0.10) | -1.60*** (0.19) | -1.81 ** (0.60)</span></span>
-<span><span class="co">#&gt; Species (virginica)                 | 1.58*** (0.10) | -2.12*** (0.27) | -3.15*** (0.63)</span></span>
+<span><span class="co">#&gt; Species [versicolor]                | 0.93*** (0.10) | -1.60*** (0.19) | -1.81 ** (0.60)</span></span>
+<span><span class="co">#&gt; Species [virginica]                 | 1.58*** (0.10) | -2.12*** (0.27) | -3.15*** (0.63)</span></span>
 <span><span class="co">#&gt; Petal Length                        |                |  0.90*** (0.06) |     0.54 (0.28)</span></span>
-<span><span class="co">#&gt; Species (versicolor) × Petal Length |                |                 |     0.29 (0.30)</span></span>
-<span><span class="co">#&gt; Species (virginica) × Petal Length  |                |                 |     0.45 (0.29)</span></span>
+<span><span class="co">#&gt; Species [versicolor] × Petal Length |                |                 |     0.29 (0.30)</span></span>
+<span><span class="co">#&gt; Species [virginica] × Petal Length  |                |                 |     0.45 (0.29)</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------------------------------------------</span></span>
 <span><span class="co">#&gt; Observations                        |            150 |             150 |             150</span></span>
 <span></span>
@@ -649,11 +649,11 @@ confidence intervals.</p>
 <span><span class="co">#&gt; Parameter                           |                           lm1 |                              lm2 |                              lm3</span></span>
 <span><span class="co">#&gt; -----------------------------------------------------------------------------------------------------------------------------------------</span></span>
 <span><span class="co">#&gt; (Intercept)                         | 5.01 (4.86, 5.15), p&lt;0.001*** |  3.68 ( 3.47,  3.89), p&lt;0.001*** |  4.21 ( 3.41,  5.02), p&lt;0.001***</span></span>
-<span><span class="co">#&gt; Species (versicolor)                | 0.93 (0.73, 1.13), p&lt;0.001*** | -1.60 (-1.98, -1.22), p&lt;0.001*** | -1.81 (-2.99, -0.62), p=0.003 **</span></span>
-<span><span class="co">#&gt; Species (virginica)                 | 1.58 (1.38, 1.79), p&lt;0.001*** | -2.12 (-2.66, -1.58), p&lt;0.001*** | -3.15 (-4.41, -1.90), p&lt;0.001***</span></span>
+<span><span class="co">#&gt; Species [versicolor]                | 0.93 (0.73, 1.13), p&lt;0.001*** | -1.60 (-1.98, -1.22), p&lt;0.001*** | -1.81 (-2.99, -0.62), p=0.003 **</span></span>
+<span><span class="co">#&gt; Species [virginica]                 | 1.58 (1.38, 1.79), p&lt;0.001*** | -2.12 (-2.66, -1.58), p&lt;0.001*** | -3.15 (-4.41, -1.90), p&lt;0.001***</span></span>
 <span><span class="co">#&gt; Petal Length                        |                               |  0.90 ( 0.78,  1.03), p&lt;0.001*** |     0.54 ( 0.00,  1.09), p=0.052</span></span>
-<span><span class="co">#&gt; Species (versicolor) × Petal Length |                               |                                  |     0.29 (-0.30,  0.87), p=0.334</span></span>
-<span><span class="co">#&gt; Species (virginica) × Petal Length  |                               |                                  |     0.45 (-0.12,  1.03), p=0.120</span></span>
+<span><span class="co">#&gt; Species [versicolor] × Petal Length |                               |                                  |     0.29 (-0.30,  0.87), p=0.334</span></span>
+<span><span class="co">#&gt; Species [virginica] × Petal Length  |                               |                                  |     0.45 (-0.12,  1.03), p=0.120</span></span>
 <span><span class="co">#&gt; -----------------------------------------------------------------------------------------------------------------------------------------</span></span>
 <span><span class="co">#&gt; Observations                        |                           150 |                              150 |                              150</span></span></code></pre></div>
 <p><code>select</code> also works for <code><a href="../reference/model_parameters.html">model_parameters()</a></code>,
@@ -686,11 +686,11 @@ argument.</p>
 <span><span class="co">#&gt; Parameter                           |       First Model |         Second Model |          Third Model</span></span>
 <span><span class="co">#&gt; -----------------------------------------------------------------------------------------------------</span></span>
 <span><span class="co">#&gt; (Intercept)                         | 5.01 (4.86, 5.15) |  3.68 ( 3.47,  3.89) |  4.21 ( 3.41,  5.02)</span></span>
-<span><span class="co">#&gt; Species (versicolor)                | 0.93 (0.73, 1.13) | -1.60 (-1.98, -1.22) | -1.81 (-2.99, -0.62)</span></span>
-<span><span class="co">#&gt; Species (virginica)                 | 1.58 (1.38, 1.79) | -2.12 (-2.66, -1.58) | -3.15 (-4.41, -1.90)</span></span>
+<span><span class="co">#&gt; Species [versicolor]                | 0.93 (0.73, 1.13) | -1.60 (-1.98, -1.22) | -1.81 (-2.99, -0.62)</span></span>
+<span><span class="co">#&gt; Species [virginica]                 | 1.58 (1.38, 1.79) | -2.12 (-2.66, -1.58) | -3.15 (-4.41, -1.90)</span></span>
 <span><span class="co">#&gt; Petal Length                        |                   |  0.90 ( 0.78,  1.03) |  0.54 ( 0.00,  1.09)</span></span>
-<span><span class="co">#&gt; Species (versicolor) × Petal Length |                   |                      |  0.29 (-0.30,  0.87)</span></span>
-<span><span class="co">#&gt; Species (virginica) × Petal Length  |                   |                      |  0.45 (-0.12,  1.03)</span></span>
+<span><span class="co">#&gt; Species [versicolor] × Petal Length |                   |                      |  0.29 (-0.30,  0.87)</span></span>
+<span><span class="co">#&gt; Species [virginica] × Petal Length  |                   |                      |  0.45 (-0.12,  1.03)</span></span>
 <span><span class="co">#&gt; -----------------------------------------------------------------------------------------------------</span></span>
 <span><span class="co">#&gt; Observations                        |               150 |                  150 |                  150</span></span></code></pre></div>
 </div>
@@ -728,7 +728,7 @@ component.</p>
 <span><span class="co">#&gt; --------------------------------------------------------------------------------</span></span>
 <span><span class="co">#&gt; (Intercept) |  0.91 ( 0.75,  1.07) |  0.68 (-0.54,  1.91) |  1.41 ( 1.06,  1.75)</span></span>
 <span><span class="co">#&gt; child       | -1.23 (-1.39, -1.08) | -1.67 (-1.84, -1.51) | -0.53 (-0.77, -0.29)</span></span>
-<span><span class="co">#&gt; camper (1)  |  1.05 ( 0.88,  1.23) |  0.94 ( 0.77,  1.12) |  0.58 ( 0.39,  0.78)</span></span>
+<span><span class="co">#&gt; camper [1]  |  1.05 ( 0.88,  1.23) |  0.94 ( 0.77,  1.12) |  0.58 ( 0.39,  0.78)</span></span>
 <span><span class="co">#&gt; zg          |                      |                      |  0.13 ( 0.05,  0.21)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; # Fixed Effects (Zero-Inflation Component)</span></span>
@@ -762,7 +762,7 @@ model are aligned to a fixed width. You can do this using
 <span><span class="co">#&gt; --------------------------------------------------------------------------------------------</span></span>
 <span><span class="co">#&gt; (Intercept)             |  0.91 ( 0.75,  1.07) |  0.68 (-0.54,  1.91) |  1.41 ( 1.06,  1.75)</span></span>
 <span><span class="co">#&gt; child                   | -1.23 (-1.39, -1.08) | -1.67 (-1.84, -1.51) | -0.53 (-0.77, -0.29)</span></span>
-<span><span class="co">#&gt; camper (1)              |  1.05 ( 0.88,  1.23) |  0.94 ( 0.77,  1.12) |  0.58 ( 0.39,  0.78)</span></span>
+<span><span class="co">#&gt; camper [1]              |  1.05 ( 0.88,  1.23) |  0.94 ( 0.77,  1.12) |  0.58 ( 0.39,  0.78)</span></span>
 <span><span class="co">#&gt; zg                      |                      |                      |  0.13 ( 0.05,  0.21)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; # Fixed Effects (Zero-Inflation Component)</span></span>
@@ -807,30 +807,30 @@ unicode characters that you need to take care of in the
 <span></span>
 <span><span class="co"># look at parameters names, to know their names for "groups" argument</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">cp</span><span class="op">)</span><span class="op">$</span><span class="va">Parameter</span> <span class="co"># note the unicode char as interaction mark</span></span>
-<span><span class="co">#&gt; [1] "Species (versicolor)"                "Species (virginica)"                </span></span>
-<span><span class="co">#&gt; [3] "Petal Length"                        "Species (versicolor) × Petal Length"</span></span>
-<span><span class="co">#&gt; [5] "Species (virginica) × Petal Length"</span></span>
+<span><span class="co">#&gt; [1] "Species [versicolor]"                "Species [virginica]"                </span></span>
+<span><span class="co">#&gt; [3] "Petal Length"                        "Species [versicolor] × Petal Length"</span></span>
+<span><span class="co">#&gt; [5] "Species [virginica] × Petal Length"</span></span>
 <span></span>
 <span><span class="co"># create groups. Interactions only present in 2nd model</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">cp</span>, groups <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
 <span>  Species <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
-<span>    <span class="st">"Species (versicolor)"</span>,</span>
-<span>    <span class="st">"Species (virginica)"</span></span>
+<span>    <span class="st">"Species [versicolor]"</span>,</span>
+<span>    <span class="st">"Species [virginica]"</span></span>
 <span>  <span class="op">)</span>,</span>
 <span>  Interactions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
-<span>    <span class="st">"Species (versicolor) × Petal Length"</span>, <span class="co"># note the unicode char!</span></span>
-<span>    <span class="st">"Species (virginica) × Petal Length"</span></span>
+<span>    <span class="st">"Species [versicolor] × Petal Length"</span>, <span class="co"># note the unicode char!</span></span>
+<span>    <span class="st">"Species [virginica] × Petal Length"</span></span>
 <span>  <span class="op">)</span>,</span>
 <span>  Controls <span class="op">=</span> <span class="st">"Petal Length"</span></span>
 <span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Parameter                             |                  lm1 |                  lm2</span></span>
 <span><span class="co">#&gt; -----------------------------------------------------------------------------------</span></span>
 <span><span class="co">#&gt; Species                               |                      |                     </span></span>
-<span><span class="co">#&gt;   Species (versicolor)                | -1.60 (-1.98, -1.22) | -1.69 (-2.80, -0.57)</span></span>
-<span><span class="co">#&gt;   Species (virginica)                 | -2.12 (-2.66, -1.58) | -1.19 (-2.37, -0.01)</span></span>
+<span><span class="co">#&gt;   Species [versicolor]                | -1.60 (-1.98, -1.22) | -1.69 (-2.80, -0.57)</span></span>
+<span><span class="co">#&gt;   Species [virginica]                 | -2.12 (-2.66, -1.58) | -1.19 (-2.37, -0.01)</span></span>
 <span><span class="co">#&gt; Interactions                          |                      |                     </span></span>
-<span><span class="co">#&gt;   Species (versicolor) × Petal Length |                      | -0.01 (-0.56,  0.53)</span></span>
-<span><span class="co">#&gt;   Species (virginica) × Petal Length  |                      | -0.15 (-0.69,  0.39)</span></span>
+<span><span class="co">#&gt;   Species [versicolor] × Petal Length |                      | -0.01 (-0.56,  0.53)</span></span>
+<span><span class="co">#&gt;   Species [virginica] × Petal Length  |                      | -0.15 (-0.69,  0.39)</span></span>
 <span><span class="co">#&gt; Controls                              |                      |                     </span></span>
 <span><span class="co">#&gt;   Petal Length                        |  0.90 ( 0.78,  1.03) |  0.39 (-0.13,  0.90)</span></span>
 <span><span class="co">#&gt; -----------------------------------------------------------------------------------</span></span>
@@ -862,11 +862,11 @@ table is split into multiple parts.</p>
 <span><span class="co">#&gt; Parameter                           |               lm1 |                  lm2 |                  lm3 |                  lm4</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------------------------------------------------------------------------------</span></span>
 <span><span class="co">#&gt; (Intercept)                         | 5.01 (4.86, 5.15) |  3.68 ( 3.47,  3.89) |  4.21 ( 3.41,  5.02) |  4.21 ( 3.41,  5.02)</span></span>
-<span><span class="co">#&gt; Species (versicolor)                | 0.93 (0.73, 1.13) | -1.60 (-1.98, -1.22) | -1.81 (-2.99, -0.62) | -1.80 (-2.99, -0.62)</span></span>
-<span><span class="co">#&gt; Species (virginica)                 | 1.58 (1.38, 1.79) | -2.12 (-2.66, -1.58) | -3.15 (-4.41, -1.90) | -3.19 (-4.50, -1.88)</span></span>
+<span><span class="co">#&gt; Species [versicolor]                | 0.93 (0.73, 1.13) | -1.60 (-1.98, -1.22) | -1.81 (-2.99, -0.62) | -1.80 (-2.99, -0.62)</span></span>
+<span><span class="co">#&gt; Species [virginica]                 | 1.58 (1.38, 1.79) | -2.12 (-2.66, -1.58) | -3.15 (-4.41, -1.90) | -3.19 (-4.50, -1.88)</span></span>
 <span><span class="co">#&gt; Petal Length                        |                   |  0.90 ( 0.78,  1.03) |  0.54 ( 0.00,  1.09) |  0.54 (-0.02,  1.09)</span></span>
-<span><span class="co">#&gt; Species (versicolor) × Petal Length |                   |                      |  0.29 (-0.30,  0.87) |  0.28 (-0.30,  0.87)</span></span>
-<span><span class="co">#&gt; Species (virginica) × Petal Length  |                   |                      |  0.45 (-0.12,  1.03) |  0.45 (-0.12,  1.03)</span></span>
+<span><span class="co">#&gt; Species [versicolor] × Petal Length |                   |                      |  0.29 (-0.30,  0.87) |  0.28 (-0.30,  0.87)</span></span>
+<span><span class="co">#&gt; Species [virginica] × Petal Length  |                   |                      |  0.45 (-0.12,  1.03) |  0.45 (-0.12,  1.03)</span></span>
 <span><span class="co">#&gt; Petal Width                         |                   |                      |                      |  0.03 (-0.28,  0.34)</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------------------------------------------------------------------------------</span></span>
 <span><span class="co">#&gt; Observations                        |               150 |                  150 |                  150 |                  150</span></span>
@@ -877,11 +877,11 @@ table is split into multiple parts.</p>
 <span><span class="co">#&gt; Parameter                           |               lm1 |                  lm2</span></span>
 <span><span class="co">#&gt; ------------------------------------------------------------------------------</span></span>
 <span><span class="co">#&gt; (Intercept)                         | 5.01 (4.86, 5.15) |  3.68 ( 3.47,  3.89)</span></span>
-<span><span class="co">#&gt; Species (versicolor)                | 0.93 (0.73, 1.13) | -1.60 (-1.98, -1.22)</span></span>
-<span><span class="co">#&gt; Species (virginica)                 | 1.58 (1.38, 1.79) | -2.12 (-2.66, -1.58)</span></span>
+<span><span class="co">#&gt; Species [versicolor]                | 0.93 (0.73, 1.13) | -1.60 (-1.98, -1.22)</span></span>
+<span><span class="co">#&gt; Species [virginica]                 | 1.58 (1.38, 1.79) | -2.12 (-2.66, -1.58)</span></span>
 <span><span class="co">#&gt; Petal Length                        |                   |  0.90 ( 0.78,  1.03)</span></span>
-<span><span class="co">#&gt; Species (versicolor) × Petal Length |                   |                     </span></span>
-<span><span class="co">#&gt; Species (virginica) × Petal Length  |                   |                     </span></span>
+<span><span class="co">#&gt; Species [versicolor] × Petal Length |                   |                     </span></span>
+<span><span class="co">#&gt; Species [virginica] × Petal Length  |                   |                     </span></span>
 <span><span class="co">#&gt; Petal Width                         |                   |                     </span></span>
 <span><span class="co">#&gt; ------------------------------------------------------------------------------</span></span>
 <span><span class="co">#&gt; Observations                        |               150 |                  150</span></span>
@@ -889,11 +889,11 @@ table is split into multiple parts.</p>
 <span><span class="co">#&gt; Parameter                           |                  lm3 |                  lm4</span></span>
 <span><span class="co">#&gt; ---------------------------------------------------------------------------------</span></span>
 <span><span class="co">#&gt; (Intercept)                         |  4.21 ( 3.41,  5.02) |  4.21 ( 3.41,  5.02)</span></span>
-<span><span class="co">#&gt; Species (versicolor)                | -1.81 (-2.99, -0.62) | -1.80 (-2.99, -0.62)</span></span>
-<span><span class="co">#&gt; Species (virginica)                 | -3.15 (-4.41, -1.90) | -3.19 (-4.50, -1.88)</span></span>
+<span><span class="co">#&gt; Species [versicolor]                | -1.81 (-2.99, -0.62) | -1.80 (-2.99, -0.62)</span></span>
+<span><span class="co">#&gt; Species [virginica]                 | -3.15 (-4.41, -1.90) | -3.19 (-4.50, -1.88)</span></span>
 <span><span class="co">#&gt; Petal Length                        |  0.54 ( 0.00,  1.09) |  0.54 (-0.02,  1.09)</span></span>
-<span><span class="co">#&gt; Species (versicolor) × Petal Length |  0.29 (-0.30,  0.87) |  0.28 (-0.30,  0.87)</span></span>
-<span><span class="co">#&gt; Species (virginica) × Petal Length  |  0.45 (-0.12,  1.03) |  0.45 (-0.12,  1.03)</span></span>
+<span><span class="co">#&gt; Species [versicolor] × Petal Length |  0.29 (-0.30,  0.87) |  0.28 (-0.30,  0.87)</span></span>
+<span><span class="co">#&gt; Species [virginica] × Petal Length  |  0.45 (-0.12,  1.03) |  0.45 (-0.12,  1.03)</span></span>
 <span><span class="co">#&gt; Petal Width                         |                      |  0.03 (-0.28,  0.34)</span></span>
 <span><span class="co">#&gt; ---------------------------------------------------------------------------------</span></span>
 <span><span class="co">#&gt; Observations                        |                  150 |                  150</span></span></code></pre></div>
