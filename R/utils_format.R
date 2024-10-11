@@ -440,6 +440,19 @@
       }
       # create a pretty level for the reference category
       pretty_level <- paste0(fn_clean, " [", sub(fn, "", reference_level, fixed = TRUE), "]")
+      pretty_level <- gsub("_", " ", pretty_level, fixed = TRUE)
+      # special handling for "cut()"
+      pattern_cut_right <- "(.*)\\((.*),(.*)\\]\\]$"
+      pattern_cut_left <- "(.*)\\[(.*),(.*)\\)\\]$"
+      if (all(grepl(pattern_cut_right, pretty_level))) {
+        lower_bounds <- gsub(pattern_cut_right, "\\2", pretty_level)
+        upper_bounds <- gsub(pattern_cut_right, "\\3", pretty_level)
+        pretty_level <- gsub(pattern_cut_right, paste0("\\1>", as.numeric(lower_bounds), "-", upper_bounds, "]"), pretty_level)
+      } else if (all(grepl(pattern_cut_left, pretty_level))) {
+        lower_bounds <- gsub(pattern_cut_left, "\\2", pretty_level)
+        upper_bounds <- gsub(pattern_cut_left, "\\3", pretty_level)
+        pretty_level <- gsub(pattern_cut_left, paste0("\\1", as.numeric(lower_bounds), "-<", upper_bounds, "]"), pretty_level)
+      }
       # insert new pretty level at the correct position in "pretty_names"
       pretty_names <- .insert_element_at(
         pretty_names,
