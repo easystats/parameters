@@ -42,7 +42,7 @@ print.compare_parameters <- function(x,
                                      zap_small = FALSE,
                                      groups = NULL,
                                      column_width = NULL,
-                                     ci_brackets = c("(", ")"),
+                                     ci_brackets = c("[", "]"),
                                      select = NULL,
                                      ...) {
   # save original input

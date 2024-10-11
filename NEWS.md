@@ -34,6 +34,9 @@
 
 * Improved printing for `simulate_parameters()` for models from packages *mclogit*.
 
+* `print()` for `compare_parameters()` now also puts factor levels into square
+  brackets, like the `print()` method for `model_parameters()`.
+
 ## Bug fixes
 
 * Arguments like `digits` etc. were ignored in `model_parameters() for objects

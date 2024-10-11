@@ -176,6 +176,12 @@ print_md.compare_parameters <- function(x,
     engine = engine
   )
 
+  # replace brackets by parenthesis
+  if (!is.null(ci_brackets) && "Parameter" %in% colnames(formatted_table)) {
+    formatted_table$Parameter <- gsub("[", ci_brackets[1], formatted_table$Parameter, fixed = TRUE)
+    formatted_table$Parameter <- gsub("]", ci_brackets[2], formatted_table$Parameter, fixed = TRUE)
+  }
+
   if (identical(engine, "tt")) {
     # retrieve output format - print_md() may be called from print_html()
     dots <- list(...)
@@ -285,7 +291,11 @@ print_md.parameters_pca <- print_md.parameters_efa
 # Equivalence test ----------------------------
 
 #' @export
-print_md.equivalence_test_lm <- function(x, digits = 2, ci_brackets = c("(", ")"), zap_small = FALSE, ...) {
+print_md.equivalence_test_lm <- function(x,
+                                         digits = 2,
+                                         ci_brackets = c("(", ")"),
+                                         zap_small = FALSE,
+                                         ...) {
   rule <- attributes(x)$rule
   rope <- attributes(x)$rope
 
