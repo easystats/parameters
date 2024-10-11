@@ -23,6 +23,6 @@ test_that("print in pipe, on-the-fly factor", {
   })
   expect_identical(
     out[4],
-    "cut(wt, c(0, 2.5, 3, 5)) [(0,2.5]] |        0.00 |      |                 |       |       "
+    "cut(wt, c(0, 2.5, 3, 5)) [>0-2.5] |        0.00 |      |                 |       |       "
   )
 })
