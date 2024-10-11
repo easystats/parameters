@@ -573,13 +573,13 @@ format.parameters_sem <- function(x,
   }
 
   # footer: r-squared
-  if (isTRUE(show_r2)) {
-    footer <- .add_footer_r2(footer, digits, r2, type)
+  if (isTRUE(show_rmse)) {
+    footer <- .add_footer_values(footer, digits, value = rmse, text = "RMSE ", type)
   }
 
   # footer: r-squared
-  if (isTRUE(show_rmse)) {
-    footer <- .add_footer_values(footer, digits, value = rmse, text = "RMSE ", type)
+  if (isTRUE(show_r2)) {
+    footer <- .add_footer_r2(footer, digits, r2, type)
   }
 
   # footer: p-adjustment

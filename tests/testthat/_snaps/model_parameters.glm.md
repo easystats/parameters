@@ -10,8 +10,8 @@
       
       Model: mpg ~ wt (32 Observations)
       Sigma: 3.046 (df = 30)
-      R2: 0.753; adjusted R2: 0.745
       RMSE : 2.949
+      R2: 0.753; adjusted R2: 0.745
 
 ---
 

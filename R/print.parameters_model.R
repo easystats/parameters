@@ -12,26 +12,33 @@
 #' printed. There are three options for this argument:
 #'
 #' 1. Selecting columns by name or index
-#' \cr
+#'
 #'   `select` can be a character vector (or numeric index) of column names that
-#'   should be printed. There are two pre-defined options for selecting columns:
-#'   `select = "minimal"` prints coefficients, confidence intervals and p-values,
-#'   while `select = "short"` prints coefficients, standard errors and p-values.
+#'   should be printed, where columns are extracted from the data frame returned
+#'   by `model_parameters()` and related functions.
+#'
+#'   There are two pre-defined options for selecting columns:
+#'   `select = "minimal"` prints coefficients, confidence intervals and
+#'   p-values, while `select = "short"` prints coefficients, standard errors and
+#'   p-values.
 #'
 #' 2. A string expression with layout pattern
-#' \cr
-#'   `select` is a string with "tokens" enclosed in braces. These tokens will
-#'   be replaced by their associated columns, where the selected columns will
-#'   be collapsed into one column. However, it is possible to create multiple
-#'   columns as well. Following tokens are replaced by the related coefficients
-#'   or statistics: `{estimate}`, `{se}`, `{ci}` (or `{ci_low}` and `{ci_high}`),
-#'   `{p}` and `{stars}`. The token `{ci}` will be replaced by `{ci_low}, {ci_high}`.
-#'   Furthermore, a `|` separates values into new cells/columns. If
-#'   `format = "html"`, a `<br>` inserts a line break inside a cell. See
+#'
+#'   `select` is a string with "tokens" enclosed in braces. These tokens will be
+#'   replaced by their associated columns, where the selected columns will be
+#'   collapsed into one column. Following tokens are replaced by the related
+#'   coefficients or statistics: `{estimate}`, `{se}`, `{ci}` (or `{ci_low}` and
+#'   `{ci_high}`), `{p}` and `{stars}`. The token `{ci}` will be replaced by
+#'   `{ci_low}, {ci_high}`. Example: `select = "{estimate}{stars} ({ci})"`
+#'
+#'   It is possible to create multiple columns as well. A `|` separates values
+#'   into new cells/columns. Example: `select = "{estimate} ({ci})|{p}"`.
+#'
+#'   If `format = "html"`, a `<br>` inserts a line break inside a cell. See
 #'   'Examples'.
 #'
 #' 3. A string indicating a pre-defined layout
-#' \cr
+#'
 #'   `select` can be one of the following string values, to create one of the
 #'   following pre-defined column layouts:
 #'

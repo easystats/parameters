@@ -93,8 +93,8 @@
       
       Model: Sepal.Length ~ Species * Petal.Length (150 Observations)
       Sigma: 0.336 (df = 144)
-      R2: 0.840; adjusted R2: 0.835
       RMSE : 0.330
+      R2: 0.840; adjusted R2: 0.835
     Message
       
       Uncertainty intervals (equal-tailed) and p-values (two-tailed) computed

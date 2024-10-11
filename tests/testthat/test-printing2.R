@@ -49,12 +49,12 @@ withr::with_options(
       expect_snapshot(
         print(out, groups = list(
           Species = c(
-            "Species (versicolor)",
-            "Species (virginica)"
+            "Species [versicolor]",
+            "Species [virginica]"
           ),
           Interactions = c(
-            "Species (versicolor) * Petal Length",
-            "Species (virginica) * Petal Length"
+            "Species [versicolor] * Petal Length",
+            "Species [virginica] * Petal Length"
           ),
           Controls = "Petal Length"
         ))
@@ -62,12 +62,12 @@ withr::with_options(
       expect_snapshot(
         print(out, groups = list(
           Species = c(
-            "Species (versicolor)",
-            "Species (virginica)"
+            "Species [versicolor]",
+            "Species [virginica]"
           ),
           Interactions = c(
-            "Species (versicolor) * Petal Length", # note the unicode char!
-            "Species (virginica) * Petal Length"
+            "Species [versicolor] * Petal Length", # note the unicode char!
+            "Species [virginica] * Petal Length"
           ),
           Controls = "Petal Length"
         ), select = "{estimate}{stars}")
@@ -75,12 +75,12 @@ withr::with_options(
       expect_snapshot(
         print(out, groups = list(
           Species = c(
-            "Species (versicolor)",
-            "Species (virginica)"
+            "Species [versicolor]",
+            "Species [virginica]"
           ),
           Interactions = c(
-            "Species (versicolor) * Petal Length", # note the unicode char!
-            "Species (virginica) * Petal Length"
+            "Species [versicolor] * Petal Length", # note the unicode char!
+            "Species [virginica] * Petal Length"
           ),
           Controls = "Petal Length"
         ), select = "{estimate}|{p}")

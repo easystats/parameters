@@ -371,7 +371,7 @@
 
   # check if we have model data, else return parameter table
   if (is.null(model_data)) {
-    params
+    return(params)
   }
 
   # find factors and factor levels and check if we have any factors in the data
@@ -385,7 +385,17 @@
     factors <- factors[setdiff(names(factors), remove_contrasts)]
   }
   if (!length(factors)) {
-    params
+    # in case of "on-the-fly" factors, e.g.:
+    # m <- lm(mpg ~ cut(wt, c(0, 2.5, 3, 5)), data = mtcars)
+    # we need to receive the data from the model frame, in order to find factors
+    model_data <- insight::get_data(model, source = "mf", verbose = FALSE)
+    if (!is.null(model_data)) {
+      factors <- .find_factor_levels(model_data, model, model_call = attributes(params)$model_call)
+    }
+    # if we still didn't find anything, quit...
+    if (!length(factors)) {
+      return(params)
+    }
   }
 
   # we need some more information about prettified labels etc.
@@ -438,6 +448,19 @@
       }
       # create a pretty level for the reference category
       pretty_level <- paste0(fn_clean, " [", sub(fn, "", reference_level, fixed = TRUE), "]")
+      pretty_level <- gsub("_", " ", pretty_level, fixed = TRUE)
+      # special handling for "cut()"
+      pattern_cut_right <- "(.*)\\((.*),(.*)\\]\\]$"
+      pattern_cut_left <- "(.*)\\[(.*),(.*)\\)\\]$"
+      if (all(grepl(pattern_cut_right, pretty_level))) {
+        lower_bounds <- gsub(pattern_cut_right, "\\2", pretty_level)
+        upper_bounds <- gsub(pattern_cut_right, "\\3", pretty_level)
+        pretty_level <- gsub(pattern_cut_right, paste0("\\1>", as.numeric(lower_bounds), "-", upper_bounds, "]"), pretty_level)
+      } else if (all(grepl(pattern_cut_left, pretty_level))) {
+        lower_bounds <- gsub(pattern_cut_left, "\\2", pretty_level)
+        upper_bounds <- gsub(pattern_cut_left, "\\3", pretty_level)
+        pretty_level <- gsub(pattern_cut_left, paste0("\\1", as.numeric(lower_bounds), "-<", upper_bounds, "]"), pretty_level)
+      }
       # insert new pretty level at the correct position in "pretty_names"
       pretty_names <- .insert_element_at(
         pretty_names,
