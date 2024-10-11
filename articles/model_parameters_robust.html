@@ -137,7 +137,7 @@ return.
 <li>
 <code>vcov_args</code>: list of arguments passed to the
 <em>sandwich</em> or <em>clubSandwich</em> function used to compute the
-covariance matrix. See for example <code><a href="https://sandwich.R-Forge.R-project.org/reference/vcovHAC.html" class="external-link">?sandwich::vcovHAC</a></code>
+covariance matrix. See for example <code><a href="https://rdrr.io/pkg/sandwich/man/vcovHAC.html" class="external-link">?sandwich::vcovHAC</a></code>
 </li>
 </ol>
 <div class="section level2">
@@ -190,7 +190,7 @@ note that the coefficient estimate remains unchanged.</p>
 <span><span class="co"># compare standard errors to result from sandwich-package</span></span>
 <span><span class="va">mp</span><span class="op">$</span><span class="va">SE</span></span>
 <span><span class="co">#&gt; [1] 5.93 0.43</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/unname.html" class="external-link">unname</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/diag.html" class="external-link">diag</a></span><span class="op">(</span><span class="fu">sandwich</span><span class="fu">::</span><span class="fu"><a href="https://sandwich.R-Forge.R-project.org/reference/vcovHC.html" class="external-link">vcovHC</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/unname.html" class="external-link">unname</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/diag.html" class="external-link">diag</a></span><span class="op">(</span><span class="fu">sandwich</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/sandwich/man/vcovHC.html" class="external-link">vcovHC</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 5.93 0.43</span></span></code></pre></div>
 </div>
 <div class="section level3">
@@ -204,7 +204,7 @@ a string, such as <code>"vcovCL"</code> (or just its suffix
 function with the content of <code>vcov_args</code> as arguments.</p>
 <p>The specific estimation type can be controlled by passing a
 <code>type</code> argument via <code>vcov_args</code>. See
-<code><a href="https://sandwich.R-Forge.R-project.org/reference/vcovCL.html" class="external-link">?sandwich::vcovCL</a></code> for information about the different types
+<code><a href="https://rdrr.io/pkg/sandwich/man/vcovCL.html" class="external-link">?sandwich::vcovCL</a></code> for information about the different types
 of covariance matrices that this function can produce (<code>HC0</code>
 to <code>HC3</code>). In the next example, we use a clustered covariance
 matrix estimation with <code>HC1</code>-estimation type.</p>
@@ -234,11 +234,11 @@ matrix estimation with <code>HC1</code>-estimation type.</p>
 <span><span class="co"># compare standard errors to result from sandwich-package</span></span>
 <span><span class="va">mp</span><span class="op">$</span><span class="va">SE</span></span>
 <span><span class="co">#&gt; [1] 0.422 0.111 0.653 0.587 0.079 0.123 0.111</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/unname.html" class="external-link">unname</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/diag.html" class="external-link">diag</a></span><span class="op">(</span><span class="fu">sandwich</span><span class="fu">::</span><span class="fu"><a href="https://sandwich.R-Forge.R-project.org/reference/vcovCL.html" class="external-link">vcovCL</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/unname.html" class="external-link">unname</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/diag.html" class="external-link">diag</a></span><span class="op">(</span><span class="fu">sandwich</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/sandwich/man/vcovCL.html" class="external-link">vcovCL</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 0.422 0.111 0.653 0.587 0.079 0.123 0.111</span></span></code></pre></div>
 <p>Usually, clustered covariance matrix estimation is used when there is
 a cluster-structure in the data. The variable indicating the
-cluster-structure can be defined in <code><a href="https://sandwich.R-Forge.R-project.org/reference/vcovCL.html" class="external-link">sandwich::vcovCL()</a></code> with
+cluster-structure can be defined in <code><a href="https://rdrr.io/pkg/sandwich/man/vcovCL.html" class="external-link">sandwich::vcovCL()</a></code> with
 the <code>cluster</code>-argument. In <code><a href="../reference/model_parameters.html">model_parameters()</a></code>,
 additional arguments that should be passed down to functions from the
 <em>sandwich</em> package can be specified in
@@ -267,7 +267,7 @@ additional arguments that should be passed down to functions from the
 <span><span class="co"># compare standard errors to result from sandwich-package</span></span>
 <span><span class="va">mp</span><span class="op">$</span><span class="va">SE</span></span>
 <span><span class="co">#&gt; [1] 0.337 0.072 0.519 0.264 0.072 0.097 0.051</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/unname.html" class="external-link">unname</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/diag.html" class="external-link">diag</a></span><span class="op">(</span><span class="fu">sandwich</span><span class="fu">::</span><span class="fu"><a href="https://sandwich.R-Forge.R-project.org/reference/vcovCL.html" class="external-link">vcovCL</a></span><span class="op">(</span><span class="va">model</span>, cluster <span class="op">=</span> <span class="va">iris</span><span class="op">$</span><span class="va">cluster</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/unname.html" class="external-link">unname</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/diag.html" class="external-link">diag</a></span><span class="op">(</span><span class="fu">sandwich</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/sandwich/man/vcovCL.html" class="external-link">vcovCL</a></span><span class="op">(</span><span class="va">model</span>, cluster <span class="op">=</span> <span class="va">iris</span><span class="op">$</span><span class="va">cluster</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 0.337 0.072 0.519 0.264 0.072 0.097 0.051</span></span></code></pre></div>
 </div>
 <div class="section level3">
