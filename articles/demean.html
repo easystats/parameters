@@ -268,7 +268,7 @@ correlation by group-meaning <span class="citation">(or “mean within
 clusters,” Bafumi and Gelman 2006; Gelman and Hill 2007, chap.
 12.6.)</span>.</p></li>
 <li><p>When time-varying predictors are “decomposed” into their
-time-varying and time-invariant components (demeaning), then mixed
+time-varying and time-invariant components (de-meaning), then mixed
 models can model <strong>both</strong> within- and between-subject
 effects <span class="citation">(Bell, Fairbrother, and Jones
 2019)</span> - this approach is essentially a further development of a
@@ -394,7 +394,7 @@ x<sub>it</sub> - ͞x<sub>i</sub> is the de-meaned predictor,
 <span>  data <span class="op">=</span> <span class="va">qol_cancer</span></span>
 <span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p><strong>What about time-constant predictors?</strong></p>
-<p>After demeaning time-varying predictors, “at the higher level, the
+<p>After de-meaning time-varying predictors, “at the higher level, the
 mean term is no longer constrained by Level 1 effects, so it is free to
 account for all the higher-level variance associated with that variable”
 <span class="citation">(Bell and Jones 2015)</span>.</p>
@@ -677,6 +677,18 @@ usually improves the estimates.</p>
 <span><span class="co">#&gt; -------------------------------------------------------</span></span>
 <span><span class="co">#&gt; SD (Intercept: grp) |        1.54 | 0.77 | [0.58, 4.09]</span></span>
 <span><span class="co">#&gt; SD (Residual)       |        2.98 | 0.21 | [2.60, 3.42]</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="a-final-note---latent-mean-centering">A final note - latent mean centering<a class="anchor" aria-label="anchor" href="#a-final-note---latent-mean-centering"></a>
+</h2>
+<p>It can be even more complicated. The person-mean is only observed,
+but the true value is not known. Thus, in certain situations, the
+coefficients after de-meaning still might be (more or less) biased,
+because it doesn’t appropriately account for the uncertainty in the
+person-means. In this case, <em>latent mean centering</em> is
+recommended, however, there are only few options to do this. One way is
+using the great <strong>brms</strong> package, and this approach <a href="https://vuorre.netlify.app/posts/latent-mean-centering/" class="external-link">is
+described here</a>.</p>
 </div>
 <div class="section level2">
 <h2 class="unnumbered" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
