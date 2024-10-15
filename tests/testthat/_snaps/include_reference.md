@@ -64,3 +64,94 @@
       | Observations | 32                   | 32                   |
       +--------------+----------------------+----------------------+ 
 
+# include_reference, different contrasts
+
+    Code
+      print(out)
+    Output
+      Parameter   | Coefficient |   SE |          95% CI | t(27) |      p
+      -------------------------------------------------------------------
+      (Intercept) |       19.70 | 1.18 | [ 17.28, 22.11] | 16.71 | < .001
+      cyl [6]     |       -6.66 | 1.63 | [-10.00, -3.31] | -4.09 | < .001
+      cyl [8]     |      -10.54 | 1.96 | [-14.56, -6.52] | -5.38 | < .001
+      gear [3]    |        0.00 |      |                 |       |       
+      gear [4]    |        1.32 | 1.93 | [ -2.63,  5.28] |  0.69 | 0.498 
+      gear [5]    |        1.50 | 1.85 | [ -2.31,  5.31] |  0.81 | 0.426 
+    Message
+      
+      Uncertainty intervals (equal-tailed) and p-values (two-tailed) computed
+        using a Wald t-distribution approximation.
+
+---
+
+    Code
+      print(out)
+    Output
+      Parameter   | Coefficient |   SE |          95% CI | t(27) |      p
+      -------------------------------------------------------------------
+      (Intercept) |       25.43 | 1.88 | [ 21.57, 29.29] | 13.52 | < .001
+      cyl [4]     |        0.00 |      |                 |       |       
+      cyl [6]     |       -6.66 | 1.63 | [-10.00, -3.31] | -4.09 | < .001
+      cyl [8]     |      -10.54 | 1.96 | [-14.56, -6.52] | -5.38 | < .001
+      gear [3]    |        0.00 |      |                 |       |       
+      gear [4]    |        1.32 | 1.93 | [ -2.63,  5.28] |  0.69 | 0.498 
+      gear [5]    |        1.50 | 1.85 | [ -2.31,  5.31] |  0.81 | 0.426 
+    Message
+      
+      Uncertainty intervals (equal-tailed) and p-values (two-tailed) computed
+        using a Wald t-distribution approximation.
+
+---
+
+    Code
+      print(out)
+    Output
+      Parameter   | Coefficient |   SE |          95% CI | t(27) |      p
+      -------------------------------------------------------------------
+      (Intercept) |       20.64 | 0.67 | [ 19.26, 22.01] | 30.76 | < .001
+      cyl [6]     |       -6.66 | 1.63 | [-10.00, -3.31] | -4.09 | < .001
+      cyl [8]     |      -10.54 | 1.96 | [-14.56, -6.52] | -5.38 | < .001
+      gear [1]    |       -0.94 | 1.09 | [ -3.18,  1.30] | -0.86 | 0.396 
+      gear [2]    |        0.38 | 1.11 | [ -1.90,  2.67] |  0.34 | 0.734 
+    Message
+      
+      Uncertainty intervals (equal-tailed) and p-values (two-tailed) computed
+        using a Wald t-distribution approximation.
+
+---
+
+    Code
+      print(out)
+    Output
+      Parameter   | Coefficient |   SE |         95% CI | t(27) |      p
+      ------------------------------------------------------------------
+      (Intercept) |       15.83 | 1.24 | [13.28, 18.37] | 12.75 | < .001
+      cyl [8]     |        0.00 |      |                |       |       
+      cyl [4]     |       10.54 | 1.96 | [ 6.52, 14.56] |  5.38 | < .001
+      cyl [6]     |        3.89 | 1.88 | [ 0.03,  7.75] |  2.07 | 0.049 
+      gear [1]    |       -0.94 | 1.09 | [-3.18,  1.30] | -0.86 | 0.396 
+      gear [2]    |        0.38 | 1.11 | [-1.90,  2.67] |  0.34 | 0.734 
+    Message
+      
+      Uncertainty intervals (equal-tailed) and p-values (two-tailed) computed
+        using a Wald t-distribution approximation.
+
+---
+
+    Code
+      print(out)
+    Output
+      Parameter   | Coefficient |   SE |         95% CI | t(27) |      p
+      ------------------------------------------------------------------
+      (Intercept) |       14.89 | 0.92 | [13.00, 16.77] | 16.19 | < .001
+      cyl [8]     |        0.00 |      |                |       |       
+      cyl [4]     |       10.54 | 1.96 | [ 6.52, 14.56] |  5.38 | < .001
+      cyl [6]     |        3.89 | 1.88 | [ 0.03,  7.75] |  2.07 | 0.049 
+      gear [3]    |        0.00 |      |                |       |       
+      gear [4]    |        1.32 | 1.93 | [-2.63,  5.28] |  0.69 | 0.498 
+      gear [5]    |        1.50 | 1.85 | [-2.31,  5.31] |  0.81 | 0.426 
+    Message
+      
+      Uncertainty intervals (equal-tailed) and p-values (two-tailed) computed
+        using a Wald t-distribution approximation.
+
