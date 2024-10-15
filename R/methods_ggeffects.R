@@ -1,6 +1,10 @@
 #' @export
 model_parameters.ggeffects <- function(model, keep = NULL, drop = NULL, verbose = TRUE, ...) {
   ci <- attributes(model)$ci.lvl
+  ## TODO: deprecate later, this is forthcoming in ggeffects 1.8.0
+  if (is.null(ci)) {
+    ci <- attributes(model)$ci_level
+  }
   co_terms <- attributes(model)$terms[-1]
   focal_term <- attributes(model)$terms[1]
   constant_values <- attributes(model)$constant.values

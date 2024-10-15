@@ -1,6 +1,6 @@
 ---
 title: "Analysing Longitudinal or Panel Data"
-output: 
+output:
   rmarkdown::html_vignette:
     toc: true
     fig_width: 10.08
@@ -9,7 +9,7 @@ vignette: >
   %\VignetteIndexEntry{Analysing Longitudinal or Panel Data}
   \usepackage[utf8]{inputenc}
   %\VignetteEngine{knitr::rmarkdown}
-editor_options: 
+editor_options:
   chunk_output_type: console
 bibliography: bibliography.bib
 ---
@@ -43,7 +43,7 @@ if (!all(sapply(pkgs, requireNamespace, quietly = TRUE))) {
 set.seed(333)
 ```
 
-This vignette explains the rational behind the `demean()` function. 
+This vignette explains the rational behind the `demean()` function.
 
 We give recommendations how to analyze multilevel or hierarchical data
 structures, when macro-indicators (or level-2 predictors, or higher-level units,
@@ -202,7 +202,7 @@ There are several ways how to address this using a mixed models approach:
     @gelman_data_2007, Chap. 12.6.].
 
   * When time-varying predictors are "decomposed" into their time-varying and
-    time-invariant components (demeaning), then mixed models can model **both**
+    time-invariant components (de-meaning), then mixed models can model **both**
     within- and between-subject effects [@bell_fixed_2019] - this approach is
     essentially a further development of a long-known recommendation by Mundlak
     [@mundlak_pooling_1978].
@@ -284,7 +284,7 @@ rewb <- suppressWarnings(lmer(
 
 **What about time-constant predictors?**
 
-After demeaning time-varying predictors, "at the higher level, the mean term is
+After de-meaning time-varying predictors, "at the higher level, the mean term is
 no longer constrained by Level 1 effects, so it is free to account for all the
 higher-level variance associated with that variable" [@bell_explaining_2015].
 
@@ -536,5 +536,15 @@ model_parameters(m1)
 m2 <- lmer(y ~ x_between + (1 | grp), data = d)
 model_parameters(m2)
 ```
+
+# A final note - latent mean centering
+
+It can be even more complicated. The person-mean is only observed, but the
+true value is not known. Thus, in certain situations, the coefficients after
+de-meaning still might be (more or less) biased, because it doesn't
+appropriately account for the uncertainty in the person-means. In this case,
+_latent mean centering_ is recommended, however, there are only few options
+to do this. One way is using the great **brms** package, and this approach
+[is described here](https://vuorre.netlify.app/posts/latent-mean-centering/).
 
 # References
