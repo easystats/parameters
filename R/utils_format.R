@@ -389,6 +389,14 @@
       return(params)
     }
   }
+  # next, check contrasts of factors. including the reference level makes
+  # only sense if there are contrasts that are all zeros, which means that
+  # the reference level is not included in the model matrix
+  remove_contrasts <- .remove_reference_contrasts(model)
+  # keep only factors with valid contrasts
+  if (!is.null(remove_contrasts) && length(remove_contrasts)) {
+    factors <- factors[setdiff(names(factors), remove_contrasts)]
+  }
 
   # we need some more information about prettified labels etc.
   pretty_names <- attributes(params)$pretty_names

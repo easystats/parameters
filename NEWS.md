@@ -37,6 +37,10 @@
 * `print()` for `compare_parameters()` now also puts factor levels into square
   brackets, like the `print()` method for `model_parameters()`.
 
+* `include_reference` now only adds the reference category of factors to the
+  parameters table when those factors have appropriate contrasts (treatment or
+  SAS contrasts).
+
 ## Bug fixes
 
 * Arguments like `digits` etc. were ignored in `model_parameters() for objects

@@ -177,6 +177,29 @@
 }
 
 
+# This functions finds contrasts for those factors in a model, where including
+# a reference level makes sense. This is the case when there are contrasts
+# that are all zeros, which means that the reference level is not included in
+# the model matrix.
+.remove_reference_contrasts <- function(model) {
+  cons <- .safe(model$contrasts)
+  if (is.null(cons)) {
+    return(NULL)
+  }
+  out <- vapply(cons, function(mat) {
+    if (is.matrix(mat) && nrow(mat) > 0) {
+      any(rowSums(mat) == 0)
+    } else if (is.character(mat)) {
+      mat %in% c("contr.treatment", "contr.SAS")
+    } else {
+      FALSE
+    }
+  }, logical(1))
+  # only return those factors that need to be removed
+  names(out)[!out]
+}
+
+
 # Almost identical to dynGet(). The difference is that we deparse the expression
 # because get0() allows symbol only since R 4.1.0
 .dynGet <- function(x,
