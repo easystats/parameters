@@ -290,3 +290,15 @@
   # no double white space
   insight::trim_ws(msg)
 }
+
+
+.fuzzy_grep <- function (x, pattern, precision = NULL) {
+  if (is.null(precision)) {
+    precision <- round(nchar(pattern) / 3)
+  }
+  if (precision > nchar(pattern)) {
+    return(NULL)
+  }
+  p <- sprintf("(%s){~%i}", pattern, precision)
+  grep(pattern = p, x = x, ignore.case = FALSE)
+}
