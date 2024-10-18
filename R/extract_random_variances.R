@@ -45,7 +45,7 @@
                                               ci_random = NULL,
                                               verbose = FALSE,
                                               ...) {
-  component <- match.arg(component, choices = c("all", "conditional", "zero_inflated", "zi", "dispersion"))
+  component <- .check_arg(component, c("all", "conditional", "zero_inflated", "zi", "dispersion"))
 
   out <- suppressWarnings(
     .extract_random_variances_helper(

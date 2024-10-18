@@ -47,8 +47,8 @@ model_parameters.glmmTMB <- function(model,
   ci_method <- .check_df_method(ci_method)
 
   # which components to return?
-  effects <- match.arg(effects, choices = c("fixed", "random", "all"))
-  component <- match.arg(component, choices = c("all", "conditional", "zi", "zero_inflated", "dispersion"))
+  effects <- .check_arg(effects, c("fixed", "random", "all"))
+  component <- .check_arg(component, c("all", "conditional", "zi", "zero_inflated", "dispersion"))
 
   # standardize only works for fixed effects...
   if (!is.null(standardize) && standardize != "refit") {
@@ -268,8 +268,8 @@ ci.glmmTMB <- function(x,
                        verbose = TRUE,
                        ...) {
   method <- tolower(method)
-  method <- match.arg(method, choices = c("wald", "normal", "ml1", "betwithin", "profile", "uniroot", "robust"))
-  component <- match.arg(component, choices = c("all", "conditional", "zi", "zero_inflated", "dispersion"))
+  method <- .check_arg(method, c("wald", "normal", "ml1", "betwithin", "profile", "uniroot", "robust"))
+  component <- .check_arg(component, c("all", "conditional", "zi", "zero_inflated", "dispersion"))
 
   if (is.null(.check_component(x, component, verbose = verbose))) {
     return(NULL)
@@ -315,8 +315,8 @@ standard_error.glmmTMB <- function(model,
                                    component = "all",
                                    verbose = TRUE,
                                    ...) {
-  component <- match.arg(component, choices = c("all", "conditional", "zi", "zero_inflated", "dispersion"))
-  effects <- match.arg(effects, choices = c("fixed", "random"))
+  component <- .check_arg(component, c("all", "conditional", "zi", "zero_inflated", "dispersion"))
+  effects <- .check_arg(effects, c("fixed", "random"))
 
   dot_args <- .check_dots(
     dots = list(...),
@@ -374,10 +374,10 @@ standard_error.glmmTMB <- function(model,
 #' @export
 simulate_model.glmmTMB <- function(model,
                                    iterations = 1000,
-                                   component = c("all", "conditional", "zi", "zero_inflated", "dispersion"),
+                                   component = "all",
                                    verbose = FALSE,
                                    ...) {
-  component <- match.arg(component)
+  component <- .check_arg(component, c("all", "conditional", "zi", "zero_inflated", "dispersion"))
   info <- insight::model_info(model, verbose = FALSE)
 
   ## TODO remove is.list() when insight 0.8.3 on CRAN

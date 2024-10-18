@@ -49,7 +49,7 @@ Other contributors:
   \item Vincent Arel-Bundock \email{vincent.arel-bundock@umontreal.ca} (\href{https://orcid.org/0000-0003-2042-7063}{ORCID}) [contributor]
   \item Jeffrey Girard \email{me@jmgirard.com} (\href{https://orcid.org/0000-0002-7359-3746}{ORCID}) [contributor]
   \item Christina Maimone \email{christina.maimone@northwestern.edu} [reviewer]
-  \item Niels Ohlsen (@Niels_Bremen) [reviewer]
+  \item Niels Ohlsen [reviewer]
   \item Douglas Ezra Morrison \email{dmorrison01@ucla.edu} (\href{https://orcid.org/0000-0002-7195-830X}{ORCID}) [contributor]
   \item Joseph Luchman \email{jluchman@gmail.com} (\href{https://orcid.org/0000-0002-8886-9717}{ORCID}) [contributor]
 }

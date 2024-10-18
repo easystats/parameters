@@ -75,7 +75,7 @@ bootstrap_model.default <- function(model,
 
   insight::check_if_installed("boot")
 
-  type <- match.arg(type, choices = c("ordinary", "parametric", "balanced", "permutation", "antithetic"))
+  type <- .check_arg(type, c("ordinary", "parametric", "balanced", "permutation", "antithetic"))
   parallel <- match.arg(parallel)
 
   model_data <- data <- insight::get_data(model, verbose = FALSE) # nolint
@@ -156,7 +156,7 @@ bootstrap_model.merMod <- function(model,
                                    ...) {
   insight::check_if_installed("lme4")
 
-  type <- match.arg(type, choices = c("parametric", "semiparametric"))
+  type <- .check_arg(type, c("parametric", "semiparametric"))
   parallel <- match.arg(parallel)
 
   boot_function <- function(model) {
@@ -228,7 +228,7 @@ bootstrap_model.nestedLogit <- function(model,
                                         ...) {
   insight::check_if_installed("boot")
 
-  type <- match.arg(type, choices = c("ordinary", "balanced", "permutation", "antithetic"))
+  type <- .check_arg(type, c("ordinary", "balanced", "permutation", "antithetic"))
   parallel <- match.arg(parallel)
 
   model_data <- data <- insight::get_data(model, verbose = FALSE) # nolint
