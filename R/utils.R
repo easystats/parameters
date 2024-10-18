@@ -243,7 +243,7 @@
     if (is.null(suggestion) || !length(suggestion) || !nzchar(suggestion)) {
       msg <- paste(msg, "Please use one of the following options:")
     } else {
-      msg <- paste(msg, suggestion, "Else, use one of the following options:")
+      msg <- paste(msg, suggestion, "Otherwise, use one of the following options:")
     }
     msg <- paste(msg, datawizard::text_concatenate(options, last = " or ", enclose = "\""))
     insight::format_error(msg)
