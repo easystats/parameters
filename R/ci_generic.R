@@ -17,11 +17,13 @@
   if (is.null(method)) {
     method <- "wald"
   }
-  method <- match.arg(tolower(method), choices = c(
-    "wald", "ml1", "betwithin", "kr",
-    "satterthwaite", "kenward", "boot",
-    "profile", "residual", "normal"
-  ))
+  method <- tolower(method)
+  method <- .check_arg(
+    method,
+    c("wald", "ml1", "betwithin", "kr", "satterthwaite", "kenward", "boot",
+      "profile", "residual", "normal"
+    )
+  )
 
   effects <- match.arg(effects)
   component <- match.arg(component)

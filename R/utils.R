@@ -220,6 +220,7 @@
   ifnotfound
 }
 
+
 .deprecated_warning <- function(old, new, verbose = TRUE) {
   if (verbose) {
     insight::format_warning(paste0(
@@ -229,4 +230,63 @@
       "` instead."
     ))
   }
+}
+
+
+# this is a wrapper around `match.arg()`, but provided clearer information on fail
+.check_arg <- function(argument, options) {
+  argument_name <- deparse(substitute(argument))
+  argument <- .safe(match.arg(argument, options))
+  if (is.null(argument)) {
+    suggestion <- .misspelled_string(options, argument_name)
+    msg <- sprintf("Invalid option for argument `%s`.", argument_name)
+    if (is.null(suggestion) || !length(suggestion) || !nzchar(suggestion)) {
+      msg <- paste(msg, "Please use one of the following options:")
+    } else {
+      msg <- paste(msg, suggestion, "Else, use one of the following options:")
+    }
+    msg <- paste(msg, datawizard::text_concatenate(options, last = " or ", enclose = "\""))
+    insight::format_error(msg)
+  }
+  argument
+}
+
+
+.misspelled_string <- function(source, searchterm, default_message = NULL) {
+  if (is.null(searchterm) || length(searchterm) < 1) {
+    return(default_message)
+  }
+  # used for many matches
+  more_found <- ""
+  # init default
+  msg <- ""
+  # remove matching strings
+  same <- intersect(source, searchterm)
+  searchterm <- setdiff(searchterm, same)
+  source <- setdiff(source, same)
+  # guess the misspelled string
+  possible_strings <- unlist(lapply(searchterm, function(s) {
+    source[.fuzzy_grep(source, s)] # nolint
+  }), use.names = FALSE)
+  if (length(possible_strings)) {
+    msg <- "Did you mean "
+    if (length(possible_strings) > 1) {
+      # make sure we don't print dozens of alternatives for larger data frames
+      if (length(possible_strings) > 5) {
+        more_found <- sprintf(
+          " We even found %i more possible matches, not shown here.",
+          length(possible_strings) - 5
+        )
+        possible_strings <- possible_strings[1:5]
+      }
+      msg <- paste0(msg, "one of ", datawizard::text_concatenate(possible_strings, last = " or ", enclose = "\""))
+    } else {
+      msg <- paste0(msg, "\"", possible_strings, "\"")
+    }
+    msg <- paste0(msg, "?", more_found)
+  } else {
+    msg <- default_message
+  }
+  # no double white space
+  insight::trim_ws(msg)
 }
