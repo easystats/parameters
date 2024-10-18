@@ -53,7 +53,6 @@ Authors@R:
       person(given = "Niels",
              family = "Ohlsen",
              role = "rev",
-             comment = c(Twitter = "@Niels_Bremen")),
       person(given = "Douglas Ezra",
              family = "Morrison",
              role = "ctb",

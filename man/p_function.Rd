@@ -369,7 +369,7 @@ guide to misinterpretations. European Journal of Epidemiology. 31:337-350.
 \item Greenland S (2023). Divergence versus decision P-values: A distinction
 worth making in theory and keeping in practice: Or, how divergence P-values
 measure evidence even when decision P-values do not. Scand J Statist, 50(1),
-54-88. \doi{doi.org/10.1111/sjos.12625}
+54-88.
 \item Rafi Z, Greenland S. Semantic and cognitive tools to aid statistical
 science: Replace confidence and significance by compatibility and surprise.
 BMC Medical Research Methodology. 2020;20(1):244. \doi{10.1186/s12874-020-01105-9}
