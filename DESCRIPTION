@@ -52,7 +52,7 @@ Authors@R:
              email = "christina.maimone@northwestern.edu"),
       person(given = "Niels",
              family = "Ohlsen",
-             role = "rev",
+             role = "rev"),
       person(given = "Douglas Ezra",
              family = "Morrison",
              role = "ctb",
