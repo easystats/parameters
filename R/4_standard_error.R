@@ -23,7 +23,8 @@
 #'    - Bootstrap: `"BS"`, `"xy"`, `"residual"`, `"wild"`, `"mammen"`,
 #'      `"fractional"`, `"jackknife"`, `"norm"`, `"webb"`.
 #'      See `?sandwich::vcovBS`
-#'    - Other `sandwich` package functions: `"HAC"`, `"PC"`, `"vCL"`, `"PL"`.
+#'    - Other `sandwich` package functions: `"HAC"`, `"PC"`, `"CL"`, `"OPG"`,
+#'      `"PL"`.
 #' @param vcov_args List of arguments to be passed to the function identified by
 #'   the `vcov` argument. This function is typically supplied by the
 #'   **sandwich** or **clubSandwich** packages. Please refer to their
