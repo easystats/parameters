@@ -265,7 +265,6 @@ test_that("model_parameters, standardize-refit robust", {
     model,
     standardize = "refit",
     effects = "fixed",
-    robust = TRUE,
     vcov = "CR",
     vcov_args = list(type = "CR1", cluster = iris$grp),
     verbose = FALSE

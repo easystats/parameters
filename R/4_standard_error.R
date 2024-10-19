@@ -10,24 +10,27 @@
 #'   to the corresponding numeric value). By default, `NA` is returned for
 #'   factors or character vectors.
 #' @param vcov Variance-covariance matrix used to compute uncertainty estimates
-#' (e.g., for robust standard errors). This argument accepts a covariance matrix,
-#' a function which returns a covariance matrix, or a string which identifies
-#' the function to be used to compute the covariance matrix.
+#' (e.g., for robust standard errors). This argument accepts a covariance
+#' matrix, a function which returns a covariance matrix, or a string which
+#' identifies the function to be used to compute the covariance matrix.
 #'  * A covariance matrix
 #'  * A function which returns a covariance matrix (e.g., `stats::vcov()`)
 #'  * A string which indicates the kind of uncertainty estimates to return.
-#'    - Heteroskedasticity-consistent: `"vcovHC"`, `"HC"`, `"HC0"`, `"HC1"`,
-#'      `"HC2"`, `"HC3"`, `"HC4"`, `"HC4m"`, `"HC5"`. See `?sandwich::vcovHC`.
-#'    - Cluster-robust: `"vcovCR"`, `"CR0"`, `"CR1"`, `"CR1p"`, `"CR1S"`,
-#'      `"CR2"`, `"CR3"`. See `?clubSandwich::vcovCR`.
-#'    - Bootstrap: `"vcovBS"`, `"xy"`, `"residual"`, `"wild"`, `"mammen"`,
-#'      `"webb"`. See `?sandwich::vcovBS`.
-#'    - Other `sandwich` package functions: `"vcovHAC"`, `"vcovPC"`, `"vcovCL"`,
-#'      `"vcovPL"`.
+#'    - Heteroskedasticity-consistent: `"HC"`, `"HC0"`, `"HC1"`, `"HC2"`,
+#'      `"HC3"`, `"HC4"`, `"HC4m"`, `"HC5"`. See `?sandwich::vcovHC`
+#'    - Cluster-robust: `"CR"`, `"CR0"`, `"CR1"`, `"CR1p"`, `"CR1S"`,
+#'      `"CR2"`, `"CR3"`. See `?clubSandwich::vcovCR`
+#'    - Bootstrap: `"BS"`, `"xy"`, `"residual"`, `"wild"`, `"mammen"`,
+#'      `"fractional"`, `"jackknife"`, `"norm"`, `"webb"`.
+#'      See `?sandwich::vcovBS`
+#'    - Other `sandwich` package functions: `"HAC"`, `"PC"`, `"vCL"`, `"PL"`.
 #' @param vcov_args List of arguments to be passed to the function identified by
-#'   the `vcov` argument. This function is typically supplied by the **sandwich**
-#'   or **clubSandwich** packages. Please refer to their documentation (e.g.,
-#'   `?sandwich::vcovHAC`) to see the list of available arguments.
+#'   the `vcov` argument. This function is typically supplied by the
+#'   **sandwich** or **clubSandwich** packages. Please refer to their
+#'   documentation (e.g., `?sandwich::vcovHAC`) to see the list of available
+#'   arguments. If no estimation type (argument `type`) is given, the default
+#'   type for `"HC"` equals the default from the **sandwich** package; for type
+#'   `"CR"`, the default is set to `"CR3"`.
 #' @param effects Should standard errors for fixed effects (`"fixed"`), random
 #'   effects (`"random"`), or both (`"all"`) be returned? Only applies
 #'   to mixed models. May be abbreviated. When standard errors for random
