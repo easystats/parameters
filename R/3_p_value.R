@@ -56,8 +56,8 @@ p_value.default <- function(model,
     method <- "wald"
   }
 
-  # robust standard errors with backward compatibility for `robust = TRUE`
-  if (!is.null(vcov) || isTRUE(dots[["robust"]])) {
+  # robust standard errors
+  if (!is.null(vcov)) {
     method <- "robust"
   }
 

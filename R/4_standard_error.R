@@ -23,7 +23,8 @@
 #'    - Bootstrap: `"BS"`, `"xy"`, `"residual"`, `"wild"`, `"mammen"`,
 #'      `"fractional"`, `"jackknife"`, `"norm"`, `"webb"`.
 #'      See `?sandwich::vcovBS`
-#'    - Other `sandwich` package functions: `"HAC"`, `"PC"`, `"vCL"`, `"PL"`.
+#'    - Other `sandwich` package functions: `"HAC"`, `"PC"`, `"CL"`, `"OPG"`,
+#'      `"PL"`.
 #' @param vcov_args List of arguments to be passed to the function identified by
 #'   the `vcov` argument. This function is typically supplied by the
 #'   **sandwich** or **clubSandwich** packages. Please refer to their
@@ -100,8 +101,8 @@ standard_error.default <- function(model,
     se <- .safe(sqrt(diag(do.call("vcov", fun_args))))
   }
 
-  # vcov: character (with backward compatibility for `robust = TRUE`)
-  if (is.character(vcov) || isTRUE(dots[["robust"]])) {
+  # vcov: character
+  if (is.character(vcov)) {
     .vcov <- insight::get_varcov(
       model,
       component = component,
