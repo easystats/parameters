@@ -11,9 +11,9 @@
 #' @param ... Arguments passed to or from other methods.
 #'
 #' @return A data frame with information on each parameter (see
-#'   [parameters_type()]), and various standardization coefficients
-#'   for the post-hoc methods (see [standardize_parameters()]) for the predictor
-#'   and the response.
+#' [`parameters_type()`]), and various standardization coefficients
+#' for the post-hoc methods (see [`standardize_parameters()`]) for the predictor
+#' and the response.
 #'
 #' @family standardize
 #'

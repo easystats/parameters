@@ -88,7 +88,7 @@ p_value_kenward.lmerMod <- function(model, dof = NULL) {
     if (is.null(se)) {
       se <- se_kenward(model)$SE
     }
-  } else if (!is.null(vcov) || isTRUE(list(...)[["robust"]])) {
+  } else if (!is.null(vcov)) {
     se <- standard_error(model,
       vcov = vcov,
       vcov_args = vcov_args,

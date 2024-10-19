@@ -176,8 +176,7 @@
 
   # ==== test statistic - fix values for robust vcov
 
-  # deprecated argument `robust = TRUE`
-  if (!is.null(vcov) || isTRUE(dots[["robust"]])) {
+  if (!is.null(vcov)) {
     parameters$Statistic <- parameters$Estimate / parameters$SE
   } else if (!is.null(statistic)) {
     parameters <- merge(parameters, statistic, by = merge_by, sort = FALSE)

@@ -75,7 +75,6 @@ mtcars$am <- as.factor(mtcars$am)
 model <- lm(mpg ~ wt * am + cyl + gear, data = mtcars)
 
 test_that("model_parameters, robust", {
-  expect_warning(expect_warning(expect_warning(model_parameters(model, robust = TRUE))))
   params <- model_parameters(model, vcov = "HC3")
   robust_se <- unname(sqrt(diag(sandwich::vcovHC(model))))
   expect_equal(params$SE, robust_se, tolerance = 1e-3)

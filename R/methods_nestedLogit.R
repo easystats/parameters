@@ -103,8 +103,8 @@ standard_error.nestedLogit <- function(model,
     se <- .safe(sqrt(diag(do.call("vcov", fun_args))))
   }
 
-  # vcov: character (with backward compatibility for `robust = TRUE`)
-  if (is.character(vcov) || isTRUE(dots[["robust"]])) {
+  # vcov: character
+  if (is.character(vcov)) {
     .vcov <- insight::get_varcov(
       model,
       component = component,
