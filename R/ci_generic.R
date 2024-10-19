@@ -18,7 +18,7 @@
     method <- "wald"
   }
   method <- tolower(method)
-  method <- .check_arg(
+  method <- insight::validate_argument(
     method,
     c("wald", "ml1", "betwithin", "kr", "satterthwaite", "kenward", "boot",
       "profile", "residual", "normal"

@@ -47,8 +47,8 @@ model_parameters.glmmTMB <- function(model,
   ci_method <- .check_df_method(ci_method)
 
   # which components to return?
-  effects <- .check_arg(effects, c("fixed", "random", "all"))
-  component <- .check_arg(component, c("all", "conditional", "zi", "zero_inflated", "dispersion"))
+  effects <- insight::validate_argument(effects, c("fixed", "random", "all"))
+  component <- insight::validate_argument(component, c("all", "conditional", "zi", "zero_inflated", "dispersion"))
 
   # standardize only works for fixed effects...
   if (!is.null(standardize) && standardize != "refit") {
@@ -268,8 +268,8 @@ ci.glmmTMB <- function(x,
                        verbose = TRUE,
                        ...) {
   method <- tolower(method)
-  method <- .check_arg(method, c("wald", "normal", "ml1", "betwithin", "profile", "uniroot", "robust"))
-  component <- .check_arg(component, c("all", "conditional", "zi", "zero_inflated", "dispersion"))
+  method <- insight::validate_argument(method, c("wald", "normal", "ml1", "betwithin", "profile", "uniroot", "robust"))
+  component <- insight::validate_argument(component, c("all", "conditional", "zi", "zero_inflated", "dispersion"))
 
   if (is.null(.check_component(x, component, verbose = verbose))) {
     return(NULL)
@@ -315,8 +315,8 @@ standard_error.glmmTMB <- function(model,
                                    component = "all",
                                    verbose = TRUE,
                                    ...) {
-  component <- .check_arg(component, c("all", "conditional", "zi", "zero_inflated", "dispersion"))
-  effects <- .check_arg(effects, c("fixed", "random"))
+  component <- insight::validate_argument(component, c("all", "conditional", "zi", "zero_inflated", "dispersion"))
+  effects <- insight::validate_argument(effects, c("fixed", "random"))
 
   dot_args <- .check_dots(
     dots = list(...),
@@ -377,7 +377,7 @@ simulate_model.glmmTMB <- function(model,
                                    component = "all",
                                    verbose = FALSE,
                                    ...) {
-  component <- .check_arg(component, c("all", "conditional", "zi", "zero_inflated", "dispersion"))
+  component <- insight::validate_argument(component, c("all", "conditional", "zi", "zero_inflated", "dispersion"))
   info <- insight::model_info(model, verbose = FALSE)
 
   ## TODO remove is.list() when insight 0.8.3 on CRAN

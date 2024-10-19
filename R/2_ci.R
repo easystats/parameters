@@ -73,7 +73,7 @@ ci.glm <- function(x,
                    vcov_args = NULL,
                    verbose = TRUE,
                    ...) {
-  method <- .check_arg(method, c("profile", "wald", "normal", "residual"))
+  method <- insight::validate_argument(method, c("profile", "wald", "normal", "residual"))
 
   # No robust vcov for profile method
   if (method == "profile") {

@@ -45,7 +45,7 @@
                                               ci_random = NULL,
                                               verbose = FALSE,
                                               ...) {
-  component <- .check_arg(component, c("all", "conditional", "zero_inflated", "zi", "dispersion"))
+  component <- insight::validate_argument(component, c("all", "conditional", "zero_inflated", "zi", "dispersion"))
 
   out <- suppressWarnings(
     .extract_random_variances_helper(

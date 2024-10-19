@@ -193,12 +193,12 @@ model_parameters.merMod <- function(model,
   ci_method <- tolower(ci_method)
 
   if (isTRUE(bootstrap)) {
-    ci_method <- .check_arg(
+    ci_method <- insight::validate_argument(
       ci_method,
       c("hdi", "quantile", "ci", "eti", "si", "bci", "bcai")
     )
   } else {
-    ci_method <- .check_arg(
+    ci_method <- insight::validate_argument(
       ci_method,
       c(
         "wald", "normal", "residual", "ml1", "betwithin", "satterthwaite",
@@ -208,7 +208,7 @@ model_parameters.merMod <- function(model,
   }
 
   # which component to return?
-  effects <- .check_arg(effects, c("fixed", "random", "all"))
+  effects <- insight::validate_argument(effects, c("fixed", "random", "all"))
   params <- params_random <- params_variance <- NULL
 
   # post hoc standardize only works for fixed effects...
@@ -343,7 +343,7 @@ ci.merMod <- function(x,
                       iterations = 500,
                       ...) {
   method <- tolower(method)
-  method <- .check_arg(method, c(
+  method <- insight::validate_argument(method, c(
     "wald", "ml1", "betwithin", "kr",
     "satterthwaite", "kenward", "boot",
     "profile", "residual", "normal"
@@ -379,7 +379,7 @@ standard_error.merMod <- function(model,
                                   vcov_args = NULL,
                                   ...) {
   dots <- list(...)
-  effects <- .check_arg(effects, c("fixed", "random"))
+  effects <- insight::validate_argument(effects, c("fixed", "random"))
 
   if (effects == "random") {
     out <- .standard_errors_random(model)
