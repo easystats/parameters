@@ -68,14 +68,6 @@ The computation of robust standard errors is controlled by two arguments:
 
 ### Robust Covariance Matrix Estimation from Model Parameters
 
-There are two arguments (see
-[`?standard_error`](https://easystats.github.io/parameters/reference/standard_error.html)
-for further details) that allow for choosing different methods and options of
-robust estimation:
-
-- `vcov`
-- `vcov_args`
-
 Let us start with a simple example, which uses a heteroskedasticity-consistent
 covariance matrix estimation with estimation-type "HC3" (i.e.
 `sandwich::vcovHC(type = "HC3")`).
