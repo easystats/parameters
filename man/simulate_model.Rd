@@ -10,7 +10,7 @@ simulate_model(model, iterations = 1000, ...)
 \method{simulate_model}{glmmTMB}(
   model,
   iterations = 1000,
-  component = c("all", "conditional", "zi", "zero_inflated", "dispersion"),
+  component = "all",
   verbose = FALSE,
   ...
 )
