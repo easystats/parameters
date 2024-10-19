@@ -28,7 +28,7 @@
 
   # check for errors
   if (is.null(out) && isTRUE(verbose)) {
-    insight::format_warning("Something went wrong when calculating random effects parameters. Only showing model's fixed effects now. You may use `effects=\"fixed\"` to speed up the call to `model_parameters()`.")
+    insight::format_warning("Something went wrong when calculating random effects parameters. Only showing model's fixed effects now. You may use `effects=\"fixed\"` to speed up the call to `model_parameters()`.") # nolint
   }
 
   out
@@ -208,7 +208,7 @@
   )
 
   # fix names for uncorrelated slope-intercepts
-  pattern <- paste0("(", paste0(insight::find_random(model, flatten = TRUE), collapse = "|"), ")\\.\\d+$")
+  pattern <- paste0("(", paste(insight::find_random(model, flatten = TRUE), collapse = "|"), ")\\.\\d+$")
   out$Group <- gsub(pattern, "\\1", out$Group)
 
   # remove non-used columns
