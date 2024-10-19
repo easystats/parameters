@@ -56,7 +56,6 @@ iris$cluster <- factor(rep(LETTERS[1:8], length.out = nrow(iris)))
 test_that("model_parameters, robust CR", {
   params <- model_parameters(
     model,
-    robust = TRUE,
     vcov = "CR1",
     vcov_args = list(cluster = iris$cluster),
     verbose = FALSE
@@ -130,7 +129,7 @@ test_that("ci_ml1, robust", {
   skip_if_not(packageVersion("parameters") < "0.16.9.9")
   skip_if_not_installed("lme4")
   model <- lme4::lmer(Petal.Length ~ Sepal.Length + (1 | Species), data = iris)
-  params <- ci_ml1(model, robust = TRUE, vcov_estimation = "CR", vcov_args = list(cluster = iris$Species))
+  params <- ci_ml1(model, vcov = "CR", vcov_args = list(cluster = iris$Species))
   robust_se <- unname(sqrt(diag(clubSandwich::vcovCR(model, type = "CR1", cluster = iris$Species))))
   upper_ci <- fixef(model) + qt(0.975, dof_ml1(model)) * robust_se
 })
