@@ -33,3 +33,30 @@ test_that("pretty_names", {
     )
   )
 })
+
+
+test_that("pretty_labels", {
+  set.seed(1024)
+  N <- 5000
+  X <- rbinom(N, 1, .5)
+  M <- sample(c("a", "b", "c"), N, replace = TRUE)
+  b <- runif(8, -1, 1)
+  Y <- rbinom(N, 1, prob = plogis(
+    b[1] + b[2] * X +
+    b[3] * (M == "b") + b[4] * (M == "b") + b[5] * (M == "c") +
+    b[6] * X * (M == "a") + b[7] * X + (M == "b") +
+    b[8] * X * (M == "c")
+  ))
+  dat <- data.frame(Y, X, M, stringsAsFactors = FALSE)
+  mod <- glm(Y ~ X * M, data = dat, family = binomial)
+
+  p <- parameters(mod)
+  expect_identical(
+    attr(p, "pretty_labels"),
+    c(
+      `(Intercept)` = "(Intercept)", X = "X", Mb = "M [b]", Mc = "M [c]",
+      `X:Mb` = "X × M [b]", `X:Mc` = "X × M [c]"
+    )
+  )
+  expect_snapshot(print(p))
+})

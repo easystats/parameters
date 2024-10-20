@@ -412,6 +412,9 @@ format_parameters.parameters_model <- function(model, ...) {
 
     # coefficient names (not labels)
     preds <- lapply(colnames(mf), function(i) {
+      if (is.character(mf[[i]])) {
+        mf[[i]] <- as.factor(mf[[i]])
+      }
       if (is.factor(mf[[i]])) {
         i <- paste0(i, levels(mf[[i]]))
       }
