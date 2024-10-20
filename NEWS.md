@@ -5,6 +5,11 @@
 * The `robust` argument, which was deprecated for a long time, is now no longer
   supported. Please use `vcov` and `vcov_args` instead.
 
+## Bug fixes
+
+* Fixed bug when extracting 'pretty labels' for model parameters, which could
+  fail when predictors were character vectors.
+
 # parameters 0.23.0
 
 ## Breaking Changes
