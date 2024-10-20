@@ -1,3 +1,10 @@
+# parameters 0.24.0
+
+## Breaking Changes
+
+* The `robust` argument, which was deprecated for a long time, is now no longer
+  supported. Please use `vcov` and `vcov_args` instead.
+
 # parameters 0.23.0
 
 ## Breaking Changes
