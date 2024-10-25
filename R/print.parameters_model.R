@@ -11,7 +11,7 @@
 #' @param select Determines which columns and and which layout columns are
 #' printed. There are three options for this argument:
 #'
-#' 1. Selecting columns by name or index
+#' * **Selecting columns by name or index**
 #'
 #'   `select` can be a character vector (or numeric index) of column names that
 #'   should be printed, where columns are extracted from the data frame returned
@@ -22,7 +22,7 @@
 #'   p-values, while `select = "short"` prints coefficients, standard errors and
 #'   p-values.
 #'
-#' 2. A string expression with layout pattern
+#' * **A string expression with layout pattern**
 #'
 #'   `select` is a string with "tokens" enclosed in braces. These tokens will be
 #'   replaced by their associated columns, where the selected columns will be
@@ -37,23 +37,23 @@
 #'   If `format = "html"`, a `<br>` inserts a line break inside a cell. See
 #'   'Examples'.
 #'
-#' 3. A string indicating a pre-defined layout
+#' *. **A string indicating a pre-defined layout**
 #'
 #'   `select` can be one of the following string values, to create one of the
 #'   following pre-defined column layouts:
 #'
-#'     - `"ci"`: Estimates and confidence intervals, no asterisks for p-values.
-#'       This is equivalent to `select = "{estimate} ({ci})"`.
-#'     - `"se"`: Estimates and standard errors, no asterisks for p-values. This is
-#'       equivalent to `select = "{estimate} ({se})"`.
-#'     - `"ci_p"`: Estimates, confidence intervals and asterisks for p-values. This
-#'       is equivalent to `select = "{estimate}{stars} ({ci})"`.
-#'     - `"se_p"`: Estimates, standard errors and asterisks for p-values. This is
-#'       equivalent to `select = "{estimate}{stars} ({se})"`..
-#'     - `"ci_p2"`: Estimates, confidence intervals and numeric p-values, in two
-#'       columns. This is equivalent to `select = "{estimate} ({ci})|{p}"`.
-#'     - `"se_p2"`: Estimate, standard errors and numeric p-values, in two columns.
-#'       This is equivalent to `select = "{estimate} ({se})|{p}"`.
+#'   - `"ci"`: Estimates and confidence intervals, no asterisks for p-values.
+#'     This is equivalent to `select = "{estimate} ({ci})"`.
+#'   - `"se"`: Estimates and standard errors, no asterisks for p-values. This is
+#'     equivalent to `select = "{estimate} ({se})"`.
+#'   - `"ci_p"`: Estimates, confidence intervals and asterisks for p-values. This
+#'     is equivalent to `select = "{estimate}{stars} ({ci})"`.
+#'   - `"se_p"`: Estimates, standard errors and asterisks for p-values. This is
+#'     equivalent to `select = "{estimate}{stars} ({se})"`..
+#'   - `"ci_p2"`: Estimates, confidence intervals and numeric p-values, in two
+#'     columns. This is equivalent to `select = "{estimate} ({ci})|{p}"`.
+#'   - `"se_p2"`: Estimate, standard errors and numeric p-values, in two columns.
+#'     This is equivalent to `select = "{estimate} ({se})|{p}"`.
 #'
 #' For `model_parameters()`, glue-like syntax is still experimental in the
 #' case of more complex models (like mixed models) and may not return expected
