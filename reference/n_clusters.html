@@ -198,18 +198,20 @@ as <code>method</code>).</p></dd>
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
 <dd><p>Arguments passed to or from other methods. For instance, when
 <code>bootstrap = TRUE</code>, arguments like <code>type</code> or <code>parallel</code> are passed down to
-<code><a href="bootstrap_model.html">bootstrap_model()</a></code>. Further non-documented arguments are <code>digits</code>,
-<code>p_digits</code>, <code>ci_digits</code> and <code>footer_digits</code> to set the number of digits for
-the output. If <code>s_value = TRUE</code>, the p-value will be replaced by the
-S-value in the output (cf. <em>Rafi and Greenland 2020</em>). <code>pd</code> adds an
-additional column with the <em>probability of direction</em> (see
-<code><a href="https://easystats.github.io/bayestestR/reference/p_direction.html" class="external-link">bayestestR::p_direction()</a></code> for details). <code>groups</code> can be used to group
-coefficients. It will be passed to the print-method, or can directly be
-used in <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code>, see documentation in <code><a href="print.parameters_model.html">print.parameters_model()</a></code>.
-Furthermore, see 'Examples' for this function. For developers, whose
-interest mainly is to get a "tidy" data frame of model summaries, it is
-recommended to set <code>pretty_names = FALSE</code> to speed up computation of the
-summary table.</p></dd>
+<code><a href="bootstrap_model.html">bootstrap_model()</a></code>.</p>
+<p>Further non-documented arguments are:</p><ul><li><p><code>digits</code>, <code>p_digits</code>, <code>ci_digits</code> and <code>footer_digits</code> to set the number of
+digits for the output. <code>groups</code> can be used to group coefficients. These
+arguments will be passed to the print-method, or can directly be used in
+<code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code>, see documentation in <code><a href="print.parameters_model.html">print.parameters_model()</a></code>.</p></li>
+<li><p>If <code>s_value = TRUE</code>, the p-value will be replaced by the S-value in the
+output (cf. <em>Rafi and Greenland 2020</em>).</p></li>
+<li><p><code>pd</code> adds an additional column with the <em>probability of direction</em> (see
+<code><a href="https://easystats.github.io/bayestestR/reference/p_direction.html" class="external-link">bayestestR::p_direction()</a></code> for details). urthermore, see 'Examples' for
+this function.</p></li>
+<li><p>For developers, whose interest mainly is to get a "tidy" data frame of
+model summaries, it is recommended to set <code>pretty_names = FALSE</code> to speed
+up computation of the summary table.</p></li>
+</ul></dd>
 
 
 <dt id="arg-clustering-function-gap-method">clustering_function, gap_method<a class="anchor" aria-label="anchor" href="#arg-clustering-function-gap-method"></a></dt>
