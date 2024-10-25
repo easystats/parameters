@@ -37,20 +37,22 @@
 #'
 #' @param model Statistical Model.
 #' @param ... Arguments passed to or from other methods. Non-documented
-#'   arguments are `digits`, `p_digits`, `ci_digits` and `footer_digits` to set
-#'   the number of digits for the output. If `s_value = TRUE`, the p-value will
-#'   be replaced by the S-value in the output (cf. _Rafi and Greenland 2020_).
-#'   `pd` adds an additional column with the _probability of direction_ (see
-#'   [`bayestestR::p_direction()`] for details). `groups` can be used to group
-#'   coefficients. It will be passed to the print-method, or can directly be used
-#'   in `print()`, see documentation in [`print.parameters_model()`]. Furthermore,
-#'   see 'Examples' in [`model_parameters.default()`]. For developers, whose
-#'   interest mainly is to get a "tidy" data frame of model summaries, it is
-#'   recommended to set `pretty_names = FALSE` to speed up computation of the
-#'   summary table.
+#' arguments are
+#' - `digits`, `p_digits`, `ci_digits` and `footer_digits` to set the number of
+#'   digits for the output. `groups` can be used to group coefficients. These
+#'   arguments will be passed to the print-method, or can directly be used in
+#'   `print()`, see documentation in [`print.parameters_model()`].
+#' - If `s_value = TRUE`, the p-value will be replaced by the S-value in the
+#'   output (cf. _Rafi and Greenland 2020_).
+#' - `pd` adds an additional column with the _probability of direction_ (see
+#'   [`bayestestR::p_direction()`] for details). Furthermore, see 'Examples' in
+#'   [`model_parameters.default()`].
+#' - For developers, whose interest mainly is to get a "tidy" data frame of
+#'   model summaries, it is recommended to set `pretty_names = FALSE` to speed
+#'   up computation of the summary table.
 #'
-#' @seealso [insight::standardize_names()] to
-#'   rename columns into a consistent, standardized naming scheme.
+#' @seealso [insight::standardize_names()] to rename columns into a consistent,
+#'   standardized naming scheme.
 #'
 #' @note The [`print()`][print.parameters_model] method has several
 #'   arguments to tweak the output. There is also a
@@ -491,18 +493,22 @@ parameters <- model_parameters
 #'   names.
 #' @param ... Arguments passed to or from other methods. For instance, when
 #'   `bootstrap = TRUE`, arguments like `type` or `parallel` are passed down to
-#'   `bootstrap_model()`. Further non-documented arguments are `digits`,
-#'   `p_digits`, `ci_digits` and `footer_digits` to set the number of digits for
-#'   the output. If `s_value = TRUE`, the p-value will be replaced by the
-#'   S-value in the output (cf. _Rafi and Greenland 2020_). `pd` adds an
-#'   additional column with the _probability of direction_ (see
-#'   [`bayestestR::p_direction()`] for details). `groups` can be used to group
-#'   coefficients. It will be passed to the print-method, or can directly be
-#'   used in `print()`, see documentation in [`print.parameters_model()`].
-#'   Furthermore, see 'Examples' for this function. For developers, whose
-#'   interest mainly is to get a "tidy" data frame of model summaries, it is
-#'   recommended to set `pretty_names = FALSE` to speed up computation of the
-#'   summary table.
+#'   `bootstrap_model()`.
+#'
+#' Further non-documented arguments are:
+#'
+#' - `digits`, `p_digits`, `ci_digits` and `footer_digits` to set the number of
+#'   digits for the output. `groups` can be used to group coefficients. These
+#'   arguments will be passed to the print-method, or can directly be used in
+#'   `print()`, see documentation in [`print.parameters_model()`].
+#' - If `s_value = TRUE`, the p-value will be replaced by the S-value in the
+#'   output (cf. _Rafi and Greenland 2020_).
+#' - `pd` adds an additional column with the _probability of direction_ (see
+#'   [`bayestestR::p_direction()`] for details). urthermore, see 'Examples' for
+#'   this function.
+#' - For developers, whose interest mainly is to get a "tidy" data frame of
+#'   model summaries, it is recommended to set `pretty_names = FALSE` to speed
+#'   up computation of the summary table.
 #' @param drop See `keep`.
 #' @param verbose Toggle warnings and messages.
 #' @inheritParams standard_error
