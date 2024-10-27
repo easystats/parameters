@@ -879,7 +879,7 @@ format.parameters_sem <- function(x,
         spurious_coefficients <- NULL
       }
     } else if (.is_valid_exponentiate_argument(exponentiate) && isTRUE(.additional_arguments(x, "log_response", FALSE))) { # nolint
-      msg <- c(
+      msg <- paste(
         "The model has a log-transformed response variable, and exponentiated parameters are reported.",
         "A one-unit increase in the predictor is associated with multiplying the outcome by that predictor's coefficient." # nolint
       )
