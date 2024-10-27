@@ -853,7 +853,7 @@ format.parameters_sem <- function(x,
         msg <- paste(msg, "Uncertainty intervals for random effect variances computed using a Wald z-distribution approximation.") # nolint
       }
 
-      insight::format_alert(msg)
+      insight::format_alert(insight::color_text(msg, "yellow"))
     }
   }
 }
