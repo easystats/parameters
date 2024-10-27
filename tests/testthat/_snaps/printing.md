@@ -347,7 +347,7 @@
       Uncertainty intervals (equal-tailed) and p-values (two-tailed) computed
         using a Wald t-distribution approximation.
 
-# message about interpretation of log-resoponse
+# no more message about interpretation of log-resoponse
 
     Code
       print(out)
@@ -360,8 +360,4 @@
       
       Uncertainty intervals (equal-tailed) and p-values (two-tailed) computed
         using a Wald t-distribution approximation.
-      
-      The model has a log-transformed response variable, and exponentiated
-        parameters are reported. A one-unit increase in the predictor is
-        associated with multiplying the outcome by that predictor's coefficient.
 
