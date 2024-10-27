@@ -880,7 +880,7 @@ format.parameters_sem <- function(x,
       }
     } else if (.is_valid_exponentiate_argument(exponentiate) && isTRUE(.additional_arguments(x, "log_response", FALSE))) { # nolint
       msg <- c(
-        "This model has a log-transformed response variable, and exponentiated parameters are reported.",
+        "The model has a log-transformed response variable, and exponentiated parameters are reported.",
         "A one-unit increase in the predictor is associated with multiplying the outcome by that predictor's coefficient." # nolint
       )
       # don't show warning about complete separation
@@ -894,9 +894,9 @@ format.parameters_sem <- function(x,
     # check for complete separation coefficients or possible issues with
     # too few data points
     if (!is.null(spurious_coefficients) && logit_model) {
-      if (any(spurious_coefficients > 100)) {
+      if (any(spurious_coefficients > 50)) {
         msg <- c(msg, "Some coefficients are very large, which may indicate issues with complete separation.") # nolint
-      } else if (any(spurious_coefficients > 25)) {
+      } else if (any(spurious_coefficients > 15)) {
         msg <- c(msg, "Some coefficients seem to be rather large, which may indicate issues with (quasi) complete separation. Consider using bias-corrected or penalized regression models.") # nolint
       }
     }
