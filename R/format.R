@@ -613,11 +613,6 @@ format.parameters_sem <- function(x,
     footer <- .add_footer_text(footer, footer_text, type, is_ggeffects)
   }
 
-  # add color code, if we have a footer
-  if (!is.null(footer) && type == "text") {
-    footer <- c(footer, "yellow")
-  }
-
   # if we have two trailing newlines, remove one
   if (identical(type, "text") && !is.null(footer) && endsWith(footer[1], "\n\n")) {
     footer[1] <- substr(footer[1], 0, nchar(x) - 1)
