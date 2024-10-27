@@ -615,7 +615,7 @@ format.parameters_sem <- function(x,
 
   # add color code, if we have a footer
   if (!is.null(footer) && type == "text") {
-    footer <- c(footer, "blue")
+    footer <- c(footer, "yellow")
   }
 
   # if we have two trailing newlines, remove one
