@@ -248,6 +248,12 @@ will replace the interaction mark (by default, \code{*}) with the related charac
 \item \code{parameters_select}: \verb{options(parameters_select = <value>)} will set the
 default for the \code{select} argument. See argument's documentation for available
 options.
+\item \code{easystats_table_width}: \verb{options(easystats_table_width = <value>)} will
+set the default width for tables in text-format, i.e. for most of the outputs
+printed to console. If not specified, tables will be adjusted to the current
+available width, e.g. of the of the console (or any other source for textual
+output, like markdown files). The argument \code{table_width} can also be used in
+most \code{print()} methods to specify the table width as desired.
 \item \code{easystats_html_engine}: \code{options(easystats_html_engine = "gt")} will set
 the default HTML engine for tables to \code{gt}, i.e. the \emph{gt} package is used to
 create HTML tables. If set to \code{tt}, the \emph{tinytable} package is used.

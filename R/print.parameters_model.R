@@ -147,6 +147,13 @@
 #' default for the `select` argument. See argument's documentation for available
 #' options.
 #'
+#' - `easystats_table_width`: `options(easystats_table_width = <value>)` will
+#' set the default width for tables in text-format, i.e. for most of the outputs
+#' printed to console. If not specified, tables will be adjusted to the current
+#' available width, e.g. of the of the console (or any other source for textual
+#' output, like markdown files). The argument `table_width` can also be used in
+#' most `print()` methods to specify the table width as desired.
+#'
 #' - `easystats_html_engine`: `options(easystats_html_engine = "gt")` will set
 #' the default HTML engine for tables to `gt`, i.e. the _gt_ package is used to
 #' create HTML tables. If set to `tt`, the _tinytable_ package is used.
