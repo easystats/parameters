@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.23.0.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.23.0.5</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -324,6 +324,12 @@ will replace the interaction mark (by default, <code>*</code>) with the related 
 <li><p><code>parameters_select</code>: <code>options(parameters_select = &lt;value&gt;)</code> will set the
 default for the <code>select</code> argument. See argument's documentation for available
 options.</p></li>
+<li><p><code>easystats_table_width</code>: <code>options(easystats_table_width = &lt;value&gt;)</code> will
+set the default width for tables in text-format, i.e. for most of the outputs
+printed to console. If not specified, tables will be adjusted to the current
+available width, e.g. of the of the console (or any other source for textual
+output, like markdown files). The argument <code>table_width</code> can also be used in
+most <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code> methods to specify the table width as desired.</p></li>
 <li><p><code>easystats_html_engine</code>: <code>options(easystats_html_engine = "gt")</code> will set
 the default HTML engine for tables to <code>gt</code>, i.e. the <em>gt</em> package is used to
 create HTML tables. If set to <code>tt</code>, the <em>tinytable</em> package is used.</p></li>

@@ -30,7 +30,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.23.0.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.23.0.5</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -131,11 +131,17 @@ feedback considered too <strong>critical</strong> and opportunity of
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">newmodel</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/reduce_parameters.html">reduce_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/model_parameters.html">parameters</a></span><span class="op">(</span><span class="va">newmodel</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Parameter                                                              | Coefficient |   SE |         95% CI | t(27) |      p</span></span>
-<span><span class="co">#&gt; -----------------------------------------------------------------------------------------------------------------------------</span></span>
-<span><span class="co">#&gt; (Intercept)                                                            |       64.63 | 1.57 | [61.41, 67.85] | 41.19 | &lt; .001</span></span>
-<span><span class="co">#&gt; raises 0 88/learning 0 82/complaints 0 78/privileges 0 70/advance 0 68 |        4.62 | 0.90 | [ 2.78,  6.46] |  5.16 | &lt; .001</span></span>
-<span><span class="co">#&gt; critical -0 80                                                         |        3.41 | 1.59 | [ 0.14,  6.67] |  2.14 | 0.041</span></span></code></pre></div>
+<span><span class="co">#&gt; Parameter                                                             </span></span>
+<span><span class="co">#&gt; ----------------------------------------------------------------------</span></span>
+<span><span class="co">#&gt; (Intercept)                                                           </span></span>
+<span><span class="co">#&gt; raises 0 88/learning 0 82/complaints 0 78/privileges 0 70/advance 0 68</span></span>
+<span><span class="co">#&gt; critical -0 80                                                        </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Coefficient |   SE |         95% CI | t(27) |      p</span></span>
+<span><span class="co">#&gt; ----------------------------------------------------</span></span>
+<span><span class="co">#&gt;       64.63 | 1.57 | [61.41, 67.85] | 41.19 | &lt; .001</span></span>
+<span><span class="co">#&gt;        4.62 | 0.90 | [ 2.78,  6.46] |  5.16 | &lt; .001</span></span>
+<span><span class="co">#&gt;        3.41 | 1.59 | [ 0.14,  6.67] |  2.14 | 0.041</span></span></code></pre></div>
 <p>This output <em>hints</em> at the fact that the model could be
 represented via <strong>two “latent” dimensions</strong>, one correlated
 with all the positive things that a company has to offer, and the other
@@ -161,12 +167,26 @@ means that the respective variables (<code>raises</code>,
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/reduce_parameters.html">reduce_parameters</a></span><span class="op">(</span><span class="va">model</span>, method <span class="op">=</span> <span class="st">"cMDS"</span><span class="op">)</span> <span class="op"><a href="https://nathaneastwood.github.io/poorman/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/model_parameters.html">parameters</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Parameter                                                 | Coefficient |   SE |         95% CI | t(26) |      p</span></span>
-<span><span class="co">#&gt; ----------------------------------------------------------------------------------------------------------------</span></span>
-<span><span class="co">#&gt; (Intercept)                                               |       64.63 | 1.41 | [61.73, 67.53] | 45.80 | &lt; .001</span></span>
-<span><span class="co">#&gt; raises 0 85/complaints 0 84/learning 0 83/privileges 0 74 |        0.43 | 0.07 | [ 0.28,  0.57] |  6.14 | &lt; .001</span></span>
-<span><span class="co">#&gt; advance -0 60                                             |        0.32 | 0.13 | [ 0.04,  0.59] |  2.36 | 0.026 </span></span>
-<span><span class="co">#&gt; critical -0 65                                            |       -0.24 | 0.15 | [-0.56,  0.07] | -1.61 | 0.120</span></span></code></pre></div>
+<span><span class="co">#&gt; Parameter                                                 | Coefficient |   SE</span></span>
+<span><span class="co">#&gt; ------------------------------------------------------------------------------</span></span>
+<span><span class="co">#&gt; (Intercept)                                               |       64.63 | 1.41</span></span>
+<span><span class="co">#&gt; raises 0 85/complaints 0 84/learning 0 83/privileges 0 74 |        0.43 | 0.07</span></span>
+<span><span class="co">#&gt; advance -0 60                                             |        0.32 | 0.13</span></span>
+<span><span class="co">#&gt; critical -0 65                                            |       -0.24 | 0.15</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Parameter                                                 |         95% CI</span></span>
+<span><span class="co">#&gt; --------------------------------------------------------------------------</span></span>
+<span><span class="co">#&gt; (Intercept)                                               | [61.73, 67.53]</span></span>
+<span><span class="co">#&gt; raises 0 85/complaints 0 84/learning 0 83/privileges 0 74 | [ 0.28,  0.57]</span></span>
+<span><span class="co">#&gt; advance -0 60                                             | [ 0.04,  0.59]</span></span>
+<span><span class="co">#&gt; critical -0 65                                            | [-0.56,  0.07]</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Parameter                                                 | t(26) |      p</span></span>
+<span><span class="co">#&gt; --------------------------------------------------------------------------</span></span>
+<span><span class="co">#&gt; (Intercept)                                               | 45.80 | &lt; .001</span></span>
+<span><span class="co">#&gt; raises 0 85/complaints 0 84/learning 0 83/privileges 0 74 |  6.14 | &lt; .001</span></span>
+<span><span class="co">#&gt; advance -0 60                                             |  2.36 | 0.026 </span></span>
+<span><span class="co">#&gt; critical -0 65                                            | -1.61 | 0.120</span></span></code></pre></div>
 <p>A different method (<strong>Classical Multidimensional Scaling -
 cMDS</strong>) suggests that negative critiques do not have a
 significant impact on the rating, and that the lack of opportunities of
