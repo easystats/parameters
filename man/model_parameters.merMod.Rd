@@ -307,7 +307,7 @@ arguments will be passed to the print-method, or can directly be used in
 \item If \code{s_value = TRUE}, the p-value will be replaced by the S-value in the
 output (cf. \emph{Rafi and Greenland 2020}).
 \item \code{pd} adds an additional column with the \emph{probability of direction} (see
-\code{\link[bayestestR:p_direction]{bayestestR::p_direction()}} for details). urthermore, see 'Examples' for
+\code{\link[bayestestR:p_direction]{bayestestR::p_direction()}} for details). Furthermore, see 'Examples' for
 this function.
 \item For developers, whose interest mainly is to get a "tidy" data frame of
 model summaries, it is recommended to set \code{pretty_names = FALSE} to speed
