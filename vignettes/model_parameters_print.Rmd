@@ -119,7 +119,9 @@ Redundant columns are removed. The related model component is shown as table hea
 
 ```{r eval=successfully_loaded["glmmTMB"]}
 mp <- model_parameters(model)
-print(mp, split_component = FALSE)
+# We use `table_width` here to print a wider table,
+# which is not split into multiple tables
+print(mp, split_component = FALSE, table_width = Inf)
 ```
 
 ## Adding model information

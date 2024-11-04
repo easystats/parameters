@@ -3,7 +3,7 @@ skip_if_not_installed("withr")
 skip_if(getRversion() < "4.0.0")
 
 withr::with_options(
-  list(parameters_interaction = "*"),
+  list(parameters_interaction = "*", easystats_table_width = Inf),
   {
     # Splitting model components ----
     test_that("print model with multiple components", {
@@ -111,12 +111,10 @@ withr::with_options(
 
 withr::with_options(
   list(parameters_warning_exponentiate = TRUE),
-  {
-    test_that("no more message about interpretation of log-resoponse", {
-      data(mtcars)
-      m <- lm(log(mpg) ~ gear, data = mtcars)
-      out <- model_parameters(m, exponentiate = TRUE)
-      expect_snapshot(print(out))
-    })
-  }
+  test_that("no more message about interpretation of log-resoponse", {
+    data(mtcars)
+    m <- lm(log(mpg) ~ gear, data = mtcars)
+    out <- model_parameters(m, exponentiate = TRUE)
+    expect_snapshot(print(out))
+  })
 )
