@@ -325,14 +325,16 @@ are shown.</p></dd>
 coefficients (and related confidence intervals). This is typical for
 logistic regression, or more generally speaking, for models with log or
 logit links. It is also recommended to use <code>exponentiate = TRUE</code> for models
-with log-transformed response values. <strong>Note:</strong> Delta-method standard
-errors are also computed (by multiplying the standard errors by the
-transformed coefficients). This is to mimic behaviour of other software
-packages, such as Stata, but these standard errors poorly estimate
-uncertainty for the transformed coefficient. The transformed confidence
-interval more clearly captures this uncertainty. For <code><a href="compare_parameters.html">compare_parameters()</a></code>,
-<code>exponentiate = "nongaussian"</code> will only exponentiate coefficients from
-non-Gaussian families.</p></dd>
+with log-transformed response values. For models with a log-transformed
+response variable, when <code>exponentiate = TRUE</code>, a one-unit increase in the
+predictor is associated with multiplying the outcome by that predictor's
+coefficient. <strong>Note:</strong> Delta-method standard errors are also computed (by
+multiplying the standard errors by the transformed coefficients). This is
+to mimic behaviour of other software packages, such as Stata, but these
+standard errors poorly estimate uncertainty for the transformed
+coefficient. The transformed confidence interval more clearly captures this
+uncertainty. For <code><a href="compare_parameters.html">compare_parameters()</a></code>, <code>exponentiate = "nongaussian"</code>
+will only exponentiate coefficients from non-Gaussian families.</p></dd>
 
 
 <dt id="arg-p-adjust">p_adjust<a class="anchor" aria-label="anchor" href="#arg-p-adjust"></a></dt>
@@ -657,10 +659,10 @@ rename columns into a consistent, standardized naming scheme.</p></div>
 <span class="r-out co"><span class="r-pr">#&gt;</span> SD (Intercept: gear) |        1.26 | 1.12 | [0.22, 7.17]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> SD (Residual)        |        2.91 | 0.39 | [2.24, 3.78]</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Uncertainty intervals (equal-tailed) and p-values (two-tailed) computed</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   using a Wald t-distribution approximation. Uncertainty intervals for</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   random effect variances computed using a Wald z-distribution</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   approximation.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">Uncertainty intervals (equal-tailed) and p-values (two-tailed)</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">  computed using a Wald t-distribution approximation. Uncertainty</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">  intervals for random effect variances computed using a Wald</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">  z-distribution approximation.</span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">Salamanders</span>, package <span class="op">=</span> <span class="st">"glmmTMB"</span><span class="op">)</span></span></span>
@@ -697,8 +699,8 @@ rename columns into a consistent, standardized naming scheme.</p></div>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -------------------------------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> SD (Intercept: site) |        0.33 | [0.18, 0.63]</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Uncertainty intervals (equal-tailed) and p-values (two-tailed) computed</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   using a Wald z-distribution approximation.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">Uncertainty intervals (equal-tailed) and p-values (two-tailed)</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">  computed using a Wald z-distribution approximation.</span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu">lme4</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html" class="external-link">lmer</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">wt</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">gear</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span>, bootstrap <span class="op">=</span> <span class="cn">TRUE</span>, iterations <span class="op">=</span> <span class="fl">50</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>

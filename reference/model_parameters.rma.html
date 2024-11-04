@@ -121,14 +121,16 @@ standardized parameters only works when <code>standardize="refit"</code>.</p></l
 coefficients (and related confidence intervals). This is typical for
 logistic regression, or more generally speaking, for models with log or
 logit links. It is also recommended to use <code>exponentiate = TRUE</code> for models
-with log-transformed response values. <strong>Note:</strong> Delta-method standard
-errors are also computed (by multiplying the standard errors by the
-transformed coefficients). This is to mimic behaviour of other software
-packages, such as Stata, but these standard errors poorly estimate
-uncertainty for the transformed coefficient. The transformed confidence
-interval more clearly captures this uncertainty. For <code><a href="compare_parameters.html">compare_parameters()</a></code>,
-<code>exponentiate = "nongaussian"</code> will only exponentiate coefficients from
-non-Gaussian families.</p></dd>
+with log-transformed response values. For models with a log-transformed
+response variable, when <code>exponentiate = TRUE</code>, a one-unit increase in the
+predictor is associated with multiplying the outcome by that predictor's
+coefficient. <strong>Note:</strong> Delta-method standard errors are also computed (by
+multiplying the standard errors by the transformed coefficients). This is
+to mimic behaviour of other software packages, such as Stata, but these
+standard errors poorly estimate uncertainty for the transformed
+coefficient. The transformed confidence interval more clearly captures this
+uncertainty. For <code><a href="compare_parameters.html">compare_parameters()</a></code>, <code>exponentiate = "nongaussian"</code>
+will only exponentiate coefficients from non-Gaussian families.</p></dd>
 
 
 <dt id="arg-include-studies">include_studies<a class="anchor" aria-label="anchor" href="#arg-include-studies"></a></dt>
@@ -219,8 +221,8 @@ up computation of the summary table.</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Study 4   |       -1.40 | 0.36 | [-2.10, -0.69] | -3.88 | &lt; .001 |   7.72</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Overall   |       -0.18 | 0.44 | [-1.05,  0.68] | -0.42 | 0.676  |       </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Uncertainty intervals (equal-tailed) and p-values (two-tailed) computed</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   using a Wald z-distribution approximation.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">Uncertainty intervals (equal-tailed) and p-values (two-tailed)</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">  computed using a Wald z-distribution approximation.</span></span>
 <span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="co"># with subgroups</span></span></span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://www.metafor-project.org" class="external-link">"metafor"</a></span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
@@ -263,8 +265,8 @@ up computation of the summary table.</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Comstock et al.2     |       -0.02 | 0.27 | [-0.54,  0.51] | -0.06 | 0.948  |  14.00</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Overall              |       -0.47 | 0.26 | [-0.97,  0.04] | -1.82 | 0.069  |       </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Uncertainty intervals (equal-tailed) and p-values (two-tailed) computed</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   using a Wald z-distribution approximation.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">Uncertainty intervals (equal-tailed) and p-values (two-tailed)</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">  computed using a Wald z-distribution approximation.</span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://github.com/danheck/metaBMA" class="external-link">"metaBMA"</a></span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">towels</span><span class="op">)</span></span></span>
@@ -308,8 +310,8 @@ up computation of the summary table.</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Overall   |   Student's t (0 +- 0.71) | Bayesian meta-analysis using 'metaBMA'</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> tau       | Inverse gamma (1 +- 0.15) | Bayesian meta-analysis using 'metaBMA'</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Uncertainty intervals (equal-tailed) and p-values (two-tailed) computed</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   using a MCMC distribution approximation.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">Uncertainty intervals (equal-tailed) and p-values (two-tailed)</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">  computed using a MCMC distribution approximation.</span></span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>

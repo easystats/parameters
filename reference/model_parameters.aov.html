@@ -245,8 +245,7 @@ covariates are mean-centred and factors are coded with orthogonal contrasts
 <span class="r-out co"><span class="r-pr">#&gt;</span> Sepal.Big |        1.10 |   1 |        1.10 | 1.61 | 0.207</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Residuals |      101.07 | 148 |        0.68 |      |      </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">Anova Table (Type 1 tests)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Anova Table (Type 1 tests)</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span>, es_type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"omega"</span>, <span class="st">"eta"</span><span class="op">)</span>, ci <span class="op">=</span> <span class="fl">0.9</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameter | Sum_Squares |  df | Mean_Square |    F |     p |   Omega2</span>
@@ -259,8 +258,7 @@ covariates are mean-centred and factors are coded with orthogonal contrasts
 <span class="r-out co"><span class="r-pr">#&gt;</span> Sepal.Big |  [0.00, 1.00] | 0.01 | [0.00, 1.00]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Residuals |               |      |             </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">Anova Table (Type 1 tests)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Anova Table (Type 1 tests)</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Sepal.Big</span>, data <span class="op">=</span> <span class="va">df</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span></span>
@@ -269,8 +267,7 @@ covariates are mean-centred and factors are coded with orthogonal contrasts
 <span class="r-out co"><span class="r-pr">#&gt;</span> Sepal.Big |        1.10 |   1 |        1.10 | 1.61 | 0.207</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Residuals |      101.07 | 148 |        0.68 |      |      </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">Anova Table (Type 1 tests)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Anova Table (Type 1 tests)</span>
 <span class="r-in"><span><span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>  <span class="va">model</span>,</span></span>
 <span class="r-in"><span>  es_type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"omega"</span>, <span class="st">"eta"</span>, <span class="st">"epsilon"</span><span class="op">)</span>,</span></span>
@@ -281,8 +278,7 @@ covariates are mean-centred and factors are coded with orthogonal contrasts
 <span class="r-out co"><span class="r-pr">#&gt;</span> Sepal.Big |        1.10 |   1 |        1.10 | 1.61 | 0.207 | 4.04e-03 | 0.01 | 4.07e-03</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Residuals |      101.07 | 148 |        0.68 |      |       |          |      |         </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">Anova Table (Type 1 tests)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Anova Table (Type 1 tests)</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/aov.html" class="external-link">aov</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Sepal.Big</span> <span class="op">+</span> <span class="fu">Error</span><span class="op">(</span><span class="va">Species</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">df</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span></span>
@@ -300,8 +296,7 @@ covariates are mean-centred and factors are coded with orthogonal contrasts
 <span class="r-out co"><span class="r-pr">#&gt;</span> Sepal.Big |        4.74 |   1 |        4.74 | 20.24 | &lt; .001</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Residuals |       34.21 | 146 |        0.23 |       |       </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">Anova Table (Type 1 tests)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Anova Table (Type 1 tests)</span>
 <span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="va">iris</span></span></span>
 <span class="r-in"><span><span class="va">df</span><span class="op">$</span><span class="va">Sepal.Big</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">Sepal.Width</span> <span class="op">&gt;=</span> <span class="fl">3</span>, <span class="st">"Yes"</span>, <span class="st">"No"</span><span class="op">)</span></span></span>
@@ -316,8 +311,7 @@ covariates are mean-centred and factors are coded with orthogonal contrasts
 <span class="r-out co"><span class="r-pr">#&gt;</span> Sepal.Big   |        1.10 |  1 |        1.10 |   4.96</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Petal.Width |       68.50 |  1 |       68.50 | 309.23</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">Anova Table (Type 1 tests)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Anova Table (Type 1 tests)</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># parameters table including effect sizes</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span></span></span>
@@ -331,8 +325,7 @@ covariates are mean-centred and factors are coded with orthogonal contrasts
 <span class="r-out co"><span class="r-pr">#&gt;</span> Sepal.Big   |        1.10 |  1 |        1.10 |   4.96 |           0.03 | [0.01, 1.00]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Petal.Width |       68.50 |  1 |       68.50 | 309.23 |           0.68 | [0.63, 1.00]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">Anova Table (Type 1 tests)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Anova Table (Type 1 tests)</span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>

@@ -140,14 +140,16 @@ highlighted values should be named <code>"emph"</code>, e.g
 coefficients (and related confidence intervals). This is typical for
 logistic regression, or more generally speaking, for models with log or
 logit links. It is also recommended to use <code>exponentiate = TRUE</code> for models
-with log-transformed response values. <strong>Note:</strong> Delta-method standard
-errors are also computed (by multiplying the standard errors by the
-transformed coefficients). This is to mimic behaviour of other software
-packages, such as Stata, but these standard errors poorly estimate
-uncertainty for the transformed coefficient. The transformed confidence
-interval more clearly captures this uncertainty. For <code><a href="compare_parameters.html">compare_parameters()</a></code>,
-<code>exponentiate = "nongaussian"</code> will only exponentiate coefficients from
-non-Gaussian families.</p></dd>
+with log-transformed response values. For models with a log-transformed
+response variable, when <code>exponentiate = TRUE</code>, a one-unit increase in the
+predictor is associated with multiplying the outcome by that predictor's
+coefficient. <strong>Note:</strong> Delta-method standard errors are also computed (by
+multiplying the standard errors by the transformed coefficients). This is
+to mimic behaviour of other software packages, such as Stata, but these
+standard errors poorly estimate uncertainty for the transformed
+coefficient. The transformed confidence interval more clearly captures this
+uncertainty. For <code><a href="compare_parameters.html">compare_parameters()</a></code>, <code>exponentiate = "nongaussian"</code>
+will only exponentiate coefficients from non-Gaussian families.</p></dd>
 
 
 <dt id="arg-effects">effects<a class="anchor" aria-label="anchor" href="#arg-effects"></a></dt>

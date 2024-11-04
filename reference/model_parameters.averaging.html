@@ -309,14 +309,16 @@ standardized parameters only works when <code>standardize="refit"</code>.</p></l
 coefficients (and related confidence intervals). This is typical for
 logistic regression, or more generally speaking, for models with log or
 logit links. It is also recommended to use <code>exponentiate = TRUE</code> for models
-with log-transformed response values. <strong>Note:</strong> Delta-method standard
-errors are also computed (by multiplying the standard errors by the
-transformed coefficients). This is to mimic behaviour of other software
-packages, such as Stata, but these standard errors poorly estimate
-uncertainty for the transformed coefficient. The transformed confidence
-interval more clearly captures this uncertainty. For <code><a href="compare_parameters.html">compare_parameters()</a></code>,
-<code>exponentiate = "nongaussian"</code> will only exponentiate coefficients from
-non-Gaussian families.</p></dd>
+with log-transformed response values. For models with a log-transformed
+response variable, when <code>exponentiate = TRUE</code>, a one-unit increase in the
+predictor is associated with multiplying the outcome by that predictor's
+coefficient. <strong>Note:</strong> Delta-method standard errors are also computed (by
+multiplying the standard errors by the transformed coefficients). This is
+to mimic behaviour of other software packages, such as Stata, but these
+standard errors poorly estimate uncertainty for the transformed
+coefficient. The transformed confidence interval more clearly captures this
+uncertainty. For <code><a href="compare_parameters.html">compare_parameters()</a></code>, <code>exponentiate = "nongaussian"</code>
+will only exponentiate coefficients from non-Gaussian families.</p></dd>
 
 
 <dt id="arg-p-adjust">p_adjust<a class="anchor" aria-label="anchor" href="#arg-p-adjust"></a></dt>
@@ -460,8 +462,8 @@ columns into a consistent, standardized naming scheme.</p></div>
 <span class="r-out co"><span class="r-pr">#&gt;</span> religion        |     0.01 | 0.17 | [-0.33, 0.35] |  0.07 | 0.945</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> gender [female] |    -0.16 | 0.28 | [-0.71, 0.39] | -0.57 | 0.566</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Uncertainty intervals (equal-tailed) and p-values (two-tailed) computed</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   using a Wald z-distribution approximation.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">Uncertainty intervals (equal-tailed) and p-values (two-tailed)</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">  computed using a Wald z-distribution approximation.</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> The model has a log- or logit-link. Consider using `exponentiate =</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   TRUE` to interpret coefficients as ratios.</span>
