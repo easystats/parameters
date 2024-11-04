@@ -2,7 +2,7 @@ skip_if_not_installed("withr")
 skip_if(getRversion() < "4.0.0")
 
 withr::with_options(
-  list(parameters_interaction = "*"),
+  list(parameters_interaction = "*", easystats_table_width = Inf),
   {
     lm1 <- lm(Sepal.Length ~ Species, data = iris)
     lm2 <- lm(Sepal.Length ~ Species + Petal.Length, data = iris)
@@ -66,7 +66,7 @@ withr::with_options(
             "Species [virginica]"
           ),
           Interactions = c(
-            "Species [versicolor] * Petal Length", # note the unicode char!
+            "Species [versicolor] * Petal Length",
             "Species [virginica] * Petal Length"
           ),
           Controls = "Petal Length"
@@ -79,7 +79,7 @@ withr::with_options(
             "Species [virginica]"
           ),
           Interactions = c(
-            "Species [versicolor] * Petal Length", # note the unicode char!
+            "Species [versicolor] * Petal Length",
             "Species [virginica] * Petal Length"
           ),
           Controls = "Petal Length"
@@ -109,6 +109,34 @@ withr::with_options(
 
       cp <- compare_parameters(m0, m1, m2, effects = "all", component = "all")
       expect_snapshot(print(cp))
+    })
+  }
+)
+
+
+withr::with_options(
+  list(parameters_interaction = "*"),
+  {
+    lm1 <- lm(Sepal.Length ~ Species + Petal.Length, data = iris)
+    lm2 <- lm(Sepal.Width ~ Species * Petal.Length, data = iris)
+
+    # remove intercept
+    out <- compare_parameters(lm1, lm2, drop = "^\\(Intercept")
+
+    test_that("templates, glue-3, separate columnns", {
+      expect_snapshot(
+        print(out, groups = list(
+          Species = c(
+            "Species [versicolor]",
+            "Species [virginica]"
+          ),
+          Interactions = c(
+            "Species [versicolor] * Petal Length",
+            "Species [virginica] * Petal Length"
+          ),
+          Controls = "Petal Length"
+        ), select = "{estimate}|{p}")
+      )
     })
   }
 )

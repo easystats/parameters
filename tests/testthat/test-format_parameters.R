@@ -2,7 +2,7 @@ skip_if_not_installed("splines")
 
 # make sure we have the correct interaction mark for tests
 withr::with_options(
-  list(parameters_interaction = "*"),
+  list(parameters_interaction = "*", easystats_table_width = Inf),
   {
     # define here because messes up the expected output
     bs <- splines::bs

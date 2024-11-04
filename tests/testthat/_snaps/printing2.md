@@ -141,6 +141,40 @@
       -------------------------------------------------------------------------------------------
         Observations                        |            150 |         |            150 |        
 
+---
+
+    Code
+      print(out, groups = list(Species = c("Species [versicolor]",
+        "Species [virginica]"), Interactions = c(
+        "Species [versicolor] * Petal Length", "Species [virginica] * Petal Length"),
+      Controls = "Petal Length"), select = "{estimate}|{p}")
+    Output
+      Parameter                             | Estimate (lm1) | p (lm1)
+      ----------------------------------------------------------------
+      Species                               |                |        
+        Species [versicolor]                |          -1.60 |  <0.001
+        Species [virginica]                 |          -2.12 |  <0.001
+      Interactions                          |                |        
+        Species [versicolor] * Petal Length |                |        
+        Species [virginica] * Petal Length  |                |        
+      Controls                              |                |        
+        Petal Length                        |           0.90 |  <0.001
+      ----------------------------------------------------------------
+        Observations                        |            150 |        
+      
+      Parameter                             | Estimate (lm2) | p (lm2)
+      ----------------------------------------------------------------
+      Species                               |                |        
+        Species [versicolor]                |          -1.69 |   0.003
+        Species [virginica]                 |          -1.19 |   0.048
+      Interactions                          |                |        
+        Species [versicolor] * Petal Length |          -0.01 |   0.961
+        Species [virginica] * Petal Length  |          -0.15 |   0.574
+      Controls                              |                |        
+        Petal Length                        |           0.39 |   0.138
+      ----------------------------------------------------------------
+        Observations                        |            150 |        
+
 # combination of different models
 
     Code

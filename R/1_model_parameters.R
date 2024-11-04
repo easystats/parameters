@@ -504,7 +504,7 @@ parameters <- model_parameters
 #' - If `s_value = TRUE`, the p-value will be replaced by the S-value in the
 #'   output (cf. _Rafi and Greenland 2020_).
 #' - `pd` adds an additional column with the _probability of direction_ (see
-#'   [`bayestestR::p_direction()`] for details). urthermore, see 'Examples' for
+#'   [`bayestestR::p_direction()`] for details). Furthermore, see 'Examples' for
 #'   this function.
 #' - For developers, whose interest mainly is to get a "tidy" data frame of
 #'   model summaries, it is recommended to set `pretty_names = FALSE` to speed

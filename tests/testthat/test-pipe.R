@@ -14,15 +14,20 @@ test_that("print in pipe", {
   )
 })
 
-test_that("print in pipe, on-the-fly factor", {
-  data(mtcars)
-  out <- capture.output({
-    mtcars |>
-      lm(mpg ~ cut(wt, c(0, 2.5, 3, 5)), data = _) |>
-      model_parameters(include_reference = TRUE)
+
+skip_if_not_installed("withr")
+withr::with_options(
+  list(easystats_table_width = Inf),
+  test_that("print in pipe, on-the-fly factor", {
+    data(mtcars)
+    out <- capture.output({
+      mtcars |>
+        lm(mpg ~ cut(wt, c(0, 2.5, 3, 5)), data = _) |>
+        model_parameters(include_reference = TRUE)
+    })
+    expect_identical(
+      out[4],
+      "cut(wt, c(0, 2.5, 3, 5)) [>0-2.5] |        0.00 |      |                 |       |       "
+    )
   })
-  expect_identical(
-    out[4],
-    "cut(wt, c(0, 2.5, 3, 5)) [>0-2.5] |        0.00 |      |                 |       |       "
-  )
-})
+)
