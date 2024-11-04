@@ -44,10 +44,10 @@
     Code
       print(out)
     Output
-      Parameter   | Log-Odds |    SE |         95% CI |     z |     p
-      ---------------------------------------------------------------
-      (Intercept) |   -70.25 | 88.29 | [    , -16.06] | -0.80 | 0.426
-      qsec        |     4.12 |  5.22 | [0.97,       ] |  0.79 | 0.430
+      Parameter   | Log-Odds |    SE |            95% CI |     z |     p
+      ------------------------------------------------------------------
+      (Intercept) |   -51.19 | 19.62 | [-105.21, -22.47] | -2.61 | 0.009
+      qsec        |     2.89 |  1.10 | [   1.28,   5.93] |  2.63 | 0.009
     Message
       
       Uncertainty intervals (profile-likelihood) and p-values (two-tailed)

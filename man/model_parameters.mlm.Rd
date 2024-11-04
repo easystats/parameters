@@ -114,14 +114,16 @@ standardized parameters only works when \code{standardize="refit"}.
 coefficients (and related confidence intervals). This is typical for
 logistic regression, or more generally speaking, for models with log or
 logit links. It is also recommended to use \code{exponentiate = TRUE} for models
-with log-transformed response values. \strong{Note:} Delta-method standard
-errors are also computed (by multiplying the standard errors by the
-transformed coefficients). This is to mimic behaviour of other software
-packages, such as Stata, but these standard errors poorly estimate
-uncertainty for the transformed coefficient. The transformed confidence
-interval more clearly captures this uncertainty. For \code{compare_parameters()},
-\code{exponentiate = "nongaussian"} will only exponentiate coefficients from
-non-Gaussian families.}
+with log-transformed response values. For models with a log-transformed
+response variable, when \code{exponentiate = TRUE}, a one-unit increase in the
+predictor is associated with multiplying the outcome by that predictor's
+coefficient. \strong{Note:} Delta-method standard errors are also computed (by
+multiplying the standard errors by the transformed coefficients). This is
+to mimic behaviour of other software packages, such as Stata, but these
+standard errors poorly estimate uncertainty for the transformed
+coefficient. The transformed confidence interval more clearly captures this
+uncertainty. For \code{compare_parameters()}, \code{exponentiate = "nongaussian"}
+will only exponentiate coefficients from non-Gaussian families.}
 
 \item{p_adjust}{Character vector, if not \code{NULL}, indicates the method to
 adjust p-values. See \code{\link[stats:p.adjust]{stats::p.adjust()}} for details. Further

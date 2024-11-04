@@ -111,7 +111,7 @@ withr::with_options(
 
 withr::with_options(
   list(parameters_warning_exponentiate = TRUE),
-  test_that("message about interpretation of log-resoponse", {
+  test_that("no more message about interpretation of log-resoponse", {
     data(mtcars)
     m <- lm(log(mpg) ~ gear, data = mtcars)
     out <- model_parameters(m, exponentiate = TRUE)

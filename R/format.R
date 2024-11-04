@@ -613,11 +613,6 @@ format.parameters_sem <- function(x,
     footer <- .add_footer_text(footer, footer_text, type, is_ggeffects)
   }
 
-  # add color code, if we have a footer
-  if (!is.null(footer) && type == "text") {
-    footer <- c(footer, "blue")
-  }
-
   # if we have two trailing newlines, remove one
   if (identical(type, "text") && !is.null(footer) && endsWith(footer[1], "\n\n")) {
     footer[1] <- substr(footer[1], 0, nchar(x) - 1)
@@ -853,7 +848,7 @@ format.parameters_sem <- function(x,
         msg <- paste(msg, "Uncertainty intervals for random effect variances computed using a Wald z-distribution approximation.") # nolint
       }
 
-      insight::format_alert(msg)
+      insight::format_alert(insight::color_text(msg, "yellow"))
     }
   }
 }
@@ -884,10 +879,6 @@ format.parameters_sem <- function(x,
         spurious_coefficients <- NULL
       }
     } else if (.is_valid_exponentiate_argument(exponentiate) && isTRUE(.additional_arguments(x, "log_response", FALSE))) { # nolint
-      msg <- c(
-        "This model has a log-transformed response variable, and exponentiated parameters are reported.",
-        "A one-unit increase in the predictor is associated with multiplying the outcome by that predictor's coefficient." # nolint
-      )
       # don't show warning about complete separation
       spurious_coefficients <- NULL
     }
@@ -899,9 +890,9 @@ format.parameters_sem <- function(x,
     # check for complete separation coefficients or possible issues with
     # too few data points
     if (!is.null(spurious_coefficients) && logit_model) {
-      if (any(spurious_coefficients > 100)) {
+      if (any(spurious_coefficients > 50)) {
         msg <- c(msg, "Some coefficients are very large, which may indicate issues with complete separation.") # nolint
-      } else if (any(spurious_coefficients > 25)) {
+      } else if (any(spurious_coefficients > 15)) {
         msg <- c(msg, "Some coefficients seem to be rather large, which may indicate issues with (quasi) complete separation. Consider using bias-corrected or penalized regression models.") # nolint
       }
     }

@@ -446,14 +446,16 @@ parameters <- model_parameters
 #'   coefficients (and related confidence intervals). This is typical for
 #'   logistic regression, or more generally speaking, for models with log or
 #'   logit links. It is also recommended to use `exponentiate = TRUE` for models
-#'   with log-transformed response values. **Note:** Delta-method standard
-#'   errors are also computed (by multiplying the standard errors by the
-#'   transformed coefficients). This is to mimic behaviour of other software
-#'   packages, such as Stata, but these standard errors poorly estimate
-#'   uncertainty for the transformed coefficient. The transformed confidence
-#'   interval more clearly captures this uncertainty. For `compare_parameters()`,
-#'   `exponentiate = "nongaussian"` will only exponentiate coefficients from
-#'   non-Gaussian families.
+#'   with log-transformed response values. For models with a log-transformed
+#'   response variable, when `exponentiate = TRUE`, a one-unit increase in the
+#'   predictor is associated with multiplying the outcome by that predictor's
+#'   coefficient. **Note:** Delta-method standard errors are also computed (by
+#'   multiplying the standard errors by the transformed coefficients). This is
+#'   to mimic behaviour of other software packages, such as Stata, but these
+#'   standard errors poorly estimate uncertainty for the transformed
+#'   coefficient. The transformed confidence interval more clearly captures this
+#'   uncertainty. For `compare_parameters()`, `exponentiate = "nongaussian"`
+#'   will only exponentiate coefficients from non-Gaussian families.
 #' @param p_adjust Character vector, if not `NULL`, indicates the method to
 #'   adjust p-values. See [`stats::p.adjust()`] for details. Further
 #'   possible adjustment methods are `"tukey"`, `"scheffe"`,
