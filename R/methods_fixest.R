@@ -73,13 +73,16 @@ standard_error.fixest <- function(model, vcov = NULL, vcov_args = NULL, ...) {
   params <- insight::get_parameters(model)
 
   if (is.null(vcov)) {
-    # most reliable is from "coeftable" element
+    # get standard errors from summary
+    stats <- summary(model)
+    SE <- as.vector(stats$se)
+    # sometimes, the correct SEs are in the `coeftable`. In this case,
+    # SE from summary have different length
     stats <- model$coeftable
-    SE <- .safe(as.vector(stats[, "Std. Error"]))
+    SE_ct <- .safe(as.vector(stats[, "Std. Error"]))
     # if this fails extract from summary
-    if (is.null(SE)) {
-      stats <- summary(model)
-      SE <- as.vector(stats$se)
+    if (!is.null(SE_ct) && length(SE_ct) < length(SE)) {
+      SE <- SE_ct
     }
   } else {
     # we don't want to wrap this in a tryCatch because the `fixest` error is
