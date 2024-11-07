@@ -73,8 +73,10 @@ standard_error.fixest <- function(model, vcov = NULL, vcov_args = NULL, ...) {
   params <- insight::get_parameters(model)
 
   if (is.null(vcov)) {
+    # get standard errors from summary
+    # see https://github.com/easystats/parameters/issues/1039
     stats <- summary(model)
-    SE <- as.vector(stats$se)
+    SE <- as.vector(stats$coeftable[, "Std. Error"])
   } else {
     # we don't want to wrap this in a tryCatch because the `fixest` error is
     # informative when `vcov` is wrong.
