@@ -118,6 +118,7 @@ test_that("robust standard errors", {
 
 
 test_that("standard errors, Sun and Abraham", {
+  skip_if_not_installed("did")
   data(mpdta, package = "did")
   m <- fixest::feols(
     lemp ~ sunab(first.treat, year, ref.p = -1:-4, att = TRUE) | countyreal + year,
