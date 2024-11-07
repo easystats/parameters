@@ -74,27 +74,14 @@ standard_error.fixest <- function(model, vcov = NULL, vcov_args = NULL, ...) {
 
   if (is.null(vcov)) {
     # get standard errors from summary
+    # see https://github.com/easystats/parameters/issues/1039
     stats <- summary(model)
-    SE <- as.vector(stats$se)
-    # sometimes, the correct SEs are in the `coeftable`. In this case,
-    # SE from summary have different length
-    if (length(SE) != nrow(params)) {
-      SE <- NULL
-      SE_ct <- .safe(as.vector(model$coeftable[, "Std. Error"]))
-      if (!is.null(SE_ct) && length(SE_ct) == nrow(params)) {
-        SE <- SE_ct
-      }
-    }
+    SE <- as.vector(stats$coeftable[, "Std. Error"])
   } else {
     # we don't want to wrap this in a tryCatch because the `fixest` error is
     # informative when `vcov` is wrong.
     V <- insight::get_varcov(model, vcov = vcov, vcov_args = vcov_args)
     SE <- sqrt(diag(V))
-  }
-
-  if (is.null(SE)) {
-    SE <- NA
-    insight::format_alert("Could not extract standard errors. Please file an issue at https://github.com/easystats/parameters/issues/")
   }
 
   .data_frame(
