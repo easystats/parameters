@@ -10,6 +10,9 @@
 * Fixed bug when extracting 'pretty labels' for model parameters, which could
   fail when predictors were character vectors.
 
+* Fixed bug with inaccurate standard errors for models from package *fixest*
+  that used the `sunab()` function in the formula.
+
 # parameters 0.23.0
 
 ## Breaking Changes

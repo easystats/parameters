@@ -115,3 +115,20 @@ test_that("robust standard errors", {
   expect_error(parameters(mod, vcov = "hetero"), NA)
   expect_error(parameters(mod, vcov = "iid"), NA)
 })
+
+
+test_that("standard errors, Sun and Abraham", {
+  data(mpdta, package = "did")
+  m <- fixest::feols(
+    lemp ~ sunab(first.treat, year, ref.p = -1:-4, att = TRUE) | countyreal + year,
+    data = mpdta,
+    cluster = ~countyreal
+  )
+  out <- model_parameters(m)
+  expect_equal(out$SE, m$coeftable[, "Std. Error"], tolerance = 1e-4, ignore_attr = TRUE)
+
+  data(base_stagg, package = "fixest")
+  m <- fixest::feols(y ~ x1 + sunab(year_treated, year) | id + year, base_stagg)
+  out <- model_parameters(m)
+  expect_equal(out$SE, m$coeftable[, "Std. Error"], tolerance = 1e-4, ignore_attr = TRUE)
+})
