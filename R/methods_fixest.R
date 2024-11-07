@@ -80,8 +80,7 @@ standard_error.fixest <- function(model, vcov = NULL, vcov_args = NULL, ...) {
     # SE from summary have different length
     if (length(SE) != nrow(params)) {
       SE <- NULL
-      stats <- model$coeftable
-      SE_ct <- .safe(as.vector(stats[, "Std. Error"]))
+      SE_ct <- .safe(as.vector(model$coeftable[, "Std. Error"]))
       if (!is.null(SE_ct) && length(SE_ct) == nrow(params)) {
         SE <- SE_ct
       }
