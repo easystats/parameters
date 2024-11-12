@@ -514,7 +514,7 @@
   # brms random intercepts or random slope variances
   ran_sd <- startsWith(out$Parameter, "sd_") & out$Effects == "random"
   if (any(ran_sd)) {
-    out$Parameter[ran_sd] <- gsub("^sd_(.*?)__(.*)", "SD \\(\\2\\)", out$Parameter[ran_sd], perl = TRUE)
+    out$Parameter[ran_sd] <- gsub("^sd_(.*?)__(.*)", "SD \\(\\2\\)", out$Parameter[ran_sd])
     if (has_component) {
       ran_zi_sd <- ran_sd & out$Component == "zero_inflated"
       if (any(ran_zi_sd)) {
@@ -525,7 +525,7 @@
   # brms random slope-intercepts correlation
   ran_cor <- startsWith(out$Parameter, "cor_") & out$Effects == "random"
   if (any(ran_cor)) {
-    out$Parameter[ran_cor] <- gsub("^cor_(.*?)__(.*)__(.*)", "Cor \\(\\2~\\3\\)", out$Parameter[ran_cor], perl = TRUE)
+    out$Parameter[ran_cor] <- gsub("^cor_(.*?)__(.*)__(.*)", "Cor \\(\\2~\\3\\)", out$Parameter[ran_cor])
     if (has_component) {
       ran_zi_cor <- ran_cor & out$Component == "zero_inflated"
       if (any(ran_zi_cor)) {
