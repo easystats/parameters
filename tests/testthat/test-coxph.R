@@ -62,3 +62,20 @@ test_that("model_parameters", {
   unloadNamespace("survey")
   unloadNamespace("survival")
 })
+
+
+skip_if_not_installed("withr")
+
+withr::with_package(
+  "survival",
+  test_that("model_parameters coxph-panel", {
+    set.seed(123)
+    # a time transform model
+    mod <- survival::coxph(
+      survival::Surv(time, status) ~ ph.ecog + tt(age),
+      data = lung,
+      tt = function(x, t, ...) pspline(x + t / 365.25)
+    )
+    expect_snapshot(print(model_parameters(mod)))
+  })
+)
