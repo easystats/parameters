@@ -312,6 +312,10 @@ model_parameters.Anova.mlm <- model_parameters.aov
 #' @export
 model_parameters.maov <- model_parameters.aov
 
+#' @export
+model_parameters.seqanova.svyglm <- model_parameters.aov
+
+
 
 # helper ------------------------------
 

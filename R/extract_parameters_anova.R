@@ -15,6 +15,8 @@
     parameters <- .extract_anova_aovlist(model)
   } else if (inherits(model, "anova.rms")) {
     parameters <- .extract_anova_aov_rms(model)
+  } else if (inherits(model, "seqanova.svyglm")) {
+    parameters <- .extract_anova_aov_svyglm(model)
   }
 
   # Rename
@@ -70,7 +72,7 @@
   # Reorder
   row.names(parameters) <- NULL
   col_order <- c(
-    "Response", "Group", "Parameter", "Coefficient", "SE", "Pillai", "AIC",
+    "Response", "Group", "Parameter", "Coefficient", "DEff", "SE", "Pillai", "AIC",
     "BIC", "Log_Likelihood", "Chi2", "Chi2_df", "RSS", "Sum_Squares",
     "Sum_Squares_Partial", "Sum_Squares_Error", "df", "Deviance", "Statistic",
     "df_num", "df_error", "Deviance_error", "Mean_Square", "F", "Rao", "p"
@@ -252,6 +254,23 @@
     out <- do.call(rbind, out)
   }
   out
+}
+
+
+# Anova.seqanova.svyglm -------------
+.extract_anova_aov_svyglm <- function(model) {
+  if (identical(attributes(model)$method, "Wald")) {
+    params <- lapply(model, function(x) {
+      data.frame(F = as.vector(x$Ftest), df = x$df, df_error = x$ddf, p = as.vector(x$p))
+    })
+  } else {
+    params <- lapply(model, function(x) {
+      data.frame(Chi2 = x$chisq, DEff = x$lambda, df = x$df, df_error = x$ddf, p = as.vector(x$p))
+    })
+  }
+
+  params <- do.call(rbind, params)
+  cbind(data.frame(Parameter = sapply(model, "[[", "test.terms"), params))
 }
 
 

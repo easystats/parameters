@@ -9,6 +9,8 @@
 
 * Added support for `coxph.panel` models.
 
+* Added support for `anova()` from models of the *survey* package.
+
 ## Bug fixes
 
 * Fixed bug when extracting 'pretty labels' for model parameters, which could
