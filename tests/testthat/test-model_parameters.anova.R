@@ -275,11 +275,11 @@ test_that("anova rms", {
 })
 
 skip_if_not_installed("withr")
+skip_if_not_installed("survey")
 
 withr::with_package(
   "survey",
   test_that("anova survey", {
-    skip_if_not_installed("survey")
     data(api, package = "survey")
     dclus2 <<- survey::svydesign(id =  ~dnum + snum, weights =  ~ pw, data = apiclus2)
     model0 <- survey::svyglm(
