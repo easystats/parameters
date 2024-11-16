@@ -273,3 +273,25 @@ test_that("anova rms", {
   expect_named(mp, c("Parameter", "Chi2", "df", "p"))
   expect_equal(mp$Chi2, data.frame(a)$Chi.Square, tolerance = 1e-3)
 })
+
+skip_if_not_installed("withr")
+
+withr::with_package(
+  "survey",
+  test_that("anova survey", {
+    skip_if_not_installed("survey")
+    data(api, package = "survey")
+    dclus2 <<- survey::svydesign(id =  ~dnum + snum, weights =  ~ pw, data = apiclus2)
+    model0 <- survey::svyglm(
+      I(sch.wide == "Yes") ~ ell * meals,
+      design = dclus2,
+      family = quasibinomial()
+    )
+
+    out <- anova(model0)
+    expect_snapshot(print(model_parameters(out)))
+
+    out <- anova(model0, method = "Wald")
+    expect_snapshot(print(model_parameters(out)))
+  })
+)
