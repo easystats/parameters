@@ -5,6 +5,10 @@
 * The `robust` argument, which was deprecated for a long time, is now no longer
   supported. Please use `vcov` and `vcov_args` instead.
 
+## Changes
+
+* Added support for `coxph.panel` models.
+
 ## Bug fixes
 
 * Fixed bug when extracting 'pretty labels' for model parameters, which could

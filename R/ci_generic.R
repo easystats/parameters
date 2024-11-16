@@ -3,12 +3,8 @@
                         ci = 0.95,
                         method = "wald",
                         dof = NULL,
-                        effects = c("fixed", "random", "all"),
-                        component = c(
-                          "all", "conditional", "zi", "zero_inflated",
-                          "dispersion", "precision", "scale",
-                          "smooth_terms", "full", "marginal"
-                        ),
+                        effects = "fixed",
+                        component = "all",
                         vcov = NULL,
                         vcov_args = NULL,
                         verbose = TRUE,
@@ -26,8 +22,14 @@
     )
   )
 
-  effects <- match.arg(effects)
-  component <- match.arg(component)
+  effects <- insight::validate_argument(effects, c("fixed", "random", "all"))
+  component <- insight::validate_argument(
+    component,
+    c(
+      "all", "conditional", "zi", "zero_inflated", "dispersion", "precision",
+      "scale", "smooth_terms", "full", "marginal"
+    )
+  )
 
   if (method == "ml1") { # nolint
     return(ci_ml1(model, ci = ci))
@@ -90,7 +92,7 @@
   }
 
   # check if all estimates are non-NA
-  params <- .check_rank_deficiency(params, verbose = FALSE)
+  params <- .check_rank_deficiency(model, params, verbose = FALSE)
   # for polr, we need to fix parameter names
   params$Parameter <- gsub("Intercept: ", "", params$Parameter, fixed = TRUE)
 
@@ -176,7 +178,9 @@
   if ("Effects" %in% names(params) && effects != "fixed") out$Effects <- params$Effects
   if ("Response" %in% names(params)) out$Response <- params$Response
 
-  if (anyNA(params$Estimate)) {
+  # for cox-panel models, we have non-linear parameters with NA coefficient,
+  # but test statistic and p-value - don't check for NA estimates in this case
+  if (anyNA(params$Estimate) && !inherits(model, "coxph.penal")) {
     out[stats::complete.cases(out), ]
   } else {
     out
