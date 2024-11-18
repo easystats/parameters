@@ -757,7 +757,6 @@ model_parameters.default <- function(model,
 #################### .glm ----------------------
 
 
-#' @rdname model_parameters.default
 #' @export
 model_parameters.glm <- function(model,
                                  ci = 0.95,

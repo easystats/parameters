@@ -41,7 +41,7 @@
 #' @param hclust_method The hierarchical clustering method (passed to [`hclust()`]).
 #' @param nbclust_method The clustering method (passed to `NbClust::NbClust()`
 #'   as `method`).
-#' @inheritParams model_parameters.glm
+#' @inheritParams model_parameters.default
 #'
 #'
 #'
