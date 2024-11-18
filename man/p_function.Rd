@@ -78,11 +78,19 @@ effects (\code{"random"}), or both (\code{"all"}) be returned? Only applies
 to mixed models. May be abbreviated. If the calculation of random effects
 parameters takes too long, you may use \code{effects = "fixed"}.}
 
-\item{component}{Should all parameters, parameters for the conditional model,
-for the zero-inflation part of the model, or the dispersion model be returned?
-Applies to models with zero-inflation and/or dispersion component. \code{component}
-may be one of \code{"conditional"}, \code{"zi"}, \code{"zero-inflated"}, \code{"dispersion"} or
-\code{"all"} (default). May be abbreviated.}
+\item{component}{Which type of parameters to return, such as parameters for the
+conditional model, the zero-inflation part of the model, the dispersion
+term, or other auxiliary parameters be returned? Applies to models with
+zero-inflation and/or dispersion formula, or if parameters such as \code{sigma}
+should be included. May be abbreviated. Note that the \emph{conditional}
+component is also called \emph{count} or \emph{mean} component, depending on the
+model. There are three convenient shortcuts: \code{component = "all"} returns
+all possible parameters. If \code{component = "location"}, location parameters
+such as \code{conditional}, \code{zero_inflated}, or \code{smooth_terms}, are returned
+(everything that are fixed or random effects - depending on the \code{effects}
+argument - but no auxiliary parameters). For \code{component = "distributional"}
+(or \code{"auxiliary"}), components like \code{sigma}, \code{dispersion}, or \code{beta}
+(and other auxiliary parameters) are returned.}
 
 \item{vcov}{Variance-covariance matrix used to compute uncertainty estimates
 (e.g., for robust standard errors). This argument accepts a covariance

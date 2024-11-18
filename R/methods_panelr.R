@@ -3,7 +3,6 @@
 # model parameters -------------------
 
 
-#' @inheritParams model_parameters.merMod
 #' @export
 model_parameters.wbm <- function(model,
                                  ci = 0.95,

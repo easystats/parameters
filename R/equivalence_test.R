@@ -20,7 +20,7 @@ bayestestR::equivalence_test
 #' for details.
 #' @param verbose Toggle warnings and messages.
 #' @param ... Arguments passed to or from other methods.
-#' @inheritParams model_parameters.merMod
+#' @inheritParams model_parameters.glmmTMB
 #' @inheritParams p_value
 #'
 #' @seealso For more details, see [bayestestR::equivalence_test()]. Further

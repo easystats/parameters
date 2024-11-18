@@ -63,7 +63,6 @@
 #'   model_parameters(model)
 #' }
 #' @return A data frame of indices related to the model's parameters.
-#' @inheritParams simulate_model
 #' @export
 model_parameters.zcpglm <- function(model,
                                     ci = 0.95,
@@ -255,7 +254,6 @@ standard_error.cpglm <- function(model, ...) {
 ########## .cpglmm ---------------
 
 
-#' @rdname model_parameters.merMod
 #' @export
 model_parameters.cpglmm <- function(model,
                                     ci = 0.95,
@@ -275,7 +273,7 @@ model_parameters.cpglmm <- function(model,
                                     ...) {
   # p-values, CI and se might be based on different df-methods
   ci_method <- .check_df_method(ci_method)
-  effects <- match.arg(effects, choices = c("fixed", "random", "all"))
+  effects <- insight::validate_argument(effects, c("fixed", "random", "all"))
 
   # standardize only works for fixed effects...
   if (!is.null(standardize) && standardize != "refit") {

@@ -13,7 +13,7 @@
 #'   `ci` or `ci_method` etc.
 #' @inheritParams model_parameters.default
 #' @inheritParams bootstrap_model
-#' @inheritParams model_parameters.merMod
+#' @inheritParams model_parameters.glmmTMB
 #'
 #' @note
 #' Models with multiple components, (for instance, models with zero-inflation,
