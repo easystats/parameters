@@ -2,7 +2,6 @@
 % Please edit documentation in R/methods_aov.R
 \name{model_parameters.aov}
 \alias{model_parameters.aov}
-\alias{model_parameters.afex_aov}
 \title{Parameters from ANOVAs}
 \usage{
 \method{model_parameters}{aov}(
@@ -17,17 +16,6 @@
   keep = NULL,
   drop = NULL,
   table_wide = FALSE,
-  verbose = TRUE,
-  ...
-)
-
-\method{model_parameters}{afex_aov}(
-  model,
-  es_type = NULL,
-  df_error = NULL,
-  type = NULL,
-  keep = NULL,
-  drop = NULL,
   verbose = TRUE,
   ...
 )

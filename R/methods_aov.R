@@ -247,7 +247,6 @@ model_parameters.aovlist <- model_parameters.aov
 
 # .afex_aov  ------
 
-#' @rdname model_parameters.aov
 #' @export
 model_parameters.afex_aov <- function(model,
                                       es_type = NULL,
