@@ -75,7 +75,10 @@ bootstrap_model.default <- function(model,
 
   insight::check_if_installed("boot")
 
-  type <- insight::validate_argument(type, c("ordinary", "parametric", "balanced", "permutation", "antithetic"))
+  type <- insight::validate_argument(
+    type,
+    c("ordinary", "parametric", "balanced", "permutation", "antithetic")
+  )
   parallel <- match.arg(parallel)
 
   model_data <- data <- insight::get_data(model, verbose = FALSE) # nolint
@@ -228,7 +231,10 @@ bootstrap_model.nestedLogit <- function(model,
                                         ...) {
   insight::check_if_installed("boot")
 
-  type <- insight::validate_argument(type, c("ordinary", "balanced", "permutation", "antithetic"))
+  type <- insight::validate_argument(
+    type,
+    c("ordinary", "balanced", "permutation", "antithetic")
+  )
   parallel <- match.arg(parallel)
 
   model_data <- data <- insight::get_data(model, verbose = FALSE) # nolint

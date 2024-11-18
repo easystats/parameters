@@ -6,14 +6,43 @@
 
 #################### .glimML ------
 
-
-#' @rdname model_parameters.averaging
+#' Parameters from special models
+#'
+#' Parameters from special regression models not listed under one of the previous categories yet.
+#'
+#' @param component Model component for which parameters should be shown. May be
+#'   one of `"conditional"`, `"precision"` (**betareg**),
+#'   `"scale"` (**ordinal**), `"extra"` (**glmx**),
+#'   `"marginal"` (**mfx**), `"conditional"` or `"full"` (for
+#'   `MuMIn::model.avg()`) or `"all"`.
+#' @param include_studies Logical, if `TRUE` (default), includes parameters
+#'   for all studies. Else, only parameters for overall-effects are shown.
+#' @inheritParams model_parameters.default
+#' @inheritParams model_parameters.stanreg
+#' @inheritParams simulate_model
+#'
+#' @seealso [insight::standardize_names()] to rename
+#'   columns into a consistent, standardized naming scheme.
+#'
+#' @examples
+#' library(parameters)
+#' if (require("brglm2", quietly = TRUE)) {
+#'   data("stemcell")
+#'   model <- bracl(
+#'     research ~ as.numeric(religion) + gender,
+#'     weights = frequency,
+#'     data = stemcell,
+#'     type = "ML"
+#'   )
+#'   model_parameters(model)
+#' }
+#' @return A data frame of indices related to the model's parameters.
 #' @export
 model_parameters.glimML <- function(model,
                                     ci = 0.95,
                                     bootstrap = FALSE,
                                     iterations = 1000,
-                                    component = c("conditional", "random", "dispersion", "all"),
+                                    component = "conditional",
                                     standardize = NULL,
                                     exponentiate = FALSE,
                                     p_adjust = NULL,
@@ -23,7 +52,10 @@ model_parameters.glimML <- function(model,
                                     drop = NULL,
                                     verbose = TRUE,
                                     ...) {
-  component <- match.arg(component)
+  component <- insight::validate_argument(
+    component,
+    c("conditional", "random", "dispersion", "all")
+  )
   if (component == "all") {
     merge_by <- c("Parameter", "Component")
   } else {

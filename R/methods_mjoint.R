@@ -1,17 +1,16 @@
-#' @rdname model_parameters.averaging
 #' @export
 model_parameters.mjoint <- function(model,
                                     ci = 0.95,
                                     effects = "fixed",
-                                    component = c("all", "conditional", "survival"),
+                                    component = "all",
                                     exponentiate = FALSE,
                                     p_adjust = NULL,
                                     keep = NULL,
                                     drop = NULL,
                                     verbose = TRUE,
                                     ...) {
-  effects <- match.arg(effects, choices = c("fixed", "random", "all"))
-  component <- match.arg(component)
+  effects <- insight::validate_argument(effects, c("fixed", "random", "all"))
+  component <- insight::validate_argument(component, c("all", "conditional", "survival"))
 
   params <- params_variance <- NULL
 

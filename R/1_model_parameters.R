@@ -28,7 +28,7 @@
 #'   **psych**, `sem`, ...
 #' - [Zero-inflated and hurdle][model_parameters.zcpglm()]: **cplm**, **mhurdle**,
 #'   **pscl**, ...
-#' - [Other models][model_parameters.averaging()]: **aod**, **bbmle**, **betareg**,
+#' - [Other models][model_parameters.glimML()]: **aod**, **bbmle**, **betareg**,
 #'   **emmeans**, **epiR**, **ggeffects**, **glmx**, **ivfixed**, **ivprobit**,
 #'   **JRM**, **lmodel2**, **logitsf**, **marginaleffects**, **margins**, **maxLik**,
 #'   **mediation**, **mfx**, **multcomp**, **mvord**, **plm**, **PMCMRplus**,

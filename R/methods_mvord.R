@@ -3,11 +3,10 @@
 #################### .mvord
 
 
-#' @rdname model_parameters.averaging
 #' @export
 model_parameters.mvord <- function(model,
                                    ci = 0.95,
-                                   component = c("all", "conditional", "thresholds", "correlation"),
+                                   component = "all",
                                    standardize = NULL,
                                    exponentiate = FALSE,
                                    p_adjust = NULL,
@@ -17,7 +16,7 @@ model_parameters.mvord <- function(model,
                                    drop = NULL,
                                    verbose = TRUE,
                                    ...) {
-  component <- match.arg(component)
+  component <- insight::validate_argument(component, c("all", "conditional", "thresholds", "correlation"))
 
   ## TODO remove deprecated later
   if (!missing(summary)) {

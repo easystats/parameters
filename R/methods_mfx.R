@@ -79,19 +79,18 @@ model_parameters.probitmfx <- model_parameters.poissonmfx
 model_parameters.negbinmfx <- model_parameters.poissonmfx
 
 
-#' @rdname model_parameters.averaging
 #' @export
 model_parameters.betaor <- function(model,
                                     ci = 0.95,
                                     bootstrap = FALSE,
                                     iterations = 1000,
-                                    component = c("conditional", "precision", "all"),
+                                    component = "conditional",
                                     standardize = NULL,
                                     exponentiate = FALSE,
                                     p_adjust = NULL,
                                     verbose = TRUE,
                                     ...) {
-  component <- match.arg(component)
+  component <- insight::validate_argument(component, c("conditional", "precision", "all"))
   model_parameters.betareg(
     model$fit,
     ci = ci,
@@ -106,13 +105,12 @@ model_parameters.betaor <- function(model,
 }
 
 
-#' @rdname model_parameters.averaging
 #' @export
 model_parameters.betamfx <- function(model,
                                      ci = 0.95,
                                      bootstrap = FALSE,
                                      iterations = 1000,
-                                     component = c("all", "conditional", "precision", "marginal"),
+                                     component = "all",
                                      standardize = NULL,
                                      exponentiate = FALSE,
                                      p_adjust = NULL,
@@ -120,7 +118,7 @@ model_parameters.betamfx <- function(model,
                                      drop = NULL,
                                      verbose = TRUE,
                                      ...) {
-  component <- match.arg(component)
+  component <- insight::validate_argument(component, c("all", "conditional", "precision", "marginal"))
   out <- .model_parameters_generic(
     model = model,
     ci = ci,

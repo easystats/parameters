@@ -1,10 +1,9 @@
-#' @rdname model_parameters.averaging
 #' @export
 model_parameters.glmx <- function(model,
                                   ci = 0.95,
                                   bootstrap = FALSE,
                                   iterations = 1000,
-                                  component = c("all", "conditional", "extra"),
+                                  component = "all",
                                   standardize = NULL,
                                   exponentiate = FALSE,
                                   p_adjust = NULL,
@@ -12,7 +11,7 @@ model_parameters.glmx <- function(model,
                                   drop = NULL,
                                   verbose = TRUE,
                                   ...) {
-  component <- match.arg(component)
+  component <- insight::validate_argument(component, c("all", "conditional", "extra"))
   if (component == "all") {
     merge_by <- c("Parameter", "Component")
   } else {

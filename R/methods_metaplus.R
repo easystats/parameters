@@ -4,7 +4,6 @@
 ###### .metaplus -------------------
 
 
-#' @rdname model_parameters.averaging
 #' @export
 model_parameters.metaplus <- function(model,
                                       ci = 0.95,
@@ -148,7 +147,6 @@ ci.metaplus <- function(x, ...) {
 ###### .meta_random -------------------
 
 
-#' @rdname model_parameters.averaging
 #' @export
 model_parameters.meta_random <- function(model,
                                          ci = 0.95,
@@ -307,7 +305,6 @@ ci.meta_fixed <- ci.meta_random
 ###### .meta_bma -------------------
 
 
-#' @rdname model_parameters.averaging
 #' @export
 model_parameters.meta_bma <- function(model,
                                       ci = 0.95,
@@ -318,7 +315,7 @@ model_parameters.meta_bma <- function(model,
                                       ...) {
   # process arguments
   params <- as.data.frame(model$estimates)
-  ci_method <- match.arg(ci_method, choices = c("hdi", "eti", "quantile"))
+  ci_method <- insight::validate_argument(ci_method, c("hdi", "eti", "quantile"))
 
   # parameters of studies included
   study_params <- model$meta$fixed$data

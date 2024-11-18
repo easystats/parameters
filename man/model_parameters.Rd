@@ -58,7 +58,7 @@ the model-specific documentation:
 \strong{psych}, \code{sem}, ...
 \item \link[=model_parameters.zcpglm]{Zero-inflated and hurdle}: \strong{cplm}, \strong{mhurdle},
 \strong{pscl}, ...
-\item \link[=model_parameters.averaging]{Other models}: \strong{aod}, \strong{bbmle}, \strong{betareg},
+\item \link[=model_parameters.glimML]{Other models}: \strong{aod}, \strong{bbmle}, \strong{betareg},
 \strong{emmeans}, \strong{epiR}, \strong{ggeffects}, \strong{glmx}, \strong{ivfixed}, \strong{ivprobit},
 \strong{JRM}, \strong{lmodel2}, \strong{logitsf}, \strong{marginaleffects}, \strong{margins}, \strong{maxLik},
 \strong{mediation}, \strong{mfx}, \strong{multcomp}, \strong{mvord}, \strong{plm}, \strong{PMCMRplus},

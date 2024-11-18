@@ -1,12 +1,11 @@
 ## TODO add ci_method later?
 
-#' @rdname model_parameters.averaging
 #' @export
 model_parameters.betareg <- function(model,
                                      ci = 0.95,
                                      bootstrap = FALSE,
                                      iterations = 1000,
-                                     component = c("conditional", "precision", "all"),
+                                     component = "conditional",
                                      standardize = NULL,
                                      exponentiate = FALSE,
                                      p_adjust = NULL,
@@ -30,7 +29,7 @@ model_parameters.betareg <- function(model,
     include_info <- summary
   }
 
-  component <- match.arg(component)
+  component <- insight::validate_argument(component, c("conditional", "precision", "all"))
   if (component == "all") {
     merge_by <- c("Parameter", "Component")
   } else {
