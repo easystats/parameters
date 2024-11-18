@@ -65,3 +65,13 @@ test_that("model_parameters", {
     tolerance = 1e-3
   )
 })
+
+skip_if_not_installed("car")
+skip_if_not_installed("clubSandwich")
+
+test_that("model_parameters, asym", {
+  data("teen_poverty", package = "panelr")
+  teen <- panelr::long_panel(teen_poverty, begin = 1, end = 5)
+  m4 <- panelr::asym(hours ~ lag(pov) + spouse, data = teen, use.wave = TRUE)
+  expect_snapshot(print(model_parameters(m4)))
+})
