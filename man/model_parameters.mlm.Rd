@@ -243,6 +243,7 @@ Some model classes also allow rather uncommon options. These are:
 \item \strong{betareg}, \strong{DirichletRegModel}: \code{"precision"}
 \item \strong{mvord}: \code{"thresholds"} and \code{"correlation"}
 \item \strong{clm2}: \code{"scale"}
+\item \strong{selection}: \code{"selection"}, \code{"outcome"}, and \code{"auxiliary"}
 }
 
 For models of class \code{brmsfit} (package \strong{brms}), \code{component}, even more
