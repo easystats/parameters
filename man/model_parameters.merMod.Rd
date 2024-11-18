@@ -154,7 +154,7 @@
   ci = 0.95,
   bootstrap = FALSE,
   iterations = 1000,
-  component = c("all", "conditional", "scale"),
+  component = "all",
   standardize = NULL,
   exponentiate = FALSE,
   p_adjust = NULL,

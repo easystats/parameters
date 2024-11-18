@@ -1,10 +1,9 @@
-#' @rdname model_parameters.mlm
 #' @export
 model_parameters.DirichletRegModel <- function(model,
                                                ci = 0.95,
                                                bootstrap = FALSE,
                                                iterations = 1000,
-                                               component = c("all", "conditional", "precision"),
+                                               component = "all",
                                                standardize = NULL,
                                                exponentiate = FALSE,
                                                p_adjust = NULL,
@@ -12,7 +11,7 @@ model_parameters.DirichletRegModel <- function(model,
                                                drop = NULL,
                                                verbose = TRUE,
                                                ...) {
-  component <- match.arg(component)
+  component <- insight::validate_argument(component, c("all", "conditional", "precision"))
   if (component == "all") {
     merge_by <- c("Parameter", "Component", "Response")
   } else {
