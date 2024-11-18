@@ -18,6 +18,43 @@
 #' @seealso [insight::standardize_names()] to rename
 #'   columns into a consistent, standardized naming scheme.
 #'
+#' @section Model components:
+#' Possible values for the `component` argument depend on the model class.
+#' Following are valid options:
+#' - `"all"`: returns all model components, applies to all models, but will only
+#'   have an effect for models with more than just the conditional model component.
+#' - `"conditional"`: only returns the conditional component, i.e. "fixed effects"
+#'   terms from the model. Will only have an effect for models with more than
+#'   just the conditional model component.
+#' - `"smooth_terms"`: returns smooth terms, only applies to GAMs (or similar
+#'   models that may contain smooth terms).
+#' - `"zero_inflated"` (or `"zi"`): returns the zero-inflation component.
+#' - `"dispersion"`: returns the dispersion model component. This is common
+#'   for models with zero-inflation or that can model the dispersion parameter.
+#' - `"instruments"`: for instrumental-variable or some fixed effects regression,
+#'   returns the instruments.
+#' - `"nonlinear"`: for non-linear models (like models of class `nlmerMod` or
+#'   `nls`), returns staring estimates for the nonlinear parameters.
+#' - `"correlation"`: for models with correlation-component, like `gls`, the
+#'   variables used to describe the correlation structure are returned.
+#'
+#' **Special models**
+#'
+#' Some model classes also allow rather uncommon options. These are:
+#' - **mhurdle**: `"infrequent_purchase"`, `"ip"`, and `"auxiliary"`
+#' - **BGGM**: `"correlation"` and `"intercept"`
+#' - **BFBayesFactor**, **glmx**: `"extra"`
+#' - **averaging**:`"conditional"` and `"full"`
+#' - **mjoint**: `"survival"`
+#' - **mfx**: `"precision"`, `"marginal"`
+#' - **betareg**, **DirichletRegModel**: `"precision"`
+#' - **mvord**: `"thresholds"` and `"correlation"`
+#' - **clm2**: `"scale"`
+#'
+#' For models of class `brmsfit` (package **brms**), `component`, even more
+#' options are possible for the `component` argument, which are not all
+#' documented in detail here.
+#'
 #' @examples
 #' library(parameters)
 #' if (require("pscl")) {
@@ -32,7 +69,7 @@ model_parameters.zcpglm <- function(model,
                                     ci = 0.95,
                                     bootstrap = FALSE,
                                     iterations = 1000,
-                                    component = c("all", "conditional", "zi", "zero_inflated"),
+                                    component = "all",
                                     standardize = NULL,
                                     exponentiate = FALSE,
                                     p_adjust = NULL,
@@ -42,7 +79,7 @@ model_parameters.zcpglm <- function(model,
                                     drop = NULL,
                                     verbose = TRUE,
                                     ...) {
-  component <- match.arg(component)
+  component <- insight::validate_argument(component, c("all", "conditional", "zi", "zero_inflated"))
 
   # fix argument, if model has no zi-part
   if (!insight::model_info(model, verbose = FALSE)$is_zero_inflated && component != "conditional") {
