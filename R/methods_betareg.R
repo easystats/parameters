@@ -116,10 +116,9 @@ standard_error.betareg <- function(model,
 }
 
 
-#' @rdname p_value.DirichletRegModel
 #' @export
 p_value.betareg <- function(model,
-                            component = c("all", "conditional", "precision"),
+                            component = "all",
                             verbose = TRUE,
                             ...) {
   # validation check, warn if unsupported argument is used.
@@ -131,7 +130,10 @@ p_value.betareg <- function(model,
     verbose = verbose
   )
 
-  component <- match.arg(component)
+  component <- insight::validate_argument(
+    component,
+    c("all", "conditional", "precision")
+  )
 
   params <- insight::get_parameters(model)
   cs <- do.call(rbind, stats::coef(summary(model)))

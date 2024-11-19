@@ -106,10 +106,12 @@ standard_error.clmm2 <- standard_error.clm2
 # p values ----------------
 
 
-#' @rdname p_value.DirichletRegModel
 #' @export
-p_value.clm2 <- function(model, component = c("all", "conditional", "scale"), ...) {
-  component <- match.arg(component)
+p_value.clm2 <- function(model, component = "all", ...) {
+  component <- insight::validate_argument(
+    component,
+    c("all", "conditional", "scale")
+  )
 
   params <- insight::get_parameters(model)
   cs <- stats::coef(summary(model))
@@ -136,11 +138,11 @@ p_value.clmm2 <- p_value.clm2
 
 
 #' @export
-simulate_model.clm2 <- function(model,
-                                iterations = 1000,
-                                component = c("all", "conditional", "scale"),
-                                ...) {
-  component <- match.arg(component)
+simulate_model.clm2 <- function(model, iterations = 1000, component = "all", ...) {
+  component <- insight::validate_argument(
+    component,
+    c("all", "conditional", "scale")
+  )
   out <- .simulate_model(model, iterations, component = component, ...)
 
   class(out) <- c("parameters_simulate_model", class(out))

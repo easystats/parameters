@@ -5,7 +5,7 @@
 #' @export
 model_parameters.averaging <- function(model,
                                        ci = 0.95,
-                                       component = c("conditional", "full"),
+                                       component = "conditional",
                                        exponentiate = FALSE,
                                        p_adjust = NULL,
                                        summary = getOption("parameters_summary", FALSE),
@@ -14,7 +14,7 @@ model_parameters.averaging <- function(model,
                                        drop = NULL,
                                        verbose = TRUE,
                                        ...) {
-  component <- match.arg(component)
+  component <- insight::validate_argument(component, c("conditional", "full"))
 
   ## TODO remove deprecated later
   if (!missing(summary)) {
@@ -42,7 +42,7 @@ model_parameters.averaging <- function(model,
 
 #' @export
 standard_error.averaging <- function(model, component = "conditional", ...) {
-  component <- match.arg(component, choices = c("conditional", "full"))
+  component <- insight::validate_argument(component, c("conditional", "full"))
   params <- insight::get_parameters(model, component = component)
   if (component == "full") {
     s <- summary(model)$coefmat.full
@@ -56,10 +56,9 @@ standard_error.averaging <- function(model, component = "conditional", ...) {
 }
 
 
-#' @rdname p_value.DirichletRegModel
 #' @export
-p_value.averaging <- function(model, component = c("conditional", "full"), ...) {
-  component <- match.arg(component)
+p_value.averaging <- function(model, component = "conditional", ...) {
+  component <- insight::validate_argument(component, c("conditional", "full"))
   params <- insight::get_parameters(model, component = component)
   if (component == "full") {
     s <- summary(model)$coefmat.full
@@ -75,7 +74,7 @@ p_value.averaging <- function(model, component = c("conditional", "full"), ...) 
 
 
 #' @export
-ci.averaging <- function(x, ci = 0.95, component = c("conditional", "full"), ...) {
-  component <- match.arg(component)
+ci.averaging <- function(x, ci = 0.95, component = "conditional", ...) {
+  component <- insight::validate_argument(component, c("conditional", "full"))
   .ci_generic(model = x, ci = ci, dof = Inf, component = component)
 }

@@ -365,7 +365,10 @@ model_parameters.seqanova.svyglm <- model_parameters.aov
 .anova_alternative <- function(params, alternative) {
   alternative_footer <- NULL
   if (!is.null(alternative)) {
-    alternative <- match.arg(tolower(alternative), choices = c("two.sided", "greater", "less"))
+    alternative <- insight::validate_argument(
+      tolower(alternative),
+      c("two.sided", "greater", "less")
+    )
     if (alternative != "two.sided") {
       ci_low <- which(endsWith(colnames(params), "CI_low"))
       ci_high <- which(endsWith(colnames(params), "CI_high"))

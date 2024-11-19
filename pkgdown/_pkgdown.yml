@@ -48,7 +48,6 @@ reference:
       - p_value.BFBayesFactor
       - p_value.zeroinfl
       - p_value.poissonmfx
-      - p_value.DirichletRegModel
       - degrees_of_freedom
       - n_parameters
   - subtitle: "Approximation Methods"
