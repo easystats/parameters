@@ -3,7 +3,7 @@
 #'
 #' @description
 #' Model parameters from Bayesian models. This function internally calls
-#' [`bayestestR::describe_posterior()`] to get the relvant information for
+#' [`bayestestR::describe_posterior()`] to get the relevant information for
 #' the output.
 #'
 #' @param model Bayesian model (including SEM from **blavaan**. May also be

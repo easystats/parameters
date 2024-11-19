@@ -281,7 +281,7 @@ withr::with_package(
   "survey",
   test_that("anova survey", {
     data(api, package = "survey")
-    dclus2 <<- survey::svydesign(id =  ~dnum + snum, weights =  ~ pw, data = apiclus2)
+    dclus2 <<- survey::svydesign(id = ~ dnum + snum, weights = ~pw, data = apiclus2)
     model0 <- survey::svyglm(
       I(sch.wide == "Yes") ~ ell * meals,
       design = dclus2,
