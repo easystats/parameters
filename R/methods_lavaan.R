@@ -8,7 +8,7 @@
 model_parameters.lavaan <- function(model,
                                     ci = 0.95,
                                     standardize = FALSE,
-                                    component = "regression",
+                                    component = c("regression", "correlation", "loading", "defined"),
                                     keep = NULL,
                                     drop = NULL,
                                     verbose = TRUE,
