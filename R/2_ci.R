@@ -79,6 +79,7 @@ ci.default <- function(x,
     component = component,
     vcov = vcov,
     vcov_args = vcov_args,
+    verbose = verbose,
   ...)
 }
 
