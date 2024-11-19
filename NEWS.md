@@ -11,6 +11,9 @@
 
 * Added support for `anova()` from models of the *survey* package.
 
+* Documentation was re-organized and clarified, and the index reduced by removing
+  redundanct class-documentation.
+
 ## Bug fixes
 
 * Fixed bug when extracting 'pretty labels' for model parameters, which could

@@ -296,7 +296,6 @@ standard_error.merMod <- function(model,
 }
 
 
-
 se_mixed_default <- function(model) {
   params <- insight::find_parameters(model,
     effects = "fixed",
@@ -305,8 +304,6 @@ se_mixed_default <- function(model) {
   )
   .data_frame(Parameter = params, SE = .get_se_from_summary(model))
 }
-
-
 
 
 #' @export
