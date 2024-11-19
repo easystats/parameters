@@ -20,7 +20,7 @@
 #'   [`model_parameters()`] for further details.
 #' @param component Model component for which parameters should be shown. See
 #'   the documentation for your object's class in [`model_parameters()`] or
-#'   [`p_value()`] for further details.
+#'   [`p_value()`] for further details, or see section _Model components_.
 #' @param iterations The number of bootstrap replicates. Only applies to models
 #'   of class `merMod` when `method=boot`.
 #' @param verbose Toggle warnings and messages.
@@ -28,10 +28,13 @@
 #' E.g., arguments like `vcov` or `vcov_args` can be used to compute confidence
 #' intervals using a specific variance-covariance matrix for the standard
 #' errors.
+#' @inheritParams standard_error
 #'
 #' @return A data frame containing the CI bounds.
 #'
 #' @inheritSection model_parameters Confidence intervals and approximation of degrees of freedom
+#'
+#' @inheritSection model_parameters.zcpglm Model components
 #'
 #' @examplesIf require("glmmTMB") && requireNamespace("sandwich")
 #' data(qol_cancer)
@@ -57,7 +60,15 @@
 #' ci(model, component = "zi")
 #' }
 #' @export
-ci.default <- function(x, ci = 0.95, dof = NULL, method = NULL, ...) {
+ci.default <- function(x,
+                       ci = 0.95,
+                       dof = NULL,
+                       method = NULL,
+                       component = "all",
+                       vcov = NULL,
+                       vcov_args = NULL,
+                       verbose = TRUE,
+                       ...) {
   # check for valid input
   .is_model_valid(x)
   .ci_generic(model = x, ci = ci, dof = dof, method = method, ...)
@@ -73,7 +84,10 @@ ci.glm <- function(x,
                    vcov_args = NULL,
                    verbose = TRUE,
                    ...) {
-  method <- insight::validate_argument(method, c("profile", "wald", "normal", "residual"))
+  method <- insight::validate_argument(
+    method,
+    c("profile", "wald", "normal", "residual")
+  )
 
   # No robust vcov for profile method
   if (method == "profile") {

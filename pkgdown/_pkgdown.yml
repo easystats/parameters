@@ -43,11 +43,7 @@ reference:
     contents:
       - standard_error
       - ci.default
-      - ci.glmmTMB
       - p_value
-      - p_value.BFBayesFactor
-      - p_value.zeroinfl
-      - p_value.poissonmfx
       - degrees_of_freedom
       - n_parameters
   - subtitle: "Approximation Methods"

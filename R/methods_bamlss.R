@@ -1,4 +1,3 @@
-#' @inheritParams insight::get_parameters
 #' @export
 model_parameters.bamlss <- function(model,
                                     centrality = "median",

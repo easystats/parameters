@@ -2,10 +2,7 @@
 #' @name p_value
 #'
 #' @description This function attempts to return, or compute, p-values of a model's
-#' parameters. See the documentation for your object's class:
-#' - [Bayesian models][p_value.BFBayesFactor] (**rstanarm**, **brms**, **MCMCglmm**, ...)
-#' - [Zero-inflated models][p_value.zeroinfl] (`hurdle`, `zeroinfl`, `zerocount`, ...)
-#' - [Marginal effects models][p_value.poissonmfx] (**mfx**)
+#' parameters.
 #'
 #' @param model A statistical model.
 #' @param adjust Character value naming the method used to adjust p-values or
@@ -18,14 +15,27 @@
 #'
 #' @inheritSection model_parameters.zcpglm Model components
 #'
+#' @details
+#' For Bayesian models, the p-values corresponds to the *probability of
+#' direction* ([`bayestestR::p_direction()`]), which is converted to a p-value
+#' using `bayestestR::convert_pd_to_p()`.
+#'
 #' @return A data frame with at least two columns: the parameter names and the
 #'   p-values. Depending on the model, may also include columns for model
 #'   components etc.
 #'
-#' @examples
+#' @examplesIf require("pscl", quietly = TRUE)
 #' data(iris)
 #' model <- lm(Petal.Length ~ Sepal.Length + Species, data = iris)
 #' p_value(model)
+#'
+#' data("bioChemists", package = "pscl")
+#' model <- pscl::zeroinfl(
+#'   art ~ fem + mar + kid5 | kid5 + phd,
+#'   data = bioChemists
+#' )
+#' p_value(model)
+#' p_value(model, component = "zi")
 #' @export
 p_value <- function(model, ...) {
   UseMethod("p_value")

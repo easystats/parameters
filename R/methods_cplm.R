@@ -56,13 +56,13 @@
 #' possible for the `component` argument, which are not all documented in detail
 #' here.
 #'
-#' @examples
-#' library(parameters)
-#' if (require("pscl")) {
-#'   data("bioChemists")
-#'   model <- zeroinfl(art ~ fem + mar + kid5 + ment | kid5 + phd, data = bioChemists)
-#'   model_parameters(model)
-#' }
+#' @examplesIf require("pscl")
+#' data("bioChemists", package = "pscl")
+#' model <- pscl::zeroinfl(
+#'   art ~ fem + mar + kid5 + ment | kid5 + phd,
+#'   data = bioChemists
+#' )
+#' model_parameters(model)
 #' @return A data frame of indices related to the model's parameters.
 #' @export
 model_parameters.zcpglm <- function(model,
@@ -130,12 +130,13 @@ model_parameters.zcpglm <- function(model,
 
 
 #' @export
-standard_error.zcpglm <- function(model,
-                                  component = c("all", "conditional", "zi", "zero_inflated"),
-                                  ...) {
+standard_error.zcpglm <- function(model, component = "all", ...) {
   insight::check_if_installed("cplm")
 
-  component <- match.arg(component)
+  component <- insight::validate_argument(
+    component,
+    c("all", "conditional", "zi", "zero_inflated")
+  )
   junk <- utils::capture.output(stats <- cplm::summary(model)$coefficients) # nolint
   params <- insight::get_parameters(model)
 
@@ -156,34 +157,14 @@ standard_error.zcpglm <- function(model,
 }
 
 
-#' p-values for Models with Zero-Inflation
-#'
-#' This function attempts to return, or compute, p-values of hurdle and
-#' zero-inflated models.
-#'
-#' @param model A statistical model.
-#' @inheritParams p_value
-#' @inheritParams simulate_model
-#' @inheritParams standard_error
-#'
-#' @return
-#' A data frame with at least two columns: the parameter names and the p-values.
-#' Depending on the model, may also include columns for model components etc.
-#'
-#' @examples
-#' if (require("pscl", quietly = TRUE)) {
-#'   data("bioChemists")
-#'   model <- zeroinfl(art ~ fem + mar + kid5 | kid5 + phd, data = bioChemists)
-#'   p_value(model)
-#'   p_value(model, component = "zi")
-#' }
 #' @export
-p_value.zcpglm <- function(model,
-                           component = c("all", "conditional", "zi", "zero_inflated"),
-                           ...) {
+p_value.zcpglm <- function(model, component = "all", ...) {
   insight::check_if_installed("cplm")
 
-  component <- match.arg(component)
+  component <- insight::validate_argument(
+    component,
+    c("all", "conditional", "zi", "zero_inflated")
+  )
   junk <- utils::capture.output(stats <- cplm::summary(model)$coefficients) # nolint
   params <- insight::get_parameters(model)
 
@@ -205,7 +186,6 @@ p_value.zcpglm <- function(model,
 
 
 
-
 ########## .bcpglm ---------------
 
 #' @export
@@ -217,9 +197,7 @@ p_value.bcplm <- p_value.brmsfit
 
 
 
-
 ########## .cpglm ---------------
-
 
 #' @export
 p_value.cpglm <- function(model, ...) {
@@ -250,10 +228,7 @@ standard_error.cpglm <- function(model, ...) {
 
 
 
-
-
 ########## .cpglmm ---------------
-
 
 #' @export
 model_parameters.cpglmm <- function(model,
@@ -332,7 +307,6 @@ standard_error.cpglmm <- function(model, ...) {
 
 
 
-
 # tools --------------------
 
 .check_df_method <- function(df_method) {
@@ -342,7 +316,13 @@ standard_error.cpglmm <- function(model, ...) {
       insight::format_alert("Satterthwaite or Kenward-Rogers approximation of degrees of freedom is only available for linear mixed models.")
       df_method <- "wald"
     }
-    df_method <- match.arg(df_method, choices = c("wald", "normal", "residual", "ml1", "betwithin", "profile", "boot", "uniroot"))
+    df_method <- insight::validate_argument(
+      df_method,
+      c(
+        "wald", "normal", "residual", "ml1", "betwithin", "profile",
+        "boot", "uniroot"
+      )
+    )
   }
   df_method
 }

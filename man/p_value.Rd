@@ -43,7 +43,7 @@ options (which vary depending on the model class): \code{"residual"},
 
 \item{component}{Model component for which parameters should be shown. See
 the documentation for your object's class in \code{\link[=model_parameters]{model_parameters()}} or
-\code{\link[=p_value]{p_value()}} for further details.}
+\code{\link[=p_value]{p_value()}} for further details, or see section \emph{Model components}.}
 
 \item{vcov}{Variance-covariance matrix used to compute uncertainty estimates
 (e.g., for robust standard errors). This argument accepts a covariance
@@ -59,8 +59,8 @@ identifies the function to be used to compute the covariance matrix.
 \item Cluster-robust: \code{"CR"}, \code{"CR0"}, \code{"CR1"}, \code{"CR1p"}, \code{"CR1S"},
 \code{"CR2"}, \code{"CR3"}. See \code{?clubSandwich::vcovCR}
 \item Bootstrap: \code{"BS"}, \code{"xy"}, \code{"residual"}, \code{"wild"}, \code{"mammen"},
-\code{"fractional"}, \code{"jackknife"}, \code{"norm"}, \code{"webb"}.
-See \code{?sandwich::vcovBS}
+\code{"fractional"}, \code{"jackknife"}, \code{"norm"}, \code{"webb"}. See
+\code{?sandwich::vcovBS}
 \item Other \code{sandwich} package functions: \code{"HAC"}, \code{"PC"}, \code{"CL"}, \code{"OPG"},
 \code{"PL"}.
 }
@@ -88,12 +88,12 @@ components etc.
 }
 \description{
 This function attempts to return, or compute, p-values of a model's
-parameters. See the documentation for your object's class:
-\itemize{
-\item \link[=p_value.BFBayesFactor]{Bayesian models} (\strong{rstanarm}, \strong{brms}, \strong{MCMCglmm}, ...)
-\item \link[=p_value.zeroinfl]{Zero-inflated models} (\code{hurdle}, \code{zeroinfl}, \code{zerocount}, ...)
-\item \link[=p_value.poissonmfx]{Marginal effects models} (\strong{mfx})
+parameters.
 }
+\details{
+For Bayesian models, the p-values corresponds to the \emph{probability of
+direction} (\code{\link[bayestestR:p_direction]{bayestestR::p_direction()}}), which is converted to a p-value
+using \code{bayestestR::convert_pd_to_p()}.
 }
 \section{Confidence intervals and approximation of degrees of freedom}{
 
@@ -306,7 +306,17 @@ here.
 }
 
 \examples{
+\dontshow{if (require("pscl", quietly = TRUE)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 data(iris)
 model <- lm(Petal.Length ~ Sepal.Length + Species, data = iris)
 p_value(model)
+
+data("bioChemists", package = "pscl")
+model <- pscl::zeroinfl(
+  art ~ fem + mar + kid5 | kid5 + phd,
+  data = bioChemists
+)
+p_value(model)
+p_value(model, component = "zi")
+\dontshow{\}) # examplesIf}
 }

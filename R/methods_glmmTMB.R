@@ -415,7 +415,6 @@ model_parameters.glmmTMB <- function(model,
 # ci -----
 
 
-#' @rdname ci.default
 #' @export
 ci.glmmTMB <- function(x,
                        ci = 0.95,

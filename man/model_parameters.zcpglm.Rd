@@ -179,12 +179,14 @@ here.
 }
 
 \examples{
-library(parameters)
-if (require("pscl")) {
-  data("bioChemists")
-  model <- zeroinfl(art ~ fem + mar + kid5 + ment | kid5 + phd, data = bioChemists)
-  model_parameters(model)
-}
+\dontshow{if (require("pscl")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+data("bioChemists", package = "pscl")
+model <- pscl::zeroinfl(
+  art ~ fem + mar + kid5 + ment | kid5 + phd,
+  data = bioChemists
+)
+model_parameters(model)
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 \code{\link[insight:standardize_names]{insight::standardize_names()}} to rename
