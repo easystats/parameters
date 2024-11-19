@@ -2,19 +2,28 @@
 #'
 #' Compute performance indices for clustering solutions.
 #'
-#' @inheritParams model_parameters.kmeans
+#' @inheritParams model_parameters.hclust
 #'
 #' @examples
 #' # kmeans
 #' model <- kmeans(iris[1:4], 3)
 #' cluster_performance(model)
+#'
+#' # hclust
+#' data <- iris[1:4]
+#' model <- hclust(dist(data))
+#' clusters <- cutree(model, 3)
+#' cluster_performance(model, data, clusters)
+#'
+#' # Retrieve performance from parameters
+#' params <- model_parameters(kmeans(iris[1:4], 3))
+#' cluster_performance(params)
 #' @export
 cluster_performance <- function(model, ...) {
   UseMethod("cluster_performance")
 }
 
 
-#' @rdname cluster_performance
 #' @export
 cluster_performance.kmeans <- function(model, ...) {
   out <- as.data.frame(model[c("totss", "betweenss", "tot.withinss")])
@@ -29,18 +38,7 @@ cluster_performance.kmeans <- function(model, ...) {
 }
 
 
-
-
-
 #' @rdname cluster_performance
-#' @examples
-#' # hclust
-#' data <- iris[1:4]
-#' model <- hclust(dist(data))
-#' clusters <- cutree(model, 3)
-#'
-#' rez <- cluster_performance(model, data, clusters)
-#' rez
 #' @export
 cluster_performance.hclust <- function(model, data, clusters, ...) {
   if (is.null(data)) {
@@ -60,13 +58,6 @@ cluster_performance.hclust <- function(model, data, clusters, ...) {
 }
 
 
-#' @rdname cluster_performance
-#' @examplesIf require("dbscan", quietly = TRUE)
-#' # DBSCAN
-#' model <- dbscan::dbscan(iris[1:4], eps = 1.45, minPts = 10)
-#'
-#' rez <- cluster_performance(model, iris[1:4])
-#' rez
 #' @export
 cluster_performance.dbscan <- function(model, data, ...) {
   if (is.null(data)) {
@@ -84,12 +75,6 @@ cluster_performance.dbscan <- function(model, data, ...) {
 # Base --------------------------------------------------------------------
 
 
-
-#' @rdname cluster_performance
-#' @examples
-#' # Retrieve performance from parameters
-#' params <- model_parameters(kmeans(iris[1:4], 3))
-#' cluster_performance(params)
 #' @export
 cluster_performance.parameters_clusters <- function(model, ...) {
   valid <- model$Cluster != 0 & model$Cluster != "0" # Valid clusters

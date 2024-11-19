@@ -27,7 +27,7 @@ reference:
       - model_parameters.mlm
       - model_parameters.glmmTMB
       - model_parameters.lavaan
-      - model_parameters.kmeans
+      - model_parameters.hclust
       - model_parameters.Mclust
       - model_parameters.mira
       - model_parameters.PCA
