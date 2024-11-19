@@ -3,7 +3,7 @@
 
 # model parameters ---------------------------
 
-
+#' @rdname model_parameters.principal
 #' @export
 model_parameters.lavaan <- function(model,
                                     ci = 0.95,
