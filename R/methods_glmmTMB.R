@@ -55,7 +55,7 @@
 #'   up computation of the summary table.
 #'
 #' @inheritParams model_parameters.default
-#' @inheritParams model_parameters.stanreg
+#' @inheritParams model_parameters.brmsfit
 #' @inheritParams simulate_model
 #'
 #' @inheritSection model_parameters.zcpglm Model components

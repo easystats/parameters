@@ -9,6 +9,11 @@
 \arguments{
 \item{model}{Cluster model.}
 
+\item{data}{A data frame.}
+
+\item{clusters}{A vector with clusters assignments (must be same length as
+rows in data).}
+
 \item{...}{Arguments passed to or from other methods.}
 }
 \description{

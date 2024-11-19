@@ -1,3 +1,4 @@
+#' @rdname model_parameters.brmsfit
 #' @export
 model_parameters.data.frame <- function(model,
                                         as_draws = FALSE,

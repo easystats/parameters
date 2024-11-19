@@ -19,7 +19,7 @@
 #' `"conditional"` or `"full"` (for `MuMIn::model.avg()`) or `"all"`. See section
 #' _Model components_ for an overview of possible options for `component`.
 #' @inheritParams model_parameters.default
-#' @inheritParams model_parameters.stanreg
+#' @inheritParams model_parameters.brmsfit
 #' @inheritParams simulate_model
 #'
 #' @seealso [insight::standardize_names()] to rename columns into a consistent,

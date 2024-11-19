@@ -13,6 +13,11 @@ cluster_performance(model, ...)
 \item{model}{Cluster model.}
 
 \item{...}{Arguments passed to or from other methods.}
+
+\item{data}{A data frame.}
+
+\item{clusters}{A vector with clusters assignments (must be same length as
+rows in data).}
 }
 \description{
 Compute performance indices for clustering solutions.

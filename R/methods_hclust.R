@@ -3,7 +3,9 @@
 #' Format cluster models obtained for example by [kmeans()].
 #'
 #' @param model Cluster model.
-#' @inheritParams model_parameters.default
+#' @param data A data frame.
+#' @param clusters A vector with clusters assignments (must be same length as
+#' rows in data).
 #' @param ... Arguments passed to or from other methods.
 #'
 #' @examplesIf require("factoextra", quietly = TRUE) && require("dbscan", quietly = TRUE) && require("cluster", quietly = TRUE) && require("fpc", quietly = TRUE)
@@ -123,9 +125,6 @@ model_parameters.hclust <- function(model, data = NULL, clusters = NULL, ...) {
 }
 
 
-
-
-#' @inheritParams n_clusters
 #' @export
 model_parameters.pvclust <- function(model, data = NULL, clusters = NULL, ci = 0.95, ...) {
   if (is.null(data)) {
