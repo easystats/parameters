@@ -246,9 +246,9 @@ Some model classes also allow rather uncommon options. These are:
 \item \strong{selection}: \code{"selection"}, \code{"outcome"}, and \code{"auxiliary"}
 }
 
-For models of class \code{brmsfit} (package \strong{brms}), \code{component}, even more
-options are possible for the \code{component} argument, which are not all
-documented in detail here.
+For models of class \code{brmsfit} (package \strong{brms}), even more options are
+possible for the \code{component} argument, which are not all documented in detail
+here.
 }
 
 \examples{

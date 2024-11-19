@@ -34,10 +34,10 @@
 case of bootstrapped frequentist models.}
 
 \item{component}{Model component for which parameters should be shown. May be
-one of \code{"conditional"}, \code{"precision"} (\strong{betareg}),
-\code{"scale"} (\strong{ordinal}), \code{"extra"} (\strong{glmx}),
-\code{"marginal"} (\strong{mfx}), \code{"conditional"} or \code{"full"} (for
-\code{MuMIn::model.avg()}) or \code{"all"}.}
+one of \code{"conditional"}, \code{"precision"} (e.g. \strong{betareg}), \code{"scale"} (e.g.
+\strong{ordinal}), \code{"extra"} (e.g. \strong{glmx}), \code{"marginal"} (e.g. \strong{mfx}),
+\code{"conditional"} or \code{"full"} (for \code{MuMIn::model.avg()}) or \code{"all"}. See section
+\emph{Model components} for an overview of possible options for \code{component}.}
 
 \item{standardize}{The method used for standardizing the parameters. Can be
 \code{NULL} (default; no standardization), \code{"refit"} (for re-fitting the model
@@ -134,8 +134,53 @@ for all studies. Else, only parameters for overall-effects are shown.}
 A data frame of indices related to the model's parameters.
 }
 \description{
-Parameters from special regression models not listed under one of the previous categories yet.
+Parameters from special regression models not listed under one of the
+previous categories yet.
 }
+\section{Model components}{
+
+Possible values for the \code{component} argument depend on the model class.
+Following are valid options:
+\itemize{
+\item \code{"all"}: returns all model components, applies to all models, but will only
+have an effect for models with more than just the conditional model component.
+\item \code{"conditional"}: only returns the conditional component, i.e. "fixed effects"
+terms from the model. Will only have an effect for models with more than
+just the conditional model component.
+\item \code{"smooth_terms"}: returns smooth terms, only applies to GAMs (or similar
+models that may contain smooth terms).
+\item \code{"zero_inflated"} (or \code{"zi"}): returns the zero-inflation component.
+\item \code{"dispersion"}: returns the dispersion model component. This is common
+for models with zero-inflation or that can model the dispersion parameter.
+\item \code{"instruments"}: for instrumental-variable or some fixed effects regression,
+returns the instruments.
+\item \code{"nonlinear"}: for non-linear models (like models of class \code{nlmerMod} or
+\code{nls}), returns staring estimates for the nonlinear parameters.
+\item \code{"correlation"}: for models with correlation-component, like \code{gls}, the
+variables used to describe the correlation structure are returned.
+}
+
+\strong{Special models}
+
+Some model classes also allow rather uncommon options. These are:
+\itemize{
+\item \strong{mhurdle}: \code{"infrequent_purchase"}, \code{"ip"}, and \code{"auxiliary"}
+\item \strong{BGGM}: \code{"correlation"} and \code{"intercept"}
+\item \strong{BFBayesFactor}, \strong{glmx}: \code{"extra"}
+\item \strong{averaging}:\code{"conditional"} and \code{"full"}
+\item \strong{mjoint}: \code{"survival"}
+\item \strong{mfx}: \code{"precision"}, \code{"marginal"}
+\item \strong{betareg}, \strong{DirichletRegModel}: \code{"precision"}
+\item \strong{mvord}: \code{"thresholds"} and \code{"correlation"}
+\item \strong{clm2}: \code{"scale"}
+\item \strong{selection}: \code{"selection"}, \code{"outcome"}, and \code{"auxiliary"}
+}
+
+For models of class \code{brmsfit} (package \strong{brms}), even more options are
+possible for the \code{component} argument, which are not all documented in detail
+here.
+}
+
 \examples{
 library(parameters)
 if (require("brglm2", quietly = TRUE)) {
@@ -150,6 +195,6 @@ if (require("brglm2", quietly = TRUE)) {
 }
 }
 \seealso{
-\code{\link[insight:standardize_names]{insight::standardize_names()}} to rename
-columns into a consistent, standardized naming scheme.
+\code{\link[insight:standardize_names]{insight::standardize_names()}} to rename columns into a consistent,
+standardized naming scheme.
 }

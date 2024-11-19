@@ -1,4 +1,3 @@
-#' @rdname model_parameters.stanreg
 #' @export
 model_parameters.draws <- function(model,
                                    centrality = "median",

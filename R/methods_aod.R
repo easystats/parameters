@@ -6,23 +6,28 @@
 
 #################### .glimML ------
 
-#' Parameters from special models
+#' @title Parameters from special models
+#' @name model_parameters.glimML
 #'
-#' Parameters from special regression models not listed under one of the previous categories yet.
+#' @description
+#' Parameters from special regression models not listed under one of the
+#' previous categories yet.
 #'
 #' @param component Model component for which parameters should be shown. May be
-#'   one of `"conditional"`, `"precision"` (**betareg**),
-#'   `"scale"` (**ordinal**), `"extra"` (**glmx**),
-#'   `"marginal"` (**mfx**), `"conditional"` or `"full"` (for
-#'   `MuMIn::model.avg()`) or `"all"`.
+#' one of `"conditional"`, `"precision"` (e.g. **betareg**), `"scale"` (e.g.
+#' **ordinal**), `"extra"` (e.g. **glmx**), `"marginal"` (e.g. **mfx**),
+#' `"conditional"` or `"full"` (for `MuMIn::model.avg()`) or `"all"`. See section
+#' _Model components_ for an overview of possible options for `component`.
 #' @param include_studies Logical, if `TRUE` (default), includes parameters
 #'   for all studies. Else, only parameters for overall-effects are shown.
 #' @inheritParams model_parameters.default
 #' @inheritParams model_parameters.stanreg
 #' @inheritParams simulate_model
 #'
-#' @seealso [insight::standardize_names()] to rename
-#'   columns into a consistent, standardized naming scheme.
+#' @seealso [insight::standardize_names()] to rename columns into a consistent,
+#' standardized naming scheme.
+#'
+#' @inheritSection model_parameters.zcpglm Model components
 #'
 #' @examples
 #' library(parameters)

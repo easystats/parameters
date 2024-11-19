@@ -1,4 +1,3 @@
-#' @rdname model_parameters.stanreg
 #' @inheritParams insight::get_parameters
 #' @export
 model_parameters.brmsfit <- function(model,
@@ -209,11 +208,17 @@ model_parameters.brmsfit <- function(model,
 
 #' @export
 standard_error.brmsfit <- function(model,
-                                   effects = c("fixed", "random"),
-                                   component = c("all", "conditional", "zi", "zero_inflated"),
+                                   effects = "fixed",
+                                   component = "all",
                                    ...) {
-  effects <- match.arg(effects)
-  component <- match.arg(component)
+  effects <- insight::validate_argument(
+    effects,
+    c("fixed", "random")
+  )
+  component <- insight::validate_argument(
+    component,
+    c("all", "conditional", "zi", "zero_inflated")
+  )
 
   params <- insight::get_parameters(model, effects = effects, component = component, ...)
 

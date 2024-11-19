@@ -33,18 +33,20 @@
 #' @inheritParams bayestestR::describe_posterior
 #' @inheritParams insight::get_parameters
 #'
-#' @seealso [insight::standardize_names()] to
-#'   rename columns into a consistent, standardized naming scheme.
+#' @seealso [insight::standardize_names()] to rename columns into a consistent,
+#' standardized naming scheme.
 #'
-#' @note When `standardize = "refit"`, columns `diagnostic`,
-#'   `bf_prior` and `priors` refer to the *original*
-#'   `model`. If `model` is a data frame, arguments `diagnostic`,
-#'   `bf_prior` and `priors` are ignored. \cr \cr There is also a
-#'   [`plot()`-method](https://easystats.github.io/see/articles/parameters.html)
-#'   implemented in the
-#'   [**see**-package](https://easystats.github.io/see/).
+#' @note When `standardize = "refit"`, columns `diagnostic`, `bf_prior` and
+#' `priors` refer to the *original* `model`. If `model` is a data frame,
+#' arguments `diagnostic`, `bf_prior` and `priors` are ignored.
+#'
+#' There is also a
+#' [`plot()`-method](https://easystats.github.io/see/articles/parameters.html)
+#' implemented in the [**see**-package](https://easystats.github.io/see/).
 #'
 #' @inheritSection model_parameters Confidence intervals and approximation of degrees of freedom
+#'
+#' @inheritSection model_parameters.zcpglm Model components
 #'
 #' @examples
 #' \donttest{

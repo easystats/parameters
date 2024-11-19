@@ -10,6 +10,15 @@ reference:
       - compare_parameters
       - dominance_analysis
       - model_parameters
+      - pool_parameters
+      - random_parameters
+      - print.parameters_model
+      - sort_parameters
+      - standardize_parameters
+      - standardize_info
+
+  - title: "Documentation of Specific Class Objects"
+    contents:
       - model_parameters.aov
       - model_parameters.befa
       - model_parameters.default
@@ -30,12 +39,6 @@ reference:
       - model_parameters.glht
       - model_parameters.averaging
       - model_parameters.t1way
-      - pool_parameters
-      - random_parameters
-      - print.parameters_model
-      - sort_parameters
-      - standardize_parameters
-      - standardize_info
 
   - title: "Standard Errors, Confidence Intervals, Degrees of Freedom and p-values"
     contents:
