@@ -126,9 +126,6 @@ this function.
 model summaries, it is recommended to set \code{pretty_names = FALSE} to speed
 up computation of the summary table.
 }}
-
-\item{include_studies}{Logical, if \code{TRUE} (default), includes parameters
-for all studies. Else, only parameters for overall-effects are shown.}
 }
 \value{
 A data frame of indices related to the model's parameters.

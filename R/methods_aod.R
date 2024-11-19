@@ -18,8 +18,6 @@
 #' **ordinal**), `"extra"` (e.g. **glmx**), `"marginal"` (e.g. **mfx**),
 #' `"conditional"` or `"full"` (for `MuMIn::model.avg()`) or `"all"`. See section
 #' _Model components_ for an overview of possible options for `component`.
-#' @param include_studies Logical, if `TRUE` (default), includes parameters
-#'   for all studies. Else, only parameters for overall-effects are shown.
 #' @inheritParams model_parameters.default
 #' @inheritParams model_parameters.stanreg
 #' @inheritParams simulate_model
