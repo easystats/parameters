@@ -1,12 +1,11 @@
 ## TODO add ci_method later?
 
-#' @rdname model_parameters.averaging
 #' @export
 model_parameters.betareg <- function(model,
                                      ci = 0.95,
                                      bootstrap = FALSE,
                                      iterations = 1000,
-                                     component = c("conditional", "precision", "all"),
+                                     component = "conditional",
                                      standardize = NULL,
                                      exponentiate = FALSE,
                                      p_adjust = NULL,
@@ -30,7 +29,7 @@ model_parameters.betareg <- function(model,
     include_info <- summary
   }
 
-  component <- match.arg(component)
+  component <- insight::validate_argument(component, c("conditional", "precision", "all"))
   if (component == "all") {
     merge_by <- c("Parameter", "Component")
   } else {
@@ -64,11 +63,7 @@ model_parameters.betareg <- function(model,
 
 
 #' @export
-ci.betareg <- function(x,
-                       ci = 0.95,
-                       component = "all",
-                       verbose = TRUE,
-                       ...) {
+ci.betareg <- function(x, ci = 0.95, component = "all", verbose = TRUE, ...) {
   # validation check, warn if unsupported argument is used.
   dot_args <- .check_dots(
     dots = list(...),
@@ -84,10 +79,7 @@ ci.betareg <- function(x,
 
 
 #' @export
-standard_error.betareg <- function(model,
-                                   component = "all",
-                                   verbose = TRUE,
-                                   ...) {
+standard_error.betareg <- function(model, component = "all", verbose = TRUE, ...) {
   # validation check, warn if unsupported argument is used.
   dot_args <- .check_dots(
     dots = list(...),
@@ -117,12 +109,8 @@ standard_error.betareg <- function(model,
 }
 
 
-#' @rdname p_value.DirichletRegModel
 #' @export
-p_value.betareg <- function(model,
-                            component = c("all", "conditional", "precision"),
-                            verbose = TRUE,
-                            ...) {
+p_value.betareg <- function(model, component = "all", verbose = TRUE, ...) {
   # validation check, warn if unsupported argument is used.
   dot_args <- .check_dots(
     dots = list(...),
@@ -132,7 +120,10 @@ p_value.betareg <- function(model,
     verbose = verbose
   )
 
-  component <- match.arg(component)
+  component <- insight::validate_argument(
+    component,
+    c("all", "conditional", "precision")
+  )
 
   params <- insight::get_parameters(model)
   cs <- do.call(rbind, stats::coef(summary(model)))
@@ -153,11 +144,11 @@ p_value.betareg <- function(model,
 
 
 #' @export
-simulate_model.betareg <- function(model,
-                                   iterations = 1000,
-                                   component = c("all", "conditional", "precision"),
-                                   ...) {
-  component <- match.arg(component)
+simulate_model.betareg <- function(model, iterations = 1000, component = "all", ...) {
+  component <- insight::validate_argument(
+    component,
+    c("all", "conditional", "precision")
+  )
   out <- .simulate_model(model, iterations, component = component, ...)
 
   class(out) <- c("parameters_simulate_model", class(out))

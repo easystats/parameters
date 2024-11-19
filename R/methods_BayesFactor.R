@@ -243,24 +243,6 @@ model_parameters.BFBayesFactor <- function(model,
 }
 
 
-#' p-values for Bayesian Models
-#'
-#' This function attempts to return, or compute, p-values of Bayesian models.
-#'
-#' @param model A statistical model.
-#' @inheritParams p_value
-#'
-#' @details
-#' For Bayesian models, the p-values corresponds to the *probability of
-#' direction* ([`bayestestR::p_direction()`]), which is converted to a p-value
-#' using `bayestestR::convert_pd_to_p()`.
-#'
-#' @return The p-values.
-#'
-#' @examples
-#' data(iris)
-#' model <- lm(Petal.Length ~ Sepal.Length + Species, data = iris)
-#' p_value(model)
 #' @export
 p_value.BFBayesFactor <- function(model, ...) {
   p <- bayestestR::p_direction(model)

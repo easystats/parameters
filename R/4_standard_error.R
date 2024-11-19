@@ -1,6 +1,7 @@
-#' Standard Errors
+#' @title Standard Errors
+#' @name standard_error
 #'
-#' `standard_error()` attempts to return standard errors of model
+#' @description `standard_error()` attempts to return standard errors of model
 #' parameters.
 #'
 #' @param model A model.
@@ -21,8 +22,8 @@
 #'    - Cluster-robust: `"CR"`, `"CR0"`, `"CR1"`, `"CR1p"`, `"CR1S"`,
 #'      `"CR2"`, `"CR3"`. See `?clubSandwich::vcovCR`
 #'    - Bootstrap: `"BS"`, `"xy"`, `"residual"`, `"wild"`, `"mammen"`,
-#'      `"fractional"`, `"jackknife"`, `"norm"`, `"webb"`.
-#'      See `?sandwich::vcovBS`
+#'      `"fractional"`, `"jackknife"`, `"norm"`, `"webb"`. See
+#'      `?sandwich::vcovBS`
 #'    - Other `sandwich` package functions: `"HAC"`, `"PC"`, `"CL"`, `"OPG"`,
 #'      `"PL"`.
 #' @param vcov_args List of arguments to be passed to the function identified by
@@ -75,6 +76,7 @@ standard_error <- function(model, ...) {
 #' @rdname standard_error
 #' @export
 standard_error.default <- function(model,
+                                   effects = "fixed",
                                    component = "all",
                                    vcov = NULL,
                                    vcov_args = NULL,

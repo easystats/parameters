@@ -247,7 +247,6 @@ model_parameters.aovlist <- model_parameters.aov
 
 # .afex_aov  ------
 
-#' @rdname model_parameters.aov
 #' @export
 model_parameters.afex_aov <- function(model,
                                       es_type = NULL,
@@ -366,7 +365,10 @@ model_parameters.seqanova.svyglm <- model_parameters.aov
 .anova_alternative <- function(params, alternative) {
   alternative_footer <- NULL
   if (!is.null(alternative)) {
-    alternative <- match.arg(tolower(alternative), choices = c("two.sided", "greater", "less"))
+    alternative <- insight::validate_argument(
+      tolower(alternative),
+      c("two.sided", "greater", "less")
+    )
     if (alternative != "two.sided") {
       ci_low <- which(endsWith(colnames(params), "CI_low"))
       ci_high <- which(endsWith(colnames(params), "CI_high"))

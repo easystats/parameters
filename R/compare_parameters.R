@@ -22,7 +22,7 @@
 #'   used for all coefficient columns. If `NULL`, the name for the coefficient
 #'   column will detected automatically (as in `model_parameters()`).
 #' @inheritParams model_parameters.default
-#' @inheritParams model_parameters.cpglmm
+#' @inheritParams model_parameters.glmmTMB
 #' @inheritParams print.parameters_model
 #'
 #' @details

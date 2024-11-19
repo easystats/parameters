@@ -2,7 +2,6 @@
 % Please edit documentation in R/equivalence_test.R
 \name{equivalence_test.lm}
 \alias{equivalence_test.lm}
-\alias{equivalence_test.merMod}
 \alias{equivalence_test.ggeffects}
 \title{Equivalence test}
 \usage{
@@ -11,18 +10,7 @@
   range = "default",
   ci = 0.95,
   rule = "classic",
-  vcov = NULL,
-  vcov_args = NULL,
-  verbose = TRUE,
-  ...
-)
-
-\method{equivalence_test}{merMod}(
-  x,
-  range = "default",
-  ci = 0.95,
-  rule = "classic",
-  effects = c("fixed", "random"),
+  effects = "fixed",
   vcov = NULL,
   vcov_args = NULL,
   verbose = TRUE,
@@ -50,6 +38,11 @@ model's data.}
 \item{rule}{Character, indicating the rules when testing for practical
 equivalence. Can be \code{"bayes"}, \code{"classic"} or \code{"cet"}. See 'Details'.}
 
+\item{effects}{Should parameters for fixed effects (\code{"fixed"}), random
+effects (\code{"random"}), or both (\code{"all"}) be returned? Only applies
+to mixed models. May be abbreviated. If the calculation of random effects
+parameters takes too long, you may use \code{effects = "fixed"}.}
+
 \item{vcov}{Variance-covariance matrix used to compute uncertainty estimates
 (e.g., for robust standard errors). This argument accepts a covariance
 matrix, a function which returns a covariance matrix, or a string which
@@ -64,8 +57,8 @@ identifies the function to be used to compute the covariance matrix.
 \item Cluster-robust: \code{"CR"}, \code{"CR0"}, \code{"CR1"}, \code{"CR1p"}, \code{"CR1S"},
 \code{"CR2"}, \code{"CR3"}. See \code{?clubSandwich::vcovCR}
 \item Bootstrap: \code{"BS"}, \code{"xy"}, \code{"residual"}, \code{"wild"}, \code{"mammen"},
-\code{"fractional"}, \code{"jackknife"}, \code{"norm"}, \code{"webb"}.
-See \code{?sandwich::vcovBS}
+\code{"fractional"}, \code{"jackknife"}, \code{"norm"}, \code{"webb"}. See
+\code{?sandwich::vcovBS}
 \item Other \code{sandwich} package functions: \code{"HAC"}, \code{"PC"}, \code{"CL"}, \code{"OPG"},
 \code{"PL"}.
 }
@@ -82,11 +75,6 @@ type for \code{"HC"} equals the default from the \strong{sandwich} package; for 
 \item{verbose}{Toggle warnings and messages.}
 
 \item{...}{Arguments passed to or from other methods.}
-
-\item{effects}{Should parameters for fixed effects (\code{"fixed"}), random
-effects (\code{"random"}), or both (\code{"all"}) be returned? Only applies
-to mixed models. May be abbreviated. If the calculation of random effects
-parameters takes too long, you may use \code{effects = "fixed"}.}
 
 \item{test}{Hypothesis test for computing contrasts or pairwise comparisons.
 See \href{https://strengejacke.github.io/ggeffects/reference/test_predictions.html}{\code{?ggeffects::test_predictions}}

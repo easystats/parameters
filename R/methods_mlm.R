@@ -20,6 +20,8 @@
 #' @seealso [insight::standardize_names()] to rename
 #'   columns into a consistent, standardized naming scheme.
 #'
+#' @inheritSection model_parameters.zcpglm Model components
+#'
 #' @examplesIf require("brglm2", quietly = TRUE)
 #' data("stemcell", package = "brglm2")
 #' model <- brglm2::bracl(

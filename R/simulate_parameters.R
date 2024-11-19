@@ -54,8 +54,6 @@ simulate_parameters <- function(model, ...) {
 }
 
 
-
-
 #' @rdname simulate_parameters
 #' @export
 simulate_parameters.default <- function(model,

@@ -1,10 +1,9 @@
-#' @rdname model_parameters.mlm
 #' @export
 model_parameters.DirichletRegModel <- function(model,
                                                ci = 0.95,
                                                bootstrap = FALSE,
                                                iterations = 1000,
-                                               component = c("all", "conditional", "precision"),
+                                               component = "all",
                                                standardize = NULL,
                                                exponentiate = FALSE,
                                                p_adjust = NULL,
@@ -12,7 +11,10 @@ model_parameters.DirichletRegModel <- function(model,
                                                drop = NULL,
                                                verbose = TRUE,
                                                ...) {
-  component <- match.arg(component)
+  component <- insight::validate_argument(
+    component,
+    c("all", "conditional", "precision")
+  )
   if (component == "all") {
     merge_by <- c("Parameter", "Component", "Response")
   } else {
@@ -45,11 +47,11 @@ model_parameters.DirichletRegModel <- function(model,
 
 
 #' @export
-ci.DirichletRegModel <- function(x,
-                                 ci = 0.95,
-                                 component = c("all", "conditional", "precision"),
-                                 ...) {
-  component <- match.arg(component)
+ci.DirichletRegModel <- function(x, ci = 0.95, component = "all", ...) {
+  component <- insight::validate_argument(
+    component,
+    c("all", "conditional", "precision")
+  )
   params <- insight::get_parameters(x, component = component)
   out <- .ci_generic(model = x, ci = ci, dof = Inf, ...)
 
@@ -68,10 +70,11 @@ ci.DirichletRegModel <- function(x,
 
 
 #' @export
-standard_error.DirichletRegModel <- function(model,
-                                             component = "all",
-                                             ...) {
-  component <- match.arg(component, choices = c("all", "conditional", "precision"))
+standard_error.DirichletRegModel <- function(model, component = "all", ...) {
+  component <- insight::validate_argument(
+    component,
+    c("all", "conditional", "precision")
+  )
   params <- insight::get_parameters(model)
 
   out <- .data_frame(
@@ -80,10 +83,10 @@ standard_error.DirichletRegModel <- function(model,
     SE = as.vector(model$se)
   )
 
-  if (!is.null(params$Component)) {
-    out$Component <- params$Component
-  } else {
+  if (is.null(params$Component)) {
     component <- "all"
+  } else {
+    out$Component <- params$Component
   }
 
   if (component != "all") {
@@ -94,25 +97,12 @@ standard_error.DirichletRegModel <- function(model,
 }
 
 
-#' @title p-values for Models with Special Components
-#' @name p_value.DirichletRegModel
-#'
-#' @description This function attempts to return, or compute, p-values of models
-#'   with special model components.
-#'
-#' @param model A statistical model.
-#' @param component Should all parameters, parameters for the conditional model,
-#'   precision- or scale-component or smooth_terms be returned? `component`
-#'   may be one of `"conditional"`, `"precision"`, `"scale"`,
-#'   `"smooth_terms"`, `"full"` or `"all"` (default).
-#' @inheritParams p_value
-#'
-#' @return The p-values.
 #' @export
-p_value.DirichletRegModel <- function(model,
-                                      component = c("all", "conditional", "precision"),
-                                      ...) {
-  component <- match.arg(component)
+p_value.DirichletRegModel <- function(model, component = "all", ...) {
+  component <- insight::validate_argument(
+    component,
+    c("all", "conditional", "precision")
+  )
   params <- insight::get_parameters(model)
 
   out <- .data_frame(
@@ -121,10 +111,10 @@ p_value.DirichletRegModel <- function(model,
     p = as.vector(2 * stats::pnorm(-abs(params$Estimate / model$se)))
   )
 
-  if (!is.null(params$Component)) {
-    out$Component <- params$Component
-  } else {
+  if (is.null(params$Component)) {
     component <- "all"
+  } else {
+    out$Component <- params$Component
   }
 
   if (component != "all") {

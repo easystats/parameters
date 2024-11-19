@@ -2,30 +2,22 @@
 % Please edit documentation in R/cluster_performance.R
 \name{cluster_performance}
 \alias{cluster_performance}
-\alias{cluster_performance.kmeans}
 \alias{cluster_performance.hclust}
-\alias{cluster_performance.dbscan}
-\alias{cluster_performance.parameters_clusters}
 \title{Performance of clustering models}
 \usage{
 cluster_performance(model, ...)
 
-\method{cluster_performance}{kmeans}(model, ...)
-
 \method{cluster_performance}{hclust}(model, data, clusters, ...)
-
-\method{cluster_performance}{dbscan}(model, data, ...)
-
-\method{cluster_performance}{parameters_clusters}(model, ...)
 }
 \arguments{
 \item{model}{Cluster model.}
 
 \item{...}{Arguments passed to or from other methods.}
 
-\item{data}{A data.frame.}
+\item{data}{A data frame.}
 
-\item{clusters}{A vector with clusters assignments (must be same length as rows in data).}
+\item{clusters}{A vector with clusters assignments (must be same length as
+rows in data).}
 }
 \description{
 Compute performance indices for clustering solutions.
@@ -34,20 +26,13 @@ Compute performance indices for clustering solutions.
 # kmeans
 model <- kmeans(iris[1:4], 3)
 cluster_performance(model)
+
 # hclust
 data <- iris[1:4]
 model <- hclust(dist(data))
 clusters <- cutree(model, 3)
+cluster_performance(model, data, clusters)
 
-rez <- cluster_performance(model, data, clusters)
-rez
-\dontshow{if (require("dbscan", quietly = TRUE)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
-# DBSCAN
-model <- dbscan::dbscan(iris[1:4], eps = 1.45, minPts = 10)
-
-rez <- cluster_performance(model, iris[1:4])
-rez
-\dontshow{\}) # examplesIf}
 # Retrieve performance from parameters
 params <- model_parameters(kmeans(iris[1:4], 3))
 cluster_performance(params)

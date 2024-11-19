@@ -28,22 +28,21 @@ p_value(model, ...)
 
 \item{dof}{Number of degrees of freedom to be used when calculating
 confidence intervals. If \code{NULL} (default), the degrees of freedom are
-retrieved by calling \code{\link[insight:get_df]{insight::get_df()}} with approximation method
-defined in \code{method}. If not \code{NULL}, use this argument to override the
-default degrees of freedom used to compute confidence intervals.}
+retrieved by calling \code{\link[insight:get_df]{insight::get_df()}} with approximation method defined
+in \code{method}. If not \code{NULL}, use this argument to override the default degrees
+of freedom used to compute confidence intervals.}
 
-\item{method}{Method for computing degrees of freedom for
-confidence intervals (CI) and the related p-values. Allowed are following
-options (which vary depending on the model class): \code{"residual"},
-\code{"normal"}, \code{"likelihood"}, \code{"satterthwaite"}, \code{"kenward"}, \code{"wald"},
-\code{"profile"}, \code{"boot"}, \code{"uniroot"}, \code{"ml1"}, \code{"betwithin"}, \code{"hdi"},
-\code{"quantile"}, \code{"ci"}, \code{"eti"}, \code{"si"}, \code{"bci"}, or \code{"bcai"}. See section
-\emph{Confidence intervals and approximation of degrees of freedom} in
-\code{\link[=model_parameters]{model_parameters()}} for further details.}
+\item{method}{Method for computing degrees of freedom for confidence
+intervals (CI) and the related p-values. Allowed are following options (which
+vary depending on the model class): \code{"residual"}, \code{"normal"}, \code{"likelihood"},
+\code{"satterthwaite"}, \code{"kenward"}, \code{"wald"}, \code{"profile"}, \code{"boot"}, \code{"uniroot"},
+\code{"ml1"}, \code{"betwithin"}, \code{"hdi"}, \code{"quantile"}, \code{"ci"}, \code{"eti"}, \code{"si"},
+\code{"bci"}, or \code{"bcai"}. See section \emph{Confidence intervals and approximation of
+degrees of freedom} in \code{\link[=model_parameters]{model_parameters()}} for further details.}
 
 \item{component}{Model component for which parameters should be shown. See
 the documentation for your object's class in \code{\link[=model_parameters]{model_parameters()}} or
-\code{\link[=p_value]{p_value()}} for further details.}
+\code{\link[=p_value]{p_value()}} for further details, or see section \emph{Model components}.}
 
 \item{vcov}{Variance-covariance matrix used to compute uncertainty estimates
 (e.g., for robust standard errors). This argument accepts a covariance
@@ -59,8 +58,8 @@ identifies the function to be used to compute the covariance matrix.
 \item Cluster-robust: \code{"CR"}, \code{"CR0"}, \code{"CR1"}, \code{"CR1p"}, \code{"CR1S"},
 \code{"CR2"}, \code{"CR3"}. See \code{?clubSandwich::vcovCR}
 \item Bootstrap: \code{"BS"}, \code{"xy"}, \code{"residual"}, \code{"wild"}, \code{"mammen"},
-\code{"fractional"}, \code{"jackknife"}, \code{"norm"}, \code{"webb"}.
-See \code{?sandwich::vcovBS}
+\code{"fractional"}, \code{"jackknife"}, \code{"norm"}, \code{"webb"}. See
+\code{?sandwich::vcovBS}
 \item Other \code{sandwich} package functions: \code{"HAC"}, \code{"PC"}, \code{"CL"}, \code{"OPG"},
 \code{"PL"}.
 }
@@ -88,13 +87,12 @@ components etc.
 }
 \description{
 This function attempts to return, or compute, p-values of a model's
-parameters. See the documentation for your object's class:
-\itemize{
-\item \link[=p_value.BFBayesFactor]{Bayesian models} (\strong{rstanarm}, \strong{brms}, \strong{MCMCglmm}, ...)
-\item \link[=p_value.zeroinfl]{Zero-inflated models} (\code{hurdle}, \code{zeroinfl}, \code{zerocount}, ...)
-\item \link[=p_value.poissonmfx]{Marginal effects models} (\strong{mfx})
-\item \link[=p_value.DirichletRegModel]{Models with special components} (\code{DirichletRegModel}, \code{clm2}, \code{cgam}, ...)
+parameters.
 }
+\details{
+For Bayesian models, the p-values corresponds to the \emph{probability of
+direction} (\code{\link[bayestestR:p_direction]{bayestestR::p_direction()}}), which is converted to a p-value
+using \code{bayestestR::convert_pd_to_p()}.
 }
 \section{Confidence intervals and approximation of degrees of freedom}{
 
@@ -262,8 +260,62 @@ p-values are based on the probability of direction (\code{\link[bayestestR:p_dir
 which is converted into a p-value using \code{\link[bayestestR:pd_to_p]{bayestestR::pd_to_p()}}.
 }
 
+\section{Model components}{
+
+Possible values for the \code{component} argument depend on the model class.
+Following are valid options:
+\itemize{
+\item \code{"all"}: returns all model components, applies to all models, but will only
+have an effect for models with more than just the conditional model component.
+\item \code{"conditional"}: only returns the conditional component, i.e. "fixed effects"
+terms from the model. Will only have an effect for models with more than
+just the conditional model component.
+\item \code{"smooth_terms"}: returns smooth terms, only applies to GAMs (or similar
+models that may contain smooth terms).
+\item \code{"zero_inflated"} (or \code{"zi"}): returns the zero-inflation component.
+\item \code{"dispersion"}: returns the dispersion model component. This is common
+for models with zero-inflation or that can model the dispersion parameter.
+\item \code{"instruments"}: for instrumental-variable or some fixed effects regression,
+returns the instruments.
+\item \code{"nonlinear"}: for non-linear models (like models of class \code{nlmerMod} or
+\code{nls}), returns staring estimates for the nonlinear parameters.
+\item \code{"correlation"}: for models with correlation-component, like \code{gls}, the
+variables used to describe the correlation structure are returned.
+}
+
+\strong{Special models}
+
+Some model classes also allow rather uncommon options. These are:
+\itemize{
+\item \strong{mhurdle}: \code{"infrequent_purchase"}, \code{"ip"}, and \code{"auxiliary"}
+\item \strong{BGGM}: \code{"correlation"} and \code{"intercept"}
+\item \strong{BFBayesFactor}, \strong{glmx}: \code{"extra"}
+\item \strong{averaging}:\code{"conditional"} and \code{"full"}
+\item \strong{mjoint}: \code{"survival"}
+\item \strong{mfx}: \code{"precision"}, \code{"marginal"}
+\item \strong{betareg}, \strong{DirichletRegModel}: \code{"precision"}
+\item \strong{mvord}: \code{"thresholds"} and \code{"correlation"}
+\item \strong{clm2}: \code{"scale"}
+\item \strong{selection}: \code{"selection"}, \code{"outcome"}, and \code{"auxiliary"}
+}
+
+For models of class \code{brmsfit} (package \strong{brms}), even more options are
+possible for the \code{component} argument, which are not all documented in detail
+here.
+}
+
 \examples{
+\dontshow{if (require("pscl", quietly = TRUE)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 data(iris)
 model <- lm(Petal.Length ~ Sepal.Length + Species, data = iris)
 p_value(model)
+
+data("bioChemists", package = "pscl")
+model <- pscl::zeroinfl(
+  art ~ fem + mar + kid5 | kid5 + phd,
+  data = bioChemists
+)
+p_value(model)
+p_value(model, component = "zi")
+\dontshow{\}) # examplesIf}
 }

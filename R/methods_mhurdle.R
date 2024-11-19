@@ -1,15 +1,17 @@
-#' @rdname model_parameters.zcpglm
 #' @export
 model_parameters.mhurdle <- function(model,
                                      ci = 0.95,
-                                     component = c("all", "conditional", "zi", "zero_inflated", "infrequent_purchase", "ip", "auxiliary"),
+                                     component = "all",
                                      exponentiate = FALSE,
                                      p_adjust = NULL,
                                      keep = NULL,
                                      drop = NULL,
                                      verbose = TRUE,
                                      ...) {
-  component <- match.arg(component)
+  component <- insight::validate_argument(
+    component,
+    c("all", "conditional", "zi", "zero_inflated", "infrequent_purchase", "ip", "auxiliary")
+  )
 
   params <- .model_parameters_generic(
     model,

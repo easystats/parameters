@@ -20,7 +20,7 @@ bayestestR::equivalence_test
 #' for details.
 #' @param verbose Toggle warnings and messages.
 #' @param ... Arguments passed to or from other methods.
-#' @inheritParams model_parameters.merMod
+#' @inheritParams model_parameters.glmmTMB
 #' @inheritParams p_value
 #'
 #' @seealso For more details, see [bayestestR::equivalence_test()]. Further
@@ -241,11 +241,12 @@ equivalence_test.lm <- function(x,
                                 range = "default",
                                 ci = 0.95,
                                 rule = "classic",
+                                effects = "fixed",
                                 vcov = NULL,
                                 vcov_args = NULL,
                                 verbose = TRUE,
                                 ...) {
-  rule <- match.arg(tolower(rule), choices = c("bayes", "classic", "cet"))
+  rule <- insight::validate_argument(tolower(rule), c("bayes", "classic", "cet"))
   out <- .equivalence_test_frequentist(
     x,
     range = range,
@@ -309,21 +310,20 @@ equivalence_test.rma <- equivalence_test.lm
 
 # mixed models, also random effects ----------------------
 
-#' @rdname equivalence_test.lm
 #' @export
 equivalence_test.merMod <- function(x,
                                     range = "default",
                                     ci = 0.95,
                                     rule = "classic",
-                                    effects = c("fixed", "random"),
+                                    effects = "fixed",
                                     vcov = NULL,
                                     vcov_args = NULL,
                                     verbose = TRUE,
                                     ...) {
   # ==== argument matching ====
 
-  rule <- match.arg(tolower(rule), choices = c("bayes", "classic", "cet"))
-  effects <- match.arg(effects)
+  rule <- insight::validate_argument(tolower(rule), c("bayes", "classic", "cet"))
+  effects <- insight::validate_argument(effects, c("fixed", "random"))
 
 
   # ==== equivalent testing for fixed or random effects ====

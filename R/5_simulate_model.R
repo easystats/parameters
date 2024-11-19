@@ -15,6 +15,8 @@
 #' @inheritParams bootstrap_model
 #' @inheritParams p_value
 #'
+#' @inheritSection model_parameters.zcpglm Model components
+#'
 #' @return A data frame.
 #'
 #' @seealso [`simulate_parameters()`], [`bootstrap_model()`], [`bootstrap_parameters()`]
@@ -57,9 +59,9 @@ simulate_model <- function(model, iterations = 1000, ...) {
 
 # Models with single component only -----------------------------------------
 
-
+#' @rdname simulate_model
 #' @export
-simulate_model.default <- function(model, iterations = 1000, ...) {
+simulate_model.default <- function(model, iterations = 1000, component = "all", ...) {
   # check for valid input
   .is_model_valid(model)
 
@@ -229,7 +231,11 @@ simulate_model.bracl <- simulate_model.default
 # helper -----------------------------------------
 
 
-.simulate_model <- function(model, iterations, component = "conditional", effects = "fixed", ...) {
+.simulate_model <- function(model,
+                            iterations,
+                            component = "conditional",
+                            effects = "fixed",
+                            ...) {
   if (is.null(iterations)) iterations <- 1000
 
   params <- insight::get_parameters(model, effects = effects, component = component, verbose = FALSE)

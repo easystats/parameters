@@ -458,7 +458,7 @@
       not_allowed_string <- datawizard::text_concatenate(not_allowed, enclose = "\"")
       insight::format_alert(
         sprintf("Following arguments are not supported in `%s()` for models of class `%s` and will be ignored: %s", function_name, model_class, not_allowed_string), # nolint
-        sprintf("Please run `%s()` again without specifying the above mentioned arguments to obtain expected results.", function_name) # nolint
+        sprintf("In case you obtain expected results, please run `%s()` again without specifying the above mentioned arguments.", function_name) # nolint
       )
     }
     dots[not_allowed] <- NULL

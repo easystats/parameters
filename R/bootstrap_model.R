@@ -66,8 +66,9 @@ bootstrap_model <- function(model,
 bootstrap_model.default <- function(model,
                                     iterations = 1000,
                                     type = "ordinary",
-                                    parallel = c("no", "multicore", "snow"),
+                                    parallel = "no",
                                     n_cpus = 1,
+                                    cluster = NULL,
                                     verbose = FALSE,
                                     ...) {
   # check for valid input
@@ -75,8 +76,11 @@ bootstrap_model.default <- function(model,
 
   insight::check_if_installed("boot")
 
-  type <- insight::validate_argument(type, c("ordinary", "parametric", "balanced", "permutation", "antithetic"))
-  parallel <- match.arg(parallel)
+  type <- insight::validate_argument(
+    type,
+    c("ordinary", "parametric", "balanced", "permutation", "antithetic")
+  )
+  parallel <- insight::validate_argument(parallel, c("no", "multicore", "snow"))
 
   model_data <- data <- insight::get_data(model, verbose = FALSE) # nolint
   model_response <- insight::find_response(model)
@@ -144,12 +148,11 @@ bootstrap_model.default <- function(model,
 }
 
 
-#' @rdname bootstrap_model
 #' @export
 bootstrap_model.merMod <- function(model,
                                    iterations = 1000,
                                    type = "parametric",
-                                   parallel = c("no", "multicore", "snow"),
+                                   parallel = "no",
                                    n_cpus = 1,
                                    cluster = NULL,
                                    verbose = FALSE,
@@ -157,7 +160,7 @@ bootstrap_model.merMod <- function(model,
   insight::check_if_installed("lme4")
 
   type <- insight::validate_argument(type, c("parametric", "semiparametric"))
-  parallel <- match.arg(parallel)
+  parallel <- insight::validate_argument(parallel, c("no", "multicore", "snow"))
 
   boot_function <- function(model) {
     params <- insight::get_parameters(model, verbose = FALSE)
@@ -222,14 +225,17 @@ bootstrap_model.glmmTMB <- bootstrap_model.merMod
 bootstrap_model.nestedLogit <- function(model,
                                         iterations = 1000,
                                         type = "ordinary",
-                                        parallel = c("no", "multicore", "snow"),
+                                        parallel = "no",
                                         n_cpus = 1,
                                         verbose = FALSE,
                                         ...) {
   insight::check_if_installed("boot")
 
-  type <- insight::validate_argument(type, c("ordinary", "balanced", "permutation", "antithetic"))
-  parallel <- match.arg(parallel)
+  type <- insight::validate_argument(
+    type,
+    c("ordinary", "balanced", "permutation", "antithetic")
+  )
+  parallel <- insight::validate_argument(parallel, c("no", "multicore", "snow"))
 
   model_data <- data <- insight::get_data(model, verbose = FALSE) # nolint
   model_response <- insight::find_response(model)

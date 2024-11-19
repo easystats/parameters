@@ -21,7 +21,6 @@ p_value.MCMCglmm <- function(model, ...) {
 }
 
 
-#' @rdname model_parameters.stanreg
 #' @export
 model_parameters.MCMCglmm <- function(model,
                                       centrality = "median",

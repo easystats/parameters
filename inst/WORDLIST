@@ -13,6 +13,7 @@ BMJ
 Bayarri
 BayesFM
 BayesFactor
+BFBayesFactor
 Bentler
 Bergh
 Biometrics
@@ -38,6 +39,7 @@ Davison
 De
 Delacre
 DirichletReg
+DirichletRegModel
 DoF
 DoFs
 Dom
@@ -215,6 +217,7 @@ ci
 clubSandwich
 cmprsk
 countreg
+clm
 cplm
 datanovia
 datawizard
@@ -287,6 +290,7 @@ maxLik
 mblogit
 mclogit
 mclust
+mjoint
 meaned
 merDeriv
 merMod

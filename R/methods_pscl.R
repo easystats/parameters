@@ -13,7 +13,6 @@ model_parameters.zerocount <- model_parameters.zcpglm
 
 
 
-
 # ci -----------------
 
 #' @export
@@ -25,8 +24,14 @@ ci.zeroinfl <- function(x,
                         verbose = TRUE,
                         ...) {
   method <- tolower(method)
-  method <- match.arg(method, choices = c("wald", "normal", "residual", "robust"))
-  component <- match.arg(component, choices = c("all", "conditional", "zi", "zero_inflated"))
+  method <- insight::validate_argument(
+    method,
+    c("wald", "normal", "residual", "robust")
+  )
+  component <- insight::validate_argument(
+    component,
+    c("all", "conditional", "zi", "zero_inflated")
+  )
 
   if (is.null(.check_component(x, component, verbose = verbose))) {
     return(NULL)
@@ -44,9 +49,7 @@ ci.zerocount <- ci.zeroinfl
 
 
 
-
 # standard error -----------------
-
 
 #' @export
 standard_error.zeroinfl <- function(model,
@@ -54,7 +57,10 @@ standard_error.zeroinfl <- function(model,
                                     method = NULL,
                                     verbose = TRUE,
                                     ...) {
-  component <- match.arg(component, choices = c("all", "conditional", "zi", "zero_inflated"))
+  component <- insight::validate_argument(
+    component,
+    c("all", "conditional", "zi", "zero_inflated")
+  )
   if (is.null(.check_component(model, component, verbose = verbose))) {
     return(NULL)
   }
@@ -102,18 +108,14 @@ standard_error.zerocount <- standard_error.zeroinfl
 
 
 
-
 # p values -----------------------
 
-
-#' @rdname p_value.zcpglm
 #' @export
-p_value.zeroinfl <- function(model,
-                             component = c("all", "conditional", "zi", "zero_inflated"),
-                             method = NULL,
-                             verbose = TRUE,
-                             ...) {
-  component <- match.arg(component)
+p_value.zeroinfl <- function(model, component = "all", method = NULL, verbose = TRUE, ...) {
+  component <- insight::validate_argument(
+    component,
+    c("all", "conditional", "zi", "zero_inflated")
+  )
   if (is.null(.check_component(model, component, verbose = verbose))) {
     return(NULL)
   }
@@ -160,9 +162,7 @@ p_value.zerocount <- p_value.zeroinfl
 
 
 
-
 # simulate model -----------------
-
 
 #' @export
 simulate_model.zeroinfl <- simulate_model.glmmTMB
@@ -172,7 +172,6 @@ simulate_model.hurdle <- simulate_model.zeroinfl
 
 #' @export
 simulate_model.zerocount <- simulate_model.zeroinfl
-
 
 
 

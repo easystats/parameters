@@ -25,7 +25,6 @@ ci.complmrob <- ci.default
 ############# .Gam --------------
 
 
-#' @rdname model_parameters.cgam
 #' @inheritParams model_parameters.aov
 #' @export
 model_parameters.Gam <- function(model,

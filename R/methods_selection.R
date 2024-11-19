@@ -1,8 +1,7 @@
-#' @rdname model_parameters.averaging
 #' @export
 model_parameters.selection <- function(model,
                                        ci = 0.95,
-                                       component = c("all", "selection", "outcome", "auxiliary"),
+                                       component = "all",
                                        bootstrap = FALSE,
                                        iterations = 1000,
                                        standardize = NULL,
@@ -14,7 +13,10 @@ model_parameters.selection <- function(model,
                                        drop = NULL,
                                        verbose = TRUE,
                                        ...) {
-  component <- match.arg(component)
+  component <- insight::validate_argument(
+    component,
+    c("all", "selection", "outcome", "auxiliary")
+  )
 
   ## TODO remove deprecated later
   if (!missing(summary)) {

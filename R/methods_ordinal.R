@@ -7,7 +7,7 @@ model_parameters.clm2 <- function(model,
                                   ci = 0.95,
                                   bootstrap = FALSE,
                                   iterations = 1000,
-                                  component = c("all", "conditional", "scale"),
+                                  component = "all",
                                   standardize = NULL,
                                   exponentiate = FALSE,
                                   p_adjust = NULL,
@@ -17,7 +17,7 @@ model_parameters.clm2 <- function(model,
                                   drop = NULL,
                                   verbose = TRUE,
                                   ...) {
-  component <- match.arg(component)
+  component <- insight::validate_argument(component, c("all", "conditional", "scale"))
   if (component == "all") {
     merge_by <- c("Parameter", "Component")
   } else {
@@ -53,12 +53,10 @@ model_parameters.clm2 <- function(model,
 }
 
 
-#' @rdname model_parameters.merMod
 #' @export
 model_parameters.clmm2 <- model_parameters.clm2
 
 
-#' @rdname model_parameters.merMod
 #' @export
 model_parameters.clmm <- model_parameters.cpglmm
 
@@ -108,10 +106,12 @@ standard_error.clmm2 <- standard_error.clm2
 # p values ----------------
 
 
-#' @rdname p_value.DirichletRegModel
 #' @export
-p_value.clm2 <- function(model, component = c("all", "conditional", "scale"), ...) {
-  component <- match.arg(component)
+p_value.clm2 <- function(model, component = "all", ...) {
+  component <- insight::validate_argument(
+    component,
+    c("all", "conditional", "scale")
+  )
 
   params <- insight::get_parameters(model)
   cs <- stats::coef(summary(model))
@@ -138,11 +138,11 @@ p_value.clmm2 <- p_value.clm2
 
 
 #' @export
-simulate_model.clm2 <- function(model,
-                                iterations = 1000,
-                                component = c("all", "conditional", "scale"),
-                                ...) {
-  component <- match.arg(component)
+simulate_model.clm2 <- function(model, iterations = 1000, component = "all", ...) {
+  component <- insight::validate_argument(
+    component,
+    c("all", "conditional", "scale")
+  )
   out <- .simulate_model(model, iterations, component = component, ...)
 
   class(out) <- c("parameters_simulate_model", class(out))

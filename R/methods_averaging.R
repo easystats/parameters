@@ -2,42 +2,10 @@
 
 #################### .averaging
 
-
-#' Parameters from special models
-#'
-#' Parameters from special regression models not listed under one of the previous categories yet.
-#'
-#' @param component Model component for which parameters should be shown. May be
-#'   one of `"conditional"`, `"precision"` (**betareg**),
-#'   `"scale"` (**ordinal**), `"extra"` (**glmx**),
-#'   `"marginal"` (**mfx**), `"conditional"` or `"full"` (for
-#'   `MuMIn::model.avg()`) or `"all"`.
-#' @param include_studies Logical, if `TRUE` (default), includes parameters
-#'   for all studies. Else, only parameters for overall-effects are shown.
-#' @inheritParams model_parameters.default
-#' @inheritParams model_parameters.stanreg
-#' @inheritParams simulate_model
-#'
-#' @seealso [insight::standardize_names()] to rename
-#'   columns into a consistent, standardized naming scheme.
-#'
-#' @examples
-#' library(parameters)
-#' if (require("brglm2", quietly = TRUE)) {
-#'   data("stemcell")
-#'   model <- bracl(
-#'     research ~ as.numeric(religion) + gender,
-#'     weights = frequency,
-#'     data = stemcell,
-#'     type = "ML"
-#'   )
-#'   model_parameters(model)
-#' }
-#' @return A data frame of indices related to the model's parameters.
 #' @export
 model_parameters.averaging <- function(model,
                                        ci = 0.95,
-                                       component = c("conditional", "full"),
+                                       component = "conditional",
                                        exponentiate = FALSE,
                                        p_adjust = NULL,
                                        summary = getOption("parameters_summary", FALSE),
@@ -46,7 +14,7 @@ model_parameters.averaging <- function(model,
                                        drop = NULL,
                                        verbose = TRUE,
                                        ...) {
-  component <- match.arg(component)
+  component <- insight::validate_argument(component, c("conditional", "full"))
 
   ## TODO remove deprecated later
   if (!missing(summary)) {
@@ -74,7 +42,7 @@ model_parameters.averaging <- function(model,
 
 #' @export
 standard_error.averaging <- function(model, component = "conditional", ...) {
-  component <- match.arg(component, choices = c("conditional", "full"))
+  component <- insight::validate_argument(component, c("conditional", "full"))
   params <- insight::get_parameters(model, component = component)
   if (component == "full") {
     s <- summary(model)$coefmat.full
@@ -88,10 +56,9 @@ standard_error.averaging <- function(model, component = "conditional", ...) {
 }
 
 
-#' @rdname p_value.DirichletRegModel
 #' @export
-p_value.averaging <- function(model, component = c("conditional", "full"), ...) {
-  component <- match.arg(component)
+p_value.averaging <- function(model, component = "conditional", ...) {
+  component <- insight::validate_argument(component, c("conditional", "full"))
   params <- insight::get_parameters(model, component = component)
   if (component == "full") {
     s <- summary(model)$coefmat.full
@@ -107,7 +74,7 @@ p_value.averaging <- function(model, component = c("conditional", "full"), ...) 
 
 
 #' @export
-ci.averaging <- function(x, ci = 0.95, component = c("conditional", "full"), ...) {
-  component <- match.arg(component)
+ci.averaging <- function(x, ci = 0.95, component = "conditional", ...) {
+  component <- insight::validate_argument(component, c("conditional", "full"))
   .ci_generic(model = x, ci = ci, dof = Inf, component = component)
 }
