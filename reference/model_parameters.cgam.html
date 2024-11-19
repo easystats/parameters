@@ -9,7 +9,7 @@ of generalized additive models (GAM(M)s)."><meta property="og:image" content="ht
 
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.23.0.10</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.23.0.11</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -52,7 +52,7 @@ of generalized additive models (GAM(M)s)."><meta property="og:image" content="ht
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Parameters from Generalized Additive (Mixed) Models</h1>
-      <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/main/R/methods_cgam.R" class="external-link"><code>R/methods_cgam.R</code></a>, <a href="https://github.com/easystats/parameters/blob/main/R/methods_mgcv.R" class="external-link"><code>R/methods_mgcv.R</code></a>, <a href="https://github.com/easystats/parameters/blob/main/R/methods_other.R" class="external-link"><code>R/methods_other.R</code></a>, and 1 more</small>
+      <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/main/R/methods_cgam.R" class="external-link"><code>R/methods_cgam.R</code></a></small>
       <div class="d-none name"><code>model_parameters.cgam.Rd</code></div>
     </div>
 
@@ -64,43 +64,6 @@ of generalized additive models (GAM(M)s).</p>
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for class 'cgam'</span></span>
-<span><span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span></span>
-<span>  <span class="va">model</span>,</span>
-<span>  ci <span class="op">=</span> <span class="fl">0.95</span>,</span>
-<span>  ci_method <span class="op">=</span> <span class="st">"residual"</span>,</span>
-<span>  bootstrap <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  iterations <span class="op">=</span> <span class="fl">1000</span>,</span>
-<span>  standardize <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  exponentiate <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  p_adjust <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  keep <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  drop <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  <span class="va">...</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># S3 method for class 'gamm'</span></span>
-<span><span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span></span>
-<span>  <span class="va">model</span>,</span>
-<span>  ci <span class="op">=</span> <span class="fl">0.95</span>,</span>
-<span>  bootstrap <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  iterations <span class="op">=</span> <span class="fl">1000</span>,</span>
-<span>  verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  <span class="va">...</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># S3 method for class 'Gam'</span></span>
-<span><span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span></span>
-<span>  <span class="va">model</span>,</span>
-<span>  es_type <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  df_error <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  type <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  table_wide <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  <span class="va">...</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># S3 method for class 'scam'</span></span>
 <span><span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span></span>
 <span>  <span class="va">model</span>,</span>
 <span>  ci <span class="op">=</span> <span class="fl">0.95</span>,</span>
@@ -143,7 +106,7 @@ cases <code>"wald"</code> is used then.</p></dd>
 
 <dt id="arg-bootstrap">bootstrap<a class="anchor" aria-label="anchor" href="#arg-bootstrap"></a></dt>
 <dd><p>Should estimates be based on bootstrapped model? If
-<code>TRUE</code>, then arguments of <a href="model_parameters.stanreg.html">Bayesian regressions</a> apply (see also
+<code>TRUE</code>, then arguments of Bayesian regressions apply (see also
 <code><a href="bootstrap_parameters.html">bootstrap_parameters()</a></code>).</p></dd>
 
 
@@ -242,31 +205,6 @@ model summaries, it is recommended to set <code>pretty_names = FALSE</code> to s
 up computation of the summary table.</p></li>
 </ul></dd>
 
-
-<dt id="arg-es-type">es_type<a class="anchor" aria-label="anchor" href="#arg-es-type"></a></dt>
-<dd><p>The effect size of interest. Not that possibly not all
-effect sizes are applicable to the model object. See 'Details'. For Anova
-models, can also be a character vector with multiple effect size names.</p></dd>
-
-
-<dt id="arg-df-error">df_error<a class="anchor" aria-label="anchor" href="#arg-df-error"></a></dt>
-<dd><p>Denominator degrees of freedom (or degrees of freedom of the
-error estimate, i.e., the residuals). This is used to compute effect sizes
-for ANOVA-tables from mixed models. See 'Examples'. (Ignored for
-<code>afex_aov</code>.)</p></dd>
-
-
-<dt id="arg-type">type<a class="anchor" aria-label="anchor" href="#arg-type"></a></dt>
-<dd><p>Numeric, type of sums of squares. May be 1, 2 or 3. If 2 or 3,
-ANOVA-tables using <code><a href="https://rdrr.io/pkg/car/man/Anova.html" class="external-link">car::Anova()</a></code> will be returned. (Ignored for
-<code>afex_aov</code>.)</p></dd>
-
-
-<dt id="arg-table-wide">table_wide<a class="anchor" aria-label="anchor" href="#arg-table-wide"></a></dt>
-<dd><p>Logical that decides whether the ANOVA table should be in
-wide format, i.e. should the numerator and denominator degrees of freedom
-be in the same row. Default: <code>FALSE</code>.</p></dd>
-
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
@@ -315,18 +253,18 @@ columns into a consistent, standardized naming scheme.</p></div>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Gu &amp; Wahba 4 term additive model</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># Fixed Effects </span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter   | Coefficient |   SE |       95% CI | t(384.53) |      p</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter   | Coefficient |   SE |       95% CI | t(383.03) |      p</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> --------------------------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) |        8.05 | 0.10 | [7.84, 8.25] |     78.00 | &lt; .001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) |        7.90 | 0.09 | [7.72, 8.09] |     83.78 | &lt; .001</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># Smooth Terms </span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameter        |      F |   df |      p</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -----------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Smooth term (x0) |  11.51 | 3.50 | &lt; .001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Smooth term (x1) | 102.91 | 2.25 | &lt; .001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Smooth term (x2) |  77.72 | 7.72 | &lt; .001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Smooth term (x3) |   0.08 | 1.00 | 0.776 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Smooth term (x0) |  17.65 | 3.10 | &lt; .001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Smooth term (x1) | 101.86 | 3.68 | &lt; .001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Smooth term (x2) |  98.39 | 7.97 | &lt; .001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Smooth term (x3) |   0.56 | 1.22 | 0.421 </span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

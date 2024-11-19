@@ -9,7 +9,7 @@ of (generalized) linear models (GLMs)."><meta property="og:image" content="https
 
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.23.0.10</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.23.0.11</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -52,7 +52,7 @@ of (generalized) linear models (GLMs)."><meta property="og:image" content="https
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Parameters from (General) Linear Models</h1>
-      <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/main/R/1_model_parameters.R" class="external-link"><code>R/1_model_parameters.R</code></a>, <a href="https://github.com/easystats/parameters/blob/main/R/methods_censReg.R" class="external-link"><code>R/methods_censReg.R</code></a>, <a href="https://github.com/easystats/parameters/blob/main/R/methods_mass.R" class="external-link"><code>R/methods_mass.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/main/R/1_model_parameters.R" class="external-link"><code>R/1_model_parameters.R</code></a></small>
       <div class="d-none name"><code>model_parameters.default.Rd</code></div>
     </div>
 
@@ -81,50 +81,7 @@ of (generalized) linear models (GLMs).</p>
 <span>  drop <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  <span class="va">...</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># S3 method for class 'glm'</span></span>
-<span><span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span></span>
-<span>  <span class="va">model</span>,</span>
-<span>  ci <span class="op">=</span> <span class="fl">0.95</span>,</span>
-<span>  ci_method <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  bootstrap <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  iterations <span class="op">=</span> <span class="fl">1000</span>,</span>
-<span>  standardize <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  exponentiate <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  p_adjust <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  vcov <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  vcov_args <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  summary <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"parameters_summary"</span>, <span class="cn">FALSE</span><span class="op">)</span>,</span>
-<span>  include_info <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"parameters_info"</span>, <span class="cn">FALSE</span><span class="op">)</span>,</span>
-<span>  keep <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  drop <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  <span class="va">...</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># S3 method for class 'censReg'</span></span>
-<span><span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span></span>
-<span>  <span class="va">model</span>,</span>
-<span>  ci <span class="op">=</span> <span class="fl">0.95</span>,</span>
-<span>  ci_method <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  bootstrap <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  iterations <span class="op">=</span> <span class="fl">1000</span>,</span>
-<span>  standardize <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  exponentiate <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  p_adjust <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  vcov <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  vcov_args <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  summary <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"parameters_summary"</span>, <span class="cn">FALSE</span><span class="op">)</span>,</span>
-<span>  include_info <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"parameters_info"</span>, <span class="cn">FALSE</span><span class="op">)</span>,</span>
-<span>  keep <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  drop <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  <span class="va">...</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># S3 method for class 'ridgelm'</span></span>
-<span><span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -153,7 +110,7 @@ cases <code>"wald"</code> is used then.</p></dd>
 
 <dt id="arg-bootstrap">bootstrap<a class="anchor" aria-label="anchor" href="#arg-bootstrap"></a></dt>
 <dd><p>Should estimates be based on bootstrapped model? If
-<code>TRUE</code>, then arguments of <a href="model_parameters.stanreg.html">Bayesian regressions</a> apply (see also
+<code>TRUE</code>, then arguments of Bayesian regressions apply (see also
 <code><a href="bootstrap_parameters.html">bootstrap_parameters()</a></code>).</p></dd>
 
 
@@ -215,8 +172,8 @@ identifies the function to be used to compute the covariance matrix.</p><ul><li>
 <li><p>Cluster-robust: <code>"CR"</code>, <code>"CR0"</code>, <code>"CR1"</code>, <code>"CR1p"</code>, <code>"CR1S"</code>,
 <code>"CR2"</code>, <code>"CR3"</code>. See <code><a href="http://jepusto.github.io/clubSandwich/reference/vcovCR.html" class="external-link">?clubSandwich::vcovCR</a></code></p></li>
 <li><p>Bootstrap: <code>"BS"</code>, <code>"xy"</code>, <code>"residual"</code>, <code>"wild"</code>, <code>"mammen"</code>,
-<code>"fractional"</code>, <code>"jackknife"</code>, <code>"norm"</code>, <code>"webb"</code>.
-See <code><a href="https://sandwich.R-Forge.R-project.org/reference/vcovBS.html" class="external-link">?sandwich::vcovBS</a></code></p></li>
+<code>"fractional"</code>, <code>"jackknife"</code>, <code>"norm"</code>, <code>"webb"</code>. See
+<code><a href="https://sandwich.R-Forge.R-project.org/reference/vcovBS.html" class="external-link">?sandwich::vcovBS</a></code></p></li>
 <li><p>Other <code>sandwich</code> package functions: <code>"HAC"</code>, <code>"PC"</code>, <code>"CL"</code>, <code>"OPG"</code>,
 <code>"PL"</code>.</p></li>
 </ul></li>
@@ -421,9 +378,9 @@ consistent, standardized naming scheme.</p></div>
 <span class="r-in"><span><span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span>, bootstrap <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameter   | Coefficient |         95% CI |      p</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) |       39.64 | [35.53, 43.88] | &lt; .001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> wt          |       -3.24 | [-4.82, -1.98] | &lt; .001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> cyl         |       -1.47 | [-2.15, -0.73] | &lt; .001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) |       39.65 | [35.41, 43.97] | &lt; .001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> wt          |       -3.22 | [-4.80, -1.95] | &lt; .001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> cyl         |       -1.46 | [-2.15, -0.74] | &lt; .001</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">Uncertainty intervals (equal-tailed) are naıve bootstrap</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">  intervals.</span></span>
@@ -515,6 +472,13 @@ consistent, standardized naming scheme.</p></div>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">Uncertainty intervals (profile-likelihood) and p-values</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">  (two-tailed) computed using a Wald z-distribution approximation.</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> The model has a log- or logit-link. Consider using `exponentiate =</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   TRUE` to interpret coefficients as ratios.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Some coefficients seem to be rather large, which may indicate issues</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   with (quasi) complete separation. Consider using bias-corrected or</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   penalized regression models.</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># show odds ratio / exponentiated coefficients</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span>, exponentiate <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>

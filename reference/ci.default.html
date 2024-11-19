@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.23.0.10</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.23.0.11</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -50,7 +50,7 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Confidence Intervals (CI)</h1>
-      <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/main/R/2_ci.R" class="external-link"><code>R/2_ci.R</code></a>, <a href="https://github.com/easystats/parameters/blob/main/R/methods_glmmTMB.R" class="external-link"><code>R/methods_glmmTMB.R</code></a>, <a href="https://github.com/easystats/parameters/blob/main/R/methods_lme4.R" class="external-link"><code>R/methods_lme4.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/main/R/2_ci.R" class="external-link"><code>R/2_ci.R</code></a></small>
       <div class="d-none name"><code>ci.default.Rd</code></div>
     </div>
 
@@ -61,21 +61,18 @@
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># Default S3 method</span></span>
-<span><span class="fu"><a href="https://easystats.github.io/bayestestR/reference/ci.html" class="external-link">ci</a></span><span class="op">(</span><span class="va">x</span>, ci <span class="op">=</span> <span class="fl">0.95</span>, dof <span class="op">=</span> <span class="cn">NULL</span>, method <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># S3 method for class 'glmmTMB'</span></span>
 <span><span class="fu"><a href="https://easystats.github.io/bayestestR/reference/ci.html" class="external-link">ci</a></span><span class="op">(</span></span>
 <span>  <span class="va">x</span>,</span>
 <span>  ci <span class="op">=</span> <span class="fl">0.95</span>,</span>
 <span>  dof <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  method <span class="op">=</span> <span class="st">"wald"</span>,</span>
+<span>  method <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  iterations <span class="op">=</span> <span class="fl">500</span>,</span>
 <span>  component <span class="op">=</span> <span class="st">"all"</span>,</span>
+<span>  vcov <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  vcov_args <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  <span class="va">...</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># S3 method for class 'merMod'</span></span>
-<span><span class="fu"><a href="https://easystats.github.io/bayestestR/reference/ci.html" class="external-link">ci</a></span><span class="op">(</span><span class="va">x</span>, ci <span class="op">=</span> <span class="fl">0.95</span>, dof <span class="op">=</span> <span class="cn">NULL</span>, method <span class="op">=</span> <span class="st">"wald"</span>, iterations <span class="op">=</span> <span class="fl">500</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -93,20 +90,63 @@
 <dt id="arg-dof">dof<a class="anchor" aria-label="anchor" href="#arg-dof"></a></dt>
 <dd><p>Number of degrees of freedom to be used when calculating
 confidence intervals. If <code>NULL</code> (default), the degrees of freedom are
-retrieved by calling <code><a href="https://easystats.github.io/insight/reference/get_df.html" class="external-link">insight::get_df()</a></code> with approximation method
-defined in <code>method</code>. If not <code>NULL</code>, use this argument to override the
-default degrees of freedom used to compute confidence intervals.</p></dd>
+retrieved by calling <code><a href="https://easystats.github.io/insight/reference/get_df.html" class="external-link">insight::get_df()</a></code> with approximation method defined
+in <code>method</code>. If not <code>NULL</code>, use this argument to override the default degrees
+of freedom used to compute confidence intervals.</p></dd>
 
 
 <dt id="arg-method">method<a class="anchor" aria-label="anchor" href="#arg-method"></a></dt>
-<dd><p>Method for computing degrees of freedom for
-confidence intervals (CI) and the related p-values. Allowed are following
-options (which vary depending on the model class): <code>"residual"</code>,
-<code>"normal"</code>, <code>"likelihood"</code>, <code>"satterthwaite"</code>, <code>"kenward"</code>, <code>"wald"</code>,
-<code>"profile"</code>, <code>"boot"</code>, <code>"uniroot"</code>, <code>"ml1"</code>, <code>"betwithin"</code>, <code>"hdi"</code>,
-<code>"quantile"</code>, <code>"ci"</code>, <code>"eti"</code>, <code>"si"</code>, <code>"bci"</code>, or <code>"bcai"</code>. See section
-<em>Confidence intervals and approximation of degrees of freedom</em> in
-<code><a href="model_parameters.html">model_parameters()</a></code> for further details.</p></dd>
+<dd><p>Method for computing degrees of freedom for confidence
+intervals (CI) and the related p-values. Allowed are following options (which
+vary depending on the model class): <code>"residual"</code>, <code>"normal"</code>, <code>"likelihood"</code>,
+<code>"satterthwaite"</code>, <code>"kenward"</code>, <code>"wald"</code>, <code>"profile"</code>, <code>"boot"</code>, <code>"uniroot"</code>,
+<code>"ml1"</code>, <code>"betwithin"</code>, <code>"hdi"</code>, <code>"quantile"</code>, <code>"ci"</code>, <code>"eti"</code>, <code>"si"</code>,
+<code>"bci"</code>, or <code>"bcai"</code>. See section <em>Confidence intervals and approximation of
+degrees of freedom</em> in <code><a href="model_parameters.html">model_parameters()</a></code> for further details.</p></dd>
+
+
+<dt id="arg-iterations">iterations<a class="anchor" aria-label="anchor" href="#arg-iterations"></a></dt>
+<dd><p>The number of bootstrap replicates. Only applies to models
+of class <code>merMod</code> when <code>method=boot</code>.</p></dd>
+
+
+<dt id="arg-component">component<a class="anchor" aria-label="anchor" href="#arg-component"></a></dt>
+<dd><p>Model component for which parameters should be shown. See
+the documentation for your object's class in <code><a href="model_parameters.html">model_parameters()</a></code> or
+<code><a href="p_value.html">p_value()</a></code> for further details, or see section <em>Model components</em>.</p></dd>
+
+
+<dt id="arg-vcov">vcov<a class="anchor" aria-label="anchor" href="#arg-vcov"></a></dt>
+<dd><p>Variance-covariance matrix used to compute uncertainty estimates
+(e.g., for robust standard errors). This argument accepts a covariance
+matrix, a function which returns a covariance matrix, or a string which
+identifies the function to be used to compute the covariance matrix.</p><ul><li><p>A covariance matrix</p></li>
+<li><p>A function which returns a covariance matrix (e.g., <code><a href="https://rdrr.io/r/stats/vcov.html" class="external-link">stats::vcov()</a></code>)</p></li>
+<li><p>A string which indicates the kind of uncertainty estimates to return.</p><ul><li><p>Heteroskedasticity-consistent: <code>"HC"</code>, <code>"HC0"</code>, <code>"HC1"</code>, <code>"HC2"</code>,
+<code>"HC3"</code>, <code>"HC4"</code>, <code>"HC4m"</code>, <code>"HC5"</code>. See <code><a href="https://sandwich.R-Forge.R-project.org/reference/vcovHC.html" class="external-link">?sandwich::vcovHC</a></code></p></li>
+<li><p>Cluster-robust: <code>"CR"</code>, <code>"CR0"</code>, <code>"CR1"</code>, <code>"CR1p"</code>, <code>"CR1S"</code>,
+<code>"CR2"</code>, <code>"CR3"</code>. See <code><a href="http://jepusto.github.io/clubSandwich/reference/vcovCR.html" class="external-link">?clubSandwich::vcovCR</a></code></p></li>
+<li><p>Bootstrap: <code>"BS"</code>, <code>"xy"</code>, <code>"residual"</code>, <code>"wild"</code>, <code>"mammen"</code>,
+<code>"fractional"</code>, <code>"jackknife"</code>, <code>"norm"</code>, <code>"webb"</code>. See
+<code><a href="https://sandwich.R-Forge.R-project.org/reference/vcovBS.html" class="external-link">?sandwich::vcovBS</a></code></p></li>
+<li><p>Other <code>sandwich</code> package functions: <code>"HAC"</code>, <code>"PC"</code>, <code>"CL"</code>, <code>"OPG"</code>,
+<code>"PL"</code>.</p></li>
+</ul></li>
+</ul></dd>
+
+
+<dt id="arg-vcov-args">vcov_args<a class="anchor" aria-label="anchor" href="#arg-vcov-args"></a></dt>
+<dd><p>List of arguments to be passed to the function identified by
+the <code>vcov</code> argument. This function is typically supplied by the
+<strong>sandwich</strong> or <strong>clubSandwich</strong> packages. Please refer to their
+documentation (e.g., <code><a href="https://sandwich.R-Forge.R-project.org/reference/vcovHAC.html" class="external-link">?sandwich::vcovHAC</a></code>) to see the list of available
+arguments. If no estimation type (argument <code>type</code>) is given, the default
+type for <code>"HC"</code> equals the default from the <strong>sandwich</strong> package; for type
+<code>"CR"</code>, the default is set to <code>"CR3"</code>.</p></dd>
+
+
+<dt id="arg-verbose">verbose<a class="anchor" aria-label="anchor" href="#arg-verbose"></a></dt>
+<dd><p>Toggle warnings and messages.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
@@ -114,21 +154,6 @@ options (which vary depending on the model class): <code>"residual"</code>,
 E.g., arguments like <code>vcov</code> or <code>vcov_args</code> can be used to compute confidence
 intervals using a specific variance-covariance matrix for the standard
 errors.</p></dd>
-
-
-<dt id="arg-component">component<a class="anchor" aria-label="anchor" href="#arg-component"></a></dt>
-<dd><p>Model component for which parameters should be shown. See
-the documentation for your object's class in <code><a href="model_parameters.html">model_parameters()</a></code> or
-<code><a href="p_value.html">p_value()</a></code> for further details.</p></dd>
-
-
-<dt id="arg-verbose">verbose<a class="anchor" aria-label="anchor" href="#arg-verbose"></a></dt>
-<dd><p>Toggle warnings and messages.</p></dd>
-
-
-<dt id="arg-iterations">iterations<a class="anchor" aria-label="anchor" href="#arg-iterations"></a></dt>
-<dd><p>The number of bootstrap replicates. Only applies to models
-of class <code>merMod</code> when <code>method=boot</code>.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -234,6 +259,42 @@ p-values computed using the Wald method with a <em>normal-distribution)</em>
 (<code>"hdi"</code>, <code>"quantile"</code>, <code>"ci"</code>, <code>"eti"</code>, <code>"si"</code>, <code>"bci"</code>, <code>"bcai"</code>),
 p-values are based on the probability of direction (<code><a href="https://easystats.github.io/bayestestR/reference/p_direction.html" class="external-link">bayestestR::p_direction()</a></code>),
 which is converted into a p-value using <code><a href="https://easystats.github.io/bayestestR/reference/pd_to_p.html" class="external-link">bayestestR::pd_to_p()</a></code>.</p>
+    </div>
+    <div class="section level2">
+    <h2 id="model-components">Model components<a class="anchor" aria-label="anchor" href="#model-components"></a></h2>
+
+
+<p>Possible values for the <code>component</code> argument depend on the model class.
+Following are valid options:</p><ul><li><p><code>"all"</code>: returns all model components, applies to all models, but will only
+have an effect for models with more than just the conditional model component.</p></li>
+<li><p><code>"conditional"</code>: only returns the conditional component, i.e. "fixed effects"
+terms from the model. Will only have an effect for models with more than
+just the conditional model component.</p></li>
+<li><p><code>"smooth_terms"</code>: returns smooth terms, only applies to GAMs (or similar
+models that may contain smooth terms).</p></li>
+<li><p><code>"zero_inflated"</code> (or <code>"zi"</code>): returns the zero-inflation component.</p></li>
+<li><p><code>"dispersion"</code>: returns the dispersion model component. This is common
+for models with zero-inflation or that can model the dispersion parameter.</p></li>
+<li><p><code>"instruments"</code>: for instrumental-variable or some fixed effects regression,
+returns the instruments.</p></li>
+<li><p><code>"nonlinear"</code>: for non-linear models (like models of class <code>nlmerMod</code> or
+<code>nls</code>), returns staring estimates for the nonlinear parameters.</p></li>
+<li><p><code>"correlation"</code>: for models with correlation-component, like <code>gls</code>, the
+variables used to describe the correlation structure are returned.</p></li>
+</ul><p><strong>Special models</strong></p>
+<p>Some model classes also allow rather uncommon options. These are:</p><ul><li><p><strong>mhurdle</strong>: <code>"infrequent_purchase"</code>, <code>"ip"</code>, and <code>"auxiliary"</code></p></li>
+<li><p><strong>BGGM</strong>: <code>"correlation"</code> and <code>"intercept"</code></p></li>
+<li><p><strong>BFBayesFactor</strong>, <strong>glmx</strong>: <code>"extra"</code></p></li>
+<li><p><strong>averaging</strong>:<code>"conditional"</code> and <code>"full"</code></p></li>
+<li><p><strong>mjoint</strong>: <code>"survival"</code></p></li>
+<li><p><strong>mfx</strong>: <code>"precision"</code>, <code>"marginal"</code></p></li>
+<li><p><strong>betareg</strong>, <strong>DirichletRegModel</strong>: <code>"precision"</code></p></li>
+<li><p><strong>mvord</strong>: <code>"thresholds"</code> and <code>"correlation"</code></p></li>
+<li><p><strong>clm2</strong>: <code>"scale"</code></p></li>
+<li><p><strong>selection</strong>: <code>"selection"</code>, <code>"outcome"</code>, and <code>"auxiliary"</code></p></li>
+</ul><p>For models of class <code>brmsfit</code> (package <strong>brms</strong>), even more options are
+possible for the <code>component</code> argument, which are not all documented in detail
+here.</p>
     </div>
 
     <div class="section level2">

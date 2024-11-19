@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.23.0.10</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.23.0.11</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -67,18 +67,7 @@
 <span>  <span class="va">model</span>,</span>
 <span>  iterations <span class="op">=</span> <span class="fl">1000</span>,</span>
 <span>  type <span class="op">=</span> <span class="st">"ordinary"</span>,</span>
-<span>  parallel <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"no"</span>, <span class="st">"multicore"</span>, <span class="st">"snow"</span><span class="op">)</span>,</span>
-<span>  n_cpus <span class="op">=</span> <span class="fl">1</span>,</span>
-<span>  verbose <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  <span class="va">...</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># S3 method for class 'merMod'</span></span>
-<span><span class="fu">bootstrap_model</span><span class="op">(</span></span>
-<span>  <span class="va">model</span>,</span>
-<span>  iterations <span class="op">=</span> <span class="fl">1000</span>,</span>
-<span>  type <span class="op">=</span> <span class="st">"parametric"</span>,</span>
-<span>  parallel <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"no"</span>, <span class="st">"multicore"</span>, <span class="st">"snow"</span><span class="op">)</span>,</span>
+<span>  parallel <span class="op">=</span> <span class="st">"no"</span>,</span>
 <span>  n_cpus <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  cluster <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="cn">FALSE</span>,</span>
@@ -118,13 +107,13 @@ other models, see argument <code>sim</code> in <code><a href="https://rdrr.io/pk
 <dd><p>Number of processes to be used in parallel operation.</p></dd>
 
 
-<dt id="arg-verbose">verbose<a class="anchor" aria-label="anchor" href="#arg-verbose"></a></dt>
-<dd><p>Toggle warnings and messages.</p></dd>
-
-
 <dt id="arg-cluster">cluster<a class="anchor" aria-label="anchor" href="#arg-cluster"></a></dt>
 <dd><p>Optional cluster when <code>parallel = "snow"</code>. See <code><a href="https://rdrr.io/pkg/lme4/man/bootMer.html" class="external-link">?lme4::bootMer</a></code>
 for details.</p></dd>
+
+
+<dt id="arg-verbose">verbose<a class="anchor" aria-label="anchor" href="#arg-verbose"></a></dt>
+<dd><p>Toggle warnings and messages.</p></dd>
 
 </dl></div>
     <div class="section level2">

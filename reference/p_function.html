@@ -17,7 +17,7 @@ different levels."><meta property="og:image" content="https://easystats.github.i
 
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.23.0.10</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.23.0.11</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -160,11 +160,19 @@ parameters takes too long, you may use <code>effects = "fixed"</code>.</p></dd>
 
 
 <dt id="arg-component">component<a class="anchor" aria-label="anchor" href="#arg-component"></a></dt>
-<dd><p>Should all parameters, parameters for the conditional model,
-for the zero-inflation part of the model, or the dispersion model be returned?
-Applies to models with zero-inflation and/or dispersion component. <code>component</code>
-may be one of <code>"conditional"</code>, <code>"zi"</code>, <code>"zero-inflated"</code>, <code>"dispersion"</code> or
-<code>"all"</code> (default). May be abbreviated.</p></dd>
+<dd><p>Which type of parameters to return, such as parameters for the
+conditional model, the zero-inflation part of the model, the dispersion
+term, or other auxiliary parameters be returned? Applies to models with
+zero-inflation and/or dispersion formula, or if parameters such as <code>sigma</code>
+should be included. May be abbreviated. Note that the <em>conditional</em>
+component is also called <em>count</em> or <em>mean</em> component, depending on the
+model. There are three convenient shortcuts: <code>component = "all"</code> returns
+all possible parameters. If <code>component = "location"</code>, location parameters
+such as <code>conditional</code>, <code>zero_inflated</code>, or <code>smooth_terms</code>, are returned
+(everything that are fixed or random effects - depending on the <code>effects</code>
+argument - but no auxiliary parameters). For <code>component = "distributional"</code>
+(or <code>"auxiliary"</code>), components like <code>sigma</code>, <code>dispersion</code>, or <code>beta</code>
+(and other auxiliary parameters) are returned.</p></dd>
 
 
 <dt id="arg-vcov">vcov<a class="anchor" aria-label="anchor" href="#arg-vcov"></a></dt>
@@ -178,8 +186,8 @@ identifies the function to be used to compute the covariance matrix.</p><ul><li>
 <li><p>Cluster-robust: <code>"CR"</code>, <code>"CR0"</code>, <code>"CR1"</code>, <code>"CR1p"</code>, <code>"CR1S"</code>,
 <code>"CR2"</code>, <code>"CR3"</code>. See <code><a href="http://jepusto.github.io/clubSandwich/reference/vcovCR.html" class="external-link">?clubSandwich::vcovCR</a></code></p></li>
 <li><p>Bootstrap: <code>"BS"</code>, <code>"xy"</code>, <code>"residual"</code>, <code>"wild"</code>, <code>"mammen"</code>,
-<code>"fractional"</code>, <code>"jackknife"</code>, <code>"norm"</code>, <code>"webb"</code>.
-See <code><a href="https://sandwich.R-Forge.R-project.org/reference/vcovBS.html" class="external-link">?sandwich::vcovBS</a></code></p></li>
+<code>"fractional"</code>, <code>"jackknife"</code>, <code>"norm"</code>, <code>"webb"</code>. See
+<code><a href="https://sandwich.R-Forge.R-project.org/reference/vcovBS.html" class="external-link">?sandwich::vcovBS</a></code></p></li>
 <li><p>Other <code>sandwich</code> package functions: <code>"HAC"</code>, <code>"PC"</code>, <code>"CL"</code>, <code>"OPG"</code>,
 <code>"PL"</code>.</p></li>
 </ul></li>
