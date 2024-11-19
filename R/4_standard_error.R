@@ -76,6 +76,7 @@ standard_error <- function(model, ...) {
 #' @rdname standard_error
 #' @export
 standard_error.default <- function(model,
+                                   effects = "fixed",
                                    component = "all",
                                    vcov = NULL,
                                    vcov_args = NULL,

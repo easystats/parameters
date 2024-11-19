@@ -223,7 +223,6 @@ ci.merMod <- function(x,
 }
 
 
-#' @rdname standard_error
 #' @export
 standard_error.merMod <- function(model,
                                   effects = "fixed",
