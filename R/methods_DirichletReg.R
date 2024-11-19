@@ -83,10 +83,10 @@ standard_error.DirichletRegModel <- function(model, component = "all", ...) {
     SE = as.vector(model$se)
   )
 
-  if (!is.null(params$Component)) {
-    out$Component <- params$Component
-  } else {
+  if (is.null(params$Component)) {
     component <- "all"
+  } else {
+    out$Component <- params$Component
   }
 
   if (component != "all") {
@@ -111,10 +111,10 @@ p_value.DirichletRegModel <- function(model, component = "all", ...) {
     p = as.vector(2 * stats::pnorm(-abs(params$Estimate / model$se)))
   )
 
-  if (!is.null(params$Component)) {
-    out$Component <- params$Component
-  } else {
+  if (is.null(params$Component)) {
     component <- "all"
+  } else {
+    out$Component <- params$Component
   }
 
   if (component != "all") {
