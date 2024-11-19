@@ -63,11 +63,7 @@ model_parameters.betareg <- function(model,
 
 
 #' @export
-ci.betareg <- function(x,
-                       ci = 0.95,
-                       component = "all",
-                       verbose = TRUE,
-                       ...) {
+ci.betareg <- function(x, ci = 0.95, component = "all", verbose = TRUE, ...) {
   # validation check, warn if unsupported argument is used.
   dot_args <- .check_dots(
     dots = list(...),
@@ -83,10 +79,7 @@ ci.betareg <- function(x,
 
 
 #' @export
-standard_error.betareg <- function(model,
-                                   component = "all",
-                                   verbose = TRUE,
-                                   ...) {
+standard_error.betareg <- function(model, component = "all", verbose = TRUE, ...) {
   # validation check, warn if unsupported argument is used.
   dot_args <- .check_dots(
     dots = list(...),
@@ -117,10 +110,7 @@ standard_error.betareg <- function(model,
 
 
 #' @export
-p_value.betareg <- function(model,
-                            component = "all",
-                            verbose = TRUE,
-                            ...) {
+p_value.betareg <- function(model, component = "all", verbose = TRUE, ...) {
   # validation check, warn if unsupported argument is used.
   dot_args <- .check_dots(
     dots = list(...),
@@ -154,11 +144,11 @@ p_value.betareg <- function(model,
 
 
 #' @export
-simulate_model.betareg <- function(model,
-                                   iterations = 1000,
-                                   component = c("all", "conditional", "precision"),
-                                   ...) {
-  component <- match.arg(component)
+simulate_model.betareg <- function(model, iterations = 1000, component = "all", ...) {
+  component <- insight::validate_argument(
+    component,
+    c("all", "conditional", "precision")
+  )
   out <- .simulate_model(model, iterations, component = component, ...)
 
   class(out) <- c("parameters_simulate_model", class(out))

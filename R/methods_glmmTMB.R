@@ -538,7 +538,6 @@ standard_error.glmmTMB <- function(model,
 # simulate model -----
 
 
-#' @rdname simulate_model
 #' @export
 simulate_model.glmmTMB <- function(model,
                                    iterations = 1000,
@@ -632,8 +631,6 @@ simulate_model.glmmTMB <- function(model,
 
 # simulate_parameters -----
 
-
-#' @rdname simulate_parameters
 #' @export
 simulate_parameters.glmmTMB <- function(model,
                                         iterations = 1000,
