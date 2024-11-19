@@ -67,6 +67,10 @@ the model-specific documentation:
 \strong{WRS2}, \code{bfsl}, \code{deltaMethod}, \code{fitdistr}, \code{mjoint}, \code{mle}, \code{model.avg}, ...
 }
 }
+\details{
+A full overview can be found here:
+https://easystats.github.io/parameters/reference/
+}
 \note{
 The \code{\link[=print.parameters_model]{print()}} method has several
 arguments to tweak the output. There is also a

@@ -36,6 +36,9 @@
 #'   **quantreg**, **selection**, **systemfit**, **tidymodels**, **varEST**,
 #'   **WRS2**, `bfsl`, `deltaMethod`, `fitdistr`, `mjoint`, `mle`, `model.avg`, ...
 #'
+#' A full overview can be found here:
+#' https://easystats.github.io/parameters/reference/
+#'
 #' @param model Statistical Model.
 #' @param ... Arguments passed to or from other methods. Non-documented
 #' arguments are
