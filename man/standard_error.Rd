@@ -91,14 +91,13 @@ to mixed models. May be abbreviated. When standard errors for random
 effects are requested, for each grouping factor a list of standard errors
 (per group level) for random intercepts and slopes is returned.}
 
-\item{method}{Method for computing degrees of freedom for
-confidence intervals (CI) and the related p-values. Allowed are following
-options (which vary depending on the model class): \code{"residual"},
-\code{"normal"}, \code{"likelihood"}, \code{"satterthwaite"}, \code{"kenward"}, \code{"wald"},
-\code{"profile"}, \code{"boot"}, \code{"uniroot"}, \code{"ml1"}, \code{"betwithin"}, \code{"hdi"},
-\code{"quantile"}, \code{"ci"}, \code{"eti"}, \code{"si"}, \code{"bci"}, or \code{"bcai"}. See section
-\emph{Confidence intervals and approximation of degrees of freedom} in
-\code{\link[=model_parameters]{model_parameters()}} for further details.}
+\item{method}{Method for computing degrees of freedom for confidence
+intervals (CI) and the related p-values. Allowed are following options (which
+vary depending on the model class): \code{"residual"}, \code{"normal"}, \code{"likelihood"},
+\code{"satterthwaite"}, \code{"kenward"}, \code{"wald"}, \code{"profile"}, \code{"boot"}, \code{"uniroot"},
+\code{"ml1"}, \code{"betwithin"}, \code{"hdi"}, \code{"quantile"}, \code{"ci"}, \code{"eti"}, \code{"si"},
+\code{"bci"}, or \code{"bcai"}. See section \emph{Confidence intervals and approximation of
+degrees of freedom} in \code{\link[=model_parameters]{model_parameters()}} for further details.}
 }
 \value{
 A data frame with at least two columns: the parameter names and the

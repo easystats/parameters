@@ -28,18 +28,17 @@ p_value(model, ...)
 
 \item{dof}{Number of degrees of freedom to be used when calculating
 confidence intervals. If \code{NULL} (default), the degrees of freedom are
-retrieved by calling \code{\link[insight:get_df]{insight::get_df()}} with approximation method
-defined in \code{method}. If not \code{NULL}, use this argument to override the
-default degrees of freedom used to compute confidence intervals.}
+retrieved by calling \code{\link[insight:get_df]{insight::get_df()}} with approximation method defined
+in \code{method}. If not \code{NULL}, use this argument to override the default degrees
+of freedom used to compute confidence intervals.}
 
-\item{method}{Method for computing degrees of freedom for
-confidence intervals (CI) and the related p-values. Allowed are following
-options (which vary depending on the model class): \code{"residual"},
-\code{"normal"}, \code{"likelihood"}, \code{"satterthwaite"}, \code{"kenward"}, \code{"wald"},
-\code{"profile"}, \code{"boot"}, \code{"uniroot"}, \code{"ml1"}, \code{"betwithin"}, \code{"hdi"},
-\code{"quantile"}, \code{"ci"}, \code{"eti"}, \code{"si"}, \code{"bci"}, or \code{"bcai"}. See section
-\emph{Confidence intervals and approximation of degrees of freedom} in
-\code{\link[=model_parameters]{model_parameters()}} for further details.}
+\item{method}{Method for computing degrees of freedom for confidence
+intervals (CI) and the related p-values. Allowed are following options (which
+vary depending on the model class): \code{"residual"}, \code{"normal"}, \code{"likelihood"},
+\code{"satterthwaite"}, \code{"kenward"}, \code{"wald"}, \code{"profile"}, \code{"boot"}, \code{"uniroot"},
+\code{"ml1"}, \code{"betwithin"}, \code{"hdi"}, \code{"quantile"}, \code{"ci"}, \code{"eti"}, \code{"si"},
+\code{"bci"}, or \code{"bcai"}. See section \emph{Confidence intervals and approximation of
+degrees of freedom} in \code{\link[=model_parameters]{model_parameters()}} for further details.}
 
 \item{component}{Model component for which parameters should be shown. See
 the documentation for your object's class in \code{\link[=model_parameters]{model_parameters()}} or
