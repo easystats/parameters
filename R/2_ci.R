@@ -80,7 +80,8 @@ ci.default <- function(x,
     vcov = vcov,
     vcov_args = vcov_args,
     verbose = verbose,
-  ...)
+    ...
+  )
 }
 
 
