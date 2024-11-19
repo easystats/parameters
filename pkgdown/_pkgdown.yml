@@ -36,7 +36,7 @@ reference:
       - model_parameters.rma
       - model_parameters.htest
       - model_parameters.glht
-      - model_parameters.averaging
+      - model_parameters.glimML
       - model_parameters.t1way
 
   - title: "Standard Errors, Confidence Intervals, Degrees of Freedom and p-values"

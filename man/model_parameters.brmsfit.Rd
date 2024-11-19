@@ -197,7 +197,7 @@ A data frame of indices related to the model's parameters.
 }
 \description{
 Model parameters from Bayesian models. This function internally calls
-\code{\link[bayestestR:describe_posterior]{bayestestR::describe_posterior()}} to get the relvant information for
+\code{\link[bayestestR:describe_posterior]{bayestestR::describe_posterior()}} to get the relevant information for
 the output.
 }
 \note{
