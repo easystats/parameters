@@ -5,7 +5,6 @@
 ############# .bracl --------------
 
 
-#' @rdname model_parameters.mlm
 #' @export
 model_parameters.bracl <- function(model,
                                    ci = 0.95,

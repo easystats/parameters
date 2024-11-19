@@ -67,7 +67,6 @@ format_parameters.mira <- format_parameters.rma
 
 # model_parameters ---------------------------------
 
-#' @rdname model_parameters.mira
 #' @export
 model_parameters.mipo <- function(model,
                                   ci = 0.95,

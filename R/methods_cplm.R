@@ -51,6 +51,9 @@
 #' - **mvord**: `"thresholds"` and `"correlation"`
 #' - **clm2**: `"scale"`
 #' - **selection**: `"selection"`, `"outcome"`, and `"auxiliary"`
+#' - **lavaan**: One or more of `"regression"`, `"correlation"`, `"loading"`,
+#'   `"variance"`, `"defined"`, or `"mean"`. Can also be `"all"` to include
+#'   all components.
 #'
 #' For models of class `brmsfit` (package **brms**), even more options are
 #' possible for the `component` argument, which are not all documented in detail

@@ -45,7 +45,6 @@ reference:
       - ci.default
       - p_value
       - degrees_of_freedom
-      - n_parameters
   - subtitle: "Approximation Methods"
     contents:
       - p_value_kenward
@@ -103,6 +102,10 @@ reference:
       - format.compare_parameters
       - parameters_type
       - print_md
+
+  - title: "Functions exported from other packages"
+    contents:
+      - n_parameters
 
   - title: "Example Data Sets"
     contents:

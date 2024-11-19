@@ -1,7 +1,5 @@
 # model parameters -------------------
 
-
-#' @rdname model_parameters.mlm
 #' @export
 model_parameters.clm2 <- function(model,
                                   ci = 0.95,

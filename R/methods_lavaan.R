@@ -4,12 +4,11 @@
 # model parameters ---------------------------
 
 
-#' @rdname model_parameters.principal
 #' @export
 model_parameters.lavaan <- function(model,
                                     ci = 0.95,
                                     standardize = FALSE,
-                                    component = c("regression", "correlation", "loading", "defined"),
+                                    component = "regression",
                                     keep = NULL,
                                     drop = NULL,
                                     verbose = TRUE,
