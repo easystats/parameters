@@ -362,6 +362,6 @@ pool_parameters <- function(x,
     "Log-Odds"
   }
   # formula
-  attr(pooled_params, "model_formula") <- insight::find_formula(model)
+  attr(pooled_params, "model_formula") <- insight::find_formula(model, verbose = FALSE)
   pooled_params
 }

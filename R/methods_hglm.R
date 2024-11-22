@@ -74,7 +74,7 @@ model_parameters.hglm <- function(model,
 
   # add dispersion model
 
-  has_dispersion <- !is.null(insight::find_formula(model)$dispersion)
+  has_dispersion <- !is.null(insight::find_formula(model, verbose = FALSE)$dispersion)
   if (has_dispersion && component %in% c("all", "dispersion")) {
     disp_params <- insight::get_parameters(model, effects = "fixed", component = "dispersion")
     disp_se <- standard_error(model, effects = "fixed", component = "dispersion")
@@ -114,7 +114,7 @@ standard_error.hglm <- function(model,
   effects <- match.arg(effects, choices = c("all", "fixed", "random"))
   component <- match.arg(component, choices = c("all", "conditional", "dispersion"))
 
-  f <- insight::find_formula(model)
+  f <- insight::find_formula(model, verbose = FALSE)
   if (component == "dispersion" && is.null(f$dispersion)) {
     if (verbose) {
       insight::format_alert("No standard errors found for model's dispersion parameters.")

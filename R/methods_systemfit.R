@@ -43,7 +43,7 @@ model_parameters.systemfit <- function(model,
 #' @export
 standard_error.systemfit <- function(model, ...) {
   cf <- stats::coef(summary(model))
-  f <- insight::find_formula(model)
+  f <- insight::find_formula(model, verbose = FALSE)
 
   system_names <- names(f)
   parameter_names <- row.names(cf)
@@ -66,7 +66,7 @@ standard_error.systemfit <- function(model, ...) {
 #' @export
 p_value.systemfit <- function(model, ...) {
   cf <- stats::coef(summary(model))
-  f <- insight::find_formula(model)
+  f <- insight::find_formula(model, verbose = FALSE)
 
   system_names <- names(f)
   parameter_names <- row.names(cf)

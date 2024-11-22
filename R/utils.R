@@ -66,7 +66,7 @@
 
 # Find log-terms inside model formula, and return "clean" term names
 .log_terms <- function(model) {
-  x <- insight::find_terms(model, flatten = TRUE)
+  x <- insight::find_terms(model, flatten = TRUE, verbose = FALSE)
   gsub("^log\\((.*)\\)", "\\1", grep("^log\\((.*)\\)", x, value = TRUE))
 }
 
@@ -143,9 +143,9 @@
 .find_factor_levels <- function(model_data, model = NULL, model_call = NULL) {
   # check whether we have on-the-fly conversion of factors
   if (!is.null(model)) {
-    model_terms <- insight::find_terms(model)
+    model_terms <- insight::find_terms(model, verbose = FALSE)
   } else if (!is.null(model_call)) { # nolint
-    model_terms <- insight::find_terms(model_call)
+    model_terms <- insight::find_terms(model_call, verbose = FALSE)
   } else {
     model_terms <- NULL
   }

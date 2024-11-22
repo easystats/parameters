@@ -64,7 +64,7 @@
   # use tryCatch, these might fail...
   attr(params, "test_statistic") <- .safe(insight::find_statistic(model))
   attr(params, "log_response") <- .safe(isTRUE(grepl("log", insight::find_transformation(model), fixed = TRUE)))
-  attr(params, "log_predictors") <- .safe(any(grepl("log", unlist(insight::find_terms(model)[c("conditional", "zero_inflated", "instruments")]), fixed = TRUE))) # nolint
+  attr(params, "log_predictors") <- .safe(any(grepl("log", unlist(insight::find_terms(model, verbose = FALSE)[c("conditional", "zero_inflated", "instruments")]), fixed = TRUE))) # nolint
 
   # save if model is multivariate response model
   if (isTRUE(info$is_multivariate)) {
@@ -107,7 +107,7 @@
 
 
   # model formula
-  model_formula <- .safe(insight::safe_deparse(insight::find_formula(model)$conditional))
+  model_formula <- .safe(insight::safe_deparse(insight::find_formula(model, verbose = FALSE)$conditional)) # nolint
   attr(params, "model_formula") <- model_formula
 
 
