@@ -16,6 +16,8 @@
 
 ## Bug fixes
 
+* Fixed bug in `p_value()` for objects of class `averaging`.
+
 * Fixed bug when extracting 'pretty labels' for model parameters, which could
   fail when predictors were character vectors.
 
