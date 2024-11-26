@@ -66,9 +66,27 @@ p_value.averaging <- function(model, component = "conditional", ...) {
     s <- summary(model)$coefmat.subset
   }
 
+  # to data frame
+  s <- as.data.frame(s)
+
+  # do we have a p-value column based on t?
+  pvcn <- which(colnames(s) == "Pr(>|t|)")
+  # if not, do we have a p-value column based on z?
+  if (length(pvcn) == 0) {
+    pvcn <- which(colnames(s) == "Pr(>|z|)")
+  }
+  # if not, default to ncol
+  if (length(pvcn) == 0) {
+    if (ncol(s) > 4) {
+      pvcn <- 5
+    } else {
+      pvcn <- 4
+    }
+  }
+
   .data_frame(
     Parameter = .remove_backticks_from_string(params$Parameter),
-    p = as.vector(s[, 5])
+    p = as.vector(s[, pvcn])
   )
 }
 
