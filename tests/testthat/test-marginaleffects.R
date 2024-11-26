@@ -1,4 +1,4 @@
-skip_if_not_installed("marginaleffects", minimum_version = "0.24.0")
+skip_if_not_installed("marginaleffects", minimum_version = "1.0.0")
 skip_if_not_installed("rstanarm")
 
 test_that("marginaleffects()", {
@@ -7,7 +7,7 @@ test_that("marginaleffects()", {
   model <- marginaleffects::avg_slopes(x, newdata = insight::get_datagrid(x, by = "Species"), variables = "Petal.Length")
   out <- parameters(model)
   expect_identical(nrow(out), 1L)
-  cols <- c("Parameter", "Coefficient", "SE", "Statistic", "p", "S", "CI", "CI_low", "CI_high")
+  cols <- c("Parameter", "Comparison", "Coefficient", "SE", "Statistic", "p", "S", "CI", "CI_low", "CI_high")
   expect_true(all(cols %in% colnames(out)))
   out <- model_parameters(model, exponentiate = TRUE)
   expect_equal(out$Coefficient, 1.394, tolerance = 1e-3)
