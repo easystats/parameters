@@ -155,7 +155,7 @@ Suggests:
     logspline,
     lqmm,
     M3C,
-    marginaleffects (>= 0.20.1),
+    marginaleffects (>= 0.20.4),
     MASS,
     Matrix,
     mclogit,
@@ -224,4 +224,4 @@ Config/testthat/edition: 3
 Config/testthat/parallel: true
 Config/Needs/website: easystats/easystatstemplate
 Config/rcmdcheck/ignore-inconsequential-notes: true
-Remotes: easystats/insight
+Remotes: easystats/insight, vincentarelbundock/marginaleffects
