@@ -1,5 +1,4 @@
 skip_if_not_installed("serp")
-skip_if_not_installed("insight", minimum_version = "0.20.0")
 skip_if_not_installed("withr")
 
 # make sure we have the correct interaction mark for tests
