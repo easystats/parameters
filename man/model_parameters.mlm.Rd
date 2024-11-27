@@ -54,9 +54,9 @@ arguments. If no estimation type (argument \code{type}) is given, the default
 type for \code{"HC"} equals the default from the \strong{sandwich} package; for type
 \code{"CR"}, the default is set to \code{"CR3"}.}
 
-\item{bootstrap}{Should estimates be based on bootstrapped model? If
-\code{TRUE}, then arguments of \link[=model_parameters.stanreg]{Bayesian regressions} apply (see also
-\code{\link[=bootstrap_parameters]{bootstrap_parameters()}}).}
+\item{bootstrap}{Should estimates be based on bootstrapped model? If \code{TRUE},
+then arguments of \link[=model_parameters.brmsfit]{Bayesian regressions} apply
+(see also \code{\link[=bootstrap_parameters]{bootstrap_parameters()}}).}
 
 \item{iterations}{The number of bootstrap replicates. This only apply in the
 case of bootstrapped frequentist models.}

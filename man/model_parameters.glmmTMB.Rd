@@ -53,9 +53,9 @@ computed by default, for simpler models or fewer observations, confidence
 intervals will be included. Set explicitly to \code{TRUE} or \code{FALSE} to enforce
 or omit calculation of confidence intervals.}
 
-\item{bootstrap}{Should estimates be based on bootstrapped model? If
-\code{TRUE}, then arguments of \link[=model_parameters.stanreg]{Bayesian regressions} apply (see also
-\code{\link[=bootstrap_parameters]{bootstrap_parameters()}}).}
+\item{bootstrap}{Should estimates be based on bootstrapped model? If \code{TRUE},
+then arguments of \link[=model_parameters.brmsfit]{Bayesian regressions} apply
+(see also \code{\link[=bootstrap_parameters]{bootstrap_parameters()}}).}
 
 \item{iterations}{The number of bootstrap replicates. This only apply in the
 case of bootstrapped frequentist models.}

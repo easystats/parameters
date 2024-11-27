@@ -1,7 +1,7 @@
 Type: Package
 Package: parameters
 Title: Processing of Model Parameters
-Version: 0.23.0.12
+Version: 0.24.0
 Authors@R:
     c(person(given = "Daniel",
              family = "Lüdecke",
@@ -80,7 +80,7 @@ Depends:
 Imports:
     bayestestR (>= 0.15.0),
     datawizard (>= 0.13.0),
-    insight (>= 0.20.5),
+    insight (>= 1.0.0),
     graphics,
     methods,
     stats,
@@ -155,7 +155,7 @@ Suggests:
     logspline,
     lqmm,
     M3C,
-    marginaleffects (>= 0.20.1),
+    marginaleffects (>= 0.20.4),
     MASS,
     Matrix,
     mclogit,
@@ -224,4 +224,3 @@ Config/testthat/edition: 3
 Config/testthat/parallel: true
 Config/Needs/website: easystats/easystatstemplate
 Config/rcmdcheck/ignore-inconsequential-notes: true
-Remotes: easystats/insight
