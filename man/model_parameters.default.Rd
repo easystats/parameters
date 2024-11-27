@@ -38,9 +38,9 @@ options (which vary depending on the model class): \code{"residual"},
 \code{\link[=model_parameters]{model_parameters()}} for further details. When \code{ci_method=NULL}, in most
 cases \code{"wald"} is used then.}
 
-\item{bootstrap}{Should estimates be based on bootstrapped model? If
-\code{TRUE}, then arguments of \link[=model_parameters.stanreg]{Bayesian regressions} apply (see also
-\code{\link[=bootstrap_parameters]{bootstrap_parameters()}}).}
+\item{bootstrap}{Should estimates be based on bootstrapped model? If \code{TRUE},
+then arguments of \link[=model_parameters.brmsfit]{Bayesian regressions} apply
+(see also \code{\link[=bootstrap_parameters]{bootstrap_parameters()}}).}
 
 \item{iterations}{The number of bootstrap replicates. This only apply in the
 case of bootstrapped frequentist models.}

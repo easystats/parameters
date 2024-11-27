@@ -13,7 +13,7 @@
 #'   **scam**, **VGAM**, `Gam` (although the output of `Gam` is more Anova-alike),
 #'   `gamm`, ...
 #' - [ANOVA][model_parameters.aov()]: **afex**, `aov`, `anova`, `Gam`, ...
-#' - [Bayesian][model_parameters.stanreg()]: **BayesFactor**, **blavaan**, **brms**,
+#' - [Bayesian][model_parameters.brmsfit()]: **BayesFactor**, **blavaan**, **brms**,
 #'   **MCMCglmm**, **posterior**, **rstanarm**, `bayesQR`, `bcplm`, `BGGM`, `blmrm`,
 #'   `blrm`, `mcmc.list`, `MCMCglmm`, ...
 #' - [Clustering][model_parameters.hclust()]: **hclust**, **kmeans**, **mclust**, **pam**, ...
@@ -426,10 +426,9 @@ parameters <- model_parameters
 #'
 #' @param model Model object.
 #' @param ci Confidence Interval (CI) level. Default to `0.95` (`95%`).
-#' @param bootstrap Should estimates be based on bootstrapped model? If
-#'   `TRUE`, then arguments of [Bayesian
-#'   regressions][model_parameters.stanreg] apply (see also
-#'   [`bootstrap_parameters()`]).
+#' @param bootstrap Should estimates be based on bootstrapped model? If `TRUE`,
+#'   then arguments of [Bayesian regressions][model_parameters.brmsfit] apply
+#'   (see also [`bootstrap_parameters()`]).
 #' @param iterations The number of bootstrap replicates. This only apply in the
 #'   case of bootstrapped frequentist models.
 #' @param standardize The method used for standardizing the parameters. Can be
