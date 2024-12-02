@@ -1,5 +1,6 @@
 skip_if_not_installed("performance")
 skip_if_not_installed("domir")
+skip_if_not_installed("datawizard")
 
 DA_test_model <- lm(mpg ~ vs + cyl + carb, data = mtcars)
 

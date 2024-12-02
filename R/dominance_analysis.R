@@ -539,9 +539,10 @@ dominance_analysis <- function(model, sets = NULL, all = NULL,
       )
     )
 
+    cols_to_select <- colnames(da_df_cdl)[2:length(da_df_cdl)]
     da_df_cdl <- datawizard::data_rename(
       da_df_cdl,
-      select = names(da_df_cdl)[2:length(da_df_cdl)],
+      select = cols_to_select,
       replacement = colnames(domir_res$Conditional_Dominance)
     )
   } else {
@@ -559,9 +560,10 @@ dominance_analysis <- function(model, sets = NULL, all = NULL,
       )
     )
 
+    cols_to_select <- colnames(da_df_cpt)[2:length(da_df_cpt)]
     da_df_cpt <- datawizard::data_rename(
       da_df_cpt,
-      select = names(da_df_cpt)[2:length(da_df_cpt)],
+      select = cols_to_select,
       replacement = colnames(domir_res$Complete_Dominance)
     )
   } else {
