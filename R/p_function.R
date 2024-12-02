@@ -379,7 +379,7 @@ format.parameters_p_function <- function(x,
     ci <- as.character(i$CI)[1]
     out <- datawizard::data_rename(
       i,
-      pattern = c("CI_low", "CI_high"),
+      select = c("CI_low", "CI_high"),
       replacement = c(sprintf("CI_low_%s", ci), sprintf("CI_high_%s", ci))
     )
     out$CI <- NULL

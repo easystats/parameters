@@ -615,7 +615,7 @@ print.parameters_da <- function(x, digits = 3, ...) {
   printed_x <- x
 
   printed_x$General <- datawizard::data_rename(x$General,
-    pattern = "General_Dominance",
+    select = "General_Dominance",
     replacement = "General Dominance"
   )
 
@@ -628,7 +628,7 @@ print.parameters_da <- function(x, digits = 3, ...) {
 
     printed_x$Conditional <-
       datawizard::data_rename(x$Conditional,
-        pattern = cdl_names,
+        select = cdl_names,
         replacement = cdl_names_rep
       )
   }
@@ -644,7 +644,7 @@ print.parameters_da <- function(x, digits = 3, ...) {
 
     printed_x$Complete <-
       datawizard::data_rename(x$Complete,
-        pattern = cpt_names,
+        select = cpt_names,
         replacement = cpt_names_rep
       )
   }
