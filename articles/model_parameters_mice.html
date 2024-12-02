@@ -29,7 +29,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.24.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.24.0.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -87,7 +87,7 @@
       <img src="../logo.png" class="logo" alt=""><h1>Model Parameters for Multiply Imputed Repeated Analyses</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/v0.24.0/vignettes/model_parameters_mice.Rmd" class="external-link"><code>vignettes/model_parameters_mice.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/main/vignettes/model_parameters_mice.Rmd" class="external-link"><code>vignettes/model_parameters_mice.Rmd</code></a></small>
       <div class="d-none name"><code>model_parameters_mice.Rmd</code></div>
     </div>
 
@@ -153,7 +153,7 @@ each imputed dataset fails.</p>
 <p>However, we can use a workaround by using
 <code><a href="../reference/pool_parameters.html">pool_parameters()</a></code>, which works on a list of model objects.
 So whenever a model-object is not yet supported by
-<code>mice::with()</code>, you can instead fit multiple models to the
+<code><a href="https://amices.org/mice/reference/with.mids.html" class="external-link">mice::with()</a></code>, you can instead fit multiple models to the
 imputed datasets and pool all parameters with
 <code><a href="../reference/pool_parameters.html">pool_parameters()</a></code>:</p>
 <p>The steps would be:</p>
