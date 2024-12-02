@@ -21,8 +21,8 @@ p_value.mipo <- function(model, ...) {
     p = as.vector(s$p.value)
   )
   # check for ordinal-alike models
-  if ("y.level" %in% colnames(s)) {
-    out$Response <- as.vector(s$y.level)
+  if (!is.null(model$pooled) && "y.level" %in% colnames(model$pooled)) {
+    out$Response <- as.vector(model$pooled$y.level)
   }
   out
 }
@@ -45,8 +45,8 @@ standard_error.mipo <- function(model, ...) {
     SE = as.vector(s$std.error)
   )
   # check for ordinal-alike models
-  if ("y.level" %in% colnames(s)) {
-    out$Response <- as.vector(s$y.level)
+  if (!is.null(model$pooled) && "y.level" %in% colnames(model$pooled)) {
+    out$Response <- as.vector(model$pooled$y.level)
   }
   out
 }
@@ -85,8 +85,7 @@ model_parameters.mipo <- function(model,
   )
 
   # check if we have ordinal/categorical response
-  s <- summary(model)
-  if ("y.level" %in% colnames(s)) {
+  if (!is.null(model$pooled) && "y.level" %in% colnames(model$pooled)) {
     merge_by <- c("Parameter", "Response")
   } else {
     merge_by <- "Parameter"

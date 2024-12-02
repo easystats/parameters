@@ -206,7 +206,7 @@
   # rename columns
   out <- datawizard::data_rename(
     out,
-    pattern = c("grp", "sdcor"),
+    select = c("grp", "sdcor"),
     replacement = c("Group", "Coefficient")
   )
 

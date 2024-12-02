@@ -74,7 +74,7 @@ test_that("pooled parameters, glmmTMB, components", {
   )
   expect_equal(out$Coefficient, c(187.280225, -87.838969), tolerance = 1e-3)
 
-  out <- pool_parameters(models, component = "all", effects = "all")
+  out <- suppressMessages(pool_parameters(models, component = "all", effects = "all"))
   expect_named(
     out,
     c(
@@ -123,7 +123,7 @@ test_that("pooled parameters, glmmTMB, zero-inflated", {
     )
   })
 
-  out <- pool_parameters(models)
+  out <- pool_parameters(models, ci_method = "residual")
   expect_named(
     out,
     c(
