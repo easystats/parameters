@@ -167,7 +167,7 @@ Suggests:
     metafor,
     mfx,
     mgcv,
-    mice,
+    mice (>= 3.17.0),
     mmrm,
     multcomp,
     MuMIn,
