@@ -426,7 +426,7 @@ ci.glmmTMB <- function(x,
   method <- tolower(method)
   method <- insight::validate_argument(
     method,
-    c("wald", "normal", "ml1", "betwithin", "profile", "uniroot", "robust")
+    c("wald", "normal", "ml1", "betwithin", "profile", "uniroot", "robust", "residual")
   )
   component <- insight::validate_argument(
     component,
