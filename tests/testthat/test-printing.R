@@ -121,9 +121,10 @@ withr::with_options(
 
 withr::with_options(
   list(parameters_warning_exponentiate = TRUE),
-  test_that("print model with multiple components", {
+  test_that("no fail for mgcv-binomial", {
     skip_if_not_installed("mgcv")
     m <- mgcv::gam(vs ~ s(mpg), data = mtcars, family = "binomial")
-    expect_snapshot(print(model_parameters(m)))
+    out <- model_parameters(m)
+    expect_snapshot(print(out))
   })
 )
