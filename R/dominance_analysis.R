@@ -529,58 +529,54 @@ dominance_analysis <- function(model, sets = NULL, all = NULL,
     datawizard::data_relocate(da_df_res, "subset", after = "ranks")
 
   if (conditional) {
-    da_df_cdl <-
-      .data_frame(Subset = names(domir_res$General_Dominance))
+    da_df_cdl <- .data_frame(Subset = names(domir_res$General_Dominance))
 
-    da_df_cdl <-
-      datawizard::data_merge(
-        da_df_cdl,
-        .data_frame(
-          Subset = names(domir_res$General_Dominance),
-          domir_res$Conditional_Dominance
-        )
+    da_df_cdl <- datawizard::data_merge(
+      da_df_cdl,
+      .data_frame(
+        Subset = names(domir_res$General_Dominance),
+        domir_res$Conditional_Dominance
       )
+    )
 
-    da_df_cdl <-
-      datawizard::data_rename(
-        da_df_cdl,
-        names(da_df_cdl)[2:length(da_df_cdl)],
-        colnames(domir_res$Conditional_Dominance)
-      )
+    cols_to_select <- colnames(da_df_cdl)[2:length(da_df_cdl)]
+    da_df_cdl <- datawizard::data_rename(
+      da_df_cdl,
+      select = cols_to_select,
+      replacement = colnames(domir_res$Conditional_Dominance)
+    )
   } else {
     da_df_cdl <- NULL
   }
 
   if (complete) {
-    da_df_cpt <-
-      .data_frame(Subset = names(domir_res$General_Dominance))
+    da_df_cpt <- .data_frame(Subset = names(domir_res$General_Dominance))
 
-    da_df_cpt <-
-      datawizard::data_merge(
-        da_df_cpt,
-        .data_frame(
-          Subset = names(domir_res$General_Dominance),
-          domir_res$Complete_Dominance
-        )
+    da_df_cpt <- datawizard::data_merge(
+      da_df_cpt,
+      .data_frame(
+        Subset = names(domir_res$General_Dominance),
+        domir_res$Complete_Dominance
       )
+    )
 
-    da_df_cpt <-
-      datawizard::data_rename(
-        da_df_cpt,
-        names(da_df_cpt)[2:length(da_df_cpt)],
-        colnames(domir_res$Complete_Dominance)
-      )
+    cols_to_select <- colnames(da_df_cpt)[2:length(da_df_cpt)]
+    da_df_cpt <- datawizard::data_rename(
+      da_df_cpt,
+      select = cols_to_select,
+      replacement = colnames(domir_res$Complete_Dominance)
+    )
   } else {
     da_df_cpt <- NULL
   }
 
-  da_df_res <-
-    datawizard::data_rename(da_df_res,
-      replacement = c(
-        "Parameter", "General_Dominance",
-        "Percent", "Ranks", "Subset"
-      )
+  da_df_res <- datawizard::data_rename(
+  da_df_res,
+    replacement = c(
+      "Parameter", "General_Dominance",
+      "Percent", "Ranks", "Subset"
     )
+  )
 
   da_list <- list(
     General = da_df_res,
@@ -615,7 +611,7 @@ print.parameters_da <- function(x, digits = 3, ...) {
   printed_x <- x
 
   printed_x$General <- datawizard::data_rename(x$General,
-    pattern = "General_Dominance",
+    select = "General_Dominance",
     replacement = "General Dominance"
   )
 
@@ -628,7 +624,7 @@ print.parameters_da <- function(x, digits = 3, ...) {
 
     printed_x$Conditional <-
       datawizard::data_rename(x$Conditional,
-        pattern = cdl_names,
+        select = cdl_names,
         replacement = cdl_names_rep
       )
   }
@@ -644,7 +640,7 @@ print.parameters_da <- function(x, digits = 3, ...) {
 
     printed_x$Complete <-
       datawizard::data_rename(x$Complete,
-        pattern = cpt_names,
+        select = cpt_names,
         replacement = cpt_names_rep
       )
   }
