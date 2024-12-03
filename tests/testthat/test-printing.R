@@ -118,3 +118,13 @@ withr::with_options(
     expect_snapshot(print(out))
   })
 )
+
+withr::with_options(
+  list(parameters_warning_exponentiate = TRUE),
+  test_that("no fail for mgcv-binomial", {
+    skip_if_not_installed("mgcv")
+    m <- mgcv::gam(vs ~ s(mpg), data = mtcars, family = "binomial")
+    out <- model_parameters(m)
+    expect_snapshot(print(out))
+  })
+)
