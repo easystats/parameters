@@ -1,3 +1,12 @@
+# parameters 0.24.1
+
+## Bug fixes
+
+* Fixed issue when printing `model_parameters()` with models from `mgcv::gam()`.
+
+* Fixed issues due to breaking changes in the latest release of the *datawizard*
+  package.
+
 # parameters 0.24.0
 
 ## Breaking Changes
