@@ -571,7 +571,7 @@ dominance_analysis <- function(model, sets = NULL, all = NULL,
   }
 
   da_df_res <- datawizard::data_rename(
-  da_df_res,
+    da_df_res,
     replacement = c(
       "Parameter", "General_Dominance",
       "Percent", "Ranks", "Subset"
