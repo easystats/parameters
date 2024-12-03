@@ -77,6 +77,27 @@
       Uncertainty intervals (equal-tailed) and p-values (two-tailed) computed
         using a Wald z-distribution approximation.
 
+---
+
+    Code
+      print(model_parameters(m))
+    Output
+      # Fixed Effects
+      
+      Parameter   | Log-Odds |   SE |        95% CI |     z |    df |     p
+      ---------------------------------------------------------------------
+      (Intercept) |    -0.20 | 0.50 | [-1.18, 0.79] | -0.39 | 29.98 | 0.695
+      
+      # Smooth Terms
+      
+      Parameter         |    z |   df |     p
+      ---------------------------------------
+      Smooth term (mpg) | 7.24 | 1.02 | 0.007
+    Message
+      
+      The model has a log- or logit-link. Consider using `exponentiate =
+        TRUE` to interpret coefficients as ratios.
+
 # adding model summaries
 
     Code

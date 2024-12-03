@@ -118,3 +118,9 @@ withr::with_options(
     expect_snapshot(print(out))
   })
 )
+
+test_that("print model with multiple components", {
+  skip_if_not_installed("mgcv")
+  m <- mgcv::gam(vs ~ s(mpg), data = mtcars, family = "binomial")
+  expect_snapshot(print(model_parameters(m)))
+})
