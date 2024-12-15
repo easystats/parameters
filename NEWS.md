@@ -7,6 +7,9 @@
 * Fixed issues due to breaking changes in the latest release of the *datawizard*
   package.
 
+* Fixed issue with wrong column-header in printed output of `model_parameters()`
+  for `MASS::polr()` models with probit-link.
+
 # parameters 0.24.0
 
 ## Breaking Changes

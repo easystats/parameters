@@ -257,7 +257,7 @@
         "Coefficient"
       )
     }
-  } else if (!is.null(info) && info$family != "unknown") {
+  } else if (!is.null(info) && info$family != "unknown" && !info$is_probit) {
     if (isTRUE(exponentiate)) {
       if (info$is_exponential && identical(info$link_function, "log")) {
         coef_col <- "Prevalence Ratio"
