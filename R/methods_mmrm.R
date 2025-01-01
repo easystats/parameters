@@ -27,43 +27,24 @@ model_parameters.mmrm <- function(model,
   }
 
   # extract model parameters table, as data frame
-  out <- tryCatch(
-    .model_parameters_generic(
-      model = model,
-      ci = ci,
-      ci_method = ci_method,
-      bootstrap = bootstrap,
-      iterations = iterations,
-      merge_by = "Parameter",
-      standardize = standardize,
-      exponentiate = exponentiate,
-      p_adjust = p_adjust,
-      include_info = include_info,
-      keep_parameters = keep,
-      drop_parameters = drop,
-      vcov = NULL,
-      vcov_args = NULL,
-      verbose = verbose,
-      ...
-    ),
-    error = function(e) {
-      fail <- NA
-      attr(fail, "error") <- gsub("  ", " ", gsub("\\n", "", e$message), fixed = TRUE)
-      fail
-    }
+  out <- .model_parameters_generic(
+    model = model,
+    ci = ci,
+    ci_method = ci_method,
+    bootstrap = bootstrap,
+    iterations = iterations,
+    merge_by = "Parameter",
+    standardize = standardize,
+    exponentiate = exponentiate,
+    p_adjust = p_adjust,
+    include_info = include_info,
+    keep_parameters = keep,
+    drop_parameters = drop,
+    vcov = NULL,
+    vcov_args = NULL,
+    verbose = verbose,
+    ...
   )
-
-  # tell user if something went wrong...
-  if (length(out) == 1 && isTRUE(is.na(out))) {
-    insight::format_error(
-      paste0(
-        "Sorry, `model_parameters()` failed with the following error (possible class `",
-        class(model)[1],
-        "` not supported):\n"
-      ),
-      attr(out, "error")
-    )
-  }
 
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(model))
   out

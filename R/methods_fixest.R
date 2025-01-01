@@ -33,35 +33,24 @@ model_parameters.fixest <- function(model,
   }
 
   # extract model parameters table, as data frame
-  out <- tryCatch(
-    {
-      .model_parameters_generic(
-        model = model,
-        ci = ci,
-        ci_method = ci_method,
-        bootstrap = bootstrap,
-        iterations = iterations,
-        merge_by = "Parameter",
-        standardize = standardize,
-        exponentiate = exponentiate,
-        p_adjust = p_adjust,
-        include_info = include_info,
-        keep_parameters = keep,
-        drop_parameters = drop,
-        vcov = vcov,
-        vcov_args = vcov_args,
-        verbose = verbose,
-        ...
-      )
-    },
-    error = function(e) {
-      NULL
-    }
+  out <- .model_parameters_generic(
+    model = model,
+    ci = ci,
+    ci_method = ci_method,
+    bootstrap = bootstrap,
+    iterations = iterations,
+    merge_by = "Parameter",
+    standardize = standardize,
+    exponentiate = exponentiate,
+    p_adjust = p_adjust,
+    include_info = include_info,
+    keep_parameters = keep,
+    drop_parameters = drop,
+    vcov = vcov,
+    vcov_args = vcov_args,
+    verbose = verbose,
+    ...
   )
-
-  if (is.null(out)) {
-    insight::format_error("Something went wrong... :-/")
-  }
 
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(model))
   out
