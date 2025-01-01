@@ -65,7 +65,7 @@ standard_error.fixest <- function(model, vcov = NULL, vcov_args = NULL, ...) {
     # get standard errors from summary
     # see https://github.com/easystats/parameters/issues/1039
     stats <- summary(model)
-    SE <- as.vector(stats$coeftable[, "Std. Error"])
+    SE <- stats$coeftable[, "Std. Error"]
   } else {
     # we don't want to wrap this in a tryCatch because the `fixest` error is
     # informative when `vcov` is wrong.
@@ -73,9 +73,14 @@ standard_error.fixest <- function(model, vcov = NULL, vcov_args = NULL, ...) {
     SE <- sqrt(diag(V))
   }
 
+  # remove .theta parameter
+  if (".theta" %in% names(SE)) {
+    SE <- SE[names(SE) != ".theta"]
+  }
+
   .data_frame(
     Parameter = params$Parameter,
-    SE = SE
+    SE = as.vector(SE)
   )
 }
 
