@@ -53,7 +53,6 @@ model_parameters.svyglm <- function(model,
 }
 
 
-
 # simulate_model -----------------------------------------
 
 #' @export
@@ -62,7 +61,6 @@ simulate_model.svyglm.nb <- simulate_model.default
 
 #' @export
 simulate_model.svyglm.zip <- simulate_model.default
-
 
 
 # standard erors -----------------------------------------
@@ -98,7 +96,6 @@ standard_error.svyglm <- function(model, ...) {
 standard_error.svyolr <- standard_error.svyglm
 
 
-
 # confidence intervals -----------------------------------
 
 #' @export
@@ -117,7 +114,6 @@ ci.svyglm <- function(x, ci = 0.95, method = "wald", ...) {
 
 #' @export
 ci.svyolr <- ci.svyglm
-
 
 
 # p values -----------------------------------------------
@@ -159,8 +155,6 @@ p_value.svyglm.nb <- function(model, ...) {
 
 #' @export
 p_value.svyglm.zip <- p_value.svyglm.nb
-
-
 
 
 # helper --------------------

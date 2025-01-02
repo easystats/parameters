@@ -27,7 +27,6 @@ knitr::opts_chunk$set(
 
 pkgs <- c(
   "datawizard",
-  "poorman",
   "see",
   "ggplot2",
   "parameters",
@@ -110,10 +109,7 @@ and as such, FE avoids estimating a parameter for each higher-level unit.
 ## Computing the de-meaned and group-meaned variables
 
 ```{r}
-qol_cancer <- cbind(
-  qol_cancer,
-  datawizard::demean(qol_cancer, select = c("phq4", "QoL"), by = "ID")
-)
+qol_cancer <- datawizard::demean(qol_cancer, select = c("phq4", "QoL"), by = "ID")
 ```
 
 Now we have:
@@ -330,7 +326,6 @@ faster, typists make more mistakes (individual-level pattern).
 
 ```{r}
 library(ggplot2)
-library(poorman)
 library(see)
 
 set.seed(123)
@@ -346,15 +341,15 @@ d <- do.call(rbind, lapply(1:n, function(i) {
   )
 }))
 
-d <- d %>%
-  group_by(grp) %>%
-  mutate(x = rev(15 - (x + 1.5 * as.numeric(grp)))) %>%
-  ungroup()
+d <- d |>
+  datawizard::data_group(grp) |>
+  datawizard::data_modify(x = rev(15 - (x + 1.5 * as.numeric(grp)))) |>
+  datawizard::data_ungroup()
 
 labs <- c("very slow", "slow", "average", "fast", "very fast")
 levels(d$grp) <- rev(labs)
 
-d <- cbind(d, datawizard::demean(d, c("x", "y"), by = "grp"))
+d <- datawizard::demean(d, c("x", "y"), by = "grp")
 ```
 
 Let's look at the raw data...
@@ -518,15 +513,15 @@ d$grp[sample(which(d$grp == 8), 10)] <- 6
 d$grp[sample(which(d$grp == 4), 8)] <- 2
 d$grp[sample(which(d$grp == 10), 9)] <- 6
 
-d <- d %>%
-  group_by(grp) %>%
-  mutate(x = rev(15 - (x + 1.5 * as.numeric(grp)))) %>%
-  ungroup()
+d <- d |>
+  datawizard::data_group(grp) |>
+  datawizard::data_modify(x = rev(15 - (x + 1.5 * as.numeric(grp)))) |>
+  datawizard::data_ungroup()
 
 labs <- c("very slow", "slow", "average", "fast", "very fast")
 levels(d$grp) <- rev(labs)
 
-d <- cbind(d, datawizard::demean(d, c("x", "y"), by = "grp"))
+d <- datawizard::demean(d, c("x", "y"), by = "grp")
 
 # Between-subject effect of typing speed
 m1 <- lm(y ~ x_between, data = d)

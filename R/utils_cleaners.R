@@ -42,8 +42,6 @@
 }
 
 
-
-
 #' @keywords internal
 .remove_backticks_from_string <- function(x) {
   if (is.character(x)) {

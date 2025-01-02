@@ -442,7 +442,6 @@ print_html.parameters_p_function <- function(x,
 }
 
 
-
 # helper ----------
 
 .print_p_function <- function(x,

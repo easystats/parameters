@@ -59,8 +59,6 @@ model_parameters.clmm2 <- model_parameters.clm2
 model_parameters.clmm <- model_parameters.cpglmm
 
 
-
-
 # CI ---------------------
 
 
@@ -75,7 +73,6 @@ ci.clm2 <- function(x, ci = 0.95, component = c("all", "conditional", "scale"), 
 
 #' @export
 ci.clmm2 <- ci.clm2
-
 
 
 # standard errors -----------------
@@ -97,8 +94,6 @@ standard_error.clm2 <- function(model, component = "all", ...) {
 
 #' @export
 standard_error.clmm2 <- standard_error.clm2
-
-
 
 
 # p values ----------------

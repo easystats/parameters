@@ -78,8 +78,6 @@ p_value.lqmm <- function(model, ...) {
 p_value.lqm <- p_value.lqmm
 
 
-
-
 # helper ------------------
 
 

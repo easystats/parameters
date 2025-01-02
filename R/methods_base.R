@@ -18,8 +18,6 @@ model_parameters.data.frame <- function(model,
 }
 
 
-
-
 # Standard Errors from standard classes ---------------------------------------------
 
 
@@ -111,8 +109,6 @@ standard_error.parameters_standardized <- function(model, verbose = TRUE, ...) {
 
   insight::text_remove_backticks(out, verbose = FALSE)
 }
-
-
 
 
 # p-Values from standard classes ---------------------------------------------

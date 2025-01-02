@@ -268,7 +268,6 @@ standard_error.merMod <- function(model,
 }
 
 
-
 # helpers --------------
 
 .standard_errors_random <- function(model) {

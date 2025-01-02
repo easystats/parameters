@@ -107,14 +107,12 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
 }
 
 
-
 # survey-table --------------------
 
 #' @export
 model_parameters.svytable <- function(model, verbose = TRUE, ...) {
   model_parameters(summary(model)$statistic, verbose = verbose, ...)
 }
-
 
 
 # ==== extract parameters ====
@@ -176,8 +174,6 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
 }
 
 
-
-
 # extract htest Box-Pierce ----------------------
 
 #' @keywords internal
@@ -191,7 +187,6 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
     stringsAsFactors = FALSE
   )
 }
-
 
 
 # extract htest correlation ----------------------
@@ -239,8 +234,6 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
   out <- out[col_order[col_order %in% names(out)]]
   out
 }
-
-
 
 
 # extract htest ranktest ----------------------
@@ -294,8 +287,6 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
 }
 
 
-
-
 # extract htest leveneTest ----------------------
 
 #' @keywords internal
@@ -309,8 +300,6 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
     stringsAsFactors = FALSE
   )
 }
-
-
 
 
 # extract htest var.test ----------------------
@@ -330,8 +319,6 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
     stringsAsFactors = FALSE
   )
 }
-
-
 
 
 # extract htest ttest ----------------------
@@ -442,8 +429,6 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
 }
 
 
-
-
 # extract htest oneway ----------------------
 
 #' @keywords internal
@@ -457,8 +442,6 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
     stringsAsFactors = FALSE
   )
 }
-
-
 
 
 # extract htest chi2 ----------------------
@@ -512,8 +495,6 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
 }
 
 
-
-
 # extract htest prop ----------------------
 
 #' @keywords internal
@@ -541,8 +522,6 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
 }
 
 
-
-
 # extract htest binom ----------------------
 
 #' @keywords internal
@@ -560,8 +539,6 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
   out$Method <- model$method
   out
 }
-
-
 
 
 # ==== effectsizes =====
@@ -651,8 +628,6 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
 }
 
 
-
-
 # ==== add attributes ====
 
 #' @keywords internal
@@ -716,7 +691,6 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
 
   params
 }
-
 
 
 #' @keywords internal

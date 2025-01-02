@@ -147,7 +147,6 @@ model_parameters.pvclust <- function(model, data = NULL, clusters = NULL, ci = 0
 }
 
 
-
 # Utils -------------------------------------------------------------------
 
 

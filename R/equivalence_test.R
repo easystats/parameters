@@ -3,7 +3,6 @@
 bayestestR::equivalence_test
 
 
-
 #' @title Equivalence test
 #'
 #' @description Compute the (conditional) equivalence test for frequentist models.
@@ -268,7 +267,6 @@ equivalence_test.lm <- function(x,
 }
 
 
-
 # standard models, only fixed effects ----------------------
 
 #' @export
@@ -303,9 +301,6 @@ equivalence_test.zeroinfl <- equivalence_test.lm
 
 #' @export
 equivalence_test.rma <- equivalence_test.lm
-
-
-
 
 
 # mixed models, also random effects ----------------------
@@ -361,7 +356,6 @@ equivalence_test.glmmTMB <- equivalence_test.merMod
 
 #' @export
 equivalence_test.MixMod <- equivalence_test.merMod
-
 
 
 # Special classes -------------------------
@@ -490,7 +484,6 @@ equivalence_test.ggeffects <- function(x,
 }
 
 
-
 # helper -------------------
 
 
@@ -590,7 +583,6 @@ equivalence_test.ggeffects <- function(x,
 }
 
 
-
 #' @keywords internal
 .equivalence_test_frequentist_random <- function(x,
                                                  range = "default",
@@ -667,8 +659,6 @@ equivalence_test.ggeffects <- function(x,
 }
 
 
-
-
 #' @keywords internal
 .equivalence_test_numeric <- function(ci = 0.95,
                                       ci_wide,
@@ -734,8 +724,6 @@ equivalence_test.ggeffects <- function(x,
     stringsAsFactors = FALSE
   )
 }
-
-
 
 
 # helper ---------------------
@@ -849,12 +837,7 @@ equivalence_test.ggeffects <- function(x,
 }
 
 
-
-
-
-
 # methods ----------------
-
 
 
 #' @export
@@ -897,7 +880,6 @@ format.equivalence_test_lm <- function(x,
 
   out
 }
-
 
 
 #' @export

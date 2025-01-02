@@ -30,9 +30,6 @@ format_p_adjust <- function(method) {
 }
 
 
-
-
-
 .p_adjust <- function(params, p_adjust, model = NULL, verbose = TRUE) {
   # check if we have any adjustment at all, and a p-column
   if (!is.null(p_adjust) && "p" %in% colnames(params) && p_adjust != "none") {
@@ -113,7 +110,7 @@ format_p_adjust <- function(method) {
       }
 
       if (isTRUE(all(old_p_vals == params$p)) && !identical(p_adjust, "none") && verbose) {
-        insight::format_warning(paste0("Could not apply ", p_adjust, "-adjustment to p-values. Either something went wrong, or the non-adjusted p-values were already very large."))
+        insight::format_warning(paste0("Could not apply ", p_adjust, "-adjustment to p-values. Either something went wrong, or the non-adjusted p-values were already very large.")) # nolint
       }
     } else if (verbose) {
       insight::format_alert(paste0("`p_adjust` must be one of ", toString(all_methods)))

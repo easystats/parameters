@@ -80,7 +80,6 @@ test_that("standardize_parameters (bootstrap_model)", {
 })
 
 
-
 # lm with ci -----------------------------------
 test_that("standardize_parameters (lm with ci)", {
   data("iris")
@@ -167,7 +166,6 @@ test_that("standardize_parameters (aov)", {
     ignore_attr = TRUE
   )
 })
-
 
 
 # with function interactions" -------------------
@@ -411,7 +409,6 @@ test_that("standardize_parameters (Pseudo - GLMM)", {
     standardize_parameters(m4, method = "pseudo")$Std_Coefficient,
     tolerance = 0.001
   )
-
 
 
   ## Give warning for within that is also between

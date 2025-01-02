@@ -64,7 +64,6 @@ select_parameters.lm <- function(model,
 }
 
 
-
 #' @rdname select_parameters
 #' @export
 select_parameters.merMod <- function(model,

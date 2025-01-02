@@ -93,7 +93,6 @@ test_that("model_parameters_Anova.mlm", {
 })
 
 
-
 test_that("model_parameters_Anova-effectsize", {
   skip_if_not_installed("lme4")
   skip_if_not_installed("effectsize", minimum_version = "0.4.3")

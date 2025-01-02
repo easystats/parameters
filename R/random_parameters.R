@@ -62,7 +62,6 @@ random_parameters <- function(model, component = "conditional") {
 }
 
 
-
 # helper -----------------------------------
 
 .n_randomeffects <- function(model) {
@@ -72,7 +71,6 @@ random_parameters <- function(model, component = "conditional") {
     numeric(1)
   )
 }
-
 
 
 .randomeffects_summary <- function(model, component = "conditional") {

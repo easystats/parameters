@@ -44,7 +44,6 @@ model_parameters.draws <- function(model,
 }
 
 
-
 # Standard Errors ---------------------------------------------
 
 #' @export
@@ -55,7 +54,6 @@ standard_error.draws <- function(model, verbose = TRUE, ...) {
     SE = unname(vapply(params, stats::sd, 1, na.rm = TRUE))
   )
 }
-
 
 
 # p-Values ---------------------------------------------
@@ -69,7 +67,6 @@ p_value.draws <- function(model, ...) {
     p = vapply(p$pd, bayestestR::convert_pd_to_p, 1)
   )
 }
-
 
 
 # helper ------------------------------

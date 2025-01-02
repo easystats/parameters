@@ -8,8 +8,6 @@
 model_parameters.blrm <- model_parameters.bayesQR
 
 
-
-
 # standard error -------------
 
 
@@ -34,8 +32,6 @@ standard_error.rms <- standard_error.lrm
 
 #' @export
 standard_error.psm <- standard_error.lrm
-
-
 
 
 # p-values -----------------------

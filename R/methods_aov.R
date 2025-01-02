@@ -218,7 +218,6 @@ p_value.aov <- function(model, ...) {
 }
 
 
-
 # .anova ------
 
 #' @export
@@ -231,7 +230,6 @@ p_value.anova <- p_value.aov
 model_parameters.anova <- model_parameters.aov
 
 
-
 # .aov.list  ------
 
 #' @export
@@ -242,7 +240,6 @@ p_value.aovlist <- p_value.aov
 
 #' @export
 model_parameters.aovlist <- model_parameters.aov
-
 
 
 # .afex_aov  ------
@@ -299,7 +296,6 @@ model_parameters.afex_aov <- function(model,
 }
 
 
-
 # others  ------
 
 #' @export
@@ -313,7 +309,6 @@ model_parameters.maov <- model_parameters.aov
 
 #' @export
 model_parameters.seqanova.svyglm <- model_parameters.aov
-
 
 
 # helper ------------------------------
@@ -484,8 +479,6 @@ model_parameters.seqanova.svyglm <- model_parameters.aov
 
   params
 }
-
-
 
 
 # internals --------------------------

@@ -35,17 +35,17 @@ model_parameters.befa <- function(model,
     if (!attr(model, "post.sign.switch")) model <- BayesFM::post.sign.switch(model)
   }
 
-  loadings <- as.data.frame(model$alpha)
-  names(loadings) <- gsub("alpha:", "", names(loadings), fixed = TRUE)
-  loadings <- stats::reshape(
-    loadings,
+  factor_loadings <- as.data.frame(model$alpha)
+  names(factor_loadings) <- gsub("alpha:", "", names(factor_loadings), fixed = TRUE)
+  factor_loadings <- stats::reshape(
+    factor_loadings,
     direction = "long",
-    varying = list(names(loadings)),
+    varying = list(names(factor_loadings)),
     sep = "_",
     timevar = "Variable",
     v.names = "Loading",
     idvar = "Draw",
-    times = names(loadings)
+    times = names(factor_loadings)
   )
 
   components <- as.data.frame(model$dedic)
@@ -61,17 +61,17 @@ model_parameters.befa <- function(model,
     times = names(components)
   )
 
-  loadings <- merge(components, loadings)
+  factor_loadings <- merge(components, factor_loadings)
 
   # Compute posterior by dedic
   long_loadings <- data.frame()
-  for (var in unique(loadings$Variable)) {
-    for (comp in unique(loadings$Component)) {
-      chunk <- loadings[loadings$Variable == var & loadings$Component == comp, ]
+  for (var in unique(factor_loadings$Variable)) {
+    for (comp in unique(factor_loadings$Component)) {
+      chunk <- factor_loadings[factor_loadings$Variable == var & factor_loadings$Component == comp, ] # nolint
       if (nrow(chunk) == 0) {
         rez <-
           bayestestR::describe_posterior(
-            loadings$Loading,
+            factor_loadings$Loading,
             centrality = centrality,
             dispersion = dispersion,
             ci = ci,
@@ -109,30 +109,33 @@ model_parameters.befa <- function(model,
   }
   long_loadings <- long_loadings[long_loadings$Component != 0, ]
 
-  loadings <- .wide_loadings(long_loadings, loadings_columns = names(long_loadings)[3], component_column = "Component", variable_column = "Variable")
-
-
+  factor_loadings <- .wide_loadings(
+    long_loadings,
+    loadings_columns = names(long_loadings)[3],
+    component_column = "Component",
+    variable_column = "Variable"
+  )
 
   # Add attributes
-  attr(loadings, "model") <- model
-  attr(loadings, "additional_arguments") <- list(...)
-  attr(loadings, "n") <- insight::n_unique(long_loadings$Component)
-  attr(loadings, "loadings_columns") <- names(loadings)[2:ncol(loadings)]
-  attr(loadings, "ci") <- ci
+  attr(factor_loadings, "model") <- model
+  attr(factor_loadings, "additional_arguments") <- list(...)
+  attr(factor_loadings, "n") <- insight::n_unique(long_loadings$Component)
+  attr(factor_loadings, "loadings_columns") <- names(factor_loadings)[2:ncol(factor_loadings)]
+  attr(factor_loadings, "ci") <- ci
 
   # Sorting
   if (isTRUE(sort)) {
-    loadings <- .sort_loadings(loadings)
+    factor_loadings <- .sort_loadings(factor_loadings)
   }
 
 
   # Add some more attributes
   long_loadings <- stats::na.omit(long_loadings)
   row.names(long_loadings) <- NULL
-  attr(loadings, "loadings_long") <- long_loadings
+  attr(factor_loadings, "loadings_long") <- long_loadings
 
   # add class-attribute for printing
-  class(loadings) <- c("parameters_efa", class(loadings))
+  class(factor_loadings) <- c("parameters_efa", class(factor_loadings))
 
-  loadings
+  factor_loadings
 }

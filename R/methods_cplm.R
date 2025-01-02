@@ -188,7 +188,6 @@ p_value.zcpglm <- function(model, component = "all", ...) {
 }
 
 
-
 ########## .bcpglm ---------------
 
 #' @export
@@ -197,7 +196,6 @@ model_parameters.bcplm <- model_parameters.bayesQR
 
 #' @export
 p_value.bcplm <- p_value.brmsfit
-
 
 
 ########## .cpglm ---------------
@@ -228,7 +226,6 @@ standard_error.cpglm <- function(model, ...) {
     SE = as.vector(stats[, "Std. Error"])
   )
 }
-
 
 
 ########## .cpglmm ---------------
@@ -307,7 +304,6 @@ standard_error.cpglmm <- function(model, ...) {
     SE = as.vector(stats[, "Std. Error"])
   )
 }
-
 
 
 # tools --------------------

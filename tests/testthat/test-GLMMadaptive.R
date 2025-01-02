@@ -52,7 +52,6 @@ test_that("ci", {
 })
 
 
-
 test_that("se", {
   expect_equal(
     standard_error(m1)$SE,

@@ -39,8 +39,6 @@ simulate_model.vgam <- function(model, iterations = 1000, ...) {
 }
 
 
-
-
 ########### .vglm ---------------
 
 
@@ -66,9 +64,6 @@ standard_error.vglm <- function(model, ...) {
     SE = as.vector(se)
   )
 }
-
-
-
 
 
 # ci.vgam <- function(x, ci = 0.95, component = c("all", "conditional", "smooth"), ...) {

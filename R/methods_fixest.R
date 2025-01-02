@@ -33,35 +33,24 @@ model_parameters.fixest <- function(model,
   }
 
   # extract model parameters table, as data frame
-  out <- tryCatch(
-    {
-      .model_parameters_generic(
-        model = model,
-        ci = ci,
-        ci_method = ci_method,
-        bootstrap = bootstrap,
-        iterations = iterations,
-        merge_by = "Parameter",
-        standardize = standardize,
-        exponentiate = exponentiate,
-        p_adjust = p_adjust,
-        include_info = include_info,
-        keep_parameters = keep,
-        drop_parameters = drop,
-        vcov = vcov,
-        vcov_args = vcov_args,
-        verbose = verbose,
-        ...
-      )
-    },
-    error = function(e) {
-      NULL
-    }
+  out <- .model_parameters_generic(
+    model = model,
+    ci = ci,
+    ci_method = ci_method,
+    bootstrap = bootstrap,
+    iterations = iterations,
+    merge_by = "Parameter",
+    standardize = standardize,
+    exponentiate = exponentiate,
+    p_adjust = p_adjust,
+    include_info = include_info,
+    keep_parameters = keep,
+    drop_parameters = drop,
+    vcov = vcov,
+    vcov_args = vcov_args,
+    verbose = verbose,
+    ...
   )
-
-  if (is.null(out)) {
-    insight::format_error("Something went wrong... :-/")
-  }
 
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(model))
   out
@@ -76,7 +65,7 @@ standard_error.fixest <- function(model, vcov = NULL, vcov_args = NULL, ...) {
     # get standard errors from summary
     # see https://github.com/easystats/parameters/issues/1039
     stats <- summary(model)
-    SE <- as.vector(stats$coeftable[, "Std. Error"])
+    SE <- stats$coeftable[, "Std. Error"]
   } else {
     # we don't want to wrap this in a tryCatch because the `fixest` error is
     # informative when `vcov` is wrong.
@@ -84,9 +73,14 @@ standard_error.fixest <- function(model, vcov = NULL, vcov_args = NULL, ...) {
     SE <- sqrt(diag(V))
   }
 
+  # remove .theta parameter
+  if (".theta" %in% names(SE)) {
+    SE <- SE[names(SE) != ".theta"]
+  }
+
   .data_frame(
     Parameter = params$Parameter,
-    SE = SE
+    SE = as.vector(SE)
   )
 }
 
@@ -118,8 +112,6 @@ p_value.feglm <- function(model, ...) {
     p = as.vector(stats[, 4])
   )
 }
-
-
 
 
 # .fixest_multi -----------------------------------
@@ -234,7 +226,6 @@ p_value.fixest_multi <- function(model, ...) {
 simulate_model.fixest_multi <- function(model, ...) {
   lapply(model, simulate_model, ...)
 }
-
 
 
 # helper ---------------------------------

@@ -57,10 +57,6 @@ bootstrap_model <- function(model,
 }
 
 
-
-
-
-
 #' @rdname bootstrap_model
 #' @export
 bootstrap_model.default <- function(model,

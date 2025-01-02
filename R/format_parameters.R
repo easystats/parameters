@@ -62,8 +62,6 @@ format_parameters.parameters_model <- function(model, ...) {
 }
 
 
-
-
 # Utilities ---------------------------------------------------------------
 
 
@@ -363,7 +361,6 @@ format_parameters.parameters_model <- function(model, ...) {
     )
   )
 }
-
 
 
 # replace pretty names with value labels, when present ---------------

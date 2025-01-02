@@ -32,15 +32,11 @@ model_parameters.kmeans <- function(model, ...) {
 }
 
 
-
-
-
 # factoextra::hkmeans -----------------------------------------------------
 
 
 #' @export
 model_parameters.hkmeans <- model_parameters.kmeans
-
 
 
 # Methods -------------------------------------------------------------------
@@ -63,10 +59,6 @@ print.parameters_clusters <- function(x, digits = 2, ...) {
 
   invisible(x)
 }
-
-
-
-
 
 
 # Predict -----------------------------------------------------------------

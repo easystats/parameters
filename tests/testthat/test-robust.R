@@ -90,8 +90,6 @@ test_that("robust-se survival", {
 })
 
 
-
-
 # p-values -------------------------------------
 
 test_that("robust-p lm", {
@@ -198,8 +196,6 @@ test_that("robust-p survival", {
   p2 <- 2 * pt(abs(stat), df = dof, lower.tail = FALSE)
   expect_equal(p1$p, p2, tolerance = 1e-4, ignore_attr = TRUE)
 })
-
-
 
 
 # CI -------------------------------------
@@ -342,8 +338,6 @@ test_that("robust-ci survival", {
   expect_equal(ci1$CI_low, ci2$CI_low, tolerance = 1e-4, ignore_attr = TRUE)
   expect_equal(ci1$CI_high, ci2$CI_high, tolerance = 1e-4, ignore_attr = TRUE)
 })
-
-
 
 
 # mixed models ----------------------

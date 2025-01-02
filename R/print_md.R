@@ -117,9 +117,6 @@ print_md.parameters_brms_meta <- print_md.parameters_model
 print_md.parameters_simulate <- print_md.parameters_model
 
 
-
-
-
 # compare parameters -------------------------
 
 
@@ -210,9 +207,6 @@ print_md.compare_parameters <- function(x,
 }
 
 
-
-
-
 # SEM print ----------------------------
 
 #' @export
@@ -249,8 +243,6 @@ print_md.parameters_sem <- function(x,
 }
 
 
-
-
 # PCA / EFA / CFA ----------------------------
 
 #' @export
@@ -283,9 +275,6 @@ print_md.parameters_efa <- function(x, digits = 2, sort = FALSE, threshold = NUL
 
 #' @export
 print_md.parameters_pca <- print_md.parameters_efa
-
-
-
 
 
 # Equivalence test ----------------------------
@@ -342,9 +331,6 @@ print_md.equivalence_test_lm <- function(x,
 
   insight::export_table(formatted_table, format = "markdown", caption = table_caption, align = "firstleft")
 }
-
-
-
 
 
 # distribution print ----------------------------

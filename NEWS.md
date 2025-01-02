@@ -1,5 +1,10 @@
 # parameters 0.24.1
 
+## Changes
+
+* `model_parameters()` now gives informative error messages for more model
+  classes than before when the function fails to extract model parameters.
+
 ## Bug fixes
 
 * Fixed issue when printing `model_parameters()` with models from `mgcv::gam()`.

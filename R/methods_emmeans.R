@@ -251,7 +251,6 @@ model_parameters.summary_emm <- function(model,
 }
 
 
-
 # standard errors -----------------
 
 
@@ -317,7 +316,6 @@ boot_em_standard_error <- function(model) {
 
   out
 }
-
 
 
 # p values ----------------------

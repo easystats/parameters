@@ -135,9 +135,6 @@ display.parameters_simulate <- display.parameters_model
 display.parameters_brms_meta <- display.parameters_model
 
 
-
-
-
 # Compare Parameters ------------------------
 
 
@@ -167,9 +164,6 @@ display.compare_parameters <- function(object,
 }
 
 
-
-
-
 # SEM models ------------------------
 
 
@@ -184,9 +178,6 @@ display.parameters_sem <- function(object,
                                    ...) {
   print_md(x = object, digits = digits, ci_digits = ci_digits, p_digits = p_digits, ci_brackets = ci_brackets, ...)
 }
-
-
-
 
 
 # PCA /EFA  models ------------------------
@@ -213,9 +204,6 @@ display.parameters_efa <- function(object, format = "markdown", digits = 2, sort
 display.parameters_pca <- display.parameters_efa
 
 
-
-
-
 # Equivalence tests ------------------------
 
 
@@ -224,8 +212,6 @@ display.parameters_pca <- display.parameters_efa
 display.equivalence_test_lm <- function(object, format = "markdown", digits = 2, ...) {
   print_md(x = object, digits = digits, ...)
 }
-
-
 
 
 # Other functions ------------------------

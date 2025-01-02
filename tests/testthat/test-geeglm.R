@@ -1,13 +1,12 @@
 skip_if_not_installed("geepack")
 data(warpbreaks)
-m1 <-
-  geepack::geeglm(
-    breaks ~ tension,
-    id = wool,
-    data = warpbreaks,
-    family = poisson,
-    corstr = "ar1"
-  )
+m1 <- geepack::geeglm(
+  breaks ~ tension,
+  id = wool,
+  data = warpbreaks,
+  family = poisson,
+  corstr = "ar1"
+)
 
 test_that("ci", {
   expect_equal(

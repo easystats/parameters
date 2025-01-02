@@ -56,7 +56,6 @@ simulate_model <- function(model, iterations = 1000, ...) {
 }
 
 
-
 # Models with single component only -----------------------------------------
 
 #' @rdname simulate_model
@@ -222,10 +221,6 @@ simulate_model.brmultinom <- simulate_model.default
 
 #' @export
 simulate_model.bracl <- simulate_model.default
-
-
-
-
 
 
 # helper -----------------------------------------

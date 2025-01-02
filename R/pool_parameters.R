@@ -316,8 +316,6 @@ pool_parameters <- function(x,
 }
 
 
-
-
 # helper ------
 
 
@@ -332,7 +330,6 @@ pool_parameters <- function(x,
   dfobs <- (dfcom + 1) / (dfcom + 3) * dfcom * (1 - lambda)
   dfold * dfobs / (dfold + dfobs)
 }
-
 
 
 .add_pooled_params_attributes <- function(pooled_params, model_params, model, ci, exponentiate, verbose = TRUE) {

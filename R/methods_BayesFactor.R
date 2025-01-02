@@ -253,8 +253,6 @@ p_value.BFBayesFactor <- function(model, ...) {
 }
 
 
-
-
 # helper -------
 
 

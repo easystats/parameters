@@ -38,8 +38,6 @@ dof_ml1 <- function(model) {
 }
 
 
-
-
 .get_df_ml1_approx <- function(x, g) {
   if (!is.factor(g)) {
     g <- as.factor(g)
@@ -55,13 +53,11 @@ dof_ml1 <- function(model) {
   var.within <- stats::var(x - x.bar)
   var.between <- stats::var(x.bar)
   if (var.within >= var.between) {
-    return(n)
+    n
   } else {
-    return(m)
+    m
   }
 }
-
-
 
 
 .find_term_assignment <- function(model_data, predictors, parameters) {

@@ -81,8 +81,6 @@ simulate_model.gam <- function(model, iterations = 1000, ...) {
 }
 
 
-
-
 #################### .list ------
 
 

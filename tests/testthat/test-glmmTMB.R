@@ -70,7 +70,6 @@ withr::with_options(
     })
 
 
-
     test_that("se", {
       expect_equal(
         standard_error(m1)$SE,
@@ -628,7 +627,6 @@ withr::with_options(
       mp <- model_parameters(model_pr, effects = "fixed", component = "all")
       expect_snapshot(print(mp))
     })
-
 
 
     test_that("model_parameters.mixed-all", {

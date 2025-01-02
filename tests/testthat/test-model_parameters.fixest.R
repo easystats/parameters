@@ -133,3 +133,17 @@ test_that("standard errors, Sun and Abraham", {
   out <- model_parameters(m)
   expect_equal(out$SE, m$coeftable[, "Std. Error"], tolerance = 1e-4, ignore_attr = TRUE)
 })
+
+
+skip_if_not_installed("withr")
+skip_if_not_installed("glmmTMB")
+
+withr::with_options(
+  list(parameters_warning_exponentiate = TRUE),
+  test_that("model_parameters works for fixest-negbin", {
+    data(Salamanders, package = "glmmTMB")
+    mod <- fixest::fenegbin(count ~ mined + spp, data = Salamanders)
+    out <- model_parameters(mod)
+    expect_snapshot(print(out))
+  })
+)

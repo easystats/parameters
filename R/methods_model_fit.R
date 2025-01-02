@@ -33,7 +33,6 @@ model_parameters.model_fit <- function(model,
 }
 
 
-
 # ci ------------------
 
 
@@ -41,7 +40,6 @@ model_parameters.model_fit <- function(model,
 ci.model_fit <- function(x, ci = 0.95, method = NULL, ...) {
   ci(x$fit, ci = ci, method = method, ...)
 }
-
 
 
 # standard error ------------------
@@ -53,7 +51,6 @@ standard_error.model_fit <- function(model, ...) {
 }
 
 
-
 # p values ------------------
 
 
@@ -61,7 +58,6 @@ standard_error.model_fit <- function(model, ...) {
 p_value.model_fit <- function(model, ...) {
   p_value(model$fit, ...)
 }
-
 
 
 # simulate model ------------------

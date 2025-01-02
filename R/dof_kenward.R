@@ -13,7 +13,6 @@ dof_kenward <- function(model) {
 }
 
 
-
 # The following code was taken from the "pbkrtest" package and slightly modified
 #' @author Søren Højsgaard, \email{sorenh@@math.aau.dk}
 .kenward_adjusted_ddf <- function(model, linear_coef, adjusted_vcov) {
@@ -88,7 +87,6 @@ dof_kenward <- function(model) {
   }
   .vcovAdj16_internal(stats::vcov(model), .get_SigmaG(model), lme4::getME(model, "X"))
 }
-
 
 
 .get_SigmaG <- function(model) {

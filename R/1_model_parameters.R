@@ -605,32 +605,31 @@ model_parameters.default <- function(model,
   )
 
   # extract model parameters table, as data frame
-  out <- tryCatch(
-    .model_parameters_generic(
-      model = model,
-      ci = ci,
-      ci_method = ci_method,
-      bootstrap = bootstrap,
-      iterations = iterations,
-      merge_by = "Parameter",
-      standardize = standardize,
-      exponentiate = exponentiate,
-      p_adjust = p_adjust,
-      include_info = include_info,
-      keep_parameters = keep,
-      drop_parameters = drop,
-      vcov = vcov,
-      vcov_args = vcov_args,
-      verbose = verbose,
-      ...
-    ),
-    error = function(e) {
-      fail <- NA
-      attr(fail, "error") <- gsub("  ", " ", gsub("\\n", "", e$message), fixed = TRUE)
-      fail
-    }
+  out <- .model_parameters_generic(
+    model = model,
+    ci = ci,
+    ci_method = ci_method,
+    bootstrap = bootstrap,
+    iterations = iterations,
+    merge_by = "Parameter",
+    standardize = standardize,
+    exponentiate = exponentiate,
+    p_adjust = p_adjust,
+    include_info = include_info,
+    keep_parameters = keep,
+    drop_parameters = drop,
+    vcov = vcov,
+    vcov_args = vcov_args,
+    verbose = verbose,
+    ...
   )
 
+  attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(model))
+  out
+}
+
+
+.fail_error_message <- function(out, model) {
   # tell user if something went wrong...
   if (length(out) == 1 && isTRUE(is.na(out))) {
     insight::format_error(
@@ -650,12 +649,7 @@ model_parameters.default <- function(model,
       )
     )
   }
-
-  attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(model))
-  out
 }
-
-
 
 
 # helper function for the composition of the parameters table,
@@ -682,79 +676,91 @@ model_parameters.default <- function(model,
                                       ...) {
   dots <- list(...)
 
-  # ==== 1. first step, extracting (bootstrapped) model parameters -------
+  out <- tryCatch(
+    {
+      # ==== 1. first step, extracting (bootstrapped) model parameters -------
 
-  # Processing, bootstrapped parameters
-  if (bootstrap) {
-    # set default method for bootstrapped CI
-    if (is.null(ci_method) || missing(ci_method)) {
-      ci_method <- "quantile"
+      # Processing, bootstrapped parameters
+      if (bootstrap) {
+        # set default method for bootstrapped CI
+        if (is.null(ci_method) || missing(ci_method)) {
+          ci_method <- "quantile"
+        }
+
+        fun_args <- list(
+          model,
+          iterations = iterations,
+          ci = ci,
+          ci_method = ci_method
+        )
+        fun_args <- c(fun_args, dots)
+        params <- do.call("bootstrap_parameters", fun_args)
+
+        # Processing, non-bootstrapped parameters
+      } else {
+        # set default method for CI
+        if (is.null(ci_method) || missing(ci_method)) {
+          ci_method <- "wald"
+        }
+
+        fun_args <- list(
+          model,
+          ci = ci,
+          component = component,
+          merge_by = merge_by,
+          standardize = standardize,
+          effects = effects,
+          ci_method = ci_method,
+          p_adjust = p_adjust,
+          keep_parameters = keep_parameters,
+          drop_parameters = drop_parameters,
+          verbose = verbose,
+          vcov = vcov,
+          vcov_args = vcov_args
+        )
+        fun_args <- c(fun_args, dots)
+        params <- do.call(".extract_parameters_generic", fun_args)
+      }
+
+
+      # ==== 2. second step, exponentiate -------
+
+      # exponentiate coefficients and SE/CI, if requested
+      params <- .exponentiate_parameters(params, model, exponentiate)
+
+
+      # ==== 3. third step, add information as attributes -------
+
+      # add further information as attributes
+      params <- .add_model_parameters_attributes(
+        params,
+        model,
+        ci,
+        exponentiate,
+        bootstrap,
+        iterations,
+        ci_method = ci_method,
+        p_adjust = p_adjust,
+        include_info = include_info,
+        verbose = verbose,
+        ...
+      )
+
+      class(params) <- c("parameters_model", "see_parameters_model", class(params))
+      params
+    },
+    error = function(e) {
+      fail <- NA
+      attr(fail, "error") <- gsub("  ", " ", gsub("\\n", "", e$message), fixed = TRUE)
+      fail
     }
-
-    fun_args <- list(
-      model,
-      iterations = iterations,
-      ci = ci,
-      ci_method = ci_method
-    )
-    fun_args <- c(fun_args, dots)
-    params <- do.call("bootstrap_parameters", fun_args)
-
-    # Processing, non-bootstrapped parameters
-  } else {
-    # set default method for CI
-    if (is.null(ci_method) || missing(ci_method)) {
-      ci_method <- "wald"
-    }
-
-    fun_args <- list(
-      model,
-      ci = ci,
-      component = component,
-      merge_by = merge_by,
-      standardize = standardize,
-      effects = effects,
-      ci_method = ci_method,
-      p_adjust = p_adjust,
-      keep_parameters = keep_parameters,
-      drop_parameters = drop_parameters,
-      verbose = verbose,
-      vcov = vcov,
-      vcov_args = vcov_args
-    )
-    fun_args <- c(fun_args, dots)
-    params <- do.call(".extract_parameters_generic", fun_args)
-  }
-
-
-  # ==== 2. second step, exponentiate -------
-
-  # exponentiate coefficients and SE/CI, if requested
-  params <- .exponentiate_parameters(params, model, exponentiate)
-
-
-  # ==== 3. third step, add information as attributes -------
-
-  # add further information as attributes
-  params <- .add_model_parameters_attributes(
-    params,
-    model,
-    ci,
-    exponentiate,
-    bootstrap,
-    iterations,
-    ci_method = ci_method,
-    p_adjust = p_adjust,
-    include_info = include_info,
-    verbose = verbose,
-    ...
   )
 
-  class(params) <- c("parameters_model", "see_parameters_model", class(params))
-  params
+  # check if everything is ok
+  .fail_error_message(out, model)
+
+  out
 }
-
-
 
 
 #################### .glm ----------------------

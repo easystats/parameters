@@ -36,8 +36,6 @@ n_clusters_elbow <- function(x,
 }
 
 
-
-
 #' @rdname n_clusters
 #' @examples
 #' \donttest{
@@ -86,7 +84,6 @@ n_clusters_gap <- function(x,
 }
 
 
-
 #' @rdname n_clusters
 #' @examples
 #' \donttest{
@@ -125,7 +122,6 @@ n_clusters_silhouette <- function(x,
   class(out) <- c("n_clusters_silhouette", class(out))
   out
 }
-
 
 
 #' @rdname n_clusters
@@ -196,10 +192,6 @@ n_clusters_dbscan <- function(x,
 }
 
 
-
-
-
-
 #' @rdname n_clusters
 #' @examples
 #' \donttest{
@@ -250,10 +242,7 @@ n_clusters_hclust <- function(x,
 }
 
 
-
-
 # Utils -------------------------------------------------------------------
-
 
 
 #' @keywords internal
@@ -270,8 +259,6 @@ n_clusters_hclust <- function(x,
 
   factoextra::fviz_nbclust(x, clustering_function, method = method, k.max = n_max, verbose = FALSE)$data
 }
-
-
 
 
 # Printing ----------------------------------------------------------------

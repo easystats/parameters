@@ -94,8 +94,6 @@ cluster_meta <- function(list_of_clusters, rownames = NULL, ...) {
 }
 
 
-
-
 #' @keywords internal
 .cluster_meta_matrix <- function(data) {
   # Internal function
@@ -126,8 +124,6 @@ cluster_meta <- function(list_of_clusters, rownames = NULL, ...) {
 
   m
 }
-
-
 
 
 # Methods ----------------------------------------------------------------

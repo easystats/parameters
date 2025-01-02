@@ -34,7 +34,6 @@ cluster_discrimination.cluster_analysis <- function(x, cluster_groups = NULL, ..
 }
 
 
-
 #' @export
 cluster_discrimination.default <- function(x, cluster_groups = NULL, ...) {
   if (is.null(cluster_groups)) {

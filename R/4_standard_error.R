@@ -70,7 +70,6 @@ standard_error <- function(model, ...) {
 }
 
 
-
 # Default methods ---------------------------------------------------------
 
 #' @rdname standard_error
@@ -160,8 +159,6 @@ standard_error.default <- function(model,
 }
 
 
-
-
 # helper -----------------------------------------------------------------
 
 
@@ -192,13 +189,10 @@ standard_error.default <- function(model,
 }
 
 
-
 .check_vcov_args <- function(robust, ...) {
   dots <- list(...)
   isTRUE(isTRUE(robust) || isTRUE(dots$robust) || ("vcov" %in% names(dots) && !is.null(dots[["vcov"]])))
 }
-
-
 
 
 # .ranef_se <- function(x) {

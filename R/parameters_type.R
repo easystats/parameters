@@ -145,7 +145,6 @@ parameters_type <- function(model, ...) {
 }
 
 
-
 #' @keywords internal
 .parameters_type_table <- function(names, data, reference) {
   out <- lapply(names, .parameters_type, data = data, reference = reference)
@@ -153,7 +152,6 @@ parameters_type <- function(model, ...) {
   names(out) <- c("Type", "Link", "Term", "Variable", "Level", "Secondary_Parameter")
   out
 }
-
 
 
 #' @keywords internal
@@ -177,8 +175,6 @@ parameters_type <- function(model, ...) {
     .parameters_type_basic(name, data, reference)
   }
 }
-
-
 
 
 #' @keywords internal
@@ -295,7 +291,6 @@ parameters_type <- function(model, ...) {
 }
 
 
-
 #' @keywords internal
 .poly_info <- function(x, what = "degree") {
   if (what == "degree") {
@@ -306,7 +301,6 @@ parameters_type <- function(model, ...) {
   p <- "(.*)poly\\((.*),\\s(.*)\\)(.*)"
   .safe(insight::trim_ws(sub(p, replacement = subs, x)), 1)
 }
-
 
 
 #' @keywords internal

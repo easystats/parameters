@@ -197,7 +197,6 @@ cluster_analysis <- function(x,
   }
 
 
-
   # Apply clustering --------------------------------------------------------
 
 
@@ -284,7 +283,6 @@ cluster_analysis <- function(x,
   class(out) <- c("cluster_analysis", class(out))
   out
 }
-
 
 
 # Clustering Methods --------------------------------------------------------
@@ -404,7 +402,6 @@ cluster_analysis <- function(x,
   model <- mclust::Mclust(cluster_data, G = n, verbose = FALSE, ...)
   list(model = model, clusters = model$classification)
 }
-
 
 
 # Methods ----------------------------------------------------------------

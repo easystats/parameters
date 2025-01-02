@@ -325,7 +325,6 @@
 }
 
 
-
 .filter_parameters <- function(params, keep = NULL, drop = NULL, verbose = TRUE) {
   if (!is.null(keep) && is.list(keep)) {
     for (i in names(keep)) {
@@ -648,7 +647,6 @@
 }
 
 
-
 .add_within_between_effects <- function(model, parameters) {
   # This function checks whether the model contains predictors that were
   # "demeaned" using the "demean()" function. If so, these columns have an
@@ -703,7 +701,6 @@
 }
 
 
-
 .find_within_between <- function(model, which_effect) {
   mf <- stats::model.frame(model)
   unlist(sapply(names(mf), function(i) {
@@ -712,10 +709,6 @@
     }
   }), use.names = FALSE)
 }
-
-
-
-
 
 
 # Bayes function ------------------------------------------------------
@@ -848,9 +841,6 @@
   rownames(parameters) <- NULL
   parameters
 }
-
-
-
 
 
 # SEM function ------------------------------------------------------
@@ -1008,7 +998,6 @@
 
   params
 }
-
 
 
 # tools -------------------------

@@ -47,8 +47,6 @@ p_value.coxph <- function(model, ...) {
 }
 
 
-
-
 #################### .aareg ------
 
 
@@ -74,9 +72,6 @@ p_value.aareg <- function(model, ...) {
     p = as.vector(p)
   )
 }
-
-
-
 
 
 #################### .survreg ------
@@ -112,8 +107,6 @@ p_value.survreg <- function(model, method = NULL, ...) {
     p = as.vector(p)
   )
 }
-
-
 
 
 #################### .riskRegression ------
