@@ -63,7 +63,6 @@
 }
 
 
-
 # Find log-terms inside model formula, and return "clean" term names
 .log_terms <- function(model) {
   x <- insight::find_terms(model, flatten = TRUE, verbose = FALSE)
@@ -82,7 +81,6 @@
   val <- withCallingHandlers(expr, warning = wHandler)
   list(out = val, warnings = myWarnings)
 }
-
 
 
 #' @keywords internal

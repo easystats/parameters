@@ -83,7 +83,6 @@ reduce_data <- function(x, method = "PCA", n = "max", distance = "euclidean", ..
 }
 
 
-
 #' @export
 reduce_parameters.data.frame <- function(x, method = "PCA", n = "max", distance = "euclidean", ...) {
   x <- datawizard::to_numeric(x, dummy_factors = TRUE)
@@ -140,7 +139,6 @@ reduce_parameters.data.frame <- function(x, method = "PCA", n = "max", distance 
 }
 
 
-
 #' @export
 reduce_parameters.lm <- function(x, method = "PCA", n = "max", distance = "euclidean", ...) {
   model_data <- reduce_parameters(
@@ -162,9 +160,6 @@ reduce_parameters.lm <- function(x, method = "PCA", n = "max", distance = "eucli
 reduce_parameters.merMod <- reduce_parameters.lm
 
 
-
-
-
 #' @export
 principal_components.lm <- function(x, ...) {
   reduce_parameters(x, method = "PCA", ...)
@@ -172,11 +167,6 @@ principal_components.lm <- function(x, ...) {
 
 #' @export
 principal_components.merMod <- principal_components.lm
-
-
-
-
-
 
 
 #' @keywords internal
@@ -190,12 +180,6 @@ principal_components.merMod <- principal_components.lm
   names(features) <- paste0("CMDS", seq_len(ncol(features)))
   features
 }
-
-
-
-
-
-
 
 
 #' @keywords internal
@@ -212,8 +196,6 @@ principal_components.merMod <- principal_components.lm
   names(features) <- paste0("DRR", seq_len(ncol(features)))
   features
 }
-
-
 
 
 #' @keywords internal

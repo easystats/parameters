@@ -142,8 +142,6 @@ ci.metaplus <- function(x, ...) {
 }
 
 
-
-
 ###### .meta_random -------------------
 
 
@@ -284,8 +282,6 @@ ci.meta_random <- function(x, method = "eti", ...) {
 }
 
 
-
-
 ###### .meta_fixed -------------------
 
 #' @export
@@ -298,8 +294,6 @@ standard_error.meta_fixed <- standard_error.meta_random
 
 #' @export
 ci.meta_fixed <- ci.meta_random
-
-
 
 
 ###### .meta_bma -------------------
@@ -400,8 +394,6 @@ standard_error.meta_bma <- standard_error.meta_random
 ci.meta_bma <- ci.meta_random
 
 
-
-
 # helper ------
 
 
@@ -417,7 +409,6 @@ ci.meta_bma <- ci.meta_random
     c(sprintf("%g%%", (100 * (1 - ci)) / 2), sprintf("%g%%", 100 - (100 * (1 - ci)) / 2))
   )
 }
-
 
 
 # format_parameters -----------------------------------

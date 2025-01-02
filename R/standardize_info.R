@@ -164,8 +164,6 @@ standardize_info.default <- function(model,
 }
 
 
-
-
 # Predictors - Smart ------------------------------------------------------------
 
 
@@ -202,7 +200,6 @@ standardize_info.default <- function(model,
     stringsAsFactors = FALSE
   )
 }
-
 
 
 #' @keywords internal
@@ -295,9 +292,6 @@ standardize_info.default <- function(model,
 }
 
 
-
-
-
 # Predictors - sdy ------------------------------------------------------------
 
 
@@ -320,9 +314,6 @@ standardize_info.default <- function(model,
     stringsAsFactors = FALSE
   )
 }
-
-
-
 
 
 # Response ------------------------------------------------------------
@@ -372,7 +363,6 @@ standardize_info.default <- function(model,
 }
 
 
-
 #' @keywords internal
 .std_info_response_basic <- function(model, info, params, robust = FALSE, w = NULL, ...) {
   if (inherits(model, c("gls", "lme"))) {
@@ -402,7 +392,6 @@ standardize_info.default <- function(model,
     stringsAsFactors = FALSE
   )
 }
-
 
 
 # Pseudo (GLMM) -----------------------------------------------------------
@@ -550,7 +539,6 @@ standardize_info.default <- function(model,
     stringsAsFactors = FALSE
   )
 }
-
 
 
 # Utils -------------------------------------------------------------------

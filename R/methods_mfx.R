@@ -148,7 +148,6 @@ model_parameters.betamfx <- function(model,
 }
 
 
-
 # ci ------------------
 
 #' @export
@@ -209,7 +208,6 @@ ci.betamfx <- function(x,
   )
   .ci_generic(model = x, ci = ci, component = component, method = method, ...)
 }
-
 
 
 # standard error ------------------
@@ -302,7 +300,6 @@ standard_error.betamfx <- function(model, component = "all", ...) {
 }
 
 
-
 # p values ------------------
 
 #' @export
@@ -387,7 +384,6 @@ p_value.betamfx <- function(model, component = "all", ...) {
 
   out
 }
-
 
 
 # simulate model ------------------

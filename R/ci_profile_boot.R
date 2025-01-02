@@ -32,7 +32,6 @@
 }
 
 
-
 # we need this function for models where confint and get_parameters return
 # different length (e.g. as for "polr" models)
 .ci_profiled2 <- function(model, ci) {
@@ -98,7 +97,6 @@
 }
 
 
-
 #' @keywords internal
 .ci_uniroot_glmmTMB <- function(x, ci, component, ...) {
   # make sure "..." doesn't pass invalid arguments to package TMB
@@ -155,7 +153,6 @@
   row.names(out) <- NULL
   out
 }
-
 
 
 #' @keywords internal

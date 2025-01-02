@@ -43,7 +43,6 @@ test_that("print model_parameters", {
 })
 
 
-
 test_that("model_parameters.glmer ml1", {
   params <- model_parameters(model, ci_method = "ml1", effects = "fixed")
   expect_equal(params$SE, c(0.22758, 0.30329, 0.32351, 0.42445), tolerance = 1e-2)

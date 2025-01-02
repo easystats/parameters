@@ -12,7 +12,6 @@ model_parameters.hurdle <- model_parameters.zcpglm
 model_parameters.zerocount <- model_parameters.zcpglm
 
 
-
 # ci -----------------
 
 #' @export
@@ -46,7 +45,6 @@ ci.hurdle <- ci.zeroinfl
 
 #' @export
 ci.zerocount <- ci.zeroinfl
-
 
 
 # standard error -----------------
@@ -107,7 +105,6 @@ standard_error.hurdle <- standard_error.zeroinfl
 standard_error.zerocount <- standard_error.zeroinfl
 
 
-
 # p values -----------------------
 
 #' @export
@@ -161,7 +158,6 @@ p_value.hurdle <- p_value.zeroinfl
 p_value.zerocount <- p_value.zeroinfl
 
 
-
 # simulate model -----------------
 
 #' @export
@@ -172,7 +168,6 @@ simulate_model.hurdle <- simulate_model.zeroinfl
 
 #' @export
 simulate_model.zerocount <- simulate_model.zeroinfl
-
 
 
 # simulate paramaters -----------------

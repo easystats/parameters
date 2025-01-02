@@ -3,7 +3,6 @@
 bayestestR::p_significance
 
 
-
 #' @title Practical Significance (ps)
 #'
 #' @description Compute the probability of **Practical Significance** (*ps*),

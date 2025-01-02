@@ -533,8 +533,6 @@ standard_error.glmmTMB <- function(model,
 }
 
 
-
-
 # simulate model -----
 
 
@@ -625,8 +623,6 @@ simulate_model.glmmTMB <- function(model,
   attr(d, "object_name") <- insight::safe_deparse_symbol(substitute(model))
   d
 }
-
-
 
 
 # simulate_parameters -----

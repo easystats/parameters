@@ -50,8 +50,6 @@ p_value_kenward.lmerMod <- function(model, dof = NULL) {
 }
 
 
-
-
 # helper ------------------------------
 
 .p_value_dof <- function(model,
@@ -119,8 +117,6 @@ p_value_kenward.lmerMod <- function(model, dof = NULL) {
 
   out
 }
-
-
 
 
 .p_value_dof_kr <- function(model, params, dof) {

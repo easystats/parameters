@@ -38,8 +38,6 @@ dof_ml1 <- function(model) {
 }
 
 
-
-
 .get_df_ml1_approx <- function(x, g) {
   if (!is.factor(g)) {
     g <- as.factor(g)
@@ -60,8 +58,6 @@ dof_ml1 <- function(model) {
     return(m)
   }
 }
-
-
 
 
 .find_term_assignment <- function(model_data, predictors, parameters) {

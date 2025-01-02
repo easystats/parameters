@@ -36,7 +36,6 @@ model_parameters.lavaan <- function(model,
 }
 
 
-
 #' @export
 model_parameters.blavaan <- function(model,
                                      centrality = "median",
@@ -94,8 +93,6 @@ model_parameters.blavaan <- function(model,
 }
 
 
-
-
 # ci ---------------------------
 
 
@@ -105,8 +102,6 @@ ci.lavaan <- function(x, ci = 0.95, ...) {
   out$CI <- ci
   out[out$Operator != "~1", c("To", "Operator", "From", "CI", "CI_low", "CI_high")]
 }
-
-
 
 
 # SE ---------------------------
@@ -130,8 +125,6 @@ standard_error.blavaan <- function(model, ...) {
 }
 
 
-
-
 # p-value ---------------------------
 
 
@@ -144,8 +137,6 @@ p_value.lavaan <- function(model, ...) {
 
 #' @export
 p_value.blavaan <- p_value.BFBayesFactor
-
-
 
 
 # print ---------------------------

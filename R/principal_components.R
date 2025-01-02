@@ -218,9 +218,6 @@ principal_components <- function(x,
 }
 
 
-
-
-
 #' @rdname principal_components
 #' @export
 rotated_data <- function(pca_results, verbose = TRUE) {
@@ -250,7 +247,6 @@ rotated_data <- function(pca_results, verbose = TRUE) {
 
   out
 }
-
 
 
 #' @export
@@ -363,7 +359,6 @@ principal_components.data.frame <- function(x,
   data_summary <- data_summary[1:n, , drop = FALSE]
 
 
-
   # Compute loadings
   if (length(model$sdev) > 1) {
     pca_loadings <- as.data.frame(model$rotation %*% diag(model$sdev))
@@ -443,7 +438,6 @@ principal_components.data.frame <- function(x,
   }
   n
 }
-
 
 
 #' @keywords internal

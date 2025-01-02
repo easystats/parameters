@@ -36,7 +36,6 @@ ci.polr <- function(x, ci = 0.95, dof = NULL, method = "profile", ...) {
 }
 
 
-
 # SE -----------------
 
 #' @export
@@ -55,7 +54,6 @@ standard_error.polr <- function(model, method = NULL, ...) {
     SE = as.vector(se)
   )
 }
-
 
 
 # p -----------------
@@ -92,7 +90,6 @@ p_value.polr <- function(model, method = NULL, ...) {
     p = as.vector(p)
   )
 }
-
 
 
 # parameters -----------------

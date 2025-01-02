@@ -29,7 +29,6 @@ test_that("mp_rq", {
 })
 
 
-
 # rqs ---------
 test_that("mp_rqs", {
   skip_if_not_installed("quantreg")

@@ -31,7 +31,6 @@ convert_efa_to_cfa <- function(model, ...) {
 }
 
 
-
 #' @rdname convert_efa_to_cfa
 #' @inheritParams model_parameters.principal
 #' @export
@@ -51,7 +50,6 @@ convert_efa_to_cfa.fa <- function(model,
 convert_efa_to_cfa.fa.ci <- convert_efa_to_cfa.fa
 
 
-
 #' @export
 convert_efa_to_cfa.parameters_efa <- function(model,
                                               threshold = NULL,
@@ -69,12 +67,9 @@ convert_efa_to_cfa.parameters_efa <- function(model,
 convert_efa_to_cfa.parameters_pca <- convert_efa_to_cfa.parameters_efa
 
 
-
 #' @rdname convert_efa_to_cfa
 #' @export
 efa_to_cfa <- convert_efa_to_cfa
-
-
 
 
 #' @keywords internal

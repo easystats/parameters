@@ -32,7 +32,6 @@ model_parameters.varest <- function(model,
 }
 
 
-
 #' @export
 ci.varest <- function(x, ci = 0.95, method = NULL, ...) {
   params <- lapply(names(x$varresult), function(i) {
@@ -43,7 +42,6 @@ ci.varest <- function(x, ci = 0.95, method = NULL, ...) {
 
   do.call(rbind, params)
 }
-
 
 
 #' @export
@@ -58,7 +56,6 @@ standard_error.varest <- function(model, method = NULL, ...) {
 }
 
 
-
 #' @export
 p_value.varest <- function(model, ...) {
   params <- lapply(names(model$varresult), function(i) {
@@ -71,7 +68,6 @@ p_value.varest <- function(model, ...) {
 }
 
 
-
 #' @export
 simulate_model.varest <- function(model, iterations = 1000, ...) {
   out <- lapply(names(model$varresult), function(i) {
@@ -81,7 +77,6 @@ simulate_model.varest <- function(model, iterations = 1000, ...) {
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(model))
   out
 }
-
 
 
 #' @export

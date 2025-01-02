@@ -52,7 +52,6 @@
 }
 
 
-
 .extract_random_parameters.glmmTMB <- function(model,
                                                ci = 0.95,
                                                effects = "random",

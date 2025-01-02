@@ -112,8 +112,6 @@ standard_error.wbm <- function(model, ...) {
 standard_error.wbgee <- standard_error.wbm
 
 
-
-
 # p values -------------------
 
 
@@ -137,9 +135,6 @@ p_value.wbm <- function(model, ...) {
 
 #' @export
 p_value.wbgee <- p_value.wbm
-
-
-
 
 
 # utils -------------------

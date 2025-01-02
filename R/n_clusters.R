@@ -138,8 +138,6 @@ n_clusters <- function(x,
 }
 
 
-
-
 #' @keywords internal
 .n_clusters_mclust <- function(x, n_max = 10, ...) {
   insight::check_if_installed("mclust")
@@ -159,8 +157,6 @@ n_clusters <- function(x,
     Duration = as.numeric(difftime(Sys.time(), t0, units = "secs"))
   )
 }
-
-
 
 
 # Methods -----------------------------------------------------------------
@@ -190,8 +186,6 @@ n_clusters <- function(x,
     )
   )
 }
-
-
 
 
 #' @keywords internal

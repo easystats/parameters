@@ -234,9 +234,6 @@ format.parameters_simulate <- format.parameters_model
 format.parameters_brms_meta <- format.parameters_model
 
 
-
-
-
 # Compare parameters ----------------------
 
 
@@ -465,7 +462,6 @@ format.compare_parameters <- function(x,
 
   formatted_table
 }
-
 
 
 # sem-models ---------------------------------

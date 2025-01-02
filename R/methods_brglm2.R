@@ -144,8 +144,6 @@ p_value.bracl <- function(model, verbose = TRUE, ...) {
 }
 
 
-
-
 ############# .multinom --------------
 
 
@@ -282,8 +280,6 @@ simulate_parameters.multinom <- function(model,
 
   out
 }
-
-
 
 
 ############# .brmultinom --------------

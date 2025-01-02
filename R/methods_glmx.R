@@ -64,7 +64,6 @@ p_value.glmx <- function(model, ...) {
 }
 
 
-
 #' @export
 simulate_model.glmx <- function(model, iterations = 1000, component = "all", ...) {
   component <- insight::validate_argument(

@@ -12,7 +12,6 @@ factor_analysis <- function(x,
 }
 
 
-
 #' @export
 factor_analysis.data.frame <- function(x,
                                        n = "auto",
@@ -40,7 +39,6 @@ factor_analysis.data.frame <- function(x,
     ...
   )
 }
-
 
 
 #' @keywords internal

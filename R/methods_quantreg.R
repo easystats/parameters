@@ -39,8 +39,6 @@ model_parameters.rqs <- function(model,
 }
 
 
-
-
 # ci ---------------------
 
 
@@ -62,9 +60,6 @@ ci.nlrq <- ci.default
 
 #' @export
 ci.rqs <- ci.default
-
-
-
 
 
 # standard errors ---------------------
@@ -189,8 +184,6 @@ standard_error.rqss <- function(model,
   }
   se
 }
-
-
 
 
 # p values ---------------------

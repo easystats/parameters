@@ -13,8 +13,6 @@ ci.lm <- function(x, ci = 0.95, method = "residual", ...) {
 }
 
 
-
-
 # .summary.lm ---------------------
 
 #' @export

@@ -242,7 +242,6 @@ print_html.compare_parameters <- function(x,
 }
 
 
-
 # helper ------------------
 
 .add_gt_options <- function(out,

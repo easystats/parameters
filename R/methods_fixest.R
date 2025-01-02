@@ -114,8 +114,6 @@ p_value.feglm <- function(model, ...) {
 }
 
 
-
-
 # .fixest_multi -----------------------------------
 
 #' @export
@@ -228,7 +226,6 @@ p_value.fixest_multi <- function(model, ...) {
 simulate_model.fixest_multi <- function(model, ...) {
   lapply(model, simulate_model, ...)
 }
-
 
 
 # helper ---------------------------------

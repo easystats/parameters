@@ -471,8 +471,6 @@ standardize_parameters.model_fit <- function(model,
 }
 
 
-
-
 # methods --------------------------------
 
 #' @export
@@ -539,9 +537,6 @@ print_html.parameters_standardized <- function(x, digits = 2, ...) {
   x_fmt <- format(x, digits = digits, output = "html", ...)
   insight::export_table(x_fmt, format = "html", ...)
 }
-
-
-
 
 
 # helper -------------------------

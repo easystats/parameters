@@ -20,8 +20,6 @@ p_value.complmrob <- p_value.default
 ci.complmrob <- ci.default
 
 
-
-
 ############# .Gam --------------
 
 

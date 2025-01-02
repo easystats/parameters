@@ -596,8 +596,6 @@ dominance_analysis <- function(model, sets = NULL, all = NULL,
 }
 
 
-
-
 # methods ------------------------------
 
 

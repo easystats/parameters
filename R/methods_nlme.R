@@ -85,8 +85,6 @@ p_value.lme <- function(model,
 standard_error.lme <- standard_error.default
 
 
-
-
 ############### .gls --------------
 
 

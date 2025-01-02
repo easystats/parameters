@@ -41,7 +41,6 @@ reshape_loadings.data.frame <- function(x, threshold = NULL, loadings_columns = 
 }
 
 
-
 #' @keywords internal
 .wide_loadings <- function(loadings,
                            loadings_columns = "Loading",
@@ -119,9 +118,6 @@ reshape_loadings.data.frame <- function(x, threshold = NULL, loadings_columns = 
   class(loadings) <- unique(c("parameters_loadings", class(loadings)))
   loadings
 }
-
-
-
 
 
 #' @export

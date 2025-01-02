@@ -20,7 +20,6 @@ ci_kenward <- function(model, ci = 0.95) {
 }
 
 
-
 .ci_kenward_dof <- function(model, ci = 0.95, df_kr) {
   out <- lapply(ci, function(i) {
     .ci_dof(

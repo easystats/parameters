@@ -763,8 +763,6 @@ model_parameters.default <- function(model,
 }
 
 
-
-
 #################### .glm ----------------------
 
 

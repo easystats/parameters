@@ -267,9 +267,6 @@
 }
 
 
-
-
-
 # other helper ------------------------
 
 
@@ -554,7 +551,6 @@
 }
 
 
-
 # helper to format the header / subheader of different model components --------------
 
 .format_model_component_header <- function(x,
@@ -719,9 +715,6 @@
 }
 
 
-
-
-
 # helper grouping parameters -------------------
 
 
@@ -818,7 +811,6 @@
 }
 
 
-
 # .insert_row <- function(x, newrow, r) {
 #   existingDF[seq(r+1,nrow(existingDF)+1),] <- existingDF[seq(r,nrow(existingDF)),]
 #   existingDF[r,] <- newrow
@@ -892,8 +884,6 @@
 }
 
 
-
-
 .prepare_splitby_for_print <- function(x) {
   if (!is.null(attributes(x)$model_class) && any(attributes(x)$model_class == "mvord")) {
     x$Response <- NULL
@@ -917,8 +907,6 @@
   split_by <- split_by[nzchar(split_by, keepNA = TRUE)]
   split_by
 }
-
-
 
 
 # this function is actually similar to "insight::print_parameters()", but more
@@ -1214,8 +1202,6 @@
     insight::compact_list(final_table)
   }
 }
-
-
 
 
 # helper to fix unequal number of columns for list of data frames,

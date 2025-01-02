@@ -67,8 +67,6 @@ get_scores <- function(x, n_items = NULL) {
 }
 
 
-
-
 # model parameters -----------------------------------------------------------------
 
 
@@ -87,10 +85,6 @@ model_parameters.parameters_efa <- function(model, ...) {
 
 #' @export
 model_parameters.parameters_pca <- model_parameters.parameters_efa
-
-
-
-
 
 
 # summary -----------------------------------------------------------------
@@ -130,11 +124,6 @@ summary.parameters_omega <- function(object, ...) {
   class(table_var) <- c("parameters_omega_summary", class(table_var))
   table_var
 }
-
-
-
-
-
 
 
 # predict -----------------------------------------------------------------
@@ -194,8 +183,6 @@ predict.parameters_efa <- function(object,
 predict.parameters_pca <- predict.parameters_efa
 
 
-
-
 .merge_na <- function(object, out, verbose = TRUE) {
   compl_cases <- attributes(object)$complete_cases
   if (is.null(compl_cases)) {
@@ -212,10 +199,6 @@ predict.parameters_pca <- predict.parameters_efa
   }
   out
 }
-
-
-
-
 
 
 # print -------------------------------------------------------------------
@@ -298,10 +281,6 @@ print.parameters_omega_summary <- function(x, ...) {
 }
 
 
-
-
-
-
 # print-helper ----------------------
 
 
@@ -371,7 +350,6 @@ print.parameters_omega_summary <- function(x, ...) {
 }
 
 
-
 #' @keywords internal
 .text_components_variance <- function(x, sep = "") {
   type <- attributes(x)$type
@@ -429,10 +407,6 @@ print.parameters_omega_summary <- function(x, ...) {
   }
   paste0(sep, text_variance, sep)
 }
-
-
-
-
 
 
 # sort --------------------------------------------------------------------
@@ -495,9 +469,6 @@ sort.parameters_pca <- sort.parameters_efa
 }
 
 
-
-
-
 # Filter --------------------------------------------------------------------
 
 
@@ -527,7 +498,6 @@ sort.parameters_pca <- sort.parameters_efa
 }
 
 
-
 # closest_component -------------------------------------------------------
 
 
@@ -540,7 +510,6 @@ closest_component <- function(pca_results) {
     .closest_component(pca_results)
   }
 }
-
 
 
 .closest_component <- function(loadings, loadings_columns = NULL, variable_names = NULL) {

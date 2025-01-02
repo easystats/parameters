@@ -357,7 +357,6 @@ n_factors <- function(x,
 }
 
 
-
 #' @rdname n_factors
 #' @export
 n_components <- function(x,
@@ -379,7 +378,6 @@ n_components <- function(x,
     ...
   )
 }
-
 
 
 #' @export
@@ -645,8 +643,6 @@ print.n_clusters <- print.n_factors
     Family = c("VSS", "VSS", "Velicers_MAP", "BIC", "BIC")
   )
 }
-
-
 
 
 #' @keywords internal

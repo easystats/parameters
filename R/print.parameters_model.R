@@ -379,8 +379,6 @@ print.parameters_simulate <- print.parameters_model
 print.parameters_brms_meta <- print.parameters_model
 
 
-
-
 # Random effects ------------------
 
 #' @export
@@ -388,8 +386,6 @@ print.parameters_random <- function(x, digits = 2, ...) {
   .print_random_parameters(x, digits = digits)
   invisible(x)
 }
-
-
 
 
 # helper --------------------
@@ -427,8 +423,6 @@ print.parameters_random <- function(x, digits = 2, ...) {
 }
 
 
-
-
 .print_footer <- function(x,
                           digits = 3,
                           show_sigma = FALSE,
@@ -462,8 +456,6 @@ print.parameters_random <- function(x, digits = 2, ...) {
     format = format
   )
 }
-
-
 
 
 .print_caption <- function(x, caption = NULL, format = "text") {
@@ -524,8 +516,6 @@ print.parameters_random <- function(x, digits = 2, ...) {
 }
 
 
-
-
 #' @keywords internal
 .print_random_parameters <- function(random_params, digits = 2) {
   insight::print_color("# Random Effects\n\n", "blue")
@@ -584,7 +574,6 @@ print.parameters_random <- function(x, digits = 2, ...) {
     }
   }
 }
-
 
 
 .find_min_colwidth <- function(formatted_table) {

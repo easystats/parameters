@@ -112,7 +112,6 @@ model_parameters.befa <- function(model,
   loadings <- .wide_loadings(long_loadings, loadings_columns = names(long_loadings)[3], component_column = "Component", variable_column = "Variable")
 
 
-
   # Add attributes
   attr(loadings, "model") <- model
   attr(loadings, "additional_arguments") <- list(...)

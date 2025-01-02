@@ -48,7 +48,6 @@ standard_error.plm <- function(model, vcov = NULL, vcov_args = NULL, verbose = T
 p_value.plm <- p_value.default
 
 
-
 # pggls ------------------------
 
 
@@ -61,7 +60,6 @@ p_value.pggls <- function(model, ...) {
     p = as.vector(p)
   )
 }
-
 
 
 # pgmm --------------------

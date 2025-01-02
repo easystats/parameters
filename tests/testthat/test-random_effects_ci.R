@@ -107,7 +107,6 @@ test_that("random effects CIs, two slopes, categorical", {
 })
 
 
-
 # model 2 ---------------------
 
 test_that("random effects CIs, simple slope", {
@@ -131,7 +130,6 @@ test_that("random effects CIs, simple slope", {
     c("", "", "Subject", "Subject", "Subject", "Residual")
   )
 })
-
 
 
 # model 3 ---------------------
@@ -182,7 +180,6 @@ test_that("random effects CIs, categorical slope-1", {
 })
 
 
-
 # model 4 ---------------------
 
 test_that("random effects CIs, categorical slope-2", {
@@ -228,7 +225,6 @@ test_that("random effects CIs, categorical slope-2", {
 })
 
 
-
 # model 5 ---------------------
 
 test_that("random effects CIs, double slope", {
@@ -256,8 +252,6 @@ test_that("random effects CIs, double slope", {
     )
   )
 })
-
-
 
 
 # no random intercept --------------------------
@@ -300,8 +294,6 @@ test_that("random effects CIs, simple slope", {
 })
 
 
-
-
 # poly random slope --------------------------
 test_that("random effects CIs, poly slope", {
   data(cake, package = "lme4")
@@ -330,8 +322,6 @@ test_that("random effects CIs, poly slope", {
     )
   )
 })
-
-
 
 
 # poly and categorical random slope --------------------------
