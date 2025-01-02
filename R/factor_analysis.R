@@ -59,7 +59,13 @@ factor_analysis.data.frame <- function(x,
   }
 
   # Pass cor if available
-  if (!is.null(cor)) {
+  if (is.null(cor)) {
+    out <- model_parameters(
+      psych::fa(x, nfactors = n, rotate = rotation, ...),
+      sort = sort,
+      threshold = threshold
+    )
+  } else {
     out <- model_parameters(
       psych::fa(
         cor,
@@ -68,12 +74,6 @@ factor_analysis.data.frame <- function(x,
         n.obs = nrow(x),
         ...
       ),
-      sort = sort,
-      threshold = threshold
-    )
-  } else {
-    out <- model_parameters(
-      psych::fa(x, nfactors = n, rotate = rotation, ...),
       sort = sort,
       threshold = threshold
     )
