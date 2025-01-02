@@ -53,9 +53,9 @@ dof_ml1 <- function(model) {
   var.within <- stats::var(x - x.bar)
   var.between <- stats::var(x.bar)
   if (var.within >= var.between) {
-    return(n)
+    n
   } else {
-    return(m)
+    m
   }
 }
 
