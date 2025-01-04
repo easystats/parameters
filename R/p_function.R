@@ -53,14 +53,29 @@
 #' (*P-Values Are Tough and S-Values Can Help*, lesslikely.com/statistics/s-values;
 #' see also _Amrhein and Greenland 2022_).
 #'
+#' The common definition of p-values can be considered as "conditional"
+#' interpretation:
+#'
+#' _The p-value is the probability of obtaining test results at least as
+#' extreme as the result actually observed, under the assumption that the
+#' null hypothesis is correct (Wikipedia)._
+#'
+#' However, this definition or interpretation is inadequate because it only
+#' referes to the test hypothesis (often the null hypothesis), which is only
+#' one component of the entire model that is being tested. Thus,
+#' _Greenland et al. 2022_ suggest an "unconditional" interpretation.
+#'
 #' This interpretation as a continuous measure of evidence against the test
 #' hypothesis and the entire model used to compute it can be seen in the
 #' figure below (taken from *P-Values Are Tough and S-Values Can Help*,
 #' lesslikely.com/statistics/s-values). The "conditional" interpretation of
 #' _p_-values and interval estimates (A) implicitly assumes certain assumptions
 #' to be true, thus the interpretation is "conditioned" on these assumptions
-#' (i.e. assumptions are taken as given). The unconditional interpretation (B),
-#' however, questions all these assumptions.
+#' (i.e. assumptions are taken as given, only the hypothesis is tested). The
+#' unconditional interpretation (B), however, questions _all_ these assumptions.
+#'
+#' A non-significant p-value could occur because the test hypothesis is false,
+#' but could also be the result of any of the model assumptions being incorrect.
 #'
 #' \if{html}{\cr \figure{unconditional_interpretation.png}{options: alt="Conditional versus unconditional interpretations of P-values"} \cr}
 #'
@@ -93,7 +108,7 @@
 #'
 #' In this sense, the probabilistic interpretation of _p_-values and
 #' compatibility intervals is "conditional" - on the data _and_ model assumptions
-#' (which is in line with the "unconditional" interpretation in the sense of
+#' (which is in line with the _"unconditional"_ interpretation in the sense of
 #' Rafi and Greenland).
 #'
 #' Ascribing a probabilistic interpretation to one realized confidence interval
@@ -140,7 +155,7 @@
 #' estimates as being intervals of values being consistent with the data,
 #' this comes close to the idea of (epistemic) probability. We do not believe that
 #' these two paradigms contradict or exclude each other. Rather, the aim is to
-#' emphasize one point of view or the other, i.e. to place the linguistic
+#' emphasize the one point of view or the other, i.e. to place the linguistic
 #' nuances either on 'compatibility' or 'probability'.
 #'
 #' The main take-away is *not* to interpret p-values as dichotomous decisions
@@ -150,15 +165,15 @@
 #' ## Compatibility intervals - is their interpretation "conditional" or not?
 #'
 #' The fact that the term "conditional" is used in different meanings in
-#' statistics, is confusing and unfortunate. Thus, we would summarize the
-#' (probabilistic) interpretation of compatibility intervals as follows: The
-#' intervals are built from the data _and_ our modeling assumptions. The
-#' accuracy of the intervals depends on our model assumptions. If a value is
-#' outside the interval, that might be because (1) that parameter value isn't
-#' supported by the data, or (2) the modeling assumptions are a poor fit for the
-#' situation. When we make bad assumptions, the compatibility interval might be
-#' too wide or (more commonly and seriously) too narrow, making us think we know
-#' more about the parameter than is warranted.
+#' statistics, is confusing. Thus, we would summarize the (probabilistic)
+#' interpretation of compatibility intervals as follows: The intervals are built
+#' from the data _and_ our modeling assumptions. The accuracy of the intervals
+#' depends on our model assumptions. If a value is outside the interval, that
+#' might be because (1) that parameter value isn't supported by the data, or (2)
+#' the modeling assumptions are a poor fit for the situation. When we make bad
+#' assumptions, the compatibility interval might be too wide or (more commonly
+#' and seriously) too narrow, making us think we know more about the parameter
+#' than is warranted.
 #'
 #' When we say "there is a 95% chance the true value is in the interval", that is
 #' a statement of _epistemic probability_ (i.e. description of uncertainty related
