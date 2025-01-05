@@ -13,4 +13,7 @@ test_that("model_parameters.logitr", {
   )
   params <- model_parameters(m, verbose = FALSE)
   expect_snapshot(params, variant = "windows")
+
+  params <- model_parameters(m, verbose = FALSE, ci_method = "residual")
+  expect_snapshot(params, variant = "windows")
 })

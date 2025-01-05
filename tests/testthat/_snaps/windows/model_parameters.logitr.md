@@ -15,3 +15,16 @@
       Uncertainty intervals (equal-tailed) and p-values (two-tailed) computed
         using a Wald z-distribution approximation.
 
+---
+
+    Code
+      params
+    Output
+      Parameter       | Log-Odds |   SE |          95% CI |      z |   df |      p
+      ----------------------------------------------------------------------------
+      scalePar        |     0.37 | 0.02 | [  0.32,  0.41] |  15.04 | 2407 | < .001
+      feat            |     1.34 | 0.36 | [  0.64,  2.04] |   3.77 | 2407 | < .001
+      brand [hiland]  |   -10.14 | 0.58 | [-11.27, -9.01] | -17.59 | 2407 | < .001
+      brand [weight]  |    -1.75 | 0.18 | [ -2.10, -1.40] |  -9.72 | 2407 | < .001
+      brand [yoplait] |     2.00 | 0.14 | [  1.72,  2.28] |  14.07 | 2407 | < .001
+
