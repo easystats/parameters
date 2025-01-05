@@ -1,7 +1,7 @@
 Type: Package
 Package: parameters
 Title: Processing of Model Parameters
-Version: 0.24.0.5
+Version: 0.24.0.6
 Authors@R:
     c(person(given = "Daniel",
              family = "Lüdecke",
@@ -152,6 +152,7 @@ Suggests:
     lmerTest,
     lmtest,
     logistf,
+    logitr,
     logspline,
     lqmm,
     M3C,
