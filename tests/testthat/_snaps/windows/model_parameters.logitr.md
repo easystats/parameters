@@ -10,10 +10,6 @@
       brand [hiland]  |   -10.14 | 0.58 | [-11.26, -9.01] | -17.59 | < .001
       brand [weight]  |    -1.75 | 0.18 | [ -2.10, -1.40] |  -9.72 | < .001
       brand [yoplait] |     2.00 | 0.14 | [  1.72,  2.28] |  14.07 | < .001
-    Message
-      
-      Uncertainty intervals (equal-tailed) and p-values (two-tailed) computed
-        using a Wald z-distribution approximation.
 
 ---
 
