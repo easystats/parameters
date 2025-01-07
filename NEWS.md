@@ -2,6 +2,8 @@
 
 ## Changes
 
+* `model_parameters()` now supports objects of class `survfit`.
+
 * `model_parameters()` now gives informative error messages for more model
   classes than before when the function fails to extract model parameters.
 
