@@ -1,4 +1,53 @@
-# classes: .coxph, .aareg, .survreg, .riskRegression
+# classes: .coxph, .aareg, .survreg, .riskRegression, .survfit
+
+#################### .survfit ------
+
+#' @export
+model_parameters.survfit <- function(model,
+                                     keep = NULL,
+                                     drop = NULL,
+                                     verbose = TRUE,
+                                     ...) {
+  s <- summary(model)
+  # extract all elements with same length, which occur most in that list
+  # that is the data we need
+  uniqv <- unique(lengths(s))
+  tab <- tabulate(match(lengths(s), uniqv))
+  idx <- which.max(tab)
+  most_len <- uniqv[idx]
+
+  # convert list into data frame, only for elements of same length
+  params <- as.data.frame(s[lengths(s) == most_len])
+
+  # keep specific columns
+  keep_columns <- intersect(
+    c("time", "n.risk", "n.event", "surv", "std.err", "strata", "lower", "upper"),
+    colnames(params)
+  )
+  params <- params[keep_columns]
+
+  # rename
+  params <- datawizard::data_rename(
+    params,
+    select = c(
+      Time = "time", `N Risk` = "n.risk", `N Event` = "n.event", Survival = "surv",
+      SE = "std.err", Group = "strata", CI_low = "lower", CI_high = "upper"
+    )
+  )
+
+  # fix labels
+  params$Group <- gsub("x=", "", params$Group, fixed = TRUE)
+
+  # These are integers, need to be character to display without decimals
+  params$Time <- as.character(params$Time)
+  params[["N Risk"]] <- as.character(params[["N Risk"]])
+  params[["N Event"]] <- as.character(params[["N Event"]])
+
+  attr(params, "ci") <- s$conf.int
+  class(params) <- c("parameters_model", "see_parameters_model", class(params))
+
+  params
+}
 
 
 #################### .coxph ------
