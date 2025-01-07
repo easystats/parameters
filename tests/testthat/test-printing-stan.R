@@ -45,5 +45,18 @@ withr::with_options(
       mp9 <- model_parameters(m9, effects = "all", component = "all", centrality = "mean")
       expect_snapshot(mp9)
     })
+
+    test_that("print-information", {
+      skip_if_offline()
+      skip_if_not_installed("httr2")
+
+      m <- insight::download_model("brms_1")
+      out <- model_parameters(m)
+      expect_snapshot(out)
+      out <- model_parameters(m, ci_method = "HDI")
+      expect_snapshot(out)
+      m <- insight::download_model("stanreg_glm_1")
+      out <- model_parameters(m)
+    })
   }
 )

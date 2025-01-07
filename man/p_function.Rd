@@ -207,7 +207,7 @@ extreme as the result actually observed, under the assumption that the
 null hypothesis is correct (Wikipedia).}
 
 However, this definition or interpretation is inadequate because it only
-referes to the test hypothesis (often the null hypothesis), which is only
+refers to the test hypothesis (often the null hypothesis), which is only
 one component of the entire model that is being tested. Thus,
 \emph{Greenland et al. 2022} suggest an "unconditional" interpretation.
 

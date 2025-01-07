@@ -14,8 +14,8 @@
       var_binom1:groupsb |   0.53 | [-1.70, 2.69] | 69.25% | 1.000 | 2699.00
     Message
       
-      Uncertainty intervals (equal-tailed) and p-values (two-tailed) computed
-        using a MCMC distribution approximation.
+      Uncertainty intervals (equal-tailed) computed using a MCMC distribution
+        approximation.
       
       The model has a log- or logit-link. Consider using `exponentiate =
         TRUE` to interpret coefficients as ratios.
@@ -36,6 +36,6 @@
       var_binom1:groupsb |   1.69 | [0.18, 14.80] | 69.25% | 1.000 | 2699.00
     Message
       
-      Uncertainty intervals (equal-tailed) and p-values (two-tailed) computed
-        using a MCMC distribution approximation.
+      Uncertainty intervals (equal-tailed) computed using a MCMC distribution
+        approximation.
 

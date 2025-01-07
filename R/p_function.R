@@ -61,7 +61,7 @@
 #' null hypothesis is correct (Wikipedia)._
 #'
 #' However, this definition or interpretation is inadequate because it only
-#' referes to the test hypothesis (often the null hypothesis), which is only
+#' refers to the test hypothesis (often the null hypothesis), which is only
 #' one component of the entire model that is being tested. Thus,
 #' _Greenland et al. 2022_ suggest an "unconditional" interpretation.
 #'
