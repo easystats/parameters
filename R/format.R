@@ -747,6 +747,7 @@ format.parameters_sem <- function(x,
     ci_method <- .additional_arguments(x, "ci_method", NULL)
     test_statistic <- .additional_arguments(x, "test_statistic", NULL)
     bootstrap <- .additional_arguments(x, "bootstrap", FALSE)
+    is_bayesian <- .additional_arguments(x, "is_bayesian", FALSE)
     simulated <- .additional_arguments(x, "simulated", FALSE)
     residual_df <- .additional_arguments(x, "residual_df", NULL)
     random_variances <- .additional_arguments(x, "ran_pars", FALSE)
@@ -825,6 +826,8 @@ format.parameters_sem <- function(x,
         # bootstrapped intervals
         if (isTRUE(bootstrap)) {
           msg <- paste0("\nUncertainty intervals (", string_tailed, ") are ", string_method, "intervals.")
+        } else if (isTRUE(is_bayesian)) {
+          msg <- paste0("\nUncertainty intervals (", string_tailed, ") computed using a ", string_method, "distribution ", string_approx, "approximation.") # nolint
         } else {
           msg <- paste0("\nUncertainty intervals (", string_tailed, ") and p-values (two-tailed) computed using a ", string_method, "distribution ", string_approx, "approximation.") # nolint
         }

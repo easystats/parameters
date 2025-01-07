@@ -839,6 +839,9 @@
   }
 
   rownames(parameters) <- NULL
+  # indicate it's a Bayesian model
+  attr(parameters, "is_bayesian") <- TRUE
+
   parameters
 }
 

@@ -18,8 +18,8 @@
       sigma     | 2.67 | [2.06, 3.51] | 100% | 1.000 | 2390.00
     Message
       
-      Uncertainty intervals (equal-tailed) and p-values (two-tailed) computed
-        using a MCMC distribution approximation.
+      Uncertainty intervals (equal-tailed) computed using a MCMC distribution
+        approximation.
 
 ---
 
@@ -49,8 +49,8 @@
       Cor (Intercept~wt: gear) | -0.25 | [-0.99,  0.83] | 62.48% | 1.106 |  36.00
     Message
       
-      Uncertainty intervals (equal-tailed) and p-values (two-tailed) computed
-        using a MCMC distribution approximation.
+      Uncertainty intervals (equal-tailed) computed using a MCMC distribution
+        approximation.
 
 ---
 
@@ -79,8 +79,8 @@
       Cor (Intercept~Days: Subject) |  0.09 | [-0.47,  0.67] | 60.42% | 1.003 |  899.00
     Message
       
-      Uncertainty intervals (equal-tailed) and p-values (two-tailed) computed
-        using a MCMC distribution approximation.
+      Uncertainty intervals (equal-tailed) computed using a MCMC distribution
+        approximation.
 
 ---
 
@@ -109,8 +109,8 @@
       SD (Intercept: Subject)    | 38.51 | [26.89, 55.98] | 100% | 1.003 | 1254.00
     Message
       
-      Uncertainty intervals (equal-tailed) and p-values (two-tailed) computed
-        using a MCMC distribution approximation.
+      Uncertainty intervals (equal-tailed) computed using a MCMC distribution
+        approximation.
 
 ---
 
@@ -137,8 +137,8 @@
       SD (Intercept: Species) | 1.68 | [0.64, 3.64] | 100% | 1.003 | 796.00
     Message
       
-      Uncertainty intervals (equal-tailed) and p-values (two-tailed) computed
-        using a MCMC distribution approximation.
+      Uncertainty intervals (equal-tailed) computed using a MCMC distribution
+        approximation.
 
 ---
 
@@ -168,8 +168,8 @@
       Cor (Intercept~wt: gear) | -0.38 | [-0.99,  0.82] | 76.85% | 1.003 | 854.00
     Message
       
-      Uncertainty intervals (equal-tailed) and p-values (two-tailed) computed
-        using a MCMC distribution approximation.
+      Uncertainty intervals (equal-tailed) computed using a MCMC distribution
+        approximation.
 
 ---
 
@@ -238,6 +238,52 @@
       mpg          |  -1.80 | [ -3.20,  -0.90] | 100% | 1.002 | 1021.00
     Message
       
-      Uncertainty intervals (equal-tailed) and p-values (two-tailed) computed
-        using a MCMC distribution approximation.
+      Uncertainty intervals (equal-tailed) computed using a MCMC distribution
+        approximation.
+
+# print-information
+
+    Code
+      out
+    Output
+      # Fixed Effects
+      
+      Parameter   | Median |         95% CI |     pd |  Rhat |     ESS
+      ----------------------------------------------------------------
+      (Intercept) |  39.68 | [36.12, 43.27] |   100% | 1.000 | 5242.00
+      wt          |  -3.20 | [-4.79, -1.65] | 99.95% | 1.000 | 2071.00
+      cyl         |  -1.49 | [-2.36, -0.64] | 99.95% | 1.000 | 1951.00
+      
+      # Sigma
+      
+      Parameter | Median |       95% CI |   pd |  Rhat |     ESS
+      ----------------------------------------------------------
+      sigma     |   2.63 | [2.06, 3.51] | 100% | 1.000 | 2390.00
+    Message
+      
+      Uncertainty intervals (equal-tailed) computed using a MCMC distribution
+        approximation.
+
+---
+
+    Code
+      out
+    Output
+      # Fixed Effects
+      
+      Parameter   | Median |         95% CI |     pd |  Rhat |     ESS
+      ----------------------------------------------------------------
+      (Intercept) |  39.68 | [36.27, 43.34] |   100% | 1.000 | 5242.00
+      wt          |  -3.20 | [-4.70, -1.57] | 99.95% | 1.000 | 2071.00
+      cyl         |  -1.49 | [-2.38, -0.68] | 99.95% | 1.000 | 1951.00
+      
+      # Sigma
+      
+      Parameter | Median |       95% CI |   pd |  Rhat |     ESS
+      ----------------------------------------------------------
+      sigma     |   2.63 | [1.99, 3.39] | 100% | 1.000 | 2390.00
+    Message
+      
+      Uncertainty intervals (highest-density) computed using a MCMC
+        distribution approximation.
 
