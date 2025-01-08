@@ -533,7 +533,7 @@ model_parameters.seqanova.svyglm <- model_parameters.aov
   wide_anova <- function(x) {
     # creating numerator and denominator degrees of freedom
     idxResid <- x$Parameter == "Residuals"
-    if (length(idxResid)) {
+    if (length(idxResid) >= 1L && any(idxResid)) {
       x$df_error <- x$df[idxResid]
       x$Sum_Squares_Error <- x$Sum_Squares[idxResid]
       x$Mean_Square_Error <- x$Sum_Squares[idxResid]
@@ -545,6 +545,12 @@ model_parameters.seqanova.svyglm <- model_parameters.aov
   if ("Group" %in% colnames(data)) {
     data <- split(data, data$Group)
     data <- lapply(data, wide_anova)
+    data <- Filter(function(x) nrow(x) >= 1L, data)
+    cols <- unique(unlist(lapply(data, colnames)))
+    data <- lapply(data, function(x) {
+      x[,setdiff(cols, colnames(x))] <- NA
+      x
+    })
     data <- do.call(rbind, data)
   } else {
     data <- wide_anova(data)
