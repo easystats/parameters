@@ -536,7 +536,7 @@ model_parameters.seqanova.svyglm <- model_parameters.aov
     if (length(idxResid) >= 1L && any(idxResid)) {
       x$df_error <- x$df[idxResid]
       x$Sum_Squares_Error <- x$Sum_Squares[idxResid]
-      x$Mean_Square_Error <- x$Sum_Squares[idxResid]
+      x$Mean_Square_Error <- x$Mean_Square[idxResid]
       x <- x[!idxResid, ]
     }
     x

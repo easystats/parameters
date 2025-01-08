@@ -114,4 +114,14 @@ test_that("model_parameters.aov - table_wide", {
 
   expect_identical(nrow(mp1), 3L)
   expect_identical(nrow(mp2), 6L)
+
+
+
+  mod1 <- aov(yield ~ N * P * K + Error(block), data = npk)
+
+  out1 <- model_parameters(mod1, table_wide = FALSE)
+  out2 <- model_parameters(mod1, table_wide = TRUE)
+
+  expect_true(all(out2$Mean_Square_Error %in% out1$Mean_Square[out1$Parameter == "Residuals"]))
+  expect_true(all(out1$Mean_Square[out1$Parameter == "Residuals"] %in% out2$Mean_Square_Error))
 })
