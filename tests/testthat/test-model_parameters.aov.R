@@ -122,6 +122,14 @@ test_that("model_parameters.aov - table_wide", {
   out1 <- model_parameters(mod1, table_wide = FALSE)
   out2 <- model_parameters(mod1, table_wide = TRUE)
 
-  expect_true(all(out2$Mean_Square_Error %in% out1$Mean_Square[out1$Parameter == "Residuals"]))
-  expect_true(all(out1$Mean_Square[out1$Parameter == "Residuals"] %in% out2$Mean_Square_Error))
+  idx <- which(out1$Parameter == "Residuals")
+
+  expect_true(all(out2$Sum_Squares_Error %in% out1$Sum_Squares[idx]))
+  expect_true(all(out1$Sum_Squares[idx] %in% out2$Sum_Squares_Error))
+
+  expect_true(all(out2$Mean_Square_Error %in% out1$Mean_Square[idx]))
+  expect_true(all(out1$Mean_Square[idx] %in% out2$Mean_Square_Error))
+
+  expect_true(all(out2$df_error %in% out1$df[idx]))
+  expect_true(all(out1$df[idx] %in% out2$df_error))
 })

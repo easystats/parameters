@@ -532,12 +532,12 @@ model_parameters.seqanova.svyglm <- model_parameters.aov
 .anova_table_wide <- function(data, ...) {
   wide_anova <- function(x) {
     # creating numerator and denominator degrees of freedom
-    idxResid <- x$Parameter == "Residuals"
-    if (length(idxResid) >= 1L && any(idxResid)) {
+    idxResid <- which(x$Parameter == "Residuals")
+    if (length(idxResid)) {
       x$df_error <- x$df[idxResid]
       x$Sum_Squares_Error <- x$Sum_Squares[idxResid]
       x$Mean_Square_Error <- x$Mean_Square[idxResid]
-      x <- x[!idxResid, ]
+      x <- x[-idxResid, ]
     }
     x
   }
