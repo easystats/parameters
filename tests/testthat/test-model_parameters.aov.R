@@ -92,10 +92,12 @@ test_that("model_parameters.aov - table_wide", {
 
   data("iris")
   # can't use the pipe yet :(
-  iris_long <- datawizard::data_modify(iris, id = 1:length(Species))
+  iris_long <- datawizard::data_modify(iris, id = seq_along(Species))
   iris_long <- datawizard::data_to_long(iris_long, select = colnames(iris)[1:4])
-  iris_long <- datawizard::data_separate(iris_long, select = "name", separator = "\\.",
-                                         new_columns = c("attribute", "measure"))
+  iris_long <- datawizard::data_separate(iris_long,
+    select = "name", separator = "\\.",
+    new_columns = c("attribute", "measure")
+  )
 
   mod1 <- stats::aov(
     formula = value ~ attribute * measure + Error(id),

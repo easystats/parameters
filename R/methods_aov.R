@@ -548,7 +548,7 @@ model_parameters.seqanova.svyglm <- model_parameters.aov
     data <- Filter(function(x) nrow(x) >= 1L, data)
     cols <- unique(unlist(lapply(data, colnames)))
     data <- lapply(data, function(x) {
-      x[,setdiff(cols, colnames(x))] <- NA
+      x[, setdiff(cols, colnames(x))] <- NA
       x
     })
     data <- do.call(rbind, data)
