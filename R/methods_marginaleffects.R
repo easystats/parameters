@@ -66,23 +66,11 @@ model_parameters.marginalmeans <- model_parameters.marginaleffects
 
 
 #' @export
-model_parameters.marginaleffects_means <- model_parameters.marginaleffects
-
-
-#' @export
-model_parameters.marginaleffects_contrasts <- model_parameters.marginaleffects
-
-
-#' @export
 model_parameters.hypotheses <- model_parameters.marginaleffects
 
 
 #' @export
 model_parameters.slopes <- model_parameters.marginaleffects
-
-
-#' @export
-model_parameters.marginaleffects_slopes <- model_parameters.marginaleffects
 
 
 #' @export
