@@ -56,7 +56,7 @@ use cases only, and currently only works for compare_parameters() objects.'><met
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Print tables in different output formats</h1>
-      <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/v0.24.1/R/display.R" class="external-link"><code>R/display.R</code></a>, <a href="https://github.com/easystats/parameters/blob/v0.24.1/R/print_table.R" class="external-link"><code>R/print_table.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/main/R/display.R" class="external-link"><code>R/display.R</code></a>, <a href="https://github.com/easystats/parameters/blob/main/R/print_table.R" class="external-link"><code>R/print_table.R</code></a></small>
       <div class="d-none name"><code>display.parameters_model.Rd</code></div>
     </div>
 
@@ -177,7 +177,7 @@ coefficients or statistics: <code>{estimate}</code>, <code>{se}</code>, <code>{c
 into new cells/columns. Example: <code>select = "{estimate} ({ci})|{p}"</code>.</p>
 <p>If <code>format = "html"</code>, a <code>&lt;br&gt;</code> inserts a line break inside a cell. See
 'Examples'.</p></li>
-</ul><p>*. <strong>A string indicating a pre-defined layout</strong></p>
+<li><p><strong>A string indicating a pre-defined layout</strong></p>
 <p><code>select</code> can be one of the following string values, to create one of the
 following pre-defined column layouts:</p><ul><li><p><code>"ci"</code>: Estimates and confidence intervals, no asterisks for p-values.
 This is equivalent to <code>select = "{estimate} ({ci})"</code>.</p></li>
@@ -191,6 +191,7 @@ equivalent to <code>select = "{estimate}{stars} ({se})"</code>..</p></li>
 columns. This is equivalent to <code>select = "{estimate} ({ci})|{p}"</code>.</p></li>
 <li><p><code>"se_p2"</code>: Estimate, standard errors and numeric p-values, in two columns.
 This is equivalent to <code>select = "{estimate} ({se})|{p}"</code>.</p></li>
+</ul></li>
 </ul><p>For <code><a href="model_parameters.html">model_parameters()</a></code>, glue-like syntax is still experimental in the
 case of more complex models (like mixed models) and may not return expected
 results.</p></dd>
@@ -609,232 +610,232 @@ in <code><a href="https://easystats.github.io/insight/reference/display.html" cl
 <span class="r-out co"><span class="r-pr">#&gt;</span>         </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         &lt;tbody&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 &lt;tr&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;(Intercept)                        &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;4.21 &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;3.41, 5.02  &lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;(Intercept)&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;4.21&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;3.41, 5.02&lt;/td&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt; .001&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;2.51 &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;1.20, 3.83 &lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;2.51&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;1.20, 3.83&lt;/td&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt; .001&lt;/td&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;-0.36&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;-0.90, 0.18 &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;0.194 &lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;-0.90, 0.18&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;0.194&lt;/td&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 &lt;/tr&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 &lt;tr&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;Species [versicolor] × Petal Length&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;0.29 &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;-0.30, 0.87 &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;0.334 &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;     &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;           &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;      &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;     &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;            &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;      &lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;0.29&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;-0.30, 0.87&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;0.334&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 &lt;/tr&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 &lt;tr&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;Petal Length                       &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;0.54 &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;0.00, 1.09  &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;0.052 &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;0.89 &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;0.75, 1.04 &lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;Petal Length&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;0.54&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;0.00, 1.09&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;0.052&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;0.89&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;0.75, 1.04&lt;/td&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt; .001&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;     &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;            &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;      &lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 &lt;/tr&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 &lt;tr&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;Species [versicolor]               &lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;Species [versicolor]&lt;/td&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;-1.81&lt;/td&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;-2.99, -0.62&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;0.003 &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;     &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;           &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;      &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;     &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;            &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;      &lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;0.003&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 &lt;/tr&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 &lt;tr&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;Species [virginica]                &lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;Species [virginica]&lt;/td&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;-3.15&lt;/td&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;-4.41, -1.90&lt;/td&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt; .001&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;     &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;           &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;      &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;     &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;            &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;      &lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 &lt;/tr&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 &lt;tr&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;Species [virginica] × Petal Length &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;0.45 &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;-0.12, 1.03 &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;0.120 &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;     &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;           &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;      &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;     &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;            &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;      &lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;Species [virginica] × Petal Length&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;0.45&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;-0.12, 1.03&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;0.120&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 &lt;/tr&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 &lt;tr&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;Petal Width                        &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;     &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;            &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;      &lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;Petal Width&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;-0.02&lt;/td&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;-0.33, 0.28&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;0.877 &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;     &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;            &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;      &lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;0.877&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 &lt;/tr&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 &lt;tr&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;spp [EC-L]                         &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;     &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;            &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;      &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;     &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;           &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;      &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;0.67 &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;0.41, 0.92  &lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;spp [EC-L]&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;0.67&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;0.41, 0.92&lt;/td&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt; .001&lt;/td&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 &lt;/tr&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 &lt;tr&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;spp [PR]                           &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;     &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;            &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;      &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;     &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;           &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;      &lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;spp [PR]&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;-1.27&lt;/td&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;-1.74, -0.80&lt;/td&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt; .001&lt;/td&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 &lt;/tr&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 &lt;tr&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;spp [DM]                           &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;     &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;            &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;      &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;     &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;           &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;      &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;0.27 &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;0.00, 0.54  &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;0.051 &lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;spp [DM]&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;0.27&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;0.00, 0.54&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;0.051&lt;/td&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 &lt;/tr&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 &lt;tr&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;spp [EC-A]                         &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;     &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;            &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;      &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;     &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;           &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;      &lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;spp [EC-A]&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;-0.57&lt;/td&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;-0.97, -0.16&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;0.006 &lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;0.006&lt;/td&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 &lt;/tr&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 &lt;tr&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;spp [DES-L]                        &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;     &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;            &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;      &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;     &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;           &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;      &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;0.63 &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;0.38, 0.87  &lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;spp [DES-L]&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;0.63&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;0.38, 0.87&lt;/td&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt; .001&lt;/td&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 &lt;/tr&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 &lt;tr&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;spp [DF]                           &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;     &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;            &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;      &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;     &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;           &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;      &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;0.12 &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;-0.17, 0.40 &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;0.435 &lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;spp [DF]&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;0.12&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;-0.17, 0.40&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;0.435&lt;/td&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 &lt;/tr&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 &lt;tr&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;mined [no]                         &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;     &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;            &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;      &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;     &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;           &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;      &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;1.27 &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;0.74, 1.80  &lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;mined [no]&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;1.27&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;0.74, 1.80&lt;/td&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt; .001&lt;/td&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 &lt;/tr&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 &lt;tr&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;(Intercept) (zi)                   &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;     &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;            &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;      &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;     &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;           &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;      &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;0.79 &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;0.26, 1.32  &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;0.004 &lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;(Intercept) (zi)&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;0.79&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;0.26, 1.32&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;0.004&lt;/td&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 &lt;/tr&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 &lt;tr&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;minedno (zi)                       &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;     &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;            &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;      &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;     &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;           &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;      &lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;minedno (zi)&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;-1.84&lt;/td&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;-2.46, -1.23&lt;/td&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt; .001&lt;/td&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 &lt;/tr&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 &lt;tr&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;SD (Residual)                      &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;     &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;            &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;      &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;0.34 &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;0.30, 0.38 &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;      &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;     &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;            &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;      &lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;SD (Residual)&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;0.34&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;0.30, 0.38&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 &lt;/tr&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 &lt;tr&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;SD (Intercept: Species)            &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;     &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;            &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;      &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;1.07 &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;0.39, 2.91 &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;      &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;     &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;            &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;      &lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;SD (Intercept: Species)&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;1.07&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;0.39, 2.91&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 &lt;/tr&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 &lt;tr&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;SD (Intercept: site)               &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;     &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;            &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;      &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;     &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;           &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;      &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;0.33 &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;0.18, 0.63  &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;      &lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;SD (Intercept: site)&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;0.33&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;0.18, 0.63&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 &lt;/tr&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         &lt;/tbody&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       &lt;/table&gt;</span>

@@ -50,7 +50,7 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Parameters from Bayesian Exploratory Factor Analysis</h1>
-      <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/v0.24.1/R/methods_BayesFM.R" class="external-link"><code>R/methods_BayesFM.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/main/R/methods_BayesFM.R" class="external-link"><code>R/methods_BayesFM.R</code></a></small>
       <div class="d-none name"><code>model_parameters.befa.Rd</code></div>
     </div>
 
@@ -113,11 +113,11 @@ to be estimated. Default to <code>0.95</code> (<code>95%</code>).</p></dd>
 <dt id="arg-test">test<a class="anchor" aria-label="anchor" href="#arg-test"></a></dt>
 <dd><p>The indices of effect existence to compute. Character (vector) or
 list with one or more of these options: <code>"p_direction"</code> (or <code>"pd"</code>),
-<code>"rope"</code>, <code>"p_map"</code>, <code>"equivalence_test"</code> (or <code>"equitest"</code>),
-<code>"bayesfactor"</code> (or <code>"bf"</code>) or <code>"all"</code> to compute all tests. For each
-"test", the corresponding <span class="pkg">bayestestR</span> function is called (e.g.
-<code><a href="https://easystats.github.io/bayestestR/reference/rope.html" class="external-link">rope()</a></code> or <code><a href="https://easystats.github.io/bayestestR/reference/p_direction.html" class="external-link">p_direction()</a></code>) and its results included in the summary
-output.</p></dd>
+<code>"rope"</code>, <code>"p_map"</code>, <code>"p_significance"</code> (or <code>"ps"</code>), <code>"p_rope"</code>,
+<code>"equivalence_test"</code> (or <code>"equitest"</code>), <code>"bayesfactor"</code> (or <code>"bf"</code>) or
+<code>"all"</code> to compute all tests. For each "test", the corresponding
+<span class="pkg">bayestestR</span> function is called (e.g. <code><a href="https://easystats.github.io/bayestestR/reference/rope.html" class="external-link">rope()</a></code> or <code><a href="https://easystats.github.io/bayestestR/reference/p_direction.html" class="external-link">p_direction()</a></code>)
+and its results included in the summary output.</p></dd>
 
 
 <dt id="arg-verbose">verbose<a class="anchor" aria-label="anchor" href="#arg-verbose"></a></dt>
