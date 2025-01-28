@@ -39,11 +39,11 @@ to be estimated. Default to \code{0.95} (\verb{95\%}).}
 
 \item{test}{The indices of effect existence to compute. Character (vector) or
 list with one or more of these options: \code{"p_direction"} (or \code{"pd"}),
-\code{"rope"}, \code{"p_map"}, \code{"equivalence_test"} (or \code{"equitest"}),
-\code{"bayesfactor"} (or \code{"bf"}) or \code{"all"} to compute all tests. For each
-"test", the corresponding \pkg{bayestestR} function is called (e.g.
-\code{\link[bayestestR:rope]{rope()}} or \code{\link[bayestestR:p_direction]{p_direction()}}) and its results included in the summary
-output.}
+\code{"rope"}, \code{"p_map"}, \code{"p_significance"} (or \code{"ps"}), \code{"p_rope"},
+\code{"equivalence_test"} (or \code{"equitest"}), \code{"bayesfactor"} (or \code{"bf"}) or
+\code{"all"} to compute all tests. For each "test", the corresponding
+\pkg{bayestestR} function is called (e.g. \code{\link[bayestestR:rope]{rope()}} or \code{\link[bayestestR:p_direction]{p_direction()}})
+and its results included in the summary output.}
 }
 \value{
 A data frame with simulated parameters.

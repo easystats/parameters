@@ -106,9 +106,7 @@ into new cells/columns. Example: \code{select = "{estimate} ({ci})|{p}"}.
 
 If \code{format = "html"}, a \verb{<br>} inserts a line break inside a cell. See
 'Examples'.
-}
-
-*. \strong{A string indicating a pre-defined layout}
+\item \strong{A string indicating a pre-defined layout}
 
 \code{select} can be one of the following string values, to create one of the
 following pre-defined column layouts:
@@ -125,6 +123,7 @@ equivalent to \code{select = "{estimate}{stars} ({se})"}..
 columns. This is equivalent to \code{select = "{estimate} ({ci})|{p}"}.
 \item \code{"se_p2"}: Estimate, standard errors and numeric p-values, in two columns.
 This is equivalent to \code{select = "{estimate} ({se})|{p}"}.
+}
 }
 
 For \code{model_parameters()}, glue-like syntax is still experimental in the
