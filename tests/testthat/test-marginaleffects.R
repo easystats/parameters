@@ -111,3 +111,20 @@ test_that("digits and ci_digits for marginaleffects", {
     model_parameters(digits = 1)
   expect_snapshot(out)
 })
+
+
+test_that("preserve columns with same name as reserved words", {
+  data(mtcars)
+  skip_if(getRversion() < "4.2.0")
+  skip_if_not_installed("modelbased")
+
+  set.seed(1234)
+  x <- rnorm(200)
+  z <- rnorm(200)
+  # quadratic relationship
+  y <- 2 * x + x^2 + 4 * z + rnorm(200)
+  d <- data.frame(x, y, z)
+  model <- lm(y ~ x + z, data = d)
+  pred <- modelbased::estimate_means(model, c("x", "z"))
+  expect_named(pred, c("x", "z", "Mean", "SE", "CI_low", "CI_high", "t", "df"))
+})
