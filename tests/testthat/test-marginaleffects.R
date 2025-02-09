@@ -1,4 +1,4 @@
-skip_if_not_installed("marginaleffects", minimum_version = "1.0.0")
+skip_if_not_installed("marginaleffects", minimum_version = "0.25.0")
 skip_if_not_installed("rstanarm")
 
 test_that("marginaleffects()", {
