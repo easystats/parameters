@@ -9,10 +9,13 @@ model_parameters.marginaleffects <- function(model,
                                              exponentiate = FALSE,
                                              ...) {
   insight::check_if_installed("marginaleffects")
-  out <- insight::standardize_names(
-    marginaleffects::tidy(model, conf_level = ci, ...),
-    style = "easystats"
-  )
+
+  tidy_model <- marginaleffects::tidy(model, conf_level = ci, ...)
+  out <- .rename_reserved_marginaleffects(tidy_model)
+  out <- insight::standardize_names(out, style = "easystats")
+  # in case data grid contained column names that are reserved words,
+  # rename those back now...
+  colnames(out) <- gsub("#####$", "", colnames(out))
 
   # contrast_ columns provide indispensable information about the comparisons
   colnames(out)[colnames(out) == "contrast"] <- "Comparison"
@@ -80,10 +83,14 @@ model_parameters.predictions <- function(model,
                                          ...) {
   insight::check_if_installed("marginaleffects")
 
-  out <- datawizard::data_rename(model, "estimate", "predicted")
+  out <- .rename_reserved_marginaleffects(model)
+  out <- datawizard::data_rename(out, "estimate", "predicted")
   out <- datawizard::data_relocate(out, "predicted", before = 1)
   out <- insight::standardize_names(out, style = "easystats")
   out <- insight::standardize_column_order(out, style = "easystats")
+  # in case data grid contained column names that are reserved words,
+  # rename those back now...
+  colnames(out) <- gsub("#####$", "", colnames(out))
 
   # remove and reorder some columns
   out$rowid <- out$Type <- NULL
@@ -116,4 +123,24 @@ model_parameters.predictions <- function(model,
 
   class(out) <- c("parameters_model", "see_parameters_model", class(out))
   out
+}
+
+
+.rename_reserved_marginaleffects <- function(model) {
+  # get focal terms - we might escape column names where focal terms
+  # equal "reserved" names, like t- or z-statistic
+  focal_terms <- attributes(model)$focal_terms
+  reserved <- c("t", "z")
+  renamed_focal <- NULL
+
+  # any focal terms equals reserved words? if so, rename
+  if (any(reserved %in% focal_terms)) {
+    renamed_focal <- focal_terms[focal_terms %in% reserved]
+    model <- datawizard::data_rename(
+      model,
+      select = renamed_focal,
+      replacement = paste0(renamed_focal, "#####")
+    )
+  }
+  model
 }
