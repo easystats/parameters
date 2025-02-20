@@ -19,6 +19,8 @@
 
 ## Bug fixes
 
+* Fixed issue with `model_parameters(<aovlist>, table_wide = TRUE)` with complex error structures ( #556 )
+
 * Fixed issue when printing `model_parameters()` with models from `mgcv::gam()`.
 
 * Fixed issues due to breaking changes in the latest release of the *datawizard*

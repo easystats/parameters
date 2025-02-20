@@ -84,3 +84,52 @@ test_that("model_parameters.anova", {
   model <- aov(Sepal.Length ~ Species / Cat1 + Error(Cat2), data = iris)
   expect_identical(sum(model_parameters(model, verbose = FALSE)$df), 149)
 })
+
+
+test_that("model_parameters.aov - table_wide", {
+  skip_if_not_installed("effectsize")
+  skip_if_not_installed("datawizard")
+
+  data("iris")
+  # can't use the pipe yet :(
+  iris_long <- datawizard::data_modify(iris, id = seq_along(Species))
+  iris_long <- datawizard::data_to_long(iris_long, select = colnames(iris)[1:4])
+  iris_long <- datawizard::data_separate(iris_long,
+    select = "name", separator = "\\.",
+    new_columns = c("attribute", "measure")
+  )
+
+  mod1 <- stats::aov(
+    formula = value ~ attribute * measure + Error(id),
+    data = iris_long
+  )
+
+  mod2 <- stats::aov(
+    formula = value ~ attribute * measure + Error(id / (attribute * measure)),
+    data = iris_long
+  )
+
+  mp1 <- model_parameters(mod1, eta_squared = "partial", ci = 0.95, table_wide = TRUE)
+  mp2 <- model_parameters(mod2, eta_squared = "partial", ci = 0.95, table_wide = TRUE)
+
+  expect_identical(nrow(mp1), 3L)
+  expect_identical(nrow(mp2), 6L)
+
+
+
+  mod1 <- aov(yield ~ N * P * K + Error(block), data = npk)
+
+  out1 <- model_parameters(mod1, table_wide = FALSE)
+  out2 <- model_parameters(mod1, table_wide = TRUE)
+
+  idx <- which(out1$Parameter == "Residuals")
+
+  expect_true(all(out2$Sum_Squares_Error %in% out1$Sum_Squares[idx]))
+  expect_true(all(out1$Sum_Squares[idx] %in% out2$Sum_Squares_Error))
+
+  expect_true(all(out2$Mean_Square_Error %in% out1$Mean_Square[idx]))
+  expect_true(all(out1$Mean_Square[idx] %in% out2$Mean_Square_Error))
+
+  expect_true(all(out2$df_error %in% out1$df[idx]))
+  expect_true(all(out1$df[idx] %in% out2$df_error))
+})
