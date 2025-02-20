@@ -1,3 +1,10 @@
+# parameters (devel)
+
+## Bug fixes
+
+* Fixed issue in `model_parameters()` for objects from package *marginaleffects*
+  where columns were renamed when their names equaled to certain reserved words.
+
 # parameters 0.24.1
 
 ## Changes
