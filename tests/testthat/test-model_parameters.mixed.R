@@ -3,8 +3,16 @@ skip_on_cran()
 
 m1 <- lme4::lmer(wt ~ cyl + (1 | gear), data = mtcars)
 m2 <- lme4::glmer(vs ~ cyl + (1 | gear), data = mtcars, family = "binomial")
+m3 <- lme4::lmer(wt ~ cyl + mpg + (1 | gear), data = mtcars)
 
 test_that("model_parameters.mixed", {
+  params <- model_parameters(m3, keep = "^cyl", effects = "fixed")
+  expect_identical(dim(params), c(1L, 10L))
+  expect_message({
+    params <- model_parameters(m3, keep = "^abc", effects = "fixed")
+  })
+  expect_identical(dim(params), c(3L, 10L))
+
   params <- model_parameters(m1, ci_method = "normal", effects = "fixed")
   expect_identical(c(nrow(params), ncol(params)), c(2L, 10L))
   expect_equal(params$CI_high, c(1.6373105660317, 0.554067677205595), tolerance = 1e-3)
