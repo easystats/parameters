@@ -29,7 +29,7 @@ of (model) objects from many different packages.
 [![CRAN](https://www.r-pkg.org/badges/version/parameters)](https://cran.r-project.org/package=parameters)
 [![parameters status
 badge](https://easystats.r-universe.dev/badges/parameters)](https://easystats.r-universe.dev)
-[![R-CMD-check](https://github.com/easystats/parameters/workflows/R-CMD-check/badge.svg?branch=main)](https://github.com/easystats/parameters/actions)
+[![codecov](https://codecov.io/gh/easystats/parameters/branch/main/graph/badge.svg)](https://app.codecov.io/gh/easystats/parameters)
 
 | Type | Source | Command |
 |----|----|----|

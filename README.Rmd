@@ -15,6 +15,7 @@ knitr::opts_chunk$set(
   out.width = "100%"
 )
 
+options(easystats_table_width = Inf)
 set.seed(333)
 library(parameters)
 ```
@@ -33,7 +34,7 @@ Another important goal of the **parameters** package is to facilitate and stream
 
 ## Installation
 
-[![CRAN](https://www.r-pkg.org/badges/version/parameters)](https://cran.r-project.org/package=parameters) [![parameters status badge](https://easystats.r-universe.dev/badges/parameters)](https://easystats.r-universe.dev) [![R-CMD-check](https://github.com/easystats/parameters/workflows/R-CMD-check/badge.svg?branch=main)](https://github.com/easystats/parameters/actions)
+[![CRAN](https://www.r-pkg.org/badges/version/parameters)](https://cran.r-project.org/package=parameters) [![parameters status badge](https://easystats.r-universe.dev/badges/parameters)](https://easystats.r-universe.dev) [![codecov](https://codecov.io/gh/easystats/parameters/branch/main/graph/badge.svg)](https://app.codecov.io/gh/easystats/parameters)
 
 Type | Source | Command
 ---|---|---
@@ -43,7 +44,7 @@ Development | GitHub | `remotes::install_github("easystats/parameters")`
 
 > **Tip**
 >
-> Instead of `library(parameters)`, use `library(easystats)`. This will make all features of the  easystats-ecosystem available.
+> Instead of `library(parameters)`, use `library(easystats)`. This will make all features of the easystats-ecosystem available.
 >
 > To stay updated, use `easystats::install_latest()`.
 
