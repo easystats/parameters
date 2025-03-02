@@ -116,7 +116,6 @@ test_that("model_parameters.aov - table_wide", {
   expect_identical(nrow(mp2), 6L)
 
 
-
   mod1 <- aov(yield ~ N * P * K + Error(block), data = npk)
 
   out1 <- model_parameters(mod1, table_wide = FALSE)
