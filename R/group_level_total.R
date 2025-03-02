@@ -1,11 +1,11 @@
-#' @keyword internal
-.group_level_total <- function(model, ...) {
-  UseMethod(".group_level_total")
+#' @keywords internal
+group_level_total <- function(model, ...) {
+  UseMethod("group_level_total")
 }
 
 
-#' @keyword internal
-.group_level_total.glmmTMB <- function(model, ...) {
+#' @keywords internal
+group_level_total.glmmTMB <- function(model, ...) {
   params <- suppressWarnings(insight::compact_list(stats::coef(model)))
   params_cond <- params$cond
   params_zi <- params$zi
@@ -20,6 +20,7 @@
       params_cond,
       group_levels = group_levels
     )
+    params_cond$Component = "conditional"
   }
   if (!is.null(params_zi)) {
     group_levels <- insight::compact_list(lapply(
@@ -32,7 +33,10 @@
       group_levels = group_levels,
       component = "zero_inflated_random"
     )
+    params_zi$Component = "zero_inflated"
   }
+
+  rbind(params_cond, params_zi)
 }
 
 
