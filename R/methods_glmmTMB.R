@@ -12,7 +12,7 @@
 #' @param model A mixed model.
 #' @param effects Should parameters for fixed effects (`"fixed"`), random
 #'   effects (`"random"`), both fixed and random effects (`"all"`), or the
-#'   overall (sum of fixed and random) effects ( `"total"`) be returned? Only
+#'   overall (sum of fixed and random) effects (`"total"`) be returned? Only
 #'   applies to mixed models. May be abbreviated. If the calculation of random
 #'   effects parameters takes too long, you may use `effects = "fixed"`.
 #' @param wb_component Logical, if `TRUE` and models contains within- and

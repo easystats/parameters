@@ -40,7 +40,7 @@ equivalence. Can be \code{"bayes"}, \code{"classic"} or \code{"cet"}. See 'Detai
 
 \item{effects}{Should parameters for fixed effects (\code{"fixed"}), random
 effects (\code{"random"}), both fixed and random effects (\code{"all"}), or the
-overall (sum of fixed and random) effects ( \code{"total"}) be returned? Only
+overall (sum of fixed and random) effects (\code{"total"}) be returned? Only
 applies to mixed models. May be abbreviated. If the calculation of random
 effects parameters takes too long, you may use \code{effects = "fixed"}.}
 
