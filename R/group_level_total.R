@@ -64,6 +64,25 @@
 }
 
 
+.group_level_total.merMod <- function(x, ...) {
+  params <- suppressWarnings(stats::coef(x))
+
+  # extract levels of group factors
+  group_levels <- insight::compact_list(lapply(methods::slot(x, "flist"), levels))
+  # extract names of slopes
+  slope_names <- insight::compact_list(methods::slot(x, "cnms"))
+  # reshape "coef()" data
+  params <- .reshape_group_level_coefficients(
+    x,
+    params = params,
+    group_levels = group_levels,
+    slope_names = slope_names
+  )
+
+  params
+}
+
+
 # helper ----------------------------------------------------------------------
 
 .reshape_group_level_coefficients <- function(
@@ -104,11 +123,8 @@
     out <- datawizard::data_join(params, join = "bind")
   }
 
-  # make sure first columns are the one to reshape
-  out <- datawizard::data_relocate(out, c("Group", "Level"), after = -1)
-
   # reshape
-  to_reshape <- seq_len(ncol(out) - 2)
+  to_reshape <- setdiff(colnames(out), c("Group", "Level"))
   out <- datawizard::reshape_longer(out, select = to_reshape)
 
   # rename
@@ -116,6 +132,10 @@
     out,
     select = c(Parameter = "name", Coefficient = "value")
   )
+
+  # make sure first columns are group and level
+  out <- datawizard::data_relocate(out, c("Group", "Level"))
+
   # remove those without valid values
   out[stats::complete.cases(out), ]
 }

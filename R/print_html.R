@@ -138,6 +138,12 @@ print_html.parameters_simulate <- print_html.parameters_model
 #' @export
 print_html.parameters_sem <- print_html.parameters_model
 
+#' @export
+print.parameters_coef <- function(x, ...) {
+  insight::export_table(format(x, ...), ...)
+}
+
+
 #' @rdname print.compare_parameters
 #' @export
 print_html.compare_parameters <- function(x,

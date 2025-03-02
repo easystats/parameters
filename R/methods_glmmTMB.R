@@ -200,12 +200,20 @@ model_parameters.glmmTMB <- function(model,
   # which components to return?
   effects <- insight::validate_argument(
     effects,
-    c("fixed", "random", "all")
+    c("fixed", "random", "total", "all")
   )
   component <- insight::validate_argument(
     component,
     c("all", "conditional", "zi", "zero_inflated", "dispersion")
   )
+
+  # for coef(), we don't need all the attributes and just stop here
+  if(effects == "total") {
+    params <- .group_level_total(model)
+    params$Effects <- "total"
+    class(params) <- c("parameters_coef", "see_parameters_coef", class(params))
+    return(params)
+  }
 
   # standardize only works for fixed effects...
   if (!is.null(standardize) && standardize != "refit") {

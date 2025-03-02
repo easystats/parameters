@@ -233,6 +233,11 @@ format.parameters_simulate <- format.parameters_model
 #' @export
 format.parameters_brms_meta <- format.parameters_model
 
+#' @export
+format.parameters_coef <- function(x, format = NULL, ...) {
+  insight::format_table(x, format = format, ...)
+}
+
 
 # Compare parameters ----------------------
 
