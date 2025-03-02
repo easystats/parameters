@@ -171,7 +171,6 @@ model_parameters.glmmTMB <- function(model,
                                      exponentiate = FALSE,
                                      p_adjust = NULL,
                                      wb_component = TRUE,
-                                     summary = getOption("parameters_mixed_summary", FALSE),
                                      include_info = getOption("parameters_mixed_info", FALSE),
                                      include_sigma = FALSE,
                                      keep = NULL,
@@ -179,12 +178,6 @@ model_parameters.glmmTMB <- function(model,
                                      verbose = TRUE,
                                      ...) {
   insight::check_if_installed("glmmTMB")
-
-  ## TODO remove deprecated later
-  if (!missing(summary)) {
-    .deprecated_warning("summary", "include_info", verbose)
-    include_info <- summary
-  }
 
   # validation check, warn if unsupported argument is used.
   dot_args <- .check_dots(

@@ -49,7 +49,6 @@ model_parameters.glimML <- function(model,
                                     standardize = NULL,
                                     exponentiate = FALSE,
                                     p_adjust = NULL,
-                                    summary = getOption("parameters_summary", FALSE),
                                     include_info = getOption("parameters_info", FALSE),
                                     keep = NULL,
                                     drop = NULL,
@@ -63,12 +62,6 @@ model_parameters.glimML <- function(model,
     merge_by <- c("Parameter", "Component")
   } else {
     merge_by <- "Parameter"
-  }
-
-  ## TODO remove deprecated later
-  if (!missing(summary)) {
-    .deprecated_warning("summary", "include_info", verbose)
-    include_info <- summary
   }
 
   # dispersion is just an alias...

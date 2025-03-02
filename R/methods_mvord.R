@@ -10,19 +10,12 @@ model_parameters.mvord <- function(model,
                                    standardize = NULL,
                                    exponentiate = FALSE,
                                    p_adjust = NULL,
-                                   summary = getOption("parameters_summary", FALSE),
                                    include_info = getOption("parameters_info", FALSE),
                                    keep = NULL,
                                    drop = NULL,
                                    verbose = TRUE,
                                    ...) {
   component <- insight::validate_argument(component, c("all", "conditional", "thresholds", "correlation"))
-
-  ## TODO remove deprecated later
-  if (!missing(summary)) {
-    .deprecated_warning("summary", "include_info", verbose)
-    include_info <- summary
-  }
 
   out <- .model_parameters_generic(
     model = model,

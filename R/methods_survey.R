@@ -7,7 +7,6 @@ model_parameters.svyglm <- function(model,
                                     standardize = NULL,
                                     exponentiate = FALSE,
                                     p_adjust = NULL,
-                                    summary = getOption("parameters_summary", FALSE),
                                     include_info = getOption("parameters_info", FALSE),
                                     keep = NULL,
                                     drop = NULL,
@@ -17,12 +16,6 @@ model_parameters.svyglm <- function(model,
     insight::format_alert(
       "Likelihood confidence intervals may take longer time to compute. Use 'ci_method=\"wald\"' for faster computation of CIs." # nolint
     )
-  }
-
-  ## TODO remove deprecated later
-  if (!missing(summary)) {
-    .deprecated_warning("summary", "include_info", verbose)
-    include_info <- summary
   }
 
   # validation check, warn if unsupported argument is used.

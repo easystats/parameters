@@ -18,7 +18,6 @@
   exponentiate = FALSE,
   p_adjust = NULL,
   wb_component = TRUE,
-  summary = getOption("parameters_mixed_summary", FALSE),
   include_info = getOption("parameters_mixed_info", FALSE),
   include_sigma = FALSE,
   keep = NULL,
@@ -129,8 +128,6 @@ will indicate which variables belong to the within-effects,
 between-effects, and cross-level interactions. By default, the
 \code{Component} column indicates, which parameters belong to the
 conditional or zero-inflation component of the model.}
-
-\item{summary}{Deprecated, please use \code{info} instead.}
 
 \item{include_info}{Logical, if \code{TRUE}, prints summary information about the
 model (model formula, number of observations, residual standard deviation

@@ -476,7 +476,6 @@ parameters <- model_parameters
 #' @param include_info Logical, if `TRUE`, prints summary information about the
 #'   model (model formula, number of observations, residual standard deviation
 #'   and more).
-#' @param summary Deprecated, please use `info` instead.
 #' @param keep Character containing a regular expression pattern that
 #'   describes the parameters that should be included (for `keep`) or excluded
 #'   (for `drop`) in the returned data frame. `keep` may also be a
@@ -580,7 +579,6 @@ model_parameters.default <- function(model,
                                      p_adjust = NULL,
                                      vcov = NULL,
                                      vcov_args = NULL,
-                                     summary = getOption("parameters_summary", FALSE),
                                      include_info = getOption("parameters_info", FALSE),
                                      keep = NULL,
                                      drop = NULL,
@@ -588,12 +586,6 @@ model_parameters.default <- function(model,
                                      ...) {
   # validation check for inputs
   .is_model_valid(model)
-
-  ## TODO remove deprecated later
-  if (!missing(summary)) {
-    .deprecated_warning("summary", "include_info", verbose)
-    include_info <- summary
-  }
 
   # validation check, warn if unsupported argument is used.
   # unsupported arguments will be removed from the argument list.
@@ -777,19 +769,12 @@ model_parameters.glm <- function(model,
                                  p_adjust = NULL,
                                  vcov = NULL,
                                  vcov_args = NULL,
-                                 summary = getOption("parameters_summary", FALSE),
                                  include_info = getOption("parameters_info", FALSE),
                                  keep = NULL,
                                  drop = NULL,
                                  verbose = TRUE,
                                  ...) {
   dots <- list(...)
-
-  ## TODO remove deprecated later
-  if (!missing(summary)) {
-    .deprecated_warning("summary", "include_info", verbose)
-    include_info <- summary
-  }
 
   # set default
   if (is.null(ci_method)) {

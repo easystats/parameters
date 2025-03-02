@@ -9,7 +9,6 @@ model_parameters.betareg <- function(model,
                                      standardize = NULL,
                                      exponentiate = FALSE,
                                      p_adjust = NULL,
-                                     summary = getOption("parameters_summary", FALSE),
                                      include_info = getOption("parameters_info", FALSE),
                                      keep = NULL,
                                      drop = NULL,
@@ -22,12 +21,6 @@ model_parameters.betareg <- function(model,
     class(model)[1],
     verbose = verbose
   )
-
-  ## TODO remove deprecated later
-  if (!missing(summary)) {
-    .deprecated_warning("summary", "include_info", verbose)
-    include_info <- summary
-  }
 
   component <- insight::validate_argument(component, c("conditional", "precision", "all"))
   if (component == "all") {

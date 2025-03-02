@@ -22,7 +22,6 @@ model_parameters.hglm <- function(model,
                                   effects = "all",
                                   component = "all",
                                   p_adjust = NULL,
-                                  summary = getOption("parameters_summary", FALSE),
                                   include_info = getOption("parameters_info", FALSE),
                                   keep = NULL,
                                   drop = NULL,
@@ -31,12 +30,6 @@ model_parameters.hglm <- function(model,
   # which components to return?
   effects <- match.arg(effects, choices = c("fixed", "random", "all"))
   component <- match.arg(component, choices = c("all", "conditional", "dispersion"))
-
-  ## TODO remove deprecated later
-  if (!missing(summary)) {
-    .deprecated_warning("summary", "include_info", verbose)
-    include_info <- summary
-  }
 
   # fixed effects
 

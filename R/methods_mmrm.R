@@ -9,7 +9,6 @@ model_parameters.mmrm <- function(model,
                                   standardize = NULL,
                                   exponentiate = FALSE,
                                   p_adjust = NULL,
-                                  summary = getOption("parameters_summary", FALSE),
                                   include_info = getOption("parameters_info", FALSE),
                                   keep = NULL,
                                   drop = NULL,
@@ -19,12 +18,6 @@ model_parameters.mmrm <- function(model,
     Satterthwaite = "satterthwaite",
     "kenward"
   )
-
-  ## TODO remove deprecated later
-  if (!missing(summary)) {
-    .deprecated_warning("summary", "include_info", verbose)
-    include_info <- summary
-  }
 
   # extract model parameters table, as data frame
   out <- .model_parameters_generic(

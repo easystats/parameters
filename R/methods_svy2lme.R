@@ -25,7 +25,7 @@ model_parameters.svy2lme <- function(model,
       drop_parameters = drop,
       verbose = verbose,
       include_sigma = include_sigma,
-      summary = FALSE,
+      include_info = FALSE,
       vcov = NULL,
       vcov_args = NULL
     )
@@ -74,7 +74,7 @@ model_parameters.svy2lme <- function(model,
     ci_method = "wald",
     p_adjust = NULL,
     verbose = verbose,
-    summary = FALSE,
+    include_info = FALSE,
     group_level = FALSE,
     wb_component = FALSE,
     ...

@@ -10,19 +10,12 @@ model_parameters.nestedLogit <- function(model,
                                          p_adjust = NULL,
                                          vcov = NULL,
                                          vcov_args = NULL,
-                                         summary = getOption("parameters_summary", FALSE),
                                          include_info = getOption("parameters_info", FALSE),
                                          keep = NULL,
                                          drop = NULL,
                                          verbose = TRUE,
                                          ...) {
   dots <- list(...)
-
-  ## TODO remove deprecated later
-  if (!missing(summary)) {
-    .deprecated_warning("summary", "include_info", verbose)
-    include_info <- summary
-  }
 
   # set default
   if (is.null(ci_method)) {
