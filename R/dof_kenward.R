@@ -67,7 +67,6 @@ dof_kenward <- function(model) {
 }
 
 
-
 .divZero <- function(x, y, tol = 1e-14) {
   ## ratio x/y is set to 1 if both |x| and |y| are below tol
   if (abs(x) < tol && abs(y) < tol) {
@@ -76,7 +75,6 @@ dof_kenward <- function(model) {
     x / y
   }
 }
-
 
 
 .vcov_kenward_ajusted <- function(model) {
@@ -146,8 +144,6 @@ dof_kenward <- function(model) {
 }
 
 
-
-
 .index2UpperTriEntry <- function(k, N) {
   ## inverse of indexSymmat2vec
   ## result: index pair (i,j) with i>=j
@@ -159,8 +155,6 @@ dof_kenward <- function(model) {
   j <- k - N * i + N - i * (3 - i) / 2 + i
   c(i, j)
 }
-
-
 
 
 .vcovAdj16_internal <- function(Phi, SigmaG, X) {
@@ -242,7 +236,6 @@ dof_kenward <- function(model) {
 }
 
 
-
 .indexSymmat2vec <- function(i, j, N) {
   ## S[i,j] symetric N times N matrix
   ## r the vector of upper triangular element  in row major order:
@@ -286,7 +279,6 @@ dof_kenward <- function(model) {
   zIndex.sub <- (Gp[ii.group] + 1):Gp[ii.group + 1]
   as.matrix(Zt[zIndex.sub, ])
 }
-
 
 
 .get.RT.dim.by.RT <- function(model) {

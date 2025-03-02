@@ -24,7 +24,7 @@
       group_levels = group_levels,
       slope_names = slope_names
     )
-    params_cond$Component = "conditional"
+    params_cond$Component <- "conditional"
   }
 
   # handle random effects in zero-inflation component
@@ -44,7 +44,7 @@
       slope_names = slope_names,
       component = "zero_inflated_random"
     )
-    params_zi$Component = "zero_inflated"
+    params_zi$Component <- "zero_inflated"
   }
 
   # create list of data frames

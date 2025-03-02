@@ -202,7 +202,7 @@ model_parameters.glmmTMB <- function(model,
   )
 
   # for coef(), we don't need all the attributes and just stop here
-  if(effects == "total") {
+  if (effects == "total") {
     params <- .group_level_total(model)
     params$Effects <- "total"
     class(params) <- c("parameters_coef", "see_parameters_coef", class(params))
