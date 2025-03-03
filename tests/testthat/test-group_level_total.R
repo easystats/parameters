@@ -79,5 +79,5 @@ test_that("group_level_total, brms", {
   expect_identical(dim(out), c(28L, 10L))
 
   out <- model_parameters(m2, effects = "total")
-  expect_identical(dim(out), c(12L, 6L))
+  expect_identical(dim(out), c(12L, 10L))
 })
