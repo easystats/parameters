@@ -137,10 +137,21 @@
   )
 
   # select parameters to keep. We want all intercepts, and all random slopes
-  # from conditional and potential zero-inflation component
+  components <- c(
+    "sigma", "mu", "nu", "shape", "beta", "phi", "hu", "ndt", "zoi",
+    "coi", "kappa", "bias", "bs", "zi", "alpha", "xi"
+  )
+  # standard components
   parameters_to_keep <- params$Parameter %in% c("Intercept", random_slopes$random)
   parameters_to_keep <- parameters_to_keep |
     params$Parameter %in% c("zi_Intercept", random_slopes$zero_inflated_random)
+
+  # auxiliary components
+  for (comp in components) {
+    parameters_to_keep <- parameters_to_keep |
+      params$Parameter %in% c(paste0(comp, "_Intercept"), random_slopes[[paste0(comp, "_random")]])
+  }
+
   # furthermore, categorical random slopes have levels in their name, so we
   # try to find those parameters here, too
   if (!is.null(random_slopes$random)) {
@@ -151,13 +162,27 @@
     parameters_to_keep <- parameters_to_keep |
       startsWith(params$Parameter, paste0("zi_", random_slopes$zero_inflated_random))
   }
+  # auxiliary components
+  for (comp in components) {
+    rc <- paste0(comp, "_random")
+    if (!is.null(random_slopes[[rc]])) {
+      parameters_to_keep <- parameters_to_keep |
+        startsWith(params$Parameter, paste0(comp, "_", random_slopes[[rc]]))
+    }
+  }
 
   # add Component column
   params$Component <- "conditional"
   params$Component[startsWith(params$Parameter, "zi_")] <- "zero_inflated"
+  for (comp in components) {
+    params$Component[startsWith(params$Parameter, paste0(comp, "_"))] <- comp
+  }
 
   # clean names
   params$Parameter <- gsub("^zi_", "", params$Parameter)
+  for (comp in components) {
+    params$Parameter <- gsub(paste0("^", comp, "_"), "", params$Parameter)
+  }
   rownames(params) <- NULL
 
   # make sure first columns are group and level
