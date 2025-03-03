@@ -423,16 +423,16 @@ here.
 }
 
 \examples{
+\dontshow{if (require("rstanarm")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 \donttest{
 library(parameters)
-if (require("rstanarm")) {
-  model <- suppressWarnings(stan_glm(
-    Sepal.Length ~ Petal.Length * Species,
-    data = iris, iter = 500, refresh = 0
-  ))
-  model_parameters(model)
+model <- suppressWarnings(stan_glm(
+  Sepal.Length ~ Petal.Length * Species,
+  data = iris, iter = 500, refresh = 0
+))
+model_parameters(model)
 }
-}
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 \code{\link[insight:standardize_names]{insight::standardize_names()}} to rename columns into a consistent,
