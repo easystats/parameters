@@ -16,7 +16,6 @@ model_parameters.merMod <- function(model,
                                     vcov = NULL,
                                     vcov_args = NULL,
                                     wb_component = TRUE,
-                                    summary = getOption("parameters_mixed_summary", FALSE),
                                     include_info = getOption("parameters_mixed_info", FALSE),
                                     include_sigma = FALSE,
                                     keep = NULL,
@@ -24,12 +23,6 @@ model_parameters.merMod <- function(model,
                                     verbose = TRUE,
                                     ...) {
   dots <- list(...)
-
-  ## TODO remove deprecated later
-  if (!missing(summary)) {
-    .deprecated_warning("summary", "include_info", verbose)
-    include_info <- summary
-  }
 
   # set default
   if (is.null(ci_method)) {
@@ -62,8 +55,16 @@ model_parameters.merMod <- function(model,
   }
 
   # which component to return?
-  effects <- insight::validate_argument(effects, c("fixed", "random", "all"))
+  effects <- insight::validate_argument(effects, c("fixed", "random", "total", "all"))
   params <- params_random <- params_variance <- NULL
+
+  # for coef(), we don't need all the attributes and just stop here
+  if (effects == "total") {
+    params <- .group_level_total(model)
+    params$Effects <- "total"
+    class(params) <- c("parameters_coef", "see_parameters_coef", class(params))
+    return(params)
+  }
 
   # post hoc standardize only works for fixed effects...
   if (!is.null(standardize) && standardize != "refit") {

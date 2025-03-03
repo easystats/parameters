@@ -52,16 +52,14 @@
 #'
 #' @inheritSection model_parameters.zcpglm Model components
 #'
-#' @examples
+#' @examplesIf require("rstanarm")
 #' \donttest{
 #' library(parameters)
-#' if (require("rstanarm")) {
-#'   model <- suppressWarnings(stan_glm(
-#'     Sepal.Length ~ Petal.Length * Species,
-#'     data = iris, iter = 500, refresh = 0
-#'   ))
-#'   model_parameters(model)
-#' }
+#' model <- suppressWarnings(stan_glm(
+#'   Sepal.Length ~ Petal.Length * Species,
+#'   data = iris, iter = 500, refresh = 0
+#' ))
+#' model_parameters(model)
 #' }
 #' @return A data frame of indices related to the model's parameters.
 #' @export
@@ -107,6 +105,12 @@ model_parameters.brmsfit <- function(model,
       drop_parameters = drop,
       ...
     )
+  } else if (identical(effects, "total")) {
+    # group level total effects (coef())
+    params <- .group_level_total(model, centrality, dispersion, ci, ci_method, test, rope_range, rope_ci, ...)
+    params$Effects <- "total"
+    class(params) <- c("parameters_coef", "see_parameters_coef", class(params))
+    return(params)
   } else {
     # Processing
     params <- .extract_parameters_bayesian(

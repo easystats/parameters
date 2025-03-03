@@ -76,7 +76,6 @@ model_parameters.zcpglm <- function(model,
                                     standardize = NULL,
                                     exponentiate = FALSE,
                                     p_adjust = NULL,
-                                    summary = getOption("parameters_summary", FALSE),
                                     include_info = getOption("parameters_info", FALSE),
                                     keep = NULL,
                                     drop = NULL,
@@ -87,12 +86,6 @@ model_parameters.zcpglm <- function(model,
   # fix argument, if model has no zi-part
   if (!insight::model_info(model, verbose = FALSE)$is_zero_inflated && component != "conditional") {
     component <- "conditional"
-  }
-
-  ## TODO remove deprecated later
-  if (!missing(summary)) {
-    .deprecated_warning("summary", "include_info", verbose)
-    include_info <- summary
   }
 
   # Processing

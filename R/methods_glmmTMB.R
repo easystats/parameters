@@ -11,9 +11,10 @@
 #'
 #' @param model A mixed model.
 #' @param effects Should parameters for fixed effects (`"fixed"`), random
-#'   effects (`"random"`), or both (`"all"`) be returned? Only applies
-#'   to mixed models. May be abbreviated. If the calculation of random effects
-#'   parameters takes too long, you may use `effects = "fixed"`.
+#'   effects (`"random"`), both fixed and random effects (`"all"`), or the
+#'   overall (sum of fixed and random) effects (`"total"`) be returned? Only
+#'   applies to mixed models. May be abbreviated. If the calculation of random
+#'   effects parameters takes too long, you may use `effects = "fixed"`.
 #' @param wb_component Logical, if `TRUE` and models contains within- and
 #'   between-effects (see `datawizard::demean()`), the `Component` column
 #'   will indicate which variables belong to the within-effects,
@@ -171,7 +172,6 @@ model_parameters.glmmTMB <- function(model,
                                      exponentiate = FALSE,
                                      p_adjust = NULL,
                                      wb_component = TRUE,
-                                     summary = getOption("parameters_mixed_summary", FALSE),
                                      include_info = getOption("parameters_mixed_info", FALSE),
                                      include_sigma = FALSE,
                                      keep = NULL,
@@ -179,12 +179,6 @@ model_parameters.glmmTMB <- function(model,
                                      verbose = TRUE,
                                      ...) {
   insight::check_if_installed("glmmTMB")
-
-  ## TODO remove deprecated later
-  if (!missing(summary)) {
-    .deprecated_warning("summary", "include_info", verbose)
-    include_info <- summary
-  }
 
   # validation check, warn if unsupported argument is used.
   dot_args <- .check_dots(
@@ -200,12 +194,20 @@ model_parameters.glmmTMB <- function(model,
   # which components to return?
   effects <- insight::validate_argument(
     effects,
-    c("fixed", "random", "all")
+    c("fixed", "random", "total", "all")
   )
   component <- insight::validate_argument(
     component,
     c("all", "conditional", "zi", "zero_inflated", "dispersion")
   )
+
+  # for coef(), we don't need all the attributes and just stop here
+  if (effects == "total") {
+    params <- .group_level_total(model)
+    params$Effects <- "total"
+    class(params) <- c("parameters_coef", "see_parameters_coef", class(params))
+    return(params)
+  }
 
   # standardize only works for fixed effects...
   if (!is.null(standardize) && standardize != "refit") {

@@ -382,6 +382,11 @@ print.parameters_brms_meta <- print.parameters_model
 # Random effects ------------------
 
 #' @export
+print.parameters_coef <- function(x, ...) {
+  cat(insight::export_table(format(x, ...), ...))
+}
+
+#' @export
 print.parameters_random <- function(x, digits = 2, ...) {
   .print_random_parameters(x, digits = digits)
   invisible(x)

@@ -856,8 +856,6 @@ as.data.frame.VarCorr.lme <- function(x, row.names = NULL, optional = FALSE, ...
 }
 
 
-
-
 # this is used to only temporarily load merDeriv and to point registered
 # methods from merDeriv to lme4-methods. if merDeriv was loaded before,
 # nothing will be changed. If merDeriv was not loaded, vcov-methods registered

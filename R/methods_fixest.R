@@ -11,7 +11,6 @@ model_parameters.fixest <- function(model,
                                     p_adjust = NULL,
                                     vcov = NULL,
                                     vcov_args = NULL,
-                                    summary = getOption("parameters_summary", FALSE),
                                     include_info = getOption("parameters_info", FALSE),
                                     keep = NULL,
                                     drop = NULL,
@@ -24,12 +23,6 @@ model_parameters.fixest <- function(model,
     } else {
       ci_method <- "normal"
     }
-  }
-
-  ## TODO remove deprecated later
-  if (!missing(summary)) {
-    .deprecated_warning("summary", "include_info", verbose)
-    include_info <- summary
   }
 
   # extract model parameters table, as data frame
@@ -127,18 +120,11 @@ model_parameters.fixest_multi <- function(model,
                                           p_adjust = NULL,
                                           vcov = NULL,
                                           vcov_args = NULL,
-                                          summary = getOption("parameters_summary", FALSE),
                                           include_info = getOption("parameters_info", FALSE),
                                           keep = NULL,
                                           drop = NULL,
                                           verbose = TRUE,
                                           ...) {
-  ## TODO remove deprecated later
-  if (!missing(summary)) {
-    .deprecated_warning("summary", "include_info", verbose)
-    include_info <- summary
-  }
-
   # iterate over responses
   out <- lapply(
     model,

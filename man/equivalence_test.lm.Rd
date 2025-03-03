@@ -39,9 +39,10 @@ model's data.}
 equivalence. Can be \code{"bayes"}, \code{"classic"} or \code{"cet"}. See 'Details'.}
 
 \item{effects}{Should parameters for fixed effects (\code{"fixed"}), random
-effects (\code{"random"}), or both (\code{"all"}) be returned? Only applies
-to mixed models. May be abbreviated. If the calculation of random effects
-parameters takes too long, you may use \code{effects = "fixed"}.}
+effects (\code{"random"}), both fixed and random effects (\code{"all"}), or the
+overall (sum of fixed and random) effects (\code{"total"}) be returned? Only
+applies to mixed models. May be abbreviated. If the calculation of random
+effects parameters takes too long, you may use \code{effects = "fixed"}.}
 
 \item{vcov}{Variance-covariance matrix used to compute uncertainty estimates
 (e.g., for robust standard errors). This argument accepts a covariance

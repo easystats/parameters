@@ -7,7 +7,6 @@ model_parameters.selection <- function(model,
                                        standardize = NULL,
                                        exponentiate = FALSE,
                                        p_adjust = NULL,
-                                       summary = getOption("parameters_summary", FALSE),
                                        include_info = getOption("parameters_info", FALSE),
                                        keep = NULL,
                                        drop = NULL,
@@ -17,12 +16,6 @@ model_parameters.selection <- function(model,
     component,
     c("all", "selection", "outcome", "auxiliary")
   )
-
-  ## TODO remove deprecated later
-  if (!missing(summary)) {
-    .deprecated_warning("summary", "include_info", verbose)
-    include_info <- summary
-  }
 
   out <- .model_parameters_generic(
     model = model,

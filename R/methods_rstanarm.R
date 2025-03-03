@@ -18,6 +18,14 @@ model_parameters.stanreg <- function(model,
                                      drop = NULL,
                                      verbose = TRUE,
                                      ...) {
+  # for coef(), we don't need all the attributes and just stop here
+  if (effects == "total") {
+    params <- .group_level_total(model)
+    params$Effects <- "total"
+    class(params) <- c("parameters_coef", "see_parameters_coef", class(params))
+    return(params)
+  }
+
   # Processing
   params <- .extract_parameters_bayesian(
     model,
