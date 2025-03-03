@@ -126,7 +126,7 @@
   # clean names
   params$Parameter <- gsub("^zi_", "", params$Parameter)
 
-  params
+  params[parameters_to_keep, ]
 }
 
 
