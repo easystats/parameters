@@ -83,6 +83,9 @@
 }
 
 
+.group_level_total.stanreg <- .group_level_total.merMod
+
+
 .group_level_total.brmsfit <- function(x, ...) {
   # extract random effects information
   group_factors <- insight::find_random(x, split_nested = TRUE, flatten = TRUE)
