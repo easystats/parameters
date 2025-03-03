@@ -1,5 +1,11 @@
 # parameters (devel)
 
+## Changes
+
+* The `effects` argument in `model_parameters()` for classes `merMod`, `glmmTMB`,
+  `brmsfit` and `stanreg` gets an additional `"total"` option, to return the
+  overall coefficient for random effects (sum of fixed and random effects).
+
 ## Bug fixes
 
 * Fixed issue in `model_parameters()` for objects from package *marginaleffects*
