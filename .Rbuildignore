@@ -6,6 +6,7 @@
 ^LICENSE
 ^docs/.
 ^README.Rmd
+^air.toml
 ^pkgdown/.
 ^paper.*$
 ^paper/.

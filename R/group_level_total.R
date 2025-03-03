@@ -109,41 +109,47 @@
   params <- NULL
 
   # create full data frame of all random effects retrieved from coef()
-  params <- do.call(rbind, lapply(group_factors, function(i) {
-    # we want the posterior distribution from coef(), so we can
-    # use bayestestR
-    ranef <- stats::coef(x, summary = FALSE)[[i]]
-    parameter_names <- dimnames(ranef)[[3]]
-    out <- lapply(
-      parameter_names,
-      function(pn) {
-        # summary of posterior
-        d <- bayestestR::describe_posterior(as.data.frame(ranef[, , pn]), verbose = FALSE, ...)
-        # add information about group factor and levels
-        d$Group <- i
-        # Parameters in the returned data frame are actually the levels
-        # # from the group factors
-        d$Level <- d$Parameter
-        # the parameter names can be taken from dimnames
-        d$Parameter <- pn
-        d
-      }
-    )
-    names(out) <- parameter_names
-    do.call(rbind, out)
-  }))
+  params <- do.call(
+    rbind,
+    lapply(group_factors, function(i) {
+      # we want the posterior distribution from coef(), so we can
+      # use bayestestR
+      ranef <- stats::coef(x, summary = FALSE)[[i]]
+      parameter_names <- dimnames(ranef)[[3]]
+      out <- lapply(
+        parameter_names,
+        function(pn) {
+          # summary of posterior
+          d <- bayestestR::describe_posterior(as.data.frame(ranef[,, pn]), verbose = FALSE, ...)
+          # add information about group factor and levels
+          d$Group <- i
+          # Parameters in the returned data frame are actually the levels
+          # # from the group factors
+          d$Level <- d$Parameter
+          # the parameter names can be taken from dimnames
+          d$Parameter <- pn
+          d
+        }
+      )
+      names(out) <- parameter_names
+      do.call(rbind, out)
+    })
+  )
 
   # select parameters to keep. We want all intercepts, and all random slopes
   # from conditional and potential zero-inflation component
   parameters_to_keep <- params$Parameter %in% c("Intercept", random_slopes$random)
-  parameters_to_keep <- parameters_to_keep | params$Parameter %in% c("zi_Intercept", random_slopes$zero_inflated_random)
+  parameters_to_keep <- parameters_to_keep |
+    params$Parameter %in% c("zi_Intercept", random_slopes$zero_inflated_random)
   # furthermore, categorical random slopes have levels in their name, so we
   # try to find those parameters here, too
   if (!is.null(random_slopes$random)) {
-    parameters_to_keep <- parameters_to_keep | startsWith(params$Parameter, random_slopes$random)
+    parameters_to_keep <- parameters_to_keep |
+      startsWith(params$Parameter, random_slopes$random)
   }
   if (!is.null(random_slopes$zero_inflated_random)) {
-    parameters_to_keep <- parameters_to_keep | startsWith(params$Parameter, paste0("zi_", random_slopes$zero_inflated_random))
+    parameters_to_keep <- parameters_to_keep |
+      startsWith(params$Parameter, paste0("zi_", random_slopes$zero_inflated_random))
   }
 
   # add Component column
