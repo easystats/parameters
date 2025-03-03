@@ -83,7 +83,23 @@
 }
 
 
-.group_level_total.stanreg <- .group_level_total.merMod
+.group_level_total.stanreg <- function(x, ...) {
+  params <- suppressWarnings(stats::coef(x))
+
+  # extract levels of group factors
+  group_levels <- insight::compact_list(lapply(x$glmod$reTrms$flist, levels))
+  # extract names of slopes
+  slope_names <- insight::compact_list(x$glmod$reTrms$cnms)
+  # reshape "coef()" data
+  params <- .reshape_group_level_coefficients(
+    x,
+    params = params,
+    group_levels = group_levels,
+    slope_names = slope_names
+  )
+
+  params
+}
 
 
 .group_level_total.brmsfit <- function(x, ...) {
