@@ -120,8 +120,12 @@
   parameters_to_keep <- parameters_to_keep | params$Parameter %in% c("zi_Intercept", random_slopes$zero_inflated_random)
   # furthermore, categorical random slopes have levels in their name, so we
   # try to find those parameters here, too
-  parameters_to_keep <- parameters_to_keep | startsWith(params$Parameter, random_slopes$random)
-  parameters_to_keep <- parameters_to_keep | startsWith(params$Parameter, random_slopes$zero_inflated_random)
+  if (!is.null(random_slopes$random)) {
+    parameters_to_keep <- parameters_to_keep | startsWith(params$Parameter, random_slopes$random)
+  }
+  if (!is.null(random_slopes$zero_inflated_random)) {
+    parameters_to_keep <- parameters_to_keep | startsWith(params$Parameter, random_slopes$zero_inflated_random)
+  }
 
   # clean names
   params$Parameter <- gsub("^zi_", "", params$Parameter)
