@@ -43,7 +43,7 @@
       Parameter | Odds Ratio |   SE |        95% CI |    z |      p
       -------------------------------------------------------------
       1|2       |       3.28 | 1.70 | [1.19,  9.04] | 2.30 | 0.022 
-      2|3       |       9.84 | 5.03 | [3.61, 26.81] | 4.47 | < .001
+      2|3       |       9.84 | 5.03 | [3.61, 26.82] | 4.47 | < .001
     Message
       
       Uncertainty intervals (equal-tailed) and p-values (two-tailed) computed
