@@ -63,3 +63,21 @@ test_that("group_level_total", {
   out <- model_parameters(m6, effects = "total")
   expect_identical(dim(out), c(36L, 5L))
 })
+
+
+test_that("group_level_total, brms", {
+  skip_if_not_installed("curl")
+  skip_if_offline()
+  skip_if_not_installed("httr2")
+  skip_if_not_installed("brms")
+
+  m1 <- insight::download_model("brms_zi_4")
+  m2 <- insight::download_model("brms_sigma_3")
+  skip_if(is.null(m1) || is.null(m2))
+
+  out <- model_parameters(m1, effects = "total")
+  expect_identical(dim(out), c(28L, 10L))
+
+  out <- model_parameters(m2, effects = "total")
+  expect_identical(dim(out), c(12L, 6L))
+})
