@@ -127,6 +127,10 @@
     parameters_to_keep <- parameters_to_keep | startsWith(params$Parameter, paste0("zi_", random_slopes$zero_inflated_random))
   }
 
+  # add Component column
+  params$Component <- "conditional"
+  params$Component[startsWith(params$Parameter, "zi_")] <- "zero_inflated"
+
   # clean names
   params$Parameter <- gsub("^zi_", "", params$Parameter)
   rownames(params) <- NULL
