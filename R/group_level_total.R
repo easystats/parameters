@@ -124,13 +124,15 @@
     parameters_to_keep <- parameters_to_keep | startsWith(params$Parameter, random_slopes$random)
   }
   if (!is.null(random_slopes$zero_inflated_random)) {
-    parameters_to_keep <- parameters_to_keep | startsWith(params$Parameter, random_slopes$zero_inflated_random)
+    parameters_to_keep <- parameters_to_keep | startsWith(params$Parameter, paste0("zi_", random_slopes$zero_inflated_random))
   }
 
   # clean names
   params$Parameter <- gsub("^zi_", "", params$Parameter)
+  rownames(params) <- NULL
 
-  params[parameters_to_keep, ]
+  # make sure first columns are group and level
+  datawizard::data_relocate(params[parameters_to_keep, ], c("Group", "Level"))
 }
 
 
