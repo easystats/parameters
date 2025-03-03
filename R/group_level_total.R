@@ -83,15 +83,30 @@
 }
 
 
+.group_level_total.brmsfit <- function(x, ...) {
+  # extract random effects information
+  group_factors <- insight::find_random(x)
+  random_slopes <- insight::find_random_slopes(x)
+
+  for (i in group_factors) {
+    ranef <- stats::coef(x, summary = FALSE)[[i]]
+    parameter_names <- dimnames(ranef)[[3]]
+    out <- lapply(
+      parameter_names,
+      function(pn) bayestestR::describe_posterior(as.data.frame(x[, , pn]), ...)
+    )
+    names(out) <- parameter_names
+  }
+}
+
+
 # helper ----------------------------------------------------------------------
 
-.reshape_group_level_coefficients <- function(
-  x,
-  params,
-  group_levels,
-  slope_names = NULL,
-  component = "random"
-) {
+.reshape_group_level_coefficients <- function(x,
+                                              params,
+                                              group_levels,
+                                              slope_names = NULL,
+                                              component = "random") {
   group_factors <- insight::find_random(x)
   random_slopes <- insight::find_random_slopes(x)
 
