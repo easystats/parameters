@@ -120,7 +120,7 @@
         parameter_names,
         function(pn) {
           # summary of posterior
-          d <- bayestestR::describe_posterior(as.data.frame(ranef[,, pn]), verbose = FALSE, ...)
+          d <- bayestestR::describe_posterior(as.data.frame(ranef[, , pn]), verbose = FALSE, ...)
           # add information about group factor and levels
           d$Group <- i
           # Parameters in the returned data frame are actually the levels
