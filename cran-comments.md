@@ -1,1 +1,1 @@
-This release fixes CRAN check issues.
+Maintainance release, in preparation for the *modelbased* submission.

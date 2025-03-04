@@ -55,11 +55,14 @@ model_parameters.merMod <- function(model,
   }
 
   # which component to return?
-  effects <- insight::validate_argument(effects, c("fixed", "random", "total", "all"))
+  effects <- insight::validate_argument(
+    effects,
+    c("fixed", "random", "total", "random_total", "all")
+  )
   params <- params_random <- params_variance <- NULL
 
   # for coef(), we don't need all the attributes and just stop here
-  if (effects == "total") {
+  if (effects %in% c("total", "random_total")) {
     params <- .group_level_total(model)
     params$Effects <- "total"
     class(params) <- c("parameters_coef", "see_parameters_coef", class(params))

@@ -78,9 +78,9 @@ standardized parameters only works when \code{standardize="refit"}.
 
 \item{effects}{Should parameters for fixed effects (\code{"fixed"}), random
 effects (\code{"random"}), both fixed and random effects (\code{"all"}), or the
-overall (sum of fixed and random) effects (\code{"total"}) be returned? Only
-applies to mixed models. May be abbreviated. If the calculation of random
-effects parameters takes too long, you may use \code{effects = "fixed"}.}
+overall (sum of fixed and random) effects (\code{"random_total"}) be returned?
+Only applies to mixed models. May be abbreviated. If the calculation of
+random effects parameters takes too long, you may use \code{effects = "fixed"}.}
 
 \item{component}{Which type of parameters to return, such as parameters for the
 conditional model, the zero-inflation part of the model, the dispersion
