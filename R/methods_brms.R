@@ -105,7 +105,7 @@ model_parameters.brmsfit <- function(model,
       drop_parameters = drop,
       ...
     )
-  } else if (identical(effects, "total")) {
+  } else if (effects %in% c("total", "random_total")) {
     # group level total effects (coef())
     params <- .group_level_total(model, centrality, dispersion, ci, ci_method, test, rope_range, rope_ci, ...)
     params$Effects <- "total"

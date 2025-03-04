@@ -12,9 +12,9 @@
 #' @param model A mixed model.
 #' @param effects Should parameters for fixed effects (`"fixed"`), random
 #'   effects (`"random"`), both fixed and random effects (`"all"`), or the
-#'   overall (sum of fixed and random) effects (`"total"`) be returned? Only
-#'   applies to mixed models. May be abbreviated. If the calculation of random
-#'   effects parameters takes too long, you may use `effects = "fixed"`.
+#'   overall (sum of fixed and random) effects (`"random_total"`) be returned?
+#'   Only applies to mixed models. May be abbreviated. If the calculation of
+#'   random effects parameters takes too long, you may use `effects = "fixed"`.
 #' @param wb_component Logical, if `TRUE` and models contains within- and
 #'   between-effects (see `datawizard::demean()`), the `Component` column
 #'   will indicate which variables belong to the within-effects,
@@ -194,7 +194,7 @@ model_parameters.glmmTMB <- function(model,
   # which components to return?
   effects <- insight::validate_argument(
     effects,
-    c("fixed", "random", "total", "all")
+    c("fixed", "random", "total", "random_total", "all")
   )
   component <- insight::validate_argument(
     component,
@@ -202,7 +202,7 @@ model_parameters.glmmTMB <- function(model,
   )
 
   # for coef(), we don't need all the attributes and just stop here
-  if (effects == "total") {
+  if (effects %in% c("total", "random_total")) {
     params <- .group_level_total(model)
     params$Effects <- "total"
     class(params) <- c("parameters_coef", "see_parameters_coef", class(params))
