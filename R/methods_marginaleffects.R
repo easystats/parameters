@@ -119,7 +119,7 @@ model_parameters.predictions <- function(model, ci = 0.95, exponentiate = FALSE,
 
   # find cofficient name - differs for Bayesian models
   coef_name <- intersect(c("Predicted", "Coefficient"), colnames(out))[1]
-  if (!is.null(at_variables) && !is.na(coef_name)) {
+  if (!is.null(at_variables) && !is.na(coef_name) && at_variables %in% colnames(out)) {
     out <- datawizard::data_relocate(
       out,
       select = at_variables,
