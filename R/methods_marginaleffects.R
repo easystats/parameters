@@ -15,7 +15,7 @@ model_parameters.marginaleffects <- function(model,
     tidy_model <- marginaleffects::tidy(model, conf_level = ci, ...)
   } else {
     # Bayesian
-    tidy_model <- suppressWarnings(bayestestR::describe_posterior(x, ci = ci, verbose = FALSE, ...))
+    tidy_model <- suppressWarnings(bayestestR::describe_posterior(model, ci = ci, verbose = FALSE, ...))
   }
 
   out <- .rename_reserved_marginaleffects(tidy_model)
@@ -97,7 +97,7 @@ model_parameters.predictions <- function(model,
     out <- datawizard::data_relocate(out, "predicted", before = 1)
   } else {
     # Bayesian
-    out <- suppressWarnings(bayestestR::describe_posterior(x, ci = ci, verbose = FALSE, ...))
+    out <- suppressWarnings(bayestestR::describe_posterior(model, ci = ci, verbose = FALSE, ...))
   }
 
   out <- insight::standardize_names(out, style = "easystats")
