@@ -109,7 +109,7 @@ model_parameters.predictions <- function(model, ci = 0.95, exponentiate = FALSE,
   colnames(out) <- gsub("#####$", "", colnames(out))
 
   # remove and reorder some columns
-  out$rowid <- out$Type <- NULL
+  out$rowid <- out$Type <- out$rowid_dedup <- NULL
 
   # find at-variables
   at_variables <- attributes(model)$newdata_at

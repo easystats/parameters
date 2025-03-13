@@ -130,22 +130,29 @@ test_that("preserve columns with same name as reserved words", {
 })
 
 
-test_that("predictions, using bayestestR #1063", {
-  skip_on_cran()
-  skip_if_not_installed("curl")
-  skip_if_offline()
-  skip_if_not_installed("httr2")
-  skip_if_not_installed("brms")
+skip_if_not_installed("withr")
 
-  m <- insight::download_model("brms_mixed_3")
-  d <- insight::get_datagrid(m, by = "Days", include_random = TRUE)
-  x <- marginaleffects::avg_predictions(m, newdata = d, by = "Days")
-  out <- model_parameters(x)
-  expect_named(
-    out,
-    c(
-      "Coefficient", "Days", "CI", "CI_low", "CI_high", "pd", "ROPE_CI",
-      "ROPE_low", "ROPE_high", "ROPE_Percentage"
+withr::with_environment(
+  new.env(),
+  test_that("predictions, using bayestestR #1063", {
+    skip_on_cran()
+    skip_if_not_installed("curl")
+    skip_if_offline()
+    skip_if_not_installed("httr2")
+    skip_if_not_installed("brms")
+
+    m <- insight::download_model("brms_mixed_3")
+    skip_if(is.null(m))
+
+    d <- insight::get_datagrid(m, by = "Days", include_random = TRUE)
+    x <- marginaleffects::avg_predictions(m, newdata = d, by = "Days")
+    out <- model_parameters(x)
+    expect_named(
+      out,
+      c(
+        "Coefficient", "Days", "CI", "CI_low", "CI_high", "pd", "ROPE_CI",
+        "ROPE_low", "ROPE_high", "ROPE_Percentage", "subgrp", "grp", "Subject"
+      )
     )
-  )
-})
+  })
+)
