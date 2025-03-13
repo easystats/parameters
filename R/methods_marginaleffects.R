@@ -4,10 +4,7 @@
 # model_parameters ----------------
 
 #' @export
-model_parameters.marginaleffects <- function(model,
-                                             ci = 0.95,
-                                             exponentiate = FALSE,
-                                             ...) {
+model_parameters.marginaleffects <- function(model, ci = 0.95, exponentiate = FALSE, ...) {
   insight::check_if_installed("marginaleffects")
 
   if (is.null(attributes(model)$posterior_draws)) {
@@ -15,7 +12,12 @@ model_parameters.marginaleffects <- function(model,
     tidy_model <- marginaleffects::tidy(model, conf_level = ci, ...)
   } else {
     # Bayesian
-    tidy_model <- suppressWarnings(bayestestR::describe_posterior(model, ci = ci, verbose = FALSE, ...))
+    tidy_model <- suppressWarnings(bayestestR::describe_posterior(
+      model,
+      ci = ci,
+      verbose = FALSE,
+      ...
+    ))
   }
 
   out <- .rename_reserved_marginaleffects(tidy_model)
@@ -28,7 +30,10 @@ model_parameters.marginaleffects <- function(model,
   colnames(out)[colnames(out) == "contrast"] <- "Comparison"
   colnames(out) <- gsub("^contrast_", "Comparison: ", colnames(out))
 
-  out <- .safe(.add_model_parameters_attributes(out, model, ci, exponentiate = exponentiate, ...), out)
+  out <- .safe(
+    .add_model_parameters_attributes(out, model, ci, exponentiate = exponentiate, ...),
+    out
+  )
 
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(model))
 
