@@ -138,7 +138,8 @@ test_that("predictions, using bayestestR #1063", {
   skip_if_not_installed("brms")
 
   m <- insight::download_model("brms_mixed_3")
-  x <- marginaleffects::avg_predictions(m, by = "Days")
+  d <- insight::get_datagrid(m, by = "Days", include_random = TRUE)
+  x <- marginaleffects::avg_predictions(m, newdata = d, by = "Days")
   out <- model_parameters(x)
   expect_named(
     out,
