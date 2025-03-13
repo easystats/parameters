@@ -110,11 +110,20 @@ model_parameters.predictions <- function(model, ci = 0.95, exponentiate = FALSE,
 
   # remove and reorder some columns
   out$rowid <- out$Type <- NULL
-  if (!is.null(attributes(model)$newdata_at) && "Predicted" %in% colnames(out)) {
+
+  # find at-variables
+  at_variables <- attributes(model)$newdata_at
+  if (is.null(at_variables)) {
+    at_variables <- attributes(model)$by
+  }
+
+  # find cofficient name - differs for Bayesian models
+  coef_name <- intersect(c("Predicted", "Coefficient"), colnames(out))[1]
+  if (!is.null(at_variables) && !is.na(coef_name)) {
     out <- datawizard::data_relocate(
       out,
-      select = attributes(model)$newdata_at,
-      after = "Predicted"
+      select = at_variables,
+      after = coef_name
     )
   }
 
