@@ -84,10 +84,7 @@ model_parameters.slopes <- model_parameters.marginaleffects
 
 
 #' @export
-model_parameters.predictions <- function(model,
-                                         ci = 0.95,
-                                         exponentiate = FALSE,
-                                         ...) {
+model_parameters.predictions <- function(model, ci = 0.95, exponentiate = FALSE, ...) {
   insight::check_if_installed("marginaleffects")
 
   if (is.null(attributes(model)$posterior_draws)) {
@@ -108,7 +105,13 @@ model_parameters.predictions <- function(model,
 
   # remove and reorder some columns
   out$rowid <- out$Type <- NULL
-  out <- datawizard::data_relocate(out, select = attributes(model)$newdata_at, after = "Predicted")
+  if (!is.null(attributes(model)$newdata_at) && "Predicted" %in% colnames(out)) {
+    out <- datawizard::data_relocate(
+      out,
+      select = attributes(model)$newdata_at,
+      after = "Predicted"
+    )
+  }
 
   # extract response, remove from data frame
   reg_model <- attributes(model)$model
@@ -117,7 +120,10 @@ model_parameters.predictions <- function(model,
     out[[resp]] <- NULL
   }
 
-  out <- .safe(.add_model_parameters_attributes(out, model, ci, exponentiate = exponentiate, ...), out)
+  out <- .safe(
+    .add_model_parameters_attributes(out, model, ci, exponentiate = exponentiate, ...),
+    out
+  )
 
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(model))
   attr(out, "coefficient_name") <- "Predicted"
