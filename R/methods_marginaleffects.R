@@ -106,7 +106,12 @@ model_parameters.predictions <- function(model,
     out <- datawizard::data_relocate(out, "predicted", before = 1)
   } else {
     # Bayesian
-    out <- suppressWarnings(bayestestR::describe_posterior(model, ci = ci, verbose = verbose, ...))
+    out <- suppressWarnings(bayestestR::describe_posterior(
+      model,
+      ci = ci,
+      verbose = verbose,
+      ...
+    ))
   }
 
   out <- insight::standardize_names(out, style = "easystats")
