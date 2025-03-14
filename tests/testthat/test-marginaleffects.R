@@ -129,30 +129,27 @@ test_that("preserve columns with same name as reserved words", {
   expect_named(pred, c("x", "z", "Mean", "SE", "CI_low", "CI_high", "t", "df"))
 })
 
+## TODO: run check manually every now and then
 
-skip_if_not_installed("withr")
+test_that("predictions, using bayestestR #1063", {
+  skip_if(!interactive())
+  skip_on_cran()
+  skip_if_not_installed("curl")
+  skip_if_offline()
+  skip_if_not_installed("httr2")
+  skip_if_not_installed("brms")
 
-withr::with_environment(
-  new.env(),
-  test_that("predictions, using bayestestR #1063", {
-    skip_on_cran()
-    skip_if_not_installed("curl")
-    skip_if_offline()
-    skip_if_not_installed("httr2")
-    skip_if_not_installed("brms")
+  m <- insight::download_model("brms_mixed_3")
+  skip_if(is.null(m))
 
-    m <- insight::download_model("brms_mixed_3")
-    skip_if(is.null(m))
-
-    d <- insight::get_datagrid(m, by = "Days", include_random = TRUE)
-    x <- marginaleffects::avg_predictions(m, newdata = d, by = "Days")
-    out <- model_parameters(x)
-    expect_named(
-      out,
-      c(
-        "Coefficient", "Days", "CI", "CI_low", "CI_high", "pd", "ROPE_CI",
-        "ROPE_low", "ROPE_high", "ROPE_Percentage", "subgrp", "grp", "Subject"
-      )
+  d <- insight::get_datagrid(m, by = "Days", include_random = TRUE)
+  x <- marginaleffects::avg_predictions(m, newdata = d, by = "Days")
+  out <- model_parameters(x)
+  expect_named(
+    out,
+    c(
+      "Coefficient", "Days", "CI", "CI_low", "CI_high", "pd", "ROPE_CI",
+      "ROPE_low", "ROPE_high", "ROPE_Percentage", "subgrp", "grp", "Subject"
     )
-  })
-)
+  )
+})
