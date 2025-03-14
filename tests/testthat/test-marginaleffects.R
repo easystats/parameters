@@ -132,7 +132,7 @@ test_that("preserve columns with same name as reserved words", {
 ## TODO: run check manually every now and then
 
 test_that("predictions, using bayestestR #1063", {
-  skip_if(!interactive())
+  skip_on_ci()
   skip_on_cran()
   skip_if_not_installed("curl")
   skip_if_offline()
