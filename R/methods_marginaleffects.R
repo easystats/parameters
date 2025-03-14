@@ -4,7 +4,11 @@
 # model_parameters ----------------
 
 #' @export
-model_parameters.marginaleffects <- function(model, ci = 0.95, exponentiate = FALSE, ...) {
+model_parameters.marginaleffects <- function(model,
+                                             ci = 0.95,
+                                             exponentiate = FALSE,
+                                             verbose = TRUE,
+                                             ...) {
   insight::check_if_installed("marginaleffects")
 
   if (is.null(attributes(model)$posterior_draws)) {
@@ -15,7 +19,7 @@ model_parameters.marginaleffects <- function(model, ci = 0.95, exponentiate = FA
     tidy_model <- suppressWarnings(bayestestR::describe_posterior(
       model,
       ci = ci,
-      verbose = FALSE,
+      verbose = verbose,
       ...
     ))
   }
@@ -29,11 +33,6 @@ model_parameters.marginaleffects <- function(model, ci = 0.95, exponentiate = FA
   # contrast_ columns provide indispensable information about the comparisons
   colnames(out)[colnames(out) == "contrast"] <- "Comparison"
   colnames(out) <- gsub("^contrast_", "Comparison: ", colnames(out))
-
-  out <- .safe(
-    .add_model_parameters_attributes(out, model, ci, exponentiate = exponentiate, ...),
-    out
-  )
 
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(model))
 
@@ -60,12 +59,16 @@ model_parameters.marginaleffects <- function(model, ci = 0.95, exponentiate = FA
   out <- .exponentiate_parameters(out, model = NULL, exponentiate)
 
   # add further information as attributes
-  out <- .add_model_parameters_attributes(
-    out,
-    model = model,
-    ci = ci,
-    exponentiate = exponentiate,
-    ...
+  out <- .safe(
+    .add_model_parameters_attributes(
+      out,
+      model = model,
+      ci = ci,
+      exponentiate = exponentiate,
+      verbose = verbose,
+      ...
+    ),
+    out
   )
 
   class(out) <- c("parameters_model", "see_parameters_model", class(out))
@@ -89,7 +92,11 @@ model_parameters.slopes <- model_parameters.marginaleffects
 
 
 #' @export
-model_parameters.predictions <- function(model, ci = 0.95, exponentiate = FALSE, ...) {
+model_parameters.predictions <- function(model,
+                                         ci = 0.95,
+                                         exponentiate = FALSE,
+                                         verbose = TRUE,
+                                         ...) {
   insight::check_if_installed("marginaleffects")
 
   if (is.null(attributes(model)$posterior_draws)) {
@@ -99,7 +106,7 @@ model_parameters.predictions <- function(model, ci = 0.95, exponentiate = FALSE,
     out <- datawizard::data_relocate(out, "predicted", before = 1)
   } else {
     # Bayesian
-    out <- suppressWarnings(bayestestR::describe_posterior(model, ci = ci, verbose = FALSE, ...))
+    out <- suppressWarnings(bayestestR::describe_posterior(model, ci = ci, verbose = verbose, ...))
   }
 
   out <- insight::standardize_names(out, style = "easystats")
@@ -135,7 +142,14 @@ model_parameters.predictions <- function(model, ci = 0.95, exponentiate = FALSE,
   }
 
   out <- .safe(
-    .add_model_parameters_attributes(out, model, ci, exponentiate = exponentiate, ...),
+    .add_model_parameters_attributes(
+      out,
+      model = model,
+      ci = ci,
+      exponentiate = exponentiate,
+      verbose = verbose,
+      ...
+    ),
     out
   )
 
@@ -145,15 +159,6 @@ model_parameters.predictions <- function(model, ci = 0.95, exponentiate = FALSE,
 
   # exponentiate coefficients and SE/CI, if requested
   out <- .exponentiate_parameters(out, model = NULL, exponentiate)
-
-  # add further information as attributes
-  out <- .add_model_parameters_attributes(
-    out,
-    model = model,
-    ci = ci,
-    exponentiate = exponentiate,
-    ...
-  )
 
   class(out) <- c("parameters_model", "see_parameters_model", class(out))
   out
