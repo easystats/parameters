@@ -129,6 +129,24 @@ test_that("preserve columns with same name as reserved words", {
   expect_named(pred, c("x", "z", "Mean", "SE", "CI_low", "CI_high", "t", "df"))
 })
 
+
+test_that("predictions, bmrs with special response formula", {
+  skip_on_ci()
+  skip_on_cran()
+  skip_if_not_installed("curl")
+  skip_if_offline()
+  skip_if_not_installed("httr2")
+  skip_if_not_installed("brms")
+
+  m <- insight::download_model("brms_ipw_1")
+  skip_if(is.null(m))
+
+  x <- marginaleffects::avg_predictions(m, variables = "treatment", hypothesis = ~pairwise)
+  out <- model_parameters(x)
+  expect_identical(dim(out), c(1L, 10L))
+})
+
+
 ## TODO: run check manually every now and then
 
 test_that("predictions, using bayestestR #1063", {
