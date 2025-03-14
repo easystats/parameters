@@ -123,7 +123,7 @@ model_parameters.predictions <- function(model,
       ...
     ))
   }
-browser()
+
   out <- insight::standardize_column_order(out, style = "easystats")
 
   # in case data grid contained column names that are reserved words,
