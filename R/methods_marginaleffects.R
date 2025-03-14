@@ -11,10 +11,10 @@ model_parameters.marginaleffects <- function(model,
                                              ...) {
   insight::check_if_installed("marginaleffects")
 
-  if (is.null(attributes(model)$posterior_draws)) {
-    # handle non-Bayesian models
-    tidy_model <- marginaleffects::tidy(model, conf_level = ci, ...)
-  } else {
+  # Bayesian models have posterior draws as attribute
+  is_bayesian <- is.null(attributes(model)$posterior_draws)
+
+  if (is_bayesian) {
     # Bayesian
     tidy_model <- suppressWarnings(bayestestR::describe_posterior(
       model,
@@ -22,10 +22,19 @@ model_parameters.marginaleffects <- function(model,
       verbose = verbose,
       ...
     ))
+  } else {
+    # handle non-Bayesian models
+    tidy_model <- marginaleffects::tidy(model, conf_level = ci, ...)
   }
 
   out <- .rename_reserved_marginaleffects(tidy_model)
-  out <- insight::standardize_names(out, style = "easystats")
+
+  # need to standardize names for non-Bayesian models. Bayesian models have
+  # been processed through describe_posterior() already
+  if (!is_bayesian) {
+    out <- insight::standardize_names(out, style = "easystats")
+  }
+
   # in case data grid contained column names that are reserved words,
   # rename those back now...
   colnames(out) <- gsub("#####$", "", colnames(out))
@@ -104,6 +113,7 @@ model_parameters.predictions <- function(model,
     out <- .rename_reserved_marginaleffects(model)
     out <- datawizard::data_rename(out, "estimate", "predicted")
     out <- datawizard::data_relocate(out, "predicted", before = 1)
+    out <- insight::standardize_names(out, style = "easystats")
   } else {
     # Bayesian
     out <- suppressWarnings(bayestestR::describe_posterior(
@@ -114,8 +124,8 @@ model_parameters.predictions <- function(model,
     ))
   }
 
-  out <- insight::standardize_names(out, style = "easystats")
   out <- insight::standardize_column_order(out, style = "easystats")
+
   # in case data grid contained column names that are reserved words,
   # rename those back now...
   colnames(out) <- gsub("#####$", "", colnames(out))
