@@ -12,7 +12,7 @@ model_parameters.marginaleffects <- function(model,
   insight::check_if_installed("marginaleffects")
 
   # Bayesian models have posterior draws as attribute
-  is_bayesian <- is.null(attributes(model)$posterior_draws)
+  is_bayesian <- !is.null(attributes(model)$posterior_draws)
 
   if (is_bayesian) {
     # Bayesian
