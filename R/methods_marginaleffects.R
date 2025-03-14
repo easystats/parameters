@@ -123,7 +123,7 @@ model_parameters.predictions <- function(model,
       ...
     ))
   }
-
+browser()
   out <- insight::standardize_column_order(out, style = "easystats")
 
   # in case data grid contained column names that are reserved words,
@@ -153,7 +153,14 @@ model_parameters.predictions <- function(model,
   reg_model <- attributes(model)$model
   if (!is.null(reg_model) && insight::is_model(reg_model)) {
     resp <- insight::find_response(reg_model)
-    out[[resp]] <- NULL
+    # check if response could be extracted
+    if (!is.null(resp)) {
+      # for some models, like brms-special response formula, we have multiple
+      # values in "resp", so we iterate all of them separately
+      for (r in resp) {
+        out[[r]] <- NULL
+      }
+    }
   }
 
   out <- .safe(
