@@ -4,13 +4,22 @@
 # model_parameters ----------------
 
 #' @export
-model_parameters.marginaleffects <- function(model,
-                                             ci = 0.95,
-                                             exponentiate = FALSE,
-                                             ...) {
+model_parameters.marginaleffects <- function(model, ci = 0.95, exponentiate = FALSE, ...) {
   insight::check_if_installed("marginaleffects")
 
-  tidy_model <- marginaleffects::tidy(model, conf_level = ci, ...)
+  if (is.null(attributes(model)$posterior_draws)) {
+    # handle non-Bayesian models
+    tidy_model <- marginaleffects::tidy(model, conf_level = ci, ...)
+  } else {
+    # Bayesian
+    tidy_model <- suppressWarnings(bayestestR::describe_posterior(
+      model,
+      ci = ci,
+      verbose = FALSE,
+      ...
+    ))
+  }
+
   out <- .rename_reserved_marginaleffects(tidy_model)
   out <- insight::standardize_names(out, style = "easystats")
   # in case data grid contained column names that are reserved words,
@@ -21,7 +30,10 @@ model_parameters.marginaleffects <- function(model,
   colnames(out)[colnames(out) == "contrast"] <- "Comparison"
   colnames(out) <- gsub("^contrast_", "Comparison: ", colnames(out))
 
-  out <- .safe(.add_model_parameters_attributes(out, model, ci, exponentiate = exponentiate, ...), out)
+  out <- .safe(
+    .add_model_parameters_attributes(out, model, ci, exponentiate = exponentiate, ...),
+    out
+  )
 
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(model))
 
@@ -77,15 +89,19 @@ model_parameters.slopes <- model_parameters.marginaleffects
 
 
 #' @export
-model_parameters.predictions <- function(model,
-                                         ci = 0.95,
-                                         exponentiate = FALSE,
-                                         ...) {
+model_parameters.predictions <- function(model, ci = 0.95, exponentiate = FALSE, ...) {
   insight::check_if_installed("marginaleffects")
 
-  out <- .rename_reserved_marginaleffects(model)
-  out <- datawizard::data_rename(out, "estimate", "predicted")
-  out <- datawizard::data_relocate(out, "predicted", before = 1)
+  if (is.null(attributes(model)$posterior_draws)) {
+    # handle non-Bayesian models
+    out <- .rename_reserved_marginaleffects(model)
+    out <- datawizard::data_rename(out, "estimate", "predicted")
+    out <- datawizard::data_relocate(out, "predicted", before = 1)
+  } else {
+    # Bayesian
+    out <- suppressWarnings(bayestestR::describe_posterior(model, ci = ci, verbose = FALSE, ...))
+  }
+
   out <- insight::standardize_names(out, style = "easystats")
   out <- insight::standardize_column_order(out, style = "easystats")
   # in case data grid contained column names that are reserved words,
@@ -93,8 +109,23 @@ model_parameters.predictions <- function(model,
   colnames(out) <- gsub("#####$", "", colnames(out))
 
   # remove and reorder some columns
-  out$rowid <- out$Type <- NULL
-  out <- datawizard::data_relocate(out, select = attributes(model)$newdata_at, after = "Predicted")
+  out$rowid <- out$Type <- out$rowid_dedup <- NULL
+
+  # find at-variables
+  at_variables <- attributes(model)$newdata_at
+  if (is.null(at_variables)) {
+    at_variables <- attributes(model)$by
+  }
+
+  # find cofficient name - differs for Bayesian models
+  coef_name <- intersect(c("Predicted", "Coefficient"), colnames(out))[1]
+  if (!is.null(at_variables) && !is.na(coef_name) && all(at_variables %in% colnames(out))) {
+    out <- datawizard::data_relocate(
+      out,
+      select = at_variables,
+      after = coef_name
+    )
+  }
 
   # extract response, remove from data frame
   reg_model <- attributes(model)$model
@@ -103,7 +134,10 @@ model_parameters.predictions <- function(model,
     out[[resp]] <- NULL
   }
 
-  out <- .safe(.add_model_parameters_attributes(out, model, ci, exponentiate = exponentiate, ...), out)
+  out <- .safe(
+    .add_model_parameters_attributes(out, model, ci, exponentiate = exponentiate, ...),
+    out
+  )
 
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(model))
   attr(out, "coefficient_name") <- "Predicted"

@@ -1,3 +1,11 @@
+# parameters (devel)
+
+## Changes
+
+* `model_parameters()` for objects from the *marginaleffects* packages now calls
+  `bayestestR::describe_posterior()` to process Bayesian models. This offers
+  more flexibility in summarizing the posterior draws from *marginaleffects*.
+
 # parameters 0.24.2
 
 ## Changes

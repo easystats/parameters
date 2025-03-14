@@ -5,7 +5,7 @@ test_that("marginaleffects()", {
   # Frequentist
   x <- lm(Sepal.Width ~ Species * Petal.Length, data = iris)
   model <- marginaleffects::avg_slopes(x, newdata = insight::get_datagrid(x, by = "Species"), variables = "Petal.Length")
-  out <- parameters(model)
+  out <- model_parameters(model)
   expect_identical(nrow(out), 1L)
   cols <- c("Parameter", "Comparison", "Coefficient", "SE", "Statistic", "p", "S", "CI", "CI_low", "CI_high")
   expect_true(all(cols %in% colnames(out)))
@@ -30,13 +30,13 @@ test_that("marginaleffects()", {
 test_that("predictions()", {
   x <- lm(Sepal.Width ~ Species * Petal.Length, data = iris)
   p <- marginaleffects::avg_predictions(x, by = "Species")
-  out <- parameters(p)
+  out <- model_parameters(p)
   expect_identical(nrow(out), 3L)
   expect_named(out, c(
-    "Predicted", "SE", "CI", "CI_low", "CI_high", "S", "Statistic",
-    "p", "Species"
+    "Predicted", "Species", "SE", "CI", "CI_low", "CI_high", "S", "Statistic",
+    "p"
   ))
-  out <- parameters(p, exponentiate = TRUE)
+  out <- model_parameters(p, exponentiate = TRUE)
   expect_equal(out$Predicted, c(30.81495, 15.95863, 19.57004), tolerance = 1e-4)
 })
 
@@ -46,8 +46,8 @@ test_that("comparisons()", {
   # Frequentist
   x <- lm(Sepal.Width ~ Species * Petal.Length, data = iris)
   m <- marginaleffects::avg_comparisons(x, newdata = insight::get_datagrid(x, by = "Species"), variables = "Petal.Length")
-  expect_identical(nrow(parameters(m)), 1L)
-  out <- parameters(m, exponentiate = TRUE)
+  expect_identical(nrow(model_parameters(m)), 1L)
+  out <- model_parameters(m, exponentiate = TRUE)
   expect_equal(out$Coefficient, 1.393999, tolerance = 1e-4)
 
   # Bayesian
@@ -73,7 +73,7 @@ test_that("hypotheses()", {
   data(mtcars)
   x <- lm(mpg ~ hp + wt, data = mtcars)
   m <- marginaleffects::hypotheses(x, "hp = wt")
-  expect_identical(nrow(parameters(m)), 1L)
+  expect_identical(nrow(model_parameters(m)), 1L)
 })
 
 
@@ -87,7 +87,7 @@ test_that("multiple contrasts: Issue #779", {
     newdata = insight::get_datagrid(mod, by = c("gear", "cyl")),
     cross = TRUE
   ))
-  cmp <- suppressWarnings(parameters(cmp))
+  cmp <- suppressWarnings(model_parameters(cmp))
   expect_true("Comparison: gear" %in% colnames(cmp))
   expect_true("Comparison: cyl" %in% colnames(cmp))
 })
@@ -127,4 +127,29 @@ test_that("preserve columns with same name as reserved words", {
   model <- lm(y ~ x + z, data = d)
   pred <- modelbased::estimate_means(model, c("x", "z"))
   expect_named(pred, c("x", "z", "Mean", "SE", "CI_low", "CI_high", "t", "df"))
+})
+
+## TODO: run check manually every now and then
+
+test_that("predictions, using bayestestR #1063", {
+  skip_on_ci()
+  skip_on_cran()
+  skip_if_not_installed("curl")
+  skip_if_offline()
+  skip_if_not_installed("httr2")
+  skip_if_not_installed("brms")
+
+  m <- insight::download_model("brms_mixed_3")
+  skip_if(is.null(m))
+
+  d <- insight::get_datagrid(m, by = "Days", include_random = TRUE)
+  x <- marginaleffects::avg_predictions(m, newdata = d, by = "Days")
+  out <- model_parameters(x)
+  expect_named(
+    out,
+    c(
+      "Coefficient", "Days", "CI", "CI_low", "CI_high", "pd", "ROPE_CI",
+      "ROPE_low", "ROPE_high", "ROPE_Percentage", "subgrp", "grp", "Subject"
+    )
+  )
 })
