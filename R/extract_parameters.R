@@ -231,7 +231,7 @@
 
   # ==== remove Component column if not needed
 
-  if (!is.null(parameters$Component) && insight::n_unique(parameters$Component) == 1 && !keep_component_column) parameters$Component <- NULL # nolint
+  if (!is.null(parameters$Component) && insight::has_single_value(parameters$Component, remove_na = TRUE) && !keep_component_column) parameters$Component <- NULL # nolint
   if ((!is.null(parameters$Effects) && insight::n_unique(parameters$Effects) == 1) || effects == "fixed") parameters$Effects <- NULL # nolint
 
 
@@ -818,10 +818,10 @@
   }
 
   # Remove unnecessary columns
-  if ("CI" %in% names(parameters) && insight::n_unique(parameters$CI) == 1) {
+  if ("CI" %in% names(parameters) && insight::has_single_value(parameters$CI, remove_na = TRUE)) {
     parameters$CI <- NULL
   }
-  if ("ROPE_CI" %in% names(parameters) && insight::n_unique(parameters$ROPE_CI) == 1) {
+  if ("ROPE_CI" %in% names(parameters) && insight::has_single_value(parameters$ROPE_CI, remove_na = TRUE)) {
     parameters$ROPE_CI <- NULL
   }
   if ("ROPE_low" %in% names(parameters) && "ROPE_high" %in% names(parameters)) {

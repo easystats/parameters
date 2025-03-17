@@ -1142,18 +1142,18 @@
     )
 
     # exceptions for random effects
-    if (insight::n_unique(formatted_table$Group) == 1) {
+    if (insight::has_single_value(formatted_table$Group, remove_na = TRUE)) {
       component_header$subheader1 <- paste0(component_header$subheader1, " (", formatted_table$Group, ")")
       formatted_table$Group <- NULL
     }
 
     # remove non-necessary columns
-    if (insight::n_unique(formatted_table$Component) == 1) {
+    if (insight::has_single_value(formatted_table$Component, remove_na = TRUE)) {
       formatted_table$Component <- NULL
     }
 
     # no column with CI-level in output
-    if (!is.null(formatted_table$CI) && insight::n_unique(formatted_table$CI) == 1) {
+    if (!is.null(formatted_table$CI) && insight::has_single_value(formatted_table$CI, remove_na = TRUE)) {
       formatted_table$CI <- NULL
     }
 
@@ -1185,8 +1185,8 @@
     }
 
     # remove unique columns
-    if (insight::n_unique(formatted_table$Effects) == 1) formatted_table$Effects <- NULL
-    if (insight::n_unique(formatted_table$Group) == 1) formatted_table$Group <- NULL
+    if (insight::has_single_value(formatted_table$Effects, remove_na = TRUE)) formatted_table$Effects <- NULL
+    if (insight::has_single_value(formatted_table$Group, remove_na = TRUE)) formatted_table$Group <- NULL
 
     final_table <- c(final_table, list(formatted_table))
   }

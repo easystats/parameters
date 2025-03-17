@@ -238,10 +238,10 @@ p_significance.lm <- function(x,
   colnames(posterior) <- out$Parameter
 
   # deal with Effects and Component columns
-  if ("Effects" %in% colnames(out) && insight::n_unique(out$Effects) == 1) {
+  if ("Effects" %in% colnames(out) && insight::has_single_value(out$Effects, remove_na = TRUE)) {
     out$Effects <- NULL
   }
-  if ("Component" %in% colnames(out) && insight::n_unique(out$Component) == 1) {
+  if ("Component" %in% colnames(out) && insight::has_single_value(out$Component, remove_na = TRUE)) {
     out$Component <- NULL
   }
 
