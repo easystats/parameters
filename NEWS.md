@@ -6,6 +6,9 @@
   `bayestestR::describe_posterior()` to process Bayesian models. This offers
   more flexibility in summarizing the posterior draws from *marginaleffects*.
 
+* `model_parameters()` now shows a more informative coefficient name for binomial
+  models with probit-link.
+
 # parameters 0.24.2
 
 ## Changes
