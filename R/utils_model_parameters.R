@@ -257,10 +257,12 @@
         "Coefficient"
       )
     }
-  } else if (!is.null(info) && info$family != "unknown" && !info$is_probit) {
+  } else if (!is.null(info) && info$family != "unknown") {
     if (isTRUE(exponentiate)) {
       if (info$is_exponential && identical(info$link_function, "log")) {
         coef_col <- "Prevalence Ratio"
+      } else if (info$is_probit) {
+        coef_col <- "Coefficient"
       } else if ((info$is_binomial && info$is_logit) || info$is_ordinal || info$is_multinomial || info$is_categorical) {
         coef_col <- "Odds Ratio"
       } else if (info$is_binomial && !info$is_logit) {
@@ -274,6 +276,8 @@
       }
     } else if (info$is_exponential && identical(info$link_function, "log")) {
       coef_col <- "Log-Prevalence"
+    } else if (info$is_probit) {
+      coef_col <- "Z-Score"
     } else if ((info$is_binomial && info$is_logit) || info$is_ordinal || info$is_multinomial || info$is_categorical) {
       coef_col <- "Log-Odds"
     } else if (info$is_binomial && !info$is_logit) {

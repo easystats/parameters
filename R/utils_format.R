@@ -499,7 +499,7 @@
 .all_coefficient_types <- c(
   "Odds Ratio", "Risk Ratio", "Prevalence Ratio", "IRR", "Log-Odds",
   "Log-Mean", "Log-Ratio", "Log-Prevalence", "Probability", "Marginal Means",
-  "Estimated Counts", "Ratio"
+  "Estimated Counts", "Ratio", "Z-Score", "exp(Z-Score)"
 )
 
 
