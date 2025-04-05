@@ -137,7 +137,7 @@
   )
 
   # select parameters to keep. We want all intercepts, and all random slopes
-  components <- .brms_dpars(x)
+  components <- insight::find_auxiliary(x)
   # standard components
   parameters_to_keep <- params$Parameter %in% c("Intercept", random_slopes$random)
   parameters_to_keep <- parameters_to_keep |
@@ -188,21 +188,6 @@
 
 
 # helper ----------------------------------------------------------------------
-
-
-.brms_dpars <- function(x) {
-  f <- stats::formula(x)
-  if (!is.null(f$forms)) {
-    out <- unique(unlist(lapply(f$forms, function(i) names(i$pforms)), use.names = FALSE))
-  } else {
-    out <- names(f$pforms)
-  }
-  fe <- dimnames(x$fit)$parameters
-  if (any(startsWith(fe, "sigma_") | grepl("sigma", fe, fixed = TRUE))) {
-    out <- c(out, "sigma")
-  }
-  unique(out)
-}
 
 
 .reshape_group_level_coefficients <- function(x,
