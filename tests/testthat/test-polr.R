@@ -8,5 +8,5 @@ test_that("robust-se polr", {
   expect_identical(attributes(out)$coefficient_name, "Log-Odds")
   m <- MASS::polr(Sat ~ Infl + Type + Cont, weights = Freq, data = housing, method = "probit")
   out <- model_parameters(m)
-  expect_identical(attributes(out)$coefficient_name, "Coefficient")
+  expect_identical(attributes(out)$coefficient_name, "Z-Score")
 })
