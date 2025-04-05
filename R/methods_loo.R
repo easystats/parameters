@@ -24,8 +24,7 @@
 #'   model_names = c("m1", "m2", "m3")
 #' ))
 #' parameters(x)
-#' parameters(x, include_IC = FALSE)
-#' parameters(x, include_ENP = TRUE)
+#' parameters(x, include_IC = FALSE, include_ENP = TRUE)
 #' }
 #'
 #' @details
@@ -39,9 +38,9 @@
 #' conclude that a model is much better than another if both models make very
 #' similar predictions.
 #'
-#' @return Objects of class [report_text()].
+#' @return Objects of `parameters_model`.
 #' @export
-parameters.compare.loo <- function(x, include_IC = TRUE, include_ENP = FALSE, ...) {
+model_parameters.compare.loo <- function(x, include_IC = TRUE, include_ENP = FALSE, ...) {
   # nolint start
   # https://stats.stackexchange.com/questions/608881/how-to-interpret-elpd-diff-of-bayesian-loo-estimate-in-bayesian-logistic-regress
   # nolint end
