@@ -133,7 +133,6 @@ Suggests:
     gamlss,
     gee,
     geepack,
-    ggeffects (>= 1.3.2),
     ggplot2,
     GLMMadaptive,
     glmmTMB (>= 1.1.10),
