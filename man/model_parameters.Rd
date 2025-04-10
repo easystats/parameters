@@ -60,11 +60,12 @@ the model-specific documentation:
 \item \link[=model_parameters.zcpglm]{Zero-inflated and hurdle}: \strong{cplm}, \strong{mhurdle},
 \strong{pscl}, ...
 \item \link[=model_parameters.glimML]{Other models}: \strong{aod}, \strong{bbmle}, \strong{betareg},
-\strong{emmeans}, \strong{epiR}, \strong{ggeffects}, \strong{glmx}, \strong{ivfixed}, \strong{ivprobit},
-\strong{JRM}, \strong{lmodel2}, \strong{logitsf}, \strong{marginaleffects}, \strong{margins}, \strong{maxLik},
+\strong{emmeans}, \strong{epiR}, \strong{glmx}, \strong{ivfixed}, \strong{ivprobit}, \strong{JRM},
+\strong{lmodel2}, \strong{logitsf}, \strong{marginaleffects}, \strong{margins}, \strong{maxLik},
 \strong{mediation}, \strong{mfx}, \strong{multcomp}, \strong{mvord}, \strong{plm}, \strong{PMCMRplus},
 \strong{quantreg}, \strong{selection}, \strong{systemfit}, \strong{tidymodels}, \strong{varEST},
-\strong{WRS2}, \code{bfsl}, \code{deltaMethod}, \code{fitdistr}, \code{mjoint}, \code{mle}, \code{model.avg}, ...
+\strong{WRS2}, \code{bfsl}, \code{deltaMethod}, \code{fitdistr}, \code{mjoint}, \code{mle}, \code{model.avg},
+...
 }
 }
 \details{

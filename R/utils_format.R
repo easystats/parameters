@@ -575,68 +575,91 @@
     "Random Effects"
   }
 
-  component_name <- switch(type,
-    mu = ,
-    fixed = ,
-    fixed. = ,
-    conditional = ,
-    conditional. = "Fixed Effects",
-    random. = ,
-    random = "Random Effects",
-    conditional.fixed = ,
-    conditional.fixed. = .conditional_fixed_text,
-    conditional.random = .conditional_random_text,
-    zero_inflated = "Zero-Inflation",
-    zero_inflated.fixed = ,
-    zero_inflated.fixed. = "Fixed Effects (Zero-Inflation Component)",
-    zero_inflated.random = "Random Effects (Zero-Inflation Component)",
-    survival = ,
-    survival.fixed = "Survival",
-    dispersion.fixed = ,
-    dispersion.fixed. = ,
-    dispersion = "Dispersion",
-    marginal = "Marginal Effects",
-    emmeans = "Estimated Marginal Means",
-    contrasts = "Contrasts",
-    simplex.fixed = ,
-    simplex = "Monotonic Effects",
-    smooth_sd = "Smooth Terms (SD)",
-    smooth_terms = "Smooth Terms",
-    sigma.fixed = ,
-    sigma.fixed. = ,
-    sigma = "Sigma",
-    thresholds = "Thresholds",
-    correlation = "Correlation",
-    `SD/Cor` = "SD / Correlation",
-    Loading = "Loading",
-    location = ,
-    location.fixed = ,
-    location.fixed. = "Location Parameters",
-    scale = ,
-    scale.fixed = ,
-    scale.fixed. = "Scale Parameters",
-    extra = ,
-    extra.fixed = ,
-    extra.fixed. = "Extra Parameters",
-    nu = "Nu",
-    tau = "Tau",
-    meta = "Meta-Parameters",
-    studies = "Studies",
-    within = "Within-Effects",
-    between = "Between-Effects",
-    interactions = "(Cross-Level) Interactions",
-    precision = ,
-    precision. = "Precision",
-    infrequent_purchase = "Infrequent Purchase",
-    auxiliary = "Auxiliary",
-    residual = "Residual",
-    intercept = "Intercept",
-    regression = "Regression",
-    latent = "Latent",
-    time_dummies = "Time Dummies",
-    type
-  )
+  # remove trailing dots
+  if (endsWith(type, ".")) {
+    type <- gsub("\\.$", "", type)
+  }
+  component_name <- NULL
 
+  # Do we have any distributional parameters?
+  # this is only relevant for models from brms
+  if (identical(attributes(x)$model_class, "brmsfit")) {
+    # check if we can access the model
+    model <- .get_object(x)
+    # if yes, extract distributional parameters
+    if (!is.null(model)) {
+      dpars <- .safe(insight::find_auxiliary(model))
+      # if model has any distributional parameters, check if it's fixed or random
+      # and create component header
+      if (!is.null(dpars)) {
+        type_parts <- unlist(strsplit(type, ".", fixed = TRUE))
+        if (type_parts[1] %in% dpars) {
+          if (identical(type_parts[2], "fixed")) {
+            component_name <- paste(type_parts[1], "Parameters")
+          } else if (identical(type_parts[2], "random")) {
+            component_name <- paste(type_parts[1], "Random Effects")
+          }
+        }
+      }
+    }
+  }
+
+  if (is.null(component_name)) {
+    component_name <- switch(type,
+      mu = ,
+      fixed = ,
+      fixed. = ,
+      conditional = "Fixed Effects",
+      random. = ,
+      random = "Random Effects",
+      conditional.fixed = .conditional_fixed_text,
+      conditional.random = .conditional_random_text,
+      zero_inflated = "Zero-Inflation",
+      zero_inflated.fixed = "Fixed Effects (Zero-Inflation Component)",
+      zero_inflated.random = "Random Effects (Zero-Inflation Component)",
+      survival = ,
+      survival.fixed = "Survival",
+      dispersion.fixed = ,
+      dispersion = "Dispersion",
+      marginal = "Marginal Effects",
+      emmeans = "Estimated Marginal Means",
+      contrasts = "Contrasts",
+      simplex.fixed = ,
+      simplex = "Monotonic Effects",
+      smooth_sd = "Smooth Terms (SD)",
+      smooth_terms = "Smooth Terms",
+      sigma.fixed = ,
+      sigma = "Sigma",
+      thresholds = "Thresholds",
+      correlation = "Correlation",
+      `SD/Cor` = "SD / Correlation",
+      Loading = "Loading",
+      location = ,
+      location.fixed = "Location Parameters",
+      scale = ,
+      scale.fixed = "Scale Parameters",
+      extra = ,
+      extra.fixed = "Extra Parameters",
+      nu = "Nu",
+      tau = "Tau",
+      meta = "Meta-Parameters",
+      studies = "Studies",
+      within = "Within-Effects",
+      between = "Between-Effects",
+      interactions = "(Cross-Level) Interactions",
+      precision = "Precision",
+      infrequent_purchase = "Infrequent Purchase",
+      auxiliary = "Auxiliary",
+      residual = "Residual",
+      intercept = "Intercept",
+      regression = "Regression",
+      latent = "Latent",
+      time_dummies = "Time Dummies",
+      type
+    )
+  }
+
+  # handle exceptions
   if (grepl("^conditional\\.(r|R)andom_variances", component_name)) {
     component_name <- insight::trim_ws(gsub("^conditional\\.(r|R)andom_variances(\\.)*", "", component_name))
     if (nzchar(component_name, keepNA = TRUE)) {
@@ -674,10 +697,7 @@
 
   # tweaking of sub headers
 
-  if (isTRUE(attributes(x)$is_ggeffects)) {
-    s1 <- gsub("(.*)\\.(.*) = (.*)", "\\1 (\\2 = \\3)", component_name)
-    s2 <- ""
-  } else if ("DirichletRegModel" %in% attributes(x)$model_class) {
+  if ("DirichletRegModel" %in% attributes(x)$model_class) {
     if (startsWith(component_name, "conditional.") || split_column == "Response") {
       s1 <- "Response level:"
       s2 <- gsub("^conditional\\.(.*)", "\\1", component_name)
@@ -931,17 +951,10 @@
 
   ignore_group <- isTRUE(attributes(x)$ignore_group)
   ran_pars <- isTRUE(attributes(x)$ran_pars)
-  is_ggeffects <- isTRUE(attributes(x)$is_ggeffects)
   is_fixest_multi <- identical(attributes(x)$model_class, "fixest_multi")
 
-  # name of "Parameter" column - usually the first column, however, for
-  # ggeffects objects, this column has the name of the focal term
-
-  if (is_ggeffects) {
-    parameter_column <- colnames(x)[1]
-  } else {
-    parameter_column <- "Parameter"
-  }
+  # name of "Parameter" column - usually the first column
+  parameter_column <- "Parameter"
 
   # default brackets are parenthesis for HTML / MD
   if ((is.null(ci_brackets) || isTRUE(ci_brackets)) && (identical(format, "html") || identical(format, "markdown"))) {
@@ -1113,16 +1126,6 @@
 
     if (grepl("random", type, fixed = TRUE) && isTRUE(ran_pars)) {
       tables[[type]]$CI <- NULL
-    }
-
-    # for ggeffects objects, only choose selected lines, to have
-    # a more compact output
-    if (is_ggeffects && is.numeric(tables[[type]][[1]])) {
-      n_rows <- nrow(tables[[type]])
-      row_steps <- round(sqrt(n_rows))
-      sample_rows <- round(c(1, stats::quantile(seq_len(n_rows), seq_len(row_steps - 2) / row_steps), n_rows))
-      tables[[type]] <- tables[[type]][sample_rows, ]
-      tables[[type]][[1]] <- insight::format_value(tables[[type]][[1]], digits = digits, protect_integers = TRUE)
     }
 
     # add the coefficient for the base-(reference)-level of factors?

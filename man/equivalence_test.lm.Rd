@@ -2,7 +2,6 @@
 % Please edit documentation in R/equivalence_test.R
 \name{equivalence_test.lm}
 \alias{equivalence_test.lm}
-\alias{equivalence_test.ggeffects}
 \title{Equivalence test}
 \usage{
 \method{equivalence_test}{lm}(
@@ -13,15 +12,6 @@
   effects = "fixed",
   vcov = NULL,
   vcov_args = NULL,
-  verbose = TRUE,
-  ...
-)
-
-\method{equivalence_test}{ggeffects}(
-  x,
-  range = "default",
-  rule = "classic",
-  test = "pairwise",
   verbose = TRUE,
   ...
 )
@@ -76,10 +66,6 @@ type for \code{"HC"} equals the default from the \strong{sandwich} package; for 
 \item{verbose}{Toggle warnings and messages.}
 
 \item{...}{Arguments passed to or from other methods.}
-
-\item{test}{Hypothesis test for computing contrasts or pairwise comparisons.
-See \href{https://strengejacke.github.io/ggeffects/reference/test_predictions.html}{\code{?ggeffects::test_predictions}}
-for details.}
 }
 \value{
 A data frame.
