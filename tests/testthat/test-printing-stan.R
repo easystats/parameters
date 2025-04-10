@@ -4,6 +4,7 @@ skip_on_cran()
 skip_if_not_installed("brms")
 skip_if_not_installed("insight")
 skip_if_not_installed("withr")
+skip_if_not_installed("rstanarm")
 
 withr::with_options(
   list(parameters_exponentiate = FALSE),
@@ -47,9 +48,6 @@ withr::with_options(
     })
 
     test_that("print-information", {
-      skip_if_offline()
-      skip_if_not_installed("httr2")
-
       m <- insight::download_model("brms_1")
       out <- model_parameters(m)
       expect_snapshot(out)

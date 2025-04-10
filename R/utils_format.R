@@ -588,7 +588,7 @@
     model <- .get_object(x)
     # if yes, extract distributional parameters
     if (!is.null(model)) {
-      dpars <- insight::find_auxiliary(model)
+      dpars <- .safe(insight::find_auxiliary(model))
       # if model has any distributional parameters, check if it's fixed or random
       # and create component header
       if (!is.null(dpars)) {
