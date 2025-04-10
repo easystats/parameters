@@ -486,11 +486,7 @@ print.parameters_random <- function(x, digits = 2, ...) {
 
   # caption = NULL, set default for HTML tables
   if (identical(format, "html") && is.null(caption)) {
-    if (isTRUE(attributes(x)$is_ggeffects)) {
-      table_caption <- title_attribute
-    } else {
-      table_caption <- "Model Summary"
-    }
+    table_caption <- "Model Summary"
   } else if (isTRUE(attributes(x)$ordinal_model)) {
     table_caption <- ""
 

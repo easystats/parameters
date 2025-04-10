@@ -14,9 +14,6 @@ bayestestR::equivalence_test
 #' @param ci Confidence Interval (CI) level. Default to `0.95` (`95%`).
 #' @param rule Character, indicating the rules when testing for practical
 #' equivalence. Can be `"bayes"`, `"classic"` or `"cet"`. See 'Details'.
-#' @param test Hypothesis test for computing contrasts or pairwise comparisons.
-#' See [`?ggeffects::test_predictions`](https://strengejacke.github.io/ggeffects/reference/test_predictions.html)
-#' for details.
 #' @param verbose Toggle warnings and messages.
 #' @param ... Arguments passed to or from other methods.
 #' @inheritParams model_parameters.glmmTMB
@@ -402,85 +399,6 @@ equivalence_test.parameters_model <- function(x,
                                               ...) {
   model <- .get_object(x)
   equivalence_test(x = model, range = range, ci = ci, rule = rule, verbose = verbose, ...)
-}
-
-
-#' @rdname equivalence_test.lm
-#' @export
-equivalence_test.ggeffects <- function(x,
-                                       range = "default",
-                                       rule = "classic",
-                                       test = "pairwise",
-                                       verbose = TRUE,
-                                       ...) {
-  insight::check_if_installed("ggeffects")
-
-  # get attributes from ggeffects objects, so we have the original model and terms
-  focal <- attributes(x)$original.terms
-  obj_name <- attributes(x)$model.name
-  ci <- attributes(x)$ci.lvl
-  dof <- attributes(x)$df
-
-  x <- .get_ggeffects_model(x)
-
-  # validation check rope range
-  rule <- match.arg(tolower(rule), choices = c("bayes", "classic", "cet"))
-  range <- .check_rope_range(x, range, verbose)
-
-  out <- ggeffects::test_predictions(
-    x,
-    terms = focal,
-    test = test,
-    equivalence = range,
-    verbose = verbose,
-    ...
-  )
-
-  out <- insight::standardize_names(out)
-
-  # we only have one type of CIs
-  conf_int <- conf_int2 <- as.data.frame(t(out[c("CI_low", "CI_high")]))
-
-  l <- Map(
-    function(ci_wide, ci_narrow) {
-      .equivalence_test_numeric(
-        ci = ci,
-        ci_wide,
-        ci_narrow,
-        range_rope = range,
-        rule = rule,
-        dof = dof,
-        verbose = verbose
-      )
-    }, conf_int, conf_int2
-  )
-
-  # bind to data frame
-  dat <- do.call(rbind, l)
-
-  # remove old CIs, bind results from equivalence test
-  out$CI_low <- out$CI_high <- NULL
-  out$CI <- ci
-  out <- cbind(out, dat)
-
-  # standardize column order
-  cols <- c(
-    "Estimate", "Contrast", "Slope", "Predicted", "CI", "CI_low", "CI_high",
-    "SGPV", "ROPE_low", "ROPE_high", "ROPE_Percentage", "ROPE_Equivalence", "p"
-  )
-
-  # order of shared columns
-  shared_order <- intersect(cols, colnames(out))
-  parameter_columns <- setdiff(colnames(out), shared_order)
-  # add remaining columns, sort
-  out <- out[c(parameter_columns, shared_order)]
-
-  attr(out, "object_name") <- obj_name
-  attr(out, "parameter_columns") <- parameter_columns
-  attr(out, "rule") <- rule
-  attr(out, "rope") <- range
-  class(out) <- c("equivalence_test_lm", "see_equivalence_test_ggeffects", "data.frame")
-  out
 }
 
 
