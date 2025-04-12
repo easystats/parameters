@@ -137,7 +137,7 @@
   )
 
   # select parameters to keep. We want all intercepts, and all random slopes
-  components <- insight::find_auxiliary(x)
+  components <- insight::find_auxiliary(x, verbose = FALSE)
   # standard components
   parameters_to_keep <- params$Parameter %in% c("Intercept", random_slopes$random)
   parameters_to_keep <- parameters_to_keep |

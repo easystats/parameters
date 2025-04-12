@@ -30,11 +30,12 @@
 #' - [Zero-inflated and hurdle][model_parameters.zcpglm()]: **cplm**, **mhurdle**,
 #'   **pscl**, ...
 #' - [Other models][model_parameters.glimML()]: **aod**, **bbmle**, **betareg**,
-#'   **emmeans**, **epiR**, **ggeffects**, **glmx**, **ivfixed**, **ivprobit**,
-#'   **JRM**, **lmodel2**, **logitsf**, **marginaleffects**, **margins**, **maxLik**,
+#'   **emmeans**, **epiR**, **glmx**, **ivfixed**, **ivprobit**, **JRM**,
+#'   **lmodel2**, **logitsf**, **marginaleffects**, **margins**, **maxLik**,
 #'   **mediation**, **mfx**, **multcomp**, **mvord**, **plm**, **PMCMRplus**,
 #'   **quantreg**, **selection**, **systemfit**, **tidymodels**, **varEST**,
-#'   **WRS2**, `bfsl`, `deltaMethod`, `fitdistr`, `mjoint`, `mle`, `model.avg`, ...
+#'   **WRS2**, `bfsl`, `deltaMethod`, `fitdistr`, `mjoint`, `mle`, `model.avg`,
+#'   ...
 #'
 #' A full overview can be found here:
 #' https://easystats.github.io/parameters/reference/
