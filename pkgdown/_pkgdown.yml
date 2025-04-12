@@ -36,6 +36,7 @@ reference:
       - model_parameters.glht
       - model_parameters.glimML
       - model_parameters.t1way
+      - model_parameters.compare.loo
 
   - title: "Standard Errors, Confidence Intervals, Degrees of Freedom and p-values"
     contents:

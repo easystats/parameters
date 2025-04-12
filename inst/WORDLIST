@@ -48,6 +48,8 @@ Dupont
 DV
 EFA
 EGAnet
+ELPD
+ENP
 ESS
 Eingenvalues
 Eivenvalues
@@ -83,6 +85,7 @@ Hofman
 Hofmann
 Hornik
 Isager
+IC
 ICA
 IRR
 JB
@@ -107,6 +110,7 @@ MLM
 MPE
 MSA
 Maechler
+Magnusson
 Malo
 Mattan
 McNemar
@@ -164,6 +168,7 @@ Shachar
 Shi
 Shikano
 Shmekels
+Sivula
 Sphericity
 Stata
 Stigum
@@ -177,6 +182,7 @@ Turkheimer
 VGAM
 VSS
 Valls
+Vehtari
 Velicer
 Vos
 WRS
@@ -231,6 +237,7 @@ doi
 easystats
 effectsize
 effectsizes
+elpd
 emmGrid
 emmeans
 endogeneity
