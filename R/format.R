@@ -25,6 +25,7 @@ format.parameters_model <- function(x,
   htest_type <- attributes(x)$htest_type
   mixed_model <- attributes(x)$mixed_model
   random_variances <- isTRUE(attributes(x)$ran_pars)
+  dist_params <- isTRUE(attributes(x)$dpars)
   mean_group_values <- attributes(x)$mean_group_values
 
   # process selection of columns
@@ -45,7 +46,7 @@ format.parameters_model <- function(x,
 
   # rename random effect parameters names for stan models
   if (isTRUE(random_variances) && any(c("brmsfit", "stanreg", "stanmvreg") %in% m_class)) {
-    x <- .format_stan_parameters(x)
+    x <- .format_stan_parameters(x, dist_params)
   }
 
   # for the current HTML backend we use (package "gt"), we cannot change

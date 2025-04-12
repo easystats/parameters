@@ -506,16 +506,23 @@
 .all_coefficient_names <- c("Coefficient", "Std_Coefficient", "Estimate", "Median", "Mean", "MAP")
 
 
-.format_stan_parameters <- function(out) {
+.format_stan_parameters <- function(out, dist_params = NULL) {
   has_component <- !is.null(out$Component)
   # brms random intercepts or random slope variances
   ran_sd <- startsWith(out$Parameter, "sd_") & out$Effects == "random"
   if (any(ran_sd)) {
     out$Parameter[ran_sd] <- gsub("^sd_(.*?)__(.*)", "SD \\(\\2\\)", out$Parameter[ran_sd])
-    if (has_component) {
-      ran_zi_sd <- ran_sd & out$Component == "zero_inflated"
-      if (any(ran_zi_sd)) {
-        out$Parameter[ran_zi_sd] <- gsub("zi_", "", out$Parameter[ran_zi_sd], fixed = TRUE)
+    if (has_component && !is.null(dist_params)) {
+      for (dp in dist_params) {
+        ran_dpars_sd <- ran_sd & out$Component == dp
+        if (any(ran_dpars_sd)) {
+          out$Parameter[ran_dpars_sd] <- gsub(
+            paste0(dp, "_"),
+            "",
+            out$Parameter[ran_dpars_sd],
+            fixed = TRUE
+          )
+        }
       }
     }
   }
@@ -523,10 +530,17 @@
   ran_cor <- startsWith(out$Parameter, "cor_") & out$Effects == "random"
   if (any(ran_cor)) {
     out$Parameter[ran_cor] <- gsub("^cor_(.*?)__(.*)__(.*)", "Cor \\(\\2~\\3\\)", out$Parameter[ran_cor])
-    if (has_component) {
-      ran_zi_cor <- ran_cor & out$Component == "zero_inflated"
-      if (any(ran_zi_cor)) {
-        out$Parameter[ran_zi_cor] <- gsub("zi_", "", out$Parameter[ran_zi_cor], fixed = TRUE)
+    if (has_component && !is.null(dist_params)) {
+      for (dp in dist_params) {
+        ran_dpars_cor <- ran_cor & out$Component == dp
+        if (any(ran_dpars_cor)) {
+          out$Parameter[ran_dpars_cor] <- gsub(
+            paste0(dp, "_"),
+            "",
+            out$Parameter[ran_dpars_cor],
+            fixed = TRUE
+          )
+        }
       }
     }
   }
