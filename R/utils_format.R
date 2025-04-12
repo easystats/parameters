@@ -513,7 +513,7 @@
   if (any(ran_sd)) {
     out$Parameter[ran_sd] <- gsub("^sd_(.*?)__(.*)", "SD \\(\\2\\)", out$Parameter[ran_sd])
     if (has_component) {
-      ran_zi_sd <- ran_sd & out$Component == "zero_inflated"
+      ran_zi_sd <- ran_sd & out$Component %in% c("zi", "zero_inflated")
       if (any(ran_zi_sd)) {
         out$Parameter[ran_zi_sd] <- gsub("zi_", "", out$Parameter[ran_zi_sd], fixed = TRUE)
       }
@@ -524,7 +524,7 @@
   if (any(ran_cor)) {
     out$Parameter[ran_cor] <- gsub("^cor_(.*?)__(.*)__(.*)", "Cor \\(\\2~\\3\\)", out$Parameter[ran_cor])
     if (has_component) {
-      ran_zi_cor <- ran_cor & out$Component == "zero_inflated"
+      ran_zi_cor <- ran_cor & out$Component %in% c("zi", "zero_inflated")
       if (any(ran_zi_cor)) {
         out$Parameter[ran_zi_cor] <- gsub("zi_", "", out$Parameter[ran_zi_cor], fixed = TRUE)
       }
