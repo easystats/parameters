@@ -592,19 +592,12 @@
       # if model has any distributional parameters, check if it's fixed or random
       # and create component header
       if (!is.null(dpars)) {
-        # add aliases
-        if ("zoi" %in% dpars) {
-          dpars <- c(dpars, "zero_one_inflated")
-        }
-        if ("coi" %in% dpars) {
-          dpars <- c(dpars, "conditional_one_inflated")
-        }
         type_parts <- unlist(strsplit(type, ".", fixed = TRUE))
         if (type_parts[1] %in% dpars) {
-          if (identical(type_parts[2], "fixed")) {
-            component_name <- paste(type_parts[1], "Parameters")
-          } else if (identical(type_parts[2], "random")) {
+          if (identical(type_parts[2], "random")) {
             component_name <- paste(type_parts[1], "Random Effects")
+          } else if (identical(type_parts[2], "fixed") || length(type_parts) < 2) {
+            component_name <- paste(type_parts[1], "Parameters")
           }
         }
       }
@@ -696,8 +689,9 @@
   }
 
   # clean some special parameter names
-  component_name <- gsub("zero_one_inflated", "Zero-One-Inflated", component_name)
-  component_name <- gsub("conditional_one_inflated", "Conditional-One-Inflated", component_name)
+  component_name <- gsub("zi", "Zero-Inflation", component_name)
+  component_name <- gsub("zoi", "Zero-One-Inflation", component_name)
+  component_name <- gsub("coi", "Conditional-One-Inflation", component_name)
 
   # if we show ZI component only, make sure this appears in header
   if (!grepl("(Zero-Inflation Component)", component_name, fixed = TRUE) &&
