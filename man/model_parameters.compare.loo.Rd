@@ -4,10 +4,10 @@
 \alias{model_parameters.compare.loo}
 \title{Bayesian Model Comparison}
 \usage{
-\method{model_parameters}{compare.loo}(x, include_IC = TRUE, include_ENP = FALSE, ...)
+\method{model_parameters}{compare.loo}(model, include_IC = TRUE, include_ENP = FALSE, ...)
 }
 \arguments{
-\item{x}{An object of class \link[brms:loo_compare.brmsfit]{brms::loo_compare}.}
+\item{model}{An object of class \link[brms:loo_compare.brmsfit]{brms::loo_compare}.}
 
 \item{include_IC}{Whether to include the information criteria (IC).}
 

@@ -2,7 +2,7 @@
 #'
 #' Make a table of Bayesian model comparisons using the `loo` package.
 #'
-#' @param x An object of class [brms::loo_compare].
+#' @param model An object of class [brms::loo_compare].
 #' @param include_IC Whether to include the information criteria (IC).
 #' @param include_ENP Whether to include the effective number of parameters (ENP).
 #' @param ... Additional arguments (not used for now).
@@ -40,7 +40,7 @@
 #'
 #' @return Objects of `parameters_model`.
 #' @export
-model_parameters.compare.loo <- function(x, include_IC = TRUE, include_ENP = FALSE, ...) {
+model_parameters.compare.loo <- function(model, include_IC = TRUE, include_ENP = FALSE, ...) {
   # nolint start
   # https://stats.stackexchange.com/questions/608881/how-to-interpret-elpd-diff-of-bayesian-loo-estimate-in-bayesian-logistic-regress
   # nolint end
@@ -52,7 +52,7 @@ model_parameters.compare.loo <- function(x, include_IC = TRUE, include_ENP = FAL
   # the difference is approximately normal).
 
   # The values in the first row are 0s because the models are ordered from best to worst according to their elpd.
-  x <- as.data.frame(x)
+  x <- as.data.frame(model)
 
   out <- data.frame(Name = rownames(x))
   if ("looic" %in% colnames(x)) {
