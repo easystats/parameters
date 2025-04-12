@@ -8,7 +8,7 @@
 #' @param ... Additional arguments (not used for now).
 #'
 # nolint start
-#' @examplesIf requireNamespace("brms", quietly = TRUE) && requireNamespace("RcppEigen", quietly = TRUE) && requireNamespace("BH", quietly = TRUE)
+#' @examplesIf all(insight::check_if_installed(c("brms", "RcppEigen", "BH"), quietly = TRUE))
 # nolint end
 #' \donttest{
 #' library(brms)
@@ -23,8 +23,8 @@
 #'   brms::add_criterion(m3, "loo"),
 #'   model_names = c("m1", "m2", "m3")
 #' ))
-#' parameters(x)
-#' parameters(x, include_IC = FALSE, include_ENP = TRUE)
+#' model_parameters(x)
+#' model_parameters(x, include_IC = FALSE, include_ENP = TRUE)
 #' }
 #'
 #' @details
