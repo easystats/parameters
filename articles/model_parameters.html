@@ -14,9 +14,9 @@
 <!-- katex math --><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" integrity="sha384-nB0miv6/jRmo5UMMR1wu3Gz6NLsoTkbqJghGIsx//Rlm+ZU03BU6SQNC66uf4l5+" crossorigin="anonymous">
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" integrity="sha384-7zkQWkzuo3B5mTepMUcHkMB5jZaolc2xDwL6VFqjFALcbeS9Ggm/Yr2r3Dy4lfFg" crossorigin="anonymous"></script><script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script><script src="../katex-auto.js"></script><script src="../lightswitch.js"></script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/Roboto-0.4.9/font.css" rel="stylesheet">
-<link href="../deps/JetBrains_Mono-0.4.9/font.css" rel="stylesheet">
-<link href="../deps/Roboto_Slab-0.4.9/font.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/Roboto-0.4.10/font.css" rel="stylesheet">
+<link href="../deps/JetBrains_Mono-0.4.10/font.css" rel="stylesheet">
+<link href="../deps/Roboto_Slab-0.4.10/font.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Summary of Model Parameters">
@@ -29,7 +29,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.24.2.10</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.24.2.11</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -438,6 +438,18 @@ arguments.</p>
 <span>  family <span class="op">=</span> <span class="fu"><a href="https://paulbuerkner.com/brms/reference/brmsfamily.html" class="external-link">zero_inflated_poisson</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  refresh <span class="op">=</span> <span class="fl">0</span></span>
 <span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Running /opt/R/4.5.0/lib/R/bin/R CMD SHLIB foo.c</span></span>
+<span><span class="co">#&gt; using C compiler: ‘gcc (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0’</span></span>
+<span><span class="co">#&gt; gcc -std=gnu2x -I"/opt/R/4.5.0/lib/R/include" -DNDEBUG   -I"/home/runner/work/_temp/Library/Rcpp/include/"  -I"/home/runner/work/_temp/Library/RcppEigen/include/"  -I"/home/runner/work/_temp/Library/RcppEigen/include/unsupported"  -I"/home/runner/work/_temp/Library/BH/include" -I"/home/runner/work/_temp/Library/StanHeaders/include/src/"  -I"/home/runner/work/_temp/Library/StanHeaders/include/"  -I"/home/runner/work/_temp/Library/RcppParallel/include/"  -I"/home/runner/work/_temp/Library/rstan/include" -DEIGEN_NO_DEBUG  -DBOOST_DISABLE_ASSERTS  -DBOOST_PENDING_INTEGER_LOG2_HPP  -DSTAN_THREADS  -DUSE_STANC3 -DSTRICT_R_HEADERS  -DBOOST_PHOENIX_NO_VARIADIC_EXPRESSION  -D_HAS_AUTO_PTR_ETC=0  -include '/home/runner/work/_temp/Library/StanHeaders/include/stan/math/prim/fun/Eigen.hpp'  -D_REENTRANT -DRCPP_PARALLEL_USE_TBB=1   -I/usr/local/include    -fpic  -g -O2  -c foo.c -o foo.o</span></span>
+<span><span class="co">#&gt; In file included from /home/runner/work/_temp/Library/RcppEigen/include/Eigen/Core:19,</span></span>
+<span><span class="co">#&gt;                  from /home/runner/work/_temp/Library/RcppEigen/include/Eigen/Dense:1,</span></span>
+<span><span class="co">#&gt;                  from /home/runner/work/_temp/Library/StanHeaders/include/stan/math/prim/fun/Eigen.hpp:22,</span></span>
+<span><span class="co">#&gt;                  from &lt;command-line&gt;:</span></span>
+<span><span class="co">#&gt; /home/runner/work/_temp/Library/RcppEigen/include/Eigen/src/Core/util/Macros.h:679:10: fatal error: cmath: No such file or directory</span></span>
+<span><span class="co">#&gt;   679 | #include &lt;cmath&gt;</span></span>
+<span><span class="co">#&gt;       |          ^~~~~~~</span></span>
+<span><span class="co">#&gt; compilation terminated.</span></span>
+<span><span class="co">#&gt; make: *** [/opt/R/4.5.0/lib/R/etc/Makeconf:202: foo.o] Error 1</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/model_parameters.html">parameters</a></span><span class="op">(</span><span class="va">model</span>, component <span class="op">=</span> <span class="st">"conditional"</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # Fixed Effects</span></span>
@@ -450,7 +462,7 @@ arguments.</p>
 <span><span class="co">#&gt; camper1     |   0.74 | [ 0.55,  0.97] |   100% | 1.061 |   62.00</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/model_parameters.html">parameters</a></span><span class="op">(</span><span class="va">model</span>, effects <span class="op">=</span> <span class="st">"all"</span>, component <span class="op">=</span> <span class="st">"all"</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="co">#&gt; # Fixed Effects (Count Model)</span></span>
+<span><span class="co">#&gt; # Fixed Effects</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Parameter   | Median |         95% CI |     pd |  Rhat |     ESS</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------------------</span></span>
@@ -459,7 +471,7 @@ arguments.</p>
 <span><span class="co">#&gt; child       |  -1.15 | [-1.34, -0.97] |   100% | 1.000 | 2078.00</span></span>
 <span><span class="co">#&gt; camper1     |   0.74 | [ 0.55,  0.97] |   100% | 1.061 |   62.00</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; # Fixed Effects (Zero-Inflation Component)</span></span>
+<span><span class="co">#&gt; # zi Parameters</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Parameter   | Median |         95% CI |     pd |  Rhat |    ESS</span></span>
 <span><span class="co">#&gt; ---------------------------------------------------------------</span></span>
@@ -473,11 +485,11 @@ arguments.</p>
 <span><span class="co">#&gt; ----------------------------------------------------------------------</span></span>
 <span><span class="co">#&gt; SD (Intercept: persons) |   0.15 | [0.01, 0.90] | 100% | 1.152 | 31.00</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; # Random Effects (Zero-Inflation Component)</span></span>
+<span><span class="co">#&gt; # zi Random Effects</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Parameter               | Median |       95% CI |   pd |  Rhat |    ESS</span></span>
-<span><span class="co">#&gt; -----------------------------------------------------------------------</span></span>
-<span><span class="co">#&gt; SD (Intercept: persons) |   1.25 | [0.52, 3.46] | 100% | 1.017 | 727.00</span></span></code></pre></div>
+<span><span class="co">#&gt; Parameter                  | Median |       95% CI |   pd |  Rhat |    ESS</span></span>
+<span><span class="co">#&gt; --------------------------------------------------------------------------</span></span>
+<span><span class="co">#&gt; SD (zi_Intercept: persons) |   1.25 | [0.52, 3.46] | 100% | 1.017 | 727.00</span></span></code></pre></div>
 <p>To include information about the random effect parameters (group
 levels), set <code>group_level = TRUE</code>:</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
