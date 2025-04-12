@@ -54,14 +54,14 @@ model_parameters.compare.loo <- function(model, include_IC = TRUE, include_ENP =
   # The values in the first row are 0s because the models are ordered from best to worst according to their elpd.
   x <- as.data.frame(model)
 
-  out <- data.frame(Name = rownames(x))
+  out <- data.frame(Name = rownames(x), stringsAsFactors = FALSE)
   if ("looic" %in% colnames(x)) {
-    if(include_IC) out$LOOIC <- x[["looic"]]
-    if(include_ENP) out$ENP <- x[["p_loo"]]
+    if (include_IC) out$LOOIC <- x[["looic"]]
+    if (include_ENP) out$ENP <- x[["p_loo"]]
     out$ELPD <- x[["elpd_loo"]]
   } else {
-    if(include_IC) out$WAIC <- x[["waic"]]
-    if(include_ENP) out$ENP <- x[["p_waic"]]
+    if (include_IC) out$WAIC <- x[["waic"]]
+    if (include_ENP) out$ENP <- x[["p_waic"]]
     out$ELPD <- x[["elpd_waic"]]
   }
 
