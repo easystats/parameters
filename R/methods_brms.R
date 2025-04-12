@@ -157,6 +157,7 @@ model_parameters.brmsfit <- function(model,
 
     attr(params, "parameter_info") <- insight::clean_parameters(model)
     attr(params, "object_name") <- insight::safe_deparse_symbol(substitute(model))
+    attr(params, "dpars") <- insight::find_auxiliary(model, verbose = FALSE)
     class(params) <- unique(c("parameters_model", "see_parameters_model", class(params)))
   }
 
