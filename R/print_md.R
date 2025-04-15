@@ -333,23 +333,6 @@ print_md.equivalence_test_lm <- function(x,
 }
 
 
-# distribution print ----------------------------
-
-#' @export
-print_md.parameters_distribution <- function(x, digits = 2, ci_brackets = c("(", ")"), ...) {
-  formatted_table <- format(
-    x = x,
-    digits = digits,
-    format = "markdown",
-    ci_width = NULL,
-    ci_brackets = ci_brackets,
-    ...
-  )
-
-  insight::export_table(formatted_table, format = "markdown", align = "firstleft", ...)
-}
-
-
 # helper -----------------------
 
 .export_table_tt <- function(x, formatted_table, groups, caption = NULL, footer = NULL, outformat = "markdown") {
