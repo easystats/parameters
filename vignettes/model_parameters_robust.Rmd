@@ -182,7 +182,7 @@ unname(sqrt(diag(clubSandwich::vcovCR(model, type = "CR1", cluster = iris$cluste
 ### Robust Covariance Matrix Estimation on Standardized Model Parameters
 
 Finally, robust estimation can be combined with
-[standardization](https://easystats.github.io/parameters/articles/model_parameters_standardized.html).
+[standardization](https://easystats.github.io/parameters/articles/standardize_parameters_effsize.html).
 However, robust covariance matrix estimation only works for `standardize = "refit"`.
 
 ```{r}

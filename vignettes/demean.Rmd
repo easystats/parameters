@@ -540,6 +540,6 @@ de-meaning still might be (more or less) biased, because it doesn't
 appropriately account for the uncertainty in the person-means. In this case,
 _latent mean centering_ is recommended, however, there are only few options
 to do this. One way is using the great **brms** package, and this approach
-[is described here](https://vuorre.netlify.app/posts/latent-mean-centering/).
+[is described here](https://vuorre.com/posts/latent-mean-centering/).
 
 # References

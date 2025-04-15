@@ -126,7 +126,7 @@ That's still a lot of parameters, but as you can see, almost all of them are
 now significant, and the $R^2$ did not change much.
 
 Although appealing, please note that these automated selection methods are
-[**quite criticized**](https://towardsdatascience.com/stopping-stepwise-why-stepwise-selection-is-bad-and-what-you-should-use-instead-90818b3f52df),
+[**quite criticized**](https://www.lexjansen.com/nesug/nesug09/sa/SA01.pdf),
 and should not be used in place of **theoretical** or **hypothetical** reasons
 (*i.e.*, you should have *a priori* hypotheses about which parameters of your
 model you want to focus on).
