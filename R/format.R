@@ -93,8 +93,8 @@ format.parameters_model <- function(x,
     htest_type == "ttest" &&
     !is.null(mean_group_values) &&
     all(c("Mean_Group1", "Mean_Group2") %in% colnames(x))) {
-    colnames(x)[which(colnames(x) == "Mean_Group1")] <- paste0(x$Group, " = ", mean_group_values[1])
-    colnames(x)[which(colnames(x) == "Mean_Group2")] <- paste0(x$Group, " = ", mean_group_values[2])
+    colnames(x)[which(colnames(x) == "Mean_Group1")] <- mean_group_values[1]
+    colnames(x)[which(colnames(x) == "Mean_Group2")] <- mean_group_values[2]
   }
 
   # Special print for mcp from WRS2
