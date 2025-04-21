@@ -212,12 +212,3 @@ display.parameters_pca <- display.parameters_efa
 display.equivalence_test_lm <- function(object, format = "markdown", digits = 2, ...) {
   print_md(x = object, digits = digits, ...)
 }
-
-
-# Other functions ------------------------
-
-
-#' @export
-display.parameters_distribution <- function(object, format = "markdown", digits = 2, ...) {
-  print_md(x = object, digits = digits, ...)
-}
