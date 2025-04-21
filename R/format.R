@@ -97,6 +97,17 @@ format.parameters_model <- function(x,
     colnames(x)[which(colnames(x) == "Mean_Group2")] <- paste0(x$Group, " = ", mean_group_values[2])
   }
 
+  # for htests, remove "$" from variable name, since this can make troubles
+  # when rendering into different output formats
+  if (!is.null(htest_type)) {
+    if ("Parameter" %in% colnames(x) && grepl("$", x$Parameter, fixed = TRUE)) {
+      x$Parameter <- gsub("(.*)\\$(.*)", "\\2", x$Parameter)
+    }
+    if ("Group" %in% colnames(x) && grepl("$", x$Group, fixed = TRUE)) {
+      x$Group <- gsub("(.*)\\$(.*)", "\\2", x$Group)
+    }
+  }
+
   # Special print for mcp from WRS2
   if (!is.null(m_class) && any(m_class %in% c("mcp1", "mcp2"))) {
     x$Group1 <- paste(x$Group1, x$Group2, sep = " vs. ")
