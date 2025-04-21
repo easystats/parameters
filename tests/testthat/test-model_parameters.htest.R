@@ -126,3 +126,11 @@ test_that("model_parameters-Box.test works, and ignores partial matching", {
   out2 <- model_parameters(result2, effects = "all")
   expect_equal(out1, out2, ignore_attr = TRUE)
 })
+
+test_that("model_parameters-htests removes $ from parameter and group names", {
+  data(sleep)
+  sleep2 <- reshape(sleep, direction = "wide", idvar = "ID", timevar = "group")
+  out <- format(model_parameters(t.test(sleep2$extra.1, sleep2$extra.2, paired = TRUE)))
+  expect_identical(out$Parameter, "extra.1")
+  expect_identical(out$Group, "extra.2")
+})
