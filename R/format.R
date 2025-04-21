@@ -100,10 +100,10 @@ format.parameters_model <- function(x,
   # for htests, remove "$" from variable name, since this can make troubles
   # when rendering into different output formats
   if (!is.null(htest_type)) {
-    if (grepl("$", x$Parameter, fixed = TRUE)) {
+    if ("Parameter" %in% colnames(x) && grepl("$", x$Parameter, fixed = TRUE)) {
       x$Parameter <- gsub("(.*)\\$(.*)", "\\2", x$Parameter)
     }
-    if (grepl("$", x$Group, fixed = TRUE)) {
+    if ("Group" %in% colnames(x) && grepl("$", x$Group, fixed = TRUE)) {
       x$Group <- gsub("(.*)\\$(.*)", "\\2", x$Group)
     }
   }
