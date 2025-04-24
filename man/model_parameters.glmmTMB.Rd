@@ -17,7 +17,7 @@
   group_level = FALSE,
   exponentiate = FALSE,
   p_adjust = NULL,
-  wb_component = TRUE,
+  wb_component = FALSE,
   include_info = getOption("parameters_mixed_info", FALSE),
   include_sigma = FALSE,
   keep = NULL,

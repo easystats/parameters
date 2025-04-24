@@ -9,6 +9,8 @@
 * `model_parameters()` now shows a more informative coefficient name for binomial
   models with probit-link.
 
+* Argument `wb_component` now defaults to `FALSE`.
+
 ## Bug fixes
 
 * Fixed printing issue with `model_parameters()` for `htest` objects when
