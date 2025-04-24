@@ -38,6 +38,16 @@ test_that("model_parameters.yuen", {
   after <- c(210, 210, 340, 190, 260, 180, 200, 220, 230, 200)
   set.seed(123)
   df_w <- model_parameters(WRS2::yuend(before, after))
+
+  set.seed(123)
+  df_bt <- model_parameters(WRS2::yuenbt(Anxiety ~ Group, data = spider))
+  expect_named(
+    df_bt,
+    c(
+      "t", "df_error", "p", "Method", "Difference", "CI", "Difference_CI_low",
+      "Difference_CI_high"
+    )
+  )
 })
 
 # model_parameters.mcp and robtab ---------------------------------------
