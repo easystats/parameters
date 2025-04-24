@@ -11,6 +11,8 @@
 
 * Argument `wb_component` now defaults to `FALSE`.
 
+* Improved support and printing for tests from package *WRS2*.
+
 ## Bug fixes
 
 * Fixed printing issue with `model_parameters()` for `htest` objects when

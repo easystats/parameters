@@ -109,13 +109,6 @@ format.parameters_model <- function(x,
     }
   }
 
-  # Special print for mcp from WRS2
-  if (!is.null(m_class) && any(m_class %in% c("mcp1", "mcp2"))) {
-    x$Group1 <- paste(x$Group1, x$Group2, sep = " vs. ")
-    x$Group2 <- NULL
-    colnames(x)[1] <- "Group"
-  }
-
   # check if we have mixed models with random variance parameters
   # in such cases, we don't need the group-column, but we rather
   # merge it with the parameter column
