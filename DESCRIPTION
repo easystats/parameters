@@ -80,7 +80,7 @@ Depends:
 Imports:
     bayestestR (>= 0.15.2),
     datawizard (>= 1.0.2),
-    insight (>= 1.1.0),
+    insight (>= 1.2.0),
     graphics,
     methods,
     stats,
@@ -224,5 +224,6 @@ Roxygen: list(markdown = TRUE)
 Config/testthat/edition: 3
 Config/testthat/parallel: true
 Config/Needs/website: easystats/easystatstemplate
+Config/Needs/check: stan-dev/cmdstanr
 Config/rcmdcheck/ignore-inconsequential-notes: true
 Remotes: easystats/insight, easystats/bayestestR
