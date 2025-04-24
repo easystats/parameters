@@ -107,7 +107,17 @@ model_parameters.brmsfit <- function(model,
     )
   } else if (effects %in% c("total", "random_total")) {
     # group level total effects (coef())
-    params <- .group_level_total(model, centrality, dispersion, ci, ci_method, test, rope_range, rope_ci, ...)
+    params <- .group_level_total(
+      model,
+      centrality,
+      dispersion,
+      ci,
+      ci_method,
+      test,
+      rope_range,
+      rope_ci,
+      ...
+    )
     params$Effects <- "total"
     class(params) <- c("parameters_coef", "see_parameters_coef", class(params))
     return(params)
@@ -134,9 +144,17 @@ model_parameters.brmsfit <- function(model,
       ...
     )
 
+    # if random effects are included, check if group-level estimates
+    # should be returned or not. If not, remove them.
     if (effects != "fixed") {
-      random_effect_levels <- which(params$Effects == "random" & grepl("^(?!sd_|cor_)(.*)", params$Parameter, perl = TRUE) & !(params$Parameter %in% c("car", "sdcar")))
-      if (length(random_effect_levels) && isFALSE(group_level)) params <- params[-random_effect_levels, ]
+      random_effect_levels <- which(
+        params$Effects == "random" &
+          grepl("^(?!sd_|cor_)(.*)", params$Parameter, perl = TRUE) &
+          !(params$Parameter %in% c("car", "sdcar"))
+      )
+      if (length(random_effect_levels) && isFALSE(group_level)) {
+        params <- params[-random_effect_levels, ]
+      }
     }
 
     # add prettified names as attribute. Furthermore, group column is added
@@ -145,7 +163,8 @@ model_parameters.brmsfit <- function(model,
     # exponentiate coefficients and SE/CI, if requested
     params <- .exponentiate_parameters(params, model, exponentiate)
 
-    params <- .add_model_parameters_attributes(params,
+    params <- .add_model_parameters_attributes(
+      params,
       model,
       ci,
       exponentiate,
