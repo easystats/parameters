@@ -41,13 +41,6 @@ plot.n_factors <- function(x, ...) {
 
 
 #' @export
-plot.parameters_distribution <- function(x, ...) {
-  insight::check_if_installed("see")
-  NextMethod()
-}
-
-
-#' @export
 plot.n_clusters <- function(x, ...) {
   insight::check_if_installed("see")
   NextMethod()

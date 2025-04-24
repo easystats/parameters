@@ -196,39 +196,6 @@
 ---
 
     Code
-      mp8
-    Output
-      # Fixed Effects (Count Model)
-      
-      Parameter   |  Mean |         95% CI |     pd |  Rhat |    ESS
-      --------------------------------------------------------------
-      (Intercept) |  0.96 | [-0.81,  2.51] | 90.00% | 1.011 | 110.00
-      child       | -1.16 | [-1.36, -0.94] |   100% | 0.996 | 278.00
-      camper      |  0.72 | [ 0.54,  0.91] |   100% | 0.996 | 271.00
-      
-      # Fixed Effects (Zero-Inflation Component)
-      
-      Parameter   |  Mean |         95% CI |     pd |  Rhat |    ESS
-      --------------------------------------------------------------
-      (Intercept) | -0.51 | [-2.03,  0.89] | 78.00% | 0.997 | 138.00
-      child       |  1.86 | [ 1.19,  2.54] |   100% | 0.996 | 303.00
-      camper      | -0.86 | [-1.61, -0.07] | 98.40% | 0.996 | 292.00
-      
-      # Random Effects Variances
-      
-      Parameter               | Mean |       95% CI |   pd |  Rhat |    ESS
-      ---------------------------------------------------------------------
-      SD (Intercept: persons) | 1.58 | [0.71, 3.58] | 100% | 1.010 | 126.00
-      
-      # Random Effects (Zero-Inflation Component)
-      
-      Parameter               | Mean |       95% CI |   pd |  Rhat |    ESS
-      ---------------------------------------------------------------------
-      SD (Intercept: persons) | 1.49 | [0.63, 3.41] | 100% | 0.996 | 129.00
-
----
-
-    Code
       mp9
     Output
       Parameter    |   Mean |           95% CI |   pd |  Rhat |     ESS
