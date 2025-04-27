@@ -122,6 +122,16 @@ model_parameters.brmsfit <- function(model,
     class(params) <- c("parameters_coef", "see_parameters_coef", class(params))
     return(params)
   } else {
+
+    ## TODO: remove this once insight > 1.2.0 is on CRAN
+    if (utils::packageVersion("insight") > "1.2.0" && effects == "random") {
+      if (group_level) {
+        effects <- "grouplevel"
+      } else {
+        effects <- "random_variance"
+      }
+    }
+
     # Processing
     params <- .extract_parameters_bayesian(
       model,
@@ -143,6 +153,8 @@ model_parameters.brmsfit <- function(model,
       verbose = verbose,
       ...
     )
+
+    ## TODO: remove this once insight > 1.2.0 on CRAN
 
     # if random effects are included, check if group-level estimates
     # should be returned or not. If not, remove them.
