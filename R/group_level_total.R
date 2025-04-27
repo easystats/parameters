@@ -108,13 +108,16 @@
   random_slopes <- insight::find_random_slopes(x)
   params <- NULL
 
+  # extract coefficients - only once, not in the loop
+  model_coefficients <- stats::coef(x, summary = FALSE)
+
   # create full data frame of all random effects retrieved from coef()
   params <- do.call(
     rbind,
     lapply(group_factors, function(i) {
       # we want the posterior distribution from coef(), so we can
       # use bayestestR
-      ranef <- stats::coef(x, summary = FALSE)[[i]]
+      ranef <- model_coefficients[[i]]
       parameter_names <- dimnames(ranef)[[3]]
       out <- lapply(
         parameter_names,
