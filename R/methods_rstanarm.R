@@ -26,6 +26,10 @@ model_parameters.stanreg <- function(model,
     return(params)
   }
 
+  if (utils::packageVersion("insight") > "1.2.0" && effects == "random" && group_level) {
+    effects <- "grouplevel"
+  }
+
   # Processing
   params <- .extract_parameters_bayesian(
     model,
@@ -47,6 +51,7 @@ model_parameters.stanreg <- function(model,
     ...
   )
 
+  ## TODO: remove this once insight > 1.2.0 on CRAN
   if (effects != "fixed") {
     random_effect_levels <- which(
       params$Effects == "random" & !startsWith(params$Parameter, "Sigma[")
@@ -99,6 +104,10 @@ model_parameters.stanmvreg <- function(model,
                                        drop = NULL,
                                        verbose = TRUE,
                                        ...) {
+  if (utils::packageVersion("insight") > "1.2.0" && effects == "random" && group_level) {
+    effects <- "grouplevel"
+  }
+
   # Processing
   params <- .extract_parameters_bayesian(
     model,

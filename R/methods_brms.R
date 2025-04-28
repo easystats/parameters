@@ -123,13 +123,8 @@ model_parameters.brmsfit <- function(model,
     return(params)
   } else {
 
-    ## TODO: remove this once insight > 1.2.0 is on CRAN
-    if (utils::packageVersion("insight") > "1.2.0" && effects == "random") {
-      if (group_level) {
-        effects <- "grouplevel"
-      } else {
-        effects <- "random_variance"
-      }
+    if (utils::packageVersion("insight") > "1.2.0" && effects == "random" && group_level) {
+      effects <- "grouplevel"
     }
 
     # Processing
@@ -312,6 +307,9 @@ standard_error.brmsfit <- function(model,
                                    effects = "fixed",
                                    component = "all",
                                    ...) {
+
+  ## TODO: remove validation of effects and component once insight > 1.2.0 is on CRAN
+
   effects <- insight::validate_argument(
     effects,
     c("fixed", "random")
