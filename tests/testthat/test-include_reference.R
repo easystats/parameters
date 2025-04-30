@@ -103,3 +103,24 @@ test_that("include_reference, different contrasts", {
   out <- model_parameters(m, include_reference = TRUE)
   expect_snapshot(print(out))
 })
+
+
+test_that("include_reference, random effects models", {
+  skip_if_not_installed("glmmTMB")
+  skip_if(getRversion() < "4.5")
+  data(penguins, package = "datasets")
+  fit_penguins <- glmmTMB::glmmTMB(
+    sex ~ flipper_len + island + (1 | year),
+    family = binomial(),
+    data = penguins
+  )
+
+  out <- model_parameters(fit_penguins, exponentiate = TRUE, include_reference = TRUE)
+  expect_snapshot(print(out))
+
+  out <- model_parameters(fit_penguins, exponentiate = TRUE)
+  expect_snapshot(print(out, include_reference = TRUE))
+
+  out <- model_parameters(fit_penguins, effects = "fixed", exponentiate = TRUE, include_reference = TRUE)
+  expect_snapshot(print(out))
+})

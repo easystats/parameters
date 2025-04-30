@@ -202,15 +202,15 @@
     }
   }
 
+  # add parameters with value and variable
+  attr(params, "pretty_labels") <- .format_value_labels(params, model)
+
   # include reference level?
   if (isTRUE(dot.arguments[["include_reference"]])) {
     a <- attributes(params)
     params <- .safe(.add_reference_level(params, model), params)
     attributes(params) <- utils::modifyList(a, attributes(params))
   }
-
-  # add parameters with value and variable
-  attr(params, "pretty_labels") <- .format_value_labels(params, model)
 
   row.names(params) <- NULL
   params
