@@ -112,6 +112,7 @@ Suggests:
     coda,
     coxme,
     cplm,
+    curl,
     dbscan,
     did,
     distributional,
