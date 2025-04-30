@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.24.2.21</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.25.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -53,6 +53,21 @@
       <small>Source: <a href="https://github.com/easystats/parameters/blob/main/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.25.0" id="parameters-0250">parameters 0.25.0<a class="anchor" aria-label="anchor" href="#parameters-0250"></a></h2>
+<div class="section level3">
+<h3 id="changes-0-25-0">Changes<a class="anchor" aria-label="anchor" href="#changes-0-25-0"></a></h3>
+<ul><li><p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> for objects from the <em>marginaleffects</em> packages now calls <code><a href="https://easystats.github.io/bayestestR/reference/describe_posterior.html" class="external-link">bayestestR::describe_posterior()</a></code> to process Bayesian models. This offers more flexibility in summarizing the posterior draws from <em>marginaleffects</em>.</p></li>
+<li><p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> now shows a more informative coefficient name for binomial models with probit-link.</p></li>
+<li><p>Argument <code>wb_component</code> now defaults to <code>FALSE</code>.</p></li>
+<li><p>Improved support and printing for tests from package <em>WRS2</em>.</p></li>
+</ul></div>
+<div class="section level3">
+<h3 id="bug-fixes-0-25-0">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-25-0"></a></h3>
+<ul><li><p>Fixed printing issue with <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for <code>htest</code> objects when printing into markdown or HTML format.</p></li>
+<li><p>Fixed printing issue with <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for mixed models when <code>include_reference = TRUE</code>.</p></li>
+</ul></div>
+</div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.24.2" id="parameters-0242">parameters 0.24.2<a class="anchor" aria-label="anchor" href="#parameters-0242"></a></h2><p class="text-muted">CRAN release: 2025-03-04</p>
 <div class="section level3">
