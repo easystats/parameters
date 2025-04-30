@@ -61,15 +61,19 @@ test_that("model_parameters.anova", {
   skip_if_not_installed("httr2")
 
   model <- insight::download_model("anova_3")
+  skip_if(is.null(model))
   expect_identical(sum(model_parameters(model, verbose = FALSE)$df), 149L)
 
   model <- insight::download_model("anova_4")
+  skip_if(is.null(model))
   expect_identical(sum(model_parameters(model, verbose = FALSE)$df, na.rm = TRUE), 2)
 
   model <- insight::download_model("anova_lmerMod_5")
+  skip_if(is.null(model))
   expect_identical(sum(model_parameters(model, verbose = FALSE)$df), 1L)
 
   model <- insight::download_model("anova_lmerMod_6")
+  skip_if(is.null(model))
   expect_identical(sum(model_parameters(model, verbose = FALSE)$df), 12)
 })
 
