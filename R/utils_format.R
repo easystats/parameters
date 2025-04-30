@@ -480,11 +480,24 @@
       out <- .insert_row_at(out, row_data, min(found))
     }
   }
-  # update pretty_names attribute
-  attr(out, "pretty_names") <- pretty_names
-  # update pretty_labels attribute
-  pretty_names[match(names(attr(out, "pretty_labels")), names(pretty_names))] <- attr(out, "pretty_labels")
-  attr(out, "pretty_labels") <- pretty_names
+
+  if (length(pretty_names)) {
+    # update pretty_names attribute
+    attr(out, "pretty_names") <- pretty_names
+    # update pretty_labels attribute - for mixed models, we need to add the random
+    # effects stuff from pretty_labels to pretty_names first, else, matching will
+    # fail
+    pretty_labels <- attributes(out)$pretty_labels
+    if (!is.null(pretty_labels)) {
+      re_labels <- startsWith(names(pretty_labels), "SD (") | startsWith(names(pretty_labels), "Cor (")
+      if (any(re_labels)) {
+        pretty_names <- c(pretty_names, pretty_labels[re_labels])
+      }
+      pretty_names[stats::na.omit(match(names(pretty_labels), names(pretty_names)))] <- pretty_labels
+      pretty_names <- pretty_names[!re_labels]
+    }
+    attr(out, "pretty_labels") <- pretty_names
+  }
 
   out
 }
@@ -703,9 +716,9 @@
   }
 
   # clean some special parameter names
-  component_name <- gsub("zi", "Zero-Inflation", component_name)
-  component_name <- gsub("zoi", "Zero-One-Inflation", component_name)
-  component_name <- gsub("coi", "Conditional-One-Inflation", component_name)
+  component_name <- gsub("zi", "Zero-Inflation", component_name, fixed = TRUE)
+  component_name <- gsub("zoi", "Zero-One-Inflation", component_name, fixed = TRUE)
+  component_name <- gsub("coi", "Conditional-One-Inflation", component_name, fixed = TRUE)
 
   # if we show ZI component only, make sure this appears in header
   if (!grepl("(Zero-Inflation Component)", component_name, fixed = TRUE) &&

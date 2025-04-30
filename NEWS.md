@@ -18,6 +18,9 @@
 * Fixed printing issue with `model_parameters()` for `htest` objects when
   printing into markdown or HTML format.
 
+* Fixed printing issue with `model_parameters()` for mixed models when
+  `include_reference = TRUE`.
+
 # parameters 0.24.2
 
 ## Changes
