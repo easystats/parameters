@@ -204,7 +204,6 @@
 
   # include reference level?
   if (isTRUE(dot.arguments[["include_reference"]])) {
-    browser()
     a <- attributes(params)
     params <- .safe(.add_reference_level(params, model), params)
     attributes(params) <- utils::modifyList(a, attributes(params))
