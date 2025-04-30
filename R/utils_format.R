@@ -716,9 +716,9 @@
   }
 
   # clean some special parameter names
-  component_name <- gsub("zi", "Zero-Inflation", component_name)
-  component_name <- gsub("zoi", "Zero-One-Inflation", component_name)
-  component_name <- gsub("coi", "Conditional-One-Inflation", component_name)
+  component_name <- gsub("zi", "Zero-Inflation", component_name, fixed = TRUE)
+  component_name <- gsub("zoi", "Zero-One-Inflation", component_name, fixed = TRUE)
+  component_name <- gsub("coi", "Conditional-One-Inflation", component_name, fixed = TRUE)
 
   # if we show ZI component only, make sure this appears in header
   if (!grepl("(Zero-Inflation Component)", component_name, fixed = TRUE) &&
