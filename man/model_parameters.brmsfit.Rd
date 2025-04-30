@@ -110,7 +110,7 @@ list with one or more of these options: \code{"p_direction"} (or \code{"pd"}),
 \code{"rope"}, \code{"p_map"}, \code{"p_significance"} (or \code{"ps"}), \code{"p_rope"},
 \code{"equivalence_test"} (or \code{"equitest"}), \code{"bayesfactor"} (or \code{"bf"}) or
 \code{"all"} to compute all tests. For each "test", the corresponding
-\pkg{bayestestR} function is called (e.g. \code{\link[bayestestR:rope]{rope()}} or \code{\link[bayestestR:p_direction]{p_direction()}})
+\strong{bayestestR} function is called (e.g. \code{\link[bayestestR:rope]{rope()}} or \code{\link[bayestestR:p_direction]{p_direction()}})
 and its results included in the summary output.}
 
 \item{rope_range}{ROPE's lower and higher bounds. Should be a vector of two
@@ -130,8 +130,9 @@ with one or more of these options: \code{"ESS"}, \code{"Rhat"}, \code{"MCSE"} or
 
 \item{priors}{Add the prior used for each parameter.}
 
-\item{effects}{Should results for fixed effects, random effects or both be
-returned? Only applies to mixed models. May be abbreviated.}
+\item{effects}{Should results for fixed effects (\code{"fixed"}, the default),
+random effects (\code{"random"}) or both ("\verb{all"}) be returned? Only applies to
+mixed models. May be abbreviated.}
 
 \item{component}{Which type of parameters to return, such as parameters for the
 conditional model, the zero-inflation part of the model, the dispersion
