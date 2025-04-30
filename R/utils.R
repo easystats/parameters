@@ -116,6 +116,14 @@
   # match column order
   row <- row[match(colnames(data), colnames(row))]
 
+  # modify effects and component column - required for printing
+  if ("Effects" %in% colnames(row)) {
+    row$Effects <- data$Effects[1]
+  }
+  if ("Component" %in% colnames(row)) {
+    row$Component <- data$Component[1]
+  }
+
   # insert row
   if (index == 1) {
     rbind(row, data)
