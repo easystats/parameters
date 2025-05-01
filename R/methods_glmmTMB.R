@@ -293,7 +293,8 @@ model_parameters.glmmTMB <- function(model,
     effects,
     component,
     dispersion_param,
-    group_level
+    group_level,
+    verbose
   )
 
   # remove empty column
@@ -391,7 +392,8 @@ model_parameters.glmmTMB <- function(model,
                                         effects,
                                         component,
                                         dispersion_param,
-                                        group_level) {
+                                        group_level,
+                                        verbose = TRUE) {
   params_random <- params_variance <- NULL
   random_effects <- insight::find_random(model, flatten = TRUE)
 
