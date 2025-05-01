@@ -229,7 +229,7 @@ model_parameters.glmmTMB <- function(model,
   }
 
   # initialize
-  params <- NULL
+  params <- att <- NULL
 
   if (effects %in% c("fixed", "all")) {
     # Processing
@@ -279,9 +279,9 @@ model_parameters.glmmTMB <- function(model,
     params <- .exponentiate_parameters(params, model, exponentiate)
 
     params$Effects <- "fixed"
+    att <- attributes(params)
   }
 
-  att <- attributes(params)
 
   # add random effects, either group level or re variances
   params <- .add_random_effects_glmmTMB(
@@ -305,7 +305,6 @@ model_parameters.glmmTMB <- function(model,
   if (!is.null(keep) || !is.null(drop)) {
     params <- .filter_parameters(params, keep, drop, verbose = verbose)
   }
-
 
   # due to rbind(), we lose attributes from "extract_parameters()",
   # so we add those attributes back here...
