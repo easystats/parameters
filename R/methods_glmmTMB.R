@@ -233,6 +233,7 @@ model_parameters.glmmTMB <- function(model,
 
   # initialize
   params <- att <- NULL
+  dispersion_param <- FALSE
 
   # fixed effects =================================================
   # ===============================================================
