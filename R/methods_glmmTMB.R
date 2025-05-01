@@ -228,8 +228,8 @@ model_parameters.glmmTMB <- function(model,
     component <- "conditional"
   }
 
+  # initialize
   params <- params_random <- params_variance <- NULL
-  dispersion_param <- FALSE
 
   if (effects %in% c("fixed", "all")) {
     # Processing
@@ -271,41 +271,9 @@ model_parameters.glmmTMB <- function(model,
     }
 
     # add dispersion parameter
-    if (
-      # must be glmmTMB
-      inherits(model, "glmmTMB") &&
-        # don't print dispersion if already present
-        (is.null(component) || !"dispersion" %in% params$Component) &&
-        # don't print dispersion for zi-component
-        component %in% c("conditional", "all", "dispersion") &&
-        # if effects = "fixed" and component = "conditional", don't include dispersion
-        !(component == "conditional" && effects == "fixed")
-    ) {
-      dispersion_param <- insight::get_parameters(model, component = "dispersion")
-      if (!is.null(dispersion_param)) {
-        # add component column
-        if (is.null(params$Component)) {
-          params$Component <- "conditional"
-        }
-        params[nrow(params) + 1, ] <- NA
-        params[nrow(params), "Parameter"] <- dispersion_param$Parameter[1]
-        params[nrow(params), "Coefficient"] <- stats::sigma(model)
-        params[nrow(params), "Component"] <- dispersion_param$Component[1]
-        params[nrow(params), c("CI_low", "CI_high")] <- tryCatch(
-          suppressWarnings(stats::confint(model, parm = "sigma", method = "wald", level = ci)[1:2]),
-          error = function(e) {
-            if (verbose) {
-              insight::format_alert(
-                "Cannot compute standard errors and confidence intervals for sigma parameter.",
-                "Your model may suffer from singularity (see '?lme4::isSingular' and '?performance::check_singularity')." # nolint
-              )
-            }
-            c(NA, NA)
-          }
-        )
-        dispersion_param <- TRUE
-      }
-    }
+    out <- .add_dispersion_param_glmmTMB(model, params, effects, component)
+    params <- out$params
+    dispersion_param <- out$dispersion_param
 
     # exponentiate coefficients and SE/CI, if requested
     params <- .exponentiate_parameters(params, model, exponentiate)
@@ -314,45 +282,24 @@ model_parameters.glmmTMB <- function(model,
   }
 
   att <- attributes(params)
-  random_effects <- insight::find_random(model, flatten = TRUE)
 
-  # check if any random effects at all
-  if (!is.null(random_effects) && effects %in% c("random", "all")) {
-    # add random parameters or variances
-    if (isTRUE(group_level)) {
-      params_random <- .extract_random_parameters(model, ci = ci, effects = effects, component = component)
-      if (length(random_effects) > 1) {
-        insight::format_alert(
-          "Cannot extract confidence intervals for random variance parameters from models with more than one grouping factor." # nolint
-        )
-      }
-    } else {
-      params_variance <- .extract_random_variances(
-        model,
-        ci = ci,
-        effects = effects,
-        component = component,
-        ci_method = ci_method,
-        ci_random = ci_random,
-        verbose = verbose
-      )
-      # remove redundant dispersion parameter
-      if (isTRUE(dispersion_param) && !is.null(params) && !is.null(params$Component)) {
-        disp <- which(params$Component == "dispersion")
-        res <- which(params_variance$Group == "Residual")
-        # check if we have dispersion parameter, and either no sigma
-        # or sigma equals dispersion
-        if (length(disp) > 0 &&
-          length(res) > 0 &&
-          isTRUE(all.equal(params_variance$Coefficient[res],
-            params$Coefficient[disp],
-            tolerance = 1e-5
-          ))) {
-          params <- params[-disp, ]
-        }
-      }
-    }
-  }
+  # add random effects, either group level or re variances
+  out <- .add_random_effects_glmmTMB(
+    model,
+    params,
+    params_random,
+    params_variance,
+    ci,
+    ci_method,
+    ci_random,
+    effects,
+    component,
+    dispersion_param,
+    group_level
+  )
+  params <- out$params
+  params_random <- out$params_random
+  params_variance <- out$params_variance
 
   # merge random and fixed effects, if necessary
   if (!is.null(params) && (!is.null(params_random) || !is.null(params_variance))) {
@@ -411,6 +358,111 @@ model_parameters.glmmTMB <- function(model,
   class(params) <- c("parameters_model", "see_parameters_model", class(params))
 
   params
+}
+
+
+# helper -----------------------------------------
+
+
+.add_dispersion_param_glmmTMB <- function(model, params, effects, component) {
+  dispersion_param <- FALSE
+  if (
+    # must be glmmTMB
+    inherits(model, "glmmTMB") &&
+      # don't print dispersion if already present
+      (is.null(component) || !"dispersion" %in% params$Component) &&
+      # don't print dispersion for zi-component
+      component %in% c("conditional", "all", "dispersion") &&
+      # if effects = "fixed" and component = "conditional", don't include dispersion
+      !(component == "conditional" && effects == "fixed")
+  ) {
+    dispersion_param <- insight::get_parameters(model, component = "dispersion")
+    if (!is.null(dispersion_param)) {
+      # add component column
+      if (is.null(params$Component)) {
+        params$Component <- "conditional"
+      }
+      params[nrow(params) + 1, ] <- NA
+      params[nrow(params), "Parameter"] <- dispersion_param$Parameter[1]
+      params[nrow(params), "Coefficient"] <- stats::sigma(model)
+      params[nrow(params), "Component"] <- dispersion_param$Component[1]
+      params[nrow(params), c("CI_low", "CI_high")] <- tryCatch(
+        suppressWarnings(stats::confint(model, parm = "sigma", method = "wald", level = ci)[1:2]),
+        error = function(e) {
+          if (verbose) {
+            insight::format_alert(
+              "Cannot compute standard errors and confidence intervals for sigma parameter.",
+              "Your model may suffer from singularity (see '?lme4::isSingular' and '?performance::check_singularity')." # nolint
+            )
+          }
+          c(NA, NA)
+        }
+      )
+      dispersion_param <- TRUE
+    }
+  }
+  list(params = params, dispersion_param = dispersion_param)
+}
+
+
+.add_random_effects_glmmTMB <- function(model,
+                                        params,
+                                        params_random,
+                                        params_variance,
+                                        ci,
+                                        ci_method,
+                                        ci_random,
+                                        effects,
+                                        component,
+                                        dispersion_param,
+                                        group_level) {
+  random_effects <- insight::find_random(model, flatten = TRUE)
+
+  if (!is.null(random_effects) && effects %in% c("random", "all")) {
+    # add random parameters or variances
+    if (isTRUE(group_level)) {
+      params_random <- .extract_random_parameters(
+        model,
+        ci = ci,
+        effects = effects,
+        component = component
+      )
+      if (length(random_effects) > 1) {
+        insight::format_alert(
+          "Cannot extract confidence intervals for random variance parameters from models with more than one grouping factor." # nolint
+        )
+      }
+    } else {
+      params_variance <- .extract_random_variances(
+        model,
+        ci = ci,
+        effects = effects,
+        component = component,
+        ci_method = ci_method,
+        ci_random = ci_random,
+        verbose = verbose
+      )
+      # remove redundant dispersion parameter
+      if (isTRUE(dispersion_param) && !is.null(params) && !is.null(params$Component)) {
+        disp <- which(params$Component == "dispersion")
+        res <- which(params_variance$Group == "Residual")
+        # check if we have dispersion parameter, and either no sigma
+        # or sigma equals dispersion
+        if (
+          length(disp) > 0 &&
+            length(res) > 0 &&
+            isTRUE(all.equal(
+              params_variance$Coefficient[res],
+              params$Coefficient[disp],
+              tolerance = 1e-5
+            ))
+        ) {
+          params <- params[-disp, ]
+        }
+      }
+    }
+  }
+  list(params = params, params_random = params_random, params_variance = params_variance)
 }
 
 
