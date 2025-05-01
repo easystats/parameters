@@ -229,7 +229,7 @@ model_parameters.glmmTMB <- function(model,
   }
 
   # initialize
-  params <- params_random <- params_variance <- NULL
+  params <- NULL
 
   if (effects %in% c("fixed", "all")) {
     # Processing
@@ -287,8 +287,6 @@ model_parameters.glmmTMB <- function(model,
   params <- .add_random_effects_glmmTMB(
     model,
     params,
-    params_random,
-    params_variance,
     ci,
     ci_method,
     ci_random,
@@ -388,8 +386,6 @@ model_parameters.glmmTMB <- function(model,
 # dispersion parameter, if present in random effects
 .add_random_effects_glmmTMB <- function(model,
                                         params,
-                                        params_random,
-                                        params_variance,
                                         ci,
                                         ci_method,
                                         ci_random,
@@ -397,6 +393,7 @@ model_parameters.glmmTMB <- function(model,
                                         component,
                                         dispersion_param,
                                         group_level) {
+  params_random <- params_variance <- NULL
   random_effects <- insight::find_random(model, flatten = TRUE)
 
   if (!is.null(random_effects) && effects %in% c("random", "all")) {
