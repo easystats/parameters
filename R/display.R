@@ -105,7 +105,9 @@ display.parameters_model <- function(object,
                                      include_reference = FALSE,
                                      verbose = TRUE,
                                      ...) {
-  if (identical(format, "html")) {
+  format <- insight::validate_argument(format, c("markdown", "html", "md", "tt"))
+
+  if (format %in% c("html", "tt")) {
     print_html(
       x = object, pretty_names = pretty_names, split_components = split_components,
       select = select, digits = digits, caption = caption, subtitle = subtitle,
@@ -151,7 +153,9 @@ display.compare_parameters <- function(object,
                                        line_padding = 4,
                                        zap_small = FALSE,
                                        ...) {
-  if (identical(format, "html")) {
+  format <- insight::validate_argument(format, c("markdown", "html", "md", "tt"))
+
+  if (format %in% c("html", "tt")) {
     print_html(
       x = object, digits = digits, ci_digits = ci_digits, p_digits = p_digits,
       select = select, column_labels = column_labels, font_size = font_size,
