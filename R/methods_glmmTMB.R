@@ -284,7 +284,7 @@ model_parameters.glmmTMB <- function(model,
   att <- attributes(params)
 
   # add random effects, either group level or re variances
-  out <- .add_random_effects_glmmTMB(
+  params <- .add_random_effects_glmmTMB(
     model,
     params,
     params_random,
@@ -297,32 +297,7 @@ model_parameters.glmmTMB <- function(model,
     dispersion_param,
     group_level
   )
-  params <- out$params
-  params_random <- out$params_random
-  params_variance <- out$params_variance
 
-  # merge random and fixed effects, if necessary
-  if (!is.null(params) && (!is.null(params_random) || !is.null(params_variance))) {
-    params$Level <- NA
-    params$Group <- ""
-    # add component column
-    if (!"Component" %in% colnames(params)) {
-      if (component %in% c("zi", "zero_inflated")) {
-        params$Component <- "zero_inflated"
-      } else {
-        params$Component <- "conditional"
-      }
-    }
-
-    # reorder
-    if (is.null(params_random)) {
-      params <- params[match(colnames(params_variance), colnames(params))]
-    } else {
-      params <- params[match(colnames(params_random), colnames(params))]
-    }
-  }
-
-  params <- rbind(params, params_random, params_variance)
   # remove empty column
   if (!is.null(params$Level) && all(is.na(params$Level))) {
     params$Level <- NULL
@@ -364,6 +339,8 @@ model_parameters.glmmTMB <- function(model,
 # helper -----------------------------------------
 
 
+# this functions adds the dispersion parameter, if it is not already
+# present in the output
 .add_dispersion_param_glmmTMB <- function(model, params, effects, component) {
   dispersion_param <- FALSE
   if (
@@ -405,6 +382,10 @@ model_parameters.glmmTMB <- function(model,
 }
 
 
+# this functions adds random effects parameters to the output. Depending on
+# whether group level estimates or random effects variances are requested,
+# the related parameters are returned. It also correctly deals with the
+# dispersion parameter, if present in random effects
 .add_random_effects_glmmTMB <- function(model,
                                         params,
                                         params_random,
@@ -462,7 +443,29 @@ model_parameters.glmmTMB <- function(model,
       }
     }
   }
-  list(params = params, params_random = params_random, params_variance = params_variance)
+
+  # merge random and fixed effects, if necessary
+  if (!is.null(params) && (!is.null(params_random) || !is.null(params_variance))) {
+    params$Level <- NA
+    params$Group <- ""
+    # add component column
+    if (!"Component" %in% colnames(params)) {
+      if (component %in% c("zi", "zero_inflated")) {
+        params$Component <- "zero_inflated"
+      } else {
+        params$Component <- "conditional"
+      }
+    }
+
+    # reorder
+    if (is.null(params_random)) {
+      params <- params[match(colnames(params_variance), colnames(params))]
+    } else {
+      params <- params[match(colnames(params_random), colnames(params))]
+    }
+  }
+
+  rbind(params, params_random, params_variance)
 }
 
 
