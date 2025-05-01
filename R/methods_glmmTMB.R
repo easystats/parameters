@@ -201,7 +201,10 @@ model_parameters.glmmTMB <- function(model,
     c("all", "conditional", "zi", "zero_inflated", "dispersion")
   )
 
-  # for coef(), we don't need all the attributes and just stop here
+  # group level estimates =================================================
+  # =======================================================================
+
+  # for coef(), we don't need all the attributes and just return early here
   if (effects %in% c("total", "random_total")) {
     params <- .group_level_total(model)
     params$Effects <- "total"
@@ -231,22 +234,23 @@ model_parameters.glmmTMB <- function(model,
   # initialize
   params <- att <- NULL
 
+  # fixed effects =================================================
+  # ===============================================================
+
   if (effects %in% c("fixed", "all")) {
-    # Processing
     if (bootstrap) {
-      params <- bootstrap_parameters(
-        model,
-        iterations = iterations,
-        ci = ci,
-        ...
-      )
+      # bootstrapped parameters
+      params <- bootstrap_parameters(model, iterations = iterations, ci = ci, ...)
       if (effects != "fixed") {
         effects <- "fixed"
         if (verbose) {
-          insight::format_warning("Bootstrapping only returns fixed effects of the mixed model.")
+          insight::format_warning(
+            "Bootstrapping only returns fixed effects of the mixed model."
+          )
         }
       }
     } else {
+      # regular parameters
       fun_args <- list(
         model,
         ci = ci,
@@ -284,6 +288,8 @@ model_parameters.glmmTMB <- function(model,
 
 
   # add random effects, either group level or re variances
+  # ======================================================
+
   params <- .add_random_effects_glmmTMB(
     model,
     params,
@@ -296,6 +302,9 @@ model_parameters.glmmTMB <- function(model,
     group_level,
     verbose
   )
+
+  # clean-up
+  # ======================================================
 
   # remove empty column
   if (!is.null(params$Level) && all(is.na(params$Level))) {
@@ -362,7 +371,12 @@ model_parameters.glmmTMB <- function(model,
       params[nrow(params), "Coefficient"] <- stats::sigma(model)
       params[nrow(params), "Component"] <- dispersion_param$Component[1]
       params[nrow(params), c("CI_low", "CI_high")] <- tryCatch(
-        suppressWarnings(stats::confint(model, parm = "sigma", method = "wald", level = ci)[1:2]),
+        suppressWarnings(stats::confint(
+          model,
+          parm = "sigma",
+          method = "wald",
+          level = ci
+        )[1:2]),
         error = function(e) {
           if (verbose) {
             insight::format_alert(
@@ -548,43 +562,58 @@ standard_error.glmmTMB <- function(model,
   )
 
   if (effects == "random") {
-    if (!all(insight::check_if_installed(c("TMB", "glmmTMB"), quietly = TRUE))) {
-      return(NULL)
-    }
-
-    s1 <- TMB::sdreport(model$obj, getJointPrecision = TRUE)
-    s2 <- sqrt(s1$diag.cov.random)
-    rand.ef <- glmmTMB::ranef(model)[[1]]
-
-    rand.se <- lapply(rand.ef, function(.x) {
-      cnt <- nrow(.x) * ncol(.x)
-      s3 <- s2[1:cnt]
-      s2 <- s2[-(1:cnt)]
-      d <- as.data.frame(matrix(sqrt(s3), ncol = ncol(.x), byrow = TRUE))
-      colnames(d) <- colnames(.x)
-      d
-    })
+    .se_random_effects_glmmTMB(model)
   } else {
-    if (is.null(.check_component(model, component, verbose = verbose))) {
-      return(NULL)
-    }
-
-    cs <- insight::compact_list(stats::coef(summary(model)))
-    x <- lapply(names(cs), function(i) {
-      .data_frame(
-        Parameter = insight::find_parameters(model, effects = "fixed", component = i, flatten = TRUE),
-        SE = as.vector(cs[[i]][, 2]),
-        Component = i
-      )
-    })
-
-    se <- do.call(rbind, x)
-    se$Component <- .rename_values(se$Component, "cond", "conditional")
-    se$Component <- .rename_values(se$Component, "zi", "zero_inflated")
-    se$Component <- .rename_values(se$Component, "disp", "dispersion")
-
-    .filter_component(se, component)
+    .se_fixed_effects_glmmTMB(model, component, verbose)
   }
+}
+
+
+# helper --------------------------------------------------------------------
+
+
+# extract standard errors for fixed effects parameters
+.se_fixed_effects_glmmTMB <- function(model, component, verbose) {
+  if (is.null(.check_component(model, component, verbose = verbose))) {
+    return(NULL)
+  }
+
+  cs <- insight::compact_list(stats::coef(summary(model)))
+  x <- lapply(names(cs), function(i) {
+    .data_frame(
+      Parameter = insight::find_parameters(model, effects = "fixed", component = i, flatten = TRUE),
+      SE = as.vector(cs[[i]][, 2]),
+      Component = i
+    )
+  })
+
+  se <- do.call(rbind, x)
+  se$Component <- .rename_values(se$Component, "cond", "conditional")
+  se$Component <- .rename_values(se$Component, "zi", "zero_inflated")
+  se$Component <- .rename_values(se$Component, "disp", "dispersion")
+
+  .filter_component(se, component)
+}
+
+
+# extract standard errors for random effects parameters
+.se_random_effects_glmmTMB <- function(model) {
+  if (!all(insight::check_if_installed(c("TMB", "glmmTMB"), quietly = TRUE))) {
+    return(NULL)
+  }
+
+  s1 <- TMB::sdreport(model$obj, getJointPrecision = TRUE)
+  s2 <- sqrt(s1$diag.cov.random)
+  rand.ef <- glmmTMB::ranef(model)[[1]]
+
+  lapply(rand.ef, function(.x) {
+    cnt <- nrow(.x) * ncol(.x)
+    s3 <- s2[1:cnt]
+    s2 <- s2[-(1:cnt)]
+    d <- as.data.frame(matrix(sqrt(s3), ncol = ncol(.x), byrow = TRUE))
+    colnames(d) <- colnames(.x)
+    d
+  })
 }
 
 
@@ -617,25 +646,22 @@ simulate_model.glmmTMB <- function(model,
   if (component == "all") {
     if (!has_zeroinflated && !has_dispersion) {
       if (verbose) {
-        insight::print_color(
-          "No zero-inflation and dispersion components. Simulating from conditional parameters.\n",
-          "red"
+        insight::format_alert(
+          "No zero-inflation and dispersion components. Simulating from conditional parameters."
         )
       }
       component <- "conditional"
     } else if (!has_zeroinflated && has_dispersion) {
       if (verbose) {
-        insight::print_color(
-          "No zero-inflation component. Simulating from conditional and dispersion parameters.\n",
-          "red"
+        insight::format_alert(
+          "No zero-inflation component. Simulating from conditional and dispersion parameters."
         )
       }
       component <- c("conditional", "dispersion")
     } else if (has_zeroinflated && !has_dispersion) {
       if (verbose) {
-        insight::print_color(
-          "No dispersion component. Simulating from conditional and zero-inflation parameters.\n",
-          "red"
+        insight::format_alert(
+          "No dispersion component. Simulating from conditional and zero-inflation parameters."
         )
       }
       component <- c("conditional", "zero_inflated")

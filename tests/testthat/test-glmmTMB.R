@@ -2,7 +2,7 @@ skip_if_not_installed("withr")
 skip_if_not_installed("glmmTMB")
 skip_if_not(getRversion() >= "4.0.0")
 
-data("fish")
+data("fish", package = "parameters")
 data("Salamanders", package = "glmmTMB")
 
 skip_on_cran()
