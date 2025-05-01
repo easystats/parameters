@@ -77,6 +77,11 @@ withr::with_options(
         tolerance = 1e-3
       )
       expect_equal(
+        standard_error(m1, effects = "random")$persons$`(Intercept)`,
+        c(0.69856, 0.68935, 0.68749, 0.68596),
+        tolerance = 1e-3
+      )
+      expect_equal(
         standard_error(m1, component = "cond")$SE,
         c(0.47559, 0.09305, 0.09346),
         tolerance = 1e-3
