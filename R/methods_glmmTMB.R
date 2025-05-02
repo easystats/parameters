@@ -276,7 +276,7 @@ model_parameters.glmmTMB <- function(model,
     }
 
     # add dispersion parameter
-    out <- .add_dispersion_param_glmmTMB(model, params, effects, component, verbose)
+    out <- .add_dispersion_param_glmmTMB(model, params, effects, component, ci, verbose)
     params <- out$params
     dispersion_param <- out$dispersion_param
 
@@ -349,7 +349,7 @@ model_parameters.glmmTMB <- function(model,
 
 # this functions adds the dispersion parameter, if it is not already
 # present in the output
-.add_dispersion_param_glmmTMB <- function(model, params, effects, component, verbose) {
+.add_dispersion_param_glmmTMB <- function(model, params, effects, component, ci, verbose) {
   dispersion_param <- FALSE
   if (
     # must be glmmTMB
