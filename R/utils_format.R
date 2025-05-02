@@ -995,7 +995,6 @@
     ci_brackets <- c("[", "]")
   }
 
-
   # check ordinal / multivariate
   is_ordinal_model <- isTRUE(attributes(x)$ordinal_model)
   is_multivariate <- isTRUE(attributes(x)$multivariate_response)
