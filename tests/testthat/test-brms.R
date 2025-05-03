@@ -40,8 +40,8 @@ test_that("mp, dpars in total effects", {
   expect_named(
     out,
     c(
-      "Group", "Level", "Parameter", "Median", "CI", "CI_low", "CI_high",
-      "pd", "Component", "Effects"
+      "Parameter", "Component", "Median", "CI", "CI_low", "CI_high",
+      "pd", "Rhat", "ESS", "Group"
     )
   )
 
