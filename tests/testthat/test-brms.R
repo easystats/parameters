@@ -26,7 +26,33 @@ test_that("mp, dpars in total effects", {
   out <- parameters::model_parameters(m, effects = "total")
   expect_identical(dim(out), c(80L, 10L))
   expect_identical(unique(out$Component), c("conditional", "delta", "k", "phi"))
-  # out <- parameters::model_parameters(m, effects = "random", group_level = TRUE)
-  # expect_identical(dim(out), c(80L, 10L))
-  # expect_identical(unique(out$Component), c("conditional", "delta", "k", "phi"))
+  expect_named(
+    out,
+    c(
+      "Group", "Level", "Parameter", "Median", "CI", "CI_low", "CI_high",
+      "pd", "Component", "Effects"
+    )
+  )
+
+  out <- parameters::model_parameters(m, effects = "grouplevel")
+  expect_identical(dim(out), c(60L, 10L))
+  expect_identical(unique(out$Component), c("conditional", "delta", "k"))
+  expect_named(
+    out,
+    c(
+      "Parameter", "Component", "Median", "CI", "CI_low", "CI_high",
+      "pd", "Rhat", "ESS", "Group"
+    )
+  )
+
+  out <- parameters::model_parameters(m, effects = "all")
+  expect_identical(dim(out), c(7L, 11L))
+  expect_identical(unique(out$Component), c("conditional", "delta", "k", "phi"))
+  expect_named(
+    out,
+    c(
+      "Parameter", "Effects", "Component", "Median", "CI", "CI_low",
+      "CI_high", "pd", "Rhat", "ESS", "Group"
+    )
+  )
 })

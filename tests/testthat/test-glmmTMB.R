@@ -2,7 +2,7 @@ skip_if_not_installed("withr")
 skip_if_not_installed("glmmTMB")
 skip_if_not(getRversion() >= "4.0.0")
 
-data("fish")
+data("fish", package = "parameters")
 data("Salamanders", package = "glmmTMB")
 
 skip_on_cran()
@@ -74,6 +74,11 @@ withr::with_options(
       expect_equal(
         standard_error(m1)$SE,
         c(0.47559, 0.09305, 0.09346, 0.65229, 0.3099, 0.32324),
+        tolerance = 1e-3
+      )
+      expect_equal(
+        standard_error(m1, effects = "random")$persons$`(Intercept)`,
+        c(0.69856, 0.68935, 0.68749, 0.68596),
         tolerance = 1e-3
       )
       expect_equal(

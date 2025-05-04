@@ -120,13 +120,11 @@ model_parameters.brmsfit <- function(model,
     )
     params$Effects <- "total"
     class(params) <- c("parameters_coef", "see_parameters_coef", class(params))
-    return(params)
   } else {
-
-    if (utils::packageVersion("insight") > "1.2.0" && effects == "random" && group_level) {
+    # update argument
+    if (effects == "random" && group_level) {
       effects <- "grouplevel"
     }
-
     # Processing
     params <- .extract_parameters_bayesian(
       model,
@@ -148,21 +146,6 @@ model_parameters.brmsfit <- function(model,
       verbose = verbose,
       ...
     )
-
-    ## TODO: remove this once insight > 1.2.0 on CRAN
-
-    # if random effects are included, check if group-level estimates
-    # should be returned or not. If not, remove them.
-    if (effects != "fixed") {
-      random_effect_levels <- which(
-        params$Effects == "random" &
-          grepl("^(?!sd_|cor_)(.*)", params$Parameter, perl = TRUE) &
-          !(params$Parameter %in% c("car", "sdcar"))
-      )
-      if (length(random_effect_levels) && isFALSE(group_level)) {
-        params <- params[-random_effect_levels, ]
-      }
-    }
 
     # add prettified names as attribute. Furthermore, group column is added
     params <- .add_pretty_names(params, model)
@@ -307,18 +290,6 @@ standard_error.brmsfit <- function(model,
                                    effects = "fixed",
                                    component = "all",
                                    ...) {
-
-  ## TODO: remove validation of effects and component once insight > 1.2.0 is on CRAN
-
-  effects <- insight::validate_argument(
-    effects,
-    c("fixed", "random")
-  )
-  component <- insight::validate_argument(
-    component,
-    c("all", "conditional", "zi", "zero_inflated")
-  )
-
   params <- insight::get_parameters(model, effects = effects, component = component, ...)
 
   .data_frame(

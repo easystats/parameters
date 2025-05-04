@@ -208,15 +208,20 @@
 
   # ==== Renaming
 
-  if ("Statistic" %in% names(parameters)) {
+  if ("Statistic" %in% colnames(parameters)) {
     stat_type <- attr(statistic, "statistic", exact = TRUE)
     if (!is.null(stat_type)) {
-      names(parameters) <- gsub("Statistic", gsub("(-|\\s)statistic", "", stat_type), names(parameters), fixed = TRUE)
-      names(parameters) <- gsub("chi-squared", "Chi2", names(parameters), fixed = TRUE)
+      colnames(parameters) <- gsub(
+        "Statistic",
+        gsub("(-|\\s)statistic", "", stat_type),
+        colnames(parameters),
+        fixed = TRUE
+      )
+      colnames(parameters) <- gsub("chi-squared", "Chi2", colnames(parameters), fixed = TRUE)
     }
   }
-  names(parameters) <- gsub("(c|C)hisq", "Chi2", names(parameters))
-  names(parameters) <- gsub("Estimate", "Coefficient", names(parameters), fixed = TRUE)
+  colnames(parameters) <- gsub("(c|C)hisq", "Chi2", colnames(parameters))
+  colnames(parameters) <- gsub("Estimate", "Coefficient", colnames(parameters), fixed = TRUE)
 
 
   # ==== add intercept groups for ordinal models
@@ -229,7 +234,7 @@
   }
 
 
-  # ==== remove Component column if not needed
+  # ==== remove Component / Effects column if not needed
 
   if (!is.null(parameters$Component) && insight::has_single_value(parameters$Component, remove_na = TRUE) && !keep_component_column) parameters$Component <- NULL # nolint
   if ((!is.null(parameters$Effects) && insight::n_unique(parameters$Effects) == 1) || effects == "fixed") parameters$Effects <- NULL # nolint
@@ -468,8 +473,8 @@
 
   ci_cols <- NULL
   if (!is.null(ci)) {
-    # robust (current or deprecated)
-    if (!is.null(vcov) || isTRUE(list(...)[["robust"]])) {
+    # HC vcov?
+    if (!is.null(vcov)) {
       fun_args <- list(model,
         ci = ci,
         vcov = vcov,
@@ -494,14 +499,19 @@
 
   # standard error - only if we don't already have SE for std. parameters
   if (!"SE" %in% colnames(parameters)) {
-    if (!is.null(vcov) || isTRUE(dots[["robust"]])) {
+    if (!is.null(vcov)) {
       fun_args <- list(model,
         vcov = vcov,
         vcov_args = vcov_args,
         verbose = verbose
       )
       fun_args <- c(fun_args, dots)
-      parameters <- merge(parameters, do.call("standard_error", fun_args), by = "Parameter", sort = FALSE)
+      parameters <- merge(
+        parameters,
+        do.call("standard_error", fun_args),
+        by = "Parameter",
+        sort = FALSE
+      )
       # special handling for KR-SEs, which we already have computed from dof
     } else if ("SE" %in% colnames(df_error)) {
       se_kr <- df_error
@@ -519,19 +529,23 @@
 
 
   # p value
-  if (!is.null(vcov) || isTRUE(list(...)[["robust"]])) {
+  if (!is.null(vcov)) {
     fun_args <- list(model,
       vcov = vcov,
       vcov_args = vcov_args,
       verbose = verbose
     )
     fun_args <- c(fun_args, dots)
-    parameters <- merge(parameters, do.call("p_value", fun_args), by = "Parameter", sort = FALSE)
+    parameters <- merge(
+      parameters,
+      do.call("p_value", fun_args),
+      by = "Parameter",
+      sort = FALSE
+    )
   } else if ("Pr(>|z|)" %in% names(parameters)) {
     names(parameters)[grepl("Pr(>|z|)", names(parameters), fixed = TRUE)] <- "p"
   } else if (ci_method %in% special_ci_methods) {
     # special handling for KR-p, which we already have computed from dof
-    # parameters <- merge(parameters, .p_value_dof_kr(model, params = parameters, dof = df_error), by = "Parameter")
     parameters <- merge(
       parameters,
       .p_value_dof(model, dof = df_error$df_error, method = ci_method, se = df_error$SE),
@@ -549,9 +563,7 @@
 
 
   # adjust standard errors and test-statistic as well
-  if ((!is.null(vcov) || ci_method %in% special_ci_methods) ||
-    # deprecated argument
-    isTRUE(list(...)[["robust"]])) {
+  if ((!is.null(vcov) || ci_method %in% special_ci_methods)) {
     parameters$Statistic <- parameters$Estimate / parameters$SE
   } else {
     parameters <- merge(parameters, statistic, by = "Parameter", sort = FALSE)
@@ -581,16 +593,16 @@
   parameters <- parameters[match(original_order, parameters$.id), ]
 
   # Renaming
-  names(parameters) <- gsub(
+  colnames(parameters) <- gsub(
     "Statistic",
     gsub("-statistic", "", attr(statistic, "statistic", exact = TRUE), fixed = TRUE),
-    names(parameters),
+    colnames(parameters),
     fixed = TRUE
   )
-  names(parameters) <- gsub("Std. Error", "SE", names(parameters), fixed = TRUE)
-  names(parameters) <- gsub("Estimate", "Coefficient", names(parameters), fixed = TRUE)
-  names(parameters) <- gsub("t value", "t", names(parameters), fixed = TRUE)
-  names(parameters) <- gsub("z value", "z", names(parameters), fixed = TRUE)
+  colnames(parameters) <- gsub("Std. Error", "SE", colnames(parameters), fixed = TRUE)
+  colnames(parameters) <- gsub("Estimate", "Coefficient", colnames(parameters), fixed = TRUE)
+  colnames(parameters) <- gsub("t value", "t", colnames(parameters), fixed = TRUE)
+  colnames(parameters) <- gsub("z value", "z", colnames(parameters), fixed = TRUE)
 
   # filter parameters, if requested
   if (!is.null(keep_parameters) || !is.null(drop_parameters)) {
@@ -632,8 +644,11 @@
   }
 
   # Reorder
-  col_order <- c("Parameter", coef_col, "SE", ci_cols, "t", "z", "df", "df_error", "p", "Component")
-  parameters <- parameters[col_order[col_order %in% names(parameters)]]
+  col_order <- c(
+    "Parameter", coef_col, "SE", ci_cols, "t", "z", "df", "df_error", "p",
+    "Component"
+  )
+  parameters <- parameters[col_order[col_order %in% colnames(parameters)]]
 
 
   # add sigma
@@ -756,22 +771,6 @@
       verbose = verbose,
       ...
     )
-  } else if (is.null(standardize)) {
-    parameters <- bayestestR::describe_posterior(
-      model,
-      centrality = centrality,
-      dispersion = dispersion,
-      ci = ci,
-      ci_method = ci_method,
-      test = test,
-      rope_range = rope_range,
-      rope_ci = rope_ci,
-      bf_prior = bf_prior,
-      diagnostic = diagnostic,
-      priors = priors,
-      verbose = verbose,
-      ...
-    )
   } else {
     parameters <- bayestestR::describe_posterior(
       model,
@@ -789,28 +788,32 @@
       ...
     )
 
-    # Don't test BF on standardized params
-    test_no_BF <- test[!test %in% c("bf", "bayesfactor", "bayes_factor")]
-    if (length(test_no_BF) == 0) test_no_BF <- NULL
-    std_post <- standardize_posteriors(model, method = standardize)
-    std_parameters <- bayestestR::describe_posterior(
-      std_post,
-      centrality = centrality,
-      dispersion = dispersion,
-      ci = ci,
-      ci_method = ci_method,
-      test = test_no_BF,
-      rope_range = rope_range,
-      rope_ci = rope_ci,
-      verbose = verbose,
-      ...
-    )
+    if (!is.null(standardize)) {
+      # Don't test BF on standardized params
+      test_no_BF <- test[!test %in% c("bf", "bayesfactor", "bayes_factor")]
+      if (length(test_no_BF) == 0) {
+        test_no_BF <- NULL
+      }
+      std_post <- standardize_posteriors(model, method = standardize)
+      std_parameters <- bayestestR::describe_posterior(
+        std_post,
+        centrality = centrality,
+        dispersion = dispersion,
+        ci = ci,
+        ci_method = ci_method,
+        test = test_no_BF,
+        rope_range = rope_range,
+        rope_ci = rope_ci,
+        verbose = verbose,
+        ...
+      )
 
-    parameters <- merge(
-      std_parameters,
-      parameters[c("Parameter", setdiff(colnames(parameters), colnames(std_parameters)))],
-      sort = FALSE
-    )
+      parameters <- merge(
+        std_parameters,
+        parameters[c("Parameter", setdiff(colnames(parameters), colnames(std_parameters)))],
+        sort = FALSE
+      )
+    }
   }
 
   if (length(ci) > 1) {
@@ -899,23 +902,9 @@
 
   # list all argument names from the `lavaan` function
   dot_args <- dot_args[names(dot_args) %in% c(
-    "zstat",
-    "pvalue",
-    "standardized",
-    "fmi",
-    "level",
-    "boot.ci.type",
-    "cov.std",
-    "fmi.options",
-    "rsquare",
-    "remove.system.eq",
-    "remove.eq",
-    "remove.ineq",
-    "remove.def",
-    "remove.nonfree",
-    "add.attributes",
-    "output",
-    "header"
+    "zstat", "pvalue", "standardized", "fmi", "level", "boot.ci.type", "cov.std",
+    "fmi.options", "rsquare", "remove.system.eq", "remove.eq", "remove.ineq",
+    "remove.def", "remove.nonfree", "add.attributes", "output", "header"
   )]
 
   # Get estimates
