@@ -26,8 +26,12 @@ model_parameters.stanreg <- function(model,
     return(params)
   }
 
-  if (utils::packageVersion("insight") > "1.2.0" && effects == "random" && group_level) {
+  # adjust arguments
+  if (effects == "random" && group_level) {
     effects <- "grouplevel"
+  }
+  if (effects == "grouplevel") {
+    priors <- FALSE
   }
 
   # Processing
@@ -50,16 +54,6 @@ model_parameters.stanreg <- function(model,
     verbose = verbose,
     ...
   )
-
-  ## TODO: remove this once insight > 1.2.0 on CRAN
-  if (effects != "fixed") {
-    random_effect_levels <- which(
-      params$Effects == "random" & !startsWith(params$Parameter, "Sigma[")
-    )
-    if (length(random_effect_levels) && isFALSE(group_level)) {
-      params <- params[-random_effect_levels, , drop = FALSE]
-    }
-  }
 
   ## TODO: can we use the regular pretty-name-formatting?
   params <- .add_pretty_names(params, model)
