@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.25.0.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.25.0.4</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -98,11 +98,15 @@ equivalence. Can be <code>"bayes"</code>, <code>"classic"</code> or <code>"cet"<
 
 
 <dt id="arg-effects">effects<a class="anchor" aria-label="anchor" href="#arg-effects"></a></dt>
-<dd><p>Should parameters for fixed effects (<code>"fixed"</code>), random
-effects (<code>"random"</code>), both fixed and random effects (<code>"all"</code>), or the
-overall (sum of fixed and random) effects (<code>"random_total"</code>) be returned?
-Only applies to mixed models. May be abbreviated. If the calculation of
-random effects parameters takes too long, you may use <code>effects = "fixed"</code>.</p></dd>
+<dd><p>Should parameters for fixed effects (<code>"fixed"</code>), random effects
+(<code>"random"</code>), or both fixed and random effects (<code>"all"</code>) be returned? By
+default, the variance components for random effects are returned. If
+group-level effects are requested, <code>"grouplevel"</code> returns the group-level
+random effects (BLUPs), while <code>"random_total"</code> return the overall (sum of
+fixed and random) effects (similar to what <code><a href="https://rdrr.io/r/stats/coef.html" class="external-link">coef()</a></code> returns). Using
+<code>"grouplevel"</code> is equivalent to setting <code>group_level = TRUE</code>. The <code>effects</code>
+argument only applies to mixed models. If the calculation of random effects
+parameters takes too long, you may use <code>effects = "fixed"</code>.</p></dd>
 
 
 <dt id="arg-vcov">vcov<a class="anchor" aria-label="anchor" href="#arg-vcov"></a></dt>
