@@ -12,10 +12,9 @@
 #' @param ci Credible Interval (CI) level. Default to `0.95` (`95%`). See
 #' [bayestestR::ci()] for further details.
 #' @param group_level Logical, for multilevel models (i.e. models with random
-#' effects) and when `effects = "all"` or `effects = "random"`,
-#' include the parameters for each group level from random effects. If
-#' `group_level = FALSE` (the default), only information on SD and COR
-#' are shown.
+#' effects) and when `effects = "all"` or `effects = "random"`, include the
+#' parameters for each group level from random effects. If `group_level = FALSE`
+#' (the default), only information on SD and COR are shown.
 #' @param component Which type of parameters to return, such as parameters for the
 #' conditional model, the zero-inflation part of the model, the dispersion
 #' term, or other auxiliary parameters be returned? Applies to models with
