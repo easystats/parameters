@@ -196,8 +196,8 @@ dots <- list(...)
 
 # helper ----------------------------------------------------------------------
 
-.add_random_effects_lme4 <- function(params,
-                                     model,
+.add_random_effects_lme4 <- function(model,
+                                     params,
                                      ci,
                                      ci_method,
                                      ci_random,
