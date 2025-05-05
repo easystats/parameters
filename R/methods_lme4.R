@@ -22,6 +22,7 @@ model_parameters.merMod <- function(model,
                                     drop = NULL,
                                     verbose = TRUE,
                                     ...) {
+  insight::check_if_installed("lme4")
   dots <- list(...)
 
   # set default
@@ -57,9 +58,12 @@ model_parameters.merMod <- function(model,
   # which component to return?
   effects <- insight::validate_argument(
     effects,
-    c("fixed", "random", "total", "random_total", "all")
+    c("fixed", "random", "grouplevel", "total", "random_total", "all")
   )
-  params <- params_random <- params_variance <- NULL
+  params <- NULL
+
+  # group level estimates =================================================
+  # =======================================================================
 
   # for coef(), we don't need all the attributes and just stop here
   if (effects %in% c("total", "random_total")) {
@@ -67,6 +71,12 @@ model_parameters.merMod <- function(model,
     params$Effects <- "total"
     class(params) <- c("parameters_coef", "see_parameters_coef", class(params))
     return(params)
+  }
+
+  # group grouplevel estimates (BLUPs), handle alias
+  if (effects == "grouplevel") {
+    effects <- "random"
+    group_level <- TRUE
   }
 
   # post hoc standardize only works for fixed effects...
@@ -85,6 +95,9 @@ model_parameters.merMod <- function(model,
     model <- datawizard::standardize(model, verbose = FALSE)
     standardize <- NULL
   }
+
+  # fixed effects =================================================
+  # ===============================================================
 
   if (effects %in% c("fixed", "all")) {
     # Processing
@@ -129,34 +142,23 @@ model_parameters.merMod <- function(model,
 
   att <- attributes(params)
 
-  if (effects %in% c("random", "all") && isTRUE(group_level)) {
-    params_random <- .extract_random_parameters(model, ci = ci, effects = effects)
-  }
+  # add random effects, either group level or re variances
+  # ======================================================
 
-  if (effects %in% c("random", "all") && isFALSE(group_level)) {
-    params_variance <- .extract_random_variances(
-      model,
-      ci = ci,
-      effects = effects,
-      ci_method = ci_method,
-      ci_random = ci_random,
-      verbose = verbose
-    )
-  }
+  params <- .add_random_effects_lme4(
+    model,
+    params,
+    ci,
+    ci_method,
+    ci_random,
+    effects,
+    group_level,
+    verbose
+  )
 
-  # merge random and fixed effects, if necessary
-  if (!is.null(params) && (!is.null(params_random) || !is.null(params_variance))) {
-    params$Level <- NA
-    params$Group <- ""
+  # clean-up
+  # ======================================================
 
-    if (is.null(params_random)) {
-      params <- params[match(colnames(params_variance), colnames(params))]
-    } else {
-      params <- params[match(colnames(params_random), colnames(params))]
-    }
-  }
-
-  params <- rbind(params, params_random, params_variance)
   # remove empty column
   if (!is.null(params$Level) && all(is.na(params$Level))) {
     params$Level <- NULL
@@ -189,6 +191,52 @@ model_parameters.merMod <- function(model,
   class(params) <- c("parameters_model", "see_parameters_model", class(params))
 
   params
+}
+
+
+# helper ----------------------------------------------------------------------
+
+.add_random_effects_lme4 <- function(model,
+                                     params,
+                                     ci,
+                                     ci_method,
+                                     ci_random,
+                                     effects,
+                                     group_level,
+                                     verbose = TRUE,
+                                     ...) {
+  params_random <- params_variance <- NULL
+
+  # only proceed if random effects are requested
+  if (effects %in% c("random", "all")) {
+    # group level estimates (BLUPs) or random effects variances?
+    if (isTRUE(group_level)) {
+      params_random <- .extract_random_parameters(model, ci = ci, effects = effects)
+    } else {
+      params_variance <- .extract_random_variances(
+        model,
+        ci = ci,
+        effects = effects,
+        ci_method = ci_method,
+        ci_random = ci_random,
+        verbose = verbose
+      )
+    }
+
+    # merge random and fixed effects, if necessary
+    if (!is.null(params) && (!is.null(params_random) || !is.null(params_variance))) {
+      params$Level <- NA
+      params$Group <- ""
+
+      if (is.null(params_random)) {
+        params <- params[match(colnames(params_variance), colnames(params))]
+      } else {
+        params <- params[match(colnames(params_random), colnames(params))]
+      }
+    }
+  }
+
+  rbind(params, params_random, params_variance)
 }
 
 

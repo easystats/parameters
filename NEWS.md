@@ -1,3 +1,11 @@
+# parameters (devel)
+
+## Changes
+
+* The `effects` argument in `model_parameters()` for classes `merMod`, `glmmTMB`,
+  `brmsfit` and `stanreg` gets an additional `"grouplevel"` option, to return
+  the group-level estimates for random effects.
+
 # parameters 0.25.0
 
 ## Changes

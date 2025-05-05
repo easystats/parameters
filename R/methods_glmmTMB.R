@@ -10,11 +10,15 @@
 #' @description Parameters from (linear) mixed models.
 #'
 #' @param model A mixed model.
-#' @param effects Should parameters for fixed effects (`"fixed"`), random
-#'   effects (`"random"`), both fixed and random effects (`"all"`), or the
-#'   overall (sum of fixed and random) effects (`"random_total"`) be returned?
-#'   Only applies to mixed models. May be abbreviated. If the calculation of
-#'   random effects parameters takes too long, you may use `effects = "fixed"`.
+#' @param effects Should parameters for fixed effects (`"fixed"`), random effects
+#'   (`"random"`), or both fixed and random effects (`"all"`) be returned? By
+#'   default, the variance components for random effects are returned. If
+#'   group-level effects are requested, `"grouplevel"` returns the group-level
+#'   random effects (BLUPs), while `"random_total"` return the overall (sum of
+#'   fixed and random) effects (similar to what `coef()` returns). Using
+#'   `"grouplevel"` is equivalent to setting `group_level = TRUE`. The `effects`
+#'   argument only applies to mixed models. If the calculation of random effects
+#'   parameters takes too long, you may use `effects = "fixed"`.
 #' @param wb_component Logical, if `TRUE` and models contains within- and
 #'   between-effects (see `datawizard::demean()`), the `Component` column
 #'   will indicate which variables belong to the within-effects,
@@ -194,7 +198,7 @@ model_parameters.glmmTMB <- function(model,
   # which components to return?
   effects <- insight::validate_argument(
     effects,
-    c("fixed", "random", "total", "random_total", "all")
+    c("fixed", "random", "total", "random_total", "grouplevel", "all")
   )
   component <- insight::validate_argument(
     component,
@@ -210,6 +214,12 @@ model_parameters.glmmTMB <- function(model,
     params$Effects <- "total"
     class(params) <- c("parameters_coef", "see_parameters_coef", class(params))
     return(params)
+  }
+
+  # group grouplevel estimates (BLUPs), handle alias
+  if (effects == "grouplevel") {
+    effects <- "random"
+    group_level <- TRUE
   }
 
   # standardize only works for fixed effects...
@@ -412,7 +422,7 @@ model_parameters.glmmTMB <- function(model,
   params_random <- params_variance <- NULL
   random_effects <- insight::find_random(model, flatten = TRUE)
 
-  if (!is.null(random_effects) && effects %in% c("random", "all")) {
+  if (!is.null(random_effects) && effects %in% c("random", "all", "grouplevel")) {
     # add random parameters or variances
     if (isTRUE(group_level)) {
       params_random <- .extract_random_parameters(
