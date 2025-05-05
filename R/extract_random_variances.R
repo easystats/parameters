@@ -689,31 +689,8 @@ as.data.frame.VarCorr.lme <- function(x, row.names = NULL, optional = FALSE, ...
 # store essential information about variance components...
 # basically, this function should return lme4::VarCorr(x)
 .get_variance_information <- function(model, model_component = "conditional") {
-  # reason to be installed
-  reason <- "to compute random effect variances for mixed models"
-
-  # installed?
-  insight::check_if_installed("lme4", reason = reason)
-
-  if (inherits(model, "lme")) {
-    insight::check_if_installed("nlme", reason = reason)
-  }
-
-  if (inherits(model, "clmm")) {
-    insight::check_if_installed("ordinal", reason = reason)
-  }
-
-  if (inherits(model, "brmsfit")) {
-    insight::check_if_installed("brms", reason = reason)
-  }
-
-  if (inherits(model, "cpglmm")) {
-    insight::check_if_installed("cplm", reason = reason)
-  }
-
-  if (inherits(model, "rstanarm")) {
-    insight::check_if_installed("rstanarm", reason = reason)
-  }
+  # check if packages are available
+  .check_mixedmodels_namespace(model)
 
   # stanreg
   # ---------------------------
@@ -832,6 +809,39 @@ as.data.frame.VarCorr.lme <- function(x, row.names = NULL, optional = FALSE, ...
   }
 
   varcorr
+}
+
+
+.check_mixedmodels_namespace <- function(model) {
+  # reason to be installed
+  reason <- "to compute random effect variances for mixed models"
+
+  # installed?
+  insight::check_if_installed("lme4", reason = reason)
+
+  if (inherits(model, "lme")) {
+    insight::check_if_installed("nlme", reason = reason)
+  }
+
+  if (inherits(model, "glmmTMB")) {
+    insight::check_if_installed("glmmTMB", reason = reason)
+  }
+
+  if (inherits(model, "clmm")) {
+    insight::check_if_installed("ordinal", reason = reason)
+  }
+
+  if (inherits(model, "brmsfit")) {
+    insight::check_if_installed("brms", reason = reason)
+  }
+
+  if (inherits(model, "cpglmm")) {
+    insight::check_if_installed("cplm", reason = reason)
+  }
+
+  if (inherits(model, "rstanarm")) {
+    insight::check_if_installed("rstanarm", reason = reason)
+  }
 }
 
 
