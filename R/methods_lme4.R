@@ -22,7 +22,8 @@ model_parameters.merMod <- function(model,
                                     drop = NULL,
                                     verbose = TRUE,
                                     ...) {
-  dots <- list(...)
+insight::check_if_installed("lme4")
+dots <- list(...)
 
   # set default
   if (is.null(ci_method)) {
