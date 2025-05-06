@@ -122,3 +122,50 @@
 .extract_random_parameters.MixMod <- function(model, ...) {
   NULL
 }
+
+
+.extract_random_parameters.coxme <- function(model, ci = NULL, effects = "random", ...) {
+  insight::check_if_installed("lme4")
+
+  # extract random effects
+  re_grp <- insight::find_random(model, split_nested = TRUE, flatten = TRUE)
+
+  ## TODO: this currently only works for one grouping variable
+  if (length(re_grp) > 1) {
+    re_grp <- re_grp[1]
+  }
+
+  out <- as.data.frame(lme4::ranef(model, condVar = TRUE), stringsAsFactors = FALSE)
+  out$grp <- unique(insight::get_data(model)[[re_grp]])
+  out <- datawizard::reshape_longer(out, select = -"grp")
+  out <- datawizard::data_separate(out, select = "name", new_columns = c("grpvar", "term"))
+  out <- datawizard::data_arrange(out, select = c("grpvar", "term"))
+  out <- out[c("grpvar", "term", "grp", "value")]
+  out$condsd <- NA
+
+  colnames(out) <- c("Group", "Parameter", "Level", "Coefficient", "SE")
+
+  # coerce to character
+  out$Parameter <- as.character(out$Parameter)
+  out$Level <- as.character(out$Level)
+  out$Group <- as.character(out$Group)
+  out$Effects <- "random"
+
+  out$CI_low <- out$CI_high <- NA
+  ci_cols <- c("CI_low", "CI_high")
+
+  stat_column <- gsub("-statistic", "", insight::find_statistic(model), fixed = TRUE)
+
+  # to match rbind
+  out[[stat_column]] <- NA
+  out$df_error <- NA
+  out$p <- NA
+
+  out <- out[c("Parameter", "Level", "Coefficient", "SE", ci_cols, stat_column, "df_error", "p", "Effects", "Group")]
+
+  if (effects == "random") {
+    out[c(stat_column, "df_error", "p")] <- NULL
+  }
+
+  out
+}
