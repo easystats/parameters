@@ -251,6 +251,7 @@ model_parameters.afex_aov <- function(model,
                                       type = NULL,
                                       keep = NULL,
                                       drop = NULL,
+                                      p_adjust = NULL,
                                       verbose = TRUE,
                                       ...) {
   if (inherits(model$Anova, "Anova.mlm")) {
@@ -258,9 +259,9 @@ model_parameters.afex_aov <- function(model,
     with_df_and_p <- summary(model$Anova)$univariate.tests
     params$`Sum Sq` <- with_df_and_p[-1, 1]
     params$`Error SS` <- with_df_and_p[-1, 3]
-    out <- .extract_parameters_anova(params, test = NULL)
+    out <- .extract_parameters_anova(params, test = NULL, p_adjust, verbose)
   } else {
-    out <- .extract_parameters_anova(model$Anova, test = NULL)
+    out <- .extract_parameters_anova(model$Anova, test = NULL, p_adjust, verbose)
   }
 
   out <- .effectsizes_for_aov(
@@ -273,7 +274,15 @@ model_parameters.afex_aov <- function(model,
   )
 
   # add attributes
-  out <- .add_anova_attributes(out, model, ci, test = NULL, alternative = NULL, ...)
+  out <- .add_anova_attributes(
+    out,
+    model,
+    ci,
+    test = NULL,
+    alternative = NULL,
+    p_adjust = p_adjust,
+    ...
+  )
 
   # filter parameters
   if (!is.null(keep) || !is.null(drop)) {

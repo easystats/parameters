@@ -1,5 +1,8 @@
 #' @keywords internal
-.extract_parameters_anova <- function(model, test = "multivariate") {
+.extract_parameters_anova <- function(model,
+                                      test = "multivariate",
+                                      p_adjust = NULL,
+                                      verbose = TRUE) {
   # Processing
   if (inherits(model, "manova")) {
     parameters <- .extract_anova_manova(model)
@@ -78,6 +81,11 @@
     "df_num", "df_error", "Deviance_error", "Mean_Square", "F", "Rao", "p"
   )
   parameters <- parameters[col_order[col_order %in% names(parameters)]]
+
+  # ==== adjust p-values?
+  if (!is.null(p_adjust)) {
+    parameters <- .p_adjust(parameters, p_adjust, model, verbose)
+  }
 
   insight::text_remove_backticks(parameters, verbose = FALSE)
 }
