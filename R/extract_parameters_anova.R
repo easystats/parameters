@@ -22,6 +22,12 @@
     parameters <- .extract_anova_aov_svyglm(model)
   }
 
+  # remove intercept
+  intercepts <- parameters$Parameter %in% c("Intercept", "(Intercept)")
+  if (any(intercepts)) {
+    parameters <- parameters[!intercepts, ]
+  }
+
   # Rename
 
   # p-values
