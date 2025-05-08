@@ -254,16 +254,15 @@ model_parameters.afex_aov <- function(model,
                                       p_adjust = NULL,
                                       verbose = TRUE,
                                       ...) {
-  # extract p-adjustment
-  p_adjust <- .extract_p_adjust_afex(model, p_adjust)
-
   if (inherits(model$Anova, "Anova.mlm")) {
     params <- model$anova_table
     with_df_and_p <- summary(model$Anova)$univariate.tests
     params$`Sum Sq` <- with_df_and_p[-1, 1]
     params$`Error SS` <- with_df_and_p[-1, 3]
-    out <- .extract_parameters_anova(params, test = NULL, p_adjust, verbose)
+    out <- .extract_parameters_anova(params, test = NULL, p_adjust = NULL, verbose)
+    p_adjust <- .extract_p_adjust_afex(model, p_adjust)
   } else {
+    p_adjust <- .extract_p_adjust_afex(model, p_adjust)
     out <- .extract_parameters_anova(model$Anova, test = NULL, p_adjust, verbose)
   }
 

@@ -30,7 +30,7 @@ test_that("afex_aov", {
 })
 
 
-test_that("afex_aov", {
+test_that("afex_aov, p-adjustement", {
   skip_if_not_installed("afex")
   data(laptop_urry, package = "afex")
   afx <- afex::aov_4(
@@ -49,4 +49,29 @@ test_that("afex_aov", {
   )
   expect_equal(out1$p, c(0.4714, 0, 0.0719, NA), tolerance = 1e-3)
   expect_equal(out2$p, c(1, 0, 0.2157, NA), tolerance = 1e-3)
+})
+
+
+test_that("afex_aov_ez, p-adjustement", {
+  skip_if_not_installed("afex")
+  data(obk.long, package = "afex")
+  a2 <- afex::aov_ez(
+    "id",
+    "value",
+    data = obk.long,
+    between = c("treatment", "gender"),
+    within = c("phase", "hour"),
+    observed = "gender",
+    anova_table = list(p_adjust_method = "fdr")
+  )
+
+  out <- model_parameters(a2)
+  expect_equal(a2$anova_table$`Pr(>F)`, out$p, tolerance = 1e-4)
+  expect_identical(dim(out), c(15L, 9L))
+  expect_named(
+    out,
+    c(
+      "Parameter", "Sum_Squares", "Sum_Squares_Error", "df", "df_error",
+      "Mean_Square", "F", "p", "Method")
+  )
 })
