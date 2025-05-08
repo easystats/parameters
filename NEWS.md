@@ -6,6 +6,11 @@
   `brmsfit` and `stanreg` gets an additional `"grouplevel"` option, to return
   the group-level estimates for random effects.
 
+* `model_parameters()` for Anova-objects gains a `p_adjust` argument, to apply
+  p-adjustment where possible. Furthermore, for models from package *afex*, where
+  p-adjustment was applied during model-fitting, the correct p-values are now
+  returned (before, unadjusted p-values were returned in some cases).
+
 # parameters 0.25.0
 
 ## Changes

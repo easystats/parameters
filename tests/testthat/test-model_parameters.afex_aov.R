@@ -47,8 +47,17 @@ test_that("afex_aov, p-adjustement", {
     out1,
     c("Parameter", "Sum_Squares", "df", "Mean_Square", "F", "p", "Method")
   )
-  expect_equal(out1$p, c(0.4714, 0, 0.0719, NA), tolerance = 1e-3)
+  expect_equal(out1$p, c(1, 0, 0.2157, NA), tolerance = 1e-3)
   expect_equal(out2$p, c(1, 0, 0.2157, NA), tolerance = 1e-3)
+
+  afx <- afex::aov_4(
+    overall ~ condition * talk + (1 | pid),
+    data = laptop_urry
+  )
+  out3 <- model_parameters(afx, ci = 0.95)
+  out4 <- model_parameters(afx, ci = 0.95, p_adjust = "bonferroni")
+  expect_equal(out3$p, c(0.4714, 0, 0.0719, NA), tolerance = 1e-3)
+  expect_equal(out4$p, c(1, 0, 0.2157, NA), tolerance = 1e-3)
 })
 
 
