@@ -102,6 +102,7 @@ model_parameters.aov <- function(model,
                                  df_error = NULL,
                                  ci = NULL,
                                  alternative = NULL,
+                                 p_adjust = NULL,
                                  test = NULL,
                                  power = FALSE,
                                  es_type = NULL,
@@ -138,7 +139,7 @@ model_parameters.aov <- function(model,
   }
 
   # extract standard parameters
-  params <- .extract_parameters_anova(model, test)
+  params <- .extract_parameters_anova(model, test, p_adjust = p_adjust, verbose = verbose)
 
   # add effect sizes, if available
   params <- .effectsizes_for_aov(
