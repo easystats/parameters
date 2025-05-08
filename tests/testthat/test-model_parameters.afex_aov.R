@@ -81,6 +81,7 @@ test_that("afex_aov_ez, p-adjustement", {
     out,
     c(
       "Parameter", "Sum_Squares", "Sum_Squares_Error", "df", "df_error",
-      "Mean_Square", "F", "p", "Method")
+      "Mean_Square", "F", "p", "Method"
+    )
   )
 })
