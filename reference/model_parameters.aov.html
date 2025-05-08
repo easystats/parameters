@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.25.0.5</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.25.0.6</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -67,6 +67,7 @@
 <span>  df_error <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  ci <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  alternative <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  p_adjust <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  test <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  power <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  es_type <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -113,6 +114,14 @@ Controls the type of CI returned: <code>"two.sided"</code> (default, two-sided C
 <code>"greater"</code> or <code>"less"</code> (one-sided CI). Partial matching is allowed
 (e.g., <code>"g"</code>, <code>"l"</code>, <code>"two"</code>...). See section <em>One-Sided CIs</em> in
 the <a href="https://easystats.github.io/effectsize/" class="external-link">effectsize_CIs vignette</a>.</p></dd>
+
+
+<dt id="arg-p-adjust">p_adjust<a class="anchor" aria-label="anchor" href="#arg-p-adjust"></a></dt>
+<dd><p>Character vector, if not <code>NULL</code>, indicates the method to
+adjust p-values. See <code><a href="https://rdrr.io/r/stats/p.adjust.html" class="external-link">stats::p.adjust()</a></code> for details. Further
+possible adjustment methods are <code>"tukey"</code>, <code>"scheffe"</code>,
+<code>"sidak"</code> and <code>"none"</code> to explicitly disable adjustment for
+<code>emmGrid</code> objects (from <strong>emmeans</strong>).</p></dd>
 
 
 <dt id="arg-test">test<a class="anchor" aria-label="anchor" href="#arg-test"></a></dt>
