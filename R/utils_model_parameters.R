@@ -388,13 +388,14 @@
 
 
 #' @keywords internal
-.add_anova_attributes <- function(params, model, ci, test = NULL, alternative = NULL, ...) {
+.add_anova_attributes <- function(params, model, ci, test = NULL, alternative = NULL, p_adjust = NULL, ...) {
   dot.arguments <- lapply(match.call(expand.dots = FALSE)$`...`, function(x) x) # nolint
 
   attr(params, "ci") <- ci
   attr(params, "model_class") <- class(model)
   attr(params, "anova_type") <- .anova_type(model)
   attr(params, "text_alternative") <- .anova_alternative(params, alternative)
+  attr(params, "p_adjust") <- p_adjust
 
   if (inherits(model, "Anova.mlm") && !identical(test, "univariate")) {
     attr(params, "anova_test") <- model$test

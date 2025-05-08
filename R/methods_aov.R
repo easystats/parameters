@@ -102,6 +102,7 @@ model_parameters.aov <- function(model,
                                  df_error = NULL,
                                  ci = NULL,
                                  alternative = NULL,
+                                 p_adjust = NULL,
                                  test = NULL,
                                  power = FALSE,
                                  es_type = NULL,
@@ -138,7 +139,7 @@ model_parameters.aov <- function(model,
   }
 
   # extract standard parameters
-  params <- .extract_parameters_anova(model, test)
+  params <- .extract_parameters_anova(model, test, p_adjust = p_adjust, verbose = verbose)
 
   # add effect sizes, if available
   params <- .effectsizes_for_aov(
@@ -251,6 +252,7 @@ model_parameters.afex_aov <- function(model,
                                       type = NULL,
                                       keep = NULL,
                                       drop = NULL,
+                                      p_adjust = NULL,
                                       verbose = TRUE,
                                       ...) {
   if (inherits(model$Anova, "Anova.mlm")) {
@@ -258,9 +260,11 @@ model_parameters.afex_aov <- function(model,
     with_df_and_p <- summary(model$Anova)$univariate.tests
     params$`Sum Sq` <- with_df_and_p[-1, 1]
     params$`Error SS` <- with_df_and_p[-1, 3]
-    out <- .extract_parameters_anova(params, test = NULL)
+    out <- .extract_parameters_anova(params, test = NULL, p_adjust = NULL, verbose)
+    p_adjust <- .extract_p_adjust_afex(model, p_adjust)
   } else {
-    out <- .extract_parameters_anova(model$Anova, test = NULL)
+    p_adjust <- .extract_p_adjust_afex(model, p_adjust)
+    out <- .extract_parameters_anova(model$Anova, test = NULL, p_adjust, verbose)
   }
 
   out <- .effectsizes_for_aov(
@@ -273,7 +277,15 @@ model_parameters.afex_aov <- function(model,
   )
 
   # add attributes
-  out <- .add_anova_attributes(out, model, ci, test = NULL, alternative = NULL, ...)
+  out <- .add_anova_attributes(
+    out,
+    model,
+    ci,
+    test = NULL,
+    alternative = NULL,
+    p_adjust = p_adjust,
+    ...
+  )
 
   # filter parameters
   if (!is.null(keep) || !is.null(drop)) {
@@ -560,4 +572,18 @@ model_parameters.seqanova.svyglm <- model_parameters.aov
   col_order <- union(c("Parameter", "F", "df", "df_error", "p"), names(data))
 
   data[, col_order]
+}
+
+
+#' @keywords internal
+.extract_p_adjust_afex <- function(model, p_adjust) {
+  if (is.null(p_adjust) && inherits(model, "afex_aov")) {
+    p_adjust <- attr(model$anova_table, "p_adjust_method")
+
+    if (p_adjust == "none") {
+      p_adjust <- NULL
+    }
+  }
+
+  p_adjust
 }
