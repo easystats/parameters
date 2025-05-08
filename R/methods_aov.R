@@ -254,8 +254,11 @@ model_parameters.afex_aov <- function(model,
                                       p_adjust = NULL,
                                       verbose = TRUE,
                                       ...) {
+  p_adjust <- .extract_p_adjust_afex(model, p_adjust)
+
   if (inherits(model$Anova, "Anova.mlm")) {
-    params <- model$anova_table
+    # need to un-do the p-adjustment
+    params <- anova(model, p_adjust_method = "none")
     with_df_and_p <- summary(model$Anova)$univariate.tests
     params$`Sum Sq` <- with_df_and_p[-1, 1]
     params$`Error SS` <- with_df_and_p[-1, 3]
@@ -569,4 +572,17 @@ model_parameters.seqanova.svyglm <- model_parameters.aov
   col_order <- union(c("Parameter", "F", "df", "df_error", "p"), names(data))
 
   data[, col_order]
+}
+
+#' @keywords internal
+.extract_p_adjust_afex <- function(model, p_adjust) {
+  if (is.null(p_adjust) && inherits(model, "afex_aov")) {
+    p_adjust <- attr(model$anova_table, "p_adjust_method")
+
+    if (p_adjust == "none") {
+      p_adjust <- NULL
+    }
+  }
+
+  p_adjust
 }
