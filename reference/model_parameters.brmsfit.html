@@ -267,6 +267,9 @@ factors), which may be a different behaviour compared to other R packages
 (such as <strong>lm.beta</strong>) or other software packages (like SPSS). to mimic
 such behaviours, either use <code>standardize="basic"</code> or standardize the data
 with <code>datawizard::standardize(force=TRUE)</code> <em>before</em> fitting the model.</p></li>
+<li><p>By default, the response (dependent) variable is also standardized, <em>if
+applicable</em>. Set <code>include_response = FALSE</code> to avoid standardization of
+the response variable. See details in <code><a href="https://easystats.github.io/datawizard/reference/standardize.default.html" class="external-link">datawizard::standardize.default()</a></code>.</p></li>
 <li><p>For mixed models, when using methods other than <code>"refit"</code>, only the fixed
 effects will be standardized.</p></li>
 <li><p>Robust estimation (i.e., <code>vcov</code> set to a value other than <code>NULL</code>) of
