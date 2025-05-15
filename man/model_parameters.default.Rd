@@ -55,6 +55,9 @@ factors), which may be a different behaviour compared to other R packages
 (such as \strong{lm.beta}) or other software packages (like SPSS). to mimic
 such behaviours, either use \code{standardize="basic"} or standardize the data
 with \code{datawizard::standardize(force=TRUE)} \emph{before} fitting the model.
+\item By default, the response (dependent) variable is also standardized, \emph{if
+applicable}. Set \code{include_response = FALSE} to avoid standardization of
+the response variable. See details in \code{\link[datawizard:standardize.default]{datawizard::standardize.default()}}.
 \item For mixed models, when using methods other than \code{"refit"}, only the fixed
 effects will be standardized.
 \item Robust estimation (i.e., \code{vcov} set to a value other than \code{NULL}) of
