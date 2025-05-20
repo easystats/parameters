@@ -40,6 +40,10 @@
 #'   computed by default, for simpler models or fewer observations, confidence
 #'   intervals will be included. Set explicitly to `TRUE` or `FALSE` to enforce
 #'   or omit calculation of confidence intervals.
+#' @param group_level Logical, for multilevel models (i.e. models with random
+#'   effects) and when `effects = "random"`, include the parameters for each
+#'   group level from random effects. If `group_level = FALSE` (the default),
+#'   only information on SD and COR are shown.
 #' @param ... Arguments passed to or from other methods. For instance, when
 #'   `bootstrap = TRUE`, arguments like `type` or `parallel` are passed down to
 #'   `bootstrap_model()`.

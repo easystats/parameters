@@ -104,9 +104,9 @@ argument - but no auxiliary parameters). For \code{component = "distributional"}
 (and other auxiliary parameters) are returned.}
 
 \item{group_level}{Logical, for multilevel models (i.e. models with random
-effects) and when \code{effects = "all"} or \code{effects = "random"}, include the
-parameters for each group level from random effects. If \code{group_level = FALSE}
-(the default), only information on SD and COR are shown.}
+effects) and when \code{effects = "random"}, include the parameters for each
+group level from random effects. If \code{group_level = FALSE} (the default),
+only information on SD and COR are shown.}
 
 \item{exponentiate}{Logical, indicating whether or not to exponentiate the
 coefficients (and related confidence intervals). This is typical for

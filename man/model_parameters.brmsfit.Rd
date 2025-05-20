@@ -183,9 +183,11 @@ standardized parameters only works when \code{standardize="refit"}.
 }}
 
 \item{group_level}{Logical, for multilevel models (i.e. models with random
-effects) and when \code{effects = "all"} or \code{effects = "random"}, include the
-parameters for each group level from random effects. If \code{group_level = FALSE}
-(the default), only information on SD and COR are shown.}
+effects) and when \code{effects = "random"}, return the parameters for each group
+level from random effects only. If \code{group_level = FALSE} (the default), also
+information on SD and COR are returned. Note that this argument is superseded
+by the new options for the \code{effects} argument. \code{effects = "grouplevel"} should
+be used instead of \code{group_level = TRUE}.}
 
 \item{keep}{Character containing a regular expression pattern that
 describes the parameters that should be included (for \code{keep}) or excluded
