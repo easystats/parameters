@@ -27,6 +27,14 @@ test_that("afex_aov", {
       "Mean_Square", "F", "p", "Method"
     )
   )
+
+  # include intercept
+  out <- model_parameters(m_between, verbose = FALSE, include_intercept = TRUE)
+  expect_identical(dim(out), c(5L, 7L))
+  expect_identical(
+    out$Parameter,
+    c("(Intercept)", "treatment", "gender", "treatment:gender", "Residuals")
+  )
 })
 
 

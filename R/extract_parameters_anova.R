@@ -2,6 +2,7 @@
 .extract_parameters_anova <- function(model,
                                       test = "multivariate",
                                       p_adjust = NULL,
+                                      include_intercept = FALSE,
                                       verbose = TRUE) {
   # Processing
   if (inherits(model, "manova")) {
@@ -24,7 +25,7 @@
 
   # remove intercept
   intercepts <- parameters$Parameter %in% c("Intercept", "(Intercept)")
-  if (any(intercepts)) {
+  if (any(intercepts) && !include_intercept) {
     parameters <- parameters[!intercepts, ]
   }
 

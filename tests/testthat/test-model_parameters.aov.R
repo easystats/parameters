@@ -62,7 +62,9 @@ test_that("model_parameters.anova", {
 
   model <- insight::download_model("anova_3")
   skip_if(is.null(model))
-  expect_identical(sum(model_parameters(model, verbose = FALSE)$df), 149L)
+  out <- model_parameters(model, verbose = FALSE)
+  expect_identical(sum(out$df), 149L)
+  expect_identical(dim(out), c(6L, 6L))
 
   model <- insight::download_model("anova_4")
   skip_if(is.null(model))

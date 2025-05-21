@@ -20,6 +20,9 @@
   mainly to be more flexible and gain more efficiency for models with many
   parameters and / or many posterior draws.
 
+* `model_parameters()` for Anova objects gains an `include_intercept` argument,
+  to include intercepts in the Anova table, where possible.
+
 # parameters 0.25.0
 
 ## Changes

@@ -4,9 +4,8 @@
 
 #' Parameters from ANOVAs
 #'
-#' @param model Object of class [aov()], [anova()],
-#'   `aovlist`, `Gam`, [manova()], `Anova.mlm`,
-#'   `afex_aov` or `maov`.
+#' @param model Object of class [aov()], [anova()], `aovlist`, `Gam`,
+#'   [manova()], `Anova.mlm`, `afex_aov` or `maov`.
 #' @param es_type The effect size of interest. Not that possibly not all
 #'   effect sizes are applicable to the model object. See 'Details'. For Anova
 #'   models, can also be a character vector with multiple effect size names.
@@ -29,6 +28,8 @@
 #' @param table_wide Logical that decides whether the ANOVA table should be in
 #'   wide format, i.e. should the numerator and denominator degrees of freedom
 #'   be in the same row. Default: `FALSE`.
+#' @param include_intercept Logical, if `TRUE`, includes the intercept
+#'   (`(Intercept)`) in the anova table.
 #' @param alternative A character string specifying the alternative hypothesis;
 #'   Controls the type of CI returned: `"two.sided"` (default, two-sided CI),
 #'   `"greater"` or `"less"` (one-sided CI). Partial matching is allowed
@@ -108,6 +109,7 @@ model_parameters.aov <- function(model,
                                  es_type = NULL,
                                  keep = NULL,
                                  drop = NULL,
+                                 include_intercept = FALSE,
                                  table_wide = FALSE,
                                  verbose = TRUE,
                                  ...) {
@@ -139,7 +141,13 @@ model_parameters.aov <- function(model,
   }
 
   # extract standard parameters
-  params <- .extract_parameters_anova(model, test, p_adjust = p_adjust, verbose = verbose)
+  params <- .extract_parameters_anova(
+    model,
+    test,
+    p_adjust = p_adjust,
+    include_intercept = include_intercept,
+    verbose = verbose
+  )
 
   # add effect sizes, if available
   params <- .effectsizes_for_aov(
@@ -252,6 +260,7 @@ model_parameters.afex_aov <- function(model,
                                       type = NULL,
                                       keep = NULL,
                                       drop = NULL,
+                                      include_intercept = FALSE,
                                       p_adjust = NULL,
                                       verbose = TRUE,
                                       ...) {
@@ -260,11 +269,23 @@ model_parameters.afex_aov <- function(model,
     with_df_and_p <- summary(model$Anova)$univariate.tests
     params$`Sum Sq` <- with_df_and_p[-1, 1]
     params$`Error SS` <- with_df_and_p[-1, 3]
-    out <- .extract_parameters_anova(params, test = NULL, p_adjust = NULL, verbose)
+    out <- .extract_parameters_anova(
+      params,
+      test = NULL,
+      include_intercept = include_intercept,
+      p_adjust = NULL,
+      verbose
+    )
     p_adjust <- .extract_p_adjust_afex(model, p_adjust)
   } else {
     p_adjust <- .extract_p_adjust_afex(model, p_adjust)
-    out <- .extract_parameters_anova(model$Anova, test = NULL, p_adjust, verbose)
+    out <- .extract_parameters_anova(
+      model$Anova,
+      test = NULL,
+      include_intercept = include_intercept,
+      p_adjust,
+      verbose
+    )
   }
 
   out <- .effectsizes_for_aov(
