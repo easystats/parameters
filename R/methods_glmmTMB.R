@@ -435,7 +435,7 @@ model_parameters.glmmTMB <- function(model,
         effects = effects,
         component = component
       )
-      if (length(random_effects) > 1) {
+      if (length(random_effects) > 1 && verbose) {
         insight::format_alert(
           "Cannot extract confidence intervals for random variance parameters from models with more than one grouping factor." # nolint
         )
