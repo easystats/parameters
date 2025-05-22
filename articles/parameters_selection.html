@@ -29,7 +29,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.26.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.26.0.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -87,7 +87,7 @@
       <img src="../logo.png" class="logo" alt=""><h1>Selection of Model Parameters</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/v0.26.0/vignettes/parameters_selection.Rmd" class="external-link"><code>vignettes/parameters_selection.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/main/vignettes/parameters_selection.Rmd" class="external-link"><code>vignettes/parameters_selection.Rmd</code></a></small>
       <div class="d-none name"><code>parameters_selection.Rmd</code></div>
     </div>
 
@@ -189,17 +189,17 @@ package:</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; High Correlation</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;                      Term      VIF           VIF 95% CI Increased SE Tolerance</span></span>
-<span><span class="co">#&gt;               Sepal.Width    29.42 [   22.31,    38.91]         5.42      0.03</span></span>
-<span><span class="co">#&gt;              Petal.Length  3204.78 [ 2414.74,  4253.41]        56.61  3.12e-04</span></span>
-<span><span class="co">#&gt;               Petal.Width  2442.10 [ 1840.11,  3241.14]        49.42  4.09e-04</span></span>
-<span><span class="co">#&gt;                   Species 3.98e+05 [3.00e+05, 5.28e+05]       630.97  2.51e-06</span></span>
-<span><span class="co">#&gt;  Sepal.Width:Petal.Length  2183.98 [ 1645.63,  2898.55]        46.73  4.58e-04</span></span>
-<span><span class="co">#&gt;   Sepal.Width:Petal.Width  1866.48 [ 1406.42,  2477.15]        43.20  5.36e-04</span></span>
-<span><span class="co">#&gt;       Sepal.Width:Species 3.49e+05 [2.63e+05, 4.64e+05]       591.13  2.86e-06</span></span>
-<span><span class="co">#&gt;  Petal.Length:Petal.Width  4032.80 [ 3038.60,  5352.41]        63.50  2.48e-04</span></span>
-<span><span class="co">#&gt;      Petal.Length:Species 1.23e+06 [9.27e+05, 1.63e+06]      1109.09  8.13e-07</span></span>
-<span><span class="co">#&gt;       Petal.Width:Species 3.77e+05 [2.84e+05, 5.01e+05]       614.38  2.65e-06</span></span>
+<span><span class="co">#&gt;                      Term      VIF           VIF 95% CI adj. VIF Tolerance</span></span>
+<span><span class="co">#&gt;               Sepal.Width    29.42 [   22.31,    38.91]     5.42      0.03</span></span>
+<span><span class="co">#&gt;              Petal.Length  3204.78 [ 2414.74,  4253.41]    56.61  3.12e-04</span></span>
+<span><span class="co">#&gt;               Petal.Width  2442.10 [ 1840.11,  3241.14]    49.42  4.09e-04</span></span>
+<span><span class="co">#&gt;                   Species 3.98e+05 [3.00e+05, 5.28e+05]    25.12  2.51e-06</span></span>
+<span><span class="co">#&gt;  Sepal.Width:Petal.Length  2183.98 [ 1645.63,  2898.55]    46.73  4.58e-04</span></span>
+<span><span class="co">#&gt;   Sepal.Width:Petal.Width  1866.48 [ 1406.42,  2477.15]    43.20  5.36e-04</span></span>
+<span><span class="co">#&gt;       Sepal.Width:Species 3.49e+05 [2.63e+05, 4.64e+05]   591.13  2.86e-06</span></span>
+<span><span class="co">#&gt;  Petal.Length:Petal.Width  4032.80 [ 3038.60,  5352.41]    63.50  2.48e-04</span></span>
+<span><span class="co">#&gt;      Petal.Length:Species 1.23e+06 [9.27e+05, 1.63e+06]  1109.09  8.13e-07</span></span>
+<span><span class="co">#&gt;       Petal.Width:Species 3.77e+05 [2.84e+05, 5.01e+05]   614.38  2.65e-06</span></span>
 <span><span class="co">#&gt;  Tolerance 95% CI</span></span>
 <span><span class="co">#&gt;      [0.03, 0.04]</span></span>
 <span><span class="co">#&gt;      [0.00, 0.00]</span></span>
