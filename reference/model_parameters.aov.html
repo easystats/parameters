@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.25.0.6</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.26.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -73,6 +73,7 @@
 <span>  es_type <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  keep <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  drop <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  include_intercept <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  table_wide <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  <span class="va">...</span></span>
@@ -84,9 +85,8 @@
 
 
 <dl><dt id="arg-model">model<a class="anchor" aria-label="anchor" href="#arg-model"></a></dt>
-<dd><p>Object of class <code><a href="https://rdrr.io/r/stats/aov.html" class="external-link">aov()</a></code>, <code><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova()</a></code>,
-<code>aovlist</code>, <code>Gam</code>, <code><a href="https://rdrr.io/r/stats/manova.html" class="external-link">manova()</a></code>, <code>Anova.mlm</code>,
-<code>afex_aov</code> or <code>maov</code>.</p></dd>
+<dd><p>Object of class <code><a href="https://rdrr.io/r/stats/aov.html" class="external-link">aov()</a></code>, <code><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova()</a></code>, <code>aovlist</code>, <code>Gam</code>,
+<code><a href="https://rdrr.io/r/stats/manova.html" class="external-link">manova()</a></code>, <code>Anova.mlm</code>, <code>afex_aov</code> or <code>maov</code>.</p></dd>
 
 
 <dt id="arg-type">type<a class="anchor" aria-label="anchor" href="#arg-type"></a></dt>
@@ -166,6 +166,11 @@ names.</p></dd>
 
 <dt id="arg-drop">drop<a class="anchor" aria-label="anchor" href="#arg-drop"></a></dt>
 <dd><p>See <code>keep</code>.</p></dd>
+
+
+<dt id="arg-include-intercept">include_intercept<a class="anchor" aria-label="anchor" href="#arg-include-intercept"></a></dt>
+<dd><p>Logical, if <code>TRUE</code>, includes the intercept
+(<code>(Intercept)</code>) in the anova table.</p></dd>
 
 
 <dt id="arg-table-wide">table_wide<a class="anchor" aria-label="anchor" href="#arg-table-wide"></a></dt>
@@ -335,7 +340,7 @@ covariates are mean-centred and factors are coded with orthogonal contrasts
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.2.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.9000.</p>
 </div>
 
     </footer></div>
