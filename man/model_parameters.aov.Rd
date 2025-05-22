@@ -16,15 +16,15 @@
   es_type = NULL,
   keep = NULL,
   drop = NULL,
+  include_intercept = FALSE,
   table_wide = FALSE,
   verbose = TRUE,
   ...
 )
 }
 \arguments{
-\item{model}{Object of class \code{\link[=aov]{aov()}}, \code{\link[=anova]{anova()}},
-\code{aovlist}, \code{Gam}, \code{\link[=manova]{manova()}}, \code{Anova.mlm},
-\code{afex_aov} or \code{maov}.}
+\item{model}{Object of class \code{\link[=aov]{aov()}}, \code{\link[=anova]{anova()}}, \code{aovlist}, \code{Gam},
+\code{\link[=manova]{manova()}}, \code{Anova.mlm}, \code{afex_aov} or \code{maov}.}
 
 \item{type}{Numeric, type of sums of squares. May be 1, 2 or 3. If 2 or 3,
 ANOVA-tables using \code{car::Anova()} will be returned. (Ignored for
@@ -84,6 +84,9 @@ frame, which can be different from how they are printed. Inspect the
 names.}
 
 \item{drop}{See \code{keep}.}
+
+\item{include_intercept}{Logical, if \code{TRUE}, includes the intercept
+(\code{(Intercept)}) in the anova table.}
 
 \item{table_wide}{Logical that decides whether the ANOVA table should be in
 wide format, i.e. should the numerator and denominator degrees of freedom
