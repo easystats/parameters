@@ -183,7 +183,7 @@ Suggests:
     panelr,
     pbkrtest,
     PCDimension,
-    performance (>= 0.12.0),
+    performance (>= 0.14.0),
     plm,
     PMCMRplus,
     poorman,

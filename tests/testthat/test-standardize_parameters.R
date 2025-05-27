@@ -329,6 +329,7 @@ test_that("standardize_parameters (Bayes)", {
 # Pseudo - GLMM --------------------------------
 test_that("standardize_parameters (Pseudo - GLMM)", {
   skip_if_not_installed("datawizard", minimum_version = "0.12.0")
+  skip_if_not_installed("performance", minimum_version = "0.14.0")
   skip_on_cran()
   skip_if_not_installed("lme4")
   set.seed(1)

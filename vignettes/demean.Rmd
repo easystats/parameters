@@ -85,11 +85,11 @@ turn, results in biased estimates, because both the within- *and* between-effect
 are captured in *one* estimate.
 
 You can check if your model may suffer from heterogeneity bias using the
-`check_heterogeneity_bias()` function:
+`check_group_variation()` function:
 
 ```{r}
 library(performance)
-check_heterogeneity_bias(qol_cancer, select = c("phq4", "education"), by = "ID")
+check_group_variation(qol_cancer, select = c("phq4", "education"), by = "ID")
 ```
 
 # Adressing heterogeneity bias: the Fixed Effects Regression (FE) approach
