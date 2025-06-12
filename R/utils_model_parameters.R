@@ -16,12 +16,17 @@
                                              verbose = TRUE,
                                              group_level = FALSE,
                                              wb_component = FALSE,
+                                             modelinfo = NULL,
                                              ...) {
   # capture additional arguments
   dot.arguments <- list(...)
 
   # model info
-  info <- .safe(suppressWarnings(insight::model_info(model, verbose = FALSE)))
+  if (is.null(modelinfo)) {
+    info <- .safe(suppressWarnings(insight::model_info(model, verbose = FALSE)))
+  } else {
+    info <- modelinfo
+  }
 
   if (is.null(info)) {
     info <- list(family = "unknown", link_function = "unknown")
@@ -359,6 +364,23 @@
 }
 
 
+#' this function extracts the table with cleaned parameter names, extracted
+#' from `insight::clean_parameters()`. it first checks whether this object
+#' is saved as attribute, and if not, calls `insight::clean_parameters()`.
+#'
+#' @keywords internal
+#' @noRd
+.get_cleaned_parameters <- function(params, model) {
+  # check if we have cleaned parameters as attributes
+  cp <- attributes(params)$clean_parameters
+  # if not, add
+  if (is.null(cp)) {
+    cp <- insight::clean_parameters(model)
+  }
+  cp
+}
+
+
 #' this function extract "prettified" parameter names, using
 #' `insight::clean_parameters()`, and matches them with the parameter names.
 #' the result is a named vector, added as attributes to the output
@@ -367,7 +389,8 @@
 #' @noRd
 .add_pretty_names <- function(params, model) {
   attr(params, "model_class") <- class(model)
-  cp <- insight::clean_parameters(model)
+  # check if we have cleaned parameters as attributes
+  cp <- .get_cleaned_parameters(params, model)
   clean_params <- cp[cp$Parameter %in% params$Parameter, ]
 
   named_clean_params <- stats::setNames(

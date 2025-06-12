@@ -161,11 +161,12 @@ model_parameters.brmsfit <- function(model,
       exponentiate,
       ci_method = ci_method,
       group_level = group_level,
+      modelinfo = modelinfo,
       verbose = verbose,
       ...
     )
 
-    attr(params, "parameter_info") <- insight::clean_parameters(model)
+    attr(params, "parameter_info") <- .get_cleaned_parameters(params, model)
     attr(params, "object_name") <- insight::safe_deparse_symbol(substitute(model))
     attr(params, "dpars") <- insight::find_auxiliary(model, verbose = FALSE)
     class(params) <- unique(c("parameters_model", "see_parameters_model", class(params)))
