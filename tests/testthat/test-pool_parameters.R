@@ -143,7 +143,7 @@ test_that("pooled parameters, glmmTMB, zero-inflated", {
     ziformula = ~mined,
     family = poisson()
   )))
-  mice_summ <- summary(mice::pool(m_mice, dfcom = Inf))
+  mice_summ <- suppressWarnings(summary(mice::pool(m_mice, dfcom = Inf)))
   expect_equal(out$Coefficient, mice_summ$estimate, tolerance = 1e-3)
   expect_equal(out$SE, mice_summ$std.error, tolerance = 1e-3)
   expect_equal(out$p, mice_summ$p.value, tolerance = 1e-3)
