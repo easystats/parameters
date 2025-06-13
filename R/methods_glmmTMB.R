@@ -209,6 +209,8 @@ model_parameters.glmmTMB <- function(model,
     c("all", "conditional", "zi", "zero_inflated", "dispersion")
   )
 
+  modelinfo <- insight::model_info(model, verbose = FALSE)
+
   # group level estimates =================================================
   # =======================================================================
 
@@ -238,7 +240,7 @@ model_parameters.glmmTMB <- function(model,
 
   # fix argument, if model has only conditional component
   cs <- stats::coef(summary(model))
-  has_zeroinf <- insight::model_info(model, verbose = FALSE)$is_zero_inflated
+  has_zeroinf <- modelinfo$is_zero_inflated
   has_disp <- is.list(cs) && !is.null(cs$disp)
 
   if (!has_zeroinf && !has_disp && component != "conditional") {
@@ -348,6 +350,7 @@ model_parameters.glmmTMB <- function(model,
     group_level = group_level,
     include_info = include_info,
     wb_component = wb_component,
+    modelinfo = modelinfo,
     ...
   )
 
