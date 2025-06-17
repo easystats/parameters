@@ -55,6 +55,7 @@ factor_analysis.data.frame <- function(x,
 
 
 # methods -------------------------
+
 #' @export
 print.psych_efa <- function(x,
                             sort = FALSE,
@@ -67,7 +68,7 @@ print.psych_efa <- function(x,
   if (is.null(sort)) {
     sort <- attributes(x)$sort
   }
-  model_parameters(x, sort = sort, threshold = threshold, labels = labels, ...)
+  print(model_parameters(x, sort = sort, threshold = threshold, labels = labels, ...))
 }
 
 

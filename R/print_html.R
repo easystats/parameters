@@ -243,6 +243,39 @@ print_html.compare_parameters <- function(x,
 }
 
 
+#' @export
+print_html.parameters_efa <- function(x, digits = 3, ...) {
+  table_caption <- "(Explained) Variance of Components"
+
+  if ("Parameter" %in% names(x)) {
+    x$Parameter <- c("Eigenvalues", "Variance Explained", "Variance Explained (Cumulative)", "Variance Explained (Proportion)") # nolint
+  } else if ("Component" %in% names(x)) {
+    names(x) <- c("Component", "Eigenvalues", "Variance Explained", "Variance Explained (Cumulative)", "Variance Explained (Proportion)") # nolint
+  }
+  insight::export_table(x, digits = digits, format = "html", caption = table_caption, align = "firstleft")
+}
+
+
+#' @export
+print_html.psych_efa <- function(x, digits = 2, sort = FALSE, threshold = NULL, labels = NULL, ...) {
+  if (is.null(threshold)) {
+    threshold <- attributes(x)$threshold
+  }
+  if (is.null(sort)) {
+    sort <- attributes(x)$sort
+  }
+  out <- model_parameters(x, sort = sort, threshold = threshold, labels = labels, ...)
+  print_html(
+    out,
+    digits = digits,
+    sort = sort,
+    threshold = threshold,
+    labels = labels,
+    ...
+  )
+}
+
+
 # helper ------------------
 
 .add_gt_options <- function(out,

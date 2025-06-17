@@ -276,6 +276,25 @@ print_md.parameters_efa <- function(x, digits = 2, sort = FALSE, threshold = NUL
 #' @export
 print_md.parameters_pca <- print_md.parameters_efa
 
+#' @export
+print_md.psych_efa <- function(x, digits = 2, sort = FALSE, threshold = NULL, labels = NULL, ...) {
+  if (is.null(threshold)) {
+    threshold <- attributes(x)$threshold
+  }
+  if (is.null(sort)) {
+    sort <- attributes(x)$sort
+  }
+  out <- model_parameters(x, sort = sort, threshold = threshold, labels = labels, ...)
+  print_md(
+    out,
+    digits = digits,
+    sort = sort,
+    threshold = threshold,
+    labels = labels,
+    ...
+  )
+}
+
 
 # Equivalence test ----------------------------
 
