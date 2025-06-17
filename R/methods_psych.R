@@ -259,12 +259,10 @@ model_parameters.omega <- function(model, verbose = TRUE, ...) {
 
   if ("Cumulative Var" %in% row.names(variance)) {
     data_summary$Variance_Cumulative <- as.numeric(variance["Cumulative Var", ])
+  } else if (ncol(variance) == 1) {
+    data_summary$Variance_Cumulative <- as.numeric(variance["Proportion Var", ])
   } else {
-    if (ncol(variance) == 1) {
-      data_summary$Variance_Cumulative <- as.numeric(variance["Proportion Var", ])
-    } else {
-      data_summary$Variance_Cumulative <- NA
-    }
+    data_summary$Variance_Cumulative <- NA
   }
   data_summary$Variance_Proportion <- data_summary$Variance / sum(data_summary$Variance)
 
