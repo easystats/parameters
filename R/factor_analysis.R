@@ -68,7 +68,8 @@ print.psych_efa <- function(x,
   if (is.null(sort)) {
     sort <- attributes(x)$sort
   }
-  print(model_parameters(x, sort = sort, threshold = threshold, labels = labels, ...))
+  out <- model_parameters(x, sort = sort, threshold = threshold, labels = labels, ...)
+  print(out, ...)
 }
 
 
