@@ -6,7 +6,7 @@ factor_analysis <- function(x,
                             sort = FALSE,
                             threshold = NULL,
                             standardize = TRUE,
-                            cor = NULL,
+                            correlation_matrix = NULL,
                             ...) {
   UseMethod("factor_analysis")
 }
@@ -19,15 +19,21 @@ factor_analysis.data.frame <- function(x,
                                        sort = FALSE,
                                        threshold = NULL,
                                        standardize = TRUE,
-                                       cor = NULL,
+                                       correlation_matrix = NULL,
                                        ...) {
   # Standardize
-  if (standardize && is.null(cor)) {
+  if (standardize && is.null(correlation_matrix)) {
     x <- datawizard::standardize(x, ...)
   }
 
   # N factors
-  n <- .get_n_factors(x, n = n, type = "FA", rotation = rotation, cor = cor)
+  n <- .get_n_factors(
+    x,
+    n = n,
+    type = "FA",
+    rotation = rotation,
+    correlation_matrix = correlation_matrix
+  )
 
   .factor_analysis_rotate(
     x,
@@ -35,7 +41,7 @@ factor_analysis.data.frame <- function(x,
     rotation = rotation,
     sort = sort,
     threshold = threshold,
-    cor = cor,
+    correlation_matrix = correlation_matrix,
     ...
   )
 }
@@ -47,7 +53,7 @@ factor_analysis.data.frame <- function(x,
                                     rotation,
                                     sort = FALSE,
                                     threshold = NULL,
-                                    cor = NULL,
+                                    correlation_matrix = NULL,
                                     ...) {
   if (!inherits(x, "data.frame")) {
     insight::format_error("`x` must be a data frame.")
@@ -58,8 +64,8 @@ factor_analysis.data.frame <- function(x,
     insight::format_error(sprintf("Package `psych` required for `%s`-rotation.", rotation))
   }
 
-  # Pass cor if available
-  if (is.null(cor)) {
+  # Pass correlation_matrix if available
+  if (is.null(correlation_matrix)) {
     out <- model_parameters(
       psych::fa(x, nfactors = n, rotate = rotation, ...),
       sort = sort,
@@ -68,7 +74,7 @@ factor_analysis.data.frame <- function(x,
   } else {
     out <- model_parameters(
       psych::fa(
-        cor,
+        correlation_matrix,
         nfactors = n,
         rotate = rotation,
         n.obs = nrow(x),

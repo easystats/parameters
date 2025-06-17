@@ -18,7 +18,7 @@ factor_analysis(
   sort = FALSE,
   threshold = NULL,
   standardize = TRUE,
-  cor = NULL,
+  correlation_matrix = NULL,
   ...
 )
 
@@ -79,9 +79,9 @@ structure).}
 standardized (centered and scaled) to have unit variance before the
 analysis (in general, such scaling is advisable).}
 
-\item{cor}{An optional correlation matrix that can be used (note that the
-data must still be passed as the first argument). If \code{NULL}, will
-compute it by running \code{cor()} on the passed data.}
+\item{correlation_matrix}{An optional correlation matrix that can be used
+(note that the data must still be passed as the first argument). If \code{NULL},
+will compute it by running \code{cor()} on the passed data.}
 
 \item{...}{Arguments passed to or from other methods.}
 
