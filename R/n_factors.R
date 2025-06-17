@@ -318,7 +318,14 @@ n_factors <- function(x,
   )
 
   # Add cumulative percentage of variance explained
-  fa <- factor_analysis(x, correlation_matrix = correlation_matrix, n = max(by_factors$n_Factors)) # Get it from our fa:: wrapper (TODO: that's probably not the most efficient)
+
+  # Get it from our fa:: wrapper
+  ## TODO: that's probably not the most efficient)
+  fa <- model_parameters(factor_analysis(
+    x,
+    correlation_matrix = correlation_matrix,
+    n = max(by_factors$n_Factors)
+  ))
   varex <- attributes(fa)$summary
   # Extract number of factors from EFA output (usually MR1, ML1, etc.)
   varex$n_Factors <- as.numeric(gsub("[^\\d]+", "", varex$Component, perl = TRUE))
