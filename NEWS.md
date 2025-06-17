@@ -1,5 +1,12 @@
 # parameters 0.26.0
 
+## Breaking Changes
+
+* The `cor` argment in `factor_analysis()` and `n_factors()` was renamed into
+  `correlation_matrix`, to avoid naming collision with the `cor` argument of
+  `psych::fa()`, which is internally used. Hence, now users can pass the `cor`
+  argument to `psych::fa()` when using `factor_analysis()`.
+
 ## Changes
 
 * The `effects` argument in `model_parameters()` for classes `merMod`, `glmmTMB`,
