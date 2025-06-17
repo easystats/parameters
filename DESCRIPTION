@@ -115,6 +115,7 @@ Suggests:
     curl,
     dbscan,
     did,
+    discovr,
     distributional,
     domir (>= 0.2.0),
     drc,
