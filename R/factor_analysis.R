@@ -35,24 +35,101 @@ factor_analysis.data.frame <- function(x,
     correlation_matrix = correlation_matrix
   )
 
-  .factor_analysis_rotate(
+  out <- .factor_analysis_rotate(
     x,
     n,
     rotation = rotation,
-    sort = sort,
-    threshold = threshold,
     correlation_matrix = correlation_matrix,
     ...
   )
+
+  attr(out, "dataset") <- x
+  attr(out, "type") <- "fa"
+  attr(out, "n") <- n
+  attr(out, "sort") <- out
+  attr(out, "threshold") <- threshold
+  class(out) <- c("psych_efa", class(out))
+
+  out
 }
 
+
+# methods -------------------------
+#' @export
+print.psych_efa <- function(x,
+                            sort = FALSE,
+                            threshold = NULL,
+                            labels = NULL,
+                            ...) {
+  if (is.null(threshold)) {
+    threshold <- attributes(x)$threshold
+  }
+  if (is.null(sort)) {
+    sort <- attributes(x)$sort
+  }
+  model_parameters(x, sort = sort, threshold = threshold, labels = labels, ...)
+}
+
+
+#' @export
+summary.psych_efa <- function(object,
+                              sort = FALSE,
+                              threshold = NULL,
+                              labels = NULL,
+                              ...) {
+  if (is.null(threshold)) {
+    threshold <- attributes(object)$threshold
+  }
+  if (is.null(sort)) {
+    sort <- attributes(object)$sort
+  }
+  out <- model_parameters(object, sort = sort, threshold = threshold, labels = labels, ...)
+  summary(out, ...)
+}
+
+
+#' @export
+predict.psych_efa <- function(object,
+                              newdata = NULL,
+                              names = NULL,
+                              keep_na = TRUE,
+                              sort = FALSE,
+                              threshold = NULL,
+                              labels = NULL,
+                              verbose = TRUE,
+                              ...) {
+  if (is.null(threshold)) {
+    threshold <- attributes(object)$threshold
+  }
+  if (is.null(sort)) {
+    sort <- attributes(object)$sort
+  }
+  out <- model_parameters(object, sort = sort, threshold = threshold, labels = labels, ...)
+  predict(out, newdata = newdata, names = names, keep_na = keep_na, verbose = verbose, ...)
+}
+
+
+#' @export
+convert_efa_to_cfa.psych_efa <- function(model,
+                                         threshold = NULL,
+                                         names = NULL,
+                                         max_per_dimension = NULL,
+                                         ...) {
+  if (is.null(threshold)) {
+    threshold <- attributes(object)$threshold
+  }
+  sort <- attributes(object)$sort
+  out <- model_parameters(object, sort = sort, threshold = threshold, ...)
+  convert_efa_to_cfa(out, names = names, max_per_dimension = max_per_dimension, ...)
+}
+
+
+# internals -----------------------
 
 #' @keywords internal
 .factor_analysis_rotate <- function(x,
                                     n,
                                     rotation,
-                                    sort = FALSE,
-                                    threshold = NULL,
                                     correlation_matrix = NULL,
                                     ...) {
   if (!inherits(x, "data.frame")) {
@@ -66,25 +143,15 @@ factor_analysis.data.frame <- function(x,
 
   # Pass correlation_matrix if available
   if (is.null(correlation_matrix)) {
-    out <- model_parameters(
-      psych::fa(x, nfactors = n, rotate = rotation, ...),
-      sort = sort,
-      threshold = threshold
-    )
+    out <- psych::fa(x, nfactors = n, rotate = rotation, ...)
   } else {
-    out <- model_parameters(
-      psych::fa(
-        correlation_matrix,
-        nfactors = n,
-        rotate = rotation,
-        n.obs = nrow(x),
-        ...
-      ),
-      sort = sort,
-      threshold = threshold
+    out <- psych::fa(
+      correlation_matrix,
+      nfactors = n,
+      rotate = rotation,
+      n.obs = nrow(x),
+      ...
     )
   }
-
-  attr(out, "dataset") <- x
   out
 }
