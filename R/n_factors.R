@@ -321,7 +321,8 @@ n_factors <- function(x,
   fa <- psych::fa(
     correlation_matrix,
     nfactors = max(by_factors$n_Factors),
-    n.obs = nrow(x)
+    n.obs = nrow(x),
+    rotate = "none"
   )
   varex <- .get_fa_variance_summary(fa)
   # Extract number of factors from EFA output (usually MR1, ML1, etc.)
