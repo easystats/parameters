@@ -151,7 +151,7 @@ n_factors <- function(x,
   # Smooth matrix if negative eigen values
   if (any(eigen_values < 0)) {
     insight::check_if_installed("psych")
-    correlation_matrix <- psych::cor.smooth(cor, ...)
+    correlation_matrix <- psych::cor.smooth(correlation_matrix, ...)
     eigen_values <- eigen(correlation_matrix)$values
   }
 
