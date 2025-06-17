@@ -318,15 +318,12 @@ n_factors <- function(x,
   )
 
   # Add cumulative percentage of variance explained
-
-  # Get it from our fa:: wrapper
-  ## TODO: that's probably not the most efficient)
-  fa <- model_parameters(factor_analysis(
-    x,
-    correlation_matrix = correlation_matrix,
-    n = max(by_factors$n_Factors)
-  ))
-  varex <- attributes(fa)$summary
+  fa <- psych::fa(
+    correlation_matrix,
+    nfactors = max(by_factors$n_Factors),
+    n.obs = nrow(x)
+  )
+  varex <- .get_fa_variance_summary(fa)
   # Extract number of factors from EFA output (usually MR1, ML1, etc.)
   varex$n_Factors <- as.numeric(gsub("[^\\d]+", "", varex$Component, perl = TRUE))
   # Merge (and like that filter out empty methods)

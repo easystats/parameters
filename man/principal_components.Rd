@@ -3,26 +3,33 @@
 %   R/utils_pca_efa.R
 \name{factor_analysis}
 \alias{factor_analysis}
+\alias{factor_analysis.data.frame}
 \alias{principal_components}
 \alias{rotated_data}
+\alias{principal_components.data.frame}
 \alias{predict.parameters_efa}
 \alias{print.parameters_efa}
 \alias{sort.parameters_efa}
 \alias{closest_component}
 \title{Principal Component Analysis (PCA) and Factor Analysis (FA)}
 \usage{
-factor_analysis(
+factor_analysis(x, ...)
+
+\method{factor_analysis}{data.frame}(
   x,
   n = "auto",
   rotation = "none",
   sort = FALSE,
   threshold = NULL,
   standardize = TRUE,
-  correlation_matrix = NULL,
   ...
 )
 
-principal_components(
+principal_components(x, ...)
+
+rotated_data(pca_results, verbose = TRUE)
+
+\method{principal_components}{data.frame}(
   x,
   n = "auto",
   rotation = "none",
@@ -32,8 +39,6 @@ principal_components(
   standardize = TRUE,
   ...
 )
-
-rotated_data(pca_results, verbose = TRUE)
 
 \method{predict}{parameters_efa}(
   object,
@@ -52,6 +57,8 @@ closest_component(pca_results)
 }
 \arguments{
 \item{x}{A data frame or a statistical model.}
+
+\item{...}{Arguments passed to or from other methods.}
 
 \item{n}{Number of components to extract. If \code{n="all"}, then \code{n} is set as
 the number of variables minus 1 (\code{ncol(x)-1}). If \code{n="auto"} (default) or
@@ -79,22 +86,17 @@ structure).}
 standardized (centered and scaled) to have unit variance before the
 analysis (in general, such scaling is advisable).}
 
-\item{correlation_matrix}{An optional correlation matrix that can be used
-(note that the data must still be passed as the first argument). If \code{NULL},
-will compute it by running \code{cor()} on the passed data.}
+\item{pca_results}{The output of the \code{principal_components()} function.}
 
-\item{...}{Arguments passed to or from other methods.}
+\item{verbose}{Toggle warnings.}
 
 \item{sparse}{Whether to compute sparse PCA (SPCA, using \code{\link[sparsepca:spca]{sparsepca::spca()}}).
 SPCA attempts to find sparse loadings (with few nonzero values), which improves
 interpretability and avoids overfitting. Can be \code{TRUE} or \code{"robust"} (see
 \code{\link[sparsepca:robspca]{sparsepca::robspca()}}).}
 
-\item{pca_results}{The output of the \code{principal_components()} function.}
-
-\item{verbose}{Toggle warnings.}
-
-\item{object}{An object of class \code{parameters_pca} or \code{parameters_efa}}
+\item{object}{An object of class \code{parameters_pca}, \code{parameters_efa} or
+\code{psych_efa}.}
 
 \item{newdata}{An optional data frame in which to look for variables with
 which to predict. If omitted, the fitted values are used.}
@@ -113,7 +115,9 @@ predicted data and original data is equal.}
 columns in \code{x}. If provided, adds an additional column with the labels.}
 }
 \value{
-A data frame of loadings.
+A data frame of loadings. For \code{factor_analysis()}, this data frame is
+also of class \code{parameters_efa()}. Objects from \code{principal_components()} are
+of class \code{parameters_pca()}.
 }
 \description{
 The functions \code{principal_components()} and \code{factor_analysis()} can

@@ -241,6 +241,10 @@ print.parameters_efa <- function(x,
                                  threshold = NULL,
                                  labels = NULL,
                                  ...) {
+  # extract attributes
+  if (is.null(threshold)) {
+    threshold <- attributes(x)$threshold
+  }
   cat(
     .print_parameters_cfa_efa(
       x,

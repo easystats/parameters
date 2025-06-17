@@ -256,26 +256,6 @@ print_html.parameters_efa <- function(x, digits = 3, ...) {
 }
 
 
-#' @export
-print_html.psych_efa <- function(x, digits = 2, sort = FALSE, threshold = NULL, labels = NULL, ...) {
-  if (is.null(threshold)) {
-    threshold <- attributes(x)$threshold
-  }
-  if (is.null(sort)) {
-    sort <- attributes(x)$sort
-  }
-  out <- model_parameters(x, sort = sort, threshold = threshold, labels = labels, ...)
-  print_html(
-    out,
-    digits = digits,
-    sort = sort,
-    threshold = threshold,
-    labels = labels,
-    ...
-  )
-}
-
-
 # helper ------------------
 
 .add_gt_options <- function(out,

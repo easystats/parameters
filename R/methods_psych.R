@@ -155,22 +155,7 @@ model_parameters.principal <- function(model,
   n <- model$factors
 
   # Get summary
-  variance <- as.data.frame(unclass(model$Vaccounted))
-  data_summary <- .data_frame(
-    Component = names(variance),
-    Eigenvalues = model$values[1:n],
-    Variance = as.numeric(variance["Proportion Var", ])
-  )
-  if ("Cumulative Var" %in% row.names(variance)) {
-    data_summary$Variance_Cumulative <- as.numeric(variance["Cumulative Var", ])
-  } else {
-    if (ncol(variance) == 1) {
-      data_summary$Variance_Cumulative <- as.numeric(variance["Proportion Var", ])
-    } else {
-      data_summary$Variance_Cumulative <- NA
-    }
-  }
-  data_summary$Variance_Proportion <- data_summary$Variance / sum(data_summary$Variance)
+  data_summary <- .get_fa_variance_summary(model)
 
   # Get loadings
   loadings <- as.data.frame(unclass(model$loadings))
@@ -200,17 +185,14 @@ model_parameters.principal <- function(model,
   attr(loadings, "scores") <- model$scores
   attr(loadings, "additional_arguments") <- list(...)
   attr(loadings, "n") <- n
+  attr(loadings, "threshold") <- threshold
+  attr(loadings, "sort") <- sort
   attr(loadings, "type") <- model$fn
   attr(loadings, "loadings_columns") <- loading_cols
 
   # Sorting
   if (isTRUE(sort)) {
     loadings <- .sort_loadings(loadings)
-  }
-
-  # Replace by NA all cells below threshold
-  if (!is.null(threshold)) {
-    loadings <- .filter_loadings(loadings, threshold = threshold)
   }
 
   # Add some more attributes
@@ -262,4 +244,29 @@ model_parameters.omega <- function(model, verbose = TRUE, ...) {
   attr(out, "summary") <- table_var
   class(out) <- c("parameters_omega", class(out))
   out
+}
+
+
+.get_fa_variance_summary <- function(model) {
+  n <- model$factors
+  variance <- as.data.frame(unclass(model$Vaccounted))
+
+  data_summary <- .data_frame(
+    Component = names(variance),
+    Eigenvalues = model$values[1:n],
+    Variance = as.numeric(variance["Proportion Var", ])
+  )
+
+  if ("Cumulative Var" %in% row.names(variance)) {
+    data_summary$Variance_Cumulative <- as.numeric(variance["Cumulative Var", ])
+  } else {
+    if (ncol(variance) == 1) {
+      data_summary$Variance_Cumulative <- as.numeric(variance["Proportion Var", ])
+    } else {
+      data_summary$Variance_Cumulative <- NA
+    }
+  }
+  data_summary$Variance_Proportion <- data_summary$Variance / sum(data_summary$Variance)
+
+  data_summary
 }

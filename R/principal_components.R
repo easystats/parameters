@@ -32,7 +32,8 @@
 #' @param standardize A logical value indicating whether the variables should be
 #'   standardized (centered and scaled) to have unit variance before the
 #'   analysis (in general, such scaling is advisable).
-#' @param object An object of class `parameters_pca` or `parameters_efa`
+#' @param object An object of class `parameters_pca`, `parameters_efa` or
+#'   `psych_efa`.
 #' @param newdata An optional data frame in which to look for variables with
 #'   which to predict. If omitted, the fitted values are used.
 #' @param names Optional character vector to name columns of the returned data
@@ -47,7 +48,6 @@
 #' @param labels Argument for `print()`, character vector of same length as
 #'   columns in `x`. If provided, adds an additional column with the labels.
 #' @param verbose Toggle warnings.
-#' @inheritParams n_factors
 #'
 #' @details
 #'
@@ -133,6 +133,25 @@
 #' magnitude. In other words, the eigenvalues explain the variance of the
 #' data along the new feature axes.
 #'
+#' @return A data frame of loadings. For `factor_analysis()`, this data frame is
+#' also of class `parameters_efa()`. Objects from `principal_components()` are
+#' of class `parameters_pca()`.
+#'
+#' @references
+#' - Kaiser, H.F. and Rice. J. (1974). Little jiffy, mark iv. Educational
+#'   and Psychological Measurement, 34(1):111–117
+#'
+#' - Hofmann, R. (1978). Complexity and simplicity as objective indices
+#'   descriptive of factor solutions. Multivariate Behavioral Research, 13:2,
+#'   247-250, \doi{10.1207/s15327906mbr1302_9}
+#'
+#' - Pettersson, E., & Turkheimer, E. (2010). Item selection, evaluation,
+#'   and simple structure in personality data. Journal of research in
+#'   personality, 44(4), 407-420, \doi{10.1016/j.jrp.2010.03.002}
+#'
+#' - Tabachnick, B. G., and Fidell, L. S. (2013). Using multivariate
+#'   statistics (6th ed.). Boston: Pearson Education.
+#'
 #' @examplesIf require("nFactors", quietly = TRUE) && require("sparsepca", quietly = TRUE) && require("psych", quietly = TRUE)
 #' library(parameters)
 #'
@@ -188,32 +207,9 @@
 #' # Automated number of components
 #' factor_analysis(mtcars[, 1:4], n = "auto")
 #' }
-#' @return A data frame of loadings.
-#'
-#' @references
-#' - Kaiser, H.F. and Rice. J. (1974). Little jiffy, mark iv. Educational
-#'   and Psychological Measurement, 34(1):111–117
-#'
-#' - Hofmann, R. (1978). Complexity and simplicity as objective indices
-#'   descriptive of factor solutions. Multivariate Behavioral Research, 13:2,
-#'   247-250, \doi{10.1207/s15327906mbr1302_9}
-#'
-#' - Pettersson, E., & Turkheimer, E. (2010). Item selection, evaluation,
-#'   and simple structure in personality data. Journal of research in
-#'   personality, 44(4), 407-420, \doi{10.1016/j.jrp.2010.03.002}
-#'
-#' - Tabachnick, B. G., and Fidell, L. S. (2013). Using multivariate
-#'   statistics (6th ed.). Boston: Pearson Education.
 #'
 #' @export
-principal_components <- function(x,
-                                 n = "auto",
-                                 rotation = "none",
-                                 sparse = FALSE,
-                                 sort = FALSE,
-                                 threshold = NULL,
-                                 standardize = TRUE,
-                                 ...) {
+principal_components <- function(x, ...) {
   UseMethod("principal_components")
 }
 
@@ -249,6 +245,7 @@ rotated_data <- function(pca_results, verbose = TRUE) {
 }
 
 
+#' @rdname principal_components
 #' @export
 principal_components.data.frame <- function(x,
                                             n = "auto",

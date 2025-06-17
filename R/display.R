@@ -258,9 +258,6 @@ display.parameters_efa <- function(object, format = "markdown", digits = 2, sort
 #' @export
 display.parameters_pca <- display.parameters_efa
 
-#' @export
-display.psych_efa <- display.parameters_efa
-
 
 # Equivalence tests ------------------------
 
