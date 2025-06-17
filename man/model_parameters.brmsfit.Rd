@@ -130,9 +130,23 @@ with one or more of these options: \code{"ESS"}, \code{"Rhat"}, \code{"MCSE"} or
 
 \item{priors}{Add the prior used for each parameter.}
 
-\item{effects}{Should results for fixed effects (\code{"fixed"}, the default),
-random effects (\code{"random"}) or both ("\verb{all"}) be returned? Only applies to
-mixed models. May be abbreviated.}
+\item{effects}{Should variables for fixed effects (\code{"fixed"}), random effects
+(\code{"random"}) or both (\code{"all"}) be returned? Only applies to mixed models. May
+be abbreviated.
+
+For models of from packages \strong{brms} or \strong{rstanarm} there are additional
+options:
+\itemize{
+\item \code{"fixed"} returns fixed effects.
+\item \code{"random_variance"} return random effects parameters (variance and
+correlation components, e.g. those parameters that start with \code{sd_} or
+\code{cor_}).
+\item \code{"grouplevel"} returns random effects group level estimates, i.e. those
+parameters that start with \code{r_}.
+\item \code{"random"} returns both \code{"random_variance"} and \code{"grouplevel"}.
+\item \code{"all"} returns fixed effects and random effects variances.
+\item \code{"full"} returns all parameters.
+}}
 
 \item{component}{Which type of parameters to return, such as parameters for the
 conditional model, the zero-inflation part of the model, the dispersion
@@ -159,6 +173,9 @@ factors), which may be a different behaviour compared to other R packages
 (such as \strong{lm.beta}) or other software packages (like SPSS). to mimic
 such behaviours, either use \code{standardize="basic"} or standardize the data
 with \code{datawizard::standardize(force=TRUE)} \emph{before} fitting the model.
+\item By default, the response (dependent) variable is also standardized, \emph{if
+applicable}. Set \code{include_response = FALSE} to avoid standardization of
+the response variable. See details in \code{\link[datawizard:standardize.default]{datawizard::standardize.default()}}.
 \item For mixed models, when using methods other than \code{"refit"}, only the fixed
 effects will be standardized.
 \item Robust estimation (i.e., \code{vcov} set to a value other than \code{NULL}) of
@@ -166,10 +183,11 @@ standardized parameters only works when \code{standardize="refit"}.
 }}
 
 \item{group_level}{Logical, for multilevel models (i.e. models with random
-effects) and when \code{effects = "all"} or \code{effects = "random"},
-include the parameters for each group level from random effects. If
-\code{group_level = FALSE} (the default), only information on SD and COR
-are shown.}
+effects) and when \code{effects = "random"}, return the parameters for each group
+level from random effects only. If \code{group_level = FALSE} (the default), also
+information on SD and COR are returned. Note that this argument is superseded
+by the new options for the \code{effects} argument. \code{effects = "grouplevel"} should
+be used instead of \code{group_level = TRUE}.}
 
 \item{keep}{Character containing a regular expression pattern that
 describes the parameters that should be included (for \code{keep}) or excluded

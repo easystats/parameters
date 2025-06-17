@@ -17,7 +17,7 @@
   group_level = FALSE,
   exponentiate = FALSE,
   p_adjust = NULL,
-  wb_component = TRUE,
+  wb_component = FALSE,
   include_info = getOption("parameters_mixed_info", FALSE),
   include_sigma = FALSE,
   keep = NULL,
@@ -70,17 +70,24 @@ factors), which may be a different behaviour compared to other R packages
 (such as \strong{lm.beta}) or other software packages (like SPSS). to mimic
 such behaviours, either use \code{standardize="basic"} or standardize the data
 with \code{datawizard::standardize(force=TRUE)} \emph{before} fitting the model.
+\item By default, the response (dependent) variable is also standardized, \emph{if
+applicable}. Set \code{include_response = FALSE} to avoid standardization of
+the response variable. See details in \code{\link[datawizard:standardize.default]{datawizard::standardize.default()}}.
 \item For mixed models, when using methods other than \code{"refit"}, only the fixed
 effects will be standardized.
 \item Robust estimation (i.e., \code{vcov} set to a value other than \code{NULL}) of
 standardized parameters only works when \code{standardize="refit"}.
 }}
 
-\item{effects}{Should parameters for fixed effects (\code{"fixed"}), random
-effects (\code{"random"}), both fixed and random effects (\code{"all"}), or the
-overall (sum of fixed and random) effects (\code{"random_total"}) be returned?
-Only applies to mixed models. May be abbreviated. If the calculation of
-random effects parameters takes too long, you may use \code{effects = "fixed"}.}
+\item{effects}{Should parameters for fixed effects (\code{"fixed"}), random effects
+(\code{"random"}), or both fixed and random effects (\code{"all"}) be returned? By
+default, the variance components for random effects are returned. If
+group-level effects are requested, \code{"grouplevel"} returns the group-level
+random effects (BLUPs), while \code{"random_total"} return the overall (sum of
+fixed and random) effects (similar to what \code{coef()} returns). Using
+\code{"grouplevel"} is equivalent to setting \code{group_level = TRUE}. The \code{effects}
+argument only applies to mixed models. If the calculation of random effects
+parameters takes too long, you may use \code{effects = "fixed"}.}
 
 \item{component}{Which type of parameters to return, such as parameters for the
 conditional model, the zero-inflation part of the model, the dispersion
@@ -97,10 +104,9 @@ argument - but no auxiliary parameters). For \code{component = "distributional"}
 (and other auxiliary parameters) are returned.}
 
 \item{group_level}{Logical, for multilevel models (i.e. models with random
-effects) and when \code{effects = "all"} or \code{effects = "random"},
-include the parameters for each group level from random effects. If
-\code{group_level = FALSE} (the default), only information on SD and COR
-are shown.}
+effects) and when \code{effects = "random"}, include the parameters for each
+group level from random effects. If \code{group_level = FALSE} (the default),
+only information on SD and COR are shown.}
 
 \item{exponentiate}{Logical, indicating whether or not to exponentiate the
 coefficients (and related confidence intervals). This is typical for

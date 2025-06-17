@@ -129,7 +129,7 @@
 #'
 #' - **pseudo** (*for 2-level (G)LMMs only*): In this (post-hoc) method, the
 #' response and the predictor are standardized based on the level of prediction
-#' (levels are detected with [performance::check_heterogeneity_bias()]): Predictors
+#' (levels are detected with [performance::check_group_variation()]): Predictors
 #' are standardized based on their SD at level of prediction (see also
 #' [datawizard::demean()]); The outcome (in linear LMMs) is standardized based
 #' on a fitted random-intercept-model, where `sqrt(random-intercept-variance)`
@@ -438,14 +438,17 @@ parameters <- model_parameters
 #'   `"pseudo"`. See 'Details' in [`standardize_parameters()`].
 #'   **Importantly**:
 #'   - The `"refit"` method does *not* standardize categorical predictors (i.e.
-#'   factors), which may be a different behaviour compared to other R packages
-#'   (such as **lm.beta**) or other software packages (like SPSS). to mimic
-#'   such behaviours, either use `standardize="basic"` or standardize the data
-#'   with `datawizard::standardize(force=TRUE)` *before* fitting the model.
+#'     factors), which may be a different behaviour compared to other R packages
+#'     (such as **lm.beta**) or other software packages (like SPSS). to mimic
+#'     such behaviours, either use `standardize="basic"` or standardize the data
+#'     with `datawizard::standardize(force=TRUE)` *before* fitting the model.
+#'   - By default, the response (dependent) variable is also standardized, *if
+#'     applicable*. Set `include_response = FALSE` to avoid standardization of
+#'     the response variable. See details in [`datawizard::standardize.default()`].
 #'   - For mixed models, when using methods other than `"refit"`, only the fixed
-#'   effects will be standardized.
+#'     effects will be standardized.
 #'   - Robust estimation (i.e., `vcov` set to a value other than `NULL`) of
-#'   standardized parameters only works when `standardize="refit"`.
+#'     standardized parameters only works when `standardize="refit"`.
 #' @param exponentiate Logical, indicating whether or not to exponentiate the
 #'   coefficients (and related confidence intervals). This is typical for
 #'   logistic regression, or more generally speaking, for models with log or

@@ -64,7 +64,7 @@
 #' delta.
 #' - **pseudo** (*for 2-level (G)LMMs only*): In this (post-hoc) method, the
 #' response and the predictor are standardized based on the level of prediction
-#' (levels are detected with [`performance::check_heterogeneity_bias()`]): Predictors
+#' (levels are detected with [`performance::check_group_variation()`]): Predictors
 #' are standardized based on their SD at level of prediction (see also
 #' [`datawizard::demean()`]); The outcome (in linear LMMs) is standardized based
 #' on a fitted random-intercept-model, where `sqrt(random-intercept-variance)`

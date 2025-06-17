@@ -2,10 +2,12 @@ skip_if_not_installed("curl")
 skip_if_offline()
 skip_if_not_installed("posterior")
 skip_if_not_installed("brms")
+skip_if_not_installed("httr2")
 
 skip_on_cran()
 
 model <- insight::download_model("brms_1")
+skip_if(is.null(model))
 
 test_that("mp-posterior-draws", {
   x <- posterior::as_draws(model)

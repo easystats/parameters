@@ -68,7 +68,7 @@ test_that("print-model_parameters", {
 })
 
 
-test_that("model_parameters_Anova.mlm", {
+test_that("model_parameters_Anova.mlm-1", {
   skip_if_not_installed("car")
 
   m <- lm(cbind(hp, mpg) ~ factor(cyl) * am, data = mtcars)
@@ -76,12 +76,12 @@ test_that("model_parameters_Anova.mlm", {
   mp <- model_parameters(a, verbose = FALSE)
 
   expect_named(mp, c("Parameter", "df", "Statistic", "df_num", "df_error", "F", "p"))
-  expect_equal(mp[["F"]], c(158.2578, 6.60593, 3.71327, 3.28975), tolerance = 1e-3)
-  expect_equal(mp$Statistic, c(0.9268, 0.67387, 0.22903, 0.4039), tolerance = 1e-3)
+  expect_equal(mp[["F"]], c(6.60593, 3.71327, 3.28975), tolerance = 1e-3)
+  expect_equal(mp$Statistic, c(0.67387, 0.22903, 0.4039), tolerance = 1e-3)
 })
 
 
-test_that("model_parameters_Anova.mlm", {
+test_that("model_parameters_Anova.mlm-2", {
   skip_if_not_installed("MASS")
   skip_if_not_installed("car")
   data(housing, package = "MASS")

@@ -133,41 +133,54 @@ model_parameters.yuen <- function(model, verbose = TRUE, ...) {
   fcall <- insight::safe_deparse(model$call)
 
   # the latter regexe covers `rlang::exec` or `do.call` instances
-
-  # between-subjects
   if (grepl("^(yuen\\(|WRS2::yuen\\()", fcall) ||
+    grepl("^(yuenbt\\(|WRS2::yuenbt\\()", fcall) ||
     grepl("function (formula, data, tr = 0.2, ...)", fcall, fixed = TRUE)) {
-    out <- data.frame(
-      t = model$test,
-      df_error = model$df,
-      p = model$p.value,
-      Method = "Yuen's test on trimmed means for independent samples",
-      Difference = model$diff,
-      CI = 0.95,
-      Difference_CI_low = model$conf.int[1],
-      Difference_CI_high = model$conf.int[2],
-      Estimate = model$effsize,
-      Effectsize = "Explanatory measure of effect size",
-      stringsAsFactors = FALSE
-    )
+    # between-subjects
+    method <- "Yuen's test on trimmed means for independent samples"
   } else {
     # within-subjects
-    out <- data.frame(
-      t = model$test,
-      df_error = model$df,
-      p = model$p.value,
-      Method = "Yuen's test on trimmed means for dependent samples",
-      Difference = model$diff,
-      CI = 0.95,
-      Difference_CI_low = model$conf.int[1],
-      Difference_CI_high = model$conf.int[2],
-      Estimate = model$effsize,
-      Effectsize = "Explanatory measure of effect size",
-      stringsAsFactors = FALSE
-    )
+    method <- "Yuen's test on trimmed means for dependent samples"
+  }
+
+  out <- data.frame(
+    t = model$test,
+    df_error = model$df,
+    p = model$p.value,
+    Method = method,
+    Difference = model$diff,
+    CI = 0.95,
+    Difference_CI_low = model$conf.int[1],
+    Difference_CI_high = model$conf.int[2],
+    stringsAsFactors = FALSE
+  )
+
+  if (!is.null(model$effsize)) {
+    out$Estimate <- model$effsize
+    out$Effectsize <- "Explanatory measure of effect size"
   }
 
   out
+}
+
+#' @export
+model_parameters.pb2 <- function(model, verbose = TRUE, ...) {
+  parameters <- .extract_wrs2_pb2(model)
+  parameters <- .add_htest_parameters_attributes(parameters, model, ...)
+  class(parameters) <- c("parameters_model", "see_parameters_model", class(parameters))
+  parameters
+}
+
+.extract_wrs2_pb2 <- function(model) {
+  data.frame(
+    t = model$test,
+    p = model$p.value,
+    Method = "Robust t-test for independent samples",
+    CI = 0.95,
+    CI_low = model$conf.int[1],
+    CI_high = model$conf.int[2],
+    stringsAsFactors = FALSE
+  )
 }
 
 # pairwise comparisons ----------------------
@@ -176,6 +189,7 @@ model_parameters.yuen <- function(model, verbose = TRUE, ...) {
 model_parameters.mcp1 <- function(model, verbose = TRUE, ...) {
   parameters <- .extract_wrs2_mcp12(model)
   parameters <- .add_htest_parameters_attributes(parameters, model, ...)
+  attr(parameters, "no_caption") <- TRUE
   class(parameters) <- c("parameters_model", "see_parameters_model", class(parameters))
   parameters
 }
@@ -200,6 +214,7 @@ model_parameters.mcp2 <- model_parameters.mcp1
   # reorder
   col_order <- c("Group1", "Group2", "Psihat", "CI", "CI_low", "CI_high", "p", "p.crit")
   out <- out[col_order[col_order %in% names(out)]]
+  attr(parameters, "no_caption") <- TRUE
 
   out
 }

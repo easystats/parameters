@@ -415,7 +415,8 @@ standardize_info.default <- function(model,
 
   f <- if (two_sd) 2 else 1
 
-  within_vars <- unclass(performance::check_heterogeneity_bias(model))
+  gv <- performance::check_group_variation(model)
+  within_vars <- gv[gv$Variation %in% c("both", "within"), "Variable"]
   id <- insight::get_random(model)[[1]]
   w <- insight::get_weights(model, remove_na = TRUE)
 

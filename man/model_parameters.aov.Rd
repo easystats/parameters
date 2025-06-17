@@ -10,20 +10,21 @@
   df_error = NULL,
   ci = NULL,
   alternative = NULL,
+  p_adjust = NULL,
   test = NULL,
   power = FALSE,
   es_type = NULL,
   keep = NULL,
   drop = NULL,
+  include_intercept = FALSE,
   table_wide = FALSE,
   verbose = TRUE,
   ...
 )
 }
 \arguments{
-\item{model}{Object of class \code{\link[=aov]{aov()}}, \code{\link[=anova]{anova()}},
-\code{aovlist}, \code{Gam}, \code{\link[=manova]{manova()}}, \code{Anova.mlm},
-\code{afex_aov} or \code{maov}.}
+\item{model}{Object of class \code{\link[=aov]{aov()}}, \code{\link[=anova]{anova()}}, \code{aovlist}, \code{Gam},
+\code{\link[=manova]{manova()}}, \code{Anova.mlm}, \code{afex_aov} or \code{maov}.}
 
 \item{type}{Numeric, type of sums of squares. May be 1, 2 or 3. If 2 or 3,
 ANOVA-tables using \code{car::Anova()} will be returned. (Ignored for
@@ -43,6 +44,12 @@ Controls the type of CI returned: \code{"two.sided"} (default, two-sided CI),
 \code{"greater"} or \code{"less"} (one-sided CI). Partial matching is allowed
 (e.g., \code{"g"}, \code{"l"}, \code{"two"}...). See section \emph{One-Sided CIs} in
 the \href{https://easystats.github.io/effectsize/}{effectsize_CIs vignette}.}
+
+\item{p_adjust}{Character vector, if not \code{NULL}, indicates the method to
+adjust p-values. See \code{\link[stats:p.adjust]{stats::p.adjust()}} for details. Further
+possible adjustment methods are \code{"tukey"}, \code{"scheffe"},
+\code{"sidak"} and \code{"none"} to explicitly disable adjustment for
+\code{emmGrid} objects (from \strong{emmeans}).}
 
 \item{test}{String, indicating the type of test for \code{Anova.mlm} to be
 returned. If \code{"multivariate"} (or \code{NULL}), returns the summary of
@@ -77,6 +84,9 @@ frame, which can be different from how they are printed. Inspect the
 names.}
 
 \item{drop}{See \code{keep}.}
+
+\item{include_intercept}{Logical, if \code{TRUE}, includes the intercept
+(\code{(Intercept)}) in the anova table.}
 
 \item{table_wide}{Logical that decides whether the ANOVA table should be in
 wide format, i.e. should the numerator and denominator degrees of freedom

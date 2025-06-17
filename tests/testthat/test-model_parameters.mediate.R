@@ -30,6 +30,11 @@ test_that("model_parameters.mediate-2", {
 
 test_that("model_parameters.mediate-3", {
   skip_on_cran()
+
+  ## FIXME: bug in the latest CRAN version of the mediation package
+  # maintainer contacted on 13. June 2025
+  skip_if(TRUE)
+
   jobs$job_disc <- as.factor(jobs$job_disc)
   b.ord <- MASS::polr(
     job_disc ~ treat + econ_hard + sex + age,

@@ -26,6 +26,14 @@ model_parameters.stanreg <- function(model,
     return(params)
   }
 
+  # adjust arguments
+  if (effects == "random" && group_level) {
+    effects <- "grouplevel"
+  }
+  if (effects == "grouplevel") {
+    priors <- FALSE
+  }
+
   # Processing
   params <- .extract_parameters_bayesian(
     model,
@@ -47,15 +55,6 @@ model_parameters.stanreg <- function(model,
     ...
   )
 
-  if (effects != "fixed") {
-    random_effect_levels <- which(
-      params$Effects == "random" & !startsWith(params$Parameter, "Sigma[")
-    )
-    if (length(random_effect_levels) && isFALSE(group_level)) {
-      params <- params[-random_effect_levels, , drop = FALSE]
-    }
-  }
-
   ## TODO: can we use the regular pretty-name-formatting?
   params <- .add_pretty_names(params, model)
 
@@ -73,7 +72,7 @@ model_parameters.stanreg <- function(model,
     ...
   )
 
-  attr(params, "parameter_info") <- insight::clean_parameters(model)
+  attr(params, "parameter_info") <- .get_cleaned_parameters(params, model)
   attr(params, "object_name") <- insight::safe_deparse_symbol(substitute(model))
   class(params) <- c("parameters_model", "see_parameters_model", class(params))
 
@@ -95,10 +94,15 @@ model_parameters.stanmvreg <- function(model,
                                        priors = TRUE,
                                        effects = "fixed",
                                        standardize = NULL,
+                                       group_level = FALSE,
                                        keep = NULL,
                                        drop = NULL,
                                        verbose = TRUE,
                                        ...) {
+  if (utils::packageVersion("insight") > "1.2.0" && effects == "random" && group_level) {
+    effects <- "grouplevel"
+  }
+
   # Processing
   params <- .extract_parameters_bayesian(
     model,

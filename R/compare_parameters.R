@@ -169,7 +169,7 @@ compare_parameters <- function(...,
       dat <- model
     } else {
       # set default-ci_type for Bayesian models
-      if (.is_bayesian_model(model, exclude = c("bmerMod", "bayesx", "blmerMod", "bglmerMod")) && !ci_method %in% c("hdi", "quantile", "ci", "eti", "si", "bci", "bcai")) { # nolint
+      if (insight::is_bayesian_model(model, exclude = c("bmerMod", "bayesx", "blmerMod", "bglmerMod")) && !ci_method %in% c("hdi", "quantile", "ci", "eti", "si", "bci", "bcai")) { # nolint
         ci_method_tmp <- "eti"
       } else {
         ci_method_tmp <- ci_method
@@ -304,20 +304,4 @@ compare_models <- compare_parameters
     }
   }
   x
-}
-
-
-.is_bayesian_model <- function(x, exclude = NULL) {
-  bayes_classes <- c(
-    "brmsfit", "stanfit", "MCMCglmm", "stanreg",
-    "stanmvreg", "bmerMod", "BFBayesFactor", "bamlss",
-    "bayesx", "mcmc", "bcplm", "bayesQR", "BGGM",
-    "meta_random", "meta_fixed", "meta_bma", "blavaan",
-    "blrm", "blmerMod"
-  )
-  # if exclude is not NULL, remove elements in exclude from bayes_class
-  if (!is.null(exclude)) {
-    bayes_classes <- bayes_classes[!bayes_classes %in% exclude]
-  }
-  inherits(x, bayes_classes)
 }

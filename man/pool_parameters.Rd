@@ -33,11 +33,15 @@ coefficient. The transformed confidence interval more clearly captures this
 uncertainty. For \code{compare_parameters()}, \code{exponentiate = "nongaussian"}
 will only exponentiate coefficients from non-Gaussian families.}
 
-\item{effects}{Should parameters for fixed effects (\code{"fixed"}), random
-effects (\code{"random"}), both fixed and random effects (\code{"all"}), or the
-overall (sum of fixed and random) effects (\code{"random_total"}) be returned?
-Only applies to mixed models. May be abbreviated. If the calculation of
-random effects parameters takes too long, you may use \code{effects = "fixed"}.}
+\item{effects}{Should parameters for fixed effects (\code{"fixed"}), random effects
+(\code{"random"}), or both fixed and random effects (\code{"all"}) be returned? By
+default, the variance components for random effects are returned. If
+group-level effects are requested, \code{"grouplevel"} returns the group-level
+random effects (BLUPs), while \code{"random_total"} return the overall (sum of
+fixed and random) effects (similar to what \code{coef()} returns). Using
+\code{"grouplevel"} is equivalent to setting \code{group_level = TRUE}. The \code{effects}
+argument only applies to mixed models. If the calculation of random effects
+parameters takes too long, you may use \code{effects = "fixed"}.}
 
 \item{component}{Which type of parameters to return, such as parameters for the
 conditional model, the zero-inflation part of the model, the dispersion

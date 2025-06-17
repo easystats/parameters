@@ -1,7 +1,9 @@
-# This function add meta-information to the returned parameters data frame,
-# usually used for printing etc.
-
+#' This function adds meta-information to the returned parameters data frame,
+#' usually used for printing etc. Prettifying names can be time consuming, if
+#' it is not necessary to have pretty names, set `pretty_names = FALSE`
+#'
 #' @keywords internal
+#' @noRd
 .add_model_parameters_attributes <- function(params,
                                              model,
                                              ci,
@@ -14,12 +16,17 @@
                                              verbose = TRUE,
                                              group_level = FALSE,
                                              wb_component = FALSE,
+                                             modelinfo = NULL,
                                              ...) {
   # capture additional arguments
   dot.arguments <- list(...)
 
   # model info
-  info <- .safe(suppressWarnings(insight::model_info(model, verbose = FALSE)))
+  if (is.null(modelinfo)) {
+    info <- .safe(suppressWarnings(insight::model_info(model, verbose = FALSE)))
+  } else {
+    info <- modelinfo
+  }
 
   if (is.null(info)) {
     info <- list(family = "unknown", link_function = "unknown")
@@ -241,6 +248,12 @@
   )
 }
 
+
+#' This function formats the column name of the printed output, to reflect
+#' the correct type of coefficient.
+#'
+#' @keywords internal
+#' @noRd
 .find_coefficient_type <- function(info, exponentiate, model = NULL) {
   # column name for coefficients
   coef_col <- "Coefficient"
@@ -300,7 +313,11 @@
 }
 
 
+#' This function exponentiates coefficients, e.g. to return odds ratios instead
+#' of log-odds ratios.
+#'
 #' @keywords internal
+#' @noRd
 .exponentiate_parameters <- function(params, model = NULL, exponentiate = TRUE) {
   # "exponentiate" must be
   # - TRUE, will always exponentiate all coefficients
@@ -347,9 +364,33 @@
 }
 
 
+#' this function extracts the table with cleaned parameter names, extracted
+#' from `insight::clean_parameters()`. it first checks whether this object
+#' is saved as attribute, and if not, calls `insight::clean_parameters()`.
+#'
+#' @keywords internal
+#' @noRd
+.get_cleaned_parameters <- function(params, model) {
+  # check if we have cleaned parameters as attributes
+  cp <- attributes(params)$clean_parameters
+  # if not, add
+  if (is.null(cp)) {
+    cp <- insight::clean_parameters(model)
+  }
+  cp
+}
+
+
+#' this function extract "prettified" parameter names, using
+#' `insight::clean_parameters()`, and matches them with the parameter names.
+#' the result is a named vector, added as attributes to the output
+#'
+#' @keywords internal
+#' @noRd
 .add_pretty_names <- function(params, model) {
   attr(params, "model_class") <- class(model)
-  cp <- insight::clean_parameters(model)
+  # check if we have cleaned parameters as attributes
+  cp <- .get_cleaned_parameters(params, model)
   clean_params <- cp[cp$Parameter %in% params$Parameter, ]
 
   named_clean_params <- stats::setNames(
@@ -370,13 +411,14 @@
 
 
 #' @keywords internal
-.add_anova_attributes <- function(params, model, ci, test = NULL, alternative = NULL, ...) {
+.add_anova_attributes <- function(params, model, ci, test = NULL, alternative = NULL, p_adjust = NULL, ...) {
   dot.arguments <- lapply(match.call(expand.dots = FALSE)$`...`, function(x) x) # nolint
 
   attr(params, "ci") <- ci
   attr(params, "model_class") <- class(model)
   attr(params, "anova_type") <- .anova_type(model)
   attr(params, "text_alternative") <- .anova_alternative(params, alternative)
+  attr(params, "p_adjust") <- p_adjust
 
   if (inherits(model, "Anova.mlm") && !identical(test, "univariate")) {
     attr(params, "anova_test") <- model$test
@@ -437,10 +479,12 @@
 }
 
 
-# checks for valid inputs in model_parameters(). E.g., some models don't support
-# the "vcov" argument - this should not be silently ignored, but rather the user
-# should be informed that robust SE are not available for that model.
-
+#' checks for valid inputs in model_parameters(). E.g., some models don't support
+#' the "vcov" argument - this should not be silently ignored, but rather the user
+#' should be informed that robust SE are not available for that model.
+#'
+#' @keywords internal
+#' @noRd
 .check_dots <- function(dots, not_allowed, model_class, function_name = "model_parameters", verbose = TRUE) {
   # remove arguments that are NULL
   dots <- insight::compact_list(dots)

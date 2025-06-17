@@ -77,6 +77,14 @@ test_that("model_parameters.mixed-random", {
   expect_equal(params$Coefficient, c(0.1692, 0.0566, -0.2259), tolerance = 1e-2)
 })
 
+test_that("model_parameters.mixed-random, grouplevel", {
+  params <- model_parameters(m1, effects = "grouplevel")
+  expect_identical(c(nrow(params), ncol(params)), c(3L, 9L))
+  expect_identical(as.vector(params$Parameter), c("(Intercept)", "(Intercept)", "(Intercept)"))
+  expect_identical(as.vector(params$Level), c("3", "4", "5"))
+  expect_equal(params$Coefficient, c(0.1692, 0.0566, -0.2259), tolerance = 1e-2)
+})
+
 test_that("model_parameters.mixed-ran_pars", {
   params <- model_parameters(m1, effects = "random")
   expect_identical(c(nrow(params), ncol(params)), c(2L, 8L))
@@ -122,20 +130,25 @@ model <- lme4::lmer(
   QoL ~ time + phq4_within + phq4_between + (1 | ID),
   data = qol_cancer
 )
-mp <- model_parameters(model, effects = "fixed")
 
 test_that("model_parameters.mixed", {
+  mp <- model_parameters(model, effects = "fixed", wb_component = TRUE)
+  mp2 <- model_parameters(model, effects = "fixed", wb_component = FALSE)
   expect_identical(mp$Component, c("rewb-contextual", "rewb-contextual", "within", "between"))
+  expect_null(mp2$Component)
 })
 
 
-test_that("print-model_parameters", {
-  expect_snapshot(model_parameters(model, effects = "fixed"))
+test_that("print-model_parameters-1", {
+  expect_snapshot(model_parameters(model, effects = "fixed", wb_component = TRUE))
+  expect_snapshot(model_parameters(model, effects = "fixed", wb_component = FALSE))
 })
 
-test_that("print-model_parameters", {
+test_that("print-model_parameters-2", {
   skip_if_not_installed("merDeriv")
-  expect_snapshot(model_parameters(m1, effects = "all"))
+  expect_snapshot(model_parameters(m1, effects = "all", wb_component = TRUE))
+  expect_snapshot(model_parameters(m1, effects = "all", wb_component = FALSE))
 
-  expect_snapshot(model_parameters(m1, effects = "fixed", include_info = TRUE))
+  expect_snapshot(model_parameters(m1, effects = "fixed", include_info = TRUE, wb_component = TRUE))
+  expect_snapshot(model_parameters(m1, effects = "fixed", include_info = TRUE, wb_component = FALSE))
 })

@@ -12,10 +12,11 @@
 #' @param ci Credible Interval (CI) level. Default to `0.95` (`95%`). See
 #' [bayestestR::ci()] for further details.
 #' @param group_level Logical, for multilevel models (i.e. models with random
-#' effects) and when `effects = "all"` or `effects = "random"`,
-#' include the parameters for each group level from random effects. If
-#' `group_level = FALSE` (the default), only information on SD and COR
-#' are shown.
+#' effects) and when `effects = "random"`, return the parameters for each group
+#' level from random effects only. If `group_level = FALSE` (the default), also
+#' information on SD and COR are returned. Note that this argument is superseded
+#' by the new options for the `effects` argument. `effects = "grouplevel"` should
+#' be used instead of `group_level = TRUE`.
 #' @param component Which type of parameters to return, such as parameters for the
 #' conditional model, the zero-inflation part of the model, the dispersion
 #' term, or other auxiliary parameters be returned? Applies to models with
@@ -107,11 +108,24 @@ model_parameters.brmsfit <- function(model,
     )
   } else if (effects %in% c("total", "random_total")) {
     # group level total effects (coef())
-    params <- .group_level_total(model, centrality, dispersion, ci, ci_method, test, rope_range, rope_ci, ...)
+    params <- .group_level_total(
+      model,
+      centrality,
+      dispersion,
+      ci,
+      ci_method,
+      test,
+      rope_range,
+      rope_ci,
+      ...
+    )
     params$Effects <- "total"
     class(params) <- c("parameters_coef", "see_parameters_coef", class(params))
-    return(params)
   } else {
+    # update argument
+    if (effects == "random" && group_level) {
+      effects <- "grouplevel"
+    }
     # Processing
     params <- .extract_parameters_bayesian(
       model,
@@ -134,28 +148,25 @@ model_parameters.brmsfit <- function(model,
       ...
     )
 
-    if (effects != "fixed") {
-      random_effect_levels <- which(params$Effects == "random" & grepl("^(?!sd_|cor_)(.*)", params$Parameter, perl = TRUE) & !(params$Parameter %in% c("car", "sdcar")))
-      if (length(random_effect_levels) && isFALSE(group_level)) params <- params[-random_effect_levels, ]
-    }
-
     # add prettified names as attribute. Furthermore, group column is added
     params <- .add_pretty_names(params, model)
 
     # exponentiate coefficients and SE/CI, if requested
     params <- .exponentiate_parameters(params, model, exponentiate)
 
-    params <- .add_model_parameters_attributes(params,
+    params <- .add_model_parameters_attributes(
+      params,
       model,
       ci,
       exponentiate,
       ci_method = ci_method,
       group_level = group_level,
+      modelinfo = modelinfo,
       verbose = verbose,
       ...
     )
 
-    attr(params, "parameter_info") <- insight::clean_parameters(model)
+    attr(params, "parameter_info") <- .get_cleaned_parameters(params, model)
     attr(params, "object_name") <- insight::safe_deparse_symbol(substitute(model))
     attr(params, "dpars") <- insight::find_auxiliary(model, verbose = FALSE)
     class(params) <- unique(c("parameters_model", "see_parameters_model", class(params)))
@@ -281,15 +292,6 @@ standard_error.brmsfit <- function(model,
                                    effects = "fixed",
                                    component = "all",
                                    ...) {
-  effects <- insight::validate_argument(
-    effects,
-    c("fixed", "random")
-  )
-  component <- insight::validate_argument(
-    component,
-    c("all", "conditional", "zi", "zero_inflated")
-  )
-
   params <- insight::get_parameters(model, effects = effects, component = component, ...)
 
   .data_frame(

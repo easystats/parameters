@@ -2,7 +2,7 @@ skip_if_not_installed("withr")
 skip_if_not_installed("glmmTMB")
 skip_if_not(getRversion() >= "4.0.0")
 
-data("fish")
+data("fish", package = "parameters")
 data("Salamanders", package = "glmmTMB")
 
 skip_on_cran()
@@ -74,6 +74,11 @@ withr::with_options(
       expect_equal(
         standard_error(m1)$SE,
         c(0.47559, 0.09305, 0.09346, 0.65229, 0.3099, 0.32324),
+        tolerance = 1e-3
+      )
+      expect_equal(
+        standard_error(m1, effects = "random")$persons$`(Intercept)`,
+        c(0.69856, 0.68935, 0.68749, 0.68596),
         tolerance = 1e-3
       )
       expect_equal(
@@ -224,6 +229,68 @@ withr::with_options(
       expect_equal(
         params$Coefficient,
         c(-1.24, -0.3456, 0.3617, 1.2553, 1.5719, 0.3013, -0.3176, -1.5665),
+        tolerance = 1e-2
+      )
+    })
+
+    test_that("model_parameters.mixed-random grouplevel", {
+      params <- model_parameters(m1, effects = "grouplevel")
+      expect_identical(c(nrow(params), ncol(params)), c(8L, 10L))
+      expect_named(
+        params,
+        c(
+          "Parameter", "Level", "Coefficient", "SE", "CI", "CI_low",
+          "CI_high", "Component", "Effects", "Group"
+        )
+      )
+      expect_identical(
+        as.vector(params$Parameter),
+        c(
+          "(Intercept)", "(Intercept)", "(Intercept)", "(Intercept)",
+          "(Intercept)", "(Intercept)", "(Intercept)", "(Intercept)"
+        )
+      )
+      expect_identical(
+        params$Component,
+        c(
+          "conditional", "conditional", "conditional", "conditional",
+          "zero_inflated", "zero_inflated", "zero_inflated", "zero_inflated"
+        )
+      )
+      expect_equal(
+        params$Coefficient,
+        c(-1.24, -0.3456, 0.3617, 1.2553, 1.5719, 0.3013, -0.3176, -1.5665),
+        tolerance = 1e-2
+      )
+    })
+
+    test_that("model_parameters.mixed-random total", {
+      params <- model_parameters(m1, effects = "total")
+      expect_identical(c(nrow(params), ncol(params)), c(8L, 6L))
+      expect_named(
+        params,
+        c(
+          "Group", "Level", "Parameter", "Coefficient", "Component",
+          "Effects"
+        )
+      )
+      expect_identical(
+        as.vector(params$Parameter),
+        c(
+          "(Intercept)", "(Intercept)", "(Intercept)", "(Intercept)",
+          "(Intercept)", "(Intercept)", "(Intercept)", "(Intercept)"
+        )
+      )
+      expect_identical(
+        params$Component,
+        c(
+          "conditional", "conditional", "conditional", "conditional",
+          "zero_inflated", "zero_inflated", "zero_inflated", "zero_inflated"
+        )
+      )
+      expect_equal(
+        params$Coefficient,
+        c(0.02278, 0.91717, 1.62455, 2.51811, 1.18248, -0.08808, -0.70703, -1.95584),
         tolerance = 1e-2
       )
     })

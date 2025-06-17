@@ -245,7 +245,7 @@ model_parameters.BFBayesFactor <- function(model,
 
 #' @export
 p_value.BFBayesFactor <- function(model, ...) {
-  p <- bayestestR::p_direction(model)
+  p <- bayestestR::p_direction(model, ...)
   .data_frame(
     Parameter = .remove_backticks_from_string(p$Parameter),
     p = sapply(p$pd, bayestestR::convert_pd_to_p, simplify = TRUE)

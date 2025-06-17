@@ -45,7 +45,10 @@
                                               ci_method = NULL,
                                               verbose = FALSE,
                                               ...) {
-  component <- match.arg(component, choices = c("all", "conditional", "zero_inflated", "zi", "dispersion"))
+  component <- insight::validate_argument(
+    component,
+    c("all", "conditional", "zero_inflated", "zi", "dispersion")
+  )
 
   out <- suppressWarnings(
     .extract_random_variances_helper(
@@ -235,7 +238,13 @@
   # row bind all random effect variances, if possible
   out <- tryCatch(
     {
-      out_list <- insight::compact_list(list(ran_intercept, ran_slope, ran_corr, ran_slopes_corr, ran_sigma))
+      out_list <- insight::compact_list(list(
+        ran_intercept,
+        ran_slope,
+        ran_corr,
+        ran_slopes_corr,
+        ran_sigma
+      ))
       do.call(rbind, out_list)
     },
     error = function(e) {
@@ -283,7 +292,16 @@
 
   # add confidence intervals?
   if (!is.null(ci) && !all(is.na(ci)) && length(ci) == 1) {
-    out <- .random_sd_ci(model, out, ci_method, ci, corr_param, sigma_param, component, verbose = verbose)
+    out <- .random_sd_ci(
+      model,
+      out,
+      ci_method,
+      ci,
+      corr_param,
+      sigma_param,
+      component,
+      verbose = verbose
+    )
   }
 
   out <- out[c("Parameter", "Level", "Coefficient", "SE", ci_cols, stat_column, "df_error", "p", "Effects", "Group")]
@@ -308,7 +326,13 @@
 
   if (inherits(model, c("merMod", "glmerMod", "lmerMod"))) {
     if (!is.null(ci_method) && ci_method %in% c("profile", "boot")) {
-      var_ci <- as.data.frame(suppressWarnings(stats::confint(model, parm = "theta_", oldNames = FALSE, method = ci_method, level = ci)))
+      var_ci <- as.data.frame(suppressWarnings(stats::confint(
+        model,
+        parm = "theta_",
+        oldNames = FALSE,
+        method = ci_method,
+        level = ci
+      )))
       colnames(var_ci) <- c("CI_low", "CI_high")
 
       rn <- row.names(var_ci)
@@ -466,8 +490,18 @@
     out <- tryCatch(
       {
         var_ci <- rbind(
-          as.data.frame(suppressWarnings(stats::confint(model, parm = "theta_", method = "wald", level = ci))),
-          as.data.frame(suppressWarnings(stats::confint(model, parm = "sigma", method = "wald", level = ci)))
+          as.data.frame(suppressWarnings(stats::confint(
+            model,
+            parm = "theta_",
+            method = "wald",
+            level = ci
+          ))),
+          as.data.frame(suppressWarnings(stats::confint(
+            model,
+            parm = "sigma",
+            method = "wald",
+            level = ci
+          )))
         )
         colnames(var_ci) <- c("CI_low", "CI_high", "not_used")
         var_ci$Component <- "conditional"
@@ -485,8 +519,16 @@
         # add Group
         var_ci$Group <- NA
         if (length(group_factor) > 1) {
-          var_ci$Group[var_ci$Component == "conditional"] <- gsub(paste0("^", group_factor2, "\\.cond\\.(.*)"), "\\1", var_ci$Parameter[var_ci$Component == "conditional"])
-          var_ci$Group[var_ci$Component == "zi"] <- gsub(paste0("^", group_factor2, "\\.zi\\.(.*)"), "\\1", var_ci$Parameter[var_ci$Component == "zi"])
+          var_ci$Group[var_ci$Component == "conditional"] <- gsub(
+            paste0("^", group_factor2, "\\.cond\\.(.*)"),
+            "\\1",
+            var_ci$Parameter[var_ci$Component == "conditional"]
+          )
+          var_ci$Group[var_ci$Component == "zi"] <- gsub(
+            paste0("^", group_factor2, "\\.zi\\.(.*)"),
+            "\\1",
+            var_ci$Parameter[var_ci$Component == "zi"]
+          )
         } else {
           var_ci$Group <- group_factor
           # check if sigma was properly identified
@@ -601,10 +643,10 @@
       },
       error = function(e) {
         if (isTRUE(verbose)) {
-          message(insight::format_message(
+          insight::format_alert(
             "Cannot compute standard errors and confidence intervals for random effects parameters.",
             "Your model may suffer from singularity (see '?lme4::isSingular' and '?performance::check_singularity')."
-          ))
+          )
         }
         out
       }
