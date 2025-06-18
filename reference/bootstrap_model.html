@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.26.0.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.26.0.3</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -156,12 +156,12 @@ to obtain non-parametric p-values.</p>
 <span class="r-in"><span><span class="va">b</span> <span class="op">&lt;-</span> <span class="fu">bootstrap_model</span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">b</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   (Intercept)        wt factor(cyl)6 factor(cyl)8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1    32.80447 -3.275128    -2.994874    -5.535547</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2    33.53835 -3.192280    -3.371982    -5.269348</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3    33.50110 -3.043621    -4.561783    -6.336212</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4    33.73882 -3.031721    -4.529576    -6.089992</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5    30.77663 -2.298175    -4.044469    -5.561024</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6    32.50119 -2.431631    -5.943601    -7.659333</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1    33.50110 -3.043621    -4.561783    -6.336212</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2    33.73882 -3.031721    -4.529576    -6.089992</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3    30.77663 -2.298175    -4.044469    -5.561024</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4    32.50119 -2.431631    -5.943601    -7.659333</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5    31.10429 -2.486001    -4.280528    -5.875406</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6    35.65625 -3.537588    -5.020713    -6.596277</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">est</span> <span class="op">&lt;-</span> <span class="fu">emmeans</span><span class="fu">::</span><span class="fu"><a href="https://rvlenth.github.io/emmeans/reference/emmeans.html" class="external-link">emmeans</a></span><span class="op">(</span><span class="va">b</span>, <span class="va">consec</span> <span class="op">~</span> <span class="va">cyl</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">est</span><span class="op">)</span><span class="op">)</span></span></span>
@@ -178,7 +178,7 @@ to obtain non-parametric p-values.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameter   | Median |         95% CI |     pd</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> cyl6 - cyl4 |  -4.08 | [-6.85, -1.92] | 99.90%</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> cyl8 - cyl6 |  -1.81 | [-3.31,  0.12] | 97.10%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> cyl8 - cyl6 |  -1.81 | [-3.32,  0.12] | 97.10%</span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>

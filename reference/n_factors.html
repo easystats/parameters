@@ -15,7 +15,7 @@ with the fewer factors."><meta property="og:image" content="https://easystats.gi
 
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.26.0.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.26.0.3</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -78,7 +78,7 @@ with the fewer factors.</p>
 <span>  rotation <span class="op">=</span> <span class="st">"varimax"</span>,</span>
 <span>  algorithm <span class="op">=</span> <span class="st">"default"</span>,</span>
 <span>  package <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"nFactors"</span>, <span class="st">"psych"</span><span class="op">)</span>,</span>
-<span>  cor <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  correlation_matrix <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  safe <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  n_max <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  <span class="va">...</span></span>
@@ -90,7 +90,7 @@ with the fewer factors.</p>
 <span>  rotation <span class="op">=</span> <span class="st">"varimax"</span>,</span>
 <span>  algorithm <span class="op">=</span> <span class="st">"default"</span>,</span>
 <span>  package <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"nFactors"</span>, <span class="st">"psych"</span><span class="op">)</span>,</span>
-<span>  cor <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  correlation_matrix <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  safe <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -134,10 +134,10 @@ the default is <code>c("nFactors", "psych")</code>. You must have the respective
 packages installed for the methods to be used.</p></dd>
 
 
-<dt id="arg-cor">cor<a class="anchor" aria-label="anchor" href="#arg-cor"></a></dt>
-<dd><p>An optional correlation matrix that can be used (note that the
-data must still be passed as the first argument). If <code>NULL</code>, will
-compute it by running <code><a href="https://rdrr.io/r/stats/cor.html" class="external-link">cor()</a></code> on the passed data.</p></dd>
+<dt id="arg-correlation-matrix">correlation_matrix<a class="anchor" aria-label="anchor" href="#arg-correlation-matrix"></a></dt>
+<dd><p>An optional correlation matrix that can be used
+(note that the data must still be passed as the first argument). If <code>NULL</code>,
+will compute it by running <code><a href="https://rdrr.io/r/stats/cor.html" class="external-link">cor()</a></code> on the passed data.</p></dd>
 
 
 <dt id="arg-safe">safe<a class="anchor" aria-label="anchor" href="#arg-safe"></a></dt>

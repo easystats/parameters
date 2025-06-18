@@ -15,7 +15,7 @@ Details section)."><meta property="og:image" content="https://easystats.github.i
 
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.26.0.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.26.0.3</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -72,17 +72,24 @@ Details section).</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">factor_analysis</span><span class="op">(</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">factor_analysis</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for class 'data.frame'</span></span>
+<span><span class="fu">factor_analysis</span><span class="op">(</span></span>
 <span>  <span class="va">x</span>,</span>
 <span>  n <span class="op">=</span> <span class="st">"auto"</span>,</span>
 <span>  rotation <span class="op">=</span> <span class="st">"none"</span>,</span>
 <span>  sort <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  threshold <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  standardize <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  cor <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span>
 <span></span>
+<span><span class="fu">principal_components</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">rotated_data</span><span class="op">(</span><span class="va">pca_results</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for class 'data.frame'</span></span>
 <span><span class="fu">principal_components</span><span class="op">(</span></span>
 <span>  <span class="va">x</span>,</span>
 <span>  n <span class="op">=</span> <span class="st">"auto"</span>,</span>
@@ -93,8 +100,6 @@ Details section).</p>
 <span>  standardize <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu">rotated_data</span><span class="op">(</span><span class="va">pca_results</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for class 'parameters_efa'</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span></span>
@@ -123,22 +128,27 @@ Details section).</p>
 <dd><p>A data frame or a statistical model.</p></dd>
 
 
+<dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
+<dd><p>Arguments passed to or from other methods.</p></dd>
+
+
 <dt id="arg-n">n<a class="anchor" aria-label="anchor" href="#arg-n"></a></dt>
 <dd><p>Number of components to extract. If <code>n="all"</code>, then <code>n</code> is set as
 the number of variables minus 1 (<code>ncol(x)-1</code>). If <code>n="auto"</code> (default) or
-<code>n=NULL</code>, the number of components is selected through <code><a href="n_factors.html">n_factors()</a></code> resp.
-<code><a href="n_factors.html">n_components()</a></code>. Else, if <code>n</code> is a number, <code>n</code> components are extracted.
-If <code>n</code> exceeds number of variables in the data, it is automatically set to
-the maximum number (i.e. <code>ncol(x)</code>). In <code><a href="reduce_parameters.html">reduce_parameters()</a></code>, can also
-be <code>"max"</code>, in which case it will select all the components that are
-maximally pseudo-loaded (i.e., correlated) by at least one variable.</p></dd>
+<code>n=NULL</code>, the number of components is selected through <code><a href="n_factors.html">n_factors()</a></code>
+resp. <code><a href="n_factors.html">n_components()</a></code>. Else, if <code>n</code> is a number, <code>n</code> components are
+extracted. If <code>n</code> exceeds number of variables in the data, it is
+automatically set to the maximum number (i.e. <code>ncol(x)</code>). In
+<code><a href="reduce_parameters.html">reduce_parameters()</a></code>, can also be <code>"max"</code>, in which case it will select
+all the components that are maximally pseudo-loaded (i.e., correlated) by
+at least one variable.</p></dd>
 
 
 <dt id="arg-rotation">rotation<a class="anchor" aria-label="anchor" href="#arg-rotation"></a></dt>
 <dd><p>If not <code>"none"</code>, the PCA / FA will be computed using the
-<strong>psych</strong> package. Possible options include <code>"varimax"</code>,
-<code>"quartimax"</code>, <code>"promax"</code>, <code>"oblimin"</code>, <code>"simplimax"</code>,
-or <code>"cluster"</code> (and more). See <code><a href="https://rdrr.io/pkg/psych/man/fa.html" class="external-link">psych::fa()</a></code> for details.</p></dd>
+<strong>psych</strong> package. Possible options include <code>"varimax"</code>, <code>"quartimax"</code>,
+<code>"promax"</code>, <code>"oblimin"</code>, <code>"simplimax"</code>, or <code>"cluster"</code> (and more). See
+<code><a href="https://rdrr.io/pkg/psych/man/fa.html" class="external-link">psych::fa()</a></code> for details.</p></dd>
 
 
 <dt id="arg-sort">sort<a class="anchor" aria-label="anchor" href="#arg-sort"></a></dt>
@@ -148,32 +158,14 @@ or <code>"cluster"</code> (and more). See <code><a href="https://rdrr.io/pkg/psy
 <dt id="arg-threshold">threshold<a class="anchor" aria-label="anchor" href="#arg-threshold"></a></dt>
 <dd><p>A value between 0 and 1 indicates which (absolute) values
 from the loadings should be removed. An integer higher than 1 indicates the
-n strongest loadings to retain. Can also be <code>"max"</code>, in which case it
-will only display the maximum loading per variable (the most simple
-structure).</p></dd>
+n strongest loadings to retain. Can also be <code>"max"</code>, in which case it will
+only display the maximum loading per variable (the most simple structure).</p></dd>
 
 
 <dt id="arg-standardize">standardize<a class="anchor" aria-label="anchor" href="#arg-standardize"></a></dt>
 <dd><p>A logical value indicating whether the variables should be
 standardized (centered and scaled) to have unit variance before the
 analysis (in general, such scaling is advisable).</p></dd>
-
-
-<dt id="arg-cor">cor<a class="anchor" aria-label="anchor" href="#arg-cor"></a></dt>
-<dd><p>An optional correlation matrix that can be used (note that the
-data must still be passed as the first argument). If <code>NULL</code>, will
-compute it by running <code><a href="https://rdrr.io/r/stats/cor.html" class="external-link">cor()</a></code> on the passed data.</p></dd>
-
-
-<dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>Arguments passed to or from other methods.</p></dd>
-
-
-<dt id="arg-sparse">sparse<a class="anchor" aria-label="anchor" href="#arg-sparse"></a></dt>
-<dd><p>Whether to compute sparse PCA (SPCA, using <code><a href="https://rdrr.io/pkg/sparsepca/man/spca.html" class="external-link">sparsepca::spca()</a></code>).
-SPCA attempts to find sparse loadings (with few nonzero values), which improves
-interpretability and avoids overfitting. Can be <code>TRUE</code> or <code>"robust"</code> (see
-<code><a href="https://rdrr.io/pkg/sparsepca/man/robspca.html" class="external-link">sparsepca::robspca()</a></code>).</p></dd>
 
 
 <dt id="arg-pca-results">pca_results<a class="anchor" aria-label="anchor" href="#arg-pca-results"></a></dt>
@@ -184,8 +176,16 @@ interpretability and avoids overfitting. Can be <code>TRUE</code> or <code>"robu
 <dd><p>Toggle warnings.</p></dd>
 
 
+<dt id="arg-sparse">sparse<a class="anchor" aria-label="anchor" href="#arg-sparse"></a></dt>
+<dd><p>Whether to compute sparse PCA (SPCA, using <code><a href="https://rdrr.io/pkg/sparsepca/man/spca.html" class="external-link">sparsepca::spca()</a></code>).
+SPCA attempts to find sparse loadings (with few nonzero values), which improves
+interpretability and avoids overfitting. Can be <code>TRUE</code> or <code>"robust"</code> (see
+<code><a href="https://rdrr.io/pkg/sparsepca/man/robspca.html" class="external-link">sparsepca::robspca()</a></code>).</p></dd>
+
+
 <dt id="arg-object">object<a class="anchor" aria-label="anchor" href="#arg-object"></a></dt>
-<dd><p>An object of class <code>parameters_pca</code> or <code>parameters_efa</code></p></dd>
+<dd><p>An object of class <code>parameters_pca</code>, <code>parameters_efa</code> or
+<code>psych_efa</code>.</p></dd>
 
 
 <dt id="arg-newdata">newdata<a class="anchor" aria-label="anchor" href="#arg-newdata"></a></dt>
@@ -216,7 +216,9 @@ columns in <code>x</code>. If provided, adds an additional column with the label
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A data frame of loadings.</p>
+    <p>A data frame of loadings. For <code>factor_analysis()</code>, this data frame is
+also of class <code>parameters_efa()</code>. Objects from <code>principal_components()</code> are
+of class <code>parameters_pca()</code>.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
