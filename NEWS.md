@@ -2,10 +2,10 @@
 
 ## Breaking Changes
 
-* The `cor` argument in `factor_analysis()` and `n_factors()` was renamed into
-  `correlation_matrix`, to avoid naming collision with the `cor` argument of
-  `psych::fa()`, which is internally used. Hence, now users can pass the `cor`
-  argument to `psych::fa()` when using `factor_analysis()`.
+* The `cor` argument in `n_factors()` was renamed into `correlation_matrix`. In
+  `factor_analysis()`, the `cor` argument was completely removed to avoid naming
+  collision with the `cor` argument of `psych::fa()`, which now users can pass
+  the `cor` argument to `psych::fa()` when using `factor_analysis()`.
 
 ## Changes
 
