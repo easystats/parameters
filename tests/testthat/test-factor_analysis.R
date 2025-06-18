@@ -29,7 +29,7 @@ test_that("n_factors, default", {
 
   s <- summary(out)
   expect_equal(
-    as.data.frame(s)[2, -1],
+    as.matrix(as.data.frame(s)[2, -1]),
     raq_fa$Vaccounted[2, ],
     tolerance = 1e-3,
     ignore_attr = TRUE
