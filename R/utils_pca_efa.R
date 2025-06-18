@@ -317,12 +317,12 @@ print.parameters_omega_summary <- function(x, ...) {
 
   # table caption
   if (is.null(rotation_name) || rotation_name == "none") {
-    if (format == "markdown") {
+    if (format %in% c("markdown", "html")) {
       table_caption <- sprintf("Loadings from %s (no rotation)", method)
     } else {
       table_caption <- c(sprintf("# Loadings from %s (no rotation)", method), "blue")
     }
-  } else if (format == "markdown") {
+  } else if (format %in% c("markdown", "html")) {
     table_caption <- sprintf("Rotated loadings from %s (%s-rotation)", method, rotation_name)
   } else {
     table_caption <- c(sprintf("# Rotated loadings from %s (%s-rotation)", method, rotation_name), "blue")
@@ -332,7 +332,7 @@ print.parameters_omega_summary <- function(x, ...) {
   if (is.null(attributes(x)$type)) {
     footer <- NULL
   } else {
-    footer <- c(.text_components_variance(x, sep = ifelse(format == "markdown", "", "\n")), "yellow")
+    footer <- c(.text_components_variance(x, sep = ifelse(format %in% c("markdown", "html"), "", "\n")), "yellow")
   }
 
   # alignment?
