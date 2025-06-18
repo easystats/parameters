@@ -1,4 +1,4 @@
-# parameters 0.26.0
+# parameters (devel)
 
 ## Breaking Changes
 
@@ -6,6 +6,12 @@
   `factor_analysis()`, the `cor` argument was completely removed to avoid naming
   collision with the `cor` argument of `psych::fa()`, which now users can pass
   the `cor` argument to `psych::fa()` when using `factor_analysis()`.
+
+## Changes
+
+* Added and/or improved print-methods for all functions around PCA and FA.
+
+# parameters 0.26.0
 
 ## Changes
 
@@ -29,8 +35,6 @@
 
 * `model_parameters()` for Anova objects gains an `include_intercept` argument,
   to include intercepts in the Anova table, where possible.
-
-* Added and/or improved print-methods for all functions around PCA and FA.
 
 # parameters 0.25.0
 
