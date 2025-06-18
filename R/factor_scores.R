@@ -4,6 +4,7 @@
 #' [`psych::fa()`] or [`factor_analysis()`].
 #'
 #' @param x An object returned by [`psych::fa()`] or [`factor_analysis()`].
+#' @param ... Currently unused.
 #'
 #' @return A data frame with the factor scores. It simply extracts the `$scores`
 #' element from the object and converts it into a data frame.

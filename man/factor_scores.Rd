@@ -8,6 +8,8 @@ factor_scores(x, ...)
 }
 \arguments{
 \item{x}{An object returned by \code{\link[psych:fa]{psych::fa()}} or \code{\link[=factor_analysis]{factor_analysis()}}.}
+
+\item{...}{Currently unused.}
 }
 \value{
 A data frame with the factor scores. It simply extracts the \verb{$scores}
