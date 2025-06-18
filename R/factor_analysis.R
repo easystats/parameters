@@ -40,3 +40,8 @@ factor_analysis.data.frame <- function(x,
   attr(out, "dataset") <- x
   out
 }
+
+
+.is_oblique_rotation <- function(rotation) {
+  !is.null(rotation) && tolower(rotation) %in% c("promax", "oblimin", "simplimax", "bentlerQ", "geominQ", "biquartimin", "cluster") # nolint
+}

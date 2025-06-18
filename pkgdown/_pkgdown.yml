@@ -85,6 +85,7 @@ reference:
     contents:
       - convert_efa_to_cfa
       - factor_analysis
+      - factor_scores
       - get_scores
       - n_factors
       - principal_components

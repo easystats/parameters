@@ -172,7 +172,6 @@ display.compare_parameters <- function(object,
       fun_args,
       list(
         column_labels = column_labels,
-        align = align,
         font_size = font_size,
         line_padding = line_padding
       )

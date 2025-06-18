@@ -1,4 +1,4 @@
-test_that("n_factors, default", {
+test_that("factor_analysis", {
   skip_on_cran()
   skip_if_not_installed("GPArotation")
   skip_if_not_installed("psych")
@@ -9,7 +9,7 @@ test_that("n_factors, default", {
   raq_items <- as.data.frame(discovr::raq)
   raq_items$id <- NULL
 
-  out <- parameters::factor_analysis(
+  out <- factor_analysis(
     raq_items,
     n = 4,
     scores = "tenBerge",
@@ -34,4 +34,19 @@ test_that("n_factors, default", {
     tolerance = 1e-3,
     ignore_attr = TRUE
   )
+
+  # include factor correlations
+  out <- factor_analysis(
+    mtcars[, 1:7],
+    n = 2,
+    rotation = "oblimin",
+    threshold = "max",
+    sort = TRUE
+  )
+  expect_snapshot(print(summary(out)))
+  expect_snapshot(print_md(summary(out)))
+
+  # check factor scores
+  fc <- factor_scores(out)
+  expect_identical(dim(fc), c(32L, 2L))
 })

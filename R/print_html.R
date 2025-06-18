@@ -281,6 +281,18 @@ print_html.parameters_efa_summary <- function(x, digits = 3, ...) {
   } else if ("Component" %in% names(x)) {
     names(x) <- c("Component", "Eigenvalues", "Variance Explained", "Variance Explained (Cumulative)", "Variance Explained (Proportion)") # nolint
   }
+
+  # we may have factor correlations
+  fc <- attributes(x)$factor_correlations
+
+  # if we have factor correlations, we need to add them to the table
+  if (!is.null(fc)) {
+    fc$Component <- "Factor Correlations"
+    x$Component <- "Explained Variance"
+    colnames(fc)[1] <- colnames(x)[1]
+    x <- .safe(rbind(x, fc), x)
+  }
+
   insight::export_table(x, digits = digits, format = "html", caption = table_caption, align = "firstleft")
 }
 

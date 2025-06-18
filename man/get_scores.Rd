@@ -31,20 +31,20 @@ score for each component from the PCA, which is on the same scale as the
 original, single items that were used to compute the PCA.
 }
 \examples{
-if (require("psych")) {
-  pca <- principal_components(mtcars[, 1:7], n = 2, rotation = "varimax")
+\dontshow{if (insight::check_if_installed("psych", quietly = TRUE)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+pca <- principal_components(mtcars[, 1:7], n = 2, rotation = "varimax")
 
-  # PCA extracted two components
-  pca
+# PCA extracted two components
+pca
 
-  # assignment of items to each component
-  closest_component(pca)
+# assignment of items to each component
+closest_component(pca)
 
-  # now we want to have sum scores for each component
-  get_scores(pca)
+# now we want to have sum scores for each component
+get_scores(pca)
 
-  # compare to manually computed sum score for 2nd component, which
-  # consists of items "hp" and "qsec"
-  (mtcars$hp + mtcars$qsec) / 2
-}
+# compare to manually computed sum score for 2nd component, which
+# consists of items "hp" and "qsec"
+(mtcars$hp + mtcars$qsec) / 2
+\dontshow{\}) # examplesIf}
 }
