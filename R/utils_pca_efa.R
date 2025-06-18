@@ -99,11 +99,20 @@ summary.parameters_efa <- function(object, ...) {
     colnames(x)
   )
 
-
   x <- as.data.frame(t(x[, cols]))
   x <- cbind(data.frame(Parameter = row.names(x), stringsAsFactors = FALSE), x)
   names(x) <- c("Parameter", attributes(object)$summary$Component)
   row.names(x) <- NULL
+
+  if (.is_oblique_rotation(attributes(object)$rotation)) {
+    factor_correlations <- attributes(object)$model$Phi
+    if (!is.null(factor_correlations)) {
+      attr(x, "factor_correlations") <- datawizard::rownames_as_column(
+        as.data.frame(factor_correlations),
+        var = "Factor"
+      )
+    }
+  }
 
   if (inherits(object, "parameters_efa")) {
     class(x) <- c("parameters_efa_summary", class(object))
@@ -206,6 +215,9 @@ predict.parameters_pca <- predict.parameters_efa
 
 #' @export
 print.parameters_efa_summary <- function(x, digits = 3, ...) {
+  # we may have factor correlations
+  fc <- attributes(x)$factor_correlations
+
   if ("Parameter" %in% names(x)) {
     x$Parameter <- c(
       "Eigenvalues", "Variance Explained", "Variance Explained (Cumulative)",
@@ -225,6 +237,19 @@ print.parameters_efa_summary <- function(x, digits = 3, ...) {
     format = "text",
     ...
   ))
+
+  if (!is.null(fc)) {
+    cat("\n")
+    cat(insight::export_table(
+      fc,
+      digits = digits,
+      caption = c("# Factor Correlations", "blue"),
+      format = "text",
+      ...
+    ))
+  }
+
+
   invisible(x)
 }
 

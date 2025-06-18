@@ -1,4 +1,4 @@
-test_that("n_factors, default", {
+test_that("factor_analysis", {
   skip_on_cran()
   skip_if_not_installed("GPArotation")
   skip_if_not_installed("psych")
@@ -34,4 +34,15 @@ test_that("n_factors, default", {
     tolerance = 1e-3,
     ignore_attr = TRUE
   )
+
+  # include factor correlations
+  out <- factor_analysis(
+    mtcars[, 1:7],
+    n = 2,
+    rotation = "oblimin",
+    threshold = "max",
+    sort = TRUE
+  )
+  expect_snapshot(print(summary(out)))
+  expect_snapshot(print_md(summary(out)))
 })
