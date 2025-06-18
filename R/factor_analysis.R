@@ -1,17 +1,11 @@
 #' @rdname principal_components
 #' @export
-factor_analysis <- function(x,
-                            n = "auto",
-                            rotation = "none",
-                            sort = FALSE,
-                            threshold = NULL,
-                            standardize = TRUE,
-                            cor = NULL,
-                            ...) {
+factor_analysis <- function(x, ...) {
   UseMethod("factor_analysis")
 }
 
 
+#' @rdname principal_components
 #' @export
 factor_analysis.data.frame <- function(x,
                                        n = "auto",
@@ -19,65 +13,29 @@ factor_analysis.data.frame <- function(x,
                                        sort = FALSE,
                                        threshold = NULL,
                                        standardize = TRUE,
-                                       cor = NULL,
                                        ...) {
+  insight::check_if_installed("psych")
+
   # Standardize
-  if (standardize && is.null(cor)) {
+  if (standardize) {
     x <- datawizard::standardize(x, ...)
   }
 
   # N factors
-  n <- .get_n_factors(x, n = n, type = "FA", rotation = rotation, cor = cor)
-
-  .factor_analysis_rotate(
+  n <- .get_n_factors(
     x,
-    n,
-    rotation = rotation,
-    sort = sort,
+    n = n,
+    type = "FA",
+    rotation = rotation
+  )
+
+  # FA
+  out <- model_parameters(
+    psych::fa(x, nfactors = n, rotate = rotation, ...),
     threshold = threshold,
-    cor = cor,
+    sort = sort,
     ...
   )
-}
-
-
-#' @keywords internal
-.factor_analysis_rotate <- function(x,
-                                    n,
-                                    rotation,
-                                    sort = FALSE,
-                                    threshold = NULL,
-                                    cor = NULL,
-                                    ...) {
-  if (!inherits(x, "data.frame")) {
-    insight::format_error("`x` must be a data frame.")
-  }
-
-  # rotate loadings
-  if (!requireNamespace("psych", quietly = TRUE)) {
-    insight::format_error(sprintf("Package `psych` required for `%s`-rotation.", rotation))
-  }
-
-  # Pass cor if available
-  if (is.null(cor)) {
-    out <- model_parameters(
-      psych::fa(x, nfactors = n, rotate = rotation, ...),
-      sort = sort,
-      threshold = threshold
-    )
-  } else {
-    out <- model_parameters(
-      psych::fa(
-        cor,
-        nfactors = n,
-        rotate = rotation,
-        n.obs = nrow(x),
-        ...
-      ),
-      sort = sort,
-      threshold = threshold
-    )
-  }
 
   attr(out, "dataset") <- x
   out

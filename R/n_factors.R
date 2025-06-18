@@ -28,9 +28,9 @@
 #' @param safe If `TRUE`, the function will run all the procedures in try
 #'   blocks, and will only return those that work and silently skip the ones
 #'   that may fail.
-#' @param cor An optional correlation matrix that can be used (note that the
-#'   data must still be passed as the first argument). If `NULL`, will
-#'   compute it by running `cor()` on the passed data.
+#' @param correlation_matrix An optional correlation matrix that can be used
+#'   (note that the data must still be passed as the first argument). If `NULL`,
+#'   will compute it by running `cor()` on the passed data.
 #' @param n_max If set to a value (e.g., `10`), will drop from the results all
 #' methods that suggest a higher number of components. The interpretation becomes
 #' 'from all the methods that suggested a number lower than n_max, the results
@@ -111,7 +111,7 @@ n_factors <- function(x,
                       rotation = "varimax",
                       algorithm = "default",
                       package = c("nFactors", "psych"),
-                      cor = NULL,
+                      correlation_matrix = NULL,
                       safe = TRUE,
                       n_max = NULL,
                       ...) {
@@ -122,12 +122,12 @@ n_factors <- function(x,
   # Get number of observations
   if (is.data.frame(x)) {
     n_obs <- nrow(x)
-  } else if (is.numeric(x) && !is.null(cor)) {
+  } else if (is.numeric(x) && !is.null(correlation_matrix)) {
     n_obs <- x
     package <- package[!package %in% c("pcdimension", "PCDimension")]
   } else if (is.matrix(x) || inherits(x, "easycormatrix")) {
     insight::format_error(
-      "Please input the correlation matrix via the `cor` argument and the number of rows / observations via the first argument." # nolint
+      "Please input the correlation matrix via the `correlation_matrix` argument and the number of rows / observations via the first argument." # nolint
     )
   }
 
@@ -143,16 +143,16 @@ n_factors <- function(x,
   x <- x[numerics]
 
   # Correlation matrix
-  if (is.null(cor)) {
-    cor <- stats::cor(x, use = "pairwise.complete.obs", ...)
+  if (is.null(correlation_matrix)) {
+    correlation_matrix <- stats::cor(x, use = "pairwise.complete.obs", ...)
   }
-  eigen_values <- eigen(cor)$values
+  eigen_values <- eigen(correlation_matrix)$values
 
   # Smooth matrix if negative eigen values
   if (any(eigen_values < 0)) {
     insight::check_if_installed("psych")
-    cor <- psych::cor.smooth(cor, ...)
-    eigen_values <- eigen(cor)$values
+    correlation_matrix <- psych::cor.smooth(correlation_matrix, ...)
+    eigen_values <- eigen(correlation_matrix)$values
   }
 
   # Initialize dataframe
@@ -173,71 +173,59 @@ n_factors <- function(x,
     if (safe) {
       out <- rbind(
         out,
-        tryCatch(.n_factors_bartlett(eigen_values, model, n_obs),
+        tryCatch(
+          .n_factors_bartlett(eigen_values, model, n_obs),
           warning = function(w) data.frame(),
           error = function(e) data.frame()
         )
       )
       out <- rbind(
         out,
-        tryCatch(.n_factors_bentler(eigen_values, model, n_obs),
+        tryCatch(
+          .n_factors_bentler(eigen_values, model, n_obs),
           warning = function(w) data.frame(),
           error = function(e) data.frame()
         )
       )
       out <- rbind(
         out,
-        tryCatch(.n_factors_cng(eigen_values, model),
+        tryCatch(
+          .n_factors_cng(eigen_values, model),
           warning = function(w) data.frame(),
           error = function(e) data.frame()
         )
       )
       out <- rbind(
         out,
-        tryCatch(.n_factors_mreg(eigen_values, model),
+        tryCatch(
+          .n_factors_mreg(eigen_values, model),
           warning = function(w) data.frame(),
           error = function(e) data.frame()
         )
       )
       out <- rbind(
         out,
-        tryCatch(.n_factors_scree(eigen_values, model),
+        tryCatch(
+          .n_factors_scree(eigen_values, model),
           warning = function(w) data.frame(),
           error = function(e) data.frame()
         )
       )
       out <- rbind(
         out,
-        tryCatch(.n_factors_sescree(eigen_values, model),
+        tryCatch(
+          .n_factors_sescree(eigen_values, model),
           warning = function(w) data.frame(),
           error = function(e) data.frame()
         )
       )
     } else {
-      out <- rbind(
-        out,
-        .n_factors_bartlett(eigen_values, model, n_obs)
-      )
-      out <- rbind(
-        out,
-        .n_factors_bentler(eigen_values, model, n_obs)
-      )
-      out <- rbind(
-        out,
-        .n_factors_cng(eigen_values, model)
-      )
-      out <- rbind(
-        out,
-        .n_factors_mreg(eigen_values, model)
-      )
-      out <- rbind(
-        out,
-        .n_factors_scree(eigen_values, model)
-      )
-      out <- rbind(
-        out,
-        .n_factors_sescree(eigen_values, model)
-      )
+      out <- rbind(out, .n_factors_bartlett(eigen_values, model, n_obs))
+      out <- rbind(out, .n_factors_bentler(eigen_values, model, n_obs))
+      out <- rbind(out, .n_factors_cng(eigen_values, model))
+      out <- rbind(out, .n_factors_mreg(eigen_values, model))
+      out <- rbind(out, .n_factors_scree(eigen_values, model))
+      out <- rbind(out, .n_factors_sescree(eigen_values, model))
     }
   }
 
@@ -248,19 +236,16 @@ n_factors <- function(x,
     if (safe) {
       out <- rbind(
         out,
-        tryCatch(.n_factors_ega(x, cor, n_obs, eigen_values, type),
+        tryCatch(
+          .n_factors_ega(x, correlation_matrix, n_obs, eigen_values, type),
           # warning = function(w) data.frame(),
           error = function(e) data.frame()
         )
       )
     } else {
-      out <- rbind(
-        out,
-        .n_factors_ega(x, cor, n_obs, eigen_values, type)
-      )
+      out <- rbind(out, .n_factors_ega(x, correlation_matrix, n_obs, eigen_values, type))
     }
   }
-
 
   # psych -------------------------------------------
   if ("psych" %in% package) {
@@ -269,16 +254,14 @@ n_factors <- function(x,
     if (safe) {
       out <- rbind(
         out,
-        tryCatch(.n_factors_vss(x, cor, n_obs, type, rotation, algorithm),
+        tryCatch(
+          .n_factors_vss(x, correlation_matrix, n_obs, type, rotation, algorithm),
           # warning = function(w) data.frame(),
           error = function(e) data.frame()
         )
       )
     } else {
-      out <- rbind(
-        out,
-        .n_factors_vss(x, cor, n_obs, type, rotation, algorithm)
-      )
+      out <- rbind(out, .n_factors_vss(x, correlation_matrix, n_obs, type, rotation, algorithm))
     }
   }
 
@@ -289,16 +272,14 @@ n_factors <- function(x,
     if (safe) {
       out <- rbind(
         out,
-        tryCatch(.n_factors_fit(x, cor, n_obs, type, rotation, algorithm),
+        tryCatch(
+          .n_factors_fit(x, correlation_matrix, n_obs, type, rotation, algorithm),
           warning = function(w) data.frame(),
           error = function(e) data.frame()
         )
       )
     } else {
-      out <- rbind(
-        out,
-        .n_factors_fit(x, cor, n_obs, type, rotation, algorithm)
-      )
+      out <- rbind(out, .n_factors_fit(x, correlation_matrix, n_obs, type, rotation, algorithm))
     }
   }
 
@@ -309,16 +290,14 @@ n_factors <- function(x,
     if (safe) {
       out <- rbind(
         out,
-        tryCatch(.n_factors_PCDimension(x, type),
+        tryCatch(
+          .n_factors_PCDimension(x, type),
           warning = function(w) data.frame(),
           error = function(e) data.frame()
         )
       )
     } else {
-      out <- rbind(
-        out,
-        .n_factors_PCDimension(x, type)
-      )
+      out <- rbind(out, .n_factors_PCDimension(x, type))
     }
   }
 
@@ -339,8 +318,13 @@ n_factors <- function(x,
   )
 
   # Add cumulative percentage of variance explained
-  fa <- factor_analysis(x, cor = cor, n = max(by_factors$n_Factors)) # Get it from our fa:: wrapper (TODO: that's probably not the most efficient)
-  varex <- attributes(fa)$summary
+  fa <- psych::fa(
+    correlation_matrix,
+    nfactors = max(by_factors$n_Factors),
+    n.obs = nrow(x),
+    rotate = "none"
+  )
+  varex <- .get_fa_variance_summary(fa)
   # Extract number of factors from EFA output (usually MR1, ML1, etc.)
   varex$n_Factors <- as.numeric(gsub("[^\\d]+", "", varex$Component, perl = TRUE))
   # Merge (and like that filter out empty methods)
@@ -348,9 +332,10 @@ n_factors <- function(x,
 
   attr(out, "Variance_Explained") <- varex # We add all the variance explained (for plotting)
   attr(out, "summary") <- by_factors
-  attr(out, "n") <- min(as.numeric(as.character(
-    by_factors[by_factors$n_Methods == max(by_factors$n_Methods), "n_Factors"]
-  )))
+  attr(out, "n") <- min(as.numeric(as.character(by_factors[
+    by_factors$n_Methods == max(by_factors$n_Methods),
+    "n_Factors"
+  ])))
 
   class(out) <- c("n_factors", "see_n_factors", class(out))
   out
@@ -364,7 +349,7 @@ n_components <- function(x,
                          rotation = "varimax",
                          algorithm = "default",
                          package = c("nFactors", "psych"),
-                         cor = NULL,
+                         correlation_matrix = NULL,
                          safe = TRUE,
                          ...) {
   n_factors(
@@ -373,7 +358,7 @@ n_components <- function(x,
     rotation = rotation,
     algorithm = algorithm,
     package = package,
-    cor = cor,
+    correlation_matrix = correlation_matrix,
     safe = safe,
     ...
   )
@@ -548,16 +533,24 @@ print.n_clusters <- print.n_factors
 
 # EGAnet ------------------------
 .n_factors_ega <- function(x = NULL,
-                           cor = NULL,
+                           correlation_matrix = NULL,
                            nobs = NULL,
                            eigen_values = NULL,
                            type = "FA") {
   # Replace with own correlation matrix
   junk <- utils::capture.output(suppressWarnings(suppressMessages(
-    nfac_glasso <- EGAnet::EGA(cor, n = nobs, model = "glasso", plot.EGA = FALSE)$n.dim # nolint
+    nfac_glasso <- EGAnet::EGA(
+      correlation_matrix,
+      n = nobs,
+      model = "glasso",
+      plot.EGA = FALSE
+    )$n.dim
   )))
   junk <- utils::capture.output(suppressWarnings(suppressMessages(
-    nfac_TMFG <- .safe(EGAnet::EGA(cor, n = nobs, model = "TMFG", plot.EGA = FALSE)$n.dim, NA) # nolint
+    nfac_TMFG <- .safe(
+      EGAnet::EGA(correlation_matrix, n = nobs, model = "TMFG", plot.EGA = FALSE)$n.dim,
+      NA
+    )
   )))
 
   .data_frame(
@@ -571,10 +564,7 @@ print.n_clusters <- print.n_factors
 # psych ------------------------
 
 #' @keywords internal
-.n_factors_parallel <- function(x = NULL,
-                                cor = NULL,
-                                nobs = NULL,
-                                type = "FA") {
+.n_factors_parallel <- function(x = NULL, correlation_matrix = NULL, nobs = NULL, type = "FA") {
   # Altnerative version of parralel analysis
   # Not used because already included in nFactors
 
@@ -585,8 +575,7 @@ print.n_clusters <- print.n_factors
   }
 
   insight::check_if_installed("psych")
-  out <- psych::fa.parallel(cor, n.obs = nobs, fa = fa, plot = FALSE, fm = "ml")
-
+  out <- psych::fa.parallel(correlation_matrix, n.obs = nobs, fa = fa, plot = FALSE, fm = "ml")
 
   .data_frame(
     n_Factors = as.numeric(stats::na.omit(c(out$nfact, out$ncomp))),
@@ -597,7 +586,7 @@ print.n_clusters <- print.n_factors
 
 #' @keywords internal
 .n_factors_vss <- function(x = NULL,
-                           cor = NULL,
+                           correlation_matrix = NULL,
                            nobs = NULL,
                            type = "FA",
                            rotation = "varimax",
@@ -610,11 +599,10 @@ print.n_clusters <- print.n_factors
     }
   }
 
-
   insight::check_if_installed("psych")
   # Compute VSS
   vss <- psych::VSS(
-    cor,
+    correlation_matrix,
     n = ncol(x) - 1,
     n.obs = nobs,
     rotate = rotation,
@@ -647,7 +635,7 @@ print.n_clusters <- print.n_factors
 
 #' @keywords internal
 .n_factors_fit <- function(x = NULL,
-                           cor = NULL,
+                           correlation_matrix = NULL,
                            nobs = NULL,
                            type = "FA",
                            rotation = "varimax",
@@ -663,12 +651,12 @@ print.n_clusters <- print.n_factors
 
   insight::check_if_installed("psych")
   rez <- data.frame()
-  for (n in 1:(ncol(cor) - 1)) {
+  for (n in 1:(ncol(correlation_matrix) - 1)) {
     if (tolower(type) %in% c("fa", "factor", "efa")) {
       factors <- tryCatch(
         suppressWarnings(
           psych::fa(
-            cor,
+            correlation_matrix,
             nfactors = n,
             n.obs = nobs,
             rotate = rotation,
@@ -681,7 +669,7 @@ print.n_clusters <- print.n_factors
       factors <- tryCatch(
         suppressWarnings(
           psych::pca(
-            cor,
+            correlation_matrix,
             nfactors = n,
             n.obs = nobs,
             rotate = rotation

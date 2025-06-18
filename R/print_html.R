@@ -243,6 +243,51 @@ print_html.compare_parameters <- function(x,
 }
 
 
+# PCA / EFA / CFA ----------------------------
+
+
+#' @export
+print_html.parameters_efa <- function(x,
+                                      digits = 2,
+                                      sort = FALSE,
+                                      threshold = NULL,
+                                      labels = NULL,
+                                      ...) {
+  # extract attributes
+  if (is.null(threshold)) {
+    threshold <- attributes(x)$threshold
+  }
+  .print_parameters_cfa_efa(
+    x,
+    threshold = threshold,
+    sort = sort,
+    format = "html",
+    digits = digits,
+    labels = labels,
+    ...
+  )
+}
+
+#' @export
+print_html.parameters_pca <- print_html.parameters_efa
+
+
+#' @export
+print_html.parameters_efa_summary <- function(x, digits = 3, ...) {
+  table_caption <- "(Explained) Variance of Components"
+
+  if ("Parameter" %in% names(x)) {
+    x$Parameter <- c("Eigenvalues", "Variance Explained", "Variance Explained (Cumulative)", "Variance Explained (Proportion)") # nolint
+  } else if ("Component" %in% names(x)) {
+    names(x) <- c("Component", "Eigenvalues", "Variance Explained", "Variance Explained (Cumulative)", "Variance Explained (Proportion)") # nolint
+  }
+  insight::export_table(x, digits = digits, format = "html", caption = table_caption, align = "firstleft")
+}
+
+#' @export
+print_html.parameters_pca_summary <- print_html.parameters_efa_summary
+
+
 # helper ------------------
 
 .add_gt_options <- function(out,

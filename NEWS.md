@@ -1,3 +1,19 @@
+# parameters (devel)
+
+## Breaking Changes
+
+* The `cor` argument in `n_factors()` was renamed into `correlation_matrix`. In
+  `factor_analysis()`, the `cor` argument was completely removed to avoid naming
+  collision with the `cor` argument of `psych::fa()`, which now users can pass
+  the `cor` argument to `psych::fa()` when using `factor_analysis()`.
+
+## Changes
+
+* Added and/or improved print-methods for all functions around PCA and FA.
+
+* Improved efficiency in `model_parameters()` for models from packages *brms*
+  and *rstanarm*.
+
 # parameters 0.26.0
 
 ## Changes

@@ -261,7 +261,16 @@ print_md.parameters_efa_summary <- function(x, digits = 3, ...) {
 print_md.parameters_pca_summary <- print_md.parameters_efa_summary
 
 #' @export
-print_md.parameters_efa <- function(x, digits = 2, sort = FALSE, threshold = NULL, labels = NULL, ...) {
+print_md.parameters_efa <- function(x,
+                                    digits = 2,
+                                    sort = FALSE,
+                                    threshold = NULL,
+                                    labels = NULL,
+                                    ...) {
+  # extract attributes
+  if (is.null(threshold)) {
+    threshold <- attributes(x)$threshold
+  }
   .print_parameters_cfa_efa(
     x,
     threshold = threshold,

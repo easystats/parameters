@@ -107,26 +107,28 @@ display.parameters_model <- function(object,
                                      ...) {
   format <- insight::validate_argument(format, c("markdown", "html", "md", "tt"))
 
+  fun_args <- list(
+    x = object, pretty_names = pretty_names, split_components = split_components,
+    select = select, digits = digits, caption = caption, subtitle = subtitle,
+    footer = footer, ci_digits = ci_digits, p_digits = p_digits,
+    footer_digits = footer_digits, ci_brackets = ci_brackets,
+    show_sigma = show_sigma, show_formula = show_formula, zap_small = zap_small,
+    include_reference = include_reference, verbose = verbose
+  )
+
   if (format %in% c("html", "tt")) {
-    print_html(
-      x = object, pretty_names = pretty_names, split_components = split_components,
-      select = select, digits = digits, caption = caption, subtitle = subtitle,
-      footer = footer, ci_digits = ci_digits, p_digits = p_digits,
-      footer_digits = footer_digits, align = align, ci_brackets = ci_brackets,
-      show_sigma = show_sigma, show_formula = show_formula, zap_small = zap_small,
-      font_size = font_size, line_padding = line_padding,
-      column_labels = column_labels, include_reference = include_reference,
-      verbose = verbose, ...
+    fun_args <- c(
+      fun_args,
+      list(
+        column_labels = column_labels,
+        align = align,
+        font_size = font_size,
+        line_padding = line_padding
+      )
     )
+    do.call(print_html, c(fun_args, list(...)))
   } else {
-    print_md(
-      x = object, pretty_names = pretty_names, split_components = split_components,
-      select = select, digits = digits, caption = caption, subtitle = subtitle,
-      footer = footer, ci_digits = ci_digits, p_digits = p_digits,
-      footer_digits = footer_digits, ci_brackets = ci_brackets,
-      show_sigma = show_sigma, show_formula = show_formula, zap_small = zap_small,
-      include_reference = include_reference, verbose = verbose, ...
-    )
+    do.call(print_md, c(fun_args, list(...)))
   }
 }
 
@@ -155,15 +157,29 @@ display.compare_parameters <- function(object,
                                        ...) {
   format <- insight::validate_argument(format, c("markdown", "html", "md", "tt"))
 
+  fun_args <- list(
+    x = object,
+    digits = digits,
+    ci_digits = ci_digits,
+    p_digits = p_digits,
+    ci_brackets = ci_brackets,
+    select = select,
+    zap_small = zap_small
+  )
+
   if (format %in% c("html", "tt")) {
-    print_html(
-      x = object, digits = digits, ci_digits = ci_digits, p_digits = p_digits,
-      select = select, column_labels = column_labels, font_size = font_size,
-      line_padding = line_padding, ci_brackets = ci_brackets,
-      zap_small = zap_small, ...
+    fun_args <- c(
+      fun_args,
+      list(
+        column_labels = column_labels,
+        align = align,
+        font_size = font_size,
+        line_padding = line_padding
+      )
     )
+    do.call(print_html, c(fun_args, list(...)))
   } else {
-    print_md(x = object, digits = digits, ci_digits = ci_digits, p_digits = p_digits, select = select, ...)
+    do.call(print_md, c(fun_args, list(...)))
   }
 }
 
@@ -180,7 +196,21 @@ display.parameters_sem <- function(object,
                                    p_digits = 3,
                                    ci_brackets = c("(", ")"),
                                    ...) {
-  print_md(x = object, digits = digits, ci_digits = ci_digits, p_digits = p_digits, ci_brackets = ci_brackets, ...)
+  format <- insight::validate_argument(format, c("markdown", "html", "md", "tt"))
+
+  fun_args <- list(
+    x = object,
+    digits = digits,
+    ci_digits = ci_digits,
+    p_digits = p_digits,
+    ci_brackets = ci_brackets
+  )
+
+  if (format %in% c("html", "tt")) {
+    do.call(print_html, c(fun_args, list(...)))
+  } else {
+    do.call(print_md, c(fun_args, list(...)))
+  }
 }
 
 
@@ -190,7 +220,14 @@ display.parameters_sem <- function(object,
 #' @rdname display.parameters_model
 #' @export
 display.parameters_efa_summary <- function(object, format = "markdown", digits = 3, ...) {
-  print_md(x = object, digits = digits, ...)
+  format <- insight::validate_argument(format, c("markdown", "html", "md", "tt"))
+  fun_args <- list(x = object, digits = digits)
+
+  if (format %in% c("html", "tt")) {
+    do.call(print_html, c(fun_args, list(...)))
+  } else {
+    do.call(print_md, c(fun_args, list(...)))
+  }
 }
 
 #' @export
@@ -201,7 +238,21 @@ display.parameters_pca_summary <- display.parameters_efa_summary
 #' @rdname display.parameters_model
 #' @export
 display.parameters_efa <- function(object, format = "markdown", digits = 2, sort = FALSE, threshold = NULL, labels = NULL, ...) {
-  print_md(x = object, digits = digits, sort = sort, threshold = threshold, labels = labels, ...)
+  format <- insight::validate_argument(format, c("markdown", "html", "md", "tt"))
+
+  fun_args <- list(
+    x = object,
+    digits = digits,
+    sort = sort,
+    threshold = threshold,
+    labels = labels
+  )
+
+  if (format %in% c("html", "tt")) {
+    do.call(print_html, c(fun_args, list(...)))
+  } else {
+    do.call(print_md, c(fun_args, list(...)))
+  }
 }
 
 #' @export

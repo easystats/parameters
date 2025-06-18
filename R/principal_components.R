@@ -9,16 +9,17 @@
 #' @param x A data frame or a statistical model.
 #' @param n Number of components to extract. If `n="all"`, then `n` is set as
 #'   the number of variables minus 1 (`ncol(x)-1`). If `n="auto"` (default) or
-#'   `n=NULL`, the number of components is selected through [`n_factors()`] resp.
-#'   [`n_components()`]. Else, if `n` is a number, `n` components are extracted.
-#'   If `n` exceeds number of variables in the data, it is automatically set to
-#'   the maximum number (i.e. `ncol(x)`). In [`reduce_parameters()`], can also
-#'   be `"max"`, in which case it will select all the components that are
-#'   maximally pseudo-loaded (i.e., correlated) by at least one variable.
+#'   `n=NULL`, the number of components is selected through [`n_factors()`]
+#'   resp. [`n_components()`]. Else, if `n` is a number, `n` components are
+#'   extracted. If `n` exceeds number of variables in the data, it is
+#'   automatically set to the maximum number (i.e. `ncol(x)`). In
+#'   [`reduce_parameters()`], can also be `"max"`, in which case it will select
+#'   all the components that are maximally pseudo-loaded (i.e., correlated) by
+#'   at least one variable.
 #' @param rotation If not `"none"`, the PCA / FA will be computed using the
-#'   **psych** package. Possible options include `"varimax"`,
-#'   `"quartimax"`, `"promax"`, `"oblimin"`, `"simplimax"`,
-#'   or `"cluster"` (and more). See [`psych::fa()`] for details.
+#'   **psych** package. Possible options include `"varimax"`, `"quartimax"`,
+#'   `"promax"`, `"oblimin"`, `"simplimax"`, or `"cluster"` (and more). See
+#'   [`psych::fa()`] for details.
 #' @param sparse Whether to compute sparse PCA (SPCA, using [`sparsepca::spca()`]).
 #'   SPCA attempts to find sparse loadings (with few nonzero values), which improves
 #'   interpretability and avoids overfitting. Can be `TRUE` or `"robust"` (see
@@ -26,13 +27,13 @@
 #' @param sort Sort the loadings.
 #' @param threshold A value between 0 and 1 indicates which (absolute) values
 #'   from the loadings should be removed. An integer higher than 1 indicates the
-#'   n strongest loadings to retain. Can also be `"max"`, in which case it
-#'   will only display the maximum loading per variable (the most simple
-#'   structure).
+#'   n strongest loadings to retain. Can also be `"max"`, in which case it will
+#'   only display the maximum loading per variable (the most simple structure).
 #' @param standardize A logical value indicating whether the variables should be
 #'   standardized (centered and scaled) to have unit variance before the
 #'   analysis (in general, such scaling is advisable).
-#' @param object An object of class `parameters_pca` or `parameters_efa`
+#' @param object An object of class `parameters_pca`, `parameters_efa` or
+#'   `psych_efa`.
 #' @param newdata An optional data frame in which to look for variables with
 #'   which to predict. If omitted, the fitted values are used.
 #' @param names Optional character vector to name columns of the returned data
@@ -47,7 +48,6 @@
 #' @param labels Argument for `print()`, character vector of same length as
 #'   columns in `x`. If provided, adds an additional column with the labels.
 #' @param verbose Toggle warnings.
-#' @inheritParams n_factors
 #'
 #' @details
 #'
@@ -133,6 +133,25 @@
 #' magnitude. In other words, the eigenvalues explain the variance of the
 #' data along the new feature axes.
 #'
+#' @return A data frame of loadings. For `factor_analysis()`, this data frame is
+#' also of class `parameters_efa()`. Objects from `principal_components()` are
+#' of class `parameters_pca()`.
+#'
+#' @references
+#' - Kaiser, H.F. and Rice. J. (1974). Little jiffy, mark iv. Educational
+#'   and Psychological Measurement, 34(1):111–117
+#'
+#' - Hofmann, R. (1978). Complexity and simplicity as objective indices
+#'   descriptive of factor solutions. Multivariate Behavioral Research, 13:2,
+#'   247-250, \doi{10.1207/s15327906mbr1302_9}
+#'
+#' - Pettersson, E., & Turkheimer, E. (2010). Item selection, evaluation,
+#'   and simple structure in personality data. Journal of research in
+#'   personality, 44(4), 407-420, \doi{10.1016/j.jrp.2010.03.002}
+#'
+#' - Tabachnick, B. G., and Fidell, L. S. (2013). Using multivariate
+#'   statistics (6th ed.). Boston: Pearson Education.
+#'
 #' @examplesIf require("nFactors", quietly = TRUE) && require("sparsepca", quietly = TRUE) && require("psych", quietly = TRUE)
 #' library(parameters)
 #'
@@ -188,32 +207,9 @@
 #' # Automated number of components
 #' factor_analysis(mtcars[, 1:4], n = "auto")
 #' }
-#' @return A data frame of loadings.
-#'
-#' @references
-#' - Kaiser, H.F. and Rice. J. (1974). Little jiffy, mark iv. Educational
-#'   and Psychological Measurement, 34(1):111–117
-#'
-#' - Hofmann, R. (1978). Complexity and simplicity as objective indices
-#'   descriptive of factor solutions. Multivariate Behavioral Research, 13:2,
-#'   247-250, \doi{10.1207/s15327906mbr1302_9}
-#'
-#' - Pettersson, E., & Turkheimer, E. (2010). Item selection, evaluation,
-#'   and simple structure in personality data. Journal of research in
-#'   personality, 44(4), 407-420, \doi{10.1016/j.jrp.2010.03.002}
-#'
-#' - Tabachnick, B. G., and Fidell, L. S. (2013). Using multivariate
-#'   statistics (6th ed.). Boston: Pearson Education.
 #'
 #' @export
-principal_components <- function(x,
-                                 n = "auto",
-                                 rotation = "none",
-                                 sparse = FALSE,
-                                 sort = FALSE,
-                                 threshold = NULL,
-                                 standardize = TRUE,
-                                 ...) {
+principal_components <- function(x, ...) {
   UseMethod("principal_components")
 }
 
@@ -249,6 +245,7 @@ rotated_data <- function(pca_results, verbose = TRUE) {
 }
 
 
+#' @rdname principal_components
 #' @export
 principal_components.data.frame <- function(x,
                                             n = "auto",
@@ -448,9 +445,10 @@ principal_components.data.frame <- function(x,
                         threshold = NULL,
                         original_data = NULL,
                         ...) {
-  if (!(rotation %in% c("varimax", "quartimax", "promax", "oblimin", "simplimax", "cluster", "none"))) {
-    insight::format_error("`rotation` must be one of \"varimax\", \"quartimax\", \"promax\", \"oblimin\", \"simplimax\", \"cluster\" or \"none\".")
-  }
+  rotation <- insight::validate_argument(
+    rotation,
+    c("varimax", "quartimax", "promax", "oblimin", "simplimax", "cluster", "none")
+  )
 
   if (!inherits(x, c("prcomp", "data.frame"))) {
     insight::format_error("`x` must be of class `prcomp` or a data frame.")
