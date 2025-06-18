@@ -129,9 +129,8 @@ summary.parameters_pca <- summary.parameters_efa
 
 #' @export
 summary.parameters_omega <- function(object, ...) {
-  table_var <- attributes(object)$summary
-  class(table_var) <- c("parameters_omega_summary", class(table_var))
-  table_var
+  class(object) <- c("parameters_omega_summary", "data.frame")
+  object
 }
 
 
@@ -284,28 +283,41 @@ print.parameters_efa <- function(x,
   invisible(x)
 }
 
-
 #' @export
 print.parameters_pca <- print.parameters_efa
 
-
 #' @export
-print.parameters_omega <- function(x, ...) {
-  orig_x <- x
-  names(x) <- c("Composite", "Omega (total)", "Omega (hierarchical)", "Omega (group)")
-  cat(insight::export_table(x))
-  invisible(orig_x)
-}
+print.parameters_omega <- print.parameters_efa
 
 
 #' @export
 print.parameters_omega_summary <- function(x, ...) {
   orig_x <- x
-  names(x) <- c(
-    "Composite", "Total Variance (%)", "Variance due to General Factor (%)",
-    "Variance due to Group Factor (%)"
-  )
-  cat(insight::export_table(x))
+
+  # extract summary tables
+  omega_coefficients <- attributes(x)$omega_coefficients
+  variance_summary <- attributes(x)$summary
+
+  # rename columns
+  if (!is.null(omega_coefficients)) {
+    names(omega_coefficients) <- c(
+      "Composite", "Omega (total)", "Omega (hierarchical)", "Omega (group)"
+    )
+    caption1 <- c("# Omega Coefficients", "blue")
+  }
+  if (!is.null(variance_summary)) {
+    names(variance_summary) <- c(
+      "Composite", "Total (%)", "General Factor (%)",
+      "Group Factor (%)"
+    )
+    caption2 <- c("# Variances", "blue")
+  }
+
+  # list for export
+  out <- insight::compact_list(list(omega_coefficients, variance_summary))
+  captions <- insight::compact_list(list(caption1, caption2))
+
+  cat(insight::export_table(out, caption = captions, format = "text", ...))
   invisible(orig_x)
 }
 
@@ -317,8 +329,10 @@ print.parameters_omega_summary <- function(x, ...) {
   # Method
   if (inherits(x, "parameters_pca")) {
     method <- "Principal Component Analysis"
-  } else {
+  } else if (inherits(x, "parameters_efa")) {
     method <- "Factor Analysis"
+  } else {
+    method <- "Omega"
   }
 
   # Rotation
@@ -341,7 +355,13 @@ print.parameters_omega_summary <- function(x, ...) {
   }
 
   # table caption
-  if (is.null(rotation_name) || rotation_name == "none") {
+  if (method == "Omega") {
+    if (format %in% c("markdown", "html")) {
+      table_caption <- "Omega"
+    } else {
+      table_caption <- c("# Omega", "blue")
+    }
+  } else if (is.null(rotation_name) || rotation_name == "none") {
     if (format %in% c("markdown", "html")) {
       table_caption <- sprintf("Loadings from %s (no rotation)", method)
     } else {

@@ -274,6 +274,38 @@ print_md.parameters_efa_summary <- function(x, digits = 3, ...) {
 print_md.parameters_pca_summary <- print_md.parameters_efa_summary
 
 #' @export
+print_md.parameters_omega_summary <- function(x, ...) {
+  orig_x <- x
+
+  # extract summary tables
+  omega_coefficients <- attributes(x)$omega_coefficients
+  variance_summary <- attributes(x)$summary
+
+  # rename columns
+  if (!is.null(omega_coefficients)) {
+    names(omega_coefficients) <- c(
+      "Composite", "Omega (total)", "Omega (hierarchical)", "Omega (group)"
+    )
+    caption1 <- "Omega Coefficients"
+  }
+  if (!is.null(variance_summary)) {
+    names(variance_summary) <- c(
+      "Composite", "Total (%)", "General Factor (%)",
+      "Group Factor (%)"
+    )
+    caption2 <- "Variances"
+  }
+
+  # list for export
+  out <- insight::compact_list(list(omega_coefficients, variance_summary))
+  captions <- insight::compact_list(list(caption1, caption2))
+
+  cat(insight::export_table(out, caption = captions, format = "markdown", ...))
+  invisible(orig_x)
+}
+
+
+#' @export
 print_md.parameters_efa <- function(x,
                                     digits = 2,
                                     sort = FALSE,
@@ -297,6 +329,9 @@ print_md.parameters_efa <- function(x,
 
 #' @export
 print_md.parameters_pca <- print_md.parameters_efa
+
+#' @export
+print_md.parameters_omega <- print_md.parameters_efa
 
 
 # Equivalence test ----------------------------
