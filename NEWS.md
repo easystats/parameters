@@ -30,6 +30,8 @@
 * `model_parameters()` for Anova objects gains an `include_intercept` argument,
   to include intercepts in the Anova table, where possible.
 
+* Added and/or improved print-methods for all functions around PCA and FA.
+
 # parameters 0.25.0
 
 ## Changes
