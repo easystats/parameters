@@ -9,16 +9,17 @@
 #' @param x A data frame or a statistical model.
 #' @param n Number of components to extract. If `n="all"`, then `n` is set as
 #'   the number of variables minus 1 (`ncol(x)-1`). If `n="auto"` (default) or
-#'   `n=NULL`, the number of components is selected through [`n_factors()`] resp.
-#'   [`n_components()`]. Else, if `n` is a number, `n` components are extracted.
-#'   If `n` exceeds number of variables in the data, it is automatically set to
-#'   the maximum number (i.e. `ncol(x)`). In [`reduce_parameters()`], can also
-#'   be `"max"`, in which case it will select all the components that are
-#'   maximally pseudo-loaded (i.e., correlated) by at least one variable.
+#'   `n=NULL`, the number of components is selected through [`n_factors()`]
+#'   resp. [`n_components()`]. Else, if `n` is a number, `n` components are
+#'   extracted. If `n` exceeds number of variables in the data, it is
+#'   automatically set to the maximum number (i.e. `ncol(x)`). In
+#'   [`reduce_parameters()`], can also be `"max"`, in which case it will select
+#'   all the components that are maximally pseudo-loaded (i.e., correlated) by
+#'   at least one variable.
 #' @param rotation If not `"none"`, the PCA / FA will be computed using the
-#'   **psych** package. Possible options include `"varimax"`,
-#'   `"quartimax"`, `"promax"`, `"oblimin"`, `"simplimax"`,
-#'   or `"cluster"` (and more). See [`psych::fa()`] for details.
+#'   **psych** package. Possible options include `"varimax"`, `"quartimax"`,
+#'   `"promax"`, `"oblimin"`, `"simplimax"`, or `"cluster"` (and more). See
+#'   [`psych::fa()`] for details.
 #' @param sparse Whether to compute sparse PCA (SPCA, using [`sparsepca::spca()`]).
 #'   SPCA attempts to find sparse loadings (with few nonzero values), which improves
 #'   interpretability and avoids overfitting. Can be `TRUE` or `"robust"` (see
@@ -26,9 +27,8 @@
 #' @param sort Sort the loadings.
 #' @param threshold A value between 0 and 1 indicates which (absolute) values
 #'   from the loadings should be removed. An integer higher than 1 indicates the
-#'   n strongest loadings to retain. Can also be `"max"`, in which case it
-#'   will only display the maximum loading per variable (the most simple
-#'   structure).
+#'   n strongest loadings to retain. Can also be `"max"`, in which case it will
+#'   only display the maximum loading per variable (the most simple structure).
 #' @param standardize A logical value indicating whether the variables should be
 #'   standardized (centered and scaled) to have unit variance before the
 #'   analysis (in general, such scaling is advisable).
@@ -445,9 +445,10 @@ principal_components.data.frame <- function(x,
                         threshold = NULL,
                         original_data = NULL,
                         ...) {
-  if (!(rotation %in% c("varimax", "quartimax", "promax", "oblimin", "simplimax", "cluster", "none"))) {
-    insight::format_error("`rotation` must be one of \"varimax\", \"quartimax\", \"promax\", \"oblimin\", \"simplimax\", \"cluster\" or \"none\".")
-  }
+  rotation <- insight::validate_argument(
+    rotation,
+    c("varimax", "quartimax", "promax", "oblimin", "simplimax", "cluster", "none")
+  )
 
   if (!inherits(x, c("prcomp", "data.frame"))) {
     insight::format_error("`x` must be of class `prcomp` or a data frame.")

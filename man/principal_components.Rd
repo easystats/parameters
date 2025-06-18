@@ -62,25 +62,25 @@ closest_component(pca_results)
 
 \item{n}{Number of components to extract. If \code{n="all"}, then \code{n} is set as
 the number of variables minus 1 (\code{ncol(x)-1}). If \code{n="auto"} (default) or
-\code{n=NULL}, the number of components is selected through \code{\link[=n_factors]{n_factors()}} resp.
-\code{\link[=n_components]{n_components()}}. Else, if \code{n} is a number, \code{n} components are extracted.
-If \code{n} exceeds number of variables in the data, it is automatically set to
-the maximum number (i.e. \code{ncol(x)}). In \code{\link[=reduce_parameters]{reduce_parameters()}}, can also
-be \code{"max"}, in which case it will select all the components that are
-maximally pseudo-loaded (i.e., correlated) by at least one variable.}
+\code{n=NULL}, the number of components is selected through \code{\link[=n_factors]{n_factors()}}
+resp. \code{\link[=n_components]{n_components()}}. Else, if \code{n} is a number, \code{n} components are
+extracted. If \code{n} exceeds number of variables in the data, it is
+automatically set to the maximum number (i.e. \code{ncol(x)}). In
+\code{\link[=reduce_parameters]{reduce_parameters()}}, can also be \code{"max"}, in which case it will select
+all the components that are maximally pseudo-loaded (i.e., correlated) by
+at least one variable.}
 
 \item{rotation}{If not \code{"none"}, the PCA / FA will be computed using the
-\strong{psych} package. Possible options include \code{"varimax"},
-\code{"quartimax"}, \code{"promax"}, \code{"oblimin"}, \code{"simplimax"},
-or \code{"cluster"} (and more). See \code{\link[psych:fa]{psych::fa()}} for details.}
+\strong{psych} package. Possible options include \code{"varimax"}, \code{"quartimax"},
+\code{"promax"}, \code{"oblimin"}, \code{"simplimax"}, or \code{"cluster"} (and more). See
+\code{\link[psych:fa]{psych::fa()}} for details.}
 
 \item{sort}{Sort the loadings.}
 
 \item{threshold}{A value between 0 and 1 indicates which (absolute) values
 from the loadings should be removed. An integer higher than 1 indicates the
-n strongest loadings to retain. Can also be \code{"max"}, in which case it
-will only display the maximum loading per variable (the most simple
-structure).}
+n strongest loadings to retain. Can also be \code{"max"}, in which case it will
+only display the maximum loading per variable (the most simple structure).}
 
 \item{standardize}{A logical value indicating whether the variables should be
 standardized (centered and scaled) to have unit variance before the
