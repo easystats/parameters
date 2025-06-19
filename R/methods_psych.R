@@ -295,6 +295,17 @@ model_parameters.omega <- function(model,
 }
 
 
+#' @export
+model_parameters.item_omega <- function(model,
+                                        sort = FALSE,
+                                        threshold = NULL,
+                                        labels = NULL,
+                                        ...) {
+  x <- attributes(model)$model
+  model_parameters(x, sort = sort, threshold = threshold, labels = labels, ...)
+}
+
+
 # helper ------------------------------------------------
 
 
