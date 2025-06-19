@@ -269,17 +269,15 @@ print.parameters_efa <- function(x,
   if (is.null(threshold)) {
     threshold <- attributes(x)$threshold
   }
-  cat(
-    .print_parameters_cfa_efa(
-      x,
-      threshold = threshold,
-      sort = sort,
-      format = "text",
-      digits = digits,
-      labels = labels,
-      ...
-    )
-  )
+  cat(.print_parameters_cfa_efa(
+    x,
+    threshold = threshold,
+    sort = sort,
+    format = "text",
+    digits = digits,
+    labels = labels,
+    ...
+  ))
   invisible(x)
 }
 
