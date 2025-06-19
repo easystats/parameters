@@ -82,7 +82,9 @@ loadings data. Usually, the question related to the item.}
 A data frame of indices or loadings.
 }
 \description{
-Format structural models from the \strong{psych} or \strong{FactoMineR} packages.
+Format structural models from the \strong{psych} or \strong{FactoMineR} packages. There
+is a \code{summary()} method for the returned output from \code{model_parameters()}, to
+show further information. See 'Examples'.
 }
 \details{
 For the structural models obtained with \strong{psych}, the following indices
@@ -118,6 +120,7 @@ library(parameters)
 # Principal Component Analysis (PCA) ---------
 pca <- psych::principal(attitude)
 model_parameters(pca)
+summary(model_parameters(pca))
 
 pca <- psych::principal(attitude, nfactors = 3, rotate = "none")
 model_parameters(pca, sort = TRUE, threshold = 0.2)

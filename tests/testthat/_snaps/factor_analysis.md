@@ -124,5 +124,33 @@
     Code
       print_md(summary(out))
     Output
-      Table: Omega Statistics  |Statistic            | Coefficient| |:--------------------|-----------:| |Alpha                |        0.88| |G.6                  |        0.97| |Omega (hierachical)  |        0.57| |Omega (asymptotic H) |        0.58| |Omega (total)        |        0.97|  Table: Omega Coefficients  |Composite | Omega (total)| Omega (hierarchical)| Omega (group)| |:---------|-------------:|--------------------:|-------------:| |g         |          0.97|                 0.57|          0.26| |F1*       |          0.90|                 0.31|          0.59| |F2*       |          0.91|                 0.69|          0.22| |F3*       |          0.87|                 0.60|          0.28|  Table: Variances  |Composite | Total (%)| General Factor (%)| Group Factor (%)| |:---------|---------:|------------------:|----------------:| |g         |     97.28|              56.64|            26.42| |F1*       |     90.12|              31.07|            59.05| |F2*       |     91.37|              69.32|            22.04| |F3*       |     87.36|              59.65|            27.71|
+      
+      
+      Table: Omega Statistics
+      
+      |Statistic            | Coefficient|
+      |:--------------------|-----------:|
+      |Alpha                |        0.88|
+      |G.6                  |        0.97|
+      |Omega (hierachical)  |        0.57|
+      |Omega (asymptotic H) |        0.58|
+      |Omega (total)        |        0.97|
+      
+      Table: Omega Coefficients
+      
+      |Composite | Omega (total)| Omega (hierarchical)| Omega (group)|
+      |:---------|-------------:|--------------------:|-------------:|
+      |g         |          0.97|                 0.57|          0.26|
+      |F1*       |          0.90|                 0.31|          0.59|
+      |F2*       |          0.91|                 0.69|          0.22|
+      |F3*       |          0.87|                 0.60|          0.28|
+      
+      Table: Variances
+      
+      |Composite | Total (%)| General Factor (%)| Group Factor (%)|
+      |:---------|---------:|------------------:|----------------:|
+      |g         |     97.28|              56.64|            26.42|
+      |F1*       |     90.12|              31.07|            59.05|
+      |F2*       |     91.37|              69.32|            22.04|
+      |F3*       |     87.36|              59.65|            27.71|
 

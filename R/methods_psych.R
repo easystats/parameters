@@ -1,6 +1,8 @@
 #' Parameters from PCA, FA, CFA, SEM
 #'
-#' Format structural models from the **psych** or **FactoMineR** packages.
+#' Format structural models from the **psych** or **FactoMineR** packages. There
+#' is a `summary()` method for the returned output from `model_parameters()`, to
+#' show further information. See 'Examples'.
 #'
 #' @param standardize Return standardized parameters (standardized coefficients).
 #'   Can be `TRUE` (or `"all"` or `"std.all"`) for standardized
@@ -52,6 +54,7 @@
 #' # Principal Component Analysis (PCA) ---------
 #' pca <- psych::principal(attitude)
 #' model_parameters(pca)
+#' summary(model_parameters(pca))
 #'
 #' pca <- psych::principal(attitude, nfactors = 3, rotate = "none")
 #' model_parameters(pca, sort = TRUE, threshold = 0.2)
@@ -323,6 +326,7 @@ model_parameters.omega <- function(model,
   table_var$Group <- table_var$group * 100
   table_var[c("Composite", "Total", "General", "Group")]
 }
+
 
 .get_omega_coefficients_summary <- function(model) {
   # Table of omega coefficients
