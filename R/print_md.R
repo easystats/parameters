@@ -276,6 +276,8 @@ print_md.parameters_pca_summary <- print_md.parameters_efa_summary
 #' @export
 print_md.parameters_omega_summary <- function(x, ...) {
   orig_x <- x
+  caption1 <- NULL
+  caption2 <- NULL
 
   # extract summary tables
   omega_coefficients <- attributes(x)$omega_coefficients

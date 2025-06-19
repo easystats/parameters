@@ -293,6 +293,8 @@ print.parameters_omega <- print.parameters_efa
 #' @export
 print.parameters_omega_summary <- function(x, ...) {
   orig_x <- x
+  caption1 <- NULL
+  caption2 <- NULL
 
   # extract summary tables
   omega_coefficients <- attributes(x)$omega_coefficients

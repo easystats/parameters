@@ -228,7 +228,6 @@ model_parameters.omega <- function(model,
                                    sort = FALSE,
                                    threshold = NULL,
                                    labels = NULL,
-                                   verbose = TRUE,
                                    ...) {
   # n
   n <- model$stats$factors
