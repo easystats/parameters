@@ -50,3 +50,18 @@ test_that("factor_analysis", {
   fc <- factor_scores(out)
   expect_identical(dim(fc), c(32L, 2L))
 })
+
+
+test_that("omega", {
+  skip_on_cran()
+  skip_if_not_installed("GPArotation")
+  skip_if_not_installed("psych")
+
+  model <- psych::omega(mtcars, nfactors = 3, plot = FALSE)
+  out <- model_parameters(model)
+  expect_snapshot(print(out))
+  expect_snapshot(print_md(out))
+
+  expect_snapshot(print(summary(out)))
+  expect_snapshot(print_md(summary(out)))
+})
