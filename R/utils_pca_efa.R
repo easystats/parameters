@@ -349,7 +349,7 @@ print.parameters_omega_summary <- function(x, ...) {
 
   # list for export
   out <- insight::compact_list(list(stats, omega_coefficients, variance_summary))
-  captions <- insight::compact_list(list(caption2, caption3))
+  captions <- insight::compact_list(list(caption1, caption2, caption3))
 
   list(tables = out, captions = captions)
 }
