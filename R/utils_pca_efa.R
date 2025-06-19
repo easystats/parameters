@@ -129,9 +129,8 @@ summary.parameters_pca <- summary.parameters_efa
 
 #' @export
 summary.parameters_omega <- function(object, ...) {
-  table_var <- attributes(object)$summary
-  class(table_var) <- c("parameters_omega_summary", class(table_var))
-  table_var
+  class(object) <- c("parameters_omega_summary", "data.frame")
+  object
 }
 
 
@@ -270,55 +269,98 @@ print.parameters_efa <- function(x,
   if (is.null(threshold)) {
     threshold <- attributes(x)$threshold
   }
-  cat(
-    .print_parameters_cfa_efa(
-      x,
-      threshold = threshold,
-      sort = sort,
-      format = "text",
-      digits = digits,
-      labels = labels,
-      ...
-    )
-  )
+  cat(.print_parameters_cfa_efa(
+    x,
+    threshold = threshold,
+    sort = sort,
+    format = "text",
+    digits = digits,
+    labels = labels,
+    ...
+  ))
   invisible(x)
 }
-
 
 #' @export
 print.parameters_pca <- print.parameters_efa
 
-
 #' @export
-print.parameters_omega <- function(x, ...) {
-  orig_x <- x
-  names(x) <- c("Composite", "Omega (total)", "Omega (hierarchical)", "Omega (group)")
-  cat(insight::export_table(x))
-  invisible(orig_x)
-}
+print.parameters_omega <- print.parameters_efa
 
 
 #' @export
 print.parameters_omega_summary <- function(x, ...) {
-  orig_x <- x
-  names(x) <- c(
-    "Composite", "Total Variance (%)", "Variance due to General Factor (%)",
-    "Variance due to Group Factor (%)"
-  )
-  cat(insight::export_table(x))
-  invisible(orig_x)
+  out <- .print_omega_summary(x)
+  cat(insight::export_table(out$tables, caption = out$captions, format = "text", ...))
+  invisible(x)
 }
 
 
 # print-helper ----------------------
 
 
+.print_omega_summary <- function(x, format = "text") {
+  caption1 <- NULL
+  caption2 <- NULL
+  caption3 <- NULL
+
+  # extract model
+  model <- attributes(x)$model
+  if (!is.null(model)) {
+    stats <- data.frame(
+      Statistic = c("Alpha", "G.6", "Omega (hierarchical)", "Omega (asymptotic H)", "Omega (total)"),
+      Coefficient = c(model$alpha, model$G6, model$omega_h, model$omega.lim, model$omega.tot)
+    )
+    if (format == "text") {
+      caption1 <- c("# Omega Statistics", "blue")
+    } else {
+      caption1 <- "Omega Statistics"
+    }
+  }
+
+  # extract summary tables
+  omega_coefficients <- attributes(x)$omega_coefficients
+  variance_summary <- attributes(x)$summary
+
+  # rename columns
+  if (!is.null(omega_coefficients)) {
+    names(omega_coefficients) <- c(
+      "Composite", "Omega (total)", "Omega (hierarchical)", "Omega (group)"
+    )
+    if (format == "text") {
+      caption2 <- c("# Omega Coefficients", "blue")
+    } else {
+      caption2 <- "Omega Coefficients"
+    }
+  }
+  if (!is.null(variance_summary)) {
+    names(variance_summary) <- c(
+      "Composite", "Total (%)", "General Factor (%)",
+      "Group Factor (%)"
+    )
+    if (format == "text") {
+      caption3 <- c("# Variances", "blue")
+    } else {
+      caption3 <- "Variances"
+    }
+  }
+
+  # list for export
+  out <- insight::compact_list(list(stats, omega_coefficients, variance_summary))
+  captions <- insight::compact_list(list(caption1, caption2, caption3))
+
+  list(tables = out, captions = captions)
+}
+
+
 .print_parameters_cfa_efa <- function(x, threshold, sort, format, digits, labels, ...) {
   # Method
   if (inherits(x, "parameters_pca")) {
     method <- "Principal Component Analysis"
-  } else {
+  } else if (inherits(x, "parameters_efa")) {
     method <- "Factor Analysis"
+  } else {
+    method <- "Omega"
   }
 
   # Rotation

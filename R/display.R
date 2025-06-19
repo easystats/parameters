@@ -232,6 +232,9 @@ display.parameters_efa_summary <- function(object, format = "markdown", digits =
 #' @export
 display.parameters_pca_summary <- display.parameters_efa_summary
 
+#' @export
+display.parameters_omega_summary <- display.parameters_efa_summary
+
 
 #' @inheritParams model_parameters.principal
 #' @rdname display.parameters_model
@@ -256,6 +259,9 @@ display.parameters_efa <- function(object, format = "markdown", digits = 2, sort
 
 #' @export
 display.parameters_pca <- display.parameters_efa
+
+#' @export
+display.parameters_omega <- display.parameters_efa
 
 
 # Equivalence tests ------------------------

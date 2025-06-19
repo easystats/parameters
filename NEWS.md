@@ -12,7 +12,7 @@
 * New function `factor_scores()` to extract factor scores from EFA (`psych::fa()`
   or `factor_analysis()`).
 
-* Added and/or improved print-methods for all functions around PCA and FA.
+* Added and/or improved print-methods for all functions around PCA, FA and Omega.
 
 * Improved efficiency in `model_parameters()` for models from packages *brms*
   and *rstanarm*.

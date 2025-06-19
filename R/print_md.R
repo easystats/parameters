@@ -274,6 +274,13 @@ print_md.parameters_efa_summary <- function(x, digits = 3, ...) {
 print_md.parameters_pca_summary <- print_md.parameters_efa_summary
 
 #' @export
+print_md.parameters_omega_summary <- function(x, ...) {
+  out <- .print_omega_summary(x, format = "markdown")
+  insight::export_table(out$tables, caption = out$captions, format = "markdown", ...)
+}
+
+
+#' @export
 print_md.parameters_efa <- function(x,
                                     digits = 2,
                                     sort = FALSE,
@@ -297,6 +304,9 @@ print_md.parameters_efa <- function(x,
 
 #' @export
 print_md.parameters_pca <- print_md.parameters_efa
+
+#' @export
+print_md.parameters_omega <- print_md.parameters_efa
 
 
 # Equivalence test ----------------------------
