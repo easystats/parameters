@@ -4,16 +4,16 @@
       print(summary(out))
     Output
       # (Explained) Variance of Components
-      
+
       Parameter                       |   MR1 |   MR2
       -----------------------------------------------
       Eigenvalues                     | 4.947 | 1.062
       Variance Explained              | 0.638 | 0.220
       Variance Explained (Cumulative) | 0.638 | 0.858
       Variance Explained (Proportion) | 0.744 | 0.256
-      
+
       # Factor Correlations
-      
+
       Factor |    MR1 |    MR2
       ------------------------
       MR1    |  1.000 | -0.366
@@ -24,19 +24,19 @@
     Code
       print_md(summary(out))
     Output
-      
-      
+
+
       Table: (Explained) Variance of Components
-      
+
       |Parameter                       |   MR1 |   MR2 |
       |:-------------------------------|:-----:|:-----:|
       |Eigenvalues                     | 4.947 | 1.062 |
       |Variance Explained              | 0.638 | 0.220 |
       |Variance Explained (Cumulative) | 0.638 | 0.858 |
       |Variance Explained (Proportion) | 0.744 | 0.256 |
-      
+
       Table: Factor Correlations
-      
+
       |Factor |    MR1 |    MR2 |
       |:------|:------:|:------:|
       |MR1    |  1.000 | -0.366 |
@@ -48,7 +48,7 @@
       print(out)
     Output
       # Rotated loadings from Omega (oblimin-rotation)
-      
+
       Variable |        g |   F1* |      F2* |       F3* |   h2 |   u2 |       p2 | Complexity
       ----------------------------------------------------------------------------------------
       mpg-     |     0.58 | -0.67 |     0.09 |      0.29 | 0.88 | 0.12 |     0.38 |       2.40
@@ -68,10 +68,10 @@
     Code
       print_md(out)
     Output
-      
-      
+
+
       Table: Rotated loadings from Omega (oblimin-rotation)
-      
+
       |Variable |        g|  F1* |      F2*|       F3*|  h2 |  u2 |       p2| Complexity|
       |:--------|--------:|:-----|--------:|---------:|:----|:----|--------:|----------:|
       |mpg-     |     0.58|-0.67 |     0.09|      0.29|0.88 |0.12 |     0.38|       2.40|
@@ -92,26 +92,26 @@
       print(summary(out))
     Output
       # Omega Statistics
-      
+
       Statistic            | Coefficient
       ----------------------------------
       Alpha                |        0.88
       G.6                  |        0.97
-      Omega (hierachical)  |        0.57
+      Omega (hierarchical) |        0.57
       Omega (asymptotic H) |        0.58
       Omega (total)        |        0.97
-      
+
       # Omega Coefficients
-      
+
       Composite | Omega (total) | Omega (hierarchical) | Omega (group)
       ----------------------------------------------------------------
       g         |          0.97 |                 0.57 |          0.26
       F1*       |          0.90 |                 0.31 |          0.59
       F2*       |          0.91 |                 0.69 |          0.22
       F3*       |          0.87 |                 0.60 |          0.28
-      
+
       # Variances
-      
+
       Composite | Total (%) | General Factor (%) | Group Factor (%)
       -------------------------------------------------------------
       g         |     97.28 |              56.64 |            26.42
@@ -124,33 +124,32 @@
     Code
       print_md(summary(out))
     Output
-      
-      
+
+
       Table: Omega Statistics
-      
+
       |Statistic            | Coefficient|
       |:--------------------|-----------:|
       |Alpha                |        0.88|
       |G.6                  |        0.97|
-      |Omega (hierachical)  |        0.57|
+      |Omega (hierarchical) |        0.57|
       |Omega (asymptotic H) |        0.58|
       |Omega (total)        |        0.97|
-      
+
       Table: Omega Coefficients
-      
+
       |Composite | Omega (total)| Omega (hierarchical)| Omega (group)|
       |:---------|-------------:|--------------------:|-------------:|
       |g         |          0.97|                 0.57|          0.26|
       |F1*       |          0.90|                 0.31|          0.59|
       |F2*       |          0.91|                 0.69|          0.22|
       |F3*       |          0.87|                 0.60|          0.28|
-      
+
       Table: Variances
-      
+
       |Composite | Total (%)| General Factor (%)| Group Factor (%)|
       |:---------|---------:|------------------:|----------------:|
       |g         |     97.28|              56.64|            26.42|
       |F1*       |     90.12|              31.07|            59.05|
       |F2*       |     91.37|              69.32|            22.04|
       |F3*       |     87.36|              59.65|            27.71|
-

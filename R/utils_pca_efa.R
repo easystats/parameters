@@ -308,7 +308,7 @@ print.parameters_omega_summary <- function(x, ...) {
   model <- attributes(x)$model
   if (!is.null(model)) {
     stats <- data.frame(
-      Statistic = c("Alpha", "G.6", "Omega (hierachical)", "Omega (asymptotic H)", "Omega (total)"),
+      Statistic = c("Alpha", "G.6", "Omega (hierarchical)", "Omega (asymptotic H)", "Omega (total)"),
       Coefficient = c(model$alpha, model$G6, model$omega_h, model$omega.lim, model$omega.tot)
     )
     if (format == "text") {
