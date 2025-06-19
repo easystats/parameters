@@ -118,6 +118,7 @@ for \code{lavaan} models implemented in the
 library(parameters)
 \donttest{
 # Principal Component Analysis (PCA) ---------
+data(attitude)
 pca <- psych::principal(attitude)
 model_parameters(pca)
 summary(model_parameters(pca))
@@ -137,6 +138,7 @@ model_parameters(efa,
 
 
 # Omega ---------
+data(mtcars)
 omega <- psych::omega(mtcars, nfactors = 3, plot = FALSE)
 params <- model_parameters(omega)
 params
@@ -166,6 +168,7 @@ model_parameters(
 
 # Structural Equation Model (SEM) ------------
 
+data(PoliticalDemocracy, package = "lavaan")
 structure <- "
   # latent variable definitions
     ind60 =~ x1 + x2 + x3
