@@ -46,81 +46,74 @@
 #'    PCA. The value should be > 0.6, and desirable values are > 0.8
 #'    (\cite{Tabachnick and Fidell, 2013}).
 #'
-#' @examples
+#' @examplesIf all(insight::check_if_installed(c("psych", "lavaan"), quietly = TRUE))
+#' library(parameters)
 #' \donttest{
-#' library(parameters)
-#' if (require("psych", quietly = TRUE)) {
-#'   # Principal Component Analysis (PCA) ---------
-#'   pca <- psych::principal(attitude)
-#'   model_parameters(pca)
+#' # Principal Component Analysis (PCA) ---------
+#' pca <- psych::principal(attitude)
+#' model_parameters(pca)
 #'
-#'   pca <- psych::principal(attitude, nfactors = 3, rotate = "none")
-#'   model_parameters(pca, sort = TRUE, threshold = 0.2)
+#' pca <- psych::principal(attitude, nfactors = 3, rotate = "none")
+#' model_parameters(pca, sort = TRUE, threshold = 0.2)
 #'
-#'   principal_components(attitude, n = 3, sort = TRUE, threshold = 0.2)
+#' principal_components(attitude, n = 3, sort = TRUE, threshold = 0.2)
 #'
 #'
-#'   # Exploratory Factor Analysis (EFA) ---------
-#'   efa <- psych::fa(attitude, nfactors = 3)
-#'   model_parameters(efa,
-#'     threshold = "max", sort = TRUE,
-#'     labels = as.character(1:ncol(attitude))
-#'   )
+#' # Exploratory Factor Analysis (EFA) ---------
+#' efa <- psych::fa(attitude, nfactors = 3)
+#' model_parameters(efa,
+#'   threshold = "max", sort = TRUE,
+#'   labels = as.character(1:ncol(attitude))
+#' )
 #'
 #'
-#'   # Omega ---------
-#'   omega <- psych::omega(mtcars, nfactors = 3)
-#'   params <- model_parameters(omega)
-#'   params
-#'   summary(params)
-#' }
+#' # Omega ---------
+#' omega <- psych::omega(mtcars, nfactors = 3, plot = FALSE)
+#' params <- model_parameters(omega)
+#' params
+#' summary(params)
 #' }
 #'
-#' # lavaan
-#'
-#' library(parameters)
 #'
 #' # lavaan -------------------------------------
-#' if (require("lavaan", quietly = TRUE)) {
-#'   # Confirmatory Factor Analysis (CFA) ---------
+#' # Confirmatory Factor Analysis (CFA) ---------
 #'
-#'   structure <- " visual  =~ x1 + x2 + x3
-#'                  textual =~ x4 + x5 + x6
-#'                  speed   =~ x7 + x8 + x9 "
-#'   model <- lavaan::cfa(structure, data = HolzingerSwineford1939)
-#'   model_parameters(model)
-#'   model_parameters(model, standardize = TRUE)
+#' structure <- " visual  =~ x1 + x2 + x3
+#'                textual =~ x4 + x5 + x6
+#'                speed   =~ x7 + x8 + x9 "
+#' model <- lavaan::cfa(structure, data = HolzingerSwineford1939)
+#' model_parameters(model)
+#' model_parameters(model, standardize = TRUE)
 #'
-#'   # filter parameters
-#'   model_parameters(
-#'     model,
-#'     parameters = list(
-#'       To = "^(?!visual)",
-#'       From = "^(?!(x7|x8))"
-#'     )
+#' # filter parameters
+#' model_parameters(
+#'   model,
+#'   parameters = list(
+#'     To = "^(?!visual)",
+#'     From = "^(?!(x7|x8))"
 #'   )
+#' )
 #'
-#'   # Structural Equation Model (SEM) ------------
+#' # Structural Equation Model (SEM) ------------
 #'
-#'   structure <- "
-#'     # latent variable definitions
-#'       ind60 =~ x1 + x2 + x3
-#'       dem60 =~ y1 + a*y2 + b*y3 + c*y4
-#'       dem65 =~ y5 + a*y6 + b*y7 + c*y8
-#'     # regressions
-#'       dem60 ~ ind60
-#'       dem65 ~ ind60 + dem60
-#'     # residual correlations
-#'       y1 ~~ y5
-#'       y2 ~~ y4 + y6
-#'       y3 ~~ y7
-#'       y4 ~~ y8
-#'       y6 ~~ y8
-#'   "
-#'   model <- lavaan::sem(structure, data = PoliticalDemocracy)
-#'   model_parameters(model)
-#'   model_parameters(model, standardize = TRUE)
-#' }
+#' structure <- "
+#'   # latent variable definitions
+#'     ind60 =~ x1 + x2 + x3
+#'     dem60 =~ y1 + a*y2 + b*y3 + c*y4
+#'     dem65 =~ y5 + a*y6 + b*y7 + c*y8
+#'   # regressions
+#'     dem60 ~ ind60
+#'     dem65 ~ ind60 + dem60
+#'   # residual correlations
+#'     y1 ~~ y5
+#'     y2 ~~ y4 + y6
+#'     y3 ~~ y7
+#'     y4 ~~ y8
+#'     y6 ~~ y8
+#' "
+#' model <- lavaan::sem(structure, data = PoliticalDemocracy)
+#' model_parameters(model)
+#' model_parameters(model, standardize = TRUE)
 #'
 #' @return A data frame of indices or loadings.
 #' @references

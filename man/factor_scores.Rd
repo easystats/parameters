@@ -2,12 +2,13 @@
 % Please edit documentation in R/factor_scores.R
 \name{factor_scores}
 \alias{factor_scores}
-\title{Extract factor scores from Factor Analysis (EFA)}
+\title{Extract factor scores from Factor Analysis (EFA) or Omega}
 \usage{
 factor_scores(x, ...)
 }
 \arguments{
-\item{x}{An object returned by \code{\link[psych:fa]{psych::fa()}} or \code{\link[=factor_analysis]{factor_analysis()}}.}
+\item{x}{An object returned by \code{\link[psych:fa]{psych::fa()}}, \code{\link[=factor_analysis]{factor_analysis()}}, or
+\code{\link[psych:omega]{psych::omega()}}.}
 
 \item{...}{Currently unused.}
 }
@@ -17,7 +18,7 @@ element from the object and converts it into a data frame.
 }
 \description{
 \code{factor_scores()} extracts the factor scores from objects returned by
-\code{\link[psych:fa]{psych::fa()}} or \code{\link[=factor_analysis]{factor_analysis()}}.
+\code{\link[psych:fa]{psych::fa()}}, \code{\link[=factor_analysis]{factor_analysis()}}, or \code{\link[psych:omega]{psych::omega()}}
 }
 \examples{
 \dontshow{if (insight::check_if_installed("psych", quietly = TRUE)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}

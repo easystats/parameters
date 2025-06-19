@@ -1,9 +1,10 @@
-#' Extract factor scores from Factor Analysis (EFA)
+#' Extract factor scores from Factor Analysis (EFA) or Omega
 #'
 #' `factor_scores()` extracts the factor scores from objects returned by
-#' [`psych::fa()`] or [`factor_analysis()`].
+#' [`psych::fa()`], [`factor_analysis()`], or [`psych::omega()`]
 #'
-#' @param x An object returned by [`psych::fa()`] or [`factor_analysis()`].
+#' @param x An object returned by [`psych::fa()`], [`factor_analysis()`], or
+#' [`psych::omega()`].
 #' @param ... Currently unused.
 #'
 #' @return A data frame with the factor scores. It simply extracts the `$scores`
@@ -25,6 +26,11 @@ factor_scores.fa <- function(x, ...) {
 }
 
 #' @export
+factor_scores.omega <- function(x, ...) {
+  as.data.frame(x$scores)
+}
+
+#' @export
 factor_scores.parameters_efa <- function(x, ...) {
   model <- attributes(x)$model
   if (is.null(model)) {
@@ -32,3 +38,6 @@ factor_scores.parameters_efa <- function(x, ...) {
   }
   as.data.frame(model$scores)
 }
+
+#' @export
+factor_scores.parameters_omega <- factor_scores.parameters_efa
