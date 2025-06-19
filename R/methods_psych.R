@@ -249,12 +249,16 @@ model_parameters.omega <- function(model,
 
   # Add information
   colnames(loadings)[colnames(loadings) == "com"] <- "Complexity"
+  rotation <- model$Call$rotate
+  if (is.null(rotation)) {
+    rotation <- "oblimin"
+  }
 
   # Add attributes
   attr(loadings, "summary") <- data_summary
   attr(loadings, "omega_coefficients") <- omega_coefficients
   attr(loadings, "model") <- model
-  attr(loadings, "rotation") <- model$rotation
+  attr(loadings, "rotation") <- rotation
   attr(loadings, "scores") <- model$scores
   attr(loadings, "additional_arguments") <- list(...)
   attr(loadings, "n") <- n

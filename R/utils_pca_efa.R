@@ -357,13 +357,7 @@ print.parameters_omega_summary <- function(x, ...) {
   }
 
   # table caption
-  if (method == "Omega") {
-    if (format %in% c("markdown", "html")) {
-      table_caption <- "Omega"
-    } else {
-      table_caption <- c("# Omega", "blue")
-    }
-  } else if (is.null(rotation_name) || rotation_name == "none") {
+  if (is.null(rotation_name) || rotation_name == "none") {
     if (format %in% c("markdown", "html")) {
       table_caption <- sprintf("Loadings from %s (no rotation)", method)
     } else {
