@@ -276,7 +276,7 @@ print_md.parameters_pca_summary <- print_md.parameters_efa_summary
 #' @export
 print_md.parameters_omega_summary <- function(x, ...) {
   out <- .print_omega_summary(x, format = "markdown")
-  cat(insight::export_table(out$tables, caption = out$captions, format = "markdown", ...))
+  insight::export_table(out$tables, caption = out$captions, format = "markdown", ...)
   invisible(x)
 }
 
