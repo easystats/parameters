@@ -292,9 +292,33 @@ print.parameters_omega <- print.parameters_efa
 
 #' @export
 print.parameters_omega_summary <- function(x, ...) {
-  orig_x <- x
+  out <- .print_omega_summary(x)
+  cat(insight::export_table(out$tables, caption = out$captions, format = "text", ...))
+  invisible(x)
+}
+
+
+# print-helper ----------------------
+
+
+.print_omega_summary <- function(x, format = "text") {
   caption1 <- NULL
   caption2 <- NULL
+  caption3 <- NULL
+
+  # extract model
+  model <- attributes(x)$model
+  if (!is.null(model)) {
+    stats <- data.frame(
+      Statistic = c("Alpha", "G.6", "Omega (hierachical)", "Omega (asymptotic H)", "Omega (total)"),
+      Coefficient = c(model$alpha, model$G6, model$omega_h, model$omega.lim, model$omega.tot)
+    )
+    if (format == "text") {
+      caption1 <- c("# Omega Statistics", "blue")
+    } else {
+      caption1 <- "Omega Statistics"
+    }
+  }
 
   # extract summary tables
   omega_coefficients <- attributes(x)$omega_coefficients
@@ -305,26 +329,30 @@ print.parameters_omega_summary <- function(x, ...) {
     names(omega_coefficients) <- c(
       "Composite", "Omega (total)", "Omega (hierarchical)", "Omega (group)"
     )
-    caption1 <- c("# Omega Coefficients", "blue")
+    if (format == "text") {
+      caption2 <- c("# Omega Coefficients", "blue")
+    } else {
+      caption2 <- "Omega Coefficients"
+    }
   }
   if (!is.null(variance_summary)) {
     names(variance_summary) <- c(
       "Composite", "Total (%)", "General Factor (%)",
       "Group Factor (%)"
     )
-    caption2 <- c("# Variances", "blue")
+    if (format == "text") {
+      caption3 <- c("# Variances", "blue")
+    } else {
+      caption3 <- "Variances"
+    }
   }
 
   # list for export
-  out <- insight::compact_list(list(omega_coefficients, variance_summary))
-  captions <- insight::compact_list(list(caption1, caption2))
+  out <- insight::compact_list(list(stats, omega_coefficients, variance_summary))
+  captions <- insight::compact_list(list(caption2, caption3))
 
-  cat(insight::export_table(out, caption = captions, format = "text", ...))
-  invisible(orig_x)
+  list(tables = out, captions = captions)
 }
-
-
-# print-helper ----------------------
 
 
 .print_parameters_cfa_efa <- function(x, threshold, sort, format, digits, labels, ...) {
