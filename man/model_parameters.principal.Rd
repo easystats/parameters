@@ -147,6 +147,7 @@ summary(params)
 # lavaan -------------------------------------
 # Confirmatory Factor Analysis (CFA) ---------
 
+data(HolzingerSwineford1939, package = "lavaan")
 structure <- " visual  =~ x1 + x2 + x3
                textual =~ x4 + x5 + x6
                speed   =~ x7 + x8 + x9 "
