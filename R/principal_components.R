@@ -103,7 +103,7 @@
 #'
 #' ## Uniqueness
 #' Uniqueness represents the variance that is 'unique' to the variable and
-#'  not shared with other variables. It is equal to `1 – communality`
+#'  not shared with other variables. It is equal to `1 - communality`
 #'  (variance that is shared with other variables). A uniqueness of `0.20`
 #'  suggests that `20%` or that variable's variance is not shared with other
 #'  variables in the overall factor model. The greater 'uniqueness' the lower
