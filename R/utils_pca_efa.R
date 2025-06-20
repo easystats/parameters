@@ -23,6 +23,8 @@
 #' @return A data frame with subscales, which are average sum scores for all
 #'   items from each component.
 #'
+#' @seealso [`principal_components()`]
+#'
 #' @examplesIf insight::check_if_installed("psych", quietly = TRUE)
 #' pca <- principal_components(mtcars[, 1:7], n = 2, rotation = "varimax")
 #'

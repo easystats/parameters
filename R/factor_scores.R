@@ -10,6 +10,8 @@
 #' @return A data frame with the factor scores. It simply extracts the `$scores`
 #' element from the object and converts it into a data frame.
 #'
+#' @seealso [`factor_analysis()`]
+#'
 #' @examplesIf insight::check_if_installed("psych", quietly = TRUE)
 #' data(mtcars)
 #' out <- factor_analysis(mtcars[, 1:7], n = 2)

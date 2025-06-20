@@ -51,3 +51,6 @@ get_scores(pca)
 (mtcars$hp + mtcars$qsec) / 2
 \dontshow{\}) # examplesIf}
 }
+\seealso{
+\code{\link[=principal_components]{principal_components()}}
+}

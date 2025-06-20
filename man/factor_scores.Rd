@@ -27,3 +27,6 @@ out <- factor_analysis(mtcars[, 1:7], n = 2)
 head(factor_scores(out))
 \dontshow{\}) # examplesIf}
 }
+\seealso{
+\code{\link[=factor_analysis]{factor_analysis()}}
+}
