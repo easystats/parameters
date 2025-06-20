@@ -6,16 +6,19 @@
 #'
 #' @param x An object returned by [principal_components()].
 #' @param n_items Number of required (i.e. non-missing) items to build the sum
-#'   score. If `NULL`, the value is chosen to match half of the number of
-#'   columns in a data frame.
+#' score for an observation. If an observation has more missing values than
+#' `n_items` in all items of a (sub) scale, `NA` is returned for that
+#' observation, else, the sum score of all (sub) items is calculated. If `NULL`,
+#' the value is chosen to match half of the number of columns in a data frame,
+#' i.e. no more than 50% missing values are allowed.
 #'
 #' @details
-#' `get_scores()` takes the results from [`principal_components()`] and
-#' extracts the variables for each component found by the PCA. Then, for each
-#' of these "subscales", row means are calculated (which equals adding up the
-#' single items and dividing by the number of items). This results in a sum
-#' score for each component from the PCA, which is on the same scale as the
-#' original, single items that were used to compute the PCA.
+#' `get_scores()` takes the results from [`principal_components()`] or
+#' [`factor_analysis()`] and extracts the variables for each component found by
+#' the PCA. Then, for each of these "subscales", row means are calculated (which
+#' equals adding up the single items and dividing by the number of items). This
+#' results in a sum score for each component from the PCA, which is on the same
+#' scale as the original, single items that were used to compute the PCA.
 #'
 #' @return A data frame with subscales, which are average sum scores for all
 #'   items from each component.

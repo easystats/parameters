@@ -10,8 +10,11 @@ get_scores(x, n_items = NULL)
 \item{x}{An object returned by \code{\link[=principal_components]{principal_components()}}.}
 
 \item{n_items}{Number of required (i.e. non-missing) items to build the sum
-score. If \code{NULL}, the value is chosen to match half of the number of
-columns in a data frame.}
+score for an observation. If an observation has more missing values than
+\code{n_items} in all items of a (sub) scale, \code{NA} is returned for that
+observation, else, the sum score of all (sub) items is calculated. If \code{NULL},
+the value is chosen to match half of the number of columns in a data frame,
+i.e. no more than 50\% missing values are allowed.}
 }
 \value{
 A data frame with subscales, which are average sum scores for all
@@ -23,12 +26,12 @@ items from each component.
 average.
 }
 \details{
-\code{get_scores()} takes the results from \code{\link[=principal_components]{principal_components()}} and
-extracts the variables for each component found by the PCA. Then, for each
-of these "subscales", row means are calculated (which equals adding up the
-single items and dividing by the number of items). This results in a sum
-score for each component from the PCA, which is on the same scale as the
-original, single items that were used to compute the PCA.
+\code{get_scores()} takes the results from \code{\link[=principal_components]{principal_components()}} or
+\code{\link[=factor_analysis]{factor_analysis()}} and extracts the variables for each component found by
+the PCA. Then, for each of these "subscales", row means are calculated (which
+equals adding up the single items and dividing by the number of items). This
+results in a sum score for each component from the PCA, which is on the same
+scale as the original, single items that were used to compute the PCA.
 }
 \examples{
 \dontshow{if (insight::check_if_installed("psych", quietly = TRUE)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}

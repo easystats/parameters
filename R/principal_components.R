@@ -69,11 +69,25 @@
 #'
 #' - Running [`get_scores()`] computes scores for each subscale.
 #'
+#' - [`factor_scores()`] extracts the factor scores from objects returned by
+#'   [`psych::fa()`], [`factor_analysis()`], or [`psych::omega()`].
+#'
 #' - Running [`closest_component()`] will return a numeric vector with the
 #'   assigned component index for each column from the original data frame.
 #'
 #' - Running [`rotated_data()`] will return the rotated data, including missing
 #'   values, so it matches the original data frame.
+#'
+#' - `performance::item_omega()` is a convenient wrapper around `psych::omega()`,
+#'   which provides some additioal methods to work seamleassly within the
+#'   *easystats* framework.
+#'
+#' - [`performance::check_normality()`] checks residuals from objects returned
+#'   by [`psych::fa()`], [`factor_analysis()`], `performance::item_omega()`,
+#'   or [`psych::omega()`] for normality.
+#'
+#' - [`performance::model_performance()`] returns fit-indices for objects returned
+#'   by [`psych::fa()`], [`factor_analysis()`], or [`psych::omega()`].
 #'
 #' - Running
 #'   [`plot()`](https://easystats.github.io/see/articles/parameters.html#principal-component-analysis)

@@ -141,10 +141,20 @@ the PCA.
 \item Running \code{summary()} returns information related to each component/factor,
 such as the explained variance and the Eivenvalues.
 \item Running \code{\link[=get_scores]{get_scores()}} computes scores for each subscale.
+\item \code{\link[=factor_scores]{factor_scores()}} extracts the factor scores from objects returned by
+\code{\link[psych:fa]{psych::fa()}}, \code{\link[=factor_analysis]{factor_analysis()}}, or \code{\link[psych:omega]{psych::omega()}}.
 \item Running \code{\link[=closest_component]{closest_component()}} will return a numeric vector with the
 assigned component index for each column from the original data frame.
 \item Running \code{\link[=rotated_data]{rotated_data()}} will return the rotated data, including missing
 values, so it matches the original data frame.
+\item \code{performance::item_omega()} is a convenient wrapper around \code{psych::omega()},
+which provides some additioal methods to work seamleassly within the
+\emph{easystats} framework.
+\item \code{\link[performance:check_normality]{performance::check_normality()}} checks residuals from objects returned
+by \code{\link[psych:fa]{psych::fa()}}, \code{\link[=factor_analysis]{factor_analysis()}}, \code{performance::item_omega()},
+or \code{\link[psych:omega]{psych::omega()}} for normality.
+\item \code{\link[performance:model_performance]{performance::model_performance()}} returns fit-indices for objects returned
+by \code{\link[psych:fa]{psych::fa()}}, \code{\link[=factor_analysis]{factor_analysis()}}, or \code{\link[psych:omega]{psych::omega()}}.
 \item Running
 \href{https://easystats.github.io/see/articles/parameters.html#principal-component-analysis}{\code{plot()}}
 visually displays the loadings (that requires the
