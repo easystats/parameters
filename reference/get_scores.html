@@ -11,7 +11,7 @@ average."><meta property="og:image" content="https://easystats.github.io/paramet
 
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.26.0.6</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.26.0.7</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -79,8 +79,11 @@ average.</p>
 
 <dt id="arg-n-items">n_items<a class="anchor" aria-label="anchor" href="#arg-n-items"></a></dt>
 <dd><p>Number of required (i.e. non-missing) items to build the sum
-score. If <code>NULL</code>, the value is chosen to match half of the number of
-columns in a data frame.</p></dd>
+score for an observation. If an observation has more missing values than
+<code>n_items</code> in all items of a (sub) scale, <code>NA</code> is returned for that
+observation, else, the sum score of all (sub) items is calculated. If <code>NULL</code>,
+the value is chosen to match half of the number of columns in a data frame,
+i.e. no more than 50% missing values are allowed.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -90,12 +93,16 @@ items from each component.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p><code>get_scores()</code> takes the results from <code><a href="principal_components.html">principal_components()</a></code> and
-extracts the variables for each component found by the PCA. Then, for each
-of these "subscales", row means are calculated (which equals adding up the
-single items and dividing by the number of items). This results in a sum
-score for each component from the PCA, which is on the same scale as the
-original, single items that were used to compute the PCA.</p>
+    <p><code>get_scores()</code> takes the results from <code><a href="principal_components.html">principal_components()</a></code> or
+<code><a href="principal_components.html">factor_analysis()</a></code> and extracts the variables for each component found by
+the PCA. Then, for each of these "subscales", row means are calculated (which
+equals adding up the single items and dividing by the number of items). This
+results in a sum score for each component from the PCA, which is on the same
+scale as the original, single items that were used to compute the PCA.</p>
+    </div>
+    <div class="section level2">
+    <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
+    <div class="dont-index"><p><code><a href="principal_components.html">principal_components()</a></code></p></div>
     </div>
 
     <div class="section level2">

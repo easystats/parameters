@@ -15,7 +15,7 @@ Details section)."><meta property="og:image" content="https://easystats.github.i
 
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.26.0.6</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.26.0.7</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -238,10 +238,20 @@ the PCA.</p></li>
 <li><p>Running <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code> returns information related to each component/factor,
 such as the explained variance and the Eivenvalues.</p></li>
 <li><p>Running <code><a href="get_scores.html">get_scores()</a></code> computes scores for each subscale.</p></li>
+<li><p><code><a href="factor_scores.html">factor_scores()</a></code> extracts the factor scores from objects returned by
+<code><a href="https://rdrr.io/pkg/psych/man/fa.html" class="external-link">psych::fa()</a></code>, <code>factor_analysis()</code>, or <code><a href="https://rdrr.io/pkg/psych/man/omega.html" class="external-link">psych::omega()</a></code>.</p></li>
 <li><p>Running <code>closest_component()</code> will return a numeric vector with the
 assigned component index for each column from the original data frame.</p></li>
 <li><p>Running <code>rotated_data()</code> will return the rotated data, including missing
 values, so it matches the original data frame.</p></li>
+<li><p><code>performance::item_omega()</code> is a convenient wrapper around <code><a href="https://rdrr.io/pkg/psych/man/omega.html" class="external-link">psych::omega()</a></code>,
+which provides some additioal methods to work seamleassly within the
+<em>easystats</em> framework.</p></li>
+<li><p><code><a href="https://easystats.github.io/performance/reference/check_normality.html" class="external-link">performance::check_normality()</a></code> checks residuals from objects returned
+by <code><a href="https://rdrr.io/pkg/psych/man/fa.html" class="external-link">psych::fa()</a></code>, <code>factor_analysis()</code>, <code>performance::item_omega()</code>,
+or <code><a href="https://rdrr.io/pkg/psych/man/omega.html" class="external-link">psych::omega()</a></code> for normality.</p></li>
+<li><p><code><a href="https://easystats.github.io/performance/reference/model_performance.html" class="external-link">performance::model_performance()</a></code> returns fit-indices for objects returned
+by <code><a href="https://rdrr.io/pkg/psych/man/fa.html" class="external-link">psych::fa()</a></code>, <code>factor_analysis()</code>, or <code><a href="https://rdrr.io/pkg/psych/man/omega.html" class="external-link">psych::omega()</a></code>.</p></li>
 <li><p>Running
 <a href="https://easystats.github.io/see/articles/parameters.html#principal-component-analysis" class="external-link"><code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code></a>
 visually displays the loadings (that requires the
