@@ -2,6 +2,8 @@
 
 ## Breaking Changes
 
+* The `standardize` argument in `factor_anaysis()` now defaults to `FALSE`.
+
 * The `cor` argument in `n_factors()` was renamed into `correlation_matrix`. In
   `factor_analysis()`, the `cor` argument was completely removed to avoid naming
   collision with the `cor` argument of `psych::fa()`, which now users can pass

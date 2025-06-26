@@ -12,7 +12,7 @@ factor_analysis.data.frame <- function(x,
                                        rotation = "none",
                                        sort = FALSE,
                                        threshold = NULL,
-                                       standardize = TRUE,
+                                       standardize = FALSE,
                                        ...) {
   insight::check_if_installed("psych")
 

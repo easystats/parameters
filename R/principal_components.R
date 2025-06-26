@@ -31,7 +31,8 @@
 #'   only display the maximum loading per variable (the most simple structure).
 #' @param standardize A logical value indicating whether the variables should be
 #'   standardized (centered and scaled) to have unit variance before the
-#'   analysis (in general, such scaling is advisable).
+#'   analysis (in general, such scaling is advisable). **Note:** This defaults
+#'   to `TRUE` for PCA, but to `FALSE` for FA.
 #' @param object An object of class `parameters_pca`, `parameters_efa` or
 #'   `psych_efa`.
 #' @param newdata An optional data frame in which to look for variables with
