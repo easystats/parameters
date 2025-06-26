@@ -2,12 +2,12 @@
 % Please edit documentation in R/utils_pca_efa.R
 \name{get_scores}
 \alias{get_scores}
-\title{Get Scores from Principal Component Analysis (PCA)}
+\title{Get Scores from Principal Component or Factor Analysis (PCA/FA)}
 \usage{
 get_scores(x, n_items = NULL)
 }
 \arguments{
-\item{x}{An object returned by \code{\link[=principal_components]{principal_components()}}.}
+\item{x}{An object returned by \code{\link[=principal_components]{principal_components()}} or \code{\link[=factor_analysis]{factor_analysis()}}.}
 
 \item{n_items}{Number of required (i.e. non-missing) items to build the sum
 score for an observation. If an observation has more missing values than
@@ -18,20 +18,23 @@ i.e. no more than 50\% missing values are allowed.}
 }
 \value{
 A data frame with subscales, which are average sum scores for all
-items from each component.
+items from each component or factor.
 }
 \description{
 \code{get_scores()} takes \code{n_items} amount of items that load the most
 (either by loading cutoff or number) on a component, and then computes their
-average.
+average. This results in a sum score for each component from the PCA/FA,
+which is on the same scale as the original, single items that were used to
+compute the PCA/FA.
 }
 \details{
 \code{get_scores()} takes the results from \code{\link[=principal_components]{principal_components()}} or
 \code{\link[=factor_analysis]{factor_analysis()}} and extracts the variables for each component found by
-the PCA. Then, for each of these "subscales", row means are calculated (which
-equals adding up the single items and dividing by the number of items). This
-results in a sum score for each component from the PCA, which is on the same
-scale as the original, single items that were used to compute the PCA.
+the PCA/FA. Then, for each of these "subscales", row means are calculated
+(which equals adding up the single items and dividing by the number of
+items). This results in a sum score for each component from the PCA/FA, which
+is on the same scale as the original, single items that were used to compute
+the PCA/FA.
 }
 \examples{
 \dontshow{if (insight::check_if_installed("psych", quietly = TRUE)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
@@ -52,5 +55,5 @@ get_scores(pca)
 \dontshow{\}) # examplesIf}
 }
 \seealso{
-\code{\link[=principal_components]{principal_components()}}
+\code{\link[=principal_components]{principal_components()}}, \code{\link[=factor_analysis]{factor_analysis()}}
 }
