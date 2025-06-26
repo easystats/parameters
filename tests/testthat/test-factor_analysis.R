@@ -41,6 +41,7 @@ test_that("factor_analysis", {
     n = 2,
     rotation = "oblimin",
     threshold = "max",
+    standardize = TRUE,
     sort = TRUE
   )
   expect_snapshot(print(summary(out)))
