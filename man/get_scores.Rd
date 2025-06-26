@@ -55,5 +55,7 @@ get_scores(pca)
 \dontshow{\}) # examplesIf}
 }
 \seealso{
-\code{\link[=principal_components]{principal_components()}}, \code{\link[=factor_analysis]{factor_analysis()}}
+Functions to carry out a PCA (\code{\link[=principal_components]{principal_components()}}) or
+a FA (\code{\link[=factor_analysis]{factor_analysis()}}). \code{\link[=factor_scores]{factor_scores()}} extracts factor scores
+from an FA object.
 }

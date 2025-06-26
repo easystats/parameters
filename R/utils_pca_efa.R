@@ -26,7 +26,9 @@
 #' @return A data frame with subscales, which are average sum scores for all
 #' items from each component or factor.
 #'
-#' @seealso [`principal_components()`], [`factor_analysis()`]
+#' @seealso Functions to carry out a PCA ([`principal_components()`]) or
+#' a FA ([`factor_analysis()`]). [`factor_scores()`] extracts factor scores
+#' from an FA object.
 #'
 #' @examplesIf insight::check_if_installed("psych", quietly = TRUE)
 #' pca <- principal_components(mtcars[, 1:7], n = 2, rotation = "varimax")
