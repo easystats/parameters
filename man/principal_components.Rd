@@ -18,7 +18,7 @@ factor_analysis(x, ...)
 \method{factor_analysis}{data.frame}(
   x,
   n = "auto",
-  rotation = "none",
+  rotation = "oblimin",
   sort = FALSE,
   threshold = NULL,
   standardize = FALSE,
@@ -73,7 +73,8 @@ at least one variable.}
 \item{rotation}{If not \code{"none"}, the PCA / FA will be computed using the
 \strong{psych} package. Possible options include \code{"varimax"}, \code{"quartimax"},
 \code{"promax"}, \code{"oblimin"}, \code{"simplimax"}, or \code{"cluster"} (and more). See
-\code{\link[psych:fa]{psych::fa()}} for details.}
+\code{\link[psych:fa]{psych::fa()}} for details. The default is \code{"none"} for PCA, and
+\code{"oblimin"} for FA.}
 
 \item{sort}{Sort the loadings.}
 

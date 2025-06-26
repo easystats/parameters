@@ -19,7 +19,8 @@
 #' @param rotation If not `"none"`, the PCA / FA will be computed using the
 #'   **psych** package. Possible options include `"varimax"`, `"quartimax"`,
 #'   `"promax"`, `"oblimin"`, `"simplimax"`, or `"cluster"` (and more). See
-#'   [`psych::fa()`] for details.
+#'   [`psych::fa()`] for details. The default is `"none"` for PCA, and
+#'   `"oblimin"` for FA.
 #' @param sparse Whether to compute sparse PCA (SPCA, using [`sparsepca::spca()`]).
 #'   SPCA attempts to find sparse loadings (with few nonzero values), which improves
 #'   interpretability and avoids overfitting. Can be `TRUE` or `"robust"` (see

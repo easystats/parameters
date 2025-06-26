@@ -9,7 +9,7 @@ factor_analysis <- function(x, ...) {
 #' @export
 factor_analysis.data.frame <- function(x,
                                        n = "auto",
-                                       rotation = "none",
+                                       rotation = "oblimin",
                                        sort = FALSE,
                                        threshold = NULL,
                                        standardize = FALSE,

@@ -4,6 +4,11 @@
 
 * The `standardize` argument in `factor_analysis()` now defaults to `FALSE`.
 
+* The `rotation` argument in `factor_analysis()` now defaults to `"oblimin"`,
+  because the former default of `"none"` rarely makes sense in the context of
+  factor analysis. If you want to use no rotation, please set `rotation =
+  "none"`.
+
 * The `cor` argument in `n_factors()` was renamed into `correlation_matrix`. In
   `factor_analysis()`, the `cor` argument was completely removed to avoid naming
   collision with the `cor` argument of `psych::fa()`, which now users can pass
