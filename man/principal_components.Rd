@@ -85,7 +85,10 @@ only display the maximum loading per variable (the most simple structure).}
 \item{standardize}{A logical value indicating whether the variables should be
 standardized (centered and scaled) to have unit variance before the
 analysis (in general, such scaling is advisable). \strong{Note:} This defaults
-to \code{TRUE} for PCA, but to \code{FALSE} for FA.}
+to \code{TRUE} for PCA, but to \code{FALSE} for FA (because \code{factor_analysis()}
+computes a correlation matrix and uses that r-matrix for the factor analysis
+by default - therefore, standardization of the raw variables is unnecessary,
+and even undesirable when using \code{cor = "poly"}).}
 
 \item{pca_results}{The output of the \code{principal_components()} function.}
 
