@@ -70,7 +70,7 @@ rotated_data(pca_results, verbose = TRUE)
 closest_component(x)
 }
 \arguments{
-\item{x}{A data frame or a statistical model. For \code{closes_component()}, the
+\item{x}{A data frame or a statistical model. For \code{closest_component()}, the
 output of the \code{principal_components()} function.}
 
 \item{...}{Arguments passed to or from other methods.}

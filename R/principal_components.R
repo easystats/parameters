@@ -5,7 +5,7 @@
 #' return the loadings as a data frame, and various methods and functions are
 #' available to access / display other information (see the 'Details' section).
 #'
-#' @param x A data frame or a statistical model. For `closes_component()`, the
+#' @param x A data frame or a statistical model. For `closest_component()`, the
 #'   output of the `principal_components()` function.
 #' @param n Number of components to extract. If `n="all"`, then `n` is set as
 #'   the number of variables minus 1 (`ncol(x)-1`). If `n="auto"` (default) or
