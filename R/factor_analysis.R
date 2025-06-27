@@ -79,7 +79,7 @@ factor_analysis.matrix <- function(x,
   }
 
   factor_analysis.data.frame(
-    as.data.frame(x),
+    x,
     n = n,
     rotation = rotation,
     factor_method = factor_method,
