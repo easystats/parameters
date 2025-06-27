@@ -9,7 +9,7 @@ psych::fa(), factor_analysis(), or psych::omega()"><meta property="og:image" con
 
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.26.0.8</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.26.0.9</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -94,13 +94,13 @@ element from the object and converts it into a data frame.</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">out</span> <span class="op">&lt;-</span> <span class="fu"><a href="principal_components.html">factor_analysis</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">7</span><span class="op">]</span>, n <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu">factor_scores</span><span class="op">(</span><span class="va">out</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                          MR1         MR2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Mazda RX4         -0.2609328 -1.04874373</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Mazda RX4 Wag     -0.2439731 -0.68178441</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Datsun 710        -0.9810004 -0.15839038</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Hornet 4 Drive    -0.1392219  1.00259255</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Hornet Sportabout  0.7360517  0.01341681</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Valiant           -0.1072357  1.53465630</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                          MR1        MR2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Mazda RX4         -0.4728356 -0.7310464</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Mazda RX4 Wag     -0.3801129 -0.4342601</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Datsun 710        -0.9925165  0.4087655</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Hornet 4 Drive     0.0718127  0.9131816</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Hornet Sportabout  0.7228201 -0.3946507</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Valiant            0.2134888  1.3394217</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
