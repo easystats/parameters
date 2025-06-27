@@ -251,9 +251,9 @@ principal_components <- function(x, ...) {
 
 #' @rdname principal_components
 #' @export
-rotated_data <- function(pca_results, verbose = TRUE) {
-  original_data <- attributes(pca_results)$dataset
-  rotated_matrix <- insight::get_predicted(attributes(pca_results)$model)
+rotated_data <- function(x, verbose = TRUE) {
+  original_data <- attributes(x)$dataset
+  rotated_matrix <- insight::get_predicted(attributes(x)$model)
   out <- NULL
 
   if (is.null(original_data) || is.null(rotated_matrix)) {
@@ -263,7 +263,7 @@ rotated_data <- function(pca_results, verbose = TRUE) {
     return(NULL)
   }
 
-  compl_cases <- attributes(pca_results)$complete_cases
+  compl_cases <- attributes(x)$complete_cases
   if (is.null(compl_cases) && nrow(original_data) != nrow(rotated_matrix)) {
     if (verbose) {
       insight::format_warning("Could not retrieve information about missing data.")

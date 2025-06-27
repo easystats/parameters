@@ -41,7 +41,7 @@ factor_analysis(x, ...)
 
 principal_components(x, ...)
 
-rotated_data(pca_results, verbose = TRUE)
+rotated_data(x, verbose = TRUE)
 
 \method{principal_components}{data.frame}(
   x,
