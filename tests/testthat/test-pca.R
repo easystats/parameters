@@ -103,7 +103,7 @@ test_that("predict model_parameters fa", {
     predict(mp, names = c("A", "B", "C", "D", "E"), keep_na = FALSE),
     c("A", "B", "C", "D", "E")
   )
-  model <- factor_analysis(d, n = 5)
+  model <- factor_analysis(d, n = 5, rotation = "none")
   expect_identical(nrow(predict(model, keep_na = FALSE)), 2436L)
 })
 
