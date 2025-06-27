@@ -153,7 +153,7 @@ assigned component index for each column from the original data frame.
 \item Running \code{\link[=rotated_data]{rotated_data()}} will return the rotated data, including missing
 values, so it matches the original data frame.
 \item \code{performance::item_omega()} is a convenient wrapper around \code{psych::omega()},
-which provides some additioal methods to work seamleassly within the
+which provides some additional methods to work seamlessly within the
 \emph{easystats} framework.
 \item \code{\link[performance:check_normality]{performance::check_normality()}} checks residuals from objects returned
 by \code{\link[psych:fa]{psych::fa()}}, \code{\link[=factor_analysis]{factor_analysis()}}, \code{performance::item_omega()},

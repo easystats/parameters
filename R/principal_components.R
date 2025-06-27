@@ -84,7 +84,7 @@
 #'   values, so it matches the original data frame.
 #'
 #' - `performance::item_omega()` is a convenient wrapper around `psych::omega()`,
-#'   which provides some additioal methods to work seamleassly within the
+#'   which provides some additional methods to work seamlessly within the
 #'   *easystats* framework.
 #'
 #' - [`performance::check_normality()`] checks residuals from objects returned
