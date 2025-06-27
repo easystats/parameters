@@ -53,7 +53,7 @@ rotated_data(pca_results, verbose = TRUE)
 
 \method{sort}{parameters_efa}(x, ...)
 
-closest_component(pca_results)
+closest_component(x)
 }
 \arguments{
 \item{x}{A data frame or a statistical model.}

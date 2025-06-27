@@ -1,10 +1,12 @@
-#' Get Scores from Principal Component Analysis (PCA)
+#' Get Scores from Principal Component or Factor Analysis (PCA/FA)
 #'
 #' `get_scores()` takes `n_items` amount of items that load the most
 #' (either by loading cutoff or number) on a component, and then computes their
-#' average.
+#' average. This results in a sum score for each component from the PCA/FA,
+#' which is on the same scale as the original, single items that were used to
+#' compute the PCA/FA.
 #'
-#' @param x An object returned by [principal_components()].
+#' @param x An object returned by [principal_components()] or [factor_analysis()].
 #' @param n_items Number of required (i.e. non-missing) items to build the sum
 #' score for an observation. If an observation has more missing values than
 #' `n_items` in all items of a (sub) scale, `NA` is returned for that
@@ -15,15 +17,18 @@
 #' @details
 #' `get_scores()` takes the results from [`principal_components()`] or
 #' [`factor_analysis()`] and extracts the variables for each component found by
-#' the PCA. Then, for each of these "subscales", row means are calculated (which
-#' equals adding up the single items and dividing by the number of items). This
-#' results in a sum score for each component from the PCA, which is on the same
-#' scale as the original, single items that were used to compute the PCA.
+#' the PCA/FA. Then, for each of these "subscales", row means are calculated
+#' (which equals adding up the single items and dividing by the number of
+#' items). This results in a sum score for each component from the PCA/FA, which
+#' is on the same scale as the original, single items that were used to compute
+#' the PCA/FA.
 #'
 #' @return A data frame with subscales, which are average sum scores for all
-#'   items from each component.
+#' items from each component or factor.
 #'
-#' @seealso [`principal_components()`]
+#' @seealso Functions to carry out a PCA ([`principal_components()`]) or
+#' a FA ([`factor_analysis()`]). [`factor_scores()`] extracts factor scores
+#' from an FA object.
 #'
 #' @examplesIf insight::check_if_installed("psych", quietly = TRUE)
 #' pca <- principal_components(mtcars[, 1:7], n = 2, rotation = "varimax")
@@ -579,11 +584,11 @@ sort.parameters_pca <- sort.parameters_efa
 
 #' @rdname principal_components
 #' @export
-closest_component <- function(pca_results) {
-  if ("closest_component" %in% names(attributes(pca_results))) {
-    attributes(pca_results)$closest_component
+closest_component <- function(x) {
+  if ("closest_component" %in% names(attributes(x))) {
+    attributes(x)$closest_component
   } else {
-    .closest_component(pca_results)
+    .closest_component(x)
   }
 }
 
