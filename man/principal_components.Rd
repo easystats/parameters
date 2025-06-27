@@ -4,6 +4,7 @@
 \name{factor_analysis}
 \alias{factor_analysis}
 \alias{factor_analysis.data.frame}
+\alias{factor_analysis.matrix}
 \alias{principal_components}
 \alias{rotated_data}
 \alias{principal_components.data.frame}
@@ -19,6 +20,18 @@ factor_analysis(x, ...)
   x,
   n = "auto",
   rotation = "oblimin",
+  sort = FALSE,
+  threshold = NULL,
+  standardize = FALSE,
+  ...
+)
+
+\method{factor_analysis}{matrix}(
+  x,
+  n = "auto",
+  rotation = "oblimin",
+  n_obs = NULL,
+  n_matrix = NULL,
   sort = FALSE,
   threshold = NULL,
   standardize = FALSE,
@@ -91,6 +104,21 @@ computes a correlation matrix and uses that r-matrix for the factor analysis
 by default - therefore, standardization of the raw variables is unnecessary,
 and even undesirable when using \code{cor = "poly"}).}
 
+\item{n_obs}{Number of observations in the original data set if \code{x} is a
+correlation matrix. Required to compute correct fit indices.}
+
+\item{n_matrix}{This argument expects a matrix where each cell \verb{[i, j]}
+specifies the number of pairwise complete observations used to compute the
+correlation between variable \code{i} and variable \code{j} in the input \code{x}. It is
+crucial when \code{x} is a correlation matrix (rather than raw data), especially
+if that matrix was derived from a dataset containing missing values using
+pairwise deletion. Providing \code{n_matrix} allows \code{psych::fa()} to accurately
+calculate statistical measures, such as chi-square fit statistics, by
+accounting for the varying sample sizes that contribute to each individual
+correlation coefficient. This precision is vital for methods that rely on
+these specific sample sizes for statistical inference, such as 'minimum
+chi-square' (minchi) solutions.}
+
 \item{pca_results}{The output of the \code{principal_components()} function.}
 
 \item{verbose}{Toggle warnings.}
@@ -125,11 +153,10 @@ also of class \code{parameters_efa()}. Objects from \code{principal_components()
 of class \code{parameters_pca()}.
 }
 \description{
-The functions \code{principal_components()} and \code{factor_analysis()} can
-be used to perform a principal component analysis (PCA) or a factor analysis
-(FA). They return the loadings as a data frame, and various methods and
-functions are available to access / display other information (see the
-Details section).
+The functions \code{principal_components()} and \code{factor_analysis()} can be used to
+perform a principal component analysis (PCA) or a factor analysis (FA). They
+return the loadings as a data frame, and various methods and functions are
+available to access / display other information (see the 'Details' section).
 }
 \details{
 \subsection{Methods and Utilities}{

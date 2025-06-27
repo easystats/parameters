@@ -16,6 +16,10 @@
 
 ## Changes
 
+* `factor_analysis()` gets a `.matrix` method, including arguments `n_obs` and
+  `n_matrix`, to compute factor analysis for a correlation matrix or covariance
+  matrix.
+
 * New function `factor_scores()` to extract factor scores from EFA (`psych::fa()`
   or `factor_analysis()`).
 

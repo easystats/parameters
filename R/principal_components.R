@@ -1,10 +1,9 @@
 #' Principal Component Analysis (PCA) and Factor Analysis (FA)
 #'
-#' The functions `principal_components()` and `factor_analysis()` can
-#' be used to perform a principal component analysis (PCA) or a factor analysis
-#' (FA). They return the loadings as a data frame, and various methods and
-#' functions are available to access / display other information (see the
-#' Details section).
+#' The functions `principal_components()` and `factor_analysis()` can be used to
+#' perform a principal component analysis (PCA) or a factor analysis (FA). They
+#' return the loadings as a data frame, and various methods and functions are
+#' available to access / display other information (see the 'Details' section).
 #'
 #' @param x A data frame or a statistical model.
 #' @param n Number of components to extract. If `n="all"`, then `n` is set as
@@ -26,6 +25,19 @@
 #'   interpretability and avoids overfitting. Can be `TRUE` or `"robust"` (see
 #'   [`sparsepca::robspca()`]).
 #' @param sort Sort the loadings.
+#' @param n_obs Number of observations in the original data set if `x` is a
+#'   correlation matrix. Required to compute correct fit indices.
+#' @param n_matrix This argument expects a matrix where each cell `[i, j]`
+#'   specifies the number of pairwise complete observations used to compute the
+#'   correlation between variable `i` and variable `j` in the input `x`. It is
+#'   crucial when `x` is a correlation matrix (rather than raw data), especially
+#'   if that matrix was derived from a dataset containing missing values using
+#'   pairwise deletion. Providing `n_matrix` allows `psych::fa()` to accurately
+#'   calculate statistical measures, such as chi-square fit statistics, by
+#'   accounting for the varying sample sizes that contribute to each individual
+#'   correlation coefficient. This precision is vital for methods that rely on
+#'   these specific sample sizes for statistical inference, such as 'minimum
+#'   chi-square' (minchi) solutions.
 #' @param threshold A value between 0 and 1 indicates which (absolute) values
 #'   from the loadings should be removed. An integer higher than 1 indicates the
 #'   n strongest loadings to retain. Can also be `"max"`, in which case it will
