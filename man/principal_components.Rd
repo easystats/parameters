@@ -276,9 +276,9 @@ closest_component(pca)
 
 # Factor Analysis (FA) ------------------------
 
-factor_analysis(mtcars[, 1:7], n = "all", threshold = 0.2)
-factor_analysis(mtcars[, 1:7], n = 2, rotation = "oblimin", threshold = "max", sort = TRUE)
-factor_analysis(mtcars[, 1:7], n = 2, threshold = 2, sort = TRUE)
+factor_analysis(mtcars[, 1:7], n = "all", threshold = 0.2, rotation = "Promax")
+factor_analysis(mtcars[, 1:7], n = 2, threshold = "max", sort = TRUE)
+factor_analysis(mtcars[, 1:7], n = 2, rotation = "none", threshold = 2, sort = TRUE)
 
 efa <- factor_analysis(mtcars[, 1:5], n = 2)
 summary(efa)
