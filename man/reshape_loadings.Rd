@@ -13,7 +13,8 @@ reshape_loadings(x, ...)
 \method{reshape_loadings}{data.frame}(x, threshold = NULL, loadings_columns = NULL, ...)
 }
 \arguments{
-\item{x}{A data frame or a statistical model.}
+\item{x}{A data frame or a statistical model. For \code{closes_component()}, the
+output of the \code{principal_components()} function.}
 
 \item{...}{Arguments passed to or from other methods.}
 

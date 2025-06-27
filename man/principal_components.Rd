@@ -20,6 +20,7 @@ factor_analysis(x, ...)
   x,
   n = "auto",
   rotation = "oblimin",
+  factor_method = "minres",
   sort = FALSE,
   threshold = NULL,
   standardize = FALSE,
@@ -30,8 +31,8 @@ factor_analysis(x, ...)
   x,
   n = "auto",
   rotation = "oblimin",
+  factor_method = "minres",
   n_obs = NULL,
-  n_matrix = NULL,
   sort = FALSE,
   threshold = NULL,
   standardize = FALSE,
@@ -69,7 +70,8 @@ rotated_data(pca_results, verbose = TRUE)
 closest_component(x)
 }
 \arguments{
-\item{x}{A data frame or a statistical model.}
+\item{x}{A data frame or a statistical model. For \code{closes_component()}, the
+output of the \code{principal_components()} function.}
 
 \item{...}{Arguments passed to or from other methods.}
 
@@ -89,6 +91,11 @@ at least one variable.}
 \code{\link[psych:fa]{psych::fa()}} for details. The default is \code{"none"} for PCA, and
 \code{"oblimin"} for FA.}
 
+\item{factor_method}{The factoring method to be used. Passed to the \code{fm}
+argument in \code{psych::fa()}. Defaults to \code{"minres"} (minimum residual). Other
+options include \code{"uls"}, \code{"ols"}, \code{"wls"}, \code{"gls"}, \code{"ml"}, \code{"minchi"},
+\code{"minrank"}, \code{"old.min"}, and \code{"alpha"}. See \code{?psych::fa} for details.}
+
 \item{sort}{Sort the loadings.}
 
 \item{threshold}{A value between 0 and 1 indicates which (absolute) values
@@ -104,22 +111,20 @@ computes a correlation matrix and uses that r-matrix for the factor analysis
 by default - therefore, standardization of the raw variables is unnecessary,
 and even undesirable when using \code{cor = "poly"}).}
 
-\item{n_obs}{Number of observations in the original data set if \code{x} is a
-correlation matrix. Required to compute correct fit indices.}
-
-\item{n_matrix}{This argument expects a matrix where each cell \verb{[i, j]}
-specifies the number of pairwise complete observations used to compute the
-correlation between variable \code{i} and variable \code{j} in the input \code{x}. It is
-crucial when \code{x} is a correlation matrix (rather than raw data), especially
-if that matrix was derived from a dataset containing missing values using
-pairwise deletion. Providing \code{n_matrix} allows \code{psych::fa()} to accurately
-calculate statistical measures, such as chi-square fit statistics, by
-accounting for the varying sample sizes that contribute to each individual
-correlation coefficient. This precision is vital for methods that rely on
-these specific sample sizes for statistical inference, such as 'minimum
-chi-square' (minchi) solutions.}
-
-\item{pca_results}{The output of the \code{principal_components()} function.}
+\item{n_obs}{An integer or a matrix.
+\itemize{
+\item \strong{Integer:} Number of observations in the original data set if \code{x} is a
+correlation matrix. Required to compute correct fit indices.
+\item \strong{Matrix:} A matrix where each cell \verb{[i, j]} specifies the number of
+pairwise complete observations used to compute the correlation between
+variable \code{i} and variable \code{j} in the input \code{x}. It is crucial when \code{x} is
+a correlation matrix (rather than raw data), especially if that matrix
+was derived from a dataset containing missing values using pairwise
+deletion. Providing a matrix allows \code{psych::fa()} to accurately calculate
+statistical measures, such as chi-square fit statistics, by accounting
+for the varying sample sizes that contribute to each individual
+correlation coefficient.
+}}
 
 \item{verbose}{Toggle warnings.}
 
@@ -239,14 +244,15 @@ composite variables.
 \subsection{Computing Item Scores}{
 
 Use \code{\link[=get_scores]{get_scores()}} to compute scores for the "subscales" represented by the
-extracted principal components. \code{get_scores()} takes the results from
-\code{principal_components()} and extracts the variables for each component found
-by the PCA. Then, for each of these "subscales", raw means are calculated
-(which equals adding up the single items and dividing by the number of items).
-This results in a sum score for each component from the PCA, which is on the
-same scale as the original, single items that were used to compute the PCA.
-One can also use \code{predict()} to back-predict scores for each component,
-to which one can provide \code{newdata} or a vector of \code{names} for the components.
+extracted principal components or factors. \code{get_scores()} takes the results
+from \code{principal_components()} or \code{factor_analysis()} and extracts the
+variables for each component found by the PCA. Then, for each of these
+"subscales", raw means are calculated (which equals adding up the single
+items and dividing by the number of items). This results in a sum score for
+each component from the PCA, which is on the same scale as the original,
+single items that were used to compute the PCA. One can also use \code{predict()}
+to back-predict scores for each component, to which one can provide \code{newdata}
+or a vector of \code{names} for the components.
 }
 
 \subsection{Explained Variance and Eingenvalues}{

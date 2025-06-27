@@ -10,6 +10,7 @@ factor_analysis <- function(x, ...) {
 factor_analysis.data.frame <- function(x,
                                        n = "auto",
                                        rotation = "oblimin",
+                                       factor_method = "minres",
                                        sort = FALSE,
                                        threshold = NULL,
                                        standardize = FALSE,
@@ -31,7 +32,7 @@ factor_analysis.data.frame <- function(x,
 
   # FA
   out <- model_parameters(
-    psych::fa(x, nfactors = n, rotate = rotation, ...),
+    psych::fa(x, nfactors = n, rotate = rotation, fm = factor_method, ...),
     threshold = threshold,
     sort = sort,
     ...
@@ -47,8 +48,8 @@ factor_analysis.data.frame <- function(x,
 factor_analysis.matrix <- function(x,
                                    n = "auto",
                                    rotation = "oblimin",
+                                   factor_method = "minres",
                                    n_obs = NULL,
-                                   n_matrix = NULL,
                                    sort = FALSE,
                                    threshold = NULL,
                                    standardize = FALSE,
@@ -63,14 +64,25 @@ factor_analysis.matrix <- function(x,
 
   # the default n.obs argument in `psych::fa()` is `NA`, so we change
   # our default `NULL` to `NA` to avoid errors
+  n_matrix <- NULL
   if (is.null(n_obs)) {
     n_obs <- NA
+  } else if (is.matrix(n_obs)) {
+    n_matrix <- n_obs
+    n_obs <- NA
+    # check for correct dimensions
+    if (dim(n_matrix)[1] != dim(x)[1] || dim(n_matrix)[2] != dim(x)[2]) {
+      insight::format_error(
+        "The provided `n_obs` matrix must have the same dimensions as the input matrix."
+      )
+    }
   }
 
   factor_analysis.data.frame(
     as.data.frame(x),
     n = n,
     rotation = rotation,
+    factor_method = factor_method,
     sort = sort,
     threshold = threshold,
     standardize = standardize,
