@@ -19,7 +19,7 @@ test_that("get_scores", {
 
   expect_message(
     get_scores(pca, reverse_items = c("cyl", "drat")),
-    regex = "Reversing items: cyl, drat"
+    regex = "Reversing items: cyl, drat",
     fixed = TRUE
   )
 
