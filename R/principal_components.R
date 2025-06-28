@@ -465,6 +465,7 @@ principal_components.data.frame <- function(x,
   )
   attr(pca_loadings, "data") <- data_name
   attr(pca_loadings, "dataset") <- original_data
+  attr(pca_loadings, "reverse_items") <- reverse_items
 
   # add class-attribute for printing
   class(pca_loadings) <- unique(c("parameters_pca", "see_parameters_pca", class(pca_loadings)))

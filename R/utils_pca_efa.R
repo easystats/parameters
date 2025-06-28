@@ -58,6 +58,13 @@ get_scores <- function(x, n_items = NULL, reverse_items = NULL, verbose = TRUE) 
 
   # should some items be reversed?
   if (!is.null(reverse_items)) {
+    # check if the object has an attribute "reverse_items" - if so, warn that
+    # we don't want to "double reverse" items
+    if ("reverse_items" %in% names(attributes(dataset))) {
+      insight::format_warning(
+        "It seem that items have already been reversed in this data set. Make sure that you do not reverse them again."
+      )
+    }
     # numeric indices should be replaced by their column names
     if (is.numeric(reverse_items)) {
       reverse_items <- colnames(dataset)[reverse_items]

@@ -60,6 +60,7 @@ factor_analysis.data.frame <- function(x,
   )
 
   attr(out, "dataset") <- x
+  attr(out, "reverse_items") <- reverse_items
   out
 }
 
