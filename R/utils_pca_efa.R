@@ -17,6 +17,7 @@
 #' indicating their column positions in `x` that should be reversed before
 #' computing sum scores. This is useful when the items are not coded in the same
 #' direction. If `NULL` (default), no items are reversed.
+#' @param verbose Logical, whether to print messages about reversing items.
 #'
 #' @details
 #' `get_scores()` takes the results from [`principal_components()`] or
@@ -51,7 +52,7 @@
 #' (mtcars$hp + mtcars$qsec) / 2
 #'
 #' @export
-get_scores <- function(x, n_items = NULL, reverse_items = NULL) {
+get_scores <- function(x, n_items = NULL, reverse_items = NULL, verbose = TRUE) {
   subscales <- closest_component(x)
   dataset <- attributes(x)$dataset
 
