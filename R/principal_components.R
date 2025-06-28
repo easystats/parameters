@@ -1,12 +1,12 @@
 #' Principal Component Analysis (PCA) and Factor Analysis (FA)
 #'
-#' The functions `principal_components()` and `factor_analysis()` can
-#' be used to perform a principal component analysis (PCA) or a factor analysis
-#' (FA). They return the loadings as a data frame, and various methods and
-#' functions are available to access / display other information (see the
-#' Details section).
+#' The functions `principal_components()` and `factor_analysis()` can be used to
+#' perform a principal component analysis (PCA) or a factor analysis (FA). They
+#' return the loadings as a data frame, and various methods and functions are
+#' available to access / display other information (see the 'Details' section).
 #'
-#' @param x A data frame or a statistical model.
+#' @param x A data frame or a statistical model. For `closest_component()`, the
+#'   output of the `principal_components()` function.
 #' @param n Number of components to extract. If `n="all"`, then `n` is set as
 #'   the number of variables minus 1 (`ncol(x)-1`). If `n="auto"` (default) or
 #'   `n=NULL`, the number of components is selected through [`n_factors()`]
@@ -19,12 +19,29 @@
 #' @param rotation If not `"none"`, the PCA / FA will be computed using the
 #'   **psych** package. Possible options include `"varimax"`, `"quartimax"`,
 #'   `"promax"`, `"oblimin"`, `"simplimax"`, or `"cluster"` (and more). See
-#'   [`psych::fa()`] for details.
+#'   [`psych::fa()`] for details. The default is `"none"` for PCA, and
+#'   `"oblimin"` for FA.
+#' @param factor_method The factoring method to be used. Passed to the `fm`
+#'   argument in `psych::fa()`. Defaults to `"minres"` (minimum residual). Other
+#'   options include `"uls"`, `"ols"`, `"wls"`, `"gls"`, `"ml"`, `"minchi"`,
+#'   `"minrank"`, `"old.min"`, and `"alpha"`. See `?psych::fa` for details.
 #' @param sparse Whether to compute sparse PCA (SPCA, using [`sparsepca::spca()`]).
 #'   SPCA attempts to find sparse loadings (with few nonzero values), which improves
 #'   interpretability and avoids overfitting. Can be `TRUE` or `"robust"` (see
 #'   [`sparsepca::robspca()`]).
 #' @param sort Sort the loadings.
+#' @param n_obs An integer or a matrix.
+#'   - **Integer:** Number of observations in the original data set if `x` is a
+#'     correlation matrix. Required to compute correct fit indices.
+#'   - **Matrix:** A matrix where each cell `[i, j]` specifies the number of
+#'     pairwise complete observations used to compute the correlation between
+#'     variable `i` and variable `j` in the input `x`. It is crucial when `x` is
+#'     a correlation matrix (rather than raw data), especially if that matrix
+#'     was derived from a dataset containing missing values using pairwise
+#'     deletion. Providing a matrix allows `psych::fa()` to accurately calculate
+#'     statistical measures, such as chi-square fit statistics, by accounting
+#'     for the varying sample sizes that contribute to each individual
+#'     correlation coefficient.
 #' @param threshold A value between 0 and 1 indicates which (absolute) values
 #'   from the loadings should be removed. An integer higher than 1 indicates the
 #'   n strongest loadings to retain. Can also be `"max"`, in which case it will
@@ -46,7 +63,6 @@
 #'   with missing values from the original data, hence the number of rows of
 #'   predicted data and original data is equal.
 #' @param ... Arguments passed to or from other methods.
-#' @param pca_results The output of the `principal_components()` function.
 #' @param digits Argument for `print()`, indicates the number of digits
 #'   (rounding) to be used.
 #' @param labels Argument for `print()`, character vector of same length as
@@ -83,7 +99,7 @@
 #'   values, so it matches the original data frame.
 #'
 #' - `performance::item_omega()` is a convenient wrapper around `psych::omega()`,
-#'   which provides some additioal methods to work seamleassly within the
+#'   which provides some additional methods to work seamlessly within the
 #'   *easystats* framework.
 #'
 #' - [`performance::check_normality()`] checks residuals from objects returned
@@ -134,14 +150,15 @@
 #'
 #' ## Computing Item Scores
 #' Use [`get_scores()`] to compute scores for the "subscales" represented by the
-#' extracted principal components. `get_scores()` takes the results from
-#' `principal_components()` and extracts the variables for each component found
-#' by the PCA. Then, for each of these "subscales", raw means are calculated
-#' (which equals adding up the single items and dividing by the number of items).
-#' This results in a sum score for each component from the PCA, which is on the
-#' same scale as the original, single items that were used to compute the PCA.
-#' One can also use `predict()` to back-predict scores for each component,
-#' to which one can provide `newdata` or a vector of `names` for the components.
+#' extracted principal components or factors. `get_scores()` takes the results
+#' from `principal_components()` or `factor_analysis()` and extracts the
+#' variables for each component found by the PCA. Then, for each of these
+#' "subscales", raw means are calculated (which equals adding up the single
+#' items and dividing by the number of items). This results in a sum score for
+#' each component from the PCA, which is on the same scale as the original,
+#' single items that were used to compute the PCA. One can also use `predict()`
+#' to back-predict scores for each component, to which one can provide `newdata`
+#' or a vector of `names` for the components.
 #'
 #' ## Explained Variance and Eingenvalues
 #' Use `summary()` to get the Eigenvalues and the explained variance for each
@@ -213,9 +230,9 @@
 #'
 #' # Factor Analysis (FA) ------------------------
 #'
-#' factor_analysis(mtcars[, 1:7], n = "all", threshold = 0.2)
-#' factor_analysis(mtcars[, 1:7], n = 2, rotation = "oblimin", threshold = "max", sort = TRUE)
-#' factor_analysis(mtcars[, 1:7], n = 2, threshold = 2, sort = TRUE)
+#' factor_analysis(mtcars[, 1:7], n = "all", threshold = 0.2, rotation = "Promax")
+#' factor_analysis(mtcars[, 1:7], n = 2, threshold = "max", sort = TRUE)
+#' factor_analysis(mtcars[, 1:7], n = 2, rotation = "none", threshold = 2, sort = TRUE)
 #'
 #' efa <- factor_analysis(mtcars[, 1:5], n = 2)
 #' summary(efa)
@@ -234,9 +251,9 @@ principal_components <- function(x, ...) {
 
 #' @rdname principal_components
 #' @export
-rotated_data <- function(pca_results, verbose = TRUE) {
-  original_data <- attributes(pca_results)$dataset
-  rotated_matrix <- insight::get_predicted(attributes(pca_results)$model)
+rotated_data <- function(x, verbose = TRUE) {
+  original_data <- attributes(x)$dataset
+  rotated_matrix <- insight::get_predicted(attributes(x)$model)
   out <- NULL
 
   if (is.null(original_data) || is.null(rotated_matrix)) {
@@ -246,7 +263,7 @@ rotated_data <- function(pca_results, verbose = TRUE) {
     return(NULL)
   }
 
-  compl_cases <- attributes(pca_results)$complete_cases
+  compl_cases <- attributes(x)$complete_cases
   if (is.null(compl_cases) && nrow(original_data) != nrow(rotated_matrix)) {
     if (verbose) {
       insight::format_warning("Could not retrieve information about missing data.")

@@ -10,7 +10,8 @@ reduce_parameters(x, method = "PCA", n = "max", distance = "euclidean", ...)
 reduce_data(x, method = "PCA", n = "max", distance = "euclidean", ...)
 }
 \arguments{
-\item{x}{A data frame or a statistical model.}
+\item{x}{A data frame or a statistical model. For \code{closest_component()}, the
+output of the \code{principal_components()} function.}
 
 \item{method}{The feature reduction method. Can be one of \code{"PCA"}, \code{"cMDS"},
 \code{"DRR"}, \code{"ICA"} (see the 'Details' section).}

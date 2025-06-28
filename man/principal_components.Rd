@@ -4,6 +4,7 @@
 \name{factor_analysis}
 \alias{factor_analysis}
 \alias{factor_analysis.data.frame}
+\alias{factor_analysis.matrix}
 \alias{principal_components}
 \alias{rotated_data}
 \alias{principal_components.data.frame}
@@ -18,7 +19,20 @@ factor_analysis(x, ...)
 \method{factor_analysis}{data.frame}(
   x,
   n = "auto",
-  rotation = "none",
+  rotation = "oblimin",
+  factor_method = "minres",
+  sort = FALSE,
+  threshold = NULL,
+  standardize = FALSE,
+  ...
+)
+
+\method{factor_analysis}{matrix}(
+  x,
+  n = "auto",
+  rotation = "oblimin",
+  factor_method = "minres",
+  n_obs = NULL,
   sort = FALSE,
   threshold = NULL,
   standardize = FALSE,
@@ -27,7 +41,7 @@ factor_analysis(x, ...)
 
 principal_components(x, ...)
 
-rotated_data(pca_results, verbose = TRUE)
+rotated_data(x, verbose = TRUE)
 
 \method{principal_components}{data.frame}(
   x,
@@ -53,10 +67,11 @@ rotated_data(pca_results, verbose = TRUE)
 
 \method{sort}{parameters_efa}(x, ...)
 
-closest_component(pca_results)
+closest_component(x)
 }
 \arguments{
-\item{x}{A data frame or a statistical model.}
+\item{x}{A data frame or a statistical model. For \code{closest_component()}, the
+output of the \code{principal_components()} function.}
 
 \item{...}{Arguments passed to or from other methods.}
 
@@ -73,7 +88,13 @@ at least one variable.}
 \item{rotation}{If not \code{"none"}, the PCA / FA will be computed using the
 \strong{psych} package. Possible options include \code{"varimax"}, \code{"quartimax"},
 \code{"promax"}, \code{"oblimin"}, \code{"simplimax"}, or \code{"cluster"} (and more). See
-\code{\link[psych:fa]{psych::fa()}} for details.}
+\code{\link[psych:fa]{psych::fa()}} for details. The default is \code{"none"} for PCA, and
+\code{"oblimin"} for FA.}
+
+\item{factor_method}{The factoring method to be used. Passed to the \code{fm}
+argument in \code{psych::fa()}. Defaults to \code{"minres"} (minimum residual). Other
+options include \code{"uls"}, \code{"ols"}, \code{"wls"}, \code{"gls"}, \code{"ml"}, \code{"minchi"},
+\code{"minrank"}, \code{"old.min"}, and \code{"alpha"}. See \code{?psych::fa} for details.}
 
 \item{sort}{Sort the loadings.}
 
@@ -90,7 +111,20 @@ computes a correlation matrix and uses that r-matrix for the factor analysis
 by default - therefore, standardization of the raw variables is unnecessary,
 and even undesirable when using \code{cor = "poly"}).}
 
-\item{pca_results}{The output of the \code{principal_components()} function.}
+\item{n_obs}{An integer or a matrix.
+\itemize{
+\item \strong{Integer:} Number of observations in the original data set if \code{x} is a
+correlation matrix. Required to compute correct fit indices.
+\item \strong{Matrix:} A matrix where each cell \verb{[i, j]} specifies the number of
+pairwise complete observations used to compute the correlation between
+variable \code{i} and variable \code{j} in the input \code{x}. It is crucial when \code{x} is
+a correlation matrix (rather than raw data), especially if that matrix
+was derived from a dataset containing missing values using pairwise
+deletion. Providing a matrix allows \code{psych::fa()} to accurately calculate
+statistical measures, such as chi-square fit statistics, by accounting
+for the varying sample sizes that contribute to each individual
+correlation coefficient.
+}}
 
 \item{verbose}{Toggle warnings.}
 
@@ -124,11 +158,10 @@ also of class \code{parameters_efa()}. Objects from \code{principal_components()
 of class \code{parameters_pca()}.
 }
 \description{
-The functions \code{principal_components()} and \code{factor_analysis()} can
-be used to perform a principal component analysis (PCA) or a factor analysis
-(FA). They return the loadings as a data frame, and various methods and
-functions are available to access / display other information (see the
-Details section).
+The functions \code{principal_components()} and \code{factor_analysis()} can be used to
+perform a principal component analysis (PCA) or a factor analysis (FA). They
+return the loadings as a data frame, and various methods and functions are
+available to access / display other information (see the 'Details' section).
 }
 \details{
 \subsection{Methods and Utilities}{
@@ -152,7 +185,7 @@ assigned component index for each column from the original data frame.
 \item Running \code{\link[=rotated_data]{rotated_data()}} will return the rotated data, including missing
 values, so it matches the original data frame.
 \item \code{performance::item_omega()} is a convenient wrapper around \code{psych::omega()},
-which provides some additioal methods to work seamleassly within the
+which provides some additional methods to work seamlessly within the
 \emph{easystats} framework.
 \item \code{\link[performance:check_normality]{performance::check_normality()}} checks residuals from objects returned
 by \code{\link[psych:fa]{psych::fa()}}, \code{\link[=factor_analysis]{factor_analysis()}}, \code{performance::item_omega()},
@@ -211,14 +244,15 @@ composite variables.
 \subsection{Computing Item Scores}{
 
 Use \code{\link[=get_scores]{get_scores()}} to compute scores for the "subscales" represented by the
-extracted principal components. \code{get_scores()} takes the results from
-\code{principal_components()} and extracts the variables for each component found
-by the PCA. Then, for each of these "subscales", raw means are calculated
-(which equals adding up the single items and dividing by the number of items).
-This results in a sum score for each component from the PCA, which is on the
-same scale as the original, single items that were used to compute the PCA.
-One can also use \code{predict()} to back-predict scores for each component,
-to which one can provide \code{newdata} or a vector of \code{names} for the components.
+extracted principal components or factors. \code{get_scores()} takes the results
+from \code{principal_components()} or \code{factor_analysis()} and extracts the
+variables for each component found by the PCA. Then, for each of these
+"subscales", raw means are calculated (which equals adding up the single
+items and dividing by the number of items). This results in a sum score for
+each component from the PCA, which is on the same scale as the original,
+single items that were used to compute the PCA. One can also use \code{predict()}
+to back-predict scores for each component, to which one can provide \code{newdata}
+or a vector of \code{names} for the components.
 }
 
 \subsection{Explained Variance and Eingenvalues}{
@@ -275,9 +309,9 @@ closest_component(pca)
 
 # Factor Analysis (FA) ------------------------
 
-factor_analysis(mtcars[, 1:7], n = "all", threshold = 0.2)
-factor_analysis(mtcars[, 1:7], n = 2, rotation = "oblimin", threshold = "max", sort = TRUE)
-factor_analysis(mtcars[, 1:7], n = 2, threshold = 2, sort = TRUE)
+factor_analysis(mtcars[, 1:7], n = "all", threshold = 0.2, rotation = "Promax")
+factor_analysis(mtcars[, 1:7], n = 2, threshold = "max", sort = TRUE)
+factor_analysis(mtcars[, 1:7], n = 2, rotation = "none", threshold = 2, sort = TRUE)
 
 efa <- factor_analysis(mtcars[, 1:5], n = 2)
 summary(efa)
