@@ -318,6 +318,7 @@ principal_components.data.frame <- function(x,
     }
     # reverse the items
     x <- datawizard::reverse_scale(x, reverse_items, verbose = verbose)
+    original_data <- datawizard::reverse_scale(original_data, reverse_items, verbose = FALSE)
   }
 
   # Select numeric only
@@ -343,6 +344,9 @@ principal_components.data.frame <- function(x,
     )
 
     attr(pca_loadings, "data") <- data_name
+    attr(pca_loadings, "dataset") <- original_data
+    attr(pca_loadings, "reverse_items") <- reverse_items
+
     return(pca_loadings)
   }
 

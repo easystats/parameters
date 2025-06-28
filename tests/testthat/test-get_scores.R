@@ -25,4 +25,16 @@ test_that("get_scores", {
 
   expect_silent(get_scores(pca, reverse_items = c("cyl", "abc"), verbose = FALSE))
   expect_silent(get_scores(pca, reverse_items = c("cyl", "drat"), verbose = FALSE))
+
+  pca <- principal_components(
+    mtcars[, 1:7],
+    n = 2,
+    rotation = "varimax",
+    reverse_items = c("cyl", "drat")
+  )
+  expect_warning(
+    get_scores(pca, reverse_items = c("cyl", "drat")),
+    regex = "It seems that",
+    fixed = TRUE
+  )
 })
