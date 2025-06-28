@@ -53,6 +53,12 @@
 #'   computes a correlation matrix and uses that r-matrix for the factor analysis
 #'   by default - therefore, standardization of the raw variables is unnecessary,
 #'   and even undesirable when using `cor = "poly"`).
+#' @param reverse_items Character vector of variable names or numeric indices
+#'   indicating their column positions in `x` that should be reversed before
+#'   computing the PCA or FA. This is useful when the items are not coded in the
+#'   same direction. If `NULL` (default), no items are reversed. **Note:** The
+#'   data frame that is stored as attribute in the returned object is the modified
+#'   version of `x`, with the reversed items.
 #' @param object An object of class `parameters_pca`, `parameters_efa` or
 #'   `psych_efa`.
 #' @param newdata An optional data frame in which to look for variables with
@@ -289,6 +295,8 @@ principal_components.data.frame <- function(x,
                                             sort = FALSE,
                                             threshold = NULL,
                                             standardize = TRUE,
+                                            reverse_items = NULL,
+                                            verbose = TRUE,
                                             ...) {
   # save name of data set
   data_name <- insight::safe_deparse_symbol(substitute(x))
@@ -298,6 +306,19 @@ principal_components.data.frame <- function(x,
 
   # remove missing
   x <- stats::na.omit(x)
+
+  # should some items be reversed?
+  if (!is.null(reverse_items)) {
+    # numeric indices should be replaced by their column names
+    if (is.numeric(reverse_items)) {
+      reverse_items <- colnames(x)[reverse_items]
+    }
+    if (verbose) {
+      insight::format_alert(paste("Reversing items:", toString(reverse_items)))
+    }
+    # reverse the items
+    x <- datawizard::reverse_scale(x, reverse_items, verbose = verbose)
+  }
 
   # Select numeric only
   x <- x[vapply(x, is.numeric, TRUE)]

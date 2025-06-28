@@ -24,6 +24,8 @@ factor_analysis(x, ...)
   sort = FALSE,
   threshold = NULL,
   standardize = FALSE,
+  reverse_items = NULL,
+  verbose = TRUE,
   ...
 )
 
@@ -51,6 +53,8 @@ rotated_data(x, verbose = TRUE)
   sort = FALSE,
   threshold = NULL,
   standardize = TRUE,
+  reverse_items = NULL,
+  verbose = TRUE,
   ...
 )
 
@@ -111,6 +115,15 @@ computes a correlation matrix and uses that r-matrix for the factor analysis
 by default - therefore, standardization of the raw variables is unnecessary,
 and even undesirable when using \code{cor = "poly"}).}
 
+\item{reverse_items}{Character vector of variable names or numeric indices
+indicating their column positions in \code{x} that should be reversed before
+computing the PCA or FA. This is useful when the items are not coded in the
+same direction. If \code{NULL} (default), no items are reversed. \strong{Note:} The
+data frame that is stored as attribute in the returned object is the modified
+version of \code{x}, with the reversed items.}
+
+\item{verbose}{Toggle warnings.}
+
 \item{n_obs}{An integer or a matrix.
 \itemize{
 \item \strong{Integer:} Number of observations in the original data set if \code{x} is a
@@ -125,8 +138,6 @@ statistical measures, such as chi-square fit statistics, by accounting
 for the varying sample sizes that contribute to each individual
 correlation coefficient.
 }}
-
-\item{verbose}{Toggle warnings.}
 
 \item{sparse}{Whether to compute sparse PCA (SPCA, using \code{\link[sparsepca:spca]{sparsepca::spca()}}).
 SPCA attempts to find sparse loadings (with few nonzero values), which improves
