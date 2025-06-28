@@ -2,6 +2,7 @@ skip_on_cran()
 
 test_that("get_scores", {
   skip_if_not_installed("psych")
+  data(mtcars)
   pca <- principal_components(mtcars[, 1:7], n = 2, rotation = "varimax")
   scores <- get_scores(pca)
   expect_equal(head(scores$Component_1), c(38.704, 38.755, 28.194, 58.339, 78.658, 51.064), tolerance = 1e-2)
@@ -15,4 +16,13 @@ test_that("get_scores", {
     regex = "Following variable(s)",
     fixed = TRUE
   )
+
+  expect_message(
+    get_scores(pca, reverse_items = c("cyl", "drat")),
+    regex = "Reversing items: cyl, drat"
+    fixed = TRUE
+  )
+
+  expect_silent(get_scores(pca, reverse_items = c("cyl", "abc"), verbose = FALSE))
+  expect_silent(get_scores(pca, reverse_items = c("cyl", "drat"), verbose = FALSE))
 })

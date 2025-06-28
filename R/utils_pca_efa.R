@@ -63,7 +63,7 @@ get_scores <- function(x, n_items = NULL, reverse_items = NULL, verbose = TRUE) 
       reverse_items <- colnames(dataset)[reverse_items]
     }
     if (verbose) {
-      insight::format_message("Reversing items: ", toString(reverse_items))
+      insight::format_alert(paste("Reversing items:", toString(reverse_items)))
     }
     # reverse the items
     dataset <- datawizard::reverse_scale(dataset, reverse_items, verbose = verbose)
