@@ -4,7 +4,7 @@
 \alias{get_scores}
 \title{Get Scores from Principal Component Analysis (PCA)}
 \usage{
-get_scores(x, n_items = NULL)
+get_scores(x, n_items = NULL, reverse_items = NULL)
 }
 \arguments{
 \item{x}{An object returned by \code{\link[=principal_components]{principal_components()}}.}
@@ -15,6 +15,11 @@ score for an observation. If an observation has more missing values than
 observation, else, the sum score of all (sub) items is calculated. If \code{NULL},
 the value is chosen to match half of the number of columns in a data frame,
 i.e. no more than 50\% missing values are allowed.}
+
+\item{reverse_items}{Character vector of variable names or numeric indices
+indicating their column positions in \code{x} that should be reversed before
+computing sum scores. This is useful when the items are not coded in the same
+direction. If \code{NULL} (default), no items are reversed.}
 }
 \value{
 A data frame with subscales, which are average sum scores for all

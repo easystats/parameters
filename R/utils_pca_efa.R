@@ -11,6 +11,10 @@
 #' observation, else, the sum score of all (sub) items is calculated. If `NULL`,
 #' the value is chosen to match half of the number of columns in a data frame,
 #' i.e. no more than 50% missing values are allowed.
+#' @param reverse_items Character vector of variable names or numeric indices
+#' indicating their column positions in `x` that should be reversed before
+#' computing sum scores. This is useful when the items are not coded in the same
+#' direction. If `NULL` (default), no items are reversed.
 #'
 #' @details
 #' `get_scores()` takes the results from [`principal_components()`] or
@@ -42,9 +46,22 @@
 #' (mtcars$hp + mtcars$qsec) / 2
 #'
 #' @export
-get_scores <- function(x, n_items = NULL) {
+get_scores <- function(x, n_items = NULL, reverse_items = NULL) {
   subscales <- closest_component(x)
   dataset <- attributes(x)$dataset
+
+  # should some items be reversed?
+  if (!is.null(reverse_items)) {
+    # numeric indices should be replaced by their column names
+    if (is.numeric(reverse_items)) {
+      reverse_items <- colnames(dataset)[reverse_items]
+    }
+    if (verbose) {
+      insight::format_message("Reversing items: ", toString(reverse_items))
+    }
+    # reverse the items
+    dataset <- datawizard::reverse_scale(dataset, reverse_items, verbose = verbose)
+  }
 
   out <- lapply(sort(unique(subscales)), function(.subscale) {
     columns <- names(subscales)[subscales == .subscale]
