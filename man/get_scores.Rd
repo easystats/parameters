@@ -15,8 +15,6 @@ score for an observation. If an observation has more missing values than
 observation, else, the sum score of all (sub) items is calculated. If \code{NULL},
 the value is chosen to match half of the number of columns in a data frame,
 i.e. no more than 50\% missing values are allowed.}
-
-\item{verbose}{Logical, whether to print messages about reversing items.}
 }
 \value{
 A data frame with subscales, which are average sum scores for all

@@ -52,7 +52,6 @@ rotated_data(x, verbose = TRUE)
   sort = FALSE,
   threshold = NULL,
   standardize = TRUE,
-  verbose = TRUE,
   ...
 )
 

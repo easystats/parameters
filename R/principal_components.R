@@ -289,7 +289,6 @@ principal_components.data.frame <- function(x,
                                             sort = FALSE,
                                             threshold = NULL,
                                             standardize = TRUE,
-                                            verbose = TRUE,
                                             ...) {
   # save name of data set
   data_name <- insight::safe_deparse_symbol(substitute(x))

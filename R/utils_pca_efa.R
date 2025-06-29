@@ -13,7 +13,6 @@
 #' observation, else, the sum score of all (sub) items is calculated. If `NULL`,
 #' the value is chosen to match half of the number of columns in a data frame,
 #' i.e. no more than 50% missing values are allowed.
-#' @param verbose Logical, whether to print messages about reversing items.
 #'
 #' @details
 #' `get_scores()` takes the results from [`principal_components()`] or
