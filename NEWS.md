@@ -23,10 +23,6 @@
 * New function `factor_scores()` to extract factor scores from EFA (`psych::fa()`
   or `factor_analysis()`).
 
-* `get_scores()` gets a `reverse_items` argument, to reverse the scale of
-  items before calculating the sum scores of subscales. This is useful
-  when the items are not coded in the same direction.
-
 * Added and/or improved print-methods for all functions around PCA, FA and Omega.
 
 * Improved efficiency in `model_parameters()` for models from packages *brms*

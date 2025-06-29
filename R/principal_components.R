@@ -322,6 +322,8 @@ principal_components.data.frame <- function(x,
     )
 
     attr(pca_loadings, "data") <- data_name
+    attr(pca_loadings, "dataset") <- original_data
+
     return(pca_loadings)
   }
 
