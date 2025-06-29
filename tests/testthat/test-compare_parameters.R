@@ -122,6 +122,8 @@ withr::with_options(
 
     test_that("compare_parameters, print_md", {
       skip_if_not_installed("lme4")
+      skip_if_not_installed("knitr")
+
       data(sleepstudy, package = "lme4")
       set.seed(1234)
       sleepstudy$grp <- as.factor(sample.int(3, nrow(sleepstudy), replace = TRUE))
