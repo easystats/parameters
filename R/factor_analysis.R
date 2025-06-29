@@ -14,29 +14,9 @@ factor_analysis.data.frame <- function(x,
                                        sort = FALSE,
                                        threshold = NULL,
                                        standardize = FALSE,
-                                       reverse_items = NULL,
                                        verbose = TRUE,
                                        ...) {
   insight::check_if_installed("psych")
-
-  # should some items be reversed?
-  if (!is.null(reverse_items)) {
-    # only works for data frames, not matrices
-    if (!is.data.frame(x)) {
-      insight::format_error(
-        "The `reverse_items` argument only works with data frames, not matrices."
-      )
-    }
-    # numeric indices should be replaced by their column names
-    if (is.numeric(reverse_items)) {
-      reverse_items <- colnames(x)[reverse_items]
-    }
-    if (verbose) {
-      insight::format_alert(paste("Reversing items:", toString(reverse_items)))
-    }
-    # reverse the items
-    x <- datawizard::reverse_scale(x, reverse_items, verbose = verbose)
-  }
 
   # Standardize
   if (standardize) {
@@ -60,7 +40,6 @@ factor_analysis.data.frame <- function(x,
   )
 
   attr(out, "dataset") <- x
-  attr(out, "reverse_items") <- reverse_items
   out
 }
 
