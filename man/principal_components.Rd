@@ -24,7 +24,6 @@ factor_analysis(x, ...)
   sort = FALSE,
   threshold = NULL,
   standardize = FALSE,
-  verbose = TRUE,
   ...
 )
 
@@ -112,8 +111,6 @@ computes a correlation matrix and uses that r-matrix for the factor analysis
 by default - therefore, standardization of the raw variables is unnecessary,
 and even undesirable when using \code{cor = "poly"}).}
 
-\item{verbose}{Toggle warnings.}
-
 \item{n_obs}{An integer or a matrix.
 \itemize{
 \item \strong{Integer:} Number of observations in the original data set if \code{x} is a
@@ -128,6 +125,8 @@ statistical measures, such as chi-square fit statistics, by accounting
 for the varying sample sizes that contribute to each individual
 correlation coefficient.
 }}
+
+\item{verbose}{Toggle warnings.}
 
 \item{sparse}{Whether to compute sparse PCA (SPCA, using \code{\link[sparsepca:spca]{sparsepca::spca()}}).
 SPCA attempts to find sparse loadings (with few nonzero values), which improves

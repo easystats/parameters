@@ -14,7 +14,6 @@ factor_analysis.data.frame <- function(x,
                                        sort = FALSE,
                                        threshold = NULL,
                                        standardize = FALSE,
-                                       verbose = TRUE,
                                        ...) {
   insight::check_if_installed("psych")
 
