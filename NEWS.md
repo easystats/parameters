@@ -1,4 +1,4 @@
-# parameters (devel)
+# parameters 0.27.0
 
 ## Breaking Changes
 
@@ -16,9 +16,8 @@
 
 ## Changes
 
-* `factor_analysis()` gets a `.matrix` method, including arguments `n_obs` and
-  `n_matrix`, to compute factor analysis for a correlation matrix or covariance
-  matrix.
+* `factor_analysis()` gets a `.matrix` method, including a new argument `n_obs`,
+  to compute factor analysis for a correlation matrix or covariance matrix.
 
 * New function `factor_scores()` to extract factor scores from EFA (`psych::fa()`
   or `factor_analysis()`).
