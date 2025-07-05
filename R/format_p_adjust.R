@@ -36,7 +36,7 @@ format_p_adjust <- function(method) {
     ## TODO add "mvt" method from emmeans
 
     # prepare arguments
-    all_methods <- c(stats::p.adjust.methods, "tukey", "scheffe", "sidak")
+    all_methods <- c(stats::p.adjust.methods, "tukey", "scheffe", "sidak", "sup-t")
 
     # for interaction terms, e.g. for "by" argument in emmeans
     # pairwise comparison, we have to adjust the rank resp. the
@@ -107,6 +107,16 @@ format_p_adjust <- function(method) {
       } else if (tolower(p_adjust) == "sidak") {
         # sidak adjustment
         params$p <- 1 - (1 - params$p)^(nrow(params) / rank_adjust)
+      }  else if (tolower(p_adjust) == "sup-t") {
+        insight::check_if_installed("mvtnorm")
+        vc <- .safe(cov2cor(insight::get_vcov(model)))
+        if (is.null(vc)) {
+          insight::format_warning("Could not calculate covariance matrix for `sup-t` adjustment.")
+          return(params)
+        }
+        ci_level <- mvtnorm::qmvt(0.95, df = params$df, tail = "both.tails", corr = vc)$quantile
+        crit <- 1 - 2 * pt(-abs(ci_level), df = params$df)
+        params$p <- .p_value_dof()
       }
 
       if (isTRUE(all(old_p_vals == params$p)) && !identical(p_adjust, "none") && verbose) {
