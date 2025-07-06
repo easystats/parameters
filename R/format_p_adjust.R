@@ -25,6 +25,7 @@ format_p_adjust <- function(method) {
     tukey = "Tukey",
     scheffe = "Scheffe",
     sidak = "Sidak",
+    `sup-t` = "Simultaneous confidence bands",
     method
   )
 }
@@ -108,15 +109,35 @@ format_p_adjust <- function(method) {
         # sidak adjustment
         params$p <- 1 - (1 - params$p)^(nrow(params) / rank_adjust)
       }  else if (tolower(p_adjust) == "sup-t") {
+        # sup-t adjustment
         insight::check_if_installed("mvtnorm")
-        vc <- .safe(cov2cor(insight::get_vcov(model)))
+        # get correlation matrix, based on the covariance matrix
+        vc <- .safe(cov2cor(insight::get_varcov(model)))
         if (is.null(vc)) {
           insight::format_warning("Could not calculate covariance matrix for `sup-t` adjustment.")
           return(params)
         }
-        ci_level <- mvtnorm::qmvt(0.95, df = params$df, tail = "both.tails", corr = vc)$quantile
-        crit <- 1 - 2 * pt(-abs(ci_level), df = params$df)
-        params$p <- .p_value_dof()
+        # get confidence interval level, or set default
+        ci_level <- .safe(params$CI[1])
+        if (is.null(ci_level)) {
+          ci_level <- 0.95
+        }
+        # calculate updated confidence interval level, based on simultaenous
+        # confidence intervals (https://onlinelibrary.wiley.com/doi/10.1002/jae.2656)
+        crit <- mvtnorm::qmvt(ci_level, df = params$df[1], tail = "both.tails", corr = vc)$quantile
+        ci_level <- 1 - 2 * pt(-abs(crit), df = params$df[1])
+        # update confidence intervals
+        params$CI_low <- params$Coefficient - crit * params$SE
+        params$CI_high <- params$Coefficient + crit * params$SE
+        # udpate p-values
+        for (i in 1:nrow(params)) {
+          params$p[i] <- 1 - mvtnorm::pmvt(
+            lower = rep(-abs(stats::qt(params$p[i] / 2, df = params$df[i])), nrow(vc)),
+            upper = rep(abs(stats::qt(params$p[i] / 2, df = params$df[i])), nrow(vc)),
+            corr = vc,
+            df = params$df[i]
+          )
+        }
       }
 
       if (isTRUE(all(old_p_vals == params$p)) && !identical(p_adjust, "none") && verbose) {
