@@ -112,7 +112,7 @@ format_p_adjust <- function(method) {
         # sup-t adjustment
         insight::check_if_installed("mvtnorm")
         # get correlation matrix, based on the covariance matrix
-        vc <- .safe(cov2cor(insight::get_varcov(model)))
+        vc <- .safe(stats::cov2cor(insight::get_varcov(model)))
         if (is.null(vc)) {
           insight::format_warning("Could not calculate covariance matrix for `sup-t` adjustment.")
           return(params)
@@ -125,7 +125,7 @@ format_p_adjust <- function(method) {
         # calculate updated confidence interval level, based on simultaenous
         # confidence intervals (https://onlinelibrary.wiley.com/doi/10.1002/jae.2656)
         crit <- mvtnorm::qmvt(ci_level, df = params$df[1], tail = "both.tails", corr = vc)$quantile
-        ci_level <- 1 - 2 * pt(-abs(crit), df = params$df[1])
+        ci_level <- 1 - 2 * stats::pt(-abs(crit), df = params$df[1])
         # update confidence intervals
         params$CI_low <- params$Coefficient - crit * params$SE
         params$CI_high <- params$Coefficient + crit * params$SE
