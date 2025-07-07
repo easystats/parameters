@@ -29,6 +29,10 @@
 * `p_adjust` for `model_parameters()` gets a new options, `"sup-t"`, to calculate
   simultaneous confidence intervals.
 
+## Bug fixes
+
+* `bootstrap_model()` did not work for intercept-only models. This has been fixed.
+
 # parameters 0.26.0
 
 ## Changes
