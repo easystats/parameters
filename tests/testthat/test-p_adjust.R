@@ -81,7 +81,36 @@ test_that("model_parameters, simultaenous confidence intervals", {
     QoL ~ time + phq4_within + phq4_between + (1 | ID),
     data = qol_cancer
   )
+  set.seed(123)
   mp <- model_parameters(model, p_adjust = "sup-t")
   expect_equal(mp$p, c(0, 0.27904, 0, 0, NA, NA), tolerance = 1e-3)
-  expect_equal(mp$CI_low, c(67.70274, -0.48345, -4.66781, -7.51949, 8.42651, 11.50991), tolerance = 1e-3)
+  expect_equal(mp$CI_low, c(67.70195, -0.48377, -4.66802, -7.51974, 8.42651, 11.50991), tolerance = 1e-3)
+
+  skip_if_not_installed("glmmTMB")
+  data("Salamanders", package = "glmmTMB")
+  model <- suppressWarnings(glmmTMB::glmmTMB(
+    count ~ spp + mined + (1 | site),
+    ziformula = ~ spp + mined,
+    family = glmmTMB::nbinom2,
+    data = Salamanders
+  ))
+  set.seed(123)
+  mp <- model_parameters(model, p_adjust = "sup-t")
+  expect_equal(
+    mp$p,
+    c(
+      0.56769, 0.57466, 0.98029, 0.83123, 0.22681, 0.06271, 0.99876,
+      0.00068, 0.61786, 0.95269, 0.81296, 0.60973, 0.97504, 0.80566,
+      0.81871, 0.00024, NA, NA
+    ),
+    tolerance = 1e-3
+  )
+  expect_equal(
+    mp$CI_low,
+    c(
+      -1.6935, -2.6841, -0.45839, -1.30244, -0.14911, -0.01933, -0.76516,
+      0.4494, -0.77256, -2.41501, -3.08449, -0.87083, -2.50859, -2.91223,
+      -8.38616, -4.18299, 0.92944, 0.16671
+    ),
+    tolerance = 1e-3)
 })

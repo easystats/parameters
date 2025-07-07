@@ -159,9 +159,28 @@ format_p_adjust <- function(method) {
 # sup-t adjustment -----
 
 .p_adjust_supt <- function(model, params) {
+  if ("Component" %in% colnames(params) && insight::n_unique(params$Component) > 1) {
+    # if we have multiple components, we adjust each component separately
+    for (component in unique(params$Component)) {
+      if (!is.na(component)) {
+        params[which(params$Component == component), ] <- .supt_adjust(
+          params[which(params$Component == component), ],
+          model,
+          component = component
+        )
+      }
+    }
+    params
+  } else {
+    .supt_adjust(params, model)
+  }
+}
+
+
+.supt_adjust <- function(params, model, component = NULL) {
   insight::check_if_installed("mvtnorm")
   # get correlation matrix, based on the covariance matrix
-  vc <- .safe(stats::cov2cor(insight::get_varcov(model)))
+  vc <- .safe(stats::cov2cor(insight::get_varcov(model, component = component)))
   if (is.null(vc)) {
     insight::format_warning("Could not calculate covariance matrix for `sup-t` adjustment.")
     return(params)
