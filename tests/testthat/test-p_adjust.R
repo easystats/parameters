@@ -45,15 +45,23 @@ test_that("model_parameters, p-adjust after keep/drop", {
   )
 })
 
+
 test_that("model_parameters, emmeans, p-adjust", {
   skip_if_not_installed("emmeans")
   m <- pairs(emmeans::emmeans(aov(Sepal.Width ~ Species, data = iris), ~Species))
   mp <- model_parameters(m)
   expect_equal(mp$p, as.data.frame(m)$p.value, tolerance = 1e-4)
-})
-test_that("model_parameters, emmeans, p-adjust", {
-  skip_if_not_installed("emmeans")
+
   m <- pairs(emmeans::emmeans(aov(Sepal.Width ~ Species, data = iris), ~Species), adjust = "scheffe")
   mp <- model_parameters(m, p_adjust = "scheffe")
   expect_equal(mp$p, as.data.frame(m)$p.value, tolerance = 1e-4)
+})
+
+
+test_that("model_parameters, simultaenous confidence intervals", {
+  skip_if_not_installed("mvtnorm")
+  m <- lm(mpg ~ wt + hp, data = mtcars)
+  set.seed(123)
+  out <- model_parameters(m, p_adjust = "sup-t")
+  expect_snapshot(print(out, zap_small = TRUE))
 })
