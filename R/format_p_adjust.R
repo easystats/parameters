@@ -107,7 +107,7 @@ format_p_adjust <- function(method) {
 
 .p_adjust_tukey <- function(params, stat_column, rank_adjust = 1, verbose = TRUE) {
   df_column <- colnames(params)[stats::na.omit(match(c("df", "df_error"), colnames(params)))][1]
-  if (length(df_column) && length(stat_column)) {
+  if (!is.na(df_column) && length(stat_column)) {
     params$p <- suppressWarnings(stats::ptukey(
       sqrt(2) * abs(params[[stat_column]]),
       nmeans = nrow(params) / rank_adjust,
@@ -133,7 +133,7 @@ format_p_adjust <- function(method) {
 
 .p_adjust_scheffe <- function(model, params, stat_column, rank_adjust = 1) {
   df_column <- colnames(params)[stats::na.omit(match(c("df", "df_error"), colnames(params)))][1]
-  if (length(df_column) && length(stat_column)) {
+  if (!is.na(df_column) && length(stat_column)) {
     # 1st try
     scheffe_ranks <- try(qr(model@linfct)$rank, silent = TRUE)
 
@@ -192,7 +192,7 @@ format_p_adjust <- function(method) {
   }
   # find degrees of freedom column, if available
   df_column <- colnames(params)[stats::na.omit(match(c("df", "df_error"), colnames(params)))][1]
-  if (length(df_column) == 0) {
+  if (is.na(df_column)) {
     return(params)
   }
   # calculate updated confidence interval level, based on simultaenous
