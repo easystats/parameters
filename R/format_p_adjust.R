@@ -106,7 +106,7 @@ format_p_adjust <- function(method) {
 # tukey adjustment -----
 
 .p_adjust_tukey <- function(params, stat_column, rank_adjust = 1, verbose = TRUE) {
-  df_column <- colnames(params)[stats::na.omit(match(c("df", "df_error"), colnames(params)))]
+  df_column <- colnames(params)[stats::na.omit(match(c("df", "df_error"), colnames(params)))][1]
   if (length(df_column) && length(stat_column)) {
     params$p <- suppressWarnings(stats::ptukey(
       sqrt(2) * abs(params[[stat_column]]),
@@ -132,7 +132,7 @@ format_p_adjust <- function(method) {
 # scheffe adjustment -----
 
 .p_adjust_scheffe <- function(model, params, stat_column, rank_adjust = 1) {
-  df_column <- colnames(params)[stats::na.omit(match(c("df", "df_error"), colnames(params)))]
+  df_column <- colnames(params)[stats::na.omit(match(c("df", "df_error"), colnames(params)))][1]
   if (length(df_column) && length(stat_column)) {
     # 1st try
     scheffe_ranks <- try(qr(model@linfct)$rank, silent = TRUE)
@@ -191,14 +191,13 @@ format_p_adjust <- function(method) {
     ci_level <- 0.95
   }
   # find degrees of freedom column, if available
-  df_column <- colnames(params)[stats::na.omit(match(c("df", "df_error"), colnames(params)))]
+  df_column <- colnames(params)[stats::na.omit(match(c("df", "df_error"), colnames(params)))][1]
   if (length(df_column) == 0) {
     return(params)
   }
   # calculate updated confidence interval level, based on simultaenous
   # confidence intervals (https://onlinelibrary.wiley.com/doi/10.1002/jae.2656)
   crit <- mvtnorm::qmvt(ci_level, df = params[[df_column]][1], tail = "both.tails", corr = vc)$quantile
-  ci_level <- 1 - 2 * stats::pt(-abs(crit), df = params[[df_column]][1])
   # update confidence intervals
   params$CI_low <- params$Coefficient - crit * params$SE
   params$CI_high <- params$Coefficient + crit * params$SE
