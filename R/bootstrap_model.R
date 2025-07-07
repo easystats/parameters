@@ -82,7 +82,7 @@ bootstrap_model.default <- function(model,
   model_response <- insight::find_response(model)
 
   boot_function <- function(model, data, indices) {
-    d <- data[indices, ] # allows boot to select sample
+    d <- data[indices, , drop = FALSE] # allows boot to select sample
 
     if (inherits(model, "biglm")) {
       fit <- suppressMessages(stats::update(model, moredata = d))
@@ -237,7 +237,7 @@ bootstrap_model.nestedLogit <- function(model,
   model_response <- insight::find_response(model)
 
   boot_function <- function(model, data, indices) {
-    d <- data[indices, ] # allows boot to select sample
+    d <- data[indices, , drop = FALSE] # allows boot to select sample
 
     if (verbose) {
       fit <- stats::update(model, data = d)
