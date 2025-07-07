@@ -70,4 +70,18 @@ test_that("model_parameters, simultaenous confidence intervals", {
   set.seed(123)
   out <- model_parameters(m, p_adjust = "sup-t")
   expect_snapshot(print(out, zap_small = TRUE))
+
+  skip_if_not_installed("lme4")
+  data("qol_cancer")
+  qol_cancer <- cbind(
+    qol_cancer,
+    demean(qol_cancer, select = c("phq4", "QoL"), by = "ID")
+  )
+  model <- lme4::lmer(
+    QoL ~ time + phq4_within + phq4_between + (1 | ID),
+    data = qol_cancer
+  )
+  mp <- model_parameters(model, p_adjust = "sup-t")
+  expect_equal(mp$p, c(0, 0.27904, 0, 0, NA, NA), tolerance = 1e-3)
+  expect_equal(mp$CI_low, c(67.70274, -0.48345, -4.66781, -7.51949, 8.42651, 11.50991), tolerance = 1e-3)
 })
