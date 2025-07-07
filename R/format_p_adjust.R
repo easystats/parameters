@@ -106,17 +106,22 @@ format_p_adjust <- function(method) {
 # tukey adjustment -----
 
 .p_adjust_tukey <- function(params, stat_column, rank_adjust = 1, verbose = TRUE) {
-  if ("df" %in% colnames(params) && length(stat_column) > 0) {
+  df_column <- colnames(params)[stats::na.omit(match(c("df", "df_error"), colnames(params)))]
+  if (length(df_column) && length(stat_column)) {
     params$p <- suppressWarnings(stats::ptukey(
       sqrt(2) * abs(params[[stat_column]]),
-      nrow(params) / rank_adjust,
-      params$df,
+      nmeans = nrow(params) / rank_adjust,
+      df = params[[df_column]],
       lower.tail = FALSE
     ))
     # for specific contrasts, ptukey might fail, and the tukey-adjustement
     # could just be simple p-value calculation
     if (all(is.na(params$p))) {
-      params$p <- 2 * stats::pt(abs(params[[stat_column]]), df = params$df, lower.tail = FALSE)
+      params$p <- 2 * stats::pt(
+        abs(params[[stat_column]]),
+        df = params[[df_column]],
+        lower.tail = FALSE
+      )
       verbose <- FALSE
     }
   }
@@ -127,7 +132,8 @@ format_p_adjust <- function(method) {
 # scheffe adjustment -----
 
 .p_adjust_scheffe <- function(model, params, stat_column, rank_adjust = 1) {
-  if ("df" %in% colnames(params) && length(stat_column) > 0) {
+  df_column <- colnames(params)[stats::na.omit(match(c("df", "df_error"), colnames(params)))]
+  if (length(df_column) && length(stat_column)) {
     # 1st try
     scheffe_ranks <- try(qr(model@linfct)$rank, silent = TRUE)
 
@@ -142,7 +148,7 @@ format_p_adjust <- function(method) {
     scheffe_ranks <- scheffe_ranks / rank_adjust
     params$p <- stats::pf(params[[stat_column]]^2 / scheffe_ranks,
       df1 = scheffe_ranks,
-      df2 = params$df,
+      df2 = params[[df_column]],
       lower.tail = FALSE
     )
   }
@@ -165,20 +171,25 @@ format_p_adjust <- function(method) {
   if (is.null(ci_level)) {
     ci_level <- 0.95
   }
+  # find degrees of freedom column, if available
+  df_column <- colnames(params)[stats::na.omit(match(c("df", "df_error"), colnames(params)))]
+  if (length(df_column) == 0) {
+    return(params)
+  }
   # calculate updated confidence interval level, based on simultaenous
   # confidence intervals (https://onlinelibrary.wiley.com/doi/10.1002/jae.2656)
-  crit <- mvtnorm::qmvt(ci_level, df = params$df[1], tail = "both.tails", corr = vc)$quantile
-  ci_level <- 1 - 2 * stats::pt(-abs(crit), df = params$df[1])
+  crit <- mvtnorm::qmvt(ci_level, df = params[[df_column]][1], tail = "both.tails", corr = vc)$quantile
+  ci_level <- 1 - 2 * stats::pt(-abs(crit), df = params[[df_column]][1])
   # update confidence intervals
   params$CI_low <- params$Coefficient - crit * params$SE
   params$CI_high <- params$Coefficient + crit * params$SE
   # udpate p-values
   for (i in 1:nrow(params)) {
     params$p[i] <- 1 - mvtnorm::pmvt(
-      lower = rep(-abs(stats::qt(params$p[i] / 2, df = params$df[i])), nrow(vc)),
-      upper = rep(abs(stats::qt(params$p[i] / 2, df = params$df[i])), nrow(vc)),
+      lower = rep(-abs(stats::qt(params$p[i] / 2, df = params[[df_column]][i])), nrow(vc)),
+      upper = rep(abs(stats::qt(params$p[i] / 2, df = params[[df_column]][i])), nrow(vc)),
       corr = vc,
-      df = params$df[i]
+      df = params[[df_column]][i]
     )
   }
   params

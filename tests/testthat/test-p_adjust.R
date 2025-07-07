@@ -9,6 +9,12 @@ test_that("model_parameters, p-adjust", {
   expect_equal(mp$p, c(0, 0.00912, 0.03318, 0.65851, 0.02137, 0.03318), tolerance = 1e-3)
   mp <- model_parameters(model, p_adjust = "bonferroni")
   expect_equal(mp$p, c(0, 0.01824, 0.16588, 1, 0.06411, 0.13869), tolerance = 1e-3)
+  mp <- model_parameters(model, p_adjust = "scheffe")
+  expect_equal(mp$p, c(0, 0.1425, 0.50499, 0.99981, 0.30911, 0.46396), tolerance = 1e-3)
+  mp <- model_parameters(model, p_adjust = "tukey")
+  expect_equal(mp$p, c(0, 0.03225, 0.21714, 0.99748, 0.09875, 0.18822), tolerance = 1e-3)
+  mp <- model_parameters(model, p_adjust = "sidak")
+  expect_equal(mp$p, c(0, 0.0181, 0.15483, 0.99841, 0.06242, 0.13092), tolerance = 1e-3)
 })
 
 
