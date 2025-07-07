@@ -11,7 +11,7 @@ test_that("bootstrap_parameters.bootstrap_model", {
   expect_snapshot(print(out))
 })
 
-test_that("bootstrap_parameters.bootstrap_model", {
+test_that("bootstrap_model intercept-only", {
   y <- 1:10
   mod <- lm(y ~ 1)
   set.seed(123)
