@@ -9,7 +9,7 @@ of (generalized) linear models (GLMs)."><meta property="og:image" content="https
 
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.26.0.11</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.26.0.12</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -156,11 +156,12 @@ will only exponentiate coefficients from non-Gaussian families.</p></dd>
 
 
 <dt id="arg-p-adjust">p_adjust<a class="anchor" aria-label="anchor" href="#arg-p-adjust"></a></dt>
-<dd><p>Character vector, if not <code>NULL</code>, indicates the method to
-adjust p-values. See <code><a href="https://rdrr.io/r/stats/p.adjust.html" class="external-link">stats::p.adjust()</a></code> for details. Further
-possible adjustment methods are <code>"tukey"</code>, <code>"scheffe"</code>,
-<code>"sidak"</code> and <code>"none"</code> to explicitly disable adjustment for
-<code>emmGrid</code> objects (from <strong>emmeans</strong>).</p></dd>
+<dd><p>String value, if not <code>NULL</code>, indicates the method to adjust
+p-values. See <code><a href="https://rdrr.io/r/stats/p.adjust.html" class="external-link">stats::p.adjust()</a></code> for details. Further possible
+adjustment methods are <code>"tukey"</code>, <code>"scheffe"</code>, <code>"sidak"</code>, <code>"sup-t"</code>, and
+<code>"none"</code> to explicitly disable adjustment for <code>emmGrid</code> objects (from
+<strong>emmeans</strong>). <code>"sup-t"</code> computes simultaneous confidence bands, also called
+sup-t confidence band (Montiel Olea &amp; Plagborg-Møller, 2019).</p></dd>
 
 
 <dt id="arg-vcov">vcov<a class="anchor" aria-label="anchor" href="#arg-vcov"></a></dt>

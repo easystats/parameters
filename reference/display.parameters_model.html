@@ -13,7 +13,7 @@ use cases only, and currently only works for compare_parameters() objects.'><met
 
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.26.0.11</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.26.0.12</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -500,7 +500,7 @@ in <code><a href="https://easystats.github.io/insight/reference/display.html" cl
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       function styleCell_fxyk5m1kng0pnpk18ki1(i, j, css_id) {</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           var table = document.getElementById("tinytable_fxyk5m1kng0pnpk18ki1");</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           var cell = table.rows[i]?.cells[j];  // Safe navigation to avoid errors</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           var cell = table.querySelector(`[data-row="${i}"][data-col="${j}"]`);</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           if (cell) {</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>               console.log(`Styling cell at (${i}, ${j}) with class ${css_id}`);</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>               cell.classList.add(css_id);</span>
@@ -510,56 +510,61 @@ in <code><a href="https://easystats.github.io/insight/reference/display.html" cl
 <span class="r-out co"><span class="r-pr">#&gt;</span>       }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       function insertSpanRow_ta6dmxhhlm772j0vvu5e(i, colspan, content) {</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         var table = document.getElementById('tinytable_fxyk5m1kng0pnpk18ki1');</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         var newRow = table.insertRow(i);</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         // Find the row with data-row attribute matching i</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         var targetRow = table.querySelector(`tr [data-row="${i}"]`).closest('tr');</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         var newRow = table.insertRow(targetRow.rowIndex);</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         var newCell = newRow.insertCell(0);</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         newCell.setAttribute("colspan", colspan);</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         newCell.setAttribute("data-col", "0");</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         newCell.setAttribute("data-row", i - 1);</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         // newCell.innerText = content;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         // this may be unsafe, but innerText does not interpret &lt;br&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         newCell.innerHTML = content;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       function spanCell_fxyk5m1kng0pnpk18ki1(i, j, rowspan, colspan) {</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         var table = document.getElementById("tinytable_fxyk5m1kng0pnpk18ki1");</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         const targetRow = table.rows[i];</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         const targetCell = targetRow.cells[j];</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         const targetCell = table.querySelector(`[data-row="${i}"][data-col="${j}"]`);</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         if (!targetCell) {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           console.warn(`Cell at (${i}, ${j}) not found.`);</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         }</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         // Get all cells that need to be removed</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         const cellsToRemove = [];</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         for (let r = 0; r &lt; rowspan; r++) {</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           // Only start deleting cells to the right for the first row (r == 0)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           if (r === 0) {</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>             // Delete cells to the right of the target cell in the first row</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>             for (let c = colspan - 1; c &gt; 0; c--) {</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               if (table.rows[i + r].cells[j + c]) {</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                 table.rows[i + r].deleteCell(j + c);</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               }</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>             }</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           }</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           // For rows below the first, delete starting from the target column</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           if (r &gt; 0) {</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>             for (let c = colspan - 1; c &gt;= 0; c--) {</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               if (table.rows[i + r] &amp;&amp; table.rows[i + r].cells[j]) {</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                 table.rows[i + r].deleteCell(j);</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               }</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           for (let c = 0; c &lt; colspan; c++) {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             if (r === 0 &amp;&amp; c === 0) continue; // Skip the target cell</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             const cell = table.querySelector(`[data-row="${i + r}"][data-col="${j + c}"]`);</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             if (cell) {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>               cellsToRemove.push(cell);</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>             }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         }</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         // Set rowspan and colspan of the target cell</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         targetCell.rowSpan = rowspan;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         targetCell.colSpan = colspan;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         // Remove all cells</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         cellsToRemove.forEach(cell =&gt; cell.remove());</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         // Set rowspan and colspan of the target cell if it exists</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         if (targetCell) {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           targetCell.rowSpan = rowspan;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           targetCell.colSpan = colspan;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       // tinytable span after</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> window.addEventListener('load', function () { insertSpanRow_ta6dmxhhlm772j0vvu5e(18, 10, 'Random Effects Variances') });</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> window.addEventListener('load', function () { insertSpanRow_ta6dmxhhlm772j0vvu5e(16, 10, 'Fixed Effects (Zero-Inflation Component)') });</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> window.addEventListener('load', function () { insertSpanRow_ta6dmxhhlm772j0vvu5e(2, 10, 'Fixed Effects') });</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       window.addEventListener('load', function () { insertSpanRow_ta6dmxhhlm772j0vvu5e(20, 10, 'Random Effects Variances') });</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       window.addEventListener('load', function () { insertSpanRow_ta6dmxhhlm772j0vvu5e(17, 10, 'Fixed Effects (Zero-Inflation Component)') });</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       window.addEventListener('load', function () { insertSpanRow_ta6dmxhhlm772j0vvu5e(2, 10, 'Fixed Effects') });</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       window.addEventListener('load', function () {</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           var cellsToStyle = [</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>             // tinytable style arrays after</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           { positions: [ { i: 0, j: 8 }, { i: 0, j: 4 }, { i: 0, j: 7 }, { i: 0, j: 5 }, { i: 0, j: 6 }, { i: 0, j: 9 },  ], css_id: 'tinytable_css_swekbr7xw9anmgmw04jp',}, </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           { positions: [ { i: 23, j: 2 }, { i: 23, j: 1 }, { i: 23, j: 7 }, { i: 23, j: 3 }, { i: 23, j: 8 }, { i: 23, j: 4 }, { i: 23, j: 9 }, { i: 23, j: 5 }, { i: 23, j: 6 },  ], css_id: 'tinytable_css_1q85em66iswm6dyp5z2y',}, </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           { positions: [ { i: 0, j: 1 }, { i: 0, j: 2 }, { i: 0, j: 3 },  ], css_id: 'tinytable_css_uyddm1z765b3je1rrlnh',}, </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           { positions: [ { i: 23, j: 0 },  ], css_id: 'tinytable_css_4zy2x5s9hhb2ul79044p',}, </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           { positions: [ { i: 20, j: 0 }, { i: 17, j: 3 }, { i: 20, j: 1 }, { i: 17, j: 5 }, { i: 17, j: 0 }, { i: 17, j: 1 }, { i: 17, j: 4 }, { i: 17, j: 2 }, { i: 20, j: 2 }, { i: 17, j: 6 }, { i: 17, j: 9 }, { i: 17, j: 7 }, { i: 20, j: 7 }, { i: 20, j: 5 }, { i: 20, j: 3 }, { i: 20, j: 6 }, { i: 20, j: 4 }, { i: 17, j: 8 }, { i: 20, j: 8 }, { i: 20, j: 9 },  ], css_id: 'tinytable_css_rjyzy5tmqslhlfxajjbj',}, </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           { positions: [ { i: 8, j: 0 }, { i: 5, j: 0 }, { i: 6, j: 0 }, { i: 7, j: 0 }, { i: 12, j: 0 }, { i: 13, j: 0 }, { i: 14, j: 0 }, { i: 15, j: 0 }, { i: 3, j: 0 }, { i: 4, j: 0 }, { i: 18, j: 0 }, { i: 19, j: 0 }, { i: 11, j: 0 }, { i: 21, j: 0 }, { i: 9, j: 0 }, { i: 10, j: 0 }, { i: 16, j: 0 }, { i: 22, j: 0 },  ], css_id: 'tinytable_css_4tlav8vb2246l257k4nx',}, </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           { positions: [ { i: 2, j: 4 }, { i: 2, j: 3 }, { i: 2, j: 1 }, { i: 2, j: 2 }, { i: 2, j: 0 }, { i: 2, j: 8 }, { i: 2, j: 6 }, { i: 2, j: 9 }, { i: 2, j: 7 }, { i: 2, j: 5 },  ], css_id: 'tinytable_css_nnpp7awvands40fvrnb9',}, </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           { positions: [ { i: 0, j: 0 },  ], css_id: 'tinytable_css_bnzew9les1kw9lji8tti',}, </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           { positions: [ { i: 1, j: 0 }, { i: 1, j: 8 }, { i: 1, j: 6 }, { i: 1, j: 4 }, { i: 1, j: 2 }, { i: 1, j: 5 }, { i: 1, j: 3 }, { i: 1, j: 9 }, { i: 1, j: 7 }, { i: 1, j: 1 },  ], css_id: 'tinytable_css_18aq6am6bfkwq92kim6o',}, </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           { positions: [ { i: '-1', j: 8 }, { i: '-1', j: 4 }, { i: '-1', j: 7 }, { i: '-1', j: 5 }, { i: '-1', j: 6 }, { i: '-1', j: 9 },  ], css_id: 'tinytable_css_swekbr7xw9anmgmw04jp',}, </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           { positions: [ { i: '22', j: 2 }, { i: '22', j: 1 }, { i: '22', j: 7 }, { i: '22', j: 3 }, { i: '22', j: 8 }, { i: '22', j: 4 }, { i: '22', j: 9 }, { i: '22', j: 5 }, { i: '22', j: 6 },  ], css_id: 'tinytable_css_1q85em66iswm6dyp5z2y',}, </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           { positions: [ { i: '-1', j: 1 }, { i: '-1', j: 2 }, { i: '-1', j: 3 },  ], css_id: 'tinytable_css_uyddm1z765b3je1rrlnh',}, </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           { positions: [ { i: '22', j: 0 },  ], css_id: 'tinytable_css_4zy2x5s9hhb2ul79044p',}, </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           { positions: [ { i: '19', j: 0 }, { i: '16', j: 3 }, { i: '19', j: 1 }, { i: '16', j: 5 }, { i: '16', j: 0 }, { i: '16', j: 1 }, { i: '16', j: 4 }, { i: '16', j: 2 }, { i: '19', j: 2 }, { i: '16', j: 6 }, { i: '16', j: 9 }, { i: '16', j: 7 }, { i: '19', j: 7 }, { i: '19', j: 5 }, { i: '19', j: 3 }, { i: '19', j: 6 }, { i: '19', j: 4 }, { i: '16', j: 8 }, { i: '19', j: 8 }, { i: '19', j: 9 },  ], css_id: 'tinytable_css_rjyzy5tmqslhlfxajjbj',}, </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           { positions: [ { i: '7', j: 0 }, { i: '4', j: 0 }, { i: '5', j: 0 }, { i: '6', j: 0 }, { i: '11', j: 0 }, { i: '12', j: 0 }, { i: '13', j: 0 }, { i: '14', j: 0 }, { i: '2', j: 0 }, { i: '3', j: 0 }, { i: '17', j: 0 }, { i: '18', j: 0 }, { i: '10', j: 0 }, { i: '20', j: 0 }, { i: '8', j: 0 }, { i: '9', j: 0 }, { i: '15', j: 0 }, { i: '21', j: 0 },  ], css_id: 'tinytable_css_4tlav8vb2246l257k4nx',}, </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           { positions: [ { i: '1', j: 4 }, { i: '1', j: 3 }, { i: '1', j: 1 }, { i: '1', j: 2 }, { i: '1', j: 0 }, { i: '1', j: 8 }, { i: '1', j: 6 }, { i: '1', j: 9 }, { i: '1', j: 7 }, { i: '1', j: 5 },  ], css_id: 'tinytable_css_nnpp7awvands40fvrnb9',}, </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           { positions: [ { i: '-1', j: 0 },  ], css_id: 'tinytable_css_bnzew9les1kw9lji8tti',}, </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           { positions: [ { i: '0', j: 0 }, { i: '0', j: 8 }, { i: '0', j: 6 }, { i: '0', j: 4 }, { i: '0', j: 2 }, { i: '0', j: 5 }, { i: '0', j: 3 }, { i: '0', j: 9 }, { i: '0', j: 7 }, { i: '0', j: 1 },  ], css_id: 'tinytable_css_18aq6am6bfkwq92kim6o',}, </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           ];</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           // Loop over the arrays to style the cells</span>
@@ -587,254 +592,254 @@ in <code><a href="https://easystats.github.io/insight/reference/display.html" cl
 <span class="r-out co"><span class="r-pr">#&gt;</span>       &lt;table class="table table-borderless" id="tinytable_fxyk5m1kng0pnpk18ki1" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing='true'&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         &lt;thead&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;tr&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;th scope="col" align="center" colspan=1&gt; &lt;/th&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;th scope="col" align="center" colspan=3&gt;m1&lt;/th&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;th scope="col" align="center" colspan=3&gt;m2&lt;/th&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;th scope="col" align="center" colspan=3&gt;m3&lt;/th&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;th scope="col" align="center" colspan=1 data-row="-1" data-col="0"&gt; &lt;/th&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;th scope="col" align="center" colspan=3 data-row="-1" data-col="1"&gt;m1&lt;/th&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;th scope="col" align="center" colspan=3 data-row="-1" data-col="2"&gt;m2&lt;/th&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;th scope="col" align="center" colspan=3 data-row="-1" data-col="3"&gt;m3&lt;/th&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;/tr&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>               &lt;tr&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                 &lt;th scope="col"&gt;Parameter&lt;/th&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                 &lt;th scope="col"&gt;Coefficient&lt;/th&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                 &lt;th scope="col"&gt;95% CI&lt;/th&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                 &lt;th scope="col"&gt;p&lt;/th&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                 &lt;th scope="col"&gt;Coefficient&lt;/th&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                 &lt;th scope="col"&gt;95% CI&lt;/th&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                 &lt;th scope="col"&gt;p&lt;/th&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                 &lt;th scope="col"&gt;Log-Mean&lt;/th&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                 &lt;th scope="col"&gt;95% CI&lt;/th&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                 &lt;th scope="col"&gt;p&lt;/th&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                 &lt;th scope="col" data-row="0" data-col="0"&gt;Parameter&lt;/th&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                 &lt;th scope="col" data-row="0" data-col="1"&gt;Coefficient&lt;/th&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                 &lt;th scope="col" data-row="0" data-col="2"&gt;95% CI&lt;/th&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                 &lt;th scope="col" data-row="0" data-col="3"&gt;p&lt;/th&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                 &lt;th scope="col" data-row="0" data-col="4"&gt;Coefficient&lt;/th&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                 &lt;th scope="col" data-row="0" data-col="5"&gt;95% CI&lt;/th&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                 &lt;th scope="col" data-row="0" data-col="6"&gt;p&lt;/th&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                 &lt;th scope="col" data-row="0" data-col="7"&gt;Log-Mean&lt;/th&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                 &lt;th scope="col" data-row="0" data-col="8"&gt;95% CI&lt;/th&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                 &lt;th scope="col" data-row="0" data-col="9"&gt;p&lt;/th&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>               &lt;/tr&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         &lt;/thead&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         &lt;tbody&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 &lt;tr&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;(Intercept)&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;4.21&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;3.41, 5.02&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt; .001&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;2.51&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;1.20, 3.83&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt; .001&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;-0.36&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;-0.90, 0.18&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;0.194&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="2" data-col="0"&gt;(Intercept)&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="2" data-col="1"&gt;4.21&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="2" data-col="2"&gt;3.41, 5.02&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="2" data-col="3"&gt;&lt; .001&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="2" data-col="4"&gt;2.51&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="2" data-col="5"&gt;1.20, 3.83&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="2" data-col="6"&gt;&lt; .001&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="2" data-col="7"&gt;-0.36&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="2" data-col="8"&gt;-0.90, 0.18&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="2" data-col="9"&gt;0.194&lt;/td&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 &lt;/tr&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 &lt;tr&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;Species [versicolor] × Petal Length&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;0.29&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;-0.30, 0.87&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;0.334&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="3" data-col="0"&gt;Species [versicolor] × Petal Length&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="3" data-col="1"&gt;0.29&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="3" data-col="2"&gt;-0.30, 0.87&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="3" data-col="3"&gt;0.334&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="3" data-col="4"&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="3" data-col="5"&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="3" data-col="6"&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="3" data-col="7"&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="3" data-col="8"&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="3" data-col="9"&gt;&lt;/td&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 &lt;/tr&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 &lt;tr&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;Petal Length&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;0.54&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;0.00, 1.09&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;0.052&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;0.89&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;0.75, 1.04&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt; .001&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="4" data-col="0"&gt;Petal Length&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="4" data-col="1"&gt;0.54&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="4" data-col="2"&gt;0.00, 1.09&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="4" data-col="3"&gt;0.052&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="4" data-col="4"&gt;0.89&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="4" data-col="5"&gt;0.75, 1.04&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="4" data-col="6"&gt;&lt; .001&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="4" data-col="7"&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="4" data-col="8"&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="4" data-col="9"&gt;&lt;/td&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 &lt;/tr&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 &lt;tr&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;Species [versicolor]&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;-1.81&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;-2.99, -0.62&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;0.003&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="5" data-col="0"&gt;Species [versicolor]&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="5" data-col="1"&gt;-1.81&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="5" data-col="2"&gt;-2.99, -0.62&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="5" data-col="3"&gt;0.003&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="5" data-col="4"&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="5" data-col="5"&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="5" data-col="6"&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="5" data-col="7"&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="5" data-col="8"&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="5" data-col="9"&gt;&lt;/td&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 &lt;/tr&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 &lt;tr&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;Species [virginica]&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;-3.15&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;-4.41, -1.90&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt; .001&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="6" data-col="0"&gt;Species [virginica]&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="6" data-col="1"&gt;-3.15&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="6" data-col="2"&gt;-4.41, -1.90&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="6" data-col="3"&gt;&lt; .001&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="6" data-col="4"&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="6" data-col="5"&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="6" data-col="6"&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="6" data-col="7"&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="6" data-col="8"&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="6" data-col="9"&gt;&lt;/td&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 &lt;/tr&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 &lt;tr&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;Species [virginica] × Petal Length&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;0.45&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;-0.12, 1.03&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;0.120&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="7" data-col="0"&gt;Species [virginica] × Petal Length&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="7" data-col="1"&gt;0.45&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="7" data-col="2"&gt;-0.12, 1.03&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="7" data-col="3"&gt;0.120&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="7" data-col="4"&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="7" data-col="5"&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="7" data-col="6"&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="7" data-col="7"&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="7" data-col="8"&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="7" data-col="9"&gt;&lt;/td&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 &lt;/tr&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 &lt;tr&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;Petal Width&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;-0.02&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;-0.33, 0.28&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;0.877&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="8" data-col="0"&gt;Petal Width&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="8" data-col="1"&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="8" data-col="2"&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="8" data-col="3"&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="8" data-col="4"&gt;-0.02&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="8" data-col="5"&gt;-0.33, 0.28&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="8" data-col="6"&gt;0.877&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="8" data-col="7"&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="8" data-col="8"&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="8" data-col="9"&gt;&lt;/td&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 &lt;/tr&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 &lt;tr&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;spp [EC-L]&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;0.67&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;0.41, 0.92&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt; .001&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="9" data-col="0"&gt;spp [EC-L]&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="9" data-col="1"&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="9" data-col="2"&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="9" data-col="3"&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="9" data-col="4"&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="9" data-col="5"&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="9" data-col="6"&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="9" data-col="7"&gt;0.67&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="9" data-col="8"&gt;0.41, 0.92&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="9" data-col="9"&gt;&lt; .001&lt;/td&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 &lt;/tr&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 &lt;tr&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;spp [PR]&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;-1.27&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;-1.74, -0.80&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt; .001&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="10" data-col="0"&gt;spp [PR]&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="10" data-col="1"&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="10" data-col="2"&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="10" data-col="3"&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="10" data-col="4"&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="10" data-col="5"&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="10" data-col="6"&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="10" data-col="7"&gt;-1.27&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="10" data-col="8"&gt;-1.74, -0.80&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="10" data-col="9"&gt;&lt; .001&lt;/td&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 &lt;/tr&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 &lt;tr&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;spp [DM]&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;0.27&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;0.00, 0.54&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;0.051&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="11" data-col="0"&gt;spp [DM]&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="11" data-col="1"&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="11" data-col="2"&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="11" data-col="3"&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="11" data-col="4"&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="11" data-col="5"&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="11" data-col="6"&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="11" data-col="7"&gt;0.27&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="11" data-col="8"&gt;0.00, 0.54&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="11" data-col="9"&gt;0.051&lt;/td&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 &lt;/tr&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 &lt;tr&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;spp [EC-A]&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;-0.57&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;-0.97, -0.16&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;0.006&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="12" data-col="0"&gt;spp [EC-A]&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="12" data-col="1"&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="12" data-col="2"&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="12" data-col="3"&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="12" data-col="4"&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="12" data-col="5"&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="12" data-col="6"&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="12" data-col="7"&gt;-0.57&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="12" data-col="8"&gt;-0.97, -0.16&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="12" data-col="9"&gt;0.006&lt;/td&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 &lt;/tr&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 &lt;tr&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;spp [DES-L]&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;0.63&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;0.38, 0.87&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt; .001&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="13" data-col="0"&gt;spp [DES-L]&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="13" data-col="1"&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="13" data-col="2"&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="13" data-col="3"&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="13" data-col="4"&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="13" data-col="5"&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="13" data-col="6"&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="13" data-col="7"&gt;0.63&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="13" data-col="8"&gt;0.38, 0.87&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="13" data-col="9"&gt;&lt; .001&lt;/td&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 &lt;/tr&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 &lt;tr&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;spp [DF]&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;0.12&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;-0.17, 0.40&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;0.435&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="14" data-col="0"&gt;spp [DF]&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="14" data-col="1"&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="14" data-col="2"&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="14" data-col="3"&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="14" data-col="4"&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="14" data-col="5"&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="14" data-col="6"&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="14" data-col="7"&gt;0.12&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="14" data-col="8"&gt;-0.17, 0.40&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="14" data-col="9"&gt;0.435&lt;/td&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 &lt;/tr&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 &lt;tr&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;mined [no]&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;1.27&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;0.74, 1.80&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt; .001&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="15" data-col="0"&gt;mined [no]&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="15" data-col="1"&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="15" data-col="2"&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="15" data-col="3"&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="15" data-col="4"&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="15" data-col="5"&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="15" data-col="6"&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="15" data-col="7"&gt;1.27&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="15" data-col="8"&gt;0.74, 1.80&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="15" data-col="9"&gt;&lt; .001&lt;/td&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 &lt;/tr&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 &lt;tr&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;(Intercept) (zi)&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;0.79&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;0.26, 1.32&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;0.004&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="17" data-col="0"&gt;(Intercept) (zi)&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="17" data-col="1"&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="17" data-col="2"&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="17" data-col="3"&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="17" data-col="4"&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="17" data-col="5"&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="17" data-col="6"&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="17" data-col="7"&gt;0.79&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="17" data-col="8"&gt;0.26, 1.32&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="17" data-col="9"&gt;0.004&lt;/td&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 &lt;/tr&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 &lt;tr&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;minedno (zi)&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;-1.84&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;-2.46, -1.23&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt; .001&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="18" data-col="0"&gt;minedno (zi)&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="18" data-col="1"&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="18" data-col="2"&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="18" data-col="3"&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="18" data-col="4"&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="18" data-col="5"&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="18" data-col="6"&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="18" data-col="7"&gt;-1.84&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="18" data-col="8"&gt;-2.46, -1.23&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="18" data-col="9"&gt;&lt; .001&lt;/td&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 &lt;/tr&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 &lt;tr&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;SD (Residual)&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;0.34&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;0.30, 0.38&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="20" data-col="0"&gt;SD (Residual)&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="20" data-col="1"&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="20" data-col="2"&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="20" data-col="3"&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="20" data-col="4"&gt;0.34&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="20" data-col="5"&gt;0.30, 0.38&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="20" data-col="6"&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="20" data-col="7"&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="20" data-col="8"&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="20" data-col="9"&gt;&lt;/td&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 &lt;/tr&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 &lt;tr&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;SD (Intercept: Species)&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;1.07&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;0.39, 2.91&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="21" data-col="0"&gt;SD (Intercept: Species)&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="21" data-col="1"&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="21" data-col="2"&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="21" data-col="3"&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="21" data-col="4"&gt;1.07&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="21" data-col="5"&gt;0.39, 2.91&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="21" data-col="6"&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="21" data-col="7"&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="21" data-col="8"&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="21" data-col="9"&gt;&lt;/td&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 &lt;/tr&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 &lt;tr&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;SD (Intercept: site)&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;0.33&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;0.18, 0.63&lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="22" data-col="0"&gt;SD (Intercept: site)&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="22" data-col="1"&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="22" data-col="2"&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="22" data-col="3"&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="22" data-col="4"&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="22" data-col="5"&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="22" data-col="6"&gt;&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="22" data-col="7"&gt;0.33&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="22" data-col="8"&gt;0.18, 0.63&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;td data-row="22" data-col="9"&gt;&lt;/td&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 &lt;/tr&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         &lt;/tbody&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       &lt;/table&gt;</span>
