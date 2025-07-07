@@ -474,6 +474,9 @@ in Psychological Science, 1(2), 259–269. \doi{10.1177/2515245918770963}
 \item Makowski, D., Ben-Shachar, M. S., Chen, S. H. A., and Lüdecke, D. (2019).
 Indices of Effect Existence and Significance in the Bayesian Framework.
 Frontiers in Psychology, 10, 2767. \doi{10.3389/fpsyg.2019.02767}
+\item Montiel Olea, J. L., and Plagborg-Møller, M. (2019). Simultaneous
+confidence bands: Theory, implementation, and an application to SVARs.
+Journal of Applied Econometrics, 34(1), 1–17. \doi{10.1002/jae.2656}
 \item Neter, J., Wasserman, W., and Kutner, M. H. (1989). Applied linear
 regression models.
 \item Rafi Z, Greenland S. Semantic and cognitive tools to aid statistical
