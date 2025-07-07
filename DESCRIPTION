@@ -175,6 +175,7 @@ Suggests:
     mmrm,
     multcomp,
     MuMIn,
+    mvtnorm,
     NbClust,
     nFactors,
     nestedLogit,

@@ -26,6 +26,9 @@
 * Improved efficiency in `model_parameters()` for models from packages *brms*
   and *rstanarm*.
 
+* `p_adjust` for `model_parameters()` gets a new options, `"sup-t"`, to calculate
+  simultaneous confidence intervals.
+
 # parameters 0.26.0
 
 ## Changes
