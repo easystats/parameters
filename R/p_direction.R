@@ -48,7 +48,7 @@ bayestestR::p_direction
 #'
 #'   - Lakens, D., Scheel, A. M., and Isager, P. M. (2018). Equivalence Testing
 #'     for Psychological Research: A Tutorial. Advances in Methods and Practices
-#'     in Psychological Science, 1(2), 259–269. \doi{10.1177/2515245918770963}
+#'     in Psychological Science, 1(2), 259–269.
 #'
 #'   - Makowski, D., Ben-Shachar, M. S., Chen, S. H. A., and Lüdecke, D. (2019).
 #'     Indices of Effect Existence and Significance in the Bayesian Framework.
