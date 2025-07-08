@@ -19,3 +19,24 @@
       The model has a log- or logit-link. Consider using `exponentiate =
         TRUE` to interpret coefficients as ratios.
 
+# pretty_labels, pscl
+
+    Code
+      print(model_parameters(model), pretty_names = "labels", zap_small = TRUE)
+    Output
+      # Fixed Effects
+      
+      Parameter           | Log-Mean |   SE |         95% CI |     z |      p
+      -----------------------------------------------------------------------
+      (Intercept)         |     0.85 | 0.06 | [ 0.72,  0.97] | 13.29 | < .001
+      MyGender [Women]    |    -0.24 | 0.06 | [-0.36, -0.11] | -3.70 | < .001
+      MyMarried [Married] |     0.01 | 0.07 | [-0.12,  0.14] |  0.17 | 0.868 
+      
+      # Zero-Inflation
+      
+      Parameter           | Log-Odds |   SE |         95% CI |     z |      p
+      -----------------------------------------------------------------------
+      (Intercept)         |    -1.32 | 0.24 | [-1.79, -0.86] | -5.55 | < .001
+      MyGender [Women]    |     0.02 | 0.24 | [-0.46,  0.50] |  0.08 | 0.939 
+      MyMarried [Married] |    -0.09 | 0.25 | [-0.58,  0.40] | -0.37 | 0.715 
+
