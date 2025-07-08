@@ -110,7 +110,7 @@ Suggests:
     cluster,
     cobalt,
     coda,
-    correlation,
+    correlation (>= 0.8.8),
     coxme,
     cplm,
     curl,
