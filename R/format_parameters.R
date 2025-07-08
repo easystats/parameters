@@ -428,7 +428,7 @@ format_parameters.parameters_model <- function(model, ...) {
     # for models from pscl, we have "count_" and "zero_" prefixes, which
     # we need to add to the "pretty_labels" names, so that we can match
     # them with the parameters
-    if (inherits(model, "zeroinfl") || inherits(model, "hurdle")) {
+    if (inherits(model, c("zeroinfl", "hurdle"))) {
       pretty_labels <- c(
         stats::setNames(pretty_labels, paste0("count_", names(pretty_labels))),
         stats::setNames(pretty_labels, paste0("zero_", names(pretty_labels)))
