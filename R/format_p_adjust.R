@@ -191,7 +191,7 @@ format_p_adjust <- function(method) {
     ci_level <- 0.95
   }
   # find degrees of freedom column, if available
-  df_column <- colnames(params)[stats::na.omit(match(c("df", "df_error"), colnames(params)))][1]
+  df_column <- intersect(c("df", "df_error"), colnames(params))[1]
   if (is.na(df_column)) {
     return(params)
   }
