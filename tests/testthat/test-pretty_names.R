@@ -80,13 +80,13 @@ withr::with_options(
 
       model <- pscl::zeroinfl(art ~ fem + mar, data = mydf)
       expect_snapshot(print(model_parameters(model), pretty_names = "labels", zap_small = TRUE))
-    })
 
-    # doesn't crash if pretty-labels is NULL
-    mydf <- pscl::bioChemists
-    mydf$mar <- as.character(mydf$mar)
-    model <- pscl::zeroinfl(art ~ fem + mar, data = mydf)
-    out <- model_parameters(model)
-    expect_identical(dim(out), c(6L, 10L))
+      # doesn't crash if pretty-labels is NULL
+      mydf <- pscl::bioChemists
+      mydf$mar <- as.character(mydf$mar)
+      model <- pscl::zeroinfl(art ~ fem + mar, data = mydf)
+      out <- model_parameters(model)
+      expect_identical(dim(out), c(6L, 10L))
+    })
   }
 )
