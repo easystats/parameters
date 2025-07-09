@@ -428,6 +428,11 @@
   # iterate all factors in the data and check if any factor was used in the model
   for (fn in names(factors)) {
     f <- factors[[fn]]
+    # for models from pscl, we have "count_" and "zero_" prefixes, which
+    # we need to add to "f" names, so that we can match them with the parameters
+    if (inherits(model, c("zeroinfl", "hurdle"))) {
+      f <- c(paste0("count_", f), paste0("zero_", f))
+    }
     # "f" contains all combinations of factor name and levels from the data,
     # which we can match with the names of the pretty_names vector
     found <- which(names(pretty_names) %in% f)
@@ -435,6 +440,7 @@
     if (length(found)) {
       # the reference level is *not* in the pretty names yet
       reference_level <- f[!f %in% names(pretty_names)]
+      reference_level <- gsub("^(count_|zero_)", "", reference_level, fixed = TRUE)
 
       # for on-the-fly conversion of factors, the names of the factors can
       # can also contain "factor()" or "as.factor()" - we need to remove these
