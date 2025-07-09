@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.26.0.16</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.27.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -53,6 +53,28 @@
       <small>Source: <a href="https://github.com/easystats/parameters/blob/v0.27.0/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.27.0" id="parameters-0270">parameters 0.27.0<a class="anchor" aria-label="anchor" href="#parameters-0270"></a></h2><p class="text-muted">CRAN release: 2025-07-09</p>
+<div class="section level3">
+<h3 id="breaking-changes-0-27-0">Breaking Changes<a class="anchor" aria-label="anchor" href="#breaking-changes-0-27-0"></a></h3>
+<ul><li><p>The <code>standardize</code> argument in <code><a href="../reference/principal_components.html">factor_analysis()</a></code> now defaults to <code>FALSE</code>.</p></li>
+<li><p>The <code>rotation</code> argument in <code><a href="../reference/principal_components.html">factor_analysis()</a></code> now defaults to <code>"oblimin"</code>, because the former default of <code>"none"</code> rarely makes sense in the context of factor analysis. If you want to use no rotation, please set <code>rotation = "none"</code>.</p></li>
+<li><p>The <code>cor</code> argument in <code><a href="../reference/n_factors.html">n_factors()</a></code> was renamed into <code>correlation_matrix</code>. In <code><a href="../reference/principal_components.html">factor_analysis()</a></code>, the <code>cor</code> argument was completely removed to avoid naming collision with the <code>cor</code> argument of <code><a href="https://rdrr.io/pkg/psych/man/fa.html" class="external-link">psych::fa()</a></code>, which now users can pass the <code>cor</code> argument to <code><a href="https://rdrr.io/pkg/psych/man/fa.html" class="external-link">psych::fa()</a></code> when using <code><a href="../reference/principal_components.html">factor_analysis()</a></code>.</p></li>
+</ul></div>
+<div class="section level3">
+<h3 id="changes-0-27-0">Changes<a class="anchor" aria-label="anchor" href="#changes-0-27-0"></a></h3>
+<ul><li><p><code><a href="../reference/principal_components.html">factor_analysis()</a></code> gets a <code>.matrix</code> method, including a new argument <code>n_obs</code> (which can be a single value or a matrix of pairwise counts), to compute factor analysis for a correlation matrix or covariance matrix.</p></li>
+<li><p>New function <code><a href="../reference/factor_scores.html">factor_scores()</a></code> to extract factor scores from EFA (<code><a href="https://rdrr.io/pkg/psych/man/fa.html" class="external-link">psych::fa()</a></code> or <code><a href="../reference/principal_components.html">factor_analysis()</a></code>).</p></li>
+<li><p>Added and/or improved print-methods for all functions around PCA, FA and Omega.</p></li>
+<li><p>Improved efficiency in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for models from packages <em>brms</em> and <em>rstanarm</em>.</p></li>
+<li><p><code>p_adjust</code> for <code><a href="../reference/model_parameters.html">model_parameters()</a></code> gets a new options, <code>"sup-t"</code>, to calculate simultaneous confidence intervals.</p></li>
+</ul></div>
+<div class="section level3">
+<h3 id="bug-fixes-0-27-0">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-27-0"></a></h3>
+<ul><li><p><code><a href="../reference/bootstrap_model.html">bootstrap_model()</a></code> did not work for intercept-only models. This has been fixed.</p></li>
+<li><p>Fixed issue with printing labels as pretty names for models from package <em>pscl</em>, i.e. <code>print(model_parameters(model), pretty_names = "labels")</code> now works as expected.</p></li>
+</ul></div>
+</div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.26.0" id="parameters-0260">parameters 0.26.0<a class="anchor" aria-label="anchor" href="#parameters-0260"></a></h2><p class="text-muted">CRAN release: 2025-05-22</p>
 <div class="section level3">
