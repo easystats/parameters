@@ -65,3 +65,21 @@ withr::with_options(
     expect_snapshot(print(p))
   })
 )
+
+
+withr::with_options(
+  list(parameters_exponentiate = FALSE, parameters_warning_exponentiate = FALSE),
+  {
+    test_that("pretty_labels, pscl", {
+      skip_if_not_installed("pscl")
+
+      mydf <- pscl::bioChemists
+      attr(mydf$art, "label") <- "MyCount"
+      attr(mydf$fem, "label") <- "MyGender"
+      attr(mydf$mar, "label") <- "MyMarried"
+
+      model <- pscl::zeroinfl(art ~ fem + mar, data = mydf)
+      expect_snapshot(print(model_parameters(model), pretty_names = "labels", zap_small = TRUE))
+    })
+  }
+)

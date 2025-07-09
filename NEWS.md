@@ -33,6 +33,10 @@
 
 * `bootstrap_model()` did not work for intercept-only models. This has been fixed.
 
+* Fixed issue with printing labels as pretty names for models from package
+  *pscl*, i.e. `print(model_parameters(model), pretty_names = "labels")` now
+  works as expected.
+
 # parameters 0.26.0
 
 ## Changes
