@@ -296,7 +296,7 @@ print.parameters_model <- function(x,
   table_caption <- .print_caption(x, caption, format = "text")
 
   # main table
-  formatted_table <- .print_core(
+  formatted_table <- format(
     x = x,
     pretty_names = pretty_names,
     split_components = split_components,
@@ -394,39 +394,6 @@ print.parameters_random <- function(x, digits = 2, ...) {
 
 
 # helper --------------------
-
-.print_core <- function(x,
-                        pretty_names = TRUE,
-                        split_components = TRUE,
-                        select = NULL,
-                        digits = 2,
-                        ci_digits = digits,
-                        p_digits = 3,
-                        zap_small = FALSE,
-                        ci_width = "auto",
-                        ci_brackets = TRUE,
-                        format = "text",
-                        groups = NULL,
-                        include_reference = FALSE,
-                        ...) {
-  format(
-    x,
-    pretty_names = pretty_names,
-    split_components = split_components,
-    select = select,
-    digits = digits,
-    ci_digits = ci_digits,
-    p_digits = p_digits,
-    ci_width = ci_width,
-    ci_brackets = ci_brackets,
-    zap_small = zap_small,
-    format = format,
-    groups = groups,
-    include_reference = include_reference,
-    ...
-  )
-}
-
 
 .print_footer <- function(x,
                           digits = 3,

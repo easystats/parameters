@@ -73,7 +73,7 @@ print_html.parameters_model <- function(x,
   table_caption <- .print_caption(x, caption, format = "html")
 
   # main table
-  formatted_table <- .print_core(
+  formatted_table <- format(
     x = x,
     pretty_names = pretty_names,
     split_components = split_components,
