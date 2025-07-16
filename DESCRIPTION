@@ -202,6 +202,7 @@ Suggests:
     rms,
     rstan,
     rstanarm,
+    sampleSelection,
     sandwich,
     see (>= 0.8.1),
     serp,
@@ -230,3 +231,4 @@ Config/testthat/parallel: true
 Config/Needs/website: easystats/easystatstemplate
 Config/Needs/check: stan-dev/cmdstanr
 Config/rcmdcheck/ignore-inconsequential-notes: true
+Remotes: easystats/insight
