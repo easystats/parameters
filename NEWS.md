@@ -1,3 +1,9 @@
+# parameters (devel)
+
+## Bug fixes
+
+* Fixed issue with models of class `selection` with multiple outcomes.
+
 # parameters 0.27.0
 
 ## Breaking Changes
