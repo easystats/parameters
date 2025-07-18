@@ -156,7 +156,7 @@ print_md.compare_parameters <- function(x,
   }
 
   # markdown engine?
-  engine <- match.arg(engine, c("tt", "default"))
+  engine <- insight::validate_argument(engine, c("tt", "default"))
 
   formatted_table <- format(
     x,
