@@ -31,7 +31,6 @@
   line_padding = 4,
   column_labels = NULL,
   include_reference = FALSE,
-  engine = "gt",
   verbose = TRUE,
   ...
 )
@@ -180,14 +179,6 @@ be added to the parameters table. This is only relevant for models with
 categorical predictors. The coefficient for the reference level is always
 \code{0} (except when \code{exponentiate = TRUE}, then the coefficient will be \code{1}),
 so this is just for completeness.}
-
-\item{engine}{Character string, naming the package or engine to be used for
-printing into HTML or markdown format. Currently supported \code{"gt"} (or
-\code{"default"}) to use the \emph{gt} package to print to HTML and the default easystats
-engine to create markdown tables. If \code{engine = "tt"}, the \emph{tinytable} package
-is used for printing to HTML or markdown. Not all \code{print()} methods support
-the \code{"tt"} engine yet. If a specific \code{print()} method has no \code{engine} argument,
-\code{insight::export_table()} is used, which uses \emph{gt} for HTML printing.}
 
 \item{verbose}{Toggle messages and warnings.}
 

@@ -103,7 +103,6 @@ display.parameters_model <- function(object,
                                      line_padding = 4,
                                      column_labels = NULL,
                                      include_reference = FALSE,
-                                     engine = "gt",
                                      verbose = TRUE,
                                      ...) {
   format <- insight::validate_argument(format, c("markdown", "html", "md", "tt"))
@@ -114,7 +113,7 @@ display.parameters_model <- function(object,
     footer = footer, ci_digits = ci_digits, p_digits = p_digits,
     footer_digits = footer_digits, ci_brackets = ci_brackets,
     show_sigma = show_sigma, show_formula = show_formula, zap_small = zap_small,
-    include_reference = include_reference, engine = format, verbose = verbose
+    include_reference = include_reference, verbose = verbose
   )
 
   if (format %in% c("html", "tt")) {
@@ -124,7 +123,8 @@ display.parameters_model <- function(object,
         column_labels = column_labels,
         align = align,
         font_size = font_size,
-        line_padding = line_padding
+        line_padding = line_padding,
+        engine = ifelse(format == "tt", "tt", "gt")
       )
     )
     do.call(print_html, c(fun_args, list(...)))
@@ -155,7 +155,6 @@ display.compare_parameters <- function(object,
                                        font_size = "100%",
                                        line_padding = 4,
                                        zap_small = FALSE,
-                                       engine = "gt",
                                        ...) {
   format <- insight::validate_argument(format, c("markdown", "html", "md", "tt"))
 
@@ -166,8 +165,7 @@ display.compare_parameters <- function(object,
     p_digits = p_digits,
     ci_brackets = ci_brackets,
     select = select,
-    zap_small = zap_small,
-    engine = format
+    zap_small = zap_small
   )
 
   if (format %in% c("html", "tt")) {
@@ -176,7 +174,8 @@ display.compare_parameters <- function(object,
       list(
         column_labels = column_labels,
         font_size = font_size,
-        line_padding = line_padding
+        line_padding = line_padding,
+        engine = ifelse(format == "tt", "tt", "gt")
       )
     )
     do.call(print_html, c(fun_args, list(...)))
