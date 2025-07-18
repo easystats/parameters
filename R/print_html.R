@@ -23,6 +23,7 @@ print_html.parameters_model <- function(x,
                                         line_padding = 4,
                                         column_labels = NULL,
                                         include_reference = FALSE,
+                                        engine = "gt",
                                         verbose = TRUE,
                                         ...) {
   # check if user supplied digits attributes
@@ -54,6 +55,12 @@ print_html.parameters_model <- function(x,
   if (!is.null(select)) {
     select <- .convert_to_glue_syntax(style = select, "<br>")
   }
+
+  # markdown engine?
+  engine <- insight::validate_argument(
+    getOption("easystats_html_engine", engine),
+    c("gt", "default", "tt")
+  )
 
   # check options ---------------
 
@@ -112,7 +119,7 @@ print_html.parameters_model <- function(x,
 
   out <- insight::export_table(
     formatted_table,
-    format = "html",
+    format = ifelse(identical(engine, "tt"), "tt", "html"),
     caption = table_caption,
     subtitle = subtitle,
     footer = footer,
@@ -120,13 +127,17 @@ print_html.parameters_model <- function(x,
     ...
   )
 
-  .add_gt_options(
-    out,
-    style = select,
-    font_size = font_size,
-    line_padding = line_padding,
-    user_labels = column_labels
-  )
+  if (identical(engine, "tt")) {
+    out
+  } else {
+    .add_gt_options(
+      out,
+      style = select,
+      font_size = font_size,
+      line_padding = line_padding,
+      user_labels = column_labels
+    )
+  }
 }
 
 #' @export
