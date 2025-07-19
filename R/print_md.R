@@ -187,14 +187,28 @@ print_md.compare_parameters <- function(x,
     } else {
       outformat <- "markdown"
     }
-    .export_table_tt(
-      x,
+
+    col_names <- gsub("(.*) \\((.*)\\)$", "\\2", colnames(formatted_table))
+    col_groups <- sapply(attributes(x)$model_names, function(i) which(i == col_names), simplify = FALSE)
+    colnames(formatted_table) <- gsub("(.*) \\((.*)\\)$", "\\1", colnames(formatted_table))
+
+    insight::export_table(
       formatted_table,
-      groups,
+      format = "tt",
       caption = caption,
+      subtitle = subtitle,
       footer = footer,
-      outformat = outformat
+      column_groups = col_groups
     )
+
+    # .export_table_tt(
+    #   x,
+    #   formatted_table,
+    #   groups,
+    #   caption = caption,
+    #   footer = footer,
+    #   outformat = outformat
+    # )
   } else {
     insight::export_table(
       formatted_table,
