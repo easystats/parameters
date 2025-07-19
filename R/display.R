@@ -123,7 +123,8 @@ display.parameters_model <- function(object,
         column_labels = column_labels,
         align = align,
         font_size = font_size,
-        line_padding = line_padding
+        line_padding = line_padding,
+        engine = ifelse(format == "tt", "tt", "gt")
       )
     )
     do.call(print_html, c(fun_args, list(...)))
@@ -173,7 +174,8 @@ display.compare_parameters <- function(object,
       list(
         column_labels = column_labels,
         font_size = font_size,
-        line_padding = line_padding
+        line_padding = line_padding,
+        engine = ifelse(format == "tt", "tt", "gt")
       )
     )
     do.call(print_html, c(fun_args, list(...)))
