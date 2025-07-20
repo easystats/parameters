@@ -122,7 +122,6 @@ format.parameters_model <- function(x,
   if (!is.null(groups)) {
     x <- .parameter_groups(x, groups)
   }
-  indent_groups <- attributes(x)$indent_groups
   indent_rows <- attributes(x)$indent_rows
 
   # prepare output, to have in shape for printing. this function removes
@@ -210,12 +209,8 @@ format.parameters_model <- function(x,
     }
   }
 
-  if (!is.null(indent_rows)) {
-    attr(formatted_table, "indent_rows") <- indent_rows
-    attr(formatted_table, "indent_groups") <- NULL
-  } else if (!is.null(indent_groups)) {
-    attr(formatted_table, "indent_groups") <- indent_groups
-  }
+  # information about indention / row groups
+  attr(formatted_table, "indent_rows") <- indent_rows
 
   # vertical layout possible, if these have just one row
   if (identical(list(...)$layout, "vertical")) {
@@ -405,8 +400,6 @@ format.compare_parameters <- function(x,
   if (!is.null(groups) && !identical(engine, "tt")) {
     out <- .parameter_groups(out, groups)
   }
-  indent_groups <- attributes(x)$indent_groups
-  indent_rows <- attributes(x)$indent_rows
 
   # check whether to split table by certain factors/columns (like component, response...)
   split_by <- split_column <- .prepare_splitby_for_print(x)

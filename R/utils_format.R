@@ -843,7 +843,6 @@
   for (i in rev(seq_along(groups))) {
     x[seq(groups[i] + 1, nrow(x) + 1), ] <- x[seq(groups[i], nrow(x)), ]
     x[groups[i], ] <- empty_row
-    x$Parameter[groups[i]] <- paste0("# ", names(groups[i]))
   }
 
   # find row indices of indented parameters
@@ -858,7 +857,6 @@
 
   attributes(x) <- utils::modifyList(att, attributes(x))
   attr(x, "indent_rows") <- indent_rows
-  attr(x, "indent_groups") <- "# "
   x
 }
 
