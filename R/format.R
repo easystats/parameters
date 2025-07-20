@@ -338,6 +338,7 @@ format.compare_parameters <- function(x,
       }
       out$Parameter[out$Parameter == "SD (Observations: Residual)"] <- "SD (Residual)"
     }
+    attributes(cols)$coef_name <- colnames(cols)[coef_column]
     # save p-stars in extra column
     cols <- insight::format_table(
       cols,
