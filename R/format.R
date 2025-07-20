@@ -116,14 +116,6 @@ format.parameters_model <- function(x,
     x <- .format_ranef_parameters(x)
   }
 
-  # group parameters - this function find those parameters that should be
-  # grouped, reorders parameters into groups and indents lines that belong
-  # to one group, adding a header for each group
-  if (!is.null(groups)) {
-    x <- .parameter_groups(x, groups)
-  }
-  indent_rows <- attributes(x)$indent_rows
-
   # prepare output, to have in shape for printing. this function removes
   # empty columns, or selects only those columns that should be printed
   x <- .prepare_x_for_print(x, select, coef_name, s_value)
@@ -210,7 +202,7 @@ format.parameters_model <- function(x,
   }
 
   # information about indention / row groups
-  attr(formatted_table, "indent_rows") <- indent_rows
+  attr(formatted_table, "indent_rows") <- groups
 
   # vertical layout possible, if these have just one row
   if (identical(list(...)$layout, "vertical")) {
@@ -394,13 +386,6 @@ format.compare_parameters <- function(x,
     out <- datawizard::data_arrange(out, c("Effects", "Component"))
   }
 
-  # group parameters - this function find those parameters that should be
-  # grouped, reorders parameters into groups and indents lines that belong
-  # to one group, adding a header for each group
-  if (!is.null(groups) && !identical(engine, "tt")) {
-    out <- .parameter_groups(out, groups)
-  }
-
   # check whether to split table by certain factors/columns (like component, response...)
   split_by <- split_column <- .prepare_splitby_for_print(x)
 
@@ -461,6 +446,9 @@ format.compare_parameters <- function(x,
     # add line with info about observations
     formatted_table <- .add_obs_row(formatted_table, parameters_attributes, style = select)
   }
+
+  # information about indention / row groups
+  attr(formatted_table, "indent_rows") <- groups
 
   formatted_table
 }
