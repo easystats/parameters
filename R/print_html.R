@@ -286,6 +286,7 @@ print_html.parameters_efa <- function(x,
                                       sort = FALSE,
                                       threshold = NULL,
                                       labels = NULL,
+                                      engine = "gt",
                                       ...) {
   # extract attributes
   if (is.null(threshold)) {
@@ -295,7 +296,7 @@ print_html.parameters_efa <- function(x,
     x,
     threshold = threshold,
     sort = sort,
-    format = "html",
+    format = engine,
     digits = digits,
     labels = labels,
     ...
@@ -307,7 +308,13 @@ print_html.parameters_pca <- print_html.parameters_efa
 
 
 #' @export
-print_html.parameters_efa_summary <- function(x, digits = 3, ...) {
+print_html.parameters_efa_summary <- function(x, digits = 3, engine = "gt", ...) {
+  # html engine?
+  engine <- insight::validate_argument(
+    getOption("easystats_html_engine", engine),
+    c("gt", "default", "tt")
+  )
+
   table_caption <- "(Explained) Variance of Components"
 
   if ("Parameter" %in% names(x)) {
@@ -327,7 +334,13 @@ print_html.parameters_efa_summary <- function(x, digits = 3, ...) {
     x <- .safe(rbind(x, fc), x)
   }
 
-  insight::export_table(x, digits = digits, format = "html", caption = table_caption, align = "firstleft")
+  insight::export_table(
+    x,
+    digits = digits,
+    format = ifelse(identical(engine, "tt"), "tt", "html"),
+    caption = table_caption,
+    align = "firstleft"
+  )
 }
 
 #' @export

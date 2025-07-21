@@ -363,7 +363,13 @@ print.parameters_omega_summary <- function(x, ...) {
 }
 
 
-.print_parameters_cfa_efa <- function(x, threshold, sort, format, digits, labels, ...) {
+.print_parameters_cfa_efa <- function(x, threshold, sort, format, digits, labels, engine = "gt", ...) {
+  # html engine?
+  engine <- insight::validate_argument(
+    getOption("easystats_html_engine", engine),
+    c("gt", "default", "tt")
+  )
+
   # Method
   if (inherits(x, "parameters_pca")) {
     method <- "Principal Component Analysis"
@@ -417,6 +423,11 @@ print.parameters_omega_summary <- function(x, ...) {
     alignment <- NULL
   } else {
     alignment <- paste(c("ll", rep("r", ncol(x) - 2)), collapse = "")
+  }
+
+  # set engine for html format
+  if (format == "html") {
+    format <- ifelse(identical(engine, "tt"), "tt", "html")
   }
 
   insight::export_table(
