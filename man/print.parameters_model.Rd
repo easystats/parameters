@@ -71,7 +71,6 @@
   line_padding = 4,
   column_labels = NULL,
   include_reference = FALSE,
-  engine = "gt",
   verbose = TRUE,
   ...
 )
@@ -244,6 +243,8 @@ data frames, \code{caption} may be a list of table captions, one for each table.
 \item{column_labels}{Labels of columns for HTML tables. If \code{NULL}, automatic
 column names are generated. See 'Examples'.}
 
+\item{verbose}{Toggle messages and warnings.}
+
 \item{engine}{Character string, naming the package or engine to be used for
 printing into HTML or markdown format. Currently supported \code{"gt"} (or
 \code{"default"}) to use the \emph{gt} package to print to HTML and the default easystats
@@ -251,8 +252,6 @@ engine to create markdown tables. If \code{engine = "tt"}, the \emph{tinytable} 
 is used for printing to HTML or markdown. Not all \code{print()} methods support
 the \code{"tt"} engine yet. If a specific \code{print()} method has no \code{engine} argument,
 \code{insight::export_table()} is used, which uses \emph{gt} for HTML printing.}
-
-\item{verbose}{Toggle messages and warnings.}
 }
 \value{
 Invisibly returns the original input object.

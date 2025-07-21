@@ -56,7 +56,6 @@
   font_size = "100\%",
   line_padding = 4,
   column_labels = NULL,
-  engine = "gt",
   ...
 )
 
