@@ -26,6 +26,16 @@ print_html.parameters_model <- function(x,
                                         engine = "gt",
                                         verbose = TRUE,
                                         ...) {
+  # markdown engine?
+  engine <- insight::validate_argument(
+    getOption("easystats_html_engine", engine),
+    c("gt", "default", "tt")
+  )
+
+  # line separator - for tinytable, we have no specific line separator,
+  # because the output format is context-dependent
+  line_sep <- ifelse(identical(engine, "tt"), " ", "<br>")
+
   # check if user supplied digits attributes
   if (missing(digits)) {
     digits <- .additional_arguments(x, "digits", digits)
@@ -53,14 +63,8 @@ print_html.parameters_model <- function(x,
 
   # we need glue-like syntax right now...
   if (!is.null(select)) {
-    select <- .convert_to_glue_syntax(style = select, "<br>")
+    select <- .convert_to_glue_syntax(style = select, line_sep)
   }
-
-  # markdown engine?
-  engine <- insight::validate_argument(
-    getOption("easystats_html_engine", engine),
-    c("gt", "default", "tt")
-  )
 
   # check options ---------------
 
@@ -112,9 +116,9 @@ print_html.parameters_model <- function(x,
     format = "html"
   )
   if (!is.null(footer)) {
-    footer <- paste0(footer, "<br>", paste(footer_stats, collapse = "<br>"))
+    footer <- paste0(footer, line_sep, paste(footer_stats, collapse = line_sep))
   } else if (!is.null(footer_stats)) {
-    footer <- paste(footer_stats, collapse = "<br>")
+    footer <- paste(footer_stats, collapse = line_sep)
   }
 
   out <- insight::export_table(
@@ -192,8 +196,12 @@ print_html.compare_parameters <- function(x,
     c("gt", "default", "tt")
   )
 
+  # line separator - for tinytable, we have no specific line separator,
+  # because the output format is context-dependent
+  line_sep <- ifelse(identical(engine, "tt"), " ", "<br>")
+
   # we need glue-like syntax right now...
-  select <- .convert_to_glue_syntax(style = select, "<br>")
+  select <- .convert_to_glue_syntax(style = select, line_sep)
 
   formatted_table <- format(
     x,
