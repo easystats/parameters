@@ -132,8 +132,8 @@ withr::with_options(
 
       cp <- compare_parameters(lm1, lm2, select = "{estimate} ({ci})|{p}", drop = "^\\(Intercept")
       out <- print_md(cp, groups = list(
-        Groups = c("grp [2]", "grp [3]"),
-        Interactions = c("Days × grp [2]", "Days × grp [3]"),
+        Groups = c("grp (2)", "grp (3)"),
+        Interactions = c("Days * grp (2)", "Days * grp (3)"),
         Controls = "Days"
       ))
       expect_snapshot(print(out))
@@ -145,7 +145,7 @@ withr::with_options(
       expect_error(
         print_md(cp, groups = list(
           Groups = c("grp (2)", "grp (3)"),
-          Interactions = c("Days × grp (2)", "Days × grp (3)"),
+          Interactions = c("Days * grp (2)", "Days * grp (3)"),
           Controls = "Days"
         )),
         regex = "Cannot combine"
@@ -174,7 +174,7 @@ withr::with_options(
       expect_error(
         print_md(cp, groups = list(
           Groups = c("grp (2)", "grp (3)"),
-          Interactions = c("Days × grp (2)", "Days × grp (3)"),
+          Interactions = c("Days * grp (2)", "Days * grp (3)"),
           Controls = "XDays"
         )),
         regex = "Some group indices"
@@ -192,7 +192,7 @@ withr::with_options(
       cp1 <- compare_parameters(lm1, lm2, select = "{estimate} ({ci})|{p}", drop = "^\\(Intercept")
       out1 <- capture.output(print_md(cp1, groups = list(
         Groups = c("grp (2)", "grp (3)"),
-        Interactions = c("Days × grp (2)", "Days × grp (3)"),
+        Interactions = c("Days * grp (2)", "Days * grp (3)"),
         Controls = "Days"
       )))
       cp2 <- compare_parameters(
@@ -202,7 +202,7 @@ withr::with_options(
         drop = "^\\(Intercept",
         groups = list(
           Groups = c("grp (2)", "grp (3)"),
-          Interactions = c("Days × grp (2)", "Days × grp (3)"),
+          Interactions = c("Days * grp (2)", "Days * grp (3)"),
           Controls = "Days"
         )
       )
