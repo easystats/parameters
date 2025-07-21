@@ -99,6 +99,13 @@
 #'   categorical predictors. The coefficient for the reference level is always
 #'   `0` (except when `exponentiate = TRUE`, then the coefficient will be `1`),
 #'   so this is just for completeness.
+#' @param engine Character string, naming the package or engine to be used for
+#'   printing into HTML or markdown format. Currently supported `"gt"` (or
+#'   `"default"`) to use the *gt* package to print to HTML and the default easystats
+#'   engine to create markdown tables. If `engine = "tt"`, the *tinytable* package
+#'   is used for printing to HTML or markdown. Not all `print()` methods support
+#'   the `"tt"` engine yet. If a specific `print()` method has no `engine` argument,
+#'   `insight::export_table()` is used, which uses *gt* for HTML printing.
 #' @param ... Arguments passed down to [`format.parameters_model()`],
 #'   [`insight::format_table()`] and [`insight::export_table()`]
 #' @inheritParams insight::format_table
@@ -198,17 +205,8 @@
 #' )
 #' # don't select "Intercept" parameter
 #' mp <- model_parameters(model, parameters = "^(?!\\(Intercept)")
-#' groups <- list(
-#'   "Focal Predictors" = c("Speciesversicolor", "Speciesvirginica"),
-#'   "Controls" = c("Sepal.Length", "Petal.Length")
-#' )
+#' groups <- list(`Focal Predictors` = c(1, 4), Controls = c(2, 3))
 #' print(mp, groups = groups)
-#'
-#' # or use row indices
-#' print(mp, groups = list(
-#'   "Focal Predictors" = c(1, 4),
-#'   "Controls" = c(2, 3)
-#' ))
 #'
 #' # only show coefficients, CI and p,
 #' # put non-matched parameters to the end
@@ -221,8 +219,8 @@
 #' # don't select "Intercept" parameter
 #' mp <- model_parameters(model, parameters = "^(?!\\(Intercept)")
 #' print(mp, groups = list(
-#'   "Engine" = c("cyl6", "cyl8", "vs", "hp"),
-#'   "Interactions" = c("gear4:vs", "gear5:vs")
+#'   Engine = c(5, 6, 4, 1),
+#'   Interactions = c(8, 9)
 #' ))
 #' }
 #'

@@ -39,8 +39,15 @@ withr::with_options(
       out <- model_parameters(model, drop = "^\\(Intercept")
       expect_snapshot(
         print(out, groups = list(
-          Engine = c("cyl6", "cyl8", "vs", "hp"),
-          Interactions = c("gear4:vs", "gear5:vs"),
+          Engine = c(5, 6, 4, 1), # c("cyl6", "cyl8", "vs", "hp"),
+          Interactions = c(8, 9), # c("gear4:vs", "gear5:vs"),
+          Controls = c(2, 3, 7)
+        ))
+      )
+      expect_snapshot(
+        print(out, groups = list(
+          Engine = c("cyl [6]", "cyl [8]", "vs", "hp"),
+          Interactions = c("gear [4] * vs", "gear [5] * vs"),
           Controls = c(2, 3, 7)
         ))
       )
@@ -48,8 +55,8 @@ withr::with_options(
         print(out,
           sep = "  ",
           groups = list(
-            Engine = c("cyl6", "cyl8", "vs", "hp"),
-            Interactions = c("gear4:vs", "gear5:vs"),
+            Engine = c(5, 6, 4, 1),
+            Interactions = c(8, 9),
             Controls = c(2, 3, 7)
           )
         )
@@ -80,8 +87,8 @@ withr::with_options(
       out <- model_parameters(model, drop = "^\\(Intercept")
       expect_snapshot(
         print(out, groups = list(
-          Engine = c("cyl6", "cyl8", "vs", "hp"),
-          Interactions = c("gear4:vs", "gear5:vs"),
+          Engine = c(5, 6, 4, 1),
+          Interactions = c(8, 9),
           Controls = c(2, 3, 7)
         ))
       )
@@ -89,8 +96,8 @@ withr::with_options(
       expect_snapshot(print(out, select = "{coef}{stars}|[{ci}]"))
       expect_snapshot(
         print(out, groups = list(
-          Engine = c("cyl6", "cyl8", "vs", "hp"),
-          Interactions = c("gear4:vs", "gear5:vs"),
+          Engine = c(5, 6, 4, 1),
+          Interactions = c(8, 9),
           Controls = c(2, 3, 7)
         ), select = "{coef}{stars}|[{ci}]")
       )
@@ -98,8 +105,8 @@ withr::with_options(
         print(out,
           sep = "  ",
           groups = list(
-            Engine = c("cyl6", "cyl8", "vs", "hp"),
-            Interactions = c("gear4:vs", "gear5:vs"),
+            Engine = c(5, 6, 4, 1),
+            Interactions = c(8, 9),
             Controls = c(2, 3, 7)
           ),
           select = "{coef}{stars}|[{ci}]"

@@ -185,8 +185,8 @@ test_that("predictions, using bayestestR #1063", {
   expect_named(
     out,
     c(
-      "Coefficient", "Days", "CI", "CI_low", "CI_high", "pd", "ROPE_CI",
-      "ROPE_low", "ROPE_high", "ROPE_Percentage", "subgrp", "grp", "Subject"
+      "Median", "CI", "CI_low", "CI_high", "pd", "ROPE_CI", "ROPE_low",
+      "ROPE_high", "ROPE_Percentage", "Days", "subgrp", "grp", "Subject"
     )
   )
 })

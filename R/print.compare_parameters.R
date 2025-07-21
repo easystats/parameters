@@ -4,13 +4,6 @@
 #' @description A `print()`-method for objects from [`compare_parameters()`].
 #'
 #' @param x An object returned by [`compare_parameters()`].
-#' @param engine Character string, naming the package or engine to be used for
-#' printing into HTML or markdown format. Currently supported `"gt"` (or
-#' `"default"`) to use the *gt* package to print to HTML and the default easystats
-#' engine to create markdown tables. If `engine = "tt"`, the *tinytable* package
-#' is used for printing to HTML or markdown. Not all `print()` methods support
-#' the `"tt"` engine yet. If a specific `print()` method has no `engine` argument,
-#' `insight::export_table()` is used, which uses *gt* for HTML printing.
 #' @inheritParams print.parameters_model
 #' @inheritSection print.parameters_model Global Options to Customize Messages and Tables when Printing
 #'

@@ -520,6 +520,22 @@ format.parameters_standardized <- function(x,
 
 
 #' @export
+display.parameters_standardized <- function(object,
+                                            format = "markdown",
+                                            digits = 2,
+                                            ...) {
+  format <- insight::validate_argument(format, c("markdown", "html", "md", "tt"))
+  fun_args <- list(x = object, digits = digits, engine = ifelse(format == "tt", "tt", "gt"))
+
+  if (format %in% c("html", "tt")) {
+    do.call(print_html, c(fun_args, list(...)))
+  } else {
+    do.call(print_md, c(fun_args, list(...)))
+  }
+}
+
+
+#' @export
 print.parameters_standardized <- function(x, digits = 2, ...) {
   x_fmt <- format(x, digits = digits, output = "text", ...)
   cat(insight::export_table(x_fmt, format = NULL, ...))
@@ -533,9 +549,14 @@ print_md.parameters_standardized <- function(x, digits = 2, ...) {
 }
 
 #' @export
-print_html.parameters_standardized <- function(x, digits = 2, ...) {
+print_html.parameters_standardized <- function(x, digits = 2, engine = "gt", ...) {
+  # which engine?
+  engine <- insight::validate_argument(
+    getOption("easystats_html_engine", engine),
+    c("gt", "default", "tt")
+  )
   x_fmt <- format(x, digits = digits, output = "html", ...)
-  insight::export_table(x_fmt, format = "html", ...)
+  insight::export_table(x_fmt, format = ifelse(identical(engine, "tt"), "tt", "html"), ...)
 }
 
 

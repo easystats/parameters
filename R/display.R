@@ -3,14 +3,17 @@
 #'
 #' @description Prints tables (i.e. data frame) in different output formats.
 #' `print_md()` is an alias for `display(format = "markdown")`, `print_html()`
-#' is an alias for `display(format = "html")`. `print_table()` is for specific
-#' use cases only, and currently only works for `compare_parameters()` objects.
+#' is an alias for `display(format = "html")`, and `print_html(engine = "tt")`
+#' is an alias for `display(format = "tt")`. The latter is a `tinytable` object,
+#' which is either printed as markdown or HTML table, depending on the environment.
 #'
-#' @param x An object returned by [`model_parameters()`].
-#' @param object An object returned by [`model_parameters()`],[`simulate_parameters()`],
-#' [`equivalence_test()`] or [`principal_components()`].
+#' @param object An object returned by one of the package's function, for example
+#' [`model_parameters()`], [`simulate_parameters()`], [`equivalence_test()`] or
+#' [`principal_components()`].
 #' @param format String, indicating the output format. Can be `"markdown"`
-#' or `"html"`.
+#' `"html"`, or `"tt"`. `format = "tt"` creates a `tinytable` object, which is
+#' either printed as markdown or HTML table, depending on the environment. See
+#' [`insight::export_table()`] for details.
 #' @param align Only applies to HTML tables. May be one of `"left"`,
 #' `"right"` or `"center"`.
 #' @param digits,ci_digits,p_digits Number of digits for rounding or
@@ -27,8 +30,6 @@
 #' @param line_padding For HTML tables, the distance (in pixel) between lines.
 #' @param column_labels Labels of columns for HTML tables. If `NULL`, automatic
 #' column names are generated. See 'Examples'.
-#' @param theme String, indicating the table theme. Can be one of `"default"`,
-#' `"grid"`, `"striped"`, `"bootstrap"` or `"darklines"`.
 #' @inheritParams print.parameters_model
 #' @inheritParams insight::format_table
 #' @inheritParams insight::export_table
@@ -36,8 +37,7 @@
 #'
 #' @return If `format = "markdown"`, the return value will be a character
 #' vector in markdown-table format. If `format = "html"`, an object of
-#' class `gt_tbl`. For `print_table()`, an object of class `tinytable` is
-#' returned.
+#' class `gt_tbl`. If `format = "tt"`, an object of class `tinytable`.
 #'
 #' @details `display()` is useful when the table-output from functions,
 #' which is usually printed as formatted text-table to console, should
@@ -45,14 +45,6 @@
 #' knitted from rmarkdown to PDF or Word files. See
 #' [vignette](https://easystats.github.io/parameters/articles/model_parameters_formatting.html)
 #' for examples.
-#'
-#' `print_table()` is a special function for `compare_parameters()` objects,
-#' which prints the output as a formatted HTML table. It is still somewhat
-#' experimental, thus, only a fixed layout-style is available at the moment
-#' (columns for estimates, confidence intervals and p-values). However, it
-#' is possible to include other model components, like zero-inflation, or random
-#' effects in the table. See 'Examples'. An alternative is to set `engine = "tt"`
-#' in `print_html()` to use the _tinytable_ package for creating HTML tables.
 #'
 #' @seealso [print.parameters_model()] and [print.compare_parameters()]
 #'
@@ -80,6 +72,28 @@
 #'   select = "{estimate}{stars}<br>({ci_low} \u2212 {ci_high})",
 #'   column_labels = c("Est. (95% CI)")
 #' )
+#' }
+#'
+#' @examplesIf all(insight::check_if_installed(c("glmmTMB", "lme4", "tinytable"), quietly = TRUE))
+#' \donttest{
+#' data(iris)
+#' data(Salamanders, package = "glmmTMB")
+#' m1 <- lm(Sepal.Length ~ Species * Petal.Length, data = iris)
+#' m2 <- lme4::lmer(
+#'   Sepal.Length ~ Petal.Length + Petal.Width + (1 | Species),
+#'   data = iris
+#' )
+#' m3 <- glmmTMB::glmmTMB(
+#'   count ~ spp + mined + (1 | site),
+#'   ziformula = ~mined,
+#'   family = poisson(),
+#'   data = Salamanders
+#' )
+#' out <- compare_parameters(m1, m2, m3, effects = "all", component = "all")
+#'
+#' display(out, format = "tt")
+#'
+#' display(out, select = "{estimate}|{ci}", format = "tt")
 #' }
 #' @export
 display.parameters_model <- function(object,
@@ -123,7 +137,8 @@ display.parameters_model <- function(object,
         column_labels = column_labels,
         align = align,
         font_size = font_size,
-        line_padding = line_padding
+        line_padding = line_padding,
+        engine = ifelse(format == "tt", "tt", "gt")
       )
     )
     do.call(print_html, c(fun_args, list(...)))
@@ -173,7 +188,8 @@ display.compare_parameters <- function(object,
       list(
         column_labels = column_labels,
         font_size = font_size,
-        line_padding = line_padding
+        line_padding = line_padding,
+        engine = ifelse(format == "tt", "tt", "gt")
       )
     )
     do.call(print_html, c(fun_args, list(...)))
@@ -202,7 +218,8 @@ display.parameters_sem <- function(object,
     digits = digits,
     ci_digits = ci_digits,
     p_digits = p_digits,
-    ci_brackets = ci_brackets
+    ci_brackets = ci_brackets,
+    engine = ifelse(format == "tt", "tt", "gt")
   )
 
   if (format %in% c("html", "tt")) {
@@ -220,7 +237,7 @@ display.parameters_sem <- function(object,
 #' @export
 display.parameters_efa_summary <- function(object, format = "markdown", digits = 3, ...) {
   format <- insight::validate_argument(format, c("markdown", "html", "md", "tt"))
-  fun_args <- list(x = object, digits = digits)
+  fun_args <- list(x = object, digits = digits, engine = ifelse(format == "tt", "tt", "gt"))
 
   if (format %in% c("html", "tt")) {
     do.call(print_html, c(fun_args, list(...)))
@@ -247,7 +264,8 @@ display.parameters_efa <- function(object, format = "markdown", digits = 2, sort
     digits = digits,
     sort = sort,
     threshold = threshold,
-    labels = labels
+    labels = labels,
+    engine = ifelse(format == "tt", "tt", "gt")
   )
 
   if (format %in% c("html", "tt")) {
@@ -271,4 +289,33 @@ display.parameters_omega <- display.parameters_efa
 #' @export
 display.equivalence_test_lm <- function(object, format = "markdown", digits = 2, ...) {
   print_md(x = object, digits = digits, ...)
+}
+
+
+# p_function ----------------------------
+
+#' @export
+display.parameters_p_function <- function(object,
+                                          format = "markdown",
+                                          digits = 2,
+                                          ci_width = "auto",
+                                          ci_brackets = TRUE,
+                                          pretty_names = TRUE,
+                                          ...) {
+  format <- insight::validate_argument(format, c("markdown", "html", "md", "tt"))
+
+  fun_args <- list(
+    x = object,
+    digits = digits,
+    ci_width = ci_width,
+    ci_brackets = ci_brackets,
+    pretty_names = pretty_names,
+    engine = ifelse(format == "tt", "tt", "gt")
+  )
+
+  if (format %in% c("html", "tt")) {
+    do.call(print_html, c(fun_args, list(...)))
+  } else {
+    do.call(print_md, c(fun_args, list(...)))
+  }
 }

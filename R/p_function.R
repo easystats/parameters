@@ -435,28 +435,6 @@ print.parameters_p_function <- function(x,
 }
 
 
-#' @export
-print_md.parameters_p_function <- function(x,
-                                           digits = 2,
-                                           ci_width = "auto",
-                                           ci_brackets = c("(", ")"),
-                                           pretty_names = TRUE,
-                                           ...) {
-  .print_p_function(x, digits, ci_width, ci_brackets, pretty_names, format = "markdown", ...)
-}
-
-
-#' @export
-print_html.parameters_p_function <- function(x,
-                                             digits = 2,
-                                             ci_width = "auto",
-                                             ci_brackets = c("(", ")"),
-                                             pretty_names = TRUE,
-                                             ...) {
-  .print_p_function(x, digits, ci_width, ci_brackets, pretty_names, format = "html", ...)
-}
-
-
 # helper ----------
 
 .print_p_function <- function(x,
@@ -465,7 +443,14 @@ print_html.parameters_p_function <- function(x,
                               ci_brackets = c("(", ")"),
                               pretty_names = TRUE,
                               format = "html",
+                              engine = "gt",
                               ...) {
+  # which engine?
+  engine <- insight::validate_argument(
+    getOption("easystats_html_engine", engine),
+    c("gt", "default", "tt")
+  )
+
   formatted_table <- format(
     x,
     digits = digits,
@@ -475,6 +460,11 @@ print_html.parameters_p_function <- function(x,
     pretty_names = pretty_names,
     ...
   )
+
+  # set engine for html format
+  if (format == "html" && identical(engine, "tt")) {
+    format <- "tt"
+  }
 
   insight::export_table(
     formatted_table,

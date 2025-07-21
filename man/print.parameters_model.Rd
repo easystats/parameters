@@ -71,6 +71,7 @@
   line_padding = 4,
   column_labels = NULL,
   include_reference = FALSE,
+  engine = "gt",
   verbose = TRUE,
   ...
 )
@@ -183,7 +184,9 @@ encompassed in square brackets (else in parentheses).}
 places than \code{digits} are printed in scientific notation.}
 
 \item{format}{String, indicating the output format. Can be \code{"markdown"}
-or \code{"html"}.}
+\code{"html"}, or \code{"tt"}. \code{format = "tt"} creates a \code{tinytable} object, which is
+either printed as markdown or HTML table, depending on the environment. See
+\code{\link[insight:export_table]{insight::export_table()}} for details.}
 
 \item{groups}{Named list, can be used to group parameters in the printed output.
 List elements may either be character vectors that match the name of those
@@ -240,6 +243,14 @@ data frames, \code{caption} may be a list of table captions, one for each table.
 
 \item{column_labels}{Labels of columns for HTML tables. If \code{NULL}, automatic
 column names are generated. See 'Examples'.}
+
+\item{engine}{Character string, naming the package or engine to be used for
+printing into HTML or markdown format. Currently supported \code{"gt"} (or
+\code{"default"}) to use the \emph{gt} package to print to HTML and the default easystats
+engine to create markdown tables. If \code{engine = "tt"}, the \emph{tinytable} package
+is used for printing to HTML or markdown. Not all \code{print()} methods support
+the \code{"tt"} engine yet. If a specific \code{print()} method has no \code{engine} argument,
+\code{insight::export_table()} is used, which uses \emph{gt} for HTML printing.}
 
 \item{verbose}{Toggle messages and warnings.}
 }
@@ -362,17 +373,8 @@ model <- lm(
 )
 # don't select "Intercept" parameter
 mp <- model_parameters(model, parameters = "^(?!\\\\(Intercept)")
-groups <- list(
-  "Focal Predictors" = c("Speciesversicolor", "Speciesvirginica"),
-  "Controls" = c("Sepal.Length", "Petal.Length")
-)
+groups <- list(`Focal Predictors` = c(1, 4), Controls = c(2, 3))
 print(mp, groups = groups)
-
-# or use row indices
-print(mp, groups = list(
-  "Focal Predictors" = c(1, 4),
-  "Controls" = c(2, 3)
-))
 
 # only show coefficients, CI and p,
 # put non-matched parameters to the end
@@ -385,8 +387,8 @@ model <- lm(mpg ~ hp + gear * vs + cyl + drat, data = mtcars)
 # don't select "Intercept" parameter
 mp <- model_parameters(model, parameters = "^(?!\\\\(Intercept)")
 print(mp, groups = list(
-  "Engine" = c("cyl6", "cyl8", "vs", "hp"),
-  "Interactions" = c("gear4:vs", "gear5:vs")
+  Engine = c(5, 6, 4, 1),
+  Interactions = c(8, 9)
 ))
 }
 

@@ -1,4 +1,5 @@
 skip_if_not_installed("tinytable")
+skip_if_not_installed("knitr")
 
 test_that("include_reference, on-the-fly factors", {
   data(mtcars)
@@ -19,7 +20,8 @@ test_that("include_reference, on-the-fly factors", {
   expect_equal(out1$Coefficient, out2$Coefficient, tolerance = 1e-4)
 
   out <- compare_parameters(m1, m2, include_reference = TRUE)
-  expect_snapshot(print_md(out, engine = "tt"))
+  expect_snapshot(print_md(out))
+  expect_snapshot(display(out, format = "tt"))
 })
 
 skip_if(getRversion() < "4.3.3")
