@@ -59,11 +59,14 @@
 \method{display}{equivalence_test_lm}(object, format = "markdown", digits = 2, ...)
 }
 \arguments{
-\item{object}{An object returned by \code{\link[=model_parameters]{model_parameters()}},\code{\link[=simulate_parameters]{simulate_parameters()}},
-\code{\link[=equivalence_test]{equivalence_test()}} or \code{\link[=principal_components]{principal_components()}}.}
+\item{object}{An object returned by one of the package's function, for example
+\code{\link[=model_parameters]{model_parameters()}}, \code{\link[=simulate_parameters]{simulate_parameters()}}, \code{\link[=equivalence_test]{equivalence_test()}} or
+\code{\link[=principal_components]{principal_components()}}.}
 
 \item{format}{String, indicating the output format. Can be \code{"markdown"}
-or \code{"html"}.}
+\code{"html"}, or \code{"tt"}. \code{format = "tt"} creates a \code{tinytable} object, which is
+either printed as markdown or HTML table, depending on the environment. See
+\code{\link[insight:export_table]{insight::export_table()}} for details.}
 
 \item{pretty_names}{Can be \code{TRUE}, which will return "pretty" (i.e. more human
 readable) parameter names. Or \code{"labels"}, in which case value and variable
@@ -191,21 +194,18 @@ only display the maximum loading per variable (the most simple structure).}
 
 \item{labels}{A character vector containing labels to be added to the
 loadings data. Usually, the question related to the item.}
-
-\item{x}{An object returned by \code{\link[=model_parameters]{model_parameters()}}.}
-
-\item{theme}{String, indicating the table theme. Can be one of \code{"default"},
-\code{"grid"}, \code{"striped"}, \code{"bootstrap"} or \code{"darklines"}.}
 }
 \value{
 If \code{format = "markdown"}, the return value will be a character
 vector in markdown-table format. If \code{format = "html"}, an object of
-class \code{gt_tbl}.
+class \code{gt_tbl}. If \code{format = "tt"}, an object of class \code{tinytable}.
 }
 \description{
 Prints tables (i.e. data frame) in different output formats.
 \code{print_md()} is an alias for \code{display(format = "markdown")}, \code{print_html()}
-is an alias for \code{display(format = "html")}.
+is an alias for \code{display(format = "html")}, and \code{print_html(engine = "tt")}
+is an alias for \code{display(format = "tt")}. The latter is a \code{tinytable} object,
+which is either printed as markdown or HTML table, depending on the environment.
 }
 \details{
 \code{display()} is useful when the table-output from functions,

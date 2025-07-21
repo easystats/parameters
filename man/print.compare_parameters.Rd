@@ -155,7 +155,9 @@ encompassed in square brackets (else in parentheses).}
 places than \code{digits} are printed in scientific notation.}
 
 \item{format}{String, indicating the output format. Can be \code{"markdown"}
-or \code{"html"}.}
+\code{"html"}, or \code{"tt"}. \code{format = "tt"} creates a \code{tinytable} object, which is
+either printed as markdown or HTML table, depending on the environment. See
+\code{\link[insight:export_table]{insight::export_table()}} for details.}
 
 \item{groups}{Named list, can be used to group parameters in the printed output.
 List elements may either be character vectors that match the name of those

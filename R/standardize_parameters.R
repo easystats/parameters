@@ -520,12 +520,12 @@ format.parameters_standardized <- function(x,
 
 
 #' @export
-display.parameters_standardized <- function(x,
+display.parameters_standardized <- function(object,
                                             format = "markdown",
                                             digits = 2,
                                             ...) {
   format <- insight::validate_argument(format, c("markdown", "html", "md", "tt"))
-  fun_args <- list(x = x, digits = digits, engine = ifelse(format == "tt", "tt", "gt"))
+  fun_args <- list(x = object, digits = digits, engine = ifelse(format == "tt", "tt", "gt"))
 
   if (format %in% c("html", "tt")) {
     do.call(print_html, c(fun_args, list(...)))

@@ -3,13 +3,17 @@
 #'
 #' @description Prints tables (i.e. data frame) in different output formats.
 #' `print_md()` is an alias for `display(format = "markdown")`, `print_html()`
-#' is an alias for `display(format = "html")`.
+#' is an alias for `display(format = "html")`, and `print_html(engine = "tt")`
+#' is an alias for `display(format = "tt")`. The latter is a `tinytable` object,
+#' which is either printed as markdown or HTML table, depending on the environment.
 #'
-#' @param x An object returned by [`model_parameters()`].
-#' @param object An object returned by [`model_parameters()`],[`simulate_parameters()`],
-#' [`equivalence_test()`] or [`principal_components()`].
+#' @param object An object returned by one of the package's function, for example
+#' [`model_parameters()`], [`simulate_parameters()`], [`equivalence_test()`] or
+#' [`principal_components()`].
 #' @param format String, indicating the output format. Can be `"markdown"`
-#' or `"html"`.
+#' `"html"`, or `"tt"`. `format = "tt"` creates a `tinytable` object, which is
+#' either printed as markdown or HTML table, depending on the environment. See
+#' [`insight::export_table()`] for details.
 #' @param align Only applies to HTML tables. May be one of `"left"`,
 #' `"right"` or `"center"`.
 #' @param digits,ci_digits,p_digits Number of digits for rounding or
@@ -26,8 +30,6 @@
 #' @param line_padding For HTML tables, the distance (in pixel) between lines.
 #' @param column_labels Labels of columns for HTML tables. If `NULL`, automatic
 #' column names are generated. See 'Examples'.
-#' @param theme String, indicating the table theme. Can be one of `"default"`,
-#' `"grid"`, `"striped"`, `"bootstrap"` or `"darklines"`.
 #' @inheritParams print.parameters_model
 #' @inheritParams insight::format_table
 #' @inheritParams insight::export_table
@@ -35,7 +37,7 @@
 #'
 #' @return If `format = "markdown"`, the return value will be a character
 #' vector in markdown-table format. If `format = "html"`, an object of
-#' class `gt_tbl`.
+#' class `gt_tbl`. If `format = "tt"`, an object of class `tinytable`.
 #'
 #' @details `display()` is useful when the table-output from functions,
 #' which is usually printed as formatted text-table to console, should
@@ -293,7 +295,7 @@ display.equivalence_test_lm <- function(object, format = "markdown", digits = 2,
 # p_function ----------------------------
 
 #' @export
-display.parameters_p_function <- function(x,
+display.parameters_p_function <- function(object,
                                           format = "markdown",
                                           digits = 2,
                                           ci_width = "auto",
@@ -303,7 +305,7 @@ display.parameters_p_function <- function(x,
   format <- insight::validate_argument(format, c("markdown", "html", "md", "tt"))
 
   fun_args <- list(
-    x = x,
+    x = object,
     digits = digits,
     ci_width = ci_width,
     ci_brackets = ci_brackets,
