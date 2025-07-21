@@ -301,7 +301,6 @@ print_html.parameters_efa <- function(x,
     format = "html",
     digits = digits,
     labels = labels,
-    backend = .check_format_backend(...),
     ...
   )
 }
@@ -363,7 +362,6 @@ print_html.parameters_p_function <- function(x,
     ci_brackets,
     pretty_names,
     format = "html",
-    backend = .check_format_backend(...),
     ...
   )
 }
@@ -444,9 +442,9 @@ print_html.parameters_p_function <- function(x,
 # we allow exporting HTML format based on "gt" or "tinytable"
 .check_format_backend <- function(...) {
   dots <- list(...)
-  if (is.null(dots) || !identical(dots$backend, "tt")) {
-    "html"
-  } else {
+  if (identical(dots$backend, "tt")) {
     "tt"
+  } else {
+    "html"
   }
 }
