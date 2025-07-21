@@ -58,8 +58,8 @@ withr::with_options(
       expect_identical(
         colnames(out),
         c(
-          "Parameter", "Estimate (SE) (m1)", "p (m1)", "Estimate (SE) (m2)",
-          "p (m2)", "Estimate (SE) (m3)", "p (m3)"
+          "Parameter", "Coefficient (SE) (m1)", "p (m1)", "Coefficient (SE) (m2)",
+          "p (m2)", "Log-Mean (SE) (m3)", "p (m3)"
         )
       )
       expect_identical(
