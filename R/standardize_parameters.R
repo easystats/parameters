@@ -549,14 +549,12 @@ print_md.parameters_standardized <- function(x, digits = 2, ...) {
 }
 
 #' @export
-print_html.parameters_standardized <- function(x, digits = 2, engine = "gt", ...) {
+print_html.parameters_standardized <- function(x, digits = 2, ...) {
   # which engine?
-  engine <- insight::validate_argument(
-    getOption("easystats_html_engine", engine),
-    c("gt", "default", "tt")
-  )
+  engine <- .check_format_backend(...)
+
   x_fmt <- format(x, digits = digits, output = "html", ...)
-  insight::export_table(x_fmt, format = ifelse(identical(engine, "tt"), "tt", "html"), ...)
+  insight::export_table(x_fmt, format = engine, ...)
 }
 
 
