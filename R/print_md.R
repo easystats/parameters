@@ -98,7 +98,6 @@ print_md.parameters_model <- function(x,
     }
   }
 
-
   insight::export_table(
     formatted_table,
     format = "markdown",
@@ -134,7 +133,6 @@ print_md.compare_parameters <- function(x,
                                         ci_brackets = c("(", ")"),
                                         zap_small = FALSE,
                                         groups = NULL,
-                                        engine = "tt",
                                         ...) {
   # check if user supplied digits attributes
   if (missing(digits)) {
@@ -155,9 +153,6 @@ print_md.compare_parameters <- function(x,
     groups <- attributes(x)$parameter_groups
   }
 
-  # markdown engine?
-  engine <- insight::validate_argument(engine, c("tt", "default"))
-
   formatted_table <- format(
     x,
     select = select,
@@ -169,8 +164,7 @@ print_md.compare_parameters <- function(x,
     ci_brackets = ci_brackets,
     format = "markdown",
     zap_small = zap_small,
-    groups = groups,
-    engine = engine
+    groups = groups
   )
 
   # replace brackets by parenthesis
@@ -179,36 +173,13 @@ print_md.compare_parameters <- function(x,
     formatted_table$Parameter <- gsub("]", ci_brackets[2], formatted_table$Parameter, fixed = TRUE)
   }
 
-  if (identical(engine, "tt")) {
-    # retrieve output format - print_md() may be called from print_html()
-    dots <- list(...)
-    if (identical(dots$outformat, "html")) {
-      outformat <- "html"
-    } else {
-      outformat <- "markdown"
-    }
-
-    col_names <- gsub("(.*) \\((.*)\\)$", "\\2", colnames(formatted_table))
-    col_groups <- sapply(attributes(x)$model_names, function(i) which(i == col_names), simplify = FALSE)
-    colnames(formatted_table) <- gsub("(.*) \\((.*)\\)$", "\\1", colnames(formatted_table))
-
-    insight::export_table(
-      formatted_table,
-      format = "tt",
-      caption = caption,
-      subtitle = subtitle,
-      footer = footer,
-      column_groups = col_groups
-    )
-  } else {
-    insight::export_table(
-      formatted_table,
-      format = "markdown",
-      caption = caption,
-      subtitle = subtitle,
-      footer = footer
-    )
-  }
+  insight::export_table(
+    formatted_table,
+    format = "markdown",
+    caption = caption,
+    subtitle = subtitle,
+    footer = footer
+  )
 }
 
 
@@ -317,11 +288,13 @@ print_md.parameters_omega <- print_md.parameters_efa
 # Equivalence test ----------------------------
 
 #' @export
-print_md.equivalence_test_lm <- function(x,
-                                         digits = 2,
-                                         ci_brackets = c("(", ")"),
-                                         zap_small = FALSE,
-                                         ...) {
+print_md.equivalence_test_lm <- function(
+  x,
+  digits = 2,
+  ci_brackets = c("(", ")"),
+  zap_small = FALSE,
+  ...
+) {
   rule <- attributes(x)$rule
   rope <- attributes(x)$rope
 
@@ -363,8 +336,19 @@ print_md.equivalence_test_lm <- function(x,
   }
 
   if (!is.null(rope)) {
-    names(formatted_table)[names(formatted_table) == "% in ROPE"] <- sprintf("%% in ROPE (%.*f, %.*f)", digits, rope[1], digits, rope[2]) # nolint
+    names(formatted_table)[names(formatted_table) == "% in ROPE"] <- sprintf(
+      "%% in ROPE (%.*f, %.*f)",
+      digits,
+      rope[1],
+      digits,
+      rope[2]
+    ) # nolint
   }
 
-  insight::export_table(formatted_table, format = "markdown", caption = table_caption, align = "firstleft")
+  insight::export_table(
+    formatted_table,
+    format = "markdown",
+    caption = table_caption,
+    align = "firstleft"
+  )
 }

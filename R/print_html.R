@@ -186,7 +186,7 @@ print_html.compare_parameters <- function(x,
     select <- attributes(x)$output_style
   }
 
-  # markdown engine?
+  # which engine?
   engine <- insight::validate_argument(
     getOption("easystats_html_engine", engine),
     c("gt", "default", "tt")
@@ -291,6 +291,12 @@ print_html.parameters_efa <- function(x,
                                       labels = NULL,
                                       engine = "gt",
                                       ...) {
+  # which engine?
+  engine <- insight::validate_argument(
+    getOption("easystats_html_engine", engine),
+    c("gt", "default", "tt")
+  )
+
   # extract attributes
   if (is.null(threshold)) {
     threshold <- attributes(x)$threshold
@@ -299,7 +305,7 @@ print_html.parameters_efa <- function(x,
     x,
     threshold = threshold,
     sort = sort,
-    format = engine,
+    format = ifelse(identical(engine, "tt"), "tt", "html"),
     digits = digits,
     labels = labels,
     ...

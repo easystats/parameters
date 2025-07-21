@@ -216,7 +216,8 @@ display.parameters_sem <- function(object,
     digits = digits,
     ci_digits = ci_digits,
     p_digits = p_digits,
-    ci_brackets = ci_brackets
+    ci_brackets = ci_brackets,
+    engine = ifelse(format == "tt", "tt", "gt")
   )
 
   if (format %in% c("html", "tt")) {
@@ -234,7 +235,7 @@ display.parameters_sem <- function(object,
 #' @export
 display.parameters_efa_summary <- function(object, format = "markdown", digits = 3, ...) {
   format <- insight::validate_argument(format, c("markdown", "html", "md", "tt"))
-  fun_args <- list(x = object, digits = digits)
+  fun_args <- list(x = object, digits = digits, engine = ifelse(format == "tt", "tt", "gt"))
 
   if (format %in% c("html", "tt")) {
     do.call(print_html, c(fun_args, list(...)))
@@ -261,7 +262,8 @@ display.parameters_efa <- function(object, format = "markdown", digits = 2, sort
     digits = digits,
     sort = sort,
     threshold = threshold,
-    labels = labels
+    labels = labels,
+    engine = ifelse(format == "tt", "tt", "gt")
   )
 
   if (format %in% c("html", "tt")) {

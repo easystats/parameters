@@ -426,8 +426,8 @@ print.parameters_omega_summary <- function(x, ...) {
   }
 
   # set engine for html format
-  if (format == "html") {
-    format <- ifelse(identical(engine, "tt"), "tt", "html")
+  if (format == "html" && identical(engine, "tt")) {
+    format <- "tt"
   }
 
   insight::export_table(

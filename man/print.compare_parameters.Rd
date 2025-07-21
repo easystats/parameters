@@ -73,7 +73,6 @@
   ci_brackets = c("(", ")"),
   zap_small = FALSE,
   groups = NULL,
-  engine = "tt",
   ...
 )
 }
