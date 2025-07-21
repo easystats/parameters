@@ -202,10 +202,10 @@ class \code{gt_tbl}. If \code{format = "tt"}, an object of class \code{tinytable
 }
 \description{
 Prints tables (i.e. data frame) in different output formats.
-\code{print_md()} is an alias for \code{display(format = "markdown")}, \code{print_html()}
-is an alias for \code{display(format = "html")}, and \code{print_html(engine = "tt")}
-is an alias for \code{display(format = "tt")}. The latter is a \code{tinytable} object,
-which is either printed as markdown or HTML table, depending on the environment.
+\code{print_md()} is an alias for \code{display(format = "markdown")} and
+\code{print_html()} is an alias for \code{display(format = "html")}. A third option is
+\code{display(format = "tt")}, which returns a \code{tinytable} object, which is either
+printed as markdown or HTML table, depending on the environment.
 }
 \details{
 \code{display()} is useful when the table-output from functions,

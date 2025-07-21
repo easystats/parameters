@@ -2,10 +2,10 @@
 #' @name display.parameters_model
 #'
 #' @description Prints tables (i.e. data frame) in different output formats.
-#' `print_md()` is an alias for `display(format = "markdown")`, `print_html()`
-#' is an alias for `display(format = "html")`, and `print_html(engine = "tt")`
-#' is an alias for `display(format = "tt")`. The latter is a `tinytable` object,
-#' which is either printed as markdown or HTML table, depending on the environment.
+#' `print_md()` is an alias for `display(format = "markdown")` and
+#' `print_html()` is an alias for `display(format = "html")`. A third option is
+#' `display(format = "tt")`, which returns a `tinytable` object, which is either
+#' printed as markdown or HTML table, depending on the environment.
 #'
 #' @param object An object returned by one of the package's function, for example
 #' [`model_parameters()`], [`simulate_parameters()`], [`equivalence_test()`] or

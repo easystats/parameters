@@ -154,10 +154,6 @@
 #' output, like markdown files). The argument `table_width` can also be used in
 #' most `print()` methods to specify the table width as desired.
 #'
-#' - `easystats_html_engine`: `options(easystats_html_engine = "gt")` will set
-#' the default HTML engine for tables to `gt`, i.e. the _gt_ package is used to
-#' create HTML tables. If set to `tt`, the _tinytable_ package is used.
-#'
 #' - `insight_use_symbols`: `options(insight_use_symbols = TRUE)` will try to
 #' print unicode-chars for symbols as column names, wherever possible (e.g.,
 #' \ifelse{html}{\out{&omega;}}{\eqn{\omega}} instead of `Omega`).
