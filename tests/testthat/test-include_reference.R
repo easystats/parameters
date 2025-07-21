@@ -20,7 +20,7 @@ test_that("include_reference, on-the-fly factors", {
 
   out <- compare_parameters(m1, m2, include_reference = TRUE)
   expect_snapshot(print_md(out))
-  expect_snapshot(display(out, engine = "tt"))
+  expect_snapshot(display(out, format = "tt"))
 })
 
 skip_if(getRversion() < "4.3.3")
