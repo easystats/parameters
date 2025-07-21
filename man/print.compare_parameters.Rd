@@ -168,14 +168,6 @@ variables, see 'Examples'. Parameters will be re-ordered according to the
 order used in \code{groups}, while all non-matching parameters will be added
 to the end.}
 
-\item{engine}{Character string, naming the package or engine to be used for
-printing into HTML or markdown format. Currently supported \code{"gt"} (or
-\code{"default"}) to use the \emph{gt} package to print to HTML and the default easystats
-engine to create markdown tables. If \code{engine = "tt"}, the \emph{tinytable} package
-is used for printing to HTML or markdown. Not all \code{print()} methods support
-the \code{"tt"} engine yet. If a specific \code{print()} method has no \code{engine} argument,
-\code{insight::export_table()} is used, which uses \emph{gt} for HTML printing.}
-
 \item{...}{Arguments passed down to \code{\link[=format.parameters_model]{format.parameters_model()}},
 \code{\link[insight:format_table]{insight::format_table()}} and \code{\link[insight:export_table]{insight::export_table()}}}
 
