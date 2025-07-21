@@ -126,7 +126,6 @@
 <span>  line_padding <span class="op">=</span> <span class="fl">4</span>,</span>
 <span>  column_labels <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  include_reference <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  engine <span class="op">=</span> <span class="st">"gt"</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span>
@@ -338,16 +337,6 @@ data frames, <code>caption</code> may be a list of table captions, one for each 
 column names are generated. See 'Examples'.</p></dd>
 
 
-<dt id="arg-engine">engine<a class="anchor" aria-label="anchor" href="#arg-engine"></a></dt>
-<dd><p>Character string, naming the package or engine to be used for
-printing into HTML or markdown format. Currently supported <code>"gt"</code> (or
-<code>"default"</code>) to use the <em>gt</em> package to print to HTML and the default easystats
-engine to create markdown tables. If <code>engine = "tt"</code>, the <em>tinytable</em> package
-is used for printing to HTML or markdown. Not all <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code> methods support
-the <code>"tt"</code> engine yet. If a specific <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code> method has no <code>engine</code> argument,
-<code><a href="https://easystats.github.io/insight/reference/export_table.html" class="external-link">insight::export_table()</a></code> is used, which uses <em>gt</em> for HTML printing.</p></dd>
-
-
 <dt id="arg-verbose">verbose<a class="anchor" aria-label="anchor" href="#arg-verbose"></a></dt>
 <dd><p>Toggle messages and warnings.</p></dd>
 
@@ -398,9 +387,6 @@ printed to console. If not specified, tables will be adjusted to the current
 available width, e.g. of the of the console (or any other source for textual
 output, like markdown files). The argument <code>table_width</code> can also be used in
 most <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code> methods to specify the table width as desired.</p></li>
-<li><p><code>easystats_html_engine</code>: <code>options(easystats_html_engine = "gt")</code> will set
-the default HTML engine for tables to <code>gt</code>, i.e. the <em>gt</em> package is used to
-create HTML tables. If set to <code>tt</code>, the <em>tinytable</em> package is used.</p></li>
 <li><p><code>insight_use_symbols</code>: <code>options(insight_use_symbols = TRUE)</code> will try to
 print unicode-chars for symbols as column names, wherever possible (e.g.,
 ω instead of <code>Omega</code>).</p></li>
