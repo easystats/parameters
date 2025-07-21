@@ -1,4 +1,5 @@
 skip_if_not_installed("tinytable")
+skip_if_not_installed("knitr")
 
 test_that("include_reference, on-the-fly factors", {
   data(mtcars)
