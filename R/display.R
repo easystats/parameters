@@ -3,8 +3,7 @@
 #'
 #' @description Prints tables (i.e. data frame) in different output formats.
 #' `print_md()` is an alias for `display(format = "markdown")`, `print_html()`
-#' is an alias for `display(format = "html")`. `print_table()` is for specific
-#' use cases only, and currently only works for `compare_parameters()` objects.
+#' is an alias for `display(format = "html")`.
 #'
 #' @param x An object returned by [`model_parameters()`].
 #' @param object An object returned by [`model_parameters()`],[`simulate_parameters()`],
@@ -36,8 +35,7 @@
 #'
 #' @return If `format = "markdown"`, the return value will be a character
 #' vector in markdown-table format. If `format = "html"`, an object of
-#' class `gt_tbl`. For `print_table()`, an object of class `tinytable` is
-#' returned.
+#' class `gt_tbl`.
 #'
 #' @details `display()` is useful when the table-output from functions,
 #' which is usually printed as formatted text-table to console, should
@@ -45,14 +43,6 @@
 #' knitted from rmarkdown to PDF or Word files. See
 #' [vignette](https://easystats.github.io/parameters/articles/model_parameters_formatting.html)
 #' for examples.
-#'
-#' `print_table()` is a special function for `compare_parameters()` objects,
-#' which prints the output as a formatted HTML table. It is still somewhat
-#' experimental, thus, only a fixed layout-style is available at the moment
-#' (columns for estimates, confidence intervals and p-values). However, it
-#' is possible to include other model components, like zero-inflation, or random
-#' effects in the table. See 'Examples'. An alternative is to set `engine = "tt"`
-#' in `print_html()` to use the _tinytable_ package for creating HTML tables.
 #'
 #' @seealso [print.parameters_model()] and [print.compare_parameters()]
 #'
@@ -80,6 +70,28 @@
 #'   select = "{estimate}{stars}<br>({ci_low} \u2212 {ci_high})",
 #'   column_labels = c("Est. (95% CI)")
 #' )
+#' }
+#'
+#' @examplesIf all(insight::check_if_installed(c("glmmTMB", "lme4", "tinytable"), quietly = TRUE))
+#' \donttest{
+#' data(iris)
+#' data(Salamanders, package = "glmmTMB")
+#' m1 <- lm(Sepal.Length ~ Species * Petal.Length, data = iris)
+#' m2 <- lme4::lmer(
+#'   Sepal.Length ~ Petal.Length + Petal.Width + (1 | Species),
+#'   data = iris
+#' )
+#' m3 <- glmmTMB::glmmTMB(
+#'   count ~ spp + mined + (1 | site),
+#'   ziformula = ~mined,
+#'   family = poisson(),
+#'   data = Salamanders
+#' )
+#' out <- compare_parameters(m1, m2, m3, effects = "all", component = "all")
+#'
+#' display(out, format = "tt")
+#'
+#' display(out, select = "{estimate}|{ci}", format = "tt")
 #' }
 #' @export
 display.parameters_model <- function(object,

@@ -221,27 +221,32 @@ print_html.compare_parameters <- function(x,
   model_groups <- NULL
   by <- NULL
 
-  if (identical(engine, "tt")) {
-    # find columns that contain model names, which we want to group
-    models <- setdiff(
-      unique(gsub("(.*) \\((.*)\\)$", "\\2", colnames(formatted_table))[-1]),
-      c("Component", "Effects", "Response", "Group")
-    )
-    # grouping only applies when we have custom column layout (with "select")
-    # else, we don't need grouping
-    if (any(grepl(paste0("(", models[1], ")"), colnames(formatted_table), fixed = TRUE))) {
-      model_groups <- lapply(models, function(model) {
-        which(endsWith(colnames(formatted_table), paste0("(", model, ")")))
-      })
-      names(model_groups) <- models
-      colnames(formatted_table)[-1] <- gsub("(.*) \\((.*)\\)$", "\\1", colnames(formatted_table)[-1])
+  # find columns that contain model names, which we want to group
+  models <- setdiff(
+    unique(gsub("(.*) \\((.*)\\)$", "\\2", colnames(formatted_table))[-1]),
+    c("Component", "Effects", "Response", "Group")
+  )
+  # grouping only applies when we have custom column layout (with "select")
+  # else, we don't need grouping
+  if (any(grepl(paste0("(", models[1], ")"), colnames(formatted_table), fixed = TRUE))) {
+    model_groups <- lapply(models, function(model) {
+      which(endsWith(colnames(formatted_table), paste0("(", model, ")")))
+    })
+    names(model_groups) <- models
+    if (identical(engine, "tt")) {
+      # for the tt backend, we need to add the model name to the column names
+      colnames(formatted_table)[-1] <- gsub(
+        "(.*) \\((.*)\\)$",
+        "\\1",
+        colnames(formatted_table)[-1]
+      )
     }
-    if ("Component" %in% colnames(formatted_table)) {
-      by <- c(by, "Component")
-    }
-    if ("Effects" %in% colnames(formatted_table)) {
-      by <- c(by, "Effects")
-    }
+  }
+  if ("Component" %in% colnames(formatted_table)) {
+    by <- c(by, "Component")
+  }
+  if ("Effects" %in% colnames(formatted_table)) {
+    by <- c(by, "Effects")
   }
 
   # export table ------------------------------------------------------------
@@ -268,8 +273,6 @@ print_html.compare_parameters <- function(x,
       style = select,
       font_size = font_size,
       line_padding = line_padding,
-      # we assume that model names are at the end of each column name, in parenthesis
-      original_colnames = gsub("(.*) \\((.*)\\)$", "\\2", colnames(formatted_table))[-1],
       column_names = colnames(formatted_table),
       user_labels = column_labels
     )
@@ -353,7 +356,6 @@ print_html.parameters_pca_summary <- print_html.parameters_efa_summary
                             style,
                             font_size = "100%",
                             line_padding = 4,
-                            original_colnames = NULL,
                             column_names = NULL,
                             user_labels = NULL) {
   insight::check_if_installed("gt")
@@ -375,29 +377,18 @@ print_html.parameters_pca_summary <- print_html.parameters_efa_summary
     )
     new_labels <- as.list(new_labels)
   }
-  # add a column span? here we have multiple columns (like estimate, CI, p, ...)
-  # for each model. In this case, we want to add a column spanner, i.e. a
-  # separate heading for all columns of each model.
-  if (!is.null(original_colnames) && anyDuplicated(original_colnames) > 0) {
-    duplicates <- original_colnames[duplicated(original_colnames)]
-    for (d in duplicates) {
-      # we need +1 here, because first column is parameter column
-      span <- which(original_colnames == d) + 1
-      # add column spanner
-      out <- gt::tab_spanner(out, label = d, columns = span)
+
+  # relabel columns. The single columns still have their old labels
+  # (like "Estimate (model1)", "p (model1)"), and we extracted the "model names"
+  # and used them for the column spanner. Now we no longer need this suffix,
+  # and remove it. In case user-defined column labels are provided, "new_labels"
+  # is not NULL, so we use user labels, else we extract labels from columns.
+  if (!is.null(column_names)) {
+    if (is.null(new_labels)) {
+      new_labels <- as.list(gsub("(.*) \\((.*)\\)$", "\\1", column_names))
     }
-    # relabel columns. The single columns still have their old labels
-    # (like "Estimate (model1)", "p (model1)"), and we extracted the "model names"
-    # and used them for the column spanner. Now we no longer need this suffix,
-    # and remove it. In case user-defined column labels are provided, "new_labels"
-    # is not NULL, so we use user labels, else we extract labels from columns.
-    if (!is.null(column_names)) {
-      if (is.null(new_labels)) {
-        new_labels <- as.list(gsub("(.*) \\((.*)\\)$", "\\1", column_names))
-      }
-      names(new_labels) <- column_names
-      out <- gt::cols_label(out, .list = new_labels)
-    }
+    names(new_labels) <- column_names
+    out <- gt::cols_label(out, .list = new_labels)
     # default column label, if we have user labels
   } else if (!is.null(new_labels)) {
     names(new_labels) <- colnames(out[["_data"]])

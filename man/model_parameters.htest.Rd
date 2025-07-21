@@ -128,6 +128,7 @@ Parameters of h-tests (correlations, t-tests, chi-squared, ...).
 \item A \strong{proportion test} returns \emph{p}.
 }
 \item Objects of class \code{anova}, \code{aov}, \code{aovlist} or \code{afex_aov}, depending on \code{type}: \code{"eta"} (default), \code{"omega"} or \code{"epsilon"} -squared, \code{"f"}, or \code{"f2"}.
+\item Objects of class \code{datawizard_crosstab(s)} / \code{datawizard_table(s)} built with \code{\link[datawizard:data_tabulate]{datawizard::data_tabulate()}} - same as Chi-squared tests of independence / goodness-of-fit, respectively.
 \item Other objects are passed to \code{\link[parameters:standardize_parameters]{parameters::standardize_parameters()}}.
 }
 
