@@ -387,8 +387,8 @@ model <- lm(mpg ~ hp + gear * vs + cyl + drat, data = mtcars)
 # don't select "Intercept" parameter
 mp <- model_parameters(model, parameters = "^(?!\\\\(Intercept)")
 print(mp, groups = list(
-  "Engine" = c("cyl6", "cyl8", "vs", "hp"),
-  "Interactions" = c("gear4:vs", "gear5:vs")
+  Engine = c(5, 6, 4, 1),
+  Interactions = c(8, 9)
 ))
 }
 
