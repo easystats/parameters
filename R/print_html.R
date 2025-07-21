@@ -215,12 +215,25 @@ print_html.compare_parameters <- function(x,
     formatted_table$Parameter <- gsub("]", ci_brackets[2], formatted_table$Parameter, fixed = TRUE)
   }
 
+  # setup grouping for tt-backend
+  if (identical(engine, "tt")) {
+    models <- unique(gsub("(.*) \\((.*)\\)$", "\\2", colnames(formatted_table))[-1])
+    model_groups <- lapply(models, function(model) {
+      which(endsWith(colnames(formatted_table), paste0("(", model, ")")))
+    })
+    names(model_groups) <- models
+    colnames(formatted_table)[-1] <- gsub("(.*) \\((.*)\\)$", "\\1", colnames(formatted_table)[-1])
+  } else {
+    model_groups <- NULL
+  }
+
   out <- insight::export_table(
     formatted_table,
     format = ifelse(identical(engine, "tt"), "tt", "html"),
     caption = caption, # TODO: get rid of NOTE
     subtitle = subtitle,
     footer = footer,
+    column_groups = model_groups,
     ...
   )
 

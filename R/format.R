@@ -351,6 +351,16 @@ format.compare_parameters <- function(x,
       select = select,
       ...
     )
+
+    # add modelname to column names; for single column layout per model, we just
+    # need the column name. If the layout contains more than one column per model,
+    # add modelname in parenthesis.
+    if (ncol(cols) > 1) {
+      colnames(cols) <- paste0(colnames(cols), " (", i, ")")
+    } else {
+      colnames(cols) <- i
+    }
+
     out <- cbind(out, cols)
   }
 
