@@ -29,7 +29,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.27.0.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.27.0.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -510,7 +510,9 @@ width.</p>
 the table. <code>groups</code> must be a named list, where the names of
 the list elements equal the header of each group, while the values of
 the list elements equal the parameter names, or the position of the
-parameters in the table (data frame).</p>
+parameters in the table (data frame). Usually, indexing by position is
+easier, since the parameter names can be modified during formatting the
+output.</p>
 <p>In the following example, we see the names of the parameters in the
 <code>Parameter</code> column, while the rownumbers indicate their
 position.</p>
@@ -537,33 +539,33 @@ position.</p>
 <span><span class="co">#&gt; 9  gear5:vs       2.588 4.537 0.95  -6.82  11.998  0.57       22 0.5741</span></span></code></pre></div>
 <p>Now we create a group named <code>"Engine"</code>, which encompasses
 the parameters <code>"cyl6"</code>, <code>"cyl8"</code>,
-<code>"vs"</code> and <code>"hp"</code>. The <code>"Interactions"</code>
-group includes <code>"gear4:vs"</code> and <code>"gear5:vs"</code>. The
-group <code>"controls"</code> has the parameters from rows 2, 3 and
-7.</p>
+<code>"vs"</code> and <code>"hp"</code> (rows 5, 6, 4 and 1). The
+<code>"Interactions"</code> group includes <code>"gear4:vs"</code> and
+<code>"gear5:vs"</code> (rows 8 and 9). The group
+<code>"controls"</code> has the parameters from rows 2, 3 and 7.</p>
 <p>Note that the parameters in the table summary are re-ordered
 according to the order specified in <code>groups</code>.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># group parameters, either by parameter name or position</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">mp</span>, groups <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span>  Engine <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"cyl6"</span>, <span class="st">"cyl8"</span>, <span class="st">"vs"</span>, <span class="st">"hp"</span><span class="op">)</span>,</span>
-<span>  Interactions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"gear4:vs"</span>, <span class="st">"gear5:vs"</span><span class="op">)</span>,</span>
+<span>  Engine <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">6</span>, <span class="fl">4</span>, <span class="fl">1</span><span class="op">)</span>,</span>
+<span>  Interactions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">8</span>, <span class="fl">9</span><span class="op">)</span>,</span>
 <span>  Controls <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">7</span><span class="op">)</span></span>
-<span><span class="op">)</span><span class="op">)</span> <span class="co"># gear 4 and 5, drat</span></span>
-<span><span class="co">#&gt; Parameter        | Coefficient |   SE |          95% CI | t(22) |     p</span></span>
-<span><span class="co">#&gt; -----------------------------------------------------------------------</span></span>
-<span><span class="co">#&gt; Engine           |             |      |                 |       |      </span></span>
-<span><span class="co">#&gt;   cyl [6]        |       -2.47 | 2.21 | [ -7.05,  2.12] | -1.12 | 0.276</span></span>
-<span><span class="co">#&gt;   cyl [8]        |        1.97 | 5.11 | [ -8.63, 12.58] |  0.39 | 0.703</span></span>
-<span><span class="co">#&gt;   vs             |        3.18 | 3.79 | [ -4.68, 11.04] |  0.84 | 0.410</span></span>
-<span><span class="co">#&gt;   hp             |       -0.06 | 0.02 | [ -0.11, -0.02] | -2.91 | 0.008</span></span>
-<span><span class="co">#&gt; Interactions     |             |      |                 |       |      </span></span>
-<span><span class="co">#&gt;   gear [4] × vs  |       -2.90 | 4.67 | [-12.57,  6.78] | -0.62 | 0.541</span></span>
-<span><span class="co">#&gt;   gear [5] × vs  |        2.59 | 4.54 | [ -6.82, 12.00] |  0.57 | 0.574</span></span>
-<span><span class="co">#&gt; Controls         |             |      |                 |       |      </span></span>
-<span><span class="co">#&gt;   gear [4]       |        3.10 | 4.34 | [ -5.90, 12.10] |  0.71 | 0.482</span></span>
-<span><span class="co">#&gt;   gear [5]       |        4.80 | 3.48 | [ -2.42, 12.01] |  1.38 | 0.182</span></span>
-<span><span class="co">#&gt;   drat           |        2.70 | 2.03 | [ -1.52,  6.91] |  1.33 | 0.198</span></span></code></pre></div>
+<span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Parameter       | Coefficient |   SE |          95% CI | t(22) |     p</span></span>
+<span><span class="co">#&gt; ----------------------------------------------------------------------</span></span>
+<span><span class="co">#&gt; Engine          |             |      |                 |       |      </span></span>
+<span><span class="co">#&gt;   cyl [6]       |       -2.47 | 2.21 | [ -7.05,  2.12] | -1.12 | 0.276</span></span>
+<span><span class="co">#&gt;   cyl [8]       |        1.97 | 5.11 | [ -8.63, 12.58] |  0.39 | 0.703</span></span>
+<span><span class="co">#&gt;   vs            |        3.18 | 3.79 | [ -4.68, 11.04] |  0.84 | 0.410</span></span>
+<span><span class="co">#&gt;   hp            |       -0.06 | 0.02 | [ -0.11, -0.02] | -2.91 | 0.008</span></span>
+<span><span class="co">#&gt; Interactions    |             |      |                 |       |      </span></span>
+<span><span class="co">#&gt;   gear [4] × vs |       -2.90 | 4.67 | [-12.57,  6.78] | -0.62 | 0.541</span></span>
+<span><span class="co">#&gt;   gear [5] × vs |        2.59 | 4.54 | [ -6.82, 12.00] |  0.57 | 0.574</span></span>
+<span><span class="co">#&gt; Controls        |             |      |                 |       |      </span></span>
+<span><span class="co">#&gt;   gear [4]      |        3.10 | 4.34 | [ -5.90, 12.10] |  0.71 | 0.482</span></span>
+<span><span class="co">#&gt;   gear [5]      |        4.80 | 3.48 | [ -2.42, 12.01] |  1.38 | 0.182</span></span>
+<span><span class="co">#&gt;   drat          |        2.70 | 2.03 | [ -1.52,  6.91] |  1.33 | 0.198</span></span></code></pre></div>
 <p>If you prefer tables without vertical borders, use the
 <code>sep</code> argument to define the string that is used as
 border-separator. This argument is passed down to
@@ -573,25 +575,25 @@ border-separator. This argument is passed down to
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">mp</span>,</span>
 <span>  sep <span class="op">=</span> <span class="st">"  "</span>,</span>
 <span>  groups <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span>    Engine <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"cyl6"</span>, <span class="st">"cyl8"</span>, <span class="st">"vs"</span>, <span class="st">"hp"</span><span class="op">)</span>,</span>
-<span>    Interactions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"gear4:vs"</span>, <span class="st">"gear5:vs"</span><span class="op">)</span>,</span>
+<span>    Engine <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">6</span>, <span class="fl">4</span>, <span class="fl">1</span><span class="op">)</span>,</span>
+<span>    Interactions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">8</span>, <span class="fl">9</span><span class="op">)</span>,</span>
 <span>    Controls <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">7</span><span class="op">)</span></span>
 <span>  <span class="op">)</span></span>
 <span><span class="op">)</span></span>
-<span><span class="co">#&gt; Parameter         Coefficient    SE           95% CI  t(22)      p</span></span>
-<span><span class="co">#&gt; ------------------------------------------------------------------</span></span>
-<span><span class="co">#&gt; Engine                                                            </span></span>
-<span><span class="co">#&gt;   cyl [6]               -2.47  2.21  [ -7.05,  2.12]  -1.12  0.276</span></span>
-<span><span class="co">#&gt;   cyl [8]                1.97  5.11  [ -8.63, 12.58]   0.39  0.703</span></span>
-<span><span class="co">#&gt;   vs                     3.18  3.79  [ -4.68, 11.04]   0.84  0.410</span></span>
-<span><span class="co">#&gt;   hp                    -0.06  0.02  [ -0.11, -0.02]  -2.91  0.008</span></span>
-<span><span class="co">#&gt; Interactions                                                      </span></span>
-<span><span class="co">#&gt;   gear [4] × vs         -2.90  4.67  [-12.57,  6.78]  -0.62  0.541</span></span>
-<span><span class="co">#&gt;   gear [5] × vs          2.59  4.54  [ -6.82, 12.00]   0.57  0.574</span></span>
-<span><span class="co">#&gt; Controls                                                          </span></span>
-<span><span class="co">#&gt;   gear [4]               3.10  4.34  [ -5.90, 12.10]   0.71  0.482</span></span>
-<span><span class="co">#&gt;   gear [5]               4.80  3.48  [ -2.42, 12.01]   1.38  0.182</span></span>
-<span><span class="co">#&gt;   drat                   2.70  2.03  [ -1.52,  6.91]   1.33  0.198</span></span></code></pre></div>
+<span><span class="co">#&gt; Parameter        Coefficient    SE           95% CI  t(22)      p</span></span>
+<span><span class="co">#&gt; -----------------------------------------------------------------</span></span>
+<span><span class="co">#&gt; Engine                                                           </span></span>
+<span><span class="co">#&gt;   cyl [6]              -2.47  2.21  [ -7.05,  2.12]  -1.12  0.276</span></span>
+<span><span class="co">#&gt;   cyl [8]               1.97  5.11  [ -8.63, 12.58]   0.39  0.703</span></span>
+<span><span class="co">#&gt;   vs                    3.18  3.79  [ -4.68, 11.04]   0.84  0.410</span></span>
+<span><span class="co">#&gt;   hp                   -0.06  0.02  [ -0.11, -0.02]  -2.91  0.008</span></span>
+<span><span class="co">#&gt; Interactions                                                     </span></span>
+<span><span class="co">#&gt;   gear [4] × vs        -2.90  4.67  [-12.57,  6.78]  -0.62  0.541</span></span>
+<span><span class="co">#&gt;   gear [5] × vs         2.59  4.54  [ -6.82, 12.00]   0.57  0.574</span></span>
+<span><span class="co">#&gt; Controls                                                         </span></span>
+<span><span class="co">#&gt;   gear [4]              3.10  4.34  [ -5.90, 12.10]   0.71  0.482</span></span>
+<span><span class="co">#&gt;   gear [5]              4.80  3.48  [ -2.42, 12.01]   1.38  0.182</span></span>
+<span><span class="co">#&gt;   drat                  2.70  2.03  [ -1.52,  6.91]   1.33  0.198</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
@@ -701,7 +703,7 @@ however, it’s necessary to call this argument via the
 <code class="sourceCode R"><span><span class="co"># estimates, p-stars and CI in parentheses</span></span>
 <span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">lm3</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">result</span>, select <span class="op">=</span> <span class="st">"{estimate}{stars} ({ci})"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Parameter                           |           Estimate (ci)</span></span>
+<span><span class="co">#&gt; Parameter                           |        Coefficient (CI)</span></span>
 <span><span class="co">#&gt; -------------------------------------------------------------</span></span>
 <span><span class="co">#&gt; (Intercept)                         |  4.21*** ( 3.41,  5.02)</span></span>
 <span><span class="co">#&gt; Species [versicolor]                | -1.81 ** (-2.99, -0.62)</span></span>
@@ -872,7 +874,7 @@ unicode characters that you need to take care of in the
 <span><span class="co">#&gt; Controls                              |                      |                     </span></span>
 <span><span class="co">#&gt;   Petal Length                        |  0.90 ( 0.78,  1.03) |  0.39 (-0.13,  0.90)</span></span>
 <span><span class="co">#&gt; -----------------------------------------------------------------------------------</span></span>
-<span><span class="co">#&gt;   Observations                        |                  150 |                  150</span></span></code></pre></div>
+<span><span class="co">#&gt; Observations                          |                  150 |                  150</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
@@ -953,7 +955,14 @@ table is split into multiple parts.</p>
 </h2>
 <p>The <code><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">print_md()</a></code> as well as <code><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">print_html()</a></code>
 functions can be used to create markdown (for knitting to PDF or Word)
-and HTML tables.</p>
+and HTML tables, where HTML tables are created using the <a href="https://gt.rstudio.com/" class="external-link"><strong>gt</strong></a> package. There is
+also a <code><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">display()</a></code> function, which internally calls
+<code><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">print_md()</a></code> or <code><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">print_html()</a></code>, depending on the
+<code>format</code> argument. However, for <code><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">display()</a></code>, the
+<code>format</code> argument can also be <code>"tt"</code> to use the <a href="https://vincentarelbundock.github.io/tinytable/" class="external-link"><strong>tinytable</strong></a>
+package as engine to produce tables. This will create tables in
+different output formats, depending on the environment where the code is
+run (e.g. R Markdown, Jupyter Notebook, etc.).</p>
 <p>Meanwhile, there are a lot of additional packages that allow users to
 have even more flexibility regarding table layouts. One package we can
 recommend is the <a href="https://vincentarelbundock.github.io/modelsummary/" class="external-link"><em>modelsummary</em>
