@@ -99,13 +99,6 @@
 #'   categorical predictors. The coefficient for the reference level is always
 #'   `0` (except when `exponentiate = TRUE`, then the coefficient will be `1`),
 #'   so this is just for completeness.
-#' @param engine Character string, naming the package or engine to be used for
-#'   printing into HTML or markdown format. Currently supported `"gt"` (or
-#'   `"default"`) to use the *gt* package to print to HTML and the default easystats
-#'   engine to create markdown tables. If `engine = "tt"`, the *tinytable* package
-#'   is used for printing to HTML or markdown. Not all `print()` methods support
-#'   the `"tt"` engine yet. If a specific `print()` method has no `engine` argument,
-#'   `insight::export_table()` is used, which uses *gt* for HTML printing.
 #' @param ... Arguments passed down to [`format.parameters_model()`],
 #'   [`insight::format_table()`] and [`insight::export_table()`]
 #' @inheritParams insight::format_table
@@ -160,10 +153,6 @@
 #' available width, e.g. of the of the console (or any other source for textual
 #' output, like markdown files). The argument `table_width` can also be used in
 #' most `print()` methods to specify the table width as desired.
-#'
-#' - `easystats_html_engine`: `options(easystats_html_engine = "gt")` will set
-#' the default HTML engine for tables to `gt`, i.e. the _gt_ package is used to
-#' create HTML tables. If set to `tt`, the _tinytable_ package is used.
 #'
 #' - `insight_use_symbols`: `options(insight_use_symbols = TRUE)` will try to
 #' print unicode-chars for symbols as column names, wherever possible (e.g.,

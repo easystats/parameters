@@ -363,12 +363,9 @@ print.parameters_omega_summary <- function(x, ...) {
 }
 
 
-.print_parameters_cfa_efa <- function(x, threshold, sort, format, digits, labels, engine = "gt", ...) {
+.print_parameters_cfa_efa <- function(x, threshold, sort, format, digits, labels, ...) {
   # html engine?
-  engine <- insight::validate_argument(
-    getOption("easystats_html_engine", engine),
-    c("gt", "default", "tt")
-  )
+  engine <- .check_format_backend(...)
 
   # Method
   if (inherits(x, "parameters_pca")) {

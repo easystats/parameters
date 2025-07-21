@@ -224,7 +224,6 @@ format.compare_parameters <- function(x,
                                       zap_small = FALSE,
                                       format = NULL,
                                       groups = NULL,
-                                      engine = NULL,
                                       ...) {
   m_class <- attributes(x)$model_class
   x$Method <- NULL

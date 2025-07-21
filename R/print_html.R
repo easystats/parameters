@@ -23,14 +23,10 @@ print_html.parameters_model <- function(x,
                                         line_padding = 4,
                                         column_labels = NULL,
                                         include_reference = FALSE,
-                                        engine = "gt",
                                         verbose = TRUE,
                                         ...) {
   # which engine?
-  engine <- insight::validate_argument(
-    getOption("easystats_html_engine", engine),
-    c("gt", "default", "tt")
-  )
+  engine <- .check_format_backend(...)
 
   # line separator - for tinytable, we have no specific line separator,
   # because the output format is context-dependent
@@ -123,7 +119,7 @@ print_html.parameters_model <- function(x,
 
   out <- insight::export_table(
     formatted_table,
-    format = ifelse(identical(engine, "tt"), "tt", "html"),
+    format = engine,
     caption = table_caption,
     subtitle = subtitle,
     footer = footer,
@@ -170,7 +166,6 @@ print_html.compare_parameters <- function(x,
                                           font_size = "100%",
                                           line_padding = 4,
                                           column_labels = NULL,
-                                          engine = "gt",
                                           ...) {
   # check if user supplied digits attributes
   if (missing(digits)) {
@@ -191,10 +186,7 @@ print_html.compare_parameters <- function(x,
   }
 
   # which engine?
-  engine <- insight::validate_argument(
-    getOption("easystats_html_engine", engine),
-    c("gt", "default", "tt")
-  )
+  engine <- .check_format_backend(...)
 
   # line separator - for tinytable, we have no specific line separator,
   # because the output format is context-dependent
@@ -261,7 +253,7 @@ print_html.compare_parameters <- function(x,
 
   out <- insight::export_table(
     formatted_table,
-    format = ifelse(identical(engine, "tt"), "tt", "html"),
+    format = engine,
     caption = caption, # TODO: get rid of NOTE
     subtitle = subtitle,
     footer = footer,
@@ -297,14 +289,7 @@ print_html.parameters_efa <- function(x,
                                       sort = FALSE,
                                       threshold = NULL,
                                       labels = NULL,
-                                      engine = "gt",
                                       ...) {
-  # which engine?
-  engine <- insight::validate_argument(
-    getOption("easystats_html_engine", engine),
-    c("gt", "default", "tt")
-  )
-
   # extract attributes
   if (is.null(threshold)) {
     threshold <- attributes(x)$threshold
@@ -313,7 +298,7 @@ print_html.parameters_efa <- function(x,
     x,
     threshold = threshold,
     sort = sort,
-    format = ifelse(identical(engine, "tt"), "tt", "html"),
+    format = "html",
     digits = digits,
     labels = labels,
     ...
@@ -325,12 +310,9 @@ print_html.parameters_pca <- print_html.parameters_efa
 
 
 #' @export
-print_html.parameters_efa_summary <- function(x, digits = 3, engine = "gt", ...) {
+print_html.parameters_efa_summary <- function(x, digits = 3, ...) {
   # html engine?
-  engine <- insight::validate_argument(
-    getOption("easystats_html_engine", engine),
-    c("gt", "default", "tt")
-  )
+  engine <- .check_format_backend(...)
 
   table_caption <- "(Explained) Variance of Components"
 
@@ -354,7 +336,7 @@ print_html.parameters_efa_summary <- function(x, digits = 3, engine = "gt", ...)
   insight::export_table(
     x,
     digits = digits,
-    format = ifelse(identical(engine, "tt"), "tt", "html"),
+    format = engine,
     caption = table_caption,
     align = "firstleft"
   )
@@ -372,7 +354,6 @@ print_html.parameters_p_function <- function(x,
                                              ci_width = "auto",
                                              ci_brackets = c("(", ")"),
                                              pretty_names = TRUE,
-                                             engine = "gt",
                                              ...) {
   .print_p_function(
     x,
@@ -381,7 +362,6 @@ print_html.parameters_p_function <- function(x,
     ci_brackets,
     pretty_names,
     format = "html",
-    engine = engine,
     ...
   )
 }
@@ -456,4 +436,15 @@ print_html.parameters_p_function <- function(x,
     )
   )
   out
+}
+
+
+# we allow exporting HTML format based on "gt" or "tinytable"
+.check_format_backend <- function(...) {
+  dots <- list(...)
+  if (identical(dots$backend, "tt")) {
+    "tt"
+  } else {
+    "html"
+  }
 }

@@ -2,10 +2,10 @@
 #' @name display.parameters_model
 #'
 #' @description Prints tables (i.e. data frame) in different output formats.
-#' `print_md()` is an alias for `display(format = "markdown")`, `print_html()`
-#' is an alias for `display(format = "html")`, and `print_html(engine = "tt")`
-#' is an alias for `display(format = "tt")`. The latter is a `tinytable` object,
-#' which is either printed as markdown or HTML table, depending on the environment.
+#' `print_md()` is an alias for `display(format = "markdown")` and
+#' `print_html()` is an alias for `display(format = "html")`. A third option is
+#' `display(format = "tt")`, which returns a `tinytable` object, which is either
+#' printed as markdown or HTML table, depending on the environment.
 #'
 #' @param object An object returned by one of the package's function, for example
 #' [`model_parameters()`], [`simulate_parameters()`], [`equivalence_test()`] or
@@ -138,7 +138,7 @@ display.parameters_model <- function(object,
         align = align,
         font_size = font_size,
         line_padding = line_padding,
-        engine = ifelse(format == "tt", "tt", "gt")
+        backend = ifelse(format == "tt", "tt", "html")
       )
     )
     do.call(print_html, c(fun_args, list(...)))
@@ -189,7 +189,7 @@ display.compare_parameters <- function(object,
         column_labels = column_labels,
         font_size = font_size,
         line_padding = line_padding,
-        engine = ifelse(format == "tt", "tt", "gt")
+        backend = ifelse(format == "tt", "tt", "html")
       )
     )
     do.call(print_html, c(fun_args, list(...)))
@@ -219,7 +219,7 @@ display.parameters_sem <- function(object,
     ci_digits = ci_digits,
     p_digits = p_digits,
     ci_brackets = ci_brackets,
-    engine = ifelse(format == "tt", "tt", "gt")
+    backend = ifelse(format == "tt", "tt", "html")
   )
 
   if (format %in% c("html", "tt")) {
@@ -237,7 +237,7 @@ display.parameters_sem <- function(object,
 #' @export
 display.parameters_efa_summary <- function(object, format = "markdown", digits = 3, ...) {
   format <- insight::validate_argument(format, c("markdown", "html", "md", "tt"))
-  fun_args <- list(x = object, digits = digits, engine = ifelse(format == "tt", "tt", "gt"))
+  fun_args <- list(x = object, digits = digits, backend = ifelse(format == "tt", "tt", "html"))
 
   if (format %in% c("html", "tt")) {
     do.call(print_html, c(fun_args, list(...)))
@@ -265,7 +265,7 @@ display.parameters_efa <- function(object, format = "markdown", digits = 2, sort
     sort = sort,
     threshold = threshold,
     labels = labels,
-    engine = ifelse(format == "tt", "tt", "gt")
+    backend = ifelse(format == "tt", "tt", "html")
   )
 
   if (format %in% c("html", "tt")) {
@@ -310,7 +310,7 @@ display.parameters_p_function <- function(object,
     ci_width = ci_width,
     ci_brackets = ci_brackets,
     pretty_names = pretty_names,
-    engine = ifelse(format == "tt", "tt", "gt")
+    backend = ifelse(format == "tt", "tt", "html")
   )
 
   if (format %in% c("html", "tt")) {

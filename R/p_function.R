@@ -443,13 +443,9 @@ print.parameters_p_function <- function(x,
                               ci_brackets = c("(", ")"),
                               pretty_names = TRUE,
                               format = "html",
-                              engine = "gt",
                               ...) {
   # which engine?
-  engine <- insight::validate_argument(
-    getOption("easystats_html_engine", engine),
-    c("gt", "default", "tt")
-  )
+  engine <- .check_format_backend(...)
 
   formatted_table <- format(
     x,

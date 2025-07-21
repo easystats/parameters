@@ -71,7 +71,6 @@
   line_padding = 4,
   column_labels = NULL,
   include_reference = FALSE,
-  engine = "gt",
   verbose = TRUE,
   ...
 )
@@ -244,14 +243,6 @@ data frames, \code{caption} may be a list of table captions, one for each table.
 \item{column_labels}{Labels of columns for HTML tables. If \code{NULL}, automatic
 column names are generated. See 'Examples'.}
 
-\item{engine}{Character string, naming the package or engine to be used for
-printing into HTML or markdown format. Currently supported \code{"gt"} (or
-\code{"default"}) to use the \emph{gt} package to print to HTML and the default easystats
-engine to create markdown tables. If \code{engine = "tt"}, the \emph{tinytable} package
-is used for printing to HTML or markdown. Not all \code{print()} methods support
-the \code{"tt"} engine yet. If a specific \code{print()} method has no \code{engine} argument,
-\code{insight::export_table()} is used, which uses \emph{gt} for HTML printing.}
-
 \item{verbose}{Toggle messages and warnings.}
 }
 \value{
@@ -305,9 +296,6 @@ printed to console. If not specified, tables will be adjusted to the current
 available width, e.g. of the of the console (or any other source for textual
 output, like markdown files). The argument \code{table_width} can also be used in
 most \code{print()} methods to specify the table width as desired.
-\item \code{easystats_html_engine}: \code{options(easystats_html_engine = "gt")} will set
-the default HTML engine for tables to \code{gt}, i.e. the \emph{gt} package is used to
-create HTML tables. If set to \code{tt}, the \emph{tinytable} package is used.
 \item \code{insight_use_symbols}: \code{options(insight_use_symbols = TRUE)} will try to
 print unicode-chars for symbols as column names, wherever possible (e.g.,
 \ifelse{html}{\out{&omega;}}{\eqn{\omega}} instead of \code{Omega}).
