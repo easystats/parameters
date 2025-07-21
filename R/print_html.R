@@ -364,6 +364,29 @@ print_html.parameters_efa_summary <- function(x, digits = 3, engine = "gt", ...)
 print_html.parameters_pca_summary <- print_html.parameters_efa_summary
 
 
+# p_function ----------------------------
+
+#' @export
+print_html.parameters_p_function <- function(x,
+                                             digits = 2,
+                                             ci_width = "auto",
+                                             ci_brackets = c("(", ")"),
+                                             pretty_names = TRUE,
+                                             engine = "gt",
+                                             ...) {
+  .print_p_function(
+    x,
+    digits,
+    ci_width,
+    ci_brackets,
+    pretty_names,
+    format = "html",
+    engine = engine,
+    ...
+  )
+}
+
+
 # helper ------------------
 
 .add_gt_options <- function(out,
@@ -433,27 +456,4 @@ print_html.parameters_pca_summary <- print_html.parameters_efa_summary
     )
   )
   out
-}
-
-
-# p_function ----------------------------
-
-#' @export
-print_html.parameters_p_function <- function(x,
-                                             digits = 2,
-                                             ci_width = "auto",
-                                             ci_brackets = c("(", ")"),
-                                             pretty_names = TRUE,
-                                             engine = "gt",
-                                             ...) {
-  .print_p_function(
-    x,
-    digits,
-    ci_width,
-    ci_brackets,
-    pretty_names,
-    format = "html",
-    engine = engine,
-    ...
-  )
 }
