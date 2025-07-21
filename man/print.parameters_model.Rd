@@ -373,17 +373,8 @@ model <- lm(
 )
 # don't select "Intercept" parameter
 mp <- model_parameters(model, parameters = "^(?!\\\\(Intercept)")
-groups <- list(
-  "Focal Predictors" = c("Speciesversicolor", "Speciesvirginica"),
-  "Controls" = c("Sepal.Length", "Petal.Length")
-)
+groups <- list(`Focal Predictors` = c(1, 4), Controls = c(2, 3))
 print(mp, groups = groups)
-
-# or use row indices
-print(mp, groups = list(
-  "Focal Predictors" = c(1, 4),
-  "Controls" = c(2, 3)
-))
 
 # only show coefficients, CI and p,
 # put non-matched parameters to the end
