@@ -288,3 +288,32 @@ display.parameters_omega <- display.parameters_efa
 display.equivalence_test_lm <- function(object, format = "markdown", digits = 2, ...) {
   print_md(x = object, digits = digits, ...)
 }
+
+
+# p_function ----------------------------
+
+#' @export
+display.parameters_p_function <- function(x,
+                                          format = "markdown",
+                                          digits = 2,
+                                          ci_width = "auto",
+                                          ci_brackets = TRUE,
+                                          pretty_names = TRUE,
+                                          ...) {
+  format <- insight::validate_argument(format, c("markdown", "html", "md", "tt"))
+
+  fun_args <- list(
+    x = x,
+    digits = digits,
+    ci_width = ci_width,
+    ci_brackets = ci_brackets,
+    pretty_names = pretty_names,
+    engine = ifelse(format == "tt", "tt", "gt")
+  )
+
+  if (format %in% c("html", "tt")) {
+    do.call(print_html, c(fun_args, list(...)))
+  } else {
+    do.call(print_md, c(fun_args, list(...)))
+  }
+}

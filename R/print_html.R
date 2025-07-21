@@ -26,7 +26,7 @@ print_html.parameters_model <- function(x,
                                         engine = "gt",
                                         verbose = TRUE,
                                         ...) {
-  # markdown engine?
+  # which engine?
   engine <- insight::validate_argument(
     getOption("easystats_html_engine", engine),
     c("gt", "default", "tt")
@@ -433,4 +433,27 @@ print_html.parameters_pca_summary <- print_html.parameters_efa_summary
     )
   )
   out
+}
+
+
+# p_function ----------------------------
+
+#' @export
+print_html.parameters_p_function <- function(x,
+                                             digits = 2,
+                                             ci_width = "auto",
+                                             ci_brackets = c("(", ")"),
+                                             pretty_names = TRUE,
+                                             engine = "gt",
+                                             ...) {
+  .print_p_function(
+    x,
+    digits,
+    ci_width,
+    ci_brackets,
+    pretty_names,
+    format = "html",
+    engine = engine,
+    ...
+  )
 }

@@ -352,3 +352,16 @@ print_md.equivalence_test_lm <- function(
     align = "firstleft"
   )
 }
+
+
+# p_function ----------------------------
+
+#' @export
+print_md.parameters_p_function <- function(x,
+                                           digits = 2,
+                                           ci_width = "auto",
+                                           ci_brackets = c("(", ")"),
+                                           pretty_names = TRUE,
+                                           ...) {
+  .print_p_function(x, digits, ci_width, ci_brackets, pretty_names, format = "markdown", ...)
+}
