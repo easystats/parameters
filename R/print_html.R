@@ -215,17 +215,36 @@ print_html.compare_parameters <- function(x,
     formatted_table$Parameter <- gsub("]", ci_brackets[2], formatted_table$Parameter, fixed = TRUE)
   }
 
-  # setup grouping for tt-backend
+  # setup grouping for tt-backend --------------------------------------------
+  # --------------------------------------------------------------------------
+
+  model_groups <- NULL
+  by <- NULL
+
   if (identical(engine, "tt")) {
-    models <- unique(gsub("(.*) \\((.*)\\)$", "\\2", colnames(formatted_table))[-1])
-    model_groups <- lapply(models, function(model) {
-      which(endsWith(colnames(formatted_table), paste0("(", model, ")")))
-    })
-    names(model_groups) <- models
-    colnames(formatted_table)[-1] <- gsub("(.*) \\((.*)\\)$", "\\1", colnames(formatted_table)[-1])
-  } else {
-    model_groups <- NULL
+    # find columns that contain model names, which we want to group
+    models <- setdiff(
+      unique(gsub("(.*) \\((.*)\\)$", "\\2", colnames(formatted_table))[-1]),
+      c("Component", "Effects", "Response", "Group")
+    )
+    # grouping only applies when we have custom column layout (with "select")
+    # else, we don't need grouping
+    if (any(grepl(paste0("(", models[1], ")"), colnames(formatted_table), fixed = TRUE))) {
+      model_groups <- lapply(models, function(model) {
+        which(endsWith(colnames(formatted_table), paste0("(", model, ")")))
+      })
+      names(model_groups) <- models
+      colnames(formatted_table)[-1] <- gsub("(.*) \\((.*)\\)$", "\\1", colnames(formatted_table)[-1])
+    }
+    if ("Component" %in% colnames(formatted_table)) {
+      by <- c(by, "Component")
+    }
+    if ("Effects" %in% colnames(formatted_table)) {
+      by <- c(by, "Effects")
+    }
   }
+
+  # export table ------------------------------------------------------------
 
   out <- insight::export_table(
     formatted_table,
@@ -234,8 +253,12 @@ print_html.compare_parameters <- function(x,
     subtitle = subtitle,
     footer = footer,
     column_groups = model_groups,
+    by = by,
     ...
   )
+
+  # setup gt-backend ---------------------------------------------------------
+  # --------------------------------------------------------------------------
 
   if (identical(engine, "tt")) {
     out
