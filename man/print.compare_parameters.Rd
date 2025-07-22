@@ -152,10 +152,14 @@ encompassed in square brackets (else in parentheses).}
 \code{digits} decimal places. If \code{FALSE}, values with more decimal
 places than \code{digits} are printed in scientific notation.}
 
-\item{format}{String, indicating the output format. Can be \code{"markdown"}
-\code{"html"}, or \code{"tt"}. \code{format = "tt"} creates a \code{tinytable} object, which is
-either printed as markdown or HTML table, depending on the environment. See
-\code{\link[insight:export_table]{insight::export_table()}} for details.}
+\item{format}{Name of output-format, as string. If \code{NULL} (or \code{"text"}),
+returned output is used for basic printing. Can be one of \code{NULL} (the
+default) resp. \code{"text"} for plain text, \code{"markdown"} (or \code{"md"}) for
+markdown and \code{"html"} for HTML output. A special option is \code{"tt"}, which
+creates a \code{\link[tinytable:tt]{tinytable::tt()}} object, where the output format is dependent
+on the context where the table is used, i.e. it can be markdown format when
+\code{export_table()} is used in markdown files, or LaTex format when creating
+PDFs etc.}
 
 \item{groups}{Named list, can be used to group parameters in the printed output.
 List elements may either be character vectors that match the name of those

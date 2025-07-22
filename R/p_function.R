@@ -381,6 +381,7 @@ plot.parameters_p_function <- function(x, ...) {
 }
 
 
+#' @rdname p_function
 #' @export
 format.parameters_p_function <- function(x,
                                          digits = 2,
@@ -416,6 +417,7 @@ format.parameters_p_function <- function(x,
 }
 
 
+#' @rdname p_function
 #' @export
 print.parameters_p_function <- function(x,
                                         digits = 2,

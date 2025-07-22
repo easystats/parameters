@@ -283,6 +283,7 @@ print_html.compare_parameters <- function(x,
 # PCA / EFA / CFA ----------------------------
 
 
+#' @rdname principal_components
 #' @export
 print_html.parameters_efa <- function(x,
                                       digits = 2,
@@ -348,6 +349,7 @@ print_html.parameters_pca_summary <- print_html.parameters_efa_summary
 
 # p_function ----------------------------
 
+#' @rdname p_function
 #' @export
 print_html.parameters_p_function <- function(x,
                                              digits = 2,

@@ -14,26 +14,8 @@
 #' `"html"`, or `"tt"`. `format = "tt"` creates a `tinytable` object, which is
 #' either printed as markdown or HTML table, depending on the environment. See
 #' [`insight::export_table()`] for details.
-#' @param align Only applies to HTML tables. May be one of `"left"`,
-#' `"right"` or `"center"`.
-#' @param digits,ci_digits,p_digits Number of digits for rounding or
-#' significant figures. May also be `"signif"` to return significant
-#' figures or `"scientific"` to return scientific notation. Control the
-#' number of digits by adding the value as suffix, e.g. `digits = "scientific4"`
-#' to have scientific notation with 4 decimal places, or `digits = "signif5"`
-#' for 5 significant figures (see also [signif()]).
-#' @param subtitle Table title (same as caption) and subtitle, as strings. If `NULL`,
-#' no title or subtitle is printed, unless it is stored as attributes (`table_title`,
-#' or its alias `table_caption`, and `table_subtitle`). If `x` is a list of
-#' data frames, `caption` may be a list of table captions, one for each table.
-#' @param font_size For HTML tables, the font size.
-#' @param line_padding For HTML tables, the distance (in pixel) between lines.
-#' @param column_labels Labels of columns for HTML tables. If `NULL`, automatic
-#' column names are generated. See 'Examples'.
-#' @inheritParams print.parameters_model
-#' @inheritParams insight::format_table
-#' @inheritParams insight::export_table
-#' @inheritParams compare_parameters
+#' @param ... Arguments passed to the underlying functions, such as `print_md()`
+#' or `print_html()`.
 #'
 #' @return If `format = "markdown"`, the return value will be a character
 #' vector in markdown-table format. If `format = "html"`, an object of
@@ -46,7 +28,7 @@
 #' [vignette](https://easystats.github.io/parameters/articles/model_parameters_formatting.html)
 #' for examples.
 #'
-#' @seealso [print.parameters_model()] and [print.compare_parameters()]
+#' @seealso [`print.parameters_model()`] and [`print.compare_parameters()`]
 #'
 #' @examplesIf require("gt", quietly = TRUE)
 #' model <- lm(mpg ~ wt + cyl, data = mtcars)
@@ -96,54 +78,13 @@
 #' display(out, select = "{estimate}|{ci}", format = "tt")
 #' }
 #' @export
-display.parameters_model <- function(object,
-                                     format = "markdown",
-                                     pretty_names = TRUE,
-                                     split_components = TRUE,
-                                     select = NULL,
-                                     caption = NULL,
-                                     subtitle = NULL,
-                                     footer = NULL,
-                                     align = NULL,
-                                     digits = 2,
-                                     ci_digits = digits,
-                                     p_digits = 3,
-                                     footer_digits = 3,
-                                     ci_brackets = c("(", ")"),
-                                     show_sigma = FALSE,
-                                     show_formula = FALSE,
-                                     zap_small = FALSE,
-                                     font_size = "100%",
-                                     line_padding = 4,
-                                     column_labels = NULL,
-                                     include_reference = FALSE,
-                                     verbose = TRUE,
-                                     ...) {
+display.parameters_model <- function(object, format = "markdown", ...) {
   format <- insight::validate_argument(format, c("markdown", "html", "md", "tt"))
 
-  fun_args <- list(
-    x = object, pretty_names = pretty_names, split_components = split_components,
-    select = select, digits = digits, caption = caption, subtitle = subtitle,
-    footer = footer, ci_digits = ci_digits, p_digits = p_digits,
-    footer_digits = footer_digits, ci_brackets = ci_brackets,
-    show_sigma = show_sigma, show_formula = show_formula, zap_small = zap_small,
-    include_reference = include_reference, verbose = verbose
-  )
-
   if (format %in% c("html", "tt")) {
-    fun_args <- c(
-      fun_args,
-      list(
-        column_labels = column_labels,
-        align = align,
-        font_size = font_size,
-        line_padding = line_padding,
-        backend = ifelse(format == "tt", "tt", "html")
-      )
-    )
-    do.call(print_html, c(fun_args, list(...)))
+    print_html(x = object, backend = ifelse(format == "tt", "tt", "html"), ...)
   } else {
-    do.call(print_md, c(fun_args, list(...)))
+    print_md(x = object, ...)
   }
 }
 
@@ -153,169 +94,32 @@ display.parameters_simulate <- display.parameters_model
 #' @export
 display.parameters_brms_meta <- display.parameters_model
 
-
-# Compare Parameters ------------------------
-
+#' @export
+display.compare_parameters <- display.parameters_model
 
 #' @export
-display.compare_parameters <- function(object,
-                                       format = "markdown",
-                                       digits = 2,
-                                       ci_digits = digits,
-                                       p_digits = 3,
-                                       select = NULL,
-                                       column_labels = NULL,
-                                       ci_brackets = c("(", ")"),
-                                       font_size = "100%",
-                                       line_padding = 4,
-                                       zap_small = FALSE,
-                                       ...) {
-  format <- insight::validate_argument(format, c("markdown", "html", "md", "tt"))
-
-  fun_args <- list(
-    x = object,
-    digits = digits,
-    ci_digits = ci_digits,
-    p_digits = p_digits,
-    ci_brackets = ci_brackets,
-    select = select,
-    zap_small = zap_small
-  )
-
-  if (format %in% c("html", "tt")) {
-    fun_args <- c(
-      fun_args,
-      list(
-        column_labels = column_labels,
-        font_size = font_size,
-        line_padding = line_padding,
-        backend = ifelse(format == "tt", "tt", "html")
-      )
-    )
-    do.call(print_html, c(fun_args, list(...)))
-  } else {
-    do.call(print_md, c(fun_args, list(...)))
-  }
-}
-
-
-# SEM models ------------------------
-
-
-#' @rdname display.parameters_model
-#' @export
-display.parameters_sem <- function(object,
-                                   format = "markdown",
-                                   digits = 2,
-                                   ci_digits = digits,
-                                   p_digits = 3,
-                                   ci_brackets = c("(", ")"),
-                                   ...) {
-  format <- insight::validate_argument(format, c("markdown", "html", "md", "tt"))
-
-  fun_args <- list(
-    x = object,
-    digits = digits,
-    ci_digits = ci_digits,
-    p_digits = p_digits,
-    ci_brackets = ci_brackets,
-    backend = ifelse(format == "tt", "tt", "html")
-  )
-
-  if (format %in% c("html", "tt")) {
-    do.call(print_html, c(fun_args, list(...)))
-  } else {
-    do.call(print_md, c(fun_args, list(...)))
-  }
-}
-
-
-# PCA /EFA  models ------------------------
-
-
-#' @rdname display.parameters_model
-#' @export
-display.parameters_efa_summary <- function(object, format = "markdown", digits = 3, ...) {
-  format <- insight::validate_argument(format, c("markdown", "html", "md", "tt"))
-  fun_args <- list(x = object, digits = digits, backend = ifelse(format == "tt", "tt", "html"))
-
-  if (format %in% c("html", "tt")) {
-    do.call(print_html, c(fun_args, list(...)))
-  } else {
-    do.call(print_md, c(fun_args, list(...)))
-  }
-}
+display.parameters_sem <- display.parameters_model
 
 #' @export
-display.parameters_pca_summary <- display.parameters_efa_summary
+display.parameters_efa_summary <- display.parameters_model
 
 #' @export
-display.parameters_omega_summary <- display.parameters_efa_summary
-
-
-#' @inheritParams model_parameters.principal
-#' @rdname display.parameters_model
-#' @export
-display.parameters_efa <- function(object, format = "markdown", digits = 2, sort = FALSE, threshold = NULL, labels = NULL, ...) {
-  format <- insight::validate_argument(format, c("markdown", "html", "md", "tt"))
-
-  fun_args <- list(
-    x = object,
-    digits = digits,
-    sort = sort,
-    threshold = threshold,
-    labels = labels,
-    backend = ifelse(format == "tt", "tt", "html")
-  )
-
-  if (format %in% c("html", "tt")) {
-    do.call(print_html, c(fun_args, list(...)))
-  } else {
-    do.call(print_md, c(fun_args, list(...)))
-  }
-}
+display.parameters_pca_summary <- display.parameters_model
 
 #' @export
-display.parameters_pca <- display.parameters_efa
+display.parameters_omega_summary <- display.parameters_model
 
 #' @export
-display.parameters_omega <- display.parameters_efa
-
-
-# Equivalence tests ------------------------
-
-
-#' @rdname display.parameters_model
-#' @export
-display.equivalence_test_lm <- function(object, format = "markdown", digits = 2, ...) {
-  print_md(x = object, digits = digits, ...)
-}
-
-
-# p_function ----------------------------
+display.parameters_efa <- display.parameters_model
 
 #' @export
-display.parameters_p_function <- function(object,
-                                          format = "markdown",
-                                          digits = 2,
-                                          ci_width = "auto",
-                                          ci_brackets = TRUE,
-                                          pretty_names = TRUE,
-                                          ...) {
-  format <- insight::validate_argument(format, c("markdown", "html", "md", "tt"))
+display.parameters_pca <- display.parameters_model
 
-  fun_args <- list(
-    x = object,
-    digits = digits,
-    ci_width = ci_width,
-    ci_brackets = ci_brackets,
-    pretty_names = pretty_names,
-    backend = ifelse(format == "tt", "tt", "html")
-  )
+#' @export
+display.parameters_omega <- display.parameters_model
 
-  if (format %in% c("html", "tt")) {
-    do.call(print_html, c(fun_args, list(...)))
-  } else {
-    do.call(print_md, c(fun_args, list(...)))
-  }
-}
+#' @export
+display.equivalence_test_lm <- display.parameters_model
+
+#' @export
+display.parameters_p_function <- display.parameters_model
