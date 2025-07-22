@@ -283,6 +283,7 @@ print_html.compare_parameters <- function(x,
 # PCA / EFA / CFA ----------------------------
 
 
+#' @rdname principal_components
 #' @export
 print_html.parameters_efa <- function(x,
                                       digits = 2,
@@ -346,8 +347,30 @@ print_html.parameters_efa_summary <- function(x, digits = 3, ...) {
 print_html.parameters_pca_summary <- print_html.parameters_efa_summary
 
 
+# Equivalence test ----------------------------
+
+#' @export
+print_html.equivalence_test_lm <- function(
+  x,
+  digits = 2,
+  ci_brackets = c("(", ")"),
+  zap_small = FALSE,
+  ...
+) {
+  .print_equivalence_test_lm(
+    x,
+    digits = digits,
+    ci_brackets = ci_brackets,
+    zap_small = zap_small,
+    format = .check_format_backend(...),
+    ...
+  )
+}
+
+
 # p_function ----------------------------
 
+#' @rdname p_function
 #' @export
 print_html.parameters_p_function <- function(x,
                                              digits = 2,
