@@ -14,6 +14,13 @@
 #' one or more of these lines by providing a names vector, where the to be
 #' highlighted values should be named `"emph"`, e.g
 #' `ci_levels = c(0.25, 0.5, emph = 0.95)`.
+#' @param x An object returned by [`model_parameters()`][model_parameters].
+#' @param digits Number of digits for rounding or significant figures. May also
+#' be `"signif"` to return significant figures or `"scientific"` to return
+#' scientific notation. Control the number of digits by adding the value as
+#' suffix, e.g. `digits = "scientific4"` to have scientific notation with 4
+#' decimal places, or `digits = "signif5"` for 5 significant figures (see also
+#' [signif()]).
 #'
 #' @inheritParams model_parameters
 #' @inheritParams model_parameters.default

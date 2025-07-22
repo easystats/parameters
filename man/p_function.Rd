@@ -198,6 +198,15 @@ model summaries, it is recommended to set \code{pretty_names = FALSE} to speed
 up computation of the summary table.
 }}
 
+\item{x}{An object returned by \code{\link[=model_parameters]{model_parameters()}}.}
+
+\item{digits}{Number of digits for rounding or significant figures. May also
+be \code{"signif"} to return significant figures or \code{"scientific"} to return
+scientific notation. Control the number of digits by adding the value as
+suffix, e.g. \code{digits = "scientific4"} to have scientific notation with 4
+decimal places, or \code{digits = "signif5"} for 5 significant figures (see also
+\code{\link[=signif]{signif()}}).}
+
 \item{format}{Name of output-format, as string. If \code{NULL} (or \code{"text"}),
 returned output is used for basic printing. Can be one of \code{NULL} (the
 default) resp. \code{"text"} for plain text, \code{"markdown"} (or \code{"md"}) for
