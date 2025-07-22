@@ -19,6 +19,7 @@
 #' @inheritParams model_parameters.default
 #' @inheritParams model_parameters.glmmTMB
 #' @inheritParams standard_error
+#' @inheritParams print.parameters_model
 #'
 #' @note
 #' Curently, `p_function()` computes intervals based on Wald t- or z-statistic.

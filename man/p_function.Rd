@@ -197,6 +197,29 @@ output (cf. \emph{Rafi and Greenland 2020}).
 model summaries, it is recommended to set \code{pretty_names = FALSE} to speed
 up computation of the summary table.
 }}
+
+\item{format}{Name of output-format, as string. If \code{NULL} (or \code{"text"}),
+returned output is used for basic printing. Can be one of \code{NULL} (the
+default) resp. \code{"text"} for plain text, \code{"markdown"} (or \code{"md"}) for
+markdown and \code{"html"} for HTML output. A special option is \code{"tt"}, which
+creates a \code{\link[tinytable:tt]{tinytable::tt()}} object, where the output format is dependent
+on the context where the table is used, i.e. it can be markdown format when
+\code{export_table()} is used in markdown files, or LaTex format when creating
+PDFs etc.}
+
+\item{ci_width}{Minimum width of the returned string for confidence
+intervals. If not \code{NULL} and width is larger than the string's length,
+leading whitespaces are added to the string. If \code{width="auto"}, width
+will be set to the length of the longest string.}
+
+\item{ci_brackets}{Logical, if \code{TRUE} (default), CI-values are
+encompassed in square brackets (else in parentheses).}
+
+\item{pretty_names}{Can be \code{TRUE}, which will return "pretty" (i.e. more human
+readable) parameter names. Or \code{"labels"}, in which case value and variable
+labels will be used as parameters names. The latter only works for "labelled"
+data, i.e. if the data used to fit the model had \code{"label"} and \code{"labels"}
+attributes. See also section \emph{Global Options to Customize Messages when Printing}.}
 }
 \value{
 A data frame with p-values and compatibility intervals.
