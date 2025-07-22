@@ -295,61 +295,13 @@ print_md.equivalence_test_lm <- function(
   zap_small = FALSE,
   ...
 ) {
-  rule <- attributes(x)$rule
-  rope <- attributes(x)$rope
-
-  if (is.null(rule)) {
-    table_caption <- "Test for Practical Equivalence"
-  } else if (rule == "cet") {
-    table_caption <- "Conditional Equivalence Testing"
-  } else if (rule == "classic") {
-    table_caption <- "TOST-test for Practical Equivalence"
-  } else {
-    table_caption <- "Test for Practical Equivalence"
-  }
-
-  if ("Component" %in% colnames(x)) {
-    x <- x[x$Component %in% c("conditional", "count"), ]
-  }
-
-  formatted_table <- insight::format_table(
+  .print_equivalence_test_lm(
     x,
-    pretty_names = TRUE,
     digits = digits,
-    ci_width = NULL,
     ci_brackets = ci_brackets,
     zap_small = zap_small,
-    ...
-  )
-
-  colnames(formatted_table)[which(colnames(formatted_table) == "Equivalence (ROPE)")] <- "H0"
-  formatted_table$ROPE <- NULL
-
-  # col_order <- c("Parameter", "H0", "% in ROPE", colnames(formatted_table)[grepl(" CI$", colnames(formatted_table))])
-  # col_order <- c(col_order, setdiff(colnames(formatted_table), col_order))
-  # formatted_table <- formatted_table[col_order]
-
-  # replace brackets by parenthesis
-  if (!is.null(ci_brackets) && "Parameter" %in% colnames(formatted_table)) {
-    formatted_table$Parameter <- gsub("[", ci_brackets[1], formatted_table$Parameter, fixed = TRUE)
-    formatted_table$Parameter <- gsub("]", ci_brackets[2], formatted_table$Parameter, fixed = TRUE)
-  }
-
-  if (!is.null(rope)) {
-    names(formatted_table)[names(formatted_table) == "% in ROPE"] <- sprintf(
-      "%% in ROPE (%.*f, %.*f)",
-      digits,
-      rope[1],
-      digits,
-      rope[2]
-    ) # nolint
-  }
-
-  insight::export_table(
-    formatted_table,
     format = "markdown",
-    caption = table_caption,
-    align = "firstleft"
+    ...
   )
 }
 
