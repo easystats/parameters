@@ -15,7 +15,7 @@ printed as markdown or HTML table, depending on the environment.'><meta property
 
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.27.0.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.27.0.3</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -73,59 +73,7 @@ printed as markdown or HTML table, depending on the environment.</p>
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for class 'parameters_model'</span></span>
-<span><span class="fu"><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">display</a></span><span class="op">(</span></span>
-<span>  <span class="va">object</span>,</span>
-<span>  format <span class="op">=</span> <span class="st">"markdown"</span>,</span>
-<span>  pretty_names <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  split_components <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  select <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  caption <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  subtitle <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  footer <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  align <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  digits <span class="op">=</span> <span class="fl">2</span>,</span>
-<span>  ci_digits <span class="op">=</span> <span class="va">digits</span>,</span>
-<span>  p_digits <span class="op">=</span> <span class="fl">3</span>,</span>
-<span>  footer_digits <span class="op">=</span> <span class="fl">3</span>,</span>
-<span>  ci_brackets <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"("</span>, <span class="st">")"</span><span class="op">)</span>,</span>
-<span>  show_sigma <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  show_formula <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  zap_small <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  font_size <span class="op">=</span> <span class="st">"100%"</span>,</span>
-<span>  line_padding <span class="op">=</span> <span class="fl">4</span>,</span>
-<span>  column_labels <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  include_reference <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  <span class="va">...</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># S3 method for class 'parameters_sem'</span></span>
-<span><span class="fu"><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">display</a></span><span class="op">(</span></span>
-<span>  <span class="va">object</span>,</span>
-<span>  format <span class="op">=</span> <span class="st">"markdown"</span>,</span>
-<span>  digits <span class="op">=</span> <span class="fl">2</span>,</span>
-<span>  ci_digits <span class="op">=</span> <span class="va">digits</span>,</span>
-<span>  p_digits <span class="op">=</span> <span class="fl">3</span>,</span>
-<span>  ci_brackets <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"("</span>, <span class="st">")"</span><span class="op">)</span>,</span>
-<span>  <span class="va">...</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># S3 method for class 'parameters_efa_summary'</span></span>
-<span><span class="fu"><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">display</a></span><span class="op">(</span><span class="va">object</span>, format <span class="op">=</span> <span class="st">"markdown"</span>, digits <span class="op">=</span> <span class="fl">3</span>, <span class="va">...</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># S3 method for class 'parameters_efa'</span></span>
-<span><span class="fu"><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">display</a></span><span class="op">(</span></span>
-<span>  <span class="va">object</span>,</span>
-<span>  format <span class="op">=</span> <span class="st">"markdown"</span>,</span>
-<span>  digits <span class="op">=</span> <span class="fl">2</span>,</span>
-<span>  sort <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  threshold <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  labels <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  <span class="va">...</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># S3 method for class 'equivalence_test_lm'</span></span>
-<span><span class="fu"><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">display</a></span><span class="op">(</span><span class="va">object</span>, format <span class="op">=</span> <span class="st">"markdown"</span>, digits <span class="op">=</span> <span class="fl">2</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">display</a></span><span class="op">(</span><span class="va">object</span>, format <span class="op">=</span> <span class="st">"markdown"</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -145,163 +93,9 @@ either printed as markdown or HTML table, depending on the environment. See
 <code><a href="https://easystats.github.io/insight/reference/export_table.html" class="external-link">insight::export_table()</a></code> for details.</p></dd>
 
 
-<dt id="arg-pretty-names">pretty_names<a class="anchor" aria-label="anchor" href="#arg-pretty-names"></a></dt>
-<dd><p>Can be <code>TRUE</code>, which will return "pretty" (i.e. more human
-readable) parameter names. Or <code>"labels"</code>, in which case value and variable
-labels will be used as parameters names. The latter only works for "labelled"
-data, i.e. if the data used to fit the model had <code>"label"</code> and <code>"labels"</code>
-attributes. See also section <em>Global Options to Customize Messages when Printing</em>.</p></dd>
-
-
-<dt id="arg-split-components">split_components<a class="anchor" aria-label="anchor" href="#arg-split-components"></a></dt>
-<dd><p>Logical, if <code>TRUE</code> (default), For models with
-multiple components (zero-inflation, smooth terms, ...), each component is
-printed in a separate table. If <code>FALSE</code>, model parameters are printed
-in a single table and a <code>Component</code> column is added to the output.</p></dd>
-
-
-<dt id="arg-select">select<a class="anchor" aria-label="anchor" href="#arg-select"></a></dt>
-<dd><p>Determines which columns and and which layout columns are
-printed. There are three options for this argument:</p><ul><li><p><strong>Selecting columns by name or index</strong></p>
-<p><code>select</code> can be a character vector (or numeric index) of column names that
-should be printed, where columns are extracted from the data frame returned
-by <code><a href="model_parameters.html">model_parameters()</a></code> and related functions.</p>
-<p>There are two pre-defined options for selecting columns:
-<code>select = "minimal"</code> prints coefficients, confidence intervals and
-p-values, while <code>select = "short"</code> prints coefficients, standard errors and
-p-values.</p></li>
-<li><p><strong>A string expression with layout pattern</strong></p>
-<p><code>select</code> is a string with "tokens" enclosed in braces. These tokens will be
-replaced by their associated columns, where the selected columns will be
-collapsed into one column. Following tokens are replaced by the related
-coefficients or statistics: <code>{estimate}</code>, <code>{se}</code>, <code>{ci}</code> (or <code>{ci_low}</code> and
-<code>{ci_high}</code>), <code>{p}</code> and <code>{stars}</code>. The token <code>{ci}</code> will be replaced by
-<code>{ci_low}, {ci_high}</code>. Example: <code>select = "{estimate}{stars} ({ci})"</code></p>
-<p>It is possible to create multiple columns as well. A <code>|</code> separates values
-into new cells/columns. Example: <code>select = "{estimate} ({ci})|{p}"</code>.</p>
-<p>If <code>format = "html"</code>, a <code>&lt;br&gt;</code> inserts a line break inside a cell. See
-'Examples'.</p></li>
-<li><p><strong>A string indicating a pre-defined layout</strong></p>
-<p><code>select</code> can be one of the following string values, to create one of the
-following pre-defined column layouts:</p><ul><li><p><code>"ci"</code>: Estimates and confidence intervals, no asterisks for p-values.
-This is equivalent to <code>select = "{estimate} ({ci})"</code>.</p></li>
-<li><p><code>"se"</code>: Estimates and standard errors, no asterisks for p-values. This is
-equivalent to <code>select = "{estimate} ({se})"</code>.</p></li>
-<li><p><code>"ci_p"</code>: Estimates, confidence intervals and asterisks for p-values. This
-is equivalent to <code>select = "{estimate}{stars} ({ci})"</code>.</p></li>
-<li><p><code>"se_p"</code>: Estimates, standard errors and asterisks for p-values. This is
-equivalent to <code>select = "{estimate}{stars} ({se})"</code>..</p></li>
-<li><p><code>"ci_p2"</code>: Estimates, confidence intervals and numeric p-values, in two
-columns. This is equivalent to <code>select = "{estimate} ({ci})|{p}"</code>.</p></li>
-<li><p><code>"se_p2"</code>: Estimate, standard errors and numeric p-values, in two columns.
-This is equivalent to <code>select = "{estimate} ({se})|{p}"</code>.</p></li>
-</ul></li>
-</ul><p>For <code><a href="model_parameters.html">model_parameters()</a></code>, glue-like syntax is still experimental in the
-case of more complex models (like mixed models) and may not return expected
-results.</p></dd>
-
-
-<dt id="arg-caption">caption<a class="anchor" aria-label="anchor" href="#arg-caption"></a></dt>
-<dd><p>Table caption as string. If <code>NULL</code>, depending on the model,
-either a default caption or no table caption is printed. Use <code>caption = ""</code>
-to suppress the table caption.</p></dd>
-
-
-<dt id="arg-subtitle">subtitle<a class="anchor" aria-label="anchor" href="#arg-subtitle"></a></dt>
-<dd><p>Table title (same as caption) and subtitle, as strings. If <code>NULL</code>,
-no title or subtitle is printed, unless it is stored as attributes (<code>table_title</code>,
-or its alias <code>table_caption</code>, and <code>table_subtitle</code>). If <code>x</code> is a list of
-data frames, <code>caption</code> may be a list of table captions, one for each table.</p></dd>
-
-
-<dt id="arg-footer">footer<a class="anchor" aria-label="anchor" href="#arg-footer"></a></dt>
-<dd><p>Can either be <code>FALSE</code> or an empty string (i.e. <code>""</code>) to
-suppress the footer, <code>NULL</code> to print the default footer, or a string. The
-latter will combine the string value with the default footer.</p></dd>
-
-
-<dt id="arg-align">align<a class="anchor" aria-label="anchor" href="#arg-align"></a></dt>
-<dd><p>Only applies to HTML tables. May be one of <code>"left"</code>,
-<code>"right"</code> or <code>"center"</code>.</p></dd>
-
-
-<dt id="arg-digits-ci-digits-p-digits">digits, ci_digits, p_digits<a class="anchor" aria-label="anchor" href="#arg-digits-ci-digits-p-digits"></a></dt>
-<dd><p>Number of digits for rounding or
-significant figures. May also be <code>"signif"</code> to return significant
-figures or <code>"scientific"</code> to return scientific notation. Control the
-number of digits by adding the value as suffix, e.g. <code>digits = "scientific4"</code>
-to have scientific notation with 4 decimal places, or <code>digits = "signif5"</code>
-for 5 significant figures (see also <code><a href="https://rdrr.io/r/base/Round.html" class="external-link">signif()</a></code>).</p></dd>
-
-
-<dt id="arg-footer-digits">footer_digits<a class="anchor" aria-label="anchor" href="#arg-footer-digits"></a></dt>
-<dd><p>Number of decimal places for values in the footer summary.</p></dd>
-
-
-<dt id="arg-ci-brackets">ci_brackets<a class="anchor" aria-label="anchor" href="#arg-ci-brackets"></a></dt>
-<dd><p>Logical, if <code>TRUE</code> (default), CI-values are
-encompassed in square brackets (else in parentheses).</p></dd>
-
-
-<dt id="arg-show-sigma">show_sigma<a class="anchor" aria-label="anchor" href="#arg-show-sigma"></a></dt>
-<dd><p>Logical, if <code>TRUE</code>, adds information about the residual
-standard deviation.</p></dd>
-
-
-<dt id="arg-show-formula">show_formula<a class="anchor" aria-label="anchor" href="#arg-show-formula"></a></dt>
-<dd><p>Logical, if <code>TRUE</code>, adds the model formula to the output.</p></dd>
-
-
-<dt id="arg-zap-small">zap_small<a class="anchor" aria-label="anchor" href="#arg-zap-small"></a></dt>
-<dd><p>Logical, if <code>TRUE</code>, small values are rounded after
-<code>digits</code> decimal places. If <code>FALSE</code>, values with more decimal
-places than <code>digits</code> are printed in scientific notation.</p></dd>
-
-
-<dt id="arg-font-size">font_size<a class="anchor" aria-label="anchor" href="#arg-font-size"></a></dt>
-<dd><p>For HTML tables, the font size.</p></dd>
-
-
-<dt id="arg-line-padding">line_padding<a class="anchor" aria-label="anchor" href="#arg-line-padding"></a></dt>
-<dd><p>For HTML tables, the distance (in pixel) between lines.</p></dd>
-
-
-<dt id="arg-column-labels">column_labels<a class="anchor" aria-label="anchor" href="#arg-column-labels"></a></dt>
-<dd><p>Labels of columns for HTML tables. If <code>NULL</code>, automatic
-column names are generated. See 'Examples'.</p></dd>
-
-
-<dt id="arg-include-reference">include_reference<a class="anchor" aria-label="anchor" href="#arg-include-reference"></a></dt>
-<dd><p>Logical, if <code>TRUE</code>, the reference level of factors will
-be added to the parameters table. This is only relevant for models with
-categorical predictors. The coefficient for the reference level is always
-<code>0</code> (except when <code>exponentiate = TRUE</code>, then the coefficient will be <code>1</code>),
-so this is just for completeness.</p></dd>
-
-
-<dt id="arg-verbose">verbose<a class="anchor" aria-label="anchor" href="#arg-verbose"></a></dt>
-<dd><p>Toggle messages and warnings.</p></dd>
-
-
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>Arguments passed down to <code><a href="print.parameters_model.html">format.parameters_model()</a></code>,
-<code><a href="https://easystats.github.io/insight/reference/format_table.html" class="external-link">insight::format_table()</a></code> and <code><a href="https://easystats.github.io/insight/reference/export_table.html" class="external-link">insight::export_table()</a></code></p></dd>
-
-
-<dt id="arg-sort">sort<a class="anchor" aria-label="anchor" href="#arg-sort"></a></dt>
-<dd><p>Sort the loadings.</p></dd>
-
-
-<dt id="arg-threshold">threshold<a class="anchor" aria-label="anchor" href="#arg-threshold"></a></dt>
-<dd><p>A value between 0 and 1 indicates which (absolute) values
-from the loadings should be removed. An integer higher than 1 indicates the
-n strongest loadings to retain. Can also be <code>"max"</code>, in which case it will
-only display the maximum loading per variable (the most simple structure).</p></dd>
-
-
-<dt id="arg-labels">labels<a class="anchor" aria-label="anchor" href="#arg-labels"></a></dt>
-<dd><p>A character vector containing labels to be added to the
-loadings data. Usually, the question related to the item.</p></dd>
+<dd><p>Arguments passed to the underlying functions, such as <code><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">print_md()</a></code>
+or <code><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">print_html()</a></code>.</p></dd>
 
 </dl></div>
     <div class="section level2">

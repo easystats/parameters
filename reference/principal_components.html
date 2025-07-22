@@ -13,7 +13,7 @@ available to access / display other information (see the 'Details' section)."><m
 
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.27.0.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.27.0.3</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -56,7 +56,7 @@ available to access / display other information (see the 'Details' section)."><m
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Principal Component Analysis (PCA) and Factor Analysis (FA)</h1>
-      <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/main/R/factor_analysis.R" class="external-link"><code>R/factor_analysis.R</code></a>, <a href="https://github.com/easystats/parameters/blob/main/R/principal_components.R" class="external-link"><code>R/principal_components.R</code></a>, <a href="https://github.com/easystats/parameters/blob/main/R/utils_pca_efa.R" class="external-link"><code>R/utils_pca_efa.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/main/R/factor_analysis.R" class="external-link"><code>R/factor_analysis.R</code></a>, <a href="https://github.com/easystats/parameters/blob/main/R/principal_components.R" class="external-link"><code>R/principal_components.R</code></a>, <a href="https://github.com/easystats/parameters/blob/main/R/print_html.R" class="external-link"><code>R/print_html.R</code></a>, and 1 more</small>
       <div class="d-none name"><code>principal_components.Rd</code></div>
     </div>
 
@@ -111,6 +111,9 @@ available to access / display other information (see the 'Details' section).</p>
 <span>  standardize <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for class 'parameters_efa'</span></span>
+<span><span class="fu"><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">print_html</a></span><span class="op">(</span><span class="va">x</span>, digits <span class="op">=</span> <span class="fl">2</span>, sort <span class="op">=</span> <span class="cn">FALSE</span>, threshold <span class="op">=</span> <span class="cn">NULL</span>, labels <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for class 'parameters_efa'</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span></span>
@@ -218,6 +221,16 @@ interpretability and avoids overfitting. Can be <code>TRUE</code> or <code>"robu
 <code><a href="https://rdrr.io/pkg/sparsepca/man/robspca.html" class="external-link">sparsepca::robspca()</a></code>).</p></dd>
 
 
+<dt id="arg-digits">digits<a class="anchor" aria-label="anchor" href="#arg-digits"></a></dt>
+<dd><p>Argument for <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code>, indicates the number of digits
+(rounding) to be used.</p></dd>
+
+
+<dt id="arg-labels">labels<a class="anchor" aria-label="anchor" href="#arg-labels"></a></dt>
+<dd><p>Argument for <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code>, character vector of same length as
+columns in <code>x</code>. If provided, adds an additional column with the labels.</p></dd>
+
+
 <dt id="arg-object">object<a class="anchor" aria-label="anchor" href="#arg-object"></a></dt>
 <dd><p>An object of class <code>parameters_pca</code>, <code>parameters_efa</code> or
 <code>psych_efa</code>.</p></dd>
@@ -237,16 +250,6 @@ frame.</p></dd>
 <dd><p>Logical, if <code>TRUE</code>, predictions also return observations
 with missing values from the original data, hence the number of rows of
 predicted data and original data is equal.</p></dd>
-
-
-<dt id="arg-digits">digits<a class="anchor" aria-label="anchor" href="#arg-digits"></a></dt>
-<dd><p>Argument for <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code>, indicates the number of digits
-(rounding) to be used.</p></dd>
-
-
-<dt id="arg-labels">labels<a class="anchor" aria-label="anchor" href="#arg-labels"></a></dt>
-<dd><p>Argument for <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code>, character vector of same length as
-columns in <code>x</code>. If provided, adds an additional column with the labels.</p></dd>
 
 </dl></div>
     <div class="section level2">

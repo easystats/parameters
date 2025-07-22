@@ -17,7 +17,7 @@ different levels."><meta property="og:image" content="https://easystats.github.i
 
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.27.0.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.27.0.3</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -60,7 +60,7 @@ different levels."><meta property="og:image" content="https://easystats.github.i
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>p-value or consonance function</h1>
-      <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/main/R/p_function.R" class="external-link"><code>R/p_function.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/main/R/p_function.R" class="external-link"><code>R/p_function.R</code></a>, <a href="https://github.com/easystats/parameters/blob/main/R/print_html.R" class="external-link"><code>R/print_html.R</code></a></small>
       <div class="d-none name"><code>p_function.Rd</code></div>
     </div>
 
@@ -114,6 +114,37 @@ different levels.</p>
 <span>  keep <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  drop <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for class 'parameters_p_function'</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/format.html" class="external-link">format</a></span><span class="op">(</span></span>
+<span>  <span class="va">x</span>,</span>
+<span>  digits <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>  format <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  ci_width <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  ci_brackets <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  pretty_names <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for class 'parameters_p_function'</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span></span>
+<span>  <span class="va">x</span>,</span>
+<span>  digits <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>  ci_width <span class="op">=</span> <span class="st">"auto"</span>,</span>
+<span>  ci_brackets <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  pretty_names <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for class 'parameters_p_function'</span></span>
+<span><span class="fu"><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">print_html</a></span><span class="op">(</span></span>
+<span>  <span class="va">x</span>,</span>
+<span>  digits <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>  ci_width <span class="op">=</span> <span class="st">"auto"</span>,</span>
+<span>  ci_brackets <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"("</span>, <span class="st">")"</span><span class="op">)</span>,</span>
+<span>  pretty_names <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -254,6 +285,50 @@ output (cf. <em>Rafi and Greenland 2020</em>).</p></li>
 model summaries, it is recommended to set <code>pretty_names = FALSE</code> to speed
 up computation of the summary table.</p></li>
 </ul></dd>
+
+
+<dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
+<dd><p>An object returned by <code><a href="model_parameters.html">model_parameters()</a></code>.</p></dd>
+
+
+<dt id="arg-digits">digits<a class="anchor" aria-label="anchor" href="#arg-digits"></a></dt>
+<dd><p>Number of digits for rounding or significant figures. May also
+be <code>"signif"</code> to return significant figures or <code>"scientific"</code> to return
+scientific notation. Control the number of digits by adding the value as
+suffix, e.g. <code>digits = "scientific4"</code> to have scientific notation with 4
+decimal places, or <code>digits = "signif5"</code> for 5 significant figures (see also
+<code><a href="https://rdrr.io/r/base/Round.html" class="external-link">signif()</a></code>).</p></dd>
+
+
+<dt id="arg-format">format<a class="anchor" aria-label="anchor" href="#arg-format"></a></dt>
+<dd><p>Name of output-format, as string. If <code>NULL</code> (or <code>"text"</code>),
+returned output is used for basic printing. Can be one of <code>NULL</code> (the
+default) resp. <code>"text"</code> for plain text, <code>"markdown"</code> (or <code>"md"</code>) for
+markdown and <code>"html"</code> for HTML output. A special option is <code>"tt"</code>, which
+creates a <code><a href="https://vincentarelbundock.github.io/tinytable/man/tt.html" class="external-link">tinytable::tt()</a></code> object, where the output format is dependent
+on the context where the table is used, i.e. it can be markdown format when
+<code>export_table()</code> is used in markdown files, or LaTex format when creating
+PDFs etc.</p></dd>
+
+
+<dt id="arg-ci-width">ci_width<a class="anchor" aria-label="anchor" href="#arg-ci-width"></a></dt>
+<dd><p>Minimum width of the returned string for confidence
+intervals. If not <code>NULL</code> and width is larger than the string's length,
+leading whitespaces are added to the string. If <code>width="auto"</code>, width
+will be set to the length of the longest string.</p></dd>
+
+
+<dt id="arg-ci-brackets">ci_brackets<a class="anchor" aria-label="anchor" href="#arg-ci-brackets"></a></dt>
+<dd><p>Logical, if <code>TRUE</code> (default), CI-values are
+encompassed in square brackets (else in parentheses).</p></dd>
+
+
+<dt id="arg-pretty-names">pretty_names<a class="anchor" aria-label="anchor" href="#arg-pretty-names"></a></dt>
+<dd><p>Can be <code>TRUE</code>, which will return "pretty" (i.e. more human
+readable) parameter names. Or <code>"labels"</code>, in which case value and variable
+labels will be used as parameters names. The latter only works for "labelled"
+data, i.e. if the data used to fit the model had <code>"label"</code> and <code>"labels"</code>
+attributes. See also section <em>Global Options to Customize Messages when Printing</em>.</p></dd>
 
 </dl></div>
     <div class="section level2">
