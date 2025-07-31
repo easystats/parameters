@@ -58,8 +58,8 @@ withr::with_options(
       expect_identical(
         colnames(out),
         c(
-          "Parameter", "Estimate (SE) (m1)", "p (m1)", "Estimate (SE) (m2)",
-          "p (m2)", "Estimate (SE) (m3)", "p (m3)"
+          "Parameter", "Coefficient (SE) (m1)", "p (m1)", "Coefficient (SE) (m2)",
+          "p (m2)", "Log-Mean (SE) (m3)", "p (m3)"
         )
       )
       expect_identical(
@@ -120,9 +120,10 @@ withr::with_options(
     })
 
 
-    test_that("compare_parameters, print_md", {
+    test_that("compare_parameters, print_md-1", {
       skip_if_not_installed("lme4")
       skip_if_not_installed("knitr")
+      skip_if_not_installed("tinytable")
 
       data(sleepstudy, package = "lme4")
       set.seed(1234)
@@ -132,24 +133,62 @@ withr::with_options(
 
       cp <- compare_parameters(lm1, lm2, select = "{estimate} ({ci})|{p}", drop = "^\\(Intercept")
       out <- print_md(cp, groups = list(
-        Groups = c("grp (2)", "grp (3)"),
-        Interactions = c("Days * grp (2)", "Days * grp (3)"),
-        Controls = "Days"
+        Groups = c(2, 3),
+        Interactions = c(4, 5),
+        Controls = 1
       ))
       expect_snapshot(print(out))
+    })
+
+    test_that("compare_parameters, print_md-2", {
+      skip_if_not_installed("lme4")
+      skip_if_not_installed("knitr")
+      skip_if_not_installed("tinytable")
+
+      data(sleepstudy, package = "lme4")
+      set.seed(1234)
+      sleepstudy$grp <- as.factor(sample.int(3, nrow(sleepstudy), replace = TRUE))
+      lm1 <- lme4::lmer(Reaction ~ Days + grp + (1 | Subject), data = sleepstudy)
+      lm2 <- lme4::lmer(Reaction ~ Days * grp + (1 | Subject), data = sleepstudy)
+
+      cp <- compare_parameters(lm1, lm2, select = "{estimate} ({ci})|{p}", drop = "^\\(Intercept")
+      out <- display(cp, groups = list(
+          Groups = c(2, 3),
+          Interactions = c(4, 5),
+          Controls = 1
+        ),
+        format = "tt"
+      )
+      expect_snapshot(print(out))
+    })
+
+    test_that("compare_parameters, print_md-3", {
+      skip_if_not_installed("lme4")
+      skip_if_not_installed("knitr")
+      skip_if_not_installed("tinytable")
+
+      data(sleepstudy, package = "lme4")
+      set.seed(1234)
+      sleepstudy$grp <- as.factor(sample.int(3, nrow(sleepstudy), replace = TRUE))
+      lm1 <- lme4::lmer(Reaction ~ Days + grp + (1 | Subject), data = sleepstudy)
+      lm2 <- lme4::lmer(Reaction ~ Days * grp + (1 | Subject), data = sleepstudy)
 
       cp <- compare_parameters(lm1, lm2, select = "{estimate} ({ci})|{p}", drop = "^\\(Intercept", effects = "all")
       expect_snapshot(print_md(cp))
+      expect_snapshot(display(cp, format = "tt"))
+    })
 
-      # error
-      expect_error(
-        print_md(cp, groups = list(
-          Groups = c("grp (2)", "grp (3)"),
-          Interactions = c("Days * grp (2)", "Days * grp (3)"),
-          Controls = "Days"
-        )),
-        regex = "Cannot combine"
-      )
+    test_that("compare_parameters, print_md-4", {
+      skip_if_not_installed("lme4")
+      skip_if_not_installed("knitr")
+      skip_if_not_installed("tinytable")
+
+      data(sleepstudy, package = "lme4")
+      set.seed(1234)
+      sleepstudy$grp <- as.factor(sample.int(3, nrow(sleepstudy), replace = TRUE))
+      lm1 <- lme4::lmer(Reaction ~ Days + grp + (1 | Subject), data = sleepstudy)
+      lm2 <- lme4::lmer(Reaction ~ Days * grp + (1 | Subject), data = sleepstudy)
+
 
       # with reference level
       cp <- compare_parameters(lm1, lm2, select = "{estimate} ({ci})|{p}", drop = "^\\(Intercept", include_reference = TRUE)
@@ -159,6 +198,19 @@ withr::with_options(
         Controls = 1
       ))
       expect_snapshot(print(out))
+
+    })
+
+    test_that("compare_parameters, print_md-5", {
+      skip_if_not_installed("lme4")
+      skip_if_not_installed("knitr")
+      skip_if_not_installed("tinytable")
+
+      data(sleepstudy, package = "lme4")
+      set.seed(1234)
+      sleepstudy$grp <- as.factor(sample.int(3, nrow(sleepstudy), replace = TRUE))
+      lm1 <- lme4::lmer(Reaction ~ Days + grp + (1 | Subject), data = sleepstudy)
+      lm2 <- lme4::lmer(Reaction ~ Days * grp + (1 | Subject), data = sleepstudy)
 
       # with reference level
       cp <- compare_parameters(lm1, lm2, drop = "^\\(Intercept", include_reference = TRUE)
@@ -173,8 +225,8 @@ withr::with_options(
       cp <- compare_parameters(lm1, lm2, select = "{estimate} ({ci})|{p}", drop = "^\\(Intercept")
       expect_error(
         print_md(cp, groups = list(
-          Groups = c("grp (2)", "grp (3)"),
-          Interactions = c("Days * grp (2)", "Days * grp (3)"),
+          Groups = c(2, 3),
+          Interactions = c(4, 5),
           Controls = "XDays"
         )),
         regex = "Some group indices"
@@ -191,9 +243,9 @@ withr::with_options(
       # output identical for both calls
       cp1 <- compare_parameters(lm1, lm2, select = "{estimate} ({ci})|{p}", drop = "^\\(Intercept")
       out1 <- capture.output(print_md(cp1, groups = list(
-        Groups = c("grp (2)", "grp (3)"),
-        Interactions = c("Days * grp (2)", "Days * grp (3)"),
-        Controls = "Days"
+        Groups = 2:3,
+        Interactions = 4:5,
+        Controls = 1
       )))
       cp2 <- compare_parameters(
         lm1,
@@ -201,9 +253,9 @@ withr::with_options(
         select = "{estimate} ({ci})|{p}",
         drop = "^\\(Intercept",
         groups = list(
-          Groups = c("grp (2)", "grp (3)"),
-          Interactions = c("Days * grp (2)", "Days * grp (3)"),
-          Controls = "Days"
+          Groups = c(2, 3),
+          Interactions = c(4, 5),
+          Controls = 1
         )
       )
       out2 <- capture.output(print_md(cp2))

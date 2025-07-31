@@ -25,6 +25,13 @@ print_html.parameters_model <- function(x,
                                         include_reference = FALSE,
                                         verbose = TRUE,
                                         ...) {
+  # which engine?
+  engine <- .check_format_backend(...)
+
+  # line separator - for tinytable, we have no specific line separator,
+  # because the output format is context-dependent
+  line_sep <- ifelse(identical(engine, "tt"), " ", "<br>")
+
   # check if user supplied digits attributes
   if (missing(digits)) {
     digits <- .additional_arguments(x, "digits", digits)
@@ -52,7 +59,7 @@ print_html.parameters_model <- function(x,
 
   # we need glue-like syntax right now...
   if (!is.null(select)) {
-    select <- .convert_to_glue_syntax(style = select, "<br>")
+    select <- .convert_to_glue_syntax(style = select, line_sep)
   }
 
   # check options ---------------
@@ -73,7 +80,7 @@ print_html.parameters_model <- function(x,
   table_caption <- .print_caption(x, caption, format = "html")
 
   # main table
-  formatted_table <- .print_core(
+  formatted_table <- format(
     x = x,
     pretty_names = pretty_names,
     split_components = split_components,
@@ -105,14 +112,14 @@ print_html.parameters_model <- function(x,
     format = "html"
   )
   if (!is.null(footer)) {
-    footer <- paste0(footer, "<br>", paste(footer_stats, collapse = "<br>"))
+    footer <- paste0(footer, line_sep, paste(footer_stats, collapse = line_sep))
   } else if (!is.null(footer_stats)) {
-    footer <- paste(footer_stats, collapse = "<br>")
+    footer <- paste(footer_stats, collapse = line_sep)
   }
 
   out <- insight::export_table(
     formatted_table,
-    format = "html",
+    format = engine,
     caption = table_caption,
     subtitle = subtitle,
     footer = footer,
@@ -120,13 +127,17 @@ print_html.parameters_model <- function(x,
     ...
   )
 
-  .add_gt_options(
-    out,
-    style = select,
-    font_size = font_size,
-    line_padding = line_padding,
-    user_labels = column_labels
-  )
+  if (identical(engine, "tt")) {
+    out
+  } else {
+    .add_gt_options(
+      out,
+      style = select,
+      font_size = font_size,
+      line_padding = line_padding,
+      user_labels = column_labels
+    )
+  }
 }
 
 #' @export
@@ -155,7 +166,6 @@ print_html.compare_parameters <- function(x,
                                           font_size = "100%",
                                           line_padding = 4,
                                           column_labels = NULL,
-                                          engine = "gt",
                                           ...) {
   # check if user supplied digits attributes
   if (missing(digits)) {
@@ -175,31 +185,15 @@ print_html.compare_parameters <- function(x,
     select <- attributes(x)$output_style
   }
 
-  # markdown engine?
-  engine <- match.arg(getOption("easystats_html_engine", engine), c("gt", "default", "tt"))
+  # which engine?
+  engine <- .check_format_backend(...)
 
-  # for tiny table, we can just call print_md()
-  if (engine == "tt") {
-    return(print_md(
-      x,
-      digits = digits,
-      ci_digits = ci_digits,
-      p_digits = p_digits,
-      caption = caption,
-      subtitle = subtitle,
-      footer = footer,
-      select = select,
-      split_components = TRUE,
-      ci_brackets = ci_brackets,
-      zap_small = zap_small,
-      groups = groups,
-      engine = "tt",
-      outformat = "html"
-    ))
-  }
+  # line separator - for tinytable, we have no specific line separator,
+  # because the output format is context-dependent
+  line_sep <- ifelse(identical(engine, "tt"), " ", "<br>")
 
   # we need glue-like syntax right now...
-  select <- .convert_to_glue_syntax(style = select, "<br>")
+  select <- .convert_to_glue_syntax(style = select, line_sep)
 
   formatted_table <- format(
     x,
@@ -221,31 +215,75 @@ print_html.compare_parameters <- function(x,
     formatted_table$Parameter <- gsub("]", ci_brackets[2], formatted_table$Parameter, fixed = TRUE)
   }
 
+  # setup grouping for tt-backend --------------------------------------------
+  # --------------------------------------------------------------------------
+
+  model_groups <- NULL
+  by <- NULL
+
+  # find columns that contain model names, which we want to group
+  models <- setdiff(
+    unique(gsub("(.*) \\((.*)\\)$", "\\2", colnames(formatted_table))[-1]),
+    c("Component", "Effects", "Response", "Group")
+  )
+  # grouping only applies when we have custom column layout (with "select")
+  # else, we don't need grouping
+  if (any(grepl(paste0("(", models[1], ")"), colnames(formatted_table), fixed = TRUE))) {
+    model_groups <- lapply(models, function(model) {
+      which(endsWith(colnames(formatted_table), paste0("(", model, ")")))
+    })
+    names(model_groups) <- models
+    if (identical(engine, "tt")) {
+      # for the tt backend, we need to add the model name to the column names
+      colnames(formatted_table)[-1] <- gsub(
+        "(.*) \\((.*)\\)$",
+        "\\1",
+        colnames(formatted_table)[-1]
+      )
+    }
+  }
+  if ("Component" %in% colnames(formatted_table)) {
+    by <- c(by, "Component")
+  }
+  if ("Effects" %in% colnames(formatted_table)) {
+    by <- c(by, "Effects")
+  }
+
+  # export table ------------------------------------------------------------
+
   out <- insight::export_table(
     formatted_table,
-    format = "html",
+    format = engine,
     caption = caption, # TODO: get rid of NOTE
     subtitle = subtitle,
     footer = footer,
+    column_groups = model_groups,
+    by = by,
     ...
   )
 
-  .add_gt_options(
-    out,
-    style = select,
-    font_size = font_size,
-    line_padding = line_padding,
-    # we assume that model names are at the end of each column name, in parenthesis
-    original_colnames = gsub("(.*) \\((.*)\\)$", "\\2", colnames(formatted_table))[-1],
-    column_names = colnames(formatted_table),
-    user_labels = column_labels
-  )
+  # setup gt-backend ---------------------------------------------------------
+  # --------------------------------------------------------------------------
+
+  if (identical(engine, "tt")) {
+    out
+  } else {
+    .add_gt_options(
+      out,
+      style = select,
+      font_size = font_size,
+      line_padding = line_padding,
+      column_names = colnames(formatted_table),
+      user_labels = column_labels
+    )
+  }
 }
 
 
 # PCA / EFA / CFA ----------------------------
 
 
+#' @rdname principal_components
 #' @export
 print_html.parameters_efa <- function(x,
                                       digits = 2,
@@ -274,6 +312,9 @@ print_html.parameters_pca <- print_html.parameters_efa
 
 #' @export
 print_html.parameters_efa_summary <- function(x, digits = 3, ...) {
+  # html engine?
+  engine <- .check_format_backend(...)
+
   table_caption <- "(Explained) Variance of Components"
 
   if ("Parameter" %in% names(x)) {
@@ -293,11 +334,60 @@ print_html.parameters_efa_summary <- function(x, digits = 3, ...) {
     x <- .safe(rbind(x, fc), x)
   }
 
-  insight::export_table(x, digits = digits, format = "html", caption = table_caption, align = "firstleft")
+  insight::export_table(
+    x,
+    digits = digits,
+    format = engine,
+    caption = table_caption,
+    align = "firstleft"
+  )
 }
 
 #' @export
 print_html.parameters_pca_summary <- print_html.parameters_efa_summary
+
+
+# Equivalence test ----------------------------
+
+#' @export
+print_html.equivalence_test_lm <- function(
+  x,
+  digits = 2,
+  ci_brackets = c("(", ")"),
+  zap_small = FALSE,
+  ...
+) {
+  .print_equivalence_test_lm(
+    x,
+    digits = digits,
+    ci_brackets = ci_brackets,
+    zap_small = zap_small,
+    format = .check_format_backend(...),
+    ...
+  )
+}
+
+
+# p_function ----------------------------
+
+#' @rdname p_function
+#' @export
+print_html.parameters_p_function <- function(x,
+                                             digits = 2,
+                                             ci_width = "auto",
+                                             ci_brackets = c("(", ")"),
+                                             pretty_names = TRUE,
+                                             ...) {
+  .print_p_function(
+    x,
+    digits,
+    ci_width,
+    ci_brackets,
+    pretty_names,
+    format = "html",
+    ...
+  )
+}
 
 
 # helper ------------------
@@ -306,7 +396,6 @@ print_html.parameters_pca_summary <- print_html.parameters_efa_summary
                             style,
                             font_size = "100%",
                             line_padding = 4,
-                            original_colnames = NULL,
                             column_names = NULL,
                             user_labels = NULL) {
   insight::check_if_installed("gt")
@@ -328,29 +417,18 @@ print_html.parameters_pca_summary <- print_html.parameters_efa_summary
     )
     new_labels <- as.list(new_labels)
   }
-  # add a column span? here we have multiple columns (like estimate, CI, p, ...)
-  # for each model. In this case, we want to add a column spanner, i.e. a
-  # separate heading for all columns of each model.
-  if (!is.null(original_colnames) && anyDuplicated(original_colnames) > 0) {
-    duplicates <- original_colnames[duplicated(original_colnames)]
-    for (d in duplicates) {
-      # we need +1 here, because first column is parameter column
-      span <- which(original_colnames == d) + 1
-      # add column spanner
-      out <- gt::tab_spanner(out, label = d, columns = span)
+
+  # relabel columns. The single columns still have their old labels
+  # (like "Estimate (model1)", "p (model1)"), and we extracted the "model names"
+  # and used them for the column spanner. Now we no longer need this suffix,
+  # and remove it. In case user-defined column labels are provided, "new_labels"
+  # is not NULL, so we use user labels, else we extract labels from columns.
+  if (!is.null(column_names)) {
+    if (is.null(new_labels)) {
+      new_labels <- as.list(gsub("(.*) \\((.*)\\)$", "\\1", column_names))
     }
-    # relabel columns. The single columns still have their old labels
-    # (like "Estimate (model1)", "p (model1)"), and we extracted the "model names"
-    # and used them for the column spanner. Now we no longer need this suffix,
-    # and remove it. In case user-defined column labels are provided, "new_labels"
-    # is not NULL, so we use user labels, else we extract labels from columns.
-    if (!is.null(column_names)) {
-      if (is.null(new_labels)) {
-        new_labels <- as.list(gsub("(.*) \\((.*)\\)$", "\\1", column_names))
-      }
-      names(new_labels) <- column_names
-      out <- gt::cols_label(out, .list = new_labels)
-    }
+    names(new_labels) <- column_names
+    out <- gt::cols_label(out, .list = new_labels)
     # default column label, if we have user labels
   } else if (!is.null(new_labels)) {
     names(new_labels) <- colnames(out[["_data"]])
@@ -381,4 +459,15 @@ print_html.parameters_pca_summary <- print_html.parameters_efa_summary
     )
   )
   out
+}
+
+
+# we allow exporting HTML format based on "gt" or "tinytable"
+.check_format_backend <- function(...) {
+  dots <- list(...)
+  if (identical(dots$backend, "tt")) {
+    "tt"
+  } else {
+    "html"
+  }
 }

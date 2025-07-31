@@ -1,7 +1,7 @@
 Type: Package
 Package: parameters
 Title: Processing of Model Parameters
-Version: 0.27.0.1
+Version: 0.27.0.5
 Authors@R:
     c(person(given = "Daniel",
              family = "Lüdecke",
@@ -202,6 +202,7 @@ Suggests:
     rms,
     rstan,
     rstanarm,
+    sampleSelection,
     sandwich,
     see (>= 0.8.1),
     serp,
@@ -230,3 +231,4 @@ Config/testthat/parallel: true
 Config/Needs/website: easystats/easystatstemplate
 Config/Needs/check: stan-dev/cmdstanr
 Config/rcmdcheck/ignore-inconsequential-notes: true
+Remotes: easystats/insight
