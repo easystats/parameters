@@ -182,8 +182,14 @@ encompassed in square brackets (else in parentheses).}
 \code{digits} decimal places. If \code{FALSE}, values with more decimal
 places than \code{digits} are printed in scientific notation.}
 
-\item{format}{String, indicating the output format. Can be \code{"markdown"}
-or \code{"html"}.}
+\item{format}{Name of output-format, as string. If \code{NULL} (or \code{"text"}),
+returned output is used for basic printing. Can be one of \code{NULL} (the
+default) resp. \code{"text"} for plain text, \code{"markdown"} (or \code{"md"}) for
+markdown and \code{"html"} for HTML output. A special option is \code{"tt"}, which
+creates a \code{\link[tinytable:tt]{tinytable::tt()}} object, where the output format is dependent
+on the context where the table is used, i.e. it can be markdown format when
+\code{export_table()} is used in markdown files, or LaTex format when creating
+PDFs etc.}
 
 \item{groups}{Named list, can be used to group parameters in the printed output.
 List elements may either be character vectors that match the name of those
@@ -294,9 +300,6 @@ printed to console. If not specified, tables will be adjusted to the current
 available width, e.g. of the of the console (or any other source for textual
 output, like markdown files). The argument \code{table_width} can also be used in
 most \code{print()} methods to specify the table width as desired.
-\item \code{easystats_html_engine}: \code{options(easystats_html_engine = "gt")} will set
-the default HTML engine for tables to \code{gt}, i.e. the \emph{gt} package is used to
-create HTML tables. If set to \code{tt}, the \emph{tinytable} package is used.
 \item \code{insight_use_symbols}: \code{options(insight_use_symbols = TRUE)} will try to
 print unicode-chars for symbols as column names, wherever possible (e.g.,
 \ifelse{html}{\out{&omega;}}{\eqn{\omega}} instead of \code{Omega}).
@@ -362,17 +365,8 @@ model <- lm(
 )
 # don't select "Intercept" parameter
 mp <- model_parameters(model, parameters = "^(?!\\\\(Intercept)")
-groups <- list(
-  "Focal Predictors" = c("Speciesversicolor", "Speciesvirginica"),
-  "Controls" = c("Sepal.Length", "Petal.Length")
-)
+groups <- list(`Focal Predictors` = c(1, 4), Controls = c(2, 3))
 print(mp, groups = groups)
-
-# or use row indices
-print(mp, groups = list(
-  "Focal Predictors" = c(1, 4),
-  "Controls" = c(2, 3)
-))
 
 # only show coefficients, CI and p,
 # put non-matched parameters to the end
@@ -385,8 +379,8 @@ model <- lm(mpg ~ hp + gear * vs + cyl + drat, data = mtcars)
 # don't select "Intercept" parameter
 mp <- model_parameters(model, parameters = "^(?!\\\\(Intercept)")
 print(mp, groups = list(
-  "Engine" = c("cyl6", "cyl8", "vs", "hp"),
-  "Interactions" = c("gear4:vs", "gear5:vs")
+  Engine = c(5, 6, 4, 1),
+  Interactions = c(8, 9)
 ))
 }
 

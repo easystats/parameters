@@ -67,16 +67,16 @@
     Code
       print(out)
     Output
-      Parameter                           | Estimate (SE) (lm1) | p (lm1) | Estimate (SE) (lm2) | p (lm2) | Estimate (SE) (lm3) | p (lm3)
-      -----------------------------------------------------------------------------------------------------------------------------------
-      (Intercept)                         |         5.01 (0.07) |  <0.001 |         3.68 (0.11) |  <0.001 |         4.21 (0.41) |  <0.001
-      Species [versicolor]                |         0.93 (0.10) |  <0.001 |        -1.60 (0.19) |  <0.001 |        -1.81 (0.60) |   0.003
-      Species [virginica]                 |         1.58 (0.10) |  <0.001 |        -2.12 (0.27) |  <0.001 |        -3.15 (0.63) |  <0.001
-      Petal Length                        |                     |         |         0.90 (0.06) |  <0.001 |         0.54 (0.28) |   0.052
-      Species [versicolor] * Petal Length |                     |         |                     |         |         0.29 (0.30) |   0.334
-      Species [virginica] * Petal Length  |                     |         |                     |         |         0.45 (0.29) |   0.120
-      -----------------------------------------------------------------------------------------------------------------------------------
-      Observations                        |                 150 |         |                 150 |         |                 150 |        
+      Parameter                           | Coefficient (SE) (lm1) | p (lm1) | Coefficient (SE) (lm2) | p (lm2) | Coefficient (SE) (lm3) | p (lm3)
+      --------------------------------------------------------------------------------------------------------------------------------------------
+      (Intercept)                         |            5.01 (0.07) |  <0.001 |            3.68 (0.11) |  <0.001 |            4.21 (0.41) |  <0.001
+      Species [versicolor]                |            0.93 (0.10) |  <0.001 |           -1.60 (0.19) |  <0.001 |           -1.81 (0.60) |   0.003
+      Species [virginica]                 |            1.58 (0.10) |  <0.001 |           -2.12 (0.27) |  <0.001 |           -3.15 (0.63) |  <0.001
+      Petal Length                        |                        |         |            0.90 (0.06) |  <0.001 |            0.54 (0.28) |   0.052
+      Species [versicolor] * Petal Length |                        |         |                        |         |            0.29 (0.30) |   0.334
+      Species [virginica] * Petal Length  |                        |         |                        |         |            0.45 (0.29) |   0.120
+      --------------------------------------------------------------------------------------------------------------------------------------------
+      Observations                        |                    150 |         |                    150 |         |                    150 |        
 
 ---
 
@@ -97,7 +97,7 @@
       Controls                              |                      |                     
         Petal Length                        |  0.90 ( 0.78,  1.03) |  0.39 (-0.13,  0.90)
       -----------------------------------------------------------------------------------
-        Observations                        |                  150 |                  150
+      Observations                          |                  150 |                  150
 
 ---
 
@@ -118,7 +118,7 @@
       Controls                              |          |        
         Petal Length                        |  0.90*** |    0.39
       ----------------------------------------------------------
-        Observations                        |      150 |     150
+      Observations                          |      150 |     150
 
 ---
 
@@ -128,18 +128,18 @@
         "Species [versicolor] * Petal Length", "Species [virginica] * Petal Length"),
       Controls = "Petal Length"), select = "{estimate}|{p}")
     Output
-      Parameter                             | Estimate (lm1) | p (lm1) | Estimate (lm2) | p (lm2)
-      -------------------------------------------------------------------------------------------
-      Species                               |                |         |                |        
-        Species [versicolor]                |          -1.60 |  <0.001 |          -1.69 |   0.003
-        Species [virginica]                 |          -2.12 |  <0.001 |          -1.19 |   0.048
-      Interactions                          |                |         |                |        
-        Species [versicolor] * Petal Length |                |         |          -0.01 |   0.961
-        Species [virginica] * Petal Length  |                |         |          -0.15 |   0.574
-      Controls                              |                |         |                |        
-        Petal Length                        |           0.90 |  <0.001 |           0.39 |   0.138
-      -------------------------------------------------------------------------------------------
-        Observations                        |            150 |         |            150 |        
+      Parameter                             | Coefficient (lm1) | p (lm1) | Coefficient (lm2) | p (lm2)
+      -------------------------------------------------------------------------------------------------
+      Species                               |                   |         |                   |        
+        Species [versicolor]                |             -1.60 |  <0.001 |             -1.69 |   0.003
+        Species [virginica]                 |             -2.12 |  <0.001 |             -1.19 |   0.048
+      Interactions                          |                   |         |                   |        
+        Species [versicolor] * Petal Length |                   |         |             -0.01 |   0.961
+        Species [virginica] * Petal Length  |                   |         |             -0.15 |   0.574
+      Controls                              |                   |         |                   |        
+        Petal Length                        |              0.90 |  <0.001 |              0.39 |   0.138
+      -------------------------------------------------------------------------------------------------
+      Observations                          |               150 |         |               150 |        
 
 ---
 
@@ -149,31 +149,31 @@
         "Species [versicolor] * Petal Length", "Species [virginica] * Petal Length"),
       Controls = "Petal Length"), select = "{estimate}|{p}")
     Output
-      Parameter                             | Estimate (lm1) | p (lm1)
-      ----------------------------------------------------------------
-      Species                               |                |        
-        Species [versicolor]                |          -1.60 |  <0.001
-        Species [virginica]                 |          -2.12 |  <0.001
-      Interactions                          |                |        
-        Species [versicolor] * Petal Length |                |        
-        Species [virginica] * Petal Length  |                |        
-      Controls                              |                |        
-        Petal Length                        |           0.90 |  <0.001
-      ----------------------------------------------------------------
-        Observations                        |            150 |        
+      Parameter                             | Coefficient (lm1) | p (lm1)
+      -------------------------------------------------------------------
+      Species                               |                   |        
+        Species [versicolor]                |             -1.60 |  <0.001
+        Species [virginica]                 |             -2.12 |  <0.001
+      Interactions                          |                   |        
+        Species [versicolor] * Petal Length |                   |        
+        Species [virginica] * Petal Length  |                   |        
+      Controls                              |                   |        
+        Petal Length                        |              0.90 |  <0.001
+      -------------------------------------------------------------------
+      Observations                          |               150 |        
       
-      Parameter                             | Estimate (lm2) | p (lm2)
-      ----------------------------------------------------------------
-      Species                               |                |        
-        Species [versicolor]                |          -1.69 |   0.003
-        Species [virginica]                 |          -1.19 |   0.048
-      Interactions                          |                |        
-        Species [versicolor] * Petal Length |          -0.01 |   0.961
-        Species [virginica] * Petal Length  |          -0.15 |   0.574
-      Controls                              |                |        
-        Petal Length                        |           0.39 |   0.138
-      ----------------------------------------------------------------
-        Observations                        |            150 |        
+      Parameter                             | Coefficient (lm2) | p (lm2)
+      -------------------------------------------------------------------
+      Species                               |                   |        
+        Species [versicolor]                |             -1.69 |   0.003
+        Species [virginica]                 |             -1.19 |   0.048
+      Interactions                          |                   |        
+        Species [versicolor] * Petal Length |             -0.01 |   0.961
+        Species [virginica] * Petal Length  |             -0.15 |   0.574
+      Controls                              |                   |        
+        Petal Length                        |              0.39 |   0.138
+      -------------------------------------------------------------------
+      Observations                          |               150 |        
 
 # combination of different models
 

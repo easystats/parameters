@@ -364,6 +364,9 @@ print.parameters_omega_summary <- function(x, ...) {
 
 
 .print_parameters_cfa_efa <- function(x, threshold, sort, format, digits, labels, ...) {
+  # html engine?
+  engine <- .check_format_backend(...)
+
   # Method
   if (inherits(x, "parameters_pca")) {
     method <- "Principal Component Analysis"
@@ -417,6 +420,11 @@ print.parameters_omega_summary <- function(x, ...) {
     alignment <- NULL
   } else {
     alignment <- paste(c("ll", rep("r", ncol(x) - 2)), collapse = "")
+  }
+
+  # set engine for html format
+  if (format == "html" && identical(engine, "tt")) {
+    format <- "tt"
   }
 
   insight::export_table(
