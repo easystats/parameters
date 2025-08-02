@@ -1,6 +1,8 @@
 #' Parameters from PCA, FA, CFA, SEM
 #'
-#' Format structural models from the **psych** or **FactoMineR** packages.
+#' Format structural models from the **psych** or **FactoMineR** packages. There
+#' is a `summary()` method for the returned output from `model_parameters()`, to
+#' show further information. See 'Examples'.
 #'
 #' @param standardize Return standardized parameters (standardized coefficients).
 #'   Can be `TRUE` (or `"all"` or `"std.all"`) for standardized
@@ -46,81 +48,79 @@
 #'    PCA. The value should be > 0.6, and desirable values are > 0.8
 #'    (\cite{Tabachnick and Fidell, 2013}).
 #'
-#' @examples
+#' @examplesIf all(insight::check_if_installed(c("psych", "lavaan"), quietly = TRUE))
+#' library(parameters)
 #' \donttest{
-#' library(parameters)
-#' if (require("psych", quietly = TRUE)) {
-#'   # Principal Component Analysis (PCA) ---------
-#'   pca <- psych::principal(attitude)
-#'   model_parameters(pca)
+#' # Principal Component Analysis (PCA) ---------
+#' data(attitude)
+#' pca <- psych::principal(attitude)
+#' model_parameters(pca)
+#' summary(model_parameters(pca))
 #'
-#'   pca <- psych::principal(attitude, nfactors = 3, rotate = "none")
-#'   model_parameters(pca, sort = TRUE, threshold = 0.2)
+#' pca <- psych::principal(attitude, nfactors = 3, rotate = "none")
+#' model_parameters(pca, sort = TRUE, threshold = 0.2)
 #'
-#'   principal_components(attitude, n = 3, sort = TRUE, threshold = 0.2)
-#'
-#'
-#'   # Exploratory Factor Analysis (EFA) ---------
-#'   efa <- psych::fa(attitude, nfactors = 3)
-#'   model_parameters(efa,
-#'     threshold = "max", sort = TRUE,
-#'     labels = as.character(1:ncol(attitude))
-#'   )
+#' principal_components(attitude, n = 3, sort = TRUE, threshold = 0.2)
 #'
 #'
-#'   # Omega ---------
-#'   omega <- psych::omega(mtcars, nfactors = 3)
-#'   params <- model_parameters(omega)
-#'   params
-#'   summary(params)
+#' # Exploratory Factor Analysis (EFA) ---------
+#' efa <- psych::fa(attitude, nfactors = 3)
+#' model_parameters(efa,
+#'   threshold = "max", sort = TRUE,
+#'   labels = as.character(1:ncol(attitude))
+#' )
+#'
+#'
+#' # Omega ---------
+#' data(mtcars)
+#' omega <- psych::omega(mtcars, nfactors = 3, plot = FALSE)
+#' params <- model_parameters(omega)
+#' params
+#' summary(params)
 #' }
-#' }
 #'
-#' # lavaan
-#'
-#' library(parameters)
 #'
 #' # lavaan -------------------------------------
-#' if (require("lavaan", quietly = TRUE)) {
-#'   # Confirmatory Factor Analysis (CFA) ---------
+#' # Confirmatory Factor Analysis (CFA) ---------
 #'
-#'   structure <- " visual  =~ x1 + x2 + x3
-#'                  textual =~ x4 + x5 + x6
-#'                  speed   =~ x7 + x8 + x9 "
-#'   model <- lavaan::cfa(structure, data = HolzingerSwineford1939)
-#'   model_parameters(model)
-#'   model_parameters(model, standardize = TRUE)
+#' data(HolzingerSwineford1939, package = "lavaan")
+#' structure <- " visual  =~ x1 + x2 + x3
+#'                textual =~ x4 + x5 + x6
+#'                speed   =~ x7 + x8 + x9 "
+#' model <- lavaan::cfa(structure, data = HolzingerSwineford1939)
+#' model_parameters(model)
+#' model_parameters(model, standardize = TRUE)
 #'
-#'   # filter parameters
-#'   model_parameters(
-#'     model,
-#'     parameters = list(
-#'       To = "^(?!visual)",
-#'       From = "^(?!(x7|x8))"
-#'     )
+#' # filter parameters
+#' model_parameters(
+#'   model,
+#'   parameters = list(
+#'     To = "^(?!visual)",
+#'     From = "^(?!(x7|x8))"
 #'   )
+#' )
 #'
-#'   # Structural Equation Model (SEM) ------------
+#' # Structural Equation Model (SEM) ------------
 #'
-#'   structure <- "
-#'     # latent variable definitions
-#'       ind60 =~ x1 + x2 + x3
-#'       dem60 =~ y1 + a*y2 + b*y3 + c*y4
-#'       dem65 =~ y5 + a*y6 + b*y7 + c*y8
-#'     # regressions
-#'       dem60 ~ ind60
-#'       dem65 ~ ind60 + dem60
-#'     # residual correlations
-#'       y1 ~~ y5
-#'       y2 ~~ y4 + y6
-#'       y3 ~~ y7
-#'       y4 ~~ y8
-#'       y6 ~~ y8
-#'   "
-#'   model <- lavaan::sem(structure, data = PoliticalDemocracy)
-#'   model_parameters(model)
-#'   model_parameters(model, standardize = TRUE)
-#' }
+#' data(PoliticalDemocracy, package = "lavaan")
+#' structure <- "
+#'   # latent variable definitions
+#'     ind60 =~ x1 + x2 + x3
+#'     dem60 =~ y1 + a*y2 + b*y3 + c*y4
+#'     dem65 =~ y5 + a*y6 + b*y7 + c*y8
+#'   # regressions
+#'     dem60 ~ ind60
+#'     dem65 ~ ind60 + dem60
+#'   # residual correlations
+#'     y1 ~~ y5
+#'     y2 ~~ y4 + y6
+#'     y3 ~~ y7
+#'     y4 ~~ y8
+#'     y6 ~~ y8
+#' "
+#' model <- lavaan::sem(structure, data = PoliticalDemocracy)
+#' model_parameters(model)
+#' model_parameters(model, standardize = TRUE)
 #'
 #' @return A data frame of indices or loadings.
 #' @references
@@ -155,22 +155,7 @@ model_parameters.principal <- function(model,
   n <- model$factors
 
   # Get summary
-  variance <- as.data.frame(unclass(model$Vaccounted))
-  data_summary <- .data_frame(
-    Component = names(variance),
-    Eigenvalues = model$values[1:n],
-    Variance = as.numeric(variance["Proportion Var", ])
-  )
-  if ("Cumulative Var" %in% row.names(variance)) {
-    data_summary$Variance_Cumulative <- as.numeric(variance["Cumulative Var", ])
-  } else {
-    if (ncol(variance) == 1) {
-      data_summary$Variance_Cumulative <- as.numeric(variance["Proportion Var", ])
-    } else {
-      data_summary$Variance_Cumulative <- NA
-    }
-  }
-  data_summary$Variance_Proportion <- data_summary$Variance / sum(data_summary$Variance)
+  data_summary <- .get_fa_variance_summary(model)
 
   # Get loadings
   loadings <- as.data.frame(unclass(model$loadings))
@@ -200,17 +185,14 @@ model_parameters.principal <- function(model,
   attr(loadings, "scores") <- model$scores
   attr(loadings, "additional_arguments") <- list(...)
   attr(loadings, "n") <- n
+  attr(loadings, "threshold") <- threshold
+  attr(loadings, "sort") <- sort
   attr(loadings, "type") <- model$fn
   attr(loadings, "loadings_columns") <- loading_cols
 
   # Sorting
   if (isTRUE(sort)) {
     loadings <- .sort_loadings(loadings)
-  }
-
-  # Replace by NA all cells below threshold
-  if (!is.null(threshold)) {
-    loadings <- .filter_loadings(loadings, threshold = threshold)
   }
 
   # Add some more attributes
@@ -242,24 +224,130 @@ model_parameters.fa.ci <- model_parameters.fa
 
 
 #' @export
-model_parameters.omega <- function(model, verbose = TRUE, ...) {
-  # Table of omega coefficients
-  table_om <- model$omega.group
-  colnames(table_om) <- c("Omega_Total", "Omega_Hierarchical", "Omega_Group")
-  table_om$Composite <- row.names(table_om)
-  row.names(table_om) <- NULL
-  table_om <- table_om[c("Composite", names(table_om)[names(table_om) != "Composite"])]
+model_parameters.omega <- function(model,
+                                   sort = FALSE,
+                                   threshold = NULL,
+                                   labels = NULL,
+                                   ...) {
+  # n
+  n <- model$stats$factors
 
+  # Get summary
+  data_summary <- .get_omega_variance_summary(model)
+
+  # Get omega coefficients
+  omega_coefficients <- .get_omega_coefficients_summary(model)
+
+  # Get loadings
+  loadings <- as.data.frame(unclass(model$schmid$sl))
+
+  # Format
+  loadings <- cbind(data.frame(Variable = row.names(loadings)), loadings)
+  row.names(loadings) <- NULL
+
+  # Labels
+  if (!is.null(labels)) {
+    loadings$Label <- labels
+    loadings <- loadings[c("Variable", "Label", names(loadings)[!names(loadings) %in% c("Variable", "Label")])]
+    loading_cols <- 3:(n + 4)
+  } else {
+    loading_cols <- 2:(n + 3)
+  }
+
+  # Add information
+  colnames(loadings)[colnames(loadings) == "com"] <- "Complexity"
+  rotation <- model$Call$rotate
+  if (is.null(rotation)) {
+    rotation <- "oblimin"
+  }
+
+  # Add attributes
+  attr(loadings, "summary") <- data_summary
+  attr(loadings, "omega_coefficients") <- omega_coefficients
+  attr(loadings, "model") <- model
+  attr(loadings, "rotation") <- rotation
+  attr(loadings, "scores") <- model$scores
+  attr(loadings, "additional_arguments") <- list(...)
+  attr(loadings, "n") <- n
+  attr(loadings, "threshold") <- threshold
+  attr(loadings, "sort") <- sort
+  attr(loadings, "loadings_columns") <- loading_cols
+
+  # Sorting
+  if (isTRUE(sort)) {
+    loadings <- .sort_loadings(loadings)
+  }
+
+  # Add some more attributes
+  attr(loadings, "loadings_long") <- .long_loadings(loadings, threshold = threshold, loadings_columns = loading_cols)
+  # here we match the original columns in the data set with the assigned components
+  # for each variable, so we know which column in the original data set belongs
+  # to which extracted component...
+  attr(loadings, "closest_component") <- .closest_component(
+    loadings,
+    loadings_columns = loading_cols,
+    variable_names = rownames(model$schmid$sl)
+  )
+
+  # add class-attribute for printing
+  class(loadings) <- c("parameters_omega", class(loadings))
+  loadings
+}
+
+
+#' @export
+model_parameters.item_omega <- function(model,
+                                        sort = FALSE,
+                                        threshold = NULL,
+                                        labels = NULL,
+                                        ...) {
+  x <- attributes(model)$model
+  model_parameters(x, sort = sort, threshold = threshold, labels = labels, ...)
+}
+
+
+# helper ------------------------------------------------
+
+
+.get_fa_variance_summary <- function(model) {
+  n <- model$factors
+  variance <- as.data.frame(unclass(model$Vaccounted))
+
+  data_summary <- .data_frame(
+    Component = names(variance),
+    Eigenvalues = model$values[1:n],
+    Variance = as.numeric(variance["Proportion Var", ])
+  )
+
+  if ("Cumulative Var" %in% row.names(variance)) {
+    data_summary$Variance_Cumulative <- as.numeric(variance["Cumulative Var", ])
+  } else if (ncol(variance) == 1) {
+    data_summary$Variance_Cumulative <- as.numeric(variance["Proportion Var", ])
+  } else {
+    data_summary$Variance_Cumulative <- NA
+  }
+  data_summary$Variance_Proportion <- data_summary$Variance / sum(data_summary$Variance)
+
+  data_summary
+}
+
+
+.get_omega_variance_summary <- function(model) {
   # Get summary: Table of Variance
   table_var <- as.data.frame(unclass(model$omega.group))
   table_var$Composite <- rownames(model$omega.group)
   table_var$Total <- table_var$total * 100
   table_var$General <- table_var$general * 100
   table_var$Group <- table_var$group * 100
-  table_var <- table_var[c("Composite", "Total", "General", "Group")]
+  table_var[c("Composite", "Total", "General", "Group")]
+}
 
-  out <- table_om
-  attr(out, "summary") <- table_var
-  class(out) <- c("parameters_omega", class(out))
-  out
+
+.get_omega_coefficients_summary <- function(model) {
+  # Table of omega coefficients
+  table_om <- model$omega.group
+  colnames(table_om) <- c("Omega_Total", "Omega_Hierarchical", "Omega_Group")
+  table_om$Composite <- row.names(table_om)
+  row.names(table_om) <- NULL
+  table_om[c("Composite", names(table_om)[names(table_om) != "Composite"])]
 }

@@ -8,4 +8,4 @@ name: R-CMD-check
 
 jobs:
   R-CMD-check:
-    uses: easystats/workflows/.github/workflows/R-CMD-check.yaml@main
+    uses: easystats/workflows/.github/workflows/R-CMD-check-no-oldrel.yaml@main

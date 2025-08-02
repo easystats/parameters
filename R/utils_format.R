@@ -1,74 +1,5 @@
 # output-format helper  -------------------------
 
-# this function does the main composition of columns for the output.
-# it's used by "compare_parameters()", where users can choose between
-# different pre-sets of "print-layouts"
-
-.format_output_style <- function(x, style, format, modelname) {
-  if (identical(format, "html")) {
-    linesep <- "<br>"
-  } else {
-    linesep <- " "
-  }
-  if (!is.null(style) && style %in% c("se", "ci")) {
-    x$p_stars <- ""
-  }
-
-  # find columns
-  coef_column <- colnames(x)[1]
-  ci_column <- colnames(x)[endsWith(colnames(x), " CI") | colnames(x) == "CI"]
-
-  # make sure we have a glue-like syntax
-  style <- .convert_to_glue_syntax(style, linesep)
-
-  # "|" indicates cell split
-  style <- unlist(strsplit(style, split = "|", fixed = TRUE))
-
-  # define column names
-  if (length(style) == 1) {
-    column_names <- modelname
-  } else {
-    column_names <- .style_pattern_to_name(style)
-  }
-
-  # paste glue together
-  formatted_columns <- lapply(seq_along(style), function(i) {
-    .format_glue_output(x, coef_column, ci_column, style[i], format, column_names[i])
-  })
-  out <- do.call(cbind, formatted_columns)
-
-  # add modelname to column names; for single column layout per model, we just
-  # need the column name. If the layout contains more than one column per model,
-  # add modelname in parenthesis.
-  if (!is.null(modelname) && nzchar(modelname, keepNA = TRUE)) {
-    if (ncol(out) > 1) {
-      colnames(out) <- paste0(colnames(out), " (", modelname, ")")
-    } else {
-      colnames(out) <- modelname
-    }
-  }
-
-  # remove empty parenthesis
-  out[] <- lapply(out, function(i) {
-    # here we either have "<br>" or " " as line breaks, followed by empty "()"
-    i <- gsub("<br>()", "", i, fixed = TRUE)
-    i <- gsub(" ()", "", i, fixed = TRUE)
-    i <- gsub("<br>(, )", "", i, fixed = TRUE)
-    i <- gsub(" (, )", "", i, fixed = TRUE)
-    i[i == "()"] <- ""
-    i[i == "(, )"] <- ""
-    # remove other non-matched patterns
-    i <- gsub("{stars}", "", i, fixed = TRUE)
-    i <- gsub("{rhat}", "", i, fixed = TRUE)
-    i <- gsub("{ess}", "", i, fixed = TRUE)
-    i <- gsub("{pd}", "", i, fixed = TRUE)
-    i <- gsub("{rope}", "", i, fixed = TRUE)
-    i
-  })
-  out
-}
-
-
 .convert_to_glue_syntax <- function(style, linesep = NULL) {
   # set default
   if (is.null(linesep)) {
@@ -110,112 +41,6 @@
 
   # replace \n for now with default line-separators
   gsub("\n", linesep, style, fixed = TRUE)
-}
-
-
-.format_glue_output <- function(x, coef_column, ci_column, style, format, column_names) {
-  # separate CI columns, for custom layout
-  ci <- ci_low <- ci_high <- NULL
-  if (!insight::is_empty_object(ci_column)) {
-    ci <- x[[ci_column[1]]]
-    ci_low <- insight::trim_ws(gsub("(\\(|\\[)(.*),(.*)(\\)|\\])", "\\2", ci))
-    ci_high <- insight::trim_ws(gsub("(\\(|\\[)(.*),(.*)(\\)|\\])", "\\3", ci))
-  }
-  # fix p-layout
-  if ("p" %in% colnames(x)) {
-    x[["p"]] <- insight::trim_ws(x[["p"]])
-    x[["p"]] <- gsub("< .", "<0.", x[["p"]], fixed = TRUE)
-  }
-  # handle aliases
-  style <- tolower(style)
-  style <- gsub("{coef}", "{estimate}", style, fixed = TRUE)
-  style <- gsub("{coefficient}", "{estimate}", style, fixed = TRUE)
-  style <- gsub("{std.error}", "{se}", style, fixed = TRUE)
-  style <- gsub("{standard error}", "{se}", style, fixed = TRUE)
-  style <- gsub("{pval}", "{p}", style, fixed = TRUE)
-  style <- gsub("{p.value}", "{p}", style, fixed = TRUE)
-  style <- gsub("{ci}", "{ci_low}, {ci_high}", style, fixed = TRUE)
-  # align columns width for text format
-  .align_values <- function(i) {
-    if (!is.null(i)) {
-      non_empty <- !is.na(i) & nzchar(i, keepNA = TRUE)
-      i[non_empty] <- format(insight::trim_ws(i[non_empty]), justify = "right")
-    }
-    i
-  }
-  # we put all elements (coefficient, SE, CI, p, ...) in one column.
-  # for text format, where columns are not center aligned, this can result in
-  # misaligned columns, which looks ugly. So we try to ensure that each element
-  # is formatted and justified to the same width
-  if (identical(format, "text") || is.null(format)) {
-    x[[coef_column]] <- .align_values(x[[coef_column]])
-    x$SE <- .align_values(x$SE)
-    x[["p"]] <- .align_values(x[["p"]])
-    x$p_stars <- .align_values(x$p_stars)
-    ci_low <- .align_values(ci_low)
-    ci_high <- .align_values(ci_high)
-    x$pd <- .align_values(x$pd)
-    x$Rhat <- .align_values(x$Rhat)
-    x$ESS <- .align_values(x$ESS)
-    x$ROPE_Percentage <- .align_values(x$ROPE_Percentage)
-  }
-  # create new string
-  table_row <- rep(style, times = nrow(x))
-  for (r in seq_along(table_row)) {
-    table_row[r] <- gsub("{estimate}", x[[coef_column]][r], table_row[r], fixed = TRUE)
-    if (!is.null(ci_low) && !is.null(ci_high)) {
-      table_row[r] <- gsub("{ci_low}", ci_low[r], table_row[r], fixed = TRUE)
-      table_row[r] <- gsub("{ci_high}", ci_high[r], table_row[r], fixed = TRUE)
-    }
-    if ("SE" %in% colnames(x)) {
-      table_row[r] <- gsub("{se}", x[["SE"]][r], table_row[r], fixed = TRUE)
-    }
-    if ("p" %in% colnames(x)) {
-      table_row[r] <- gsub("{p}", x[["p"]][r], table_row[r], fixed = TRUE)
-    }
-    if ("p_stars" %in% colnames(x)) {
-      table_row[r] <- gsub("{stars}", x[["p_stars"]][r], table_row[r], fixed = TRUE)
-    }
-    if ("pd" %in% colnames(x)) {
-      table_row[r] <- gsub("{pd}", x[["pd"]][r], table_row[r], fixed = TRUE)
-    }
-    if ("Rhat" %in% colnames(x)) {
-      table_row[r] <- gsub("{rhat}", x[["Rhat"]][r], table_row[r], fixed = TRUE)
-    }
-    if ("ESS" %in% colnames(x)) {
-      table_row[r] <- gsub("{ess}", x[["ESS"]][r], table_row[r], fixed = TRUE)
-    }
-    if ("ROPE_Percentage" %in% colnames(x)) {
-      table_row[r] <- gsub("{rope}", x[["ROPE_Percentage"]][r], table_row[r], fixed = TRUE)
-    }
-  }
-  # some cleaning: columns w/o coefficient are empty
-  table_row[x[[coef_column]] == "" | is.na(x[[coef_column]])] <- "" # nolint
-  # fix some p-value stuff, e.g. if pattern is "p={p]}",
-  # we may have "p= <0.001", which we want to be "p<0.001"
-  table_row <- gsub("=<", "<", table_row, fixed = TRUE)
-  table_row <- gsub("= <", "<", table_row, fixed = TRUE)
-  table_row <- gsub("= ", "=", table_row, fixed = TRUE)
-  # final output
-  x <- data.frame(table_row)
-  colnames(x) <- column_names
-  x
-}
-
-
-.style_pattern_to_name <- function(style) {
-  column_names <- tolower(style)
-  # completely remove these patterns
-  column_names <- gsub("{stars}", "", column_names, fixed = TRUE)
-  # remove curlys
-  column_names <- gsub("{", "", column_names, fixed = TRUE)
-  column_names <- gsub("}", "", column_names, fixed = TRUE)
-  # manual renaming
-  column_names <- gsub("\\Qrope\\E", "% in ROPE", column_names)
-  column_names <- gsub("(estimate|coefficient|coef)", "Estimate", column_names)
-  column_names <- gsub("\\Qse\\E", "SE", column_names)
-  column_names <- gsub("<br>", "", column_names, fixed = TRUE)
-  column_names
 }
 
 
@@ -281,6 +106,7 @@
                                              coef_name = NULL,
                                              zap_small = FALSE,
                                              include_reference = FALSE,
+                                             style = NULL,
                                              ...) {
   # default brackets are parenthesis for HTML / MD
   if ((is.null(ci_brackets) || isTRUE(ci_brackets)) && (identical(format, "html") || identical(format, "markdown"))) {
@@ -323,6 +149,7 @@
     ci_digits = ci_digits,
     p_digits = p_digits,
     zap_small = zap_small,
+    select = style,
     ...
   )
 }
@@ -767,102 +594,6 @@
 }
 
 
-# helper grouping parameters -------------------
-
-
-.parameter_groups <- function(x, groups) {
-  # only apply to conditional component for now
-  if ("Component" %in% colnames(x) && !any(x$Component == "conditional")) {
-    return(x)
-  }
-  if ("Component" %in% colnames(x)) {
-    row_index <- which(x$Component == "conditional")
-  } else {
-    row_index <- seq_len(nrow(x))
-  }
-
-  x_other <- x[-row_index, ]
-  x <- x[row_index, ]
-
-  att <- attributes(x)
-  indent_rows <- NULL
-  indent_parameters <- NULL
-
-  if (is.list(groups)) {
-    # find parameter names and replace by rowindex
-    group_rows <- lapply(groups, function(i) {
-      if (is.character(i)) {
-        i <- match(i, x$Parameter)
-      }
-      i
-    })
-
-    # validation check - check if all parameter names in the
-    # group list are spelled correctly
-    misspelled <- vapply(group_rows, anyNA, TRUE)
-
-    if (any(misspelled)) {
-      # remove invalid groups
-      group_rows[misspelled] <- NULL
-      # tell user
-      insight::format_alert(
-        "Couldn't find one or more parameters specified in following groups:",
-        toString(names(misspelled[misspelled])),
-        "Maybe you misspelled parameter names?"
-      )
-    }
-
-
-    # sort parameters according to grouping
-    selected_rows <- unlist(group_rows)
-    indent_parameters <- x$Parameter[selected_rows]
-    x <- rbind(x[selected_rows, ], x[-selected_rows, ])
-
-    # set back correct indices
-    groups <- 1
-    for (i in 2:length(group_rows)) {
-      groups <- c(groups, groups[i - 1] + length(group_rows[[i - 1]]))
-    }
-    names(groups) <- names(group_rows)
-  } else {
-    # find parameter names and replace by rowindex
-    group_names <- names(groups)
-    groups <- match(groups, x$Parameter)
-    names(groups) <- group_names
-
-    # order groups
-    groups <- sort(groups, na.last = TRUE)
-  }
-
-
-  empty_row <- x[1, ]
-  for (i in seq_len(ncol(empty_row))) {
-    empty_row[[i]] <- NA
-  }
-
-  for (i in rev(seq_along(groups))) {
-    x[seq(groups[i] + 1, nrow(x) + 1), ] <- x[seq(groups[i], nrow(x)), ]
-    x[groups[i], ] <- empty_row
-    x$Parameter[groups[i]] <- paste0("# ", names(groups[i]))
-  }
-
-  # find row indices of indented parameters
-  if (!is.null(indent_parameters)) {
-    indent_rows <- match(indent_parameters, x$Parameter)
-  }
-
-  # add other rows back
-  if (nrow(x_other) > 0) {
-    x <- rbind(x, x_other)
-  }
-
-  attributes(x) <- utils::modifyList(att, attributes(x))
-  attr(x, "indent_rows") <- indent_rows
-  attr(x, "indent_groups") <- "# "
-  x
-}
-
-
 # .insert_row <- function(x, newrow, r) {
 #   existingDF[seq(r+1,nrow(existingDF)+1),] <- existingDF[seq(r,nrow(existingDF)),]
 #   existingDF[r,] <- newrow
@@ -978,6 +709,7 @@
                                                 ci_brackets = TRUE,
                                                 zap_small = FALSE,
                                                 include_reference = FALSE,
+                                                style = NULL,
                                                 ...) {
   final_table <- list()
 
@@ -1168,7 +900,7 @@
       tables[[type]],
       digits = digits, ci_digits = ci_digits,
       p_digits = p_digits, pretty_names = pretty_names, ci_width = ci_width,
-      ci_brackets = ci_brackets, zap_small = zap_small, ...
+      ci_brackets = ci_brackets, zap_small = zap_small, select = style, ...
     )
     component_header <- .format_model_component_header(
       x, type, split_column, is_zero_inflated, is_ordinal_model,

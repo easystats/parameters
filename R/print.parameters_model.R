@@ -5,9 +5,9 @@
 #'
 #' @param x,object An object returned by [`model_parameters()`][model_parameters].
 #' @param split_components Logical, if `TRUE` (default), For models with
-#'   multiple components (zero-inflation, smooth terms, ...), each component is
-#'   printed in a separate table. If `FALSE`, model parameters are printed
-#'   in a single table and a `Component` column is added to the output.
+#' multiple components (zero-inflation, smooth terms, ...), each component is
+#' printed in a separate table. If `FALSE`, model parameters are printed
+#' in a single table and a `Component` column is added to the output.
 #' @param select Determines which columns and and which layout columns are
 #' printed. There are three options for this argument:
 #'
@@ -59,50 +59,62 @@
 #' case of more complex models (like mixed models) and may not return expected
 #' results.
 #' @param show_sigma Logical, if `TRUE`, adds information about the residual
-#'   standard deviation.
+#' standard deviation.
 #' @param show_formula Logical, if `TRUE`, adds the model formula to the output.
 #' @param caption Table caption as string. If `NULL`, depending on the model,
-#'   either a default caption or no table caption is printed. Use `caption = ""`
-#'   to suppress the table caption.
+#' either a default caption or no table caption is printed. Use `caption = ""`
+#' to suppress the table caption.
 #' @param footer Can either be `FALSE` or an empty string (i.e. `""`) to
-#'   suppress the footer, `NULL` to print the default footer, or a string. The
-#'   latter will combine the string value with the default footer.
+#' suppress the footer, `NULL` to print the default footer, or a string. The
+#' latter will combine the string value with the default footer.
 #' @param footer_digits Number of decimal places for values in the footer summary.
 #' @param groups Named list, can be used to group parameters in the printed output.
-#'   List elements may either be character vectors that match the name of those
-#'   parameters that belong to one group, or list elements can be row numbers
-#'   of those parameter rows that should belong to one group. The names of the
-#'   list elements will be used as group names, which will be inserted as "header
-#'   row". A possible use case might be to emphasize focal predictors and control
-#'   variables, see 'Examples'. Parameters will be re-ordered according to the
-#'   order used in `groups`, while all non-matching parameters will be added
-#'   to the end.
+#' List elements may either be character vectors that match the name of those
+#' parameters that belong to one group, or list elements can be row numbers
+#' of those parameter rows that should belong to one group. The names of the
+#' list elements will be used as group names, which will be inserted as "header
+#' row". A possible use case might be to emphasize focal predictors and control
+#' variables, see 'Examples'. Parameters will be re-ordered according to the
+#' order used in `groups`, while all non-matching parameters will be added
+#' to the end.
 #' @param column_width Width of table columns. Can be either `NULL`, a named
-#'   numeric vector, or `"fixed"`. If `NULL`, the width for each table column is
-#'   adjusted to the minimum required width. If a named numeric vector, value
-#'   names are matched against column names, and for each match, the specified
-#'   width is used. If `"fixed"`, and table is split into multiple components,
-#'   columns across all table components are adjusted to have the same width.
+#' numeric vector, or `"fixed"`. If `NULL`, the width for each table column is
+#' adjusted to the minimum required width. If a named numeric vector, value
+#' names are matched against column names, and for each match, the specified
+#' width is used. If `"fixed"`, and table is split into multiple components,
+#' columns across all table components are adjusted to have the same width.
 #' @param digits,ci_digits,p_digits Number of digits for rounding or
-#'   significant figures. May also be `"signif"` to return significant
-#'   figures or `"scientific"` to return scientific notation. Control the
-#'   number of digits by adding the value as suffix, e.g. `digits = "scientific4"`
-#'   to have scientific notation with 4 decimal places, or `digits = "signif5"`
-#'   for 5 significant figures (see also [signif()]).
+#' significant figures. May also be `"signif"` to return significant
+#' figures or `"scientific"` to return scientific notation. Control the
+#' number of digits by adding the value as suffix, e.g. `digits = "scientific4"`
+#' to have scientific notation with 4 decimal places, or `digits = "signif5"`
+#' for 5 significant figures (see also [signif()]).
 #' @param pretty_names Can be `TRUE`, which will return "pretty" (i.e. more human
-#'   readable) parameter names. Or `"labels"`, in which case value and variable
-#'   labels will be used as parameters names. The latter only works for "labelled"
-#'   data, i.e. if the data used to fit the model had `"label"` and `"labels"`
-#'   attributes. See also section _Global Options to Customize Messages when Printing_.
+#' readable) parameter names. Or `"labels"`, in which case value and variable
+#' labels will be used as parameters names. The latter only works for "labelled"
+#' data, i.e. if the data used to fit the model had `"label"` and `"labels"`
+#' attributes. See also section _Global Options to Customize Messages when Printing_.
 #' @param include_reference Logical, if `TRUE`, the reference level of factors will
-#'   be added to the parameters table. This is only relevant for models with
-#'   categorical predictors. The coefficient for the reference level is always
-#'   `0` (except when `exponentiate = TRUE`, then the coefficient will be `1`),
-#'   so this is just for completeness.
+#' be added to the parameters table. This is only relevant for models with
+#' categorical predictors. The coefficient for the reference level is always
+#' `0` (except when `exponentiate = TRUE`, then the coefficient will be `1`),
+#' so this is just for completeness.
+#' @param align Only applies to HTML tables. May be one of `"left"`,
+#' `"right"` or `"center"`.
+#' @param subtitle Table title (same as caption) and subtitle, as strings. If `NULL`,
+#' no title or subtitle is printed, unless it is stored as attributes (`table_title`,
+#' or its alias `table_caption`, and `table_subtitle`). If `x` is a list of
+#' data frames, `caption` may be a list of table captions, one for each table.
+#' @param font_size For HTML tables, the font size.
+#' @param line_padding For HTML tables, the distance (in pixel) between lines.
+#' @param column_labels Labels of columns for HTML tables. If `NULL`, automatic
+#' column names are generated. See 'Examples'.
 #' @param ... Arguments passed down to [`format.parameters_model()`],
-#'   [`insight::format_table()`] and [`insight::export_table()`]
+#' [`insight::format_table()`] and [`insight::export_table()`]
+#'
 #' @inheritParams insight::format_table
 #' @inheritParams compare_parameters
+#' @inheritParams insight::export_table
 #' @inheritParams display.parameters_model
 #'
 #' @inheritSection format_parameters Interpretation of Interaction Terms
@@ -154,10 +166,6 @@
 #' output, like markdown files). The argument `table_width` can also be used in
 #' most `print()` methods to specify the table width as desired.
 #'
-#' - `easystats_html_engine`: `options(easystats_html_engine = "gt")` will set
-#' the default HTML engine for tables to `gt`, i.e. the _gt_ package is used to
-#' create HTML tables. If set to `tt`, the _tinytable_ package is used.
-#'
 #' - `insight_use_symbols`: `options(insight_use_symbols = TRUE)` will try to
 #' print unicode-chars for symbols as column names, wherever possible (e.g.,
 #' \ifelse{html}{\out{&omega;}}{\eqn{\omega}} instead of `Omega`).
@@ -198,17 +206,8 @@
 #' )
 #' # don't select "Intercept" parameter
 #' mp <- model_parameters(model, parameters = "^(?!\\(Intercept)")
-#' groups <- list(
-#'   "Focal Predictors" = c("Speciesversicolor", "Speciesvirginica"),
-#'   "Controls" = c("Sepal.Length", "Petal.Length")
-#' )
+#' groups <- list(`Focal Predictors` = c(1, 4), Controls = c(2, 3))
 #' print(mp, groups = groups)
-#'
-#' # or use row indices
-#' print(mp, groups = list(
-#'   "Focal Predictors" = c(1, 4),
-#'   "Controls" = c(2, 3)
-#' ))
 #'
 #' # only show coefficients, CI and p,
 #' # put non-matched parameters to the end
@@ -221,8 +220,8 @@
 #' # don't select "Intercept" parameter
 #' mp <- model_parameters(model, parameters = "^(?!\\(Intercept)")
 #' print(mp, groups = list(
-#'   "Engine" = c("cyl6", "cyl8", "vs", "hp"),
-#'   "Interactions" = c("gear4:vs", "gear5:vs")
+#'   Engine = c(5, 6, 4, 1),
+#'   Interactions = c(8, 9)
 #' ))
 #' }
 #'
@@ -296,7 +295,7 @@ print.parameters_model <- function(x,
   table_caption <- .print_caption(x, caption, format = "text")
 
   # main table
-  formatted_table <- .print_core(
+  formatted_table <- format(
     x = x,
     pretty_names = pretty_names,
     split_components = split_components,
@@ -394,39 +393,6 @@ print.parameters_random <- function(x, digits = 2, ...) {
 
 
 # helper --------------------
-
-.print_core <- function(x,
-                        pretty_names = TRUE,
-                        split_components = TRUE,
-                        select = NULL,
-                        digits = 2,
-                        ci_digits = digits,
-                        p_digits = 3,
-                        zap_small = FALSE,
-                        ci_width = "auto",
-                        ci_brackets = TRUE,
-                        format = "text",
-                        groups = NULL,
-                        include_reference = FALSE,
-                        ...) {
-  format(
-    x,
-    pretty_names = pretty_names,
-    split_components = split_components,
-    select = select,
-    digits = digits,
-    ci_digits = ci_digits,
-    p_digits = p_digits,
-    ci_width = ci_width,
-    ci_brackets = ci_brackets,
-    zap_small = zap_small,
-    format = format,
-    groups = groups,
-    include_reference = include_reference,
-    ...
-  )
-}
-
 
 .print_footer <- function(x,
                           digits = 3,

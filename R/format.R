@@ -116,26 +116,12 @@ format.parameters_model <- function(x,
     x <- .format_ranef_parameters(x)
   }
 
-  # group parameters - this function find those parameters that should be
-  # grouped, reorders parameters into groups and indents lines that belong
-  # to one group, adding a header for each group
-  if (!is.null(groups)) {
-    x <- .parameter_groups(x, groups)
-  }
-  indent_groups <- attributes(x)$indent_groups
-  indent_rows <- attributes(x)$indent_rows
-
   # prepare output, to have in shape for printing. this function removes
   # empty columns, or selects only those columns that should be printed
   x <- .prepare_x_for_print(x, select, coef_name, s_value)
 
   # check whether to split table by certain factors/columns (like component, response...)
   split_by <- .prepare_splitby_for_print(x)
-
-  # add p-stars, if we need this for style-argument
-  if (!is.null(style) && grepl("{stars}", style, fixed = TRUE)) {
-    x$p_stars <- insight::format_p(x[["p"]], stars = TRUE, stars_only = TRUE)
-  }
 
   # format everything now...
   if (split_components && !is.null(split_by) && length(split_by)) {
@@ -158,6 +144,7 @@ format.parameters_model <- function(x,
       ci_brackets = ci_brackets,
       zap_small = zap_small,
       include_reference = include_reference,
+      style = style,
       ...
     )
   } else {
@@ -175,6 +162,7 @@ format.parameters_model <- function(x,
       coef_name = coef_name,
       zap_small = zap_small,
       include_reference = include_reference,
+      style = style,
       ...
     )
   }
@@ -189,33 +177,8 @@ format.parameters_model <- function(x,
     formatted_table$CI <- NULL
   }
 
-  # we also allow style-argument for model parameters. In this case, we need
-  # some small preparation, namely, we need the p_stars column, and we need
-  # to "split" the formatted table, because the glue-function needs the columns
-  # without the parameters-column.
-  if (!is.null(style)) {
-    if (is.data.frame(formatted_table)) {
-      formatted_table <- .style_formatted_table(
-        formatted_table,
-        style = style,
-        format = format
-      )
-    } else {
-      formatted_table[] <- lapply(
-        formatted_table,
-        .style_formatted_table,
-        style = style,
-        format = format
-      )
-    }
-  }
-
-  if (!is.null(indent_rows)) {
-    attr(formatted_table, "indent_rows") <- indent_rows
-    attr(formatted_table, "indent_groups") <- NULL
-  } else if (!is.null(indent_groups)) {
-    attr(formatted_table, "indent_groups") <- indent_groups
-  }
+  # information about indention / row groups
+  attr(formatted_table, "indent_rows") <- groups
 
   # vertical layout possible, if these have just one row
   if (identical(list(...)$layout, "vertical")) {
@@ -261,7 +224,6 @@ format.compare_parameters <- function(x,
                                       zap_small = FALSE,
                                       format = NULL,
                                       groups = NULL,
-                                      engine = NULL,
                                       ...) {
   m_class <- attributes(x)$model_class
   x$Method <- NULL
@@ -375,8 +337,8 @@ format.compare_parameters <- function(x,
       }
       out$Parameter[out$Parameter == "SD (Observations: Residual)"] <- "SD (Residual)"
     }
+    attributes(cols)$coef_name <- colnames(cols)[coef_column]
     # save p-stars in extra column
-    cols$p_stars <- insight::format_p(cols$p, stars = TRUE, stars_only = TRUE)
     cols <- insight::format_table(
       cols,
       digits = digits,
@@ -385,9 +347,20 @@ format.compare_parameters <- function(x,
       ci_digits = ci_digits,
       p_digits = p_digits,
       zap_small = zap_small,
+      select = select,
       ...
     )
-    out <- cbind(out, .format_output_style(cols, style = select, format, i))
+
+    # add modelname to column names; for single column layout per model, we just
+    # need the column name. If the layout contains more than one column per model,
+    # add modelname in parenthesis.
+    if (ncol(cols) > 1) {
+      colnames(cols) <- paste0(colnames(cols), " (", i, ")")
+    } else {
+      colnames(cols) <- i
+    }
+
+    out <- cbind(out, cols)
   }
 
   # remove group column
@@ -398,15 +371,6 @@ format.compare_parameters <- function(x,
   if (isFALSE(split_components)) {
     out <- datawizard::data_arrange(out, c("Effects", "Component"))
   }
-
-  # group parameters - this function find those parameters that should be
-  # grouped, reorders parameters into groups and indents lines that belong
-  # to one group, adding a header for each group
-  if (!is.null(groups) && !identical(engine, "tt")) {
-    out <- .parameter_groups(out, groups)
-  }
-  indent_groups <- attributes(x)$indent_groups
-  indent_rows <- attributes(x)$indent_rows
 
   # check whether to split table by certain factors/columns (like component, response...)
   split_by <- split_column <- .prepare_splitby_for_print(x)
@@ -469,6 +433,9 @@ format.compare_parameters <- function(x,
     formatted_table <- .add_obs_row(formatted_table, parameters_attributes, style = select)
   }
 
+  # information about indention / row groups
+  attr(formatted_table, "indent_rows") <- groups
+
   formatted_table
 }
 
@@ -507,35 +474,6 @@ format.parameters_sem <- function(x,
     ci_brackets = ci_brackets,
     ...
   )
-}
-
-
-# helper ---------------------
-
-.style_formatted_table <- function(formtab, style, format) {
-  additional_columns <- intersect(c("Effects", "Group", "Component"), colnames(formtab))
-  if (length(additional_columns)) {
-    additional_columns <- formtab[additional_columns]
-  }
-  # define column names in case the glue-pattern has multiple columns.
-  if (grepl("|", style, fixed = TRUE)) {
-    cn <- NULL
-  } else {
-    cn <- .style_pattern_to_name(style)
-  }
-  formtab <- cbind(
-    formtab[1],
-    .format_output_style(
-      formtab[2:ncol(formtab)],
-      style = style,
-      format = format,
-      modelname = cn
-    )
-  )
-  if (!insight::is_empty_object(additional_columns)) {
-    formtab <- cbind(formtab, additional_columns)
-  }
-  formtab
 }
 
 

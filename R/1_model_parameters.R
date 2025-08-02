@@ -358,11 +358,15 @@
 #'
 #'   - Lakens, D., Scheel, A. M., and Isager, P. M. (2018). Equivalence Testing
 #'     for Psychological Research: A Tutorial. Advances in Methods and Practices
-#'     in Psychological Science, 1(2), 259–269. \doi{10.1177/2515245918770963}
+#'     in Psychological Science, 1(2), 259–269.
 #'
 #'   - Makowski, D., Ben-Shachar, M. S., Chen, S. H. A., and Lüdecke, D. (2019).
 #'     Indices of Effect Existence and Significance in the Bayesian Framework.
 #'     Frontiers in Psychology, 10, 2767. \doi{10.3389/fpsyg.2019.02767}
+#'
+#'   - Montiel Olea, J. L., and Plagborg-Møller, M. (2019). Simultaneous
+#'     confidence bands: Theory, implementation, and an application to SVARs.
+#'     Journal of Applied Econometrics, 34(1), 1–17. \doi{10.1002/jae.2656}
 #'
 #'   - Neter, J., Wasserman, W., and Kutner, M. H. (1989). Applied linear
 #'     regression models.
@@ -463,11 +467,12 @@ parameters <- model_parameters
 #'   coefficient. The transformed confidence interval more clearly captures this
 #'   uncertainty. For `compare_parameters()`, `exponentiate = "nongaussian"`
 #'   will only exponentiate coefficients from non-Gaussian families.
-#' @param p_adjust Character vector, if not `NULL`, indicates the method to
-#'   adjust p-values. See [`stats::p.adjust()`] for details. Further
-#'   possible adjustment methods are `"tukey"`, `"scheffe"`,
-#'   `"sidak"` and `"none"` to explicitly disable adjustment for
-#'   `emmGrid` objects (from **emmeans**).
+#' @param p_adjust String value, if not `NULL`, indicates the method to adjust
+#'   p-values. See [`stats::p.adjust()`] for details. Further possible
+#'   adjustment methods are `"tukey"`, `"scheffe"`, `"sidak"`, `"sup-t"`, and
+#'   `"none"` to explicitly disable adjustment for `emmGrid` objects (from
+#'   **emmeans**). `"sup-t"` computes simultaneous confidence bands, also called
+#'   sup-t confidence band (Montiel Olea & Plagborg-Møller, 2019).
 #' @param ci_method Method for computing degrees of freedom for
 #'   confidence intervals (CI) and the related p-values. Allowed are following
 #'   options (which vary depending on the model class): `"residual"`,

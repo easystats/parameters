@@ -1,7 +1,7 @@
 Type: Package
 Package: parameters
 Title: Processing of Model Parameters
-Version: 0.26.0.2
+Version: 0.27.0.3
 Authors@R:
     c(person(given = "Daniel",
              family = "Lüdecke",
@@ -78,9 +78,9 @@ BugReports: https://github.com/easystats/parameters/issues
 Depends:
     R (>= 3.6)
 Imports:
-    bayestestR (>= 0.16.0),
-    datawizard (>= 1.1.0),
-    insight (>= 1.3.0),
+    bayestestR (>= 0.16.1),
+    datawizard (>= 1.2.0),
+    insight (>= 1.3.1),
     graphics,
     methods,
     stats,
@@ -110,11 +110,13 @@ Suggests:
     cluster,
     cobalt,
     coda,
+    correlation (>= 0.8.8),
     coxme,
     cplm,
     curl,
     dbscan,
     did,
+    discovr,
     distributional,
     domir (>= 0.2.0),
     drc,
@@ -173,6 +175,7 @@ Suggests:
     mmrm,
     multcomp,
     MuMIn,
+    mvtnorm,
     NbClust,
     nFactors,
     nestedLogit,
@@ -199,6 +202,7 @@ Suggests:
     rms,
     rstan,
     rstanarm,
+    sampleSelection,
     sandwich,
     see (>= 0.8.1),
     serp,
@@ -227,4 +231,4 @@ Config/testthat/parallel: true
 Config/Needs/website: easystats/easystatstemplate
 Config/Needs/check: stan-dev/cmdstanr
 Config/rcmdcheck/ignore-inconsequential-notes: true
-Remotes: easystats/insight, easystats/bayestestR
+Remotes: easystats/insight

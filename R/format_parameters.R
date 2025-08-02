@@ -430,6 +430,15 @@ format_parameters.parameters_model <- function(model, ...) {
     # replace former pretty names with labels, if we have any labels
     # (else, default pretty names are returned)
     if (!is.null(pretty_labels)) {
+      # for models from pscl, we have "count_" and "zero_" prefixes, which
+      # we need to add to the "pretty_labels" names, so that we can match
+      # them with the parameters
+      if (inherits(model, c("zeroinfl", "hurdle"))) {
+        pretty_labels <- c(
+          stats::setNames(pretty_labels, paste0("count_", names(pretty_labels))),
+          stats::setNames(pretty_labels, paste0("zero_", names(pretty_labels)))
+        )
+      }
       # check if we have any interactions, and if so, create combined labels
       interactions <- pn[grepl(":", names(pn), fixed = TRUE)]
       if (length(interactions)) {

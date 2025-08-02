@@ -289,7 +289,7 @@ print.n_clusters_dbscan <- function(x, ...) {
 
 #' @export
 print.n_clusters_hclust <- function(x, ...) {
-  insight::print_color(paste0("The bootstrap analysis of hierachical clustering highlighted ", attributes(x)$n, " significant clusters."), "green") # nolint
+  insight::print_color(paste0("The bootstrap analysis of hierarchical clustering highlighted ", attributes(x)$n, " significant clusters."), "green") # nolint
   invisible(x)
 }
 

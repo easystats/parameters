@@ -72,9 +72,8 @@ names.}
 
 \item{threshold}{A value between 0 and 1 indicates which (absolute) values
 from the loadings should be removed. An integer higher than 1 indicates the
-n strongest loadings to retain. Can also be \code{"max"}, in which case it
-will only display the maximum loading per variable (the most simple
-structure).}
+n strongest loadings to retain. Can also be \code{"max"}, in which case it will
+only display the maximum loading per variable (the most simple structure).}
 
 \item{labels}{A character vector containing labels to be added to the
 loadings data. Usually, the question related to the item.}
@@ -83,7 +82,9 @@ loadings data. Usually, the question related to the item.}
 A data frame of indices or loadings.
 }
 \description{
-Format structural models from the \strong{psych} or \strong{FactoMineR} packages.
+Format structural models from the \strong{psych} or \strong{FactoMineR} packages. There
+is a \code{summary()} method for the returned output from \code{model_parameters()}, to
+show further information. See 'Examples'.
 }
 \details{
 For the structural models obtained with \strong{psych}, the following indices
@@ -113,81 +114,80 @@ for \code{lavaan} models implemented in the
 \href{https://easystats.github.io/see/}{\strong{see}-package}.
 }
 \examples{
+\dontshow{if (all(insight::check_if_installed(c("psych", "lavaan"), quietly = TRUE))) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+library(parameters)
 \donttest{
-library(parameters)
-if (require("psych", quietly = TRUE)) {
-  # Principal Component Analysis (PCA) ---------
-  pca <- psych::principal(attitude)
-  model_parameters(pca)
+# Principal Component Analysis (PCA) ---------
+data(attitude)
+pca <- psych::principal(attitude)
+model_parameters(pca)
+summary(model_parameters(pca))
 
-  pca <- psych::principal(attitude, nfactors = 3, rotate = "none")
-  model_parameters(pca, sort = TRUE, threshold = 0.2)
+pca <- psych::principal(attitude, nfactors = 3, rotate = "none")
+model_parameters(pca, sort = TRUE, threshold = 0.2)
 
-  principal_components(attitude, n = 3, sort = TRUE, threshold = 0.2)
-
-
-  # Exploratory Factor Analysis (EFA) ---------
-  efa <- psych::fa(attitude, nfactors = 3)
-  model_parameters(efa,
-    threshold = "max", sort = TRUE,
-    labels = as.character(1:ncol(attitude))
-  )
+principal_components(attitude, n = 3, sort = TRUE, threshold = 0.2)
 
 
-  # Omega ---------
-  omega <- psych::omega(mtcars, nfactors = 3)
-  params <- model_parameters(omega)
-  params
-  summary(params)
+# Exploratory Factor Analysis (EFA) ---------
+efa <- psych::fa(attitude, nfactors = 3)
+model_parameters(efa,
+  threshold = "max", sort = TRUE,
+  labels = as.character(1:ncol(attitude))
+)
+
+
+# Omega ---------
+data(mtcars)
+omega <- psych::omega(mtcars, nfactors = 3, plot = FALSE)
+params <- model_parameters(omega)
+params
+summary(params)
 }
-}
 
-# lavaan
-
-library(parameters)
 
 # lavaan -------------------------------------
-if (require("lavaan", quietly = TRUE)) {
-  # Confirmatory Factor Analysis (CFA) ---------
+# Confirmatory Factor Analysis (CFA) ---------
 
-  structure <- " visual  =~ x1 + x2 + x3
-                 textual =~ x4 + x5 + x6
-                 speed   =~ x7 + x8 + x9 "
-  model <- lavaan::cfa(structure, data = HolzingerSwineford1939)
-  model_parameters(model)
-  model_parameters(model, standardize = TRUE)
+data(HolzingerSwineford1939, package = "lavaan")
+structure <- " visual  =~ x1 + x2 + x3
+               textual =~ x4 + x5 + x6
+               speed   =~ x7 + x8 + x9 "
+model <- lavaan::cfa(structure, data = HolzingerSwineford1939)
+model_parameters(model)
+model_parameters(model, standardize = TRUE)
 
-  # filter parameters
-  model_parameters(
-    model,
-    parameters = list(
-      To = "^(?!visual)",
-      From = "^(?!(x7|x8))"
-    )
+# filter parameters
+model_parameters(
+  model,
+  parameters = list(
+    To = "^(?!visual)",
+    From = "^(?!(x7|x8))"
   )
+)
 
-  # Structural Equation Model (SEM) ------------
+# Structural Equation Model (SEM) ------------
 
-  structure <- "
-    # latent variable definitions
-      ind60 =~ x1 + x2 + x3
-      dem60 =~ y1 + a*y2 + b*y3 + c*y4
-      dem65 =~ y5 + a*y6 + b*y7 + c*y8
-    # regressions
-      dem60 ~ ind60
-      dem65 ~ ind60 + dem60
-    # residual correlations
-      y1 ~~ y5
-      y2 ~~ y4 + y6
-      y3 ~~ y7
-      y4 ~~ y8
-      y6 ~~ y8
-  "
-  model <- lavaan::sem(structure, data = PoliticalDemocracy)
-  model_parameters(model)
-  model_parameters(model, standardize = TRUE)
-}
-
+data(PoliticalDemocracy, package = "lavaan")
+structure <- "
+  # latent variable definitions
+    ind60 =~ x1 + x2 + x3
+    dem60 =~ y1 + a*y2 + b*y3 + c*y4
+    dem65 =~ y5 + a*y6 + b*y7 + c*y8
+  # regressions
+    dem60 ~ ind60
+    dem65 ~ ind60 + dem60
+  # residual correlations
+    y1 ~~ y5
+    y2 ~~ y4 + y6
+    y3 ~~ y7
+    y4 ~~ y8
+    y6 ~~ y8
+"
+model <- lavaan::sem(structure, data = PoliticalDemocracy)
+model_parameters(model)
+model_parameters(model, standardize = TRUE)
+\dontshow{\}) # examplesIf}
 }
 \references{
 \itemize{

@@ -45,11 +45,12 @@ Controls the type of CI returned: \code{"two.sided"} (default, two-sided CI),
 (e.g., \code{"g"}, \code{"l"}, \code{"two"}...). See section \emph{One-Sided CIs} in
 the \href{https://easystats.github.io/effectsize/}{effectsize_CIs vignette}.}
 
-\item{p_adjust}{Character vector, if not \code{NULL}, indicates the method to
-adjust p-values. See \code{\link[stats:p.adjust]{stats::p.adjust()}} for details. Further
-possible adjustment methods are \code{"tukey"}, \code{"scheffe"},
-\code{"sidak"} and \code{"none"} to explicitly disable adjustment for
-\code{emmGrid} objects (from \strong{emmeans}).}
+\item{p_adjust}{String value, if not \code{NULL}, indicates the method to adjust
+p-values. See \code{\link[stats:p.adjust]{stats::p.adjust()}} for details. Further possible
+adjustment methods are \code{"tukey"}, \code{"scheffe"}, \code{"sidak"}, \code{"sup-t"}, and
+\code{"none"} to explicitly disable adjustment for \code{emmGrid} objects (from
+\strong{emmeans}). \code{"sup-t"} computes simultaneous confidence bands, also called
+sup-t confidence band (Montiel Olea & Plagborg-Møller, 2019).}
 
 \item{test}{String, indicating the type of test for \code{Anova.mlm} to be
 returned. If \code{"multivariate"} (or \code{NULL}), returns the summary of
@@ -137,6 +138,7 @@ Parameters from ANOVAs
 \item A \strong{proportion test} returns \emph{p}.
 }
 \item Objects of class \code{anova}, \code{aov}, \code{aovlist} or \code{afex_aov}, depending on \code{type}: \code{"eta"} (default), \code{"omega"} or \code{"epsilon"} -squared, \code{"f"}, or \code{"f2"}.
+\item Objects of class \code{datawizard_crosstab(s)} / \code{datawizard_table(s)} built with \code{\link[datawizard:data_tabulate]{datawizard::data_tabulate()}} - same as Chi-squared tests of independence / goodness-of-fit, respectively.
 \item Other objects are passed to \code{\link[parameters:standardize_parameters]{parameters::standardize_parameters()}}.
 }
 

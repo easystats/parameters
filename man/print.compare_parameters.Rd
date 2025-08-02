@@ -20,7 +20,6 @@
   zap_small = FALSE,
   format = NULL,
   groups = NULL,
-  engine = NULL,
   ...
 )
 
@@ -56,7 +55,6 @@
   font_size = "100\%",
   line_padding = 4,
   column_labels = NULL,
-  engine = "gt",
   ...
 )
 
@@ -73,7 +71,6 @@
   ci_brackets = c("(", ")"),
   zap_small = FALSE,
   groups = NULL,
-  engine = "tt",
   ...
 )
 }
@@ -155,8 +152,14 @@ encompassed in square brackets (else in parentheses).}
 \code{digits} decimal places. If \code{FALSE}, values with more decimal
 places than \code{digits} are printed in scientific notation.}
 
-\item{format}{String, indicating the output format. Can be \code{"markdown"}
-or \code{"html"}.}
+\item{format}{Name of output-format, as string. If \code{NULL} (or \code{"text"}),
+returned output is used for basic printing. Can be one of \code{NULL} (the
+default) resp. \code{"text"} for plain text, \code{"markdown"} (or \code{"md"}) for
+markdown and \code{"html"} for HTML output. A special option is \code{"tt"}, which
+creates a \code{\link[tinytable:tt]{tinytable::tt()}} object, where the output format is dependent
+on the context where the table is used, i.e. it can be markdown format when
+\code{export_table()} is used in markdown files, or LaTex format when creating
+PDFs etc.}
 
 \item{groups}{Named list, can be used to group parameters in the printed output.
 List elements may either be character vectors that match the name of those
@@ -167,14 +170,6 @@ row". A possible use case might be to emphasize focal predictors and control
 variables, see 'Examples'. Parameters will be re-ordered according to the
 order used in \code{groups}, while all non-matching parameters will be added
 to the end.}
-
-\item{engine}{Character string, naming the package or engine to be used for
-printing into HTML or markdown format. Currently supported \code{"gt"} (or
-\code{"default"}) to use the \emph{gt} package to print to HTML and the default easystats
-engine to create markdown tables. If \code{engine = "tt"}, the \emph{tinytable} package
-is used for printing to HTML or markdown. Not all \code{print()} methods support
-the \code{"tt"} engine yet. If a specific \code{print()} method has no \code{engine} argument,
-\code{insight::export_table()} is used, which uses \emph{gt} for HTML printing.}
 
 \item{...}{Arguments passed down to \code{\link[=format.parameters_model]{format.parameters_model()}},
 \code{\link[insight:format_table]{insight::format_table()}} and \code{\link[insight:export_table]{insight::export_table()}}}
@@ -253,9 +248,6 @@ printed to console. If not specified, tables will be adjusted to the current
 available width, e.g. of the of the console (or any other source for textual
 output, like markdown files). The argument \code{table_width} can also be used in
 most \code{print()} methods to specify the table width as desired.
-\item \code{easystats_html_engine}: \code{options(easystats_html_engine = "gt")} will set
-the default HTML engine for tables to \code{gt}, i.e. the \emph{gt} package is used to
-create HTML tables. If set to \code{tt}, the \emph{tinytable} package is used.
 \item \code{insight_use_symbols}: \code{options(insight_use_symbols = TRUE)} will try to
 print unicode-chars for symbols as column names, wherever possible (e.g.,
 \ifelse{html}{\out{&omega;}}{\eqn{\omega}} instead of \code{Omega}).

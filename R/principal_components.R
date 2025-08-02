@@ -1,38 +1,60 @@
 #' Principal Component Analysis (PCA) and Factor Analysis (FA)
 #'
-#' The functions `principal_components()` and `factor_analysis()` can
-#' be used to perform a principal component analysis (PCA) or a factor analysis
-#' (FA). They return the loadings as a data frame, and various methods and
-#' functions are available to access / display other information (see the
-#' Details section).
+#' The functions `principal_components()` and `factor_analysis()` can be used to
+#' perform a principal component analysis (PCA) or a factor analysis (FA). They
+#' return the loadings as a data frame, and various methods and functions are
+#' available to access / display other information (see the 'Details' section).
 #'
-#' @param x A data frame or a statistical model.
+#' @param x A data frame or a statistical model. For `closest_component()`, the
+#'   output of the `principal_components()` function.
 #' @param n Number of components to extract. If `n="all"`, then `n` is set as
 #'   the number of variables minus 1 (`ncol(x)-1`). If `n="auto"` (default) or
-#'   `n=NULL`, the number of components is selected through [`n_factors()`] resp.
-#'   [`n_components()`]. Else, if `n` is a number, `n` components are extracted.
-#'   If `n` exceeds number of variables in the data, it is automatically set to
-#'   the maximum number (i.e. `ncol(x)`). In [`reduce_parameters()`], can also
-#'   be `"max"`, in which case it will select all the components that are
-#'   maximally pseudo-loaded (i.e., correlated) by at least one variable.
+#'   `n=NULL`, the number of components is selected through [`n_factors()`]
+#'   resp. [`n_components()`]. Else, if `n` is a number, `n` components are
+#'   extracted. If `n` exceeds number of variables in the data, it is
+#'   automatically set to the maximum number (i.e. `ncol(x)`). In
+#'   [`reduce_parameters()`], can also be `"max"`, in which case it will select
+#'   all the components that are maximally pseudo-loaded (i.e., correlated) by
+#'   at least one variable.
 #' @param rotation If not `"none"`, the PCA / FA will be computed using the
-#'   **psych** package. Possible options include `"varimax"`,
-#'   `"quartimax"`, `"promax"`, `"oblimin"`, `"simplimax"`,
-#'   or `"cluster"` (and more). See [`psych::fa()`] for details.
+#'   **psych** package. Possible options include `"varimax"`, `"quartimax"`,
+#'   `"promax"`, `"oblimin"`, `"simplimax"`, or `"cluster"` (and more). See
+#'   [`psych::fa()`] for details. The default is `"none"` for PCA, and
+#'   `"oblimin"` for FA.
+#' @param factor_method The factoring method to be used. Passed to the `fm`
+#'   argument in `psych::fa()`. Defaults to `"minres"` (minimum residual). Other
+#'   options include `"uls"`, `"ols"`, `"wls"`, `"gls"`, `"ml"`, `"minchi"`,
+#'   `"minrank"`, `"old.min"`, and `"alpha"`. See `?psych::fa` for details.
 #' @param sparse Whether to compute sparse PCA (SPCA, using [`sparsepca::spca()`]).
 #'   SPCA attempts to find sparse loadings (with few nonzero values), which improves
 #'   interpretability and avoids overfitting. Can be `TRUE` or `"robust"` (see
 #'   [`sparsepca::robspca()`]).
 #' @param sort Sort the loadings.
+#' @param n_obs An integer or a matrix.
+#'   - **Integer:** Number of observations in the original data set if `x` is a
+#'     correlation matrix. Required to compute correct fit indices.
+#'   - **Matrix:** A matrix where each cell `[i, j]` specifies the number of
+#'     pairwise complete observations used to compute the correlation between
+#'     variable `i` and variable `j` in the input `x`. It is crucial when `x` is
+#'     a correlation matrix (rather than raw data), especially if that matrix
+#'     was derived from a dataset containing missing values using pairwise
+#'     deletion. Providing a matrix allows `psych::fa()` to accurately calculate
+#'     statistical measures, such as chi-square fit statistics, by accounting
+#'     for the varying sample sizes that contribute to each individual
+#'     correlation coefficient.
 #' @param threshold A value between 0 and 1 indicates which (absolute) values
 #'   from the loadings should be removed. An integer higher than 1 indicates the
-#'   n strongest loadings to retain. Can also be `"max"`, in which case it
-#'   will only display the maximum loading per variable (the most simple
-#'   structure).
+#'   n strongest loadings to retain. Can also be `"max"`, in which case it will
+#'   only display the maximum loading per variable (the most simple structure).
 #' @param standardize A logical value indicating whether the variables should be
 #'   standardized (centered and scaled) to have unit variance before the
-#'   analysis (in general, such scaling is advisable).
-#' @param object An object of class `parameters_pca` or `parameters_efa`
+#'   analysis (in general, such scaling is advisable). **Note:** This defaults
+#'   to `TRUE` for PCA, but to `FALSE` for FA (because `factor_analysis()`
+#'   computes a correlation matrix and uses that r-matrix for the factor analysis
+#'   by default - therefore, standardization of the raw variables is unnecessary,
+#'   and even undesirable when using `cor = "poly"`).
+#' @param object An object of class `parameters_pca`, `parameters_efa` or
+#'   `psych_efa`.
 #' @param newdata An optional data frame in which to look for variables with
 #'   which to predict. If omitted, the fitted values are used.
 #' @param names Optional character vector to name columns of the returned data
@@ -41,13 +63,11 @@
 #'   with missing values from the original data, hence the number of rows of
 #'   predicted data and original data is equal.
 #' @param ... Arguments passed to or from other methods.
-#' @param pca_results The output of the `principal_components()` function.
 #' @param digits Argument for `print()`, indicates the number of digits
 #'   (rounding) to be used.
 #' @param labels Argument for `print()`, character vector of same length as
 #'   columns in `x`. If provided, adds an additional column with the labels.
 #' @param verbose Toggle warnings.
-#' @inheritParams n_factors
 #'
 #' @details
 #'
@@ -69,11 +89,25 @@
 #'
 #' - Running [`get_scores()`] computes scores for each subscale.
 #'
+#' - [`factor_scores()`] extracts the factor scores from objects returned by
+#'   [`psych::fa()`], [`factor_analysis()`], or [`psych::omega()`].
+#'
 #' - Running [`closest_component()`] will return a numeric vector with the
 #'   assigned component index for each column from the original data frame.
 #'
 #' - Running [`rotated_data()`] will return the rotated data, including missing
 #'   values, so it matches the original data frame.
+#'
+#' - `performance::item_omega()` is a convenient wrapper around `psych::omega()`,
+#'   which provides some additional methods to work seamlessly within the
+#'   *easystats* framework.
+#'
+#' - [`performance::check_normality()`] checks residuals from objects returned
+#'   by [`psych::fa()`], [`factor_analysis()`], `performance::item_omega()`,
+#'   or [`psych::omega()`] for normality.
+#'
+#' - [`performance::model_performance()`] returns fit-indices for objects returned
+#'   by [`psych::fa()`], [`factor_analysis()`], or [`psych::omega()`].
 #'
 #' - Running
 #'   [`plot()`](https://easystats.github.io/see/articles/parameters.html#principal-component-analysis)
@@ -89,7 +123,7 @@
 #'
 #' ## Uniqueness
 #' Uniqueness represents the variance that is 'unique' to the variable and
-#'  not shared with other variables. It is equal to `1 – communality`
+#'  not shared with other variables. It is equal to `1 - communality`
 #'  (variance that is shared with other variables). A uniqueness of `0.20`
 #'  suggests that `20%` or that variable's variance is not shared with other
 #'  variables in the overall factor model. The greater 'uniqueness' the lower
@@ -116,14 +150,15 @@
 #'
 #' ## Computing Item Scores
 #' Use [`get_scores()`] to compute scores for the "subscales" represented by the
-#' extracted principal components. `get_scores()` takes the results from
-#' `principal_components()` and extracts the variables for each component found
-#' by the PCA. Then, for each of these "subscales", raw means are calculated
-#' (which equals adding up the single items and dividing by the number of items).
-#' This results in a sum score for each component from the PCA, which is on the
-#' same scale as the original, single items that were used to compute the PCA.
-#' One can also use `predict()` to back-predict scores for each component,
-#' to which one can provide `newdata` or a vector of `names` for the components.
+#' extracted principal components or factors. `get_scores()` takes the results
+#' from `principal_components()` or `factor_analysis()` and extracts the
+#' variables for each component found by the PCA. Then, for each of these
+#' "subscales", raw means are calculated (which equals adding up the single
+#' items and dividing by the number of items). This results in a sum score for
+#' each component from the PCA, which is on the same scale as the original,
+#' single items that were used to compute the PCA. One can also use `predict()`
+#' to back-predict scores for each component, to which one can provide `newdata`
+#' or a vector of `names` for the components.
 #'
 #' ## Explained Variance and Eingenvalues
 #' Use `summary()` to get the Eigenvalues and the explained variance for each
@@ -132,6 +167,25 @@
 #' directions of the new feature space, and the eigenvalues determine their
 #' magnitude. In other words, the eigenvalues explain the variance of the
 #' data along the new feature axes.
+#'
+#' @return A data frame of loadings. For `factor_analysis()`, this data frame is
+#' also of class `parameters_efa()`. Objects from `principal_components()` are
+#' of class `parameters_pca()`.
+#'
+#' @references
+#' - Kaiser, H.F. and Rice. J. (1974). Little jiffy, mark iv. Educational
+#'   and Psychological Measurement, 34(1):111–117
+#'
+#' - Hofmann, R. (1978). Complexity and simplicity as objective indices
+#'   descriptive of factor solutions. Multivariate Behavioral Research, 13:2,
+#'   247-250, \doi{10.1207/s15327906mbr1302_9}
+#'
+#' - Pettersson, E., & Turkheimer, E. (2010). Item selection, evaluation,
+#'   and simple structure in personality data. Journal of research in
+#'   personality, 44(4), 407-420, \doi{10.1016/j.jrp.2010.03.002}
+#'
+#' - Tabachnick, B. G., and Fidell, L. S. (2013). Using multivariate
+#'   statistics (6th ed.). Boston: Pearson Education.
 #'
 #' @examplesIf require("nFactors", quietly = TRUE) && require("sparsepca", quietly = TRUE) && require("psych", quietly = TRUE)
 #' library(parameters)
@@ -176,9 +230,9 @@
 #'
 #' # Factor Analysis (FA) ------------------------
 #'
-#' factor_analysis(mtcars[, 1:7], n = "all", threshold = 0.2)
-#' factor_analysis(mtcars[, 1:7], n = 2, rotation = "oblimin", threshold = "max", sort = TRUE)
-#' factor_analysis(mtcars[, 1:7], n = 2, threshold = 2, sort = TRUE)
+#' factor_analysis(mtcars[, 1:7], n = "all", threshold = 0.2, rotation = "Promax")
+#' factor_analysis(mtcars[, 1:7], n = 2, threshold = "max", sort = TRUE)
+#' factor_analysis(mtcars[, 1:7], n = 2, rotation = "none", threshold = 2, sort = TRUE)
 #'
 #' efa <- factor_analysis(mtcars[, 1:5], n = 2)
 #' summary(efa)
@@ -188,41 +242,18 @@
 #' # Automated number of components
 #' factor_analysis(mtcars[, 1:4], n = "auto")
 #' }
-#' @return A data frame of loadings.
-#'
-#' @references
-#' - Kaiser, H.F. and Rice. J. (1974). Little jiffy, mark iv. Educational
-#'   and Psychological Measurement, 34(1):111–117
-#'
-#' - Hofmann, R. (1978). Complexity and simplicity as objective indices
-#'   descriptive of factor solutions. Multivariate Behavioral Research, 13:2,
-#'   247-250, \doi{10.1207/s15327906mbr1302_9}
-#'
-#' - Pettersson, E., & Turkheimer, E. (2010). Item selection, evaluation,
-#'   and simple structure in personality data. Journal of research in
-#'   personality, 44(4), 407-420, \doi{10.1016/j.jrp.2010.03.002}
-#'
-#' - Tabachnick, B. G., and Fidell, L. S. (2013). Using multivariate
-#'   statistics (6th ed.). Boston: Pearson Education.
 #'
 #' @export
-principal_components <- function(x,
-                                 n = "auto",
-                                 rotation = "none",
-                                 sparse = FALSE,
-                                 sort = FALSE,
-                                 threshold = NULL,
-                                 standardize = TRUE,
-                                 ...) {
+principal_components <- function(x, ...) {
   UseMethod("principal_components")
 }
 
 
 #' @rdname principal_components
 #' @export
-rotated_data <- function(pca_results, verbose = TRUE) {
-  original_data <- attributes(pca_results)$dataset
-  rotated_matrix <- insight::get_predicted(attributes(pca_results)$model)
+rotated_data <- function(x, verbose = TRUE) {
+  original_data <- attributes(x)$dataset
+  rotated_matrix <- insight::get_predicted(attributes(x)$model)
   out <- NULL
 
   if (is.null(original_data) || is.null(rotated_matrix)) {
@@ -232,7 +263,7 @@ rotated_data <- function(pca_results, verbose = TRUE) {
     return(NULL)
   }
 
-  compl_cases <- attributes(pca_results)$complete_cases
+  compl_cases <- attributes(x)$complete_cases
   if (is.null(compl_cases) && nrow(original_data) != nrow(rotated_matrix)) {
     if (verbose) {
       insight::format_warning("Could not retrieve information about missing data.")
@@ -249,6 +280,7 @@ rotated_data <- function(pca_results, verbose = TRUE) {
 }
 
 
+#' @rdname principal_components
 #' @export
 principal_components.data.frame <- function(x,
                                             n = "auto",
@@ -290,6 +322,8 @@ principal_components.data.frame <- function(x,
     )
 
     attr(pca_loadings, "data") <- data_name
+    attr(pca_loadings, "dataset") <- original_data
+
     return(pca_loadings)
   }
 
@@ -448,9 +482,10 @@ principal_components.data.frame <- function(x,
                         threshold = NULL,
                         original_data = NULL,
                         ...) {
-  if (!(rotation %in% c("varimax", "quartimax", "promax", "oblimin", "simplimax", "cluster", "none"))) {
-    insight::format_error("`rotation` must be one of \"varimax\", \"quartimax\", \"promax\", \"oblimin\", \"simplimax\", \"cluster\" or \"none\".")
-  }
+  rotation <- insight::validate_argument(
+    rotation,
+    c("varimax", "quartimax", "promax", "oblimin", "simplimax", "cluster", "none")
+  )
 
   if (!inherits(x, c("prcomp", "data.frame"))) {
     insight::format_error("`x` must be of class `prcomp` or a data frame.")

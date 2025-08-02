@@ -1,3 +1,66 @@
+# parameters (devel)
+
+## Breaking Changes
+
+* The experimental `print_table()` function was removed. The aim of this function
+  was to test the implementation of the `tinytable` backend for printing. Now,
+  `tinytable` is fully supported by `insight::export_table()` and thereby also
+  by the various `print()` resp. `display()` methods for model parameters.
+
+## Changes
+
+* All `print_html()` methods get an `engine` argument, to either use the `gt`
+  package or the `tinytable` package for printing HTML tables. Since `tinytable`
+  not only produces HTML tables, but rather different formats depending on the
+  environment, `print_html()` may also generate a markdown table. Thus, the
+  generic `display()` method can be used, too, which has a `format` argument that
+  also supports `"tt"` for `tinytable`.
+
+## Bug fixes
+
+* Fixed issue with models of class `selection` with multiple outcomes.
+
+# parameters 0.27.0
+
+## Breaking Changes
+
+* The `standardize` argument in `factor_analysis()` now defaults to `FALSE`.
+
+* The `rotation` argument in `factor_analysis()` now defaults to `"oblimin"`,
+  because the former default of `"none"` rarely makes sense in the context of
+  factor analysis. If you want to use no rotation, please set `rotation =
+  "none"`.
+
+* The `cor` argument in `n_factors()` was renamed into `correlation_matrix`. In
+  `factor_analysis()`, the `cor` argument was completely removed to avoid naming
+  collision with the `cor` argument of `psych::fa()`, which now users can pass
+  the `cor` argument to `psych::fa()` when using `factor_analysis()`.
+
+## Changes
+
+* `factor_analysis()` gets a `.matrix` method, including a new argument `n_obs`
+  (which can be a single value or a matrix of pairwise counts), to compute
+  factor analysis for a correlation matrix or covariance matrix.
+
+* New function `factor_scores()` to extract factor scores from EFA (`psych::fa()`
+  or `factor_analysis()`).
+
+* Added and/or improved print-methods for all functions around PCA, FA and Omega.
+
+* Improved efficiency in `model_parameters()` for models from packages *brms*
+  and *rstanarm*.
+
+* `p_adjust` for `model_parameters()` gets a new options, `"sup-t"`, to calculate
+  simultaneous confidence intervals.
+
+## Bug fixes
+
+* `bootstrap_model()` did not work for intercept-only models. This has been fixed.
+
+* Fixed issue with printing labels as pretty names for models from package
+  *pscl*, i.e. `print(model_parameters(model), pretty_names = "labels")` now
+  works as expected.
+
 # parameters 0.26.0
 
 ## Changes
