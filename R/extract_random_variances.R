@@ -839,6 +839,10 @@ as.data.frame.VarCorr.lme <- function(x, row.names = NULL, optional = FALSE, ...
     insight::check_if_installed("cplm", reason = reason)
   }
 
+  if (inherits(model, "coxme")) {
+    insight::check_if_installed("coxme", reason = reason)
+  }
+
   if (inherits(model, "rstanarm")) {
     insight::check_if_installed("rstanarm", reason = reason)
   }
