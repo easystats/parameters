@@ -125,7 +125,7 @@
 
 
 .extract_random_parameters.coxme <- function(model, ci = NULL, effects = "random", ...) {
-  insight::check_if_installed("lme4")
+  insight::check_if_installed(c("lme4", "coxme"))
 
   # extract random effects
   re_grp <- insight::find_random(model, split_nested = TRUE, flatten = TRUE)

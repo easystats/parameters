@@ -213,7 +213,7 @@ default) resp. \code{"text"} for plain text, \code{"markdown"} (or \code{"md"}) 
 markdown and \code{"html"} for HTML output. A special option is \code{"tt"}, which
 creates a \code{\link[tinytable:tt]{tinytable::tt()}} object, where the output format is dependent
 on the context where the table is used, i.e. it can be markdown format when
-\code{export_table()} is used in markdown files, or LaTex format when creating
+\code{export_table()} is used in markdown files, or LaTeX format when creating
 PDFs etc.}
 
 \item{ci_width}{Minimum width of the returned string for confidence
