@@ -663,7 +663,7 @@
 # store essential information about variance components...
 # basically, this function should return lme4::VarCorr(x)
 .get_variance_information <- function(model, model_component = "conditional") {
-  varcorr <- insight::get_mixed_info(model, model_component = model_component, verbose = FALSE)
+  varcorr <- insight::get_mixed_info(model, component = model_component, verbose = FALSE)
   varcorr$vc
 }
 
