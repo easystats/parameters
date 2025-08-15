@@ -332,6 +332,12 @@ as.data.frame.VarCorr.lme <- function(x, row.names = NULL, optional = FALSE, ...
 }
 
 
+#' @export
+as.data.frame.VarCorr.coxme <- function(x, row.names = NULL, optional = FALSE, ...) {
+
+}
+
+
 # extract CI for random SD ------------------------
 
 .random_sd_ci <- function(model,
