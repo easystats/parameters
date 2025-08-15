@@ -135,7 +135,7 @@
     re_grp <- re_grp[1]
   }
 
-  out <- as.data.frame(lme4::ranef(model, condVar = TRUE), stringsAsFactors = FALSE)
+  out <- as.data.frame(lme4::ranef(model, condVar = TRUE)[[re_grp]], stringsAsFactors = FALSE)
   out$grp <- unique(insight::get_data(model)[[re_grp]])
   out <- datawizard::reshape_longer(out, select = -"grp")
   out <- datawizard::data_separate(out, select = "name", new_columns = c("grpvar", "term"))
