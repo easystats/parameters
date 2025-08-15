@@ -334,6 +334,7 @@ as.data.frame.VarCorr.lme <- function(x, row.names = NULL, optional = FALSE, ...
 
 #' @export
 as.data.frame.VarCorr.coxme <- function(x, row.names = NULL, optional = FALSE, ...) {
+  variances <- lapply(x, diag)
 
 }
 
