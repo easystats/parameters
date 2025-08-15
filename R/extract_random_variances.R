@@ -160,7 +160,7 @@
                                              verbose = FALSE,
                                              ...) {
   varcorr <- insight::get_mixed_info(model, component = component, verbose = FALSE)$vc
-  if (!inherits(model, "lme")) {
+  if (!inherits(model, c("lme", "coxme"))) {
     class(varcorr) <- "VarCorr.merMod"
   }
 
@@ -334,8 +334,41 @@ as.data.frame.VarCorr.lme <- function(x, row.names = NULL, optional = FALSE, ...
 
 #' @export
 as.data.frame.VarCorr.coxme <- function(x, row.names = NULL, optional = FALSE, ...) {
+  # extract variances from VarCorr object
   variances <- lapply(x, diag)
+  # create data frame, similar to as.data.frame.VarCorr.merMod
+  out <- do.call(rbind, lapply(names(variances), function(i) {
+    # information on variances
+    d <- data.frame(
+      grp = i,
+      var1 = names(variances[[i]]),
+      var2 = NA_character_,
+      vcov = as.numeric(variances[[i]]),
+      sdcor = sqrt(as.numeric(variances[[i]])),
+      stringsAsFactors = FALSE
+    )
+    # add correlations, if any
+    if (nrow(x[[i]]) > 1) {
+      d <- rbind(d, data.frame(
+        grp = i,
+        var1 = "(Intercept)",
+        var2 = rownames(x[[i]])[2],
+        vcov = NA_real_,
+        sdcor = as.numeric(x[[i]][2, 1]),
+        stringsAsFactors = FALSE
+      ))
+    }
+  }))
 
+  # bind residual variance
+  rbind(out, data.frame(
+    grp = "Residual",
+    var1 = NA_character_,
+    var2 = NA_character_,
+    vcov = NA_real_,
+    sdcor = NA_real_,
+    stringsAsFactors = FALSE
+  ))
 }
 
 
