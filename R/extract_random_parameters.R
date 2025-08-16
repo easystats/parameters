@@ -136,14 +136,20 @@
   }
 
   out <- as.data.frame(lme4::ranef(model, condVar = TRUE)[[re_grp]], stringsAsFactors = FALSE)
-  out$grp <- unique(insight::get_data(model)[[re_grp]])
-  out <- datawizard::reshape_longer(out, select = -"grp")
-  out <- datawizard::data_separate(out, select = "name", new_columns = c("grpvar", "term"))
-  out <- datawizard::data_arrange(out, select = c("grpvar", "term"))
-  out <- out[c("grpvar", "term", "grp", "value")]
-  out$condsd <- NA
+  out$.grp <- unique(insight::get_data(model)[[re_grp]])
+  out <- datawizard::reshape_longer(out, select = -".grp")
+  out$grpvar <- re_grp
 
-  colnames(out) <- c("Group", "Parameter", "Level", "Coefficient", "SE")
+  # rename columns
+  colnames(out) <- c("Level", "Parameter", "Coefficient", "Group")
+  out$SE <- NA
+
+  # re-order columns
+  out <- out[c("Group", "Parameter", "Level", "Coefficient", "SE")]
+  out$Parameter[out$Parameter == "Intercept"] <- "(Intercept)"
+
+  # sort
+  out <- datawizard::data_arrange(out, c("Group", "Parameter", "Level"))
 
   # coerce to character
   out$Parameter <- as.character(out$Parameter)
