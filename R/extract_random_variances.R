@@ -358,6 +358,7 @@ as.data.frame.VarCorr.coxme <- function(x, row.names = NULL, optional = FALSE, .
         stringsAsFactors = FALSE
       ))
     }
+    d
   }))
 
   # bind residual variance
