@@ -16,7 +16,7 @@ withr::with_environment(
     rats$grp <- sample(letters[1:3], nrow(rats), replace = TRUE)
 
     data(eortc, package = "coxme")
-    d <- coxme::eortc
+    d <<- coxme::eortc
     d2 <<- rats
 
     m1 <- coxme::coxme(Surv(y, uncens) ~ trt + (1 | center), data = d)
