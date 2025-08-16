@@ -16,6 +16,9 @@
   generic `display()` method can be used, too, which has a `format` argument that
   also supports `"tt"` for `tinytable`.
 
+* Improved support for *coxme* models in `model_parameters()`. Random effects
+  and group level estimates are now returned as well.
+
 ## Bug fixes
 
 * Fixed issue with models of class `selection` with multiple outcomes.
