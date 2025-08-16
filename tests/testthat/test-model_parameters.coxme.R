@@ -26,6 +26,8 @@ withr::with_environment(
       c("Parameter", "Coefficient", "SE", "CI", "CI_low", "CI_high", "z", "df_error", "p", "Effects", "Group")
     )
     expect_equal(out$Coefficient, c(0.708613, 0.329214, NA), tolerance = 1e-4)
+    out <- model_parameters(m1, effects = "grouplevel")
+    expect_identical(dim(out), c(37L, 9L))
 
     m2 <- coxme::coxme(Surv(time, status) ~ ph.ecog + age + (1 | inst), lung)
     out <- model_parameters(m2)
@@ -34,6 +36,8 @@ withr::with_environment(
       c("Parameter", "Coefficient", "SE", "CI", "CI_low", "CI_high", "z", "df_error", "p", "Effects", "Group")
     )
     expect_equal(out$Coefficient, c(0.473195, 0.011394, 0.146955, NA), tolerance = 1e-4)
+    out <- model_parameters(m2, effects = "grouplevel")
+    expect_identical(dim(out), c(18L, 9L))
 
     m3 <- coxme::coxme(Surv(time, status) ~ rx + (1 + rx | litter) + (1 | grp), d2)
     out <- model_parameters(m3)
@@ -65,5 +69,9 @@ withr::with_environment(
       out$Parameter,
       c("SD (Intercept)", "SD (Intercept)", "SD (rx)", "Cor (Intercept~rx)", "SD (Observations)")
     )
+    out <- model_parameters(m3, effects = "grouplevel")
+    expect_identical(dim(out), c(203, 9L))
+    expect_identical(unique(out$Parameter), c("(Intercept)", "rx"))
+    expect_identical(unique(out$Group), c("litter", "grp"))
   })
 )
