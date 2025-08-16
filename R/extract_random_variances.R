@@ -168,6 +168,8 @@
     varcorr <- insight::get_mixed_info(model, component = component, verbose = FALSE)$vc
   }
 
+  # we have own data frame methods for VarCorr objects from lme and coxme, so
+  # only change class attribute for other models
   if (!inherits(model, c("lme", "coxme"))) {
     class(varcorr) <- "VarCorr.merMod"
   }
