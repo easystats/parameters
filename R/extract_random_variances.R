@@ -159,7 +159,15 @@
                                              ci_random = NULL,
                                              verbose = FALSE,
                                              ...) {
-  varcorr <- insight::get_mixed_info(model, component = component, verbose = FALSE)$vc
+  # special handling for lme objects
+  if (inherits(model, "lme")) {
+    insight::check_if_installed("lme4")
+    varcorr <- lme4::VarCorr(model)
+    class(varcorr) <- "VarCorr.lme"
+  } else {
+    varcorr <- insight::get_mixed_info(model, component = component, verbose = FALSE)$vc
+  }
+
   if (!inherits(model, c("lme", "coxme"))) {
     class(varcorr) <- "VarCorr.merMod"
   }
