@@ -12,6 +12,7 @@ withr::with_environment(
     rats <- survival::rats
     lung <- survival::lung
 
+    set.seed(1234)
     rats$grp <- sample(letters[1:3], nrow(rats), replace = TRUE)
 
     data(eortc, package = "coxme")
@@ -42,7 +43,7 @@ withr::with_environment(
     )
     expect_equal(
       out$Coefficient,
-      c(0.738099, 1.145896, 0.270636, 0.039584, 0.000168, NA),
+      c(0.730075, 1.147669, 0.018608, 0.038953, 0.000791, NA),
       tolerance = 1e-4
     )
     expect_identical(
