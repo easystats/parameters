@@ -17,7 +17,7 @@ withr::with_environment(
 
     data(eortc, package = "coxme")
     d <- coxme::eortc
-    d2 <- rats
+    d2 <<- rats
 
     m1 <- coxme::coxme(Surv(y, uncens) ~ trt + (1 | center), data = d)
     out <- model_parameters(m1)
@@ -31,7 +31,7 @@ withr::with_environment(
     out <- model_parameters(m2)
     expect_named(
       out,
-      c("Parameter", "Coefficient", "SE", "CI", "CI_low", "CI_high", "z", "df_error", "p", "Effects", "Group"))
+      c("Parameter", "Coefficient", "SE", "CI", "CI_low", "CI_high", "z", "df_error", "p", "Effects", "Group")
     )
     expect_equal(out$Coefficient, c(0.473195, 0.011394, 0.146955, NA), tolerance = 1e-4)
 
@@ -39,7 +39,7 @@ withr::with_environment(
     out <- model_parameters(m3)
     expect_named(
       out,
-      c("Parameter", "Coefficient", "SE", "CI", "CI_low", "CI_high", "z", "df_error", "p", "Effects", "Group"))
+      c("Parameter", "Coefficient", "SE", "CI", "CI_low", "CI_high", "z", "df_error", "p", "Effects", "Group")
     )
     expect_equal(
       out$Coefficient,
