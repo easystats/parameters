@@ -50,5 +50,20 @@ withr::with_environment(
       out$Parameter,
       c("rx", "SD (Intercept)", "SD (Intercept)", "SD (rx)", "Cor (Intercept~rx)", "SD (Observations)")
     )
+
+    out <- model_parameters(m3, effects = "fixed")
+    expect_equal(out$Coefficient, 0.730075, tolerance = 1e-4)
+    expect_identical(out$Parameter, "rx")
+
+    out <- model_parameters(m3, effects = "random")
+    expect_equal(
+      out$Coefficient,
+      c(1.147669, 0.018608, 0.038953, 0.000791, NA),
+      tolerance = 1e-4
+    )
+    expect_identical(
+      out$Parameter,
+      c("SD (Intercept)", "SD (Intercept)", "SD (rx)", "Cor (Intercept~rx)", "SD (Observations)")
+    )
   })
 )
