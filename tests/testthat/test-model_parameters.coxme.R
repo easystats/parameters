@@ -70,7 +70,7 @@ withr::with_environment(
       c("SD (Intercept)", "SD (Intercept)", "SD (rx)", "Cor (Intercept~rx)", "SD (Observations)")
     )
     out <- model_parameters(m3, effects = "grouplevel")
-    expect_identical(dim(out), c(203, 9L))
+    expect_identical(dim(out), c(203L, 9L))
     expect_identical(unique(out$Parameter), c("(Intercept)", "rx"))
     expect_identical(unique(out$Group), c("litter", "grp"))
   })
