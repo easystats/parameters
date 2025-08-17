@@ -446,8 +446,15 @@ format_parameters.parameters_model <- function(model, ...) {
         for (i in names(interactions)) {
           # extract single coefficient names from interaction term
           out <- unlist(strsplit(i, ":", fixed = TRUE))
+          # for on-the-fly conversion of factors, the names of the factors can
+          # can also contain "factor()" or "as.factor()" - we need to remove these
+          if (any(grepl("(as\\.factor|factor|as\\.character)", out))) {
+            out_clean <- gsub("(as\\.factor|factor|as\\.character)\\((.*)\\)(.*)", "\\2", out)
+          } else {
+            out_clean <- out
+          }
           # combine labels
-          labs <- c(labs, paste(sapply(out, function(l) pretty_labels[l]), collapse = " * "))
+          labs <- c(labs, paste(sapply(out_clean, function(l) pretty_labels[l]), collapse = " * "))
         }
         # add interaction terms to labels string
         names(labs) <- names(interactions)
