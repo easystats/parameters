@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.27.0.5</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.28.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -53,6 +53,22 @@
       <small>Source: <a href="https://github.com/easystats/parameters/blob/main/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.28.0" id="parameters-0280">parameters 0.28.0<a class="anchor" aria-label="anchor" href="#parameters-0280"></a></h2><p class="text-muted">CRAN release: 2025-08-20</p>
+<div class="section level3">
+<h3 id="breaking-changes-0-28-0">Breaking Changes<a class="anchor" aria-label="anchor" href="#breaking-changes-0-28-0"></a></h3>
+<ul><li>The experimental <code>print_table()</code> function was removed. The aim of this function was to test the implementation of the <code>tinytable</code> backend for printing. Now, <code>tinytable</code> is fully supported by <code><a href="https://easystats.github.io/insight/reference/export_table.html" class="external-link">insight::export_table()</a></code> and thereby also by the various <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code> resp. <code><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">display()</a></code> methods for model parameters.</li>
+</ul></div>
+<div class="section level3">
+<h3 id="changes-0-28-0">Changes<a class="anchor" aria-label="anchor" href="#changes-0-28-0"></a></h3>
+<ul><li><p>All <code><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">print_html()</a></code> methods get an <code>engine</code> argument, to either use the <code>gt</code> package or the <code>tinytable</code> package for printing HTML tables. Since <code>tinytable</code> not only produces HTML tables, but rather different formats depending on the environment, <code><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">print_html()</a></code> may also generate a markdown table. Thus, the generic <code><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">display()</a></code> method can be used, too, which has a <code>format</code> argument that also supports <code>"tt"</code> for <code>tinytable</code>.</p></li>
+<li><p>Improved support for <em>coxme</em> models in <code><a href="../reference/model_parameters.html">model_parameters()</a></code>. Random effects and group level estimates are now returned as well.</p></li>
+</ul></div>
+<div class="section level3">
+<h3 id="bug-fixes-0-28-0">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-28-0"></a></h3>
+<ul><li>Fixed issue with models of class <code>selection</code> with multiple outcomes.</li>
+</ul></div>
+</div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.27.0" id="parameters-0270">parameters 0.27.0<a class="anchor" aria-label="anchor" href="#parameters-0270"></a></h2><p class="text-muted">CRAN release: 2025-07-09</p>
 <div class="section level3">
