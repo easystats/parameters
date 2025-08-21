@@ -179,6 +179,8 @@ model_parameters.glmmTMB <- function(model,
                                      group_level = FALSE,
                                      exponentiate = FALSE,
                                      p_adjust = NULL,
+                                     vcov = NULL,
+                                     vcov_args = NULL,
                                      wb_component = FALSE,
                                      include_info = getOption("parameters_mixed_info", FALSE),
                                      include_sigma = FALSE,
@@ -187,14 +189,6 @@ model_parameters.glmmTMB <- function(model,
                                      verbose = TRUE,
                                      ...) {
   insight::check_if_installed("glmmTMB")
-
-  # validation check, warn if unsupported argument is used.
-  dot_args <- .check_dots(
-    dots = list(...),
-    not_allowed = c("vcov", "vcov_args"),
-    class(model)[1],
-    verbose = verbose
-  )
 
   # p-values, CI and se might be based on different df-methods
   ci_method <- .check_df_method(ci_method)
@@ -280,14 +274,14 @@ model_parameters.glmmTMB <- function(model,
         keep_parameters = NULL,
         drop_parameters = NULL,
         verbose = verbose,
-        vcov = NULL,
-        vcov_args = NULL,
+        vcov = vcov,
+        vcov_args = vcov_args,
         keep_component_column = component != "conditional",
         include_sigma = include_sigma,
         wb_component = wb_component,
         include_info = include_info
       )
-      fun_args <- c(fun_args, dot_args)
+      fun_args <- c(fun_args, list(...))
       params <- do.call(".extract_parameters_generic", fun_args)
     }
 
@@ -501,7 +495,6 @@ model_parameters.glmmTMB <- function(model,
 
 # ci -----
 
-
 #' @export
 ci.glmmTMB <- function(x,
                        ci = 0.95,
@@ -524,15 +517,6 @@ ci.glmmTMB <- function(x,
     return(NULL)
   }
 
-  # validation check, warn if unsupported argument is used.
-  dot_args <- .check_dots(
-    dots = list(...),
-    not_allowed = c("vcov", "vcov_args"),
-    class(x)[1],
-    function_name = "ci",
-    verbose = verbose
-  )
-
   # profiled CIs
   if (method == "profile") {
     if (length(ci) > 1) {
@@ -554,12 +538,42 @@ ci.glmmTMB <- function(x,
 }
 
 
+# p_value -----
+
+#' @export
+p_value.glmmTMB <- function(model,
+                            component = "all",
+                            vcov = NULL,
+                            vcov_args = NULL,
+                            verbose = TRUE,
+                            ...) {
+  component <- insight::validate_argument(
+    component,
+    c("all", "conditional", "zi", "zero_inflated", "dispersion")
+  )
+  effects <- insight::validate_argument(
+    effects,
+    c("fixed", "random")
+  )
+
+  if (effects == "random") {
+    .se_random_effects_glmmTMB(model)
+  } else if (!is.null(vcov)) {
+    .se_robust_glmmTMB(model, component, vcov, vcov_args, verbose, ...)
+  } else {
+    .se_fixed_effects_glmmTMB(model, component, verbose)
+  }
+}
+
+
 # standard_error -----
 
 #' @export
 standard_error.glmmTMB <- function(model,
                                    effects = "fixed",
                                    component = "all",
+                                   vcov = NULL,
+                                   vcov_args = NULL,
                                    verbose = TRUE,
                                    ...) {
   component <- insight::validate_argument(
@@ -571,16 +585,10 @@ standard_error.glmmTMB <- function(model,
     c("fixed", "random")
   )
 
-  dot_args <- .check_dots(
-    dots = list(...),
-    not_allowed = c("vcov", "vcov_args"),
-    class(model)[1],
-    function_name = "standard_error",
-    verbose = verbose
-  )
-
   if (effects == "random") {
     .se_random_effects_glmmTMB(model)
+  } else if (!is.null(vcov)) {
+    .se_robust_glmmTMB(model, component, vcov, vcov_args, verbose, ...)
   } else {
     .se_fixed_effects_glmmTMB(model, component, verbose)
   }
@@ -591,7 +599,7 @@ standard_error.glmmTMB <- function(model,
 
 
 # extract standard errors for fixed effects parameters
-.se_fixed_effects_glmmTMB <- function(model, component, verbose) {
+.se_fixed_effects_glmmTMB <- function(model, component, verbose = TRUE) {
   if (is.null(.check_component(model, component, verbose = verbose))) {
     return(NULL)
   }
@@ -611,6 +619,38 @@ standard_error.glmmTMB <- function(model,
   se$Component <- .rename_values(se$Component, "disp", "dispersion")
 
   .filter_component(se, component)
+}
+
+
+# extract robust standard errors for fixed effects parameters
+.se_robust_glmmTMB <- function(model,
+                               component = "all",
+                               vcov,
+                               vcov_args = NULL,
+                               verbose = TRUE,
+                               ...) {
+  fun_args <- list(
+    model,
+    component = component,
+    vcov = vcov,
+    vcov_args = vcov_args
+  )
+  fun_args <- c(fun_args, list(...))
+  out <- do.call("standard_error.default", fun_args)
+
+  # fix for `component = "all"`
+  if (identical(component, "all")) {
+    # remove theta-rows
+    theta_rows <- startsWith(out$Parameter, "theta_")
+    out <- out[!theta_rows, ]
+    # add component column
+    out$Component <- "conditional"
+    out$Component[startsWith(out$Parameter, "zi~")] <- "zero_inflated"
+    out$Component[startsWith(out$Parameter, "disp~")] <- "dispersion"
+  }
+
+  out
+
 }
 
 
