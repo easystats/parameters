@@ -538,34 +538,6 @@ ci.glmmTMB <- function(x,
 }
 
 
-# p_value -----
-
-#' @export
-p_value.glmmTMB <- function(model,
-                            component = "all",
-                            vcov = NULL,
-                            vcov_args = NULL,
-                            verbose = TRUE,
-                            ...) {
-  component <- insight::validate_argument(
-    component,
-    c("all", "conditional", "zi", "zero_inflated", "dispersion")
-  )
-  effects <- insight::validate_argument(
-    effects,
-    c("fixed", "random")
-  )
-
-  if (effects == "random") {
-    .se_random_effects_glmmTMB(model)
-  } else if (!is.null(vcov)) {
-    .se_robust_glmmTMB(model, component, vcov, vcov_args, verbose, ...)
-  } else {
-    .se_fixed_effects_glmmTMB(model, component, verbose)
-  }
-}
-
-
 # standard_error -----
 
 #' @export
