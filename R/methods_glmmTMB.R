@@ -647,6 +647,9 @@ standard_error.glmmTMB <- function(model,
     out$Component <- "conditional"
     out$Component[startsWith(out$Parameter, "zi~")] <- "zero_inflated"
     out$Component[startsWith(out$Parameter, "disp~")] <- "dispersion"
+    # clean parameter names
+    out$Parameter <- gsub("zi~", "", out$Parameter, fixed = TRUE)
+    out$Parameter <- gsub("disp~", "", out$Parameter, fixed = TRUE)
   }
 
   out
