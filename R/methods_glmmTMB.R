@@ -610,7 +610,9 @@ standard_error.glmmTMB <- function(model,
   fun_args <- c(fun_args, list(...))
   out <- do.call("standard_error.default", fun_args)
 
-  # fix for `component = "all"`
+  # fix for `component = "all"` - if component is not "all", we have a correct
+  # component column. But for "all", we don't have a component column, so we
+  # need to create one
   if (identical(component, "all")) {
     # remove theta-rows
     theta_rows <- startsWith(out$Parameter, "theta_")
