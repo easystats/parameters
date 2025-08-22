@@ -17,6 +17,8 @@
   group_level = FALSE,
   exponentiate = FALSE,
   p_adjust = NULL,
+  vcov = NULL,
+  vcov_args = NULL,
   wb_component = FALSE,
   include_info = getOption("parameters_mixed_info", FALSE),
   include_sigma = FALSE,
@@ -129,6 +131,35 @@ adjustment methods are \code{"tukey"}, \code{"scheffe"}, \code{"sidak"}, \code{"
 \code{"none"} to explicitly disable adjustment for \code{emmGrid} objects (from
 \strong{emmeans}). \code{"sup-t"} computes simultaneous confidence bands, also called
 sup-t confidence band (Montiel Olea & Plagborg-Møller, 2019).}
+
+\item{vcov}{Variance-covariance matrix used to compute uncertainty estimates
+(e.g., for robust standard errors). This argument accepts a covariance
+matrix, a function which returns a covariance matrix, or a string which
+identifies the function to be used to compute the covariance matrix.
+\itemize{
+\item A covariance matrix
+\item A function which returns a covariance matrix (e.g., \code{stats::vcov()})
+\item A string which indicates the kind of uncertainty estimates to return.
+\itemize{
+\item Heteroskedasticity-consistent: \code{"HC"}, \code{"HC0"}, \code{"HC1"}, \code{"HC2"},
+\code{"HC3"}, \code{"HC4"}, \code{"HC4m"}, \code{"HC5"}. See \code{?sandwich::vcovHC}
+\item Cluster-robust: \code{"CR"}, \code{"CR0"}, \code{"CR1"}, \code{"CR1p"}, \code{"CR1S"},
+\code{"CR2"}, \code{"CR3"}. See \code{?clubSandwich::vcovCR}
+\item Bootstrap: \code{"BS"}, \code{"xy"}, \code{"residual"}, \code{"wild"}, \code{"mammen"},
+\code{"fractional"}, \code{"jackknife"}, \code{"norm"}, \code{"webb"}. See
+\code{?sandwich::vcovBS}
+\item Other \code{sandwich} package functions: \code{"HAC"}, \code{"PC"}, \code{"CL"}, \code{"OPG"},
+\code{"PL"}.
+}
+}}
+
+\item{vcov_args}{List of arguments to be passed to the function identified by
+the \code{vcov} argument. This function is typically supplied by the
+\strong{sandwich} or \strong{clubSandwich} packages. Please refer to their
+documentation (e.g., \code{?sandwich::vcovHAC}) to see the list of available
+arguments. If no estimation type (argument \code{type}) is given, the default
+type for \code{"HC"} equals the default from the \strong{sandwich} package; for type
+\code{"CR"}, the default is set to \code{"CR3"}.}
 
 \item{wb_component}{Logical, if \code{TRUE} and models contains within- and
 between-effects (see \code{datawizard::demean()}), the \code{Component} column

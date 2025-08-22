@@ -215,3 +215,40 @@
       ----------------------------------------------------
       SD (Intercept: persons) |        1.17 | [0.54, 2.57]
 
+# robust SE/VCOV
+
+    Code
+      print(out, table_width = Inf)
+    Output
+      # Fixed Effects (Count Model)
+      
+      Parameter   | Log-Mean |   SE |         95% CI |     z |      p
+      ---------------------------------------------------------------
+      (Intercept) |     1.26 | 0.46 | [ 0.36,  2.17] |  2.74 | 0.006 
+      child       |    -1.14 | 0.30 | [-1.73, -0.55] | -3.80 | < .001
+      camper [1]  |     0.73 | 0.41 | [-0.06,  1.53] |  1.80 | 0.072 
+      
+      # Fixed Effects (Zero-Inflation Component)
+      
+      Parameter   | Log-Odds |   SE |         95% CI |     z |      p
+      ---------------------------------------------------------------
+      (Intercept) |    -0.39 | 0.58 | [-1.52,  0.75] | -0.67 | 0.501 
+      child       |     2.05 | 0.39 | [ 1.30,  2.81] |  5.33 | < .001
+      camper [1]  |    -1.01 | 0.39 | [-1.77, -0.24] | -2.59 | 0.010 
+      
+      # Random Effects Variances
+      
+      Parameter               | Coefficient |       95% CI
+      ----------------------------------------------------
+      SD (Intercept: persons) |        0.93 | [0.46, 1.89]
+      
+      # Random Effects (Zero-Inflation Component)
+      
+      Parameter               | Coefficient |       95% CI
+      ----------------------------------------------------
+      SD (Intercept: persons) |        1.17 | [0.54, 2.57]
+    Message
+      
+      Uncertainty intervals (equal-tailed) and p-values (two-tailed) computed
+        using a Wald z-distribution approximation.
+

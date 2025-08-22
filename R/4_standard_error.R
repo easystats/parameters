@@ -113,6 +113,13 @@ standard_error.default <- function(model,
       ...
     )
     se <- sqrt(diag(.vcov))
+
+    # for glmmTMB, we need to remove theta-rows
+    if (inherits(model, "glmmTMB")) {
+      # remove theta-rows
+      theta_rows <- startsWith(names(se), "theta_")
+      se <- se[!theta_rows]
+    }
   }
 
   # classical SE from summary()
