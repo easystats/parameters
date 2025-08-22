@@ -766,5 +766,21 @@ withr::with_options(
       expect_identical(nrow(out), 46L)
       expect_equal(out$Coefficient, unlist(glmmTMB::ranef(m)), ignore_attr = TRUE, tolerance = 1e-4)
     })
+
+    test_that("robust SE/VCOV", {
+      skip_if_not_installed("sandwich")
+      skip_if(packageVersion("insight") <= "1.4.0")
+
+      out1 <- standard_error(m1)
+      out2 <- sqrt(diag(insight::get_varcov(m1, component = "all")))
+      expect_equal(out1$SE, out2[1:6], ignore_attr = TRUE, tolerance = 1e-4)
+
+      out1 <- standard_error(m1, vcov = "HC0")
+      out2 <- sqrt(diag(insight::get_varcov(m1, vcov = "HC0", component = "all")))
+      expect_equal(out1$SE, out2[1:6], ignore_attr = TRUE, tolerance = 1e-4)
+
+      ## FIXME: model_parameters() currently fails with robust SE for mixed models
+      # out <- model_parameters(m1, vcov = "HC0")
+    })
   }
 )
