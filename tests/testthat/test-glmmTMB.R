@@ -30,11 +30,6 @@ withr::with_options(
       data = Salamanders
     ))
 
-    test_that("unsupported args", {
-      expect_message(model_parameters(m1, vcov = "HC3", effects = "fixed", component = "conditional"))
-      expect_message(model_parameters(m1, vcov = "HC3"))
-    })
-
     test_that("ci", {
       expect_equal(
         ci(m1)$CI_low,
@@ -779,8 +774,8 @@ withr::with_options(
       out2 <- sqrt(diag(insight::get_varcov(m1, vcov = "HC0", component = "all")))
       expect_equal(out1$SE, out2[1:6], ignore_attr = TRUE, tolerance = 1e-4)
 
-      ## FIXME: model_parameters() currently fails with robust SE for mixed models
-      # out <- model_parameters(m1, vcov = "HC0")
+      out <- model_parameters(m1, vcov = "HC0")
+      expect_snapshot(print(out, table_width = Inf))
     })
   }
 )
