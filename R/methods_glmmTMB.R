@@ -608,26 +608,7 @@ standard_error.glmmTMB <- function(model,
     vcov_args = vcov_args
   )
   fun_args <- c(fun_args, list(...))
-  out <- do.call("standard_error.default", fun_args)
-
-  # fix for `component = "all"` - if component is not "all", we have a correct
-  # component column. But for "all", we don't have a component column, so we
-  # need to create one
-  if (identical(component, "all")) {
-    # remove theta-rows
-    theta_rows <- startsWith(out$Parameter, "theta_")
-    out <- out[!theta_rows, ]
-    # add component column
-    out$Component <- "conditional"
-    out$Component[startsWith(out$Parameter, "zi~")] <- "zero_inflated"
-    out$Component[startsWith(out$Parameter, "disp~")] <- "dispersion"
-    # clean parameter names
-    out$Parameter <- gsub("zi~", "", out$Parameter, fixed = TRUE)
-    out$Parameter <- gsub("disp~", "", out$Parameter, fixed = TRUE)
-  }
-
-  out
-
+  do.call("standard_error.default", fun_args)
 }
 
 
