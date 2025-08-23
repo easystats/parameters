@@ -2,7 +2,8 @@
 
 ## Changes
 
-*
+* `model_parameters()` for *marginaleffects* objects is now more robust in
+  detecting Bayesian models.
 
 # parameters 0.28.0
 
