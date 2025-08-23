@@ -180,13 +180,10 @@ test_that("predictions, using bayestestR #1063", {
   skip_if(is.null(m))
 
   d <- insight::get_datagrid(m, by = "Days", include_random = TRUE)
-  x <- marginaleffects::avg_predictions(m, newdata = d, by = "Days")
+  x <- marginaleffects::predictions(m, newdata = d, allow_new_levels = TRUE)
   out <- model_parameters(x)
-  expect_named(
-    out,
-    c(
-      "Median", "CI", "CI_low", "CI_high", "pd", "ROPE_CI", "ROPE_low",
-      "ROPE_high", "ROPE_Percentage", "Days", "subgrp", "grp", "Subject"
-    )
-  )
+  cols <- c(
+    "Median", "CI", "CI_low", "CI_high", "pd", "ROPE_CI", "ROPE_low",
+    "ROPE_high", "ROPE_Percentage", "Days", "subgrp", "grp", "Subject")
+  expect_named(out, cols)
 })
