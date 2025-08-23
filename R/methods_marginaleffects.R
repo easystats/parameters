@@ -107,14 +107,9 @@ model_parameters.predictions <- function(model,
                                          verbose = TRUE,
                                          ...) {
   insight::check_if_installed("marginaleffects")
+  is_bayes <- !is.null(suppressWarnings(marginaleffects::get_draws(model, "PxD")))
 
-  if (is.null(attributes(model)$posterior_draws)) {
-    # handle non-Bayesian models
-    out <- .rename_reserved_marginaleffects(model)
-    out <- datawizard::data_rename(out, "estimate", "predicted")
-    out <- datawizard::data_relocate(out, "predicted", before = 1)
-    out <- insight::standardize_names(out, style = "easystats")
-  } else {
+  if (is_bayes) {
     # Bayesian
     out <- suppressWarnings(bayestestR::describe_posterior(
       model,
@@ -122,6 +117,12 @@ model_parameters.predictions <- function(model,
       verbose = verbose,
       ...
     ))
+  } else {
+    # handle non-Bayesian models
+    out <- .rename_reserved_marginaleffects(model)
+    out <- datawizard::data_rename(out, "estimate", "predicted")
+    out <- datawizard::data_relocate(out, "predicted", before = 1)
+    out <- insight::standardize_names(out, style = "easystats")
   }
 
   out <- insight::standardize_column_order(out, style = "easystats")
