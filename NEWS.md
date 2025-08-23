@@ -2,6 +2,9 @@
 
 ## Changes
 
+* Methods for *glmmTMB* objects (`ci()`, `model_parameters()`, `standard_error()`)
+  now support the `vcov` argument to compute robust standard errors.
+
 * `model_parameters()` for *marginaleffects* objects is now more robust in
   detecting Bayesian models.
 
