@@ -48,9 +48,7 @@ model_parameters.marginaleffects <- function(model,
   # do not print or report these columns
   out <- out[, !colnames(out) %in% c("predicted_lo", "predicted_hi"), drop = FALSE]
 
-  if (inherits(model, "marginalmeans")) {
-    attr(out, "coefficient_name") <- "Marginal Means"
-  } else if (inherits(model, "comparisons")) {
+  if (inherits(model, "comparisons")) {
     attr(out, "coefficient_name") <- "Estimate"
     attr(out, "title") <- "Contrasts between Adjusted Predictions"
     if ("Type" %in% colnames(out)) {
@@ -86,10 +84,6 @@ model_parameters.marginaleffects <- function(model,
 
 #' @export
 model_parameters.comparisons <- model_parameters.marginaleffects
-
-
-#' @export
-model_parameters.marginalmeans <- model_parameters.marginaleffects
 
 
 #' @export
