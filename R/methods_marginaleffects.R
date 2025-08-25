@@ -32,7 +32,13 @@ model_parameters.marginaleffects <- function(model,
       colnames(marginaleffects::components(model, "modeldata"))
     )
     # columns we want to keep
-    by_cols <- marginaleffects::components(model, "variable_names_by")
+    by_cols <- union(
+      marginaleffects::components(model, "variable_names_by"),
+      marginaleffects::components(model, "variable_names_by_hypothesis")
+    )
+
+    ## FIXME: hack to workaround https://github.com/vincentarelbundock/marginaleffects/issues/1573
+    tidy_model <- .fix_duplicated_by_columns(tidy_model, by_cols)
 
     # remove redundant columns
     to_remove <- setdiff(all_data_cols, by_cols)
@@ -126,6 +132,15 @@ model_parameters.predictions <- function(model,
       ...
     ))
   } else {
+    # columns we want to keep
+    by_cols <- union(
+      marginaleffects::components(model, "variable_names_by"),
+      marginaleffects::components(model, "variable_names_by_hypothesis")
+    )
+
+    ## FIXME: hack to workaround https://github.com/vincentarelbundock/marginaleffects/issues/1573
+    model <- .fix_duplicated_by_columns(model, by_cols)
+
     # handle non-Bayesian models
     out <- .rename_reserved_marginaleffects(model)
     out <- datawizard::data_rename(out, "estimate", "predicted")
@@ -143,11 +158,10 @@ model_parameters.predictions <- function(model,
   out$rowid <- out$Type <- out$rowid_dedup <- NULL
 
   # find at-variables
-  at_variables <- c(
-    marginaleffects::components(model, "variable_names_datagrid"),
+  at_variables <- insight::compact_character(c(
     marginaleffects::components(model, "variable_names_by"),
     marginaleffects::components(model, "variable_names_by_hypothesis")
-  )
+  ))
 
   # find cofficient name - differs for Bayesian models
   coef_name <- intersect(c("Predicted", "Coefficient"), colnames(out))[1]
@@ -214,4 +228,18 @@ model_parameters.predictions <- function(model,
     )
   }
   model
+}
+
+
+.fix_duplicated_by_columns <- function(x, by_cols) {
+  duplicated_names <- grep(
+    paste0("(", paste0(by_cols, "\\.\\d+$", collapse = "|"), ")"),
+    colnames(x),
+    value = TRUE
+  )
+  # if we have duplicated "by" columns, we want to remove those as well
+  if (length(duplicated_names) > 0) {
+    x[duplicated_names] <- NULL
+  }
+  x
 }
