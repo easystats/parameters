@@ -41,6 +41,31 @@ test_that("marginaleffects()", {
     variables = "Petal.Length"
   )
   expect_identical(nrow(parameters(model)), 1L)
+
+  # remove redundant columns
+  skip_if_not_installed("mgcv")
+  data(iris)
+  model <- mgcv::gam(Sepal.Width ~ s(Petal.Length, by = Species), data = iris)
+  mfx <- marginaleffects::avg_slopes(model, variables = "Petal.Length")
+  out <- model_parameters(mfx)
+  expect_identical(dim(out), c(1L, 11L))
+  expect_named(
+    out,
+    c(
+      "Parameter", "Comparison", "Coefficient", "SE", "Statistic",
+      "p", "S", "CI", "CI_low", "CI_high", "Predicted"
+    )
+  )
+  mfx <- marginaleffects::avg_slopes(model, variables = "Petal.Length", by = "Species")
+  out <- model_parameters(mfx)
+  expect_identical(dim(out), c(3L, 11L))
+  expect_named(
+    out,
+    c(
+      "Parameter", "Comparison", "Species", "Coefficient", "SE", "Statistic",
+      "p", "S", "CI", "CI_low", "CI_high"
+    )
+  )
 })
 
 
