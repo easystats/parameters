@@ -25,6 +25,17 @@ model_parameters.marginaleffects <- function(model,
   } else {
     # handle non-Bayesian models
     tidy_model <- marginaleffects::tidy(model, conf_level = ci, ...)
+    # remove redundant columns
+    to_remove <- setdiff(
+      # all columns
+      union(
+        colnames(marginaleffects::components(model, "newdata")),
+        colnames(marginaleffects::components(model, "modeldata"))
+      ),
+      # columns we want to keep
+      marginaleffects::components(model, "variable_names_by")
+    )
+    tidy_model <- tidy_model[, !colnames(tidy_model) %in% to_remove, drop = FALSE]
   }
 
   out <- .rename_reserved_marginaleffects(tidy_model)
