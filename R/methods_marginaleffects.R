@@ -38,15 +38,7 @@ model_parameters.marginaleffects <- function(model,
     )
 
     ## FIXME: hack to workaround https://github.com/vincentarelbundock/marginaleffects/issues/1573
-    duplicated_names <- grep(
-      paste0("(", paste0(by_cols, "\\.\\d+$", collapse = "|"), ")"),
-      colnames(tidy_model),
-      value = TRUE
-    )
-    # if we have duplicated "by" columns, we want to remove those as well
-    if (length(duplicated_names) > 0) {
-      all_data_cols <- c(all_data_cols, duplicated_names)
-    }
+    tidy_model <- .fix_duplicated_by_columns(tidy_model, by_cols)
 
     # remove redundant columns
     to_remove <- setdiff(all_data_cols, by_cols)
@@ -147,15 +139,7 @@ model_parameters.predictions <- function(model,
     )
 
     ## FIXME: hack to workaround https://github.com/vincentarelbundock/marginaleffects/issues/1573
-    duplicated_names <- grep(
-      paste0("(", paste0(by_cols, "\\.\\d+$", collapse = "|"), ")"),
-      colnames(model),
-      value = TRUE
-    )
-    # if we have duplicated "by" columns, we want to remove those as well
-    if (length(duplicated_names) > 0) {
-      model[duplicated_names] <- NULL
-    }
+    model <- .fix_duplicated_by_columns(model, by_cols)
 
     # handle non-Bayesian models
     out <- .rename_reserved_marginaleffects(model)
@@ -245,4 +229,18 @@ model_parameters.predictions <- function(model,
     )
   }
   model
+}
+
+
+.fix_duplicated_by_columns <- function(x, by_cols) {
+  duplicated_names <- grep(
+    paste0("(", paste0(by_cols, "\\.\\d+$", collapse = "|"), ")"),
+    colnames(x),
+    value = TRUE
+  )
+  # if we have duplicated "by" columns, we want to remove those as well
+  if (length(duplicated_names) > 0) {
+    x[duplicated_names] <- NULL
+  }
+  x
 }
