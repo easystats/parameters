@@ -48,9 +48,7 @@ model_parameters.marginaleffects <- function(model,
   # do not print or report these columns
   out <- out[, !colnames(out) %in% c("predicted_lo", "predicted_hi"), drop = FALSE]
 
-  if (inherits(model, "marginalmeans")) {
-    attr(out, "coefficient_name") <- "Marginal Means"
-  } else if (inherits(model, "comparisons")) {
+  if (inherits(model, "comparisons")) {
     attr(out, "coefficient_name") <- "Estimate"
     attr(out, "title") <- "Contrasts between Adjusted Predictions"
     if ("Type" %in% colnames(out)) {
@@ -89,10 +87,6 @@ model_parameters.comparisons <- model_parameters.marginaleffects
 
 
 #' @export
-model_parameters.marginalmeans <- model_parameters.marginaleffects
-
-
-#' @export
 model_parameters.hypotheses <- model_parameters.marginaleffects
 
 
@@ -109,9 +103,9 @@ model_parameters.predictions <- function(model,
   insight::check_if_installed("marginaleffects")
 
   # Bayesian models have posterior draws as attribute
-  is_bayes <- !is.null(suppressWarnings(marginaleffects::get_draws(model, "PxD")))
+  is_bayesian <- !is.null(suppressWarnings(marginaleffects::get_draws(model, "PxD")))
 
-  if (is_bayes) {
+  if (is_bayesian) {
     # Bayesian
     out <- suppressWarnings(bayestestR::describe_posterior(
       model,
@@ -137,10 +131,11 @@ model_parameters.predictions <- function(model,
   out$rowid <- out$Type <- out$rowid_dedup <- NULL
 
   # find at-variables
-  at_variables <- attributes(model)$newdata_at
-  if (is.null(at_variables)) {
-    at_variables <- attributes(model)$by
-  }
+  at_variables <- c(
+    marginaleffects::components(model, "variable_names_datagrid"),
+    marginaleffects::components(model, "variable_names_by"),
+    marginaleffects::components(model, "variable_names_by_hypothesis")
+  )
 
   # find cofficient name - differs for Bayesian models
   coef_name <- intersect(c("Predicted", "Coefficient"), colnames(out))[1]
@@ -153,7 +148,7 @@ model_parameters.predictions <- function(model,
   }
 
   # extract response, remove from data frame
-  reg_model <- attributes(model)$model
+  reg_model <- marginaleffects::components(model, "model")
   if (!is.null(reg_model) && insight::is_model(reg_model)) {
     resp <- insight::find_response(reg_model)
     # check if response could be extracted

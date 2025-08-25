@@ -165,8 +165,18 @@ test_that("predictions, bmrs with special response formula", {
   expect_identical(dim(out), c(1L, 10L))
 })
 
+## TODO: check this test locally
 
-## TODO: run check manually every now and then
+# Following test may fail on CI, probably due to scoping issues?
+# ── Error (test-marginaleffects.R:179:3): predictions, using bayestestR #1063 ───
+# Error in ``[.data.frame`(data, random_factors)`: undefined columns selected
+# Backtrace:
+#     ▆
+#  1. ├─insight::get_datagrid(m, by = "Days", include_random = TRUE) at test-marginaleffects.R:179:3
+#  2. └─insight:::get_datagrid.default(m, by = "Days", include_random = TRUE)
+#  3.   ├─base::lapply(data[random_factors], as.factor)
+#  4.   ├─data[random_factors]
+#  5.   └─base::`[.data.frame`(data, random_factors)
 
 test_that("predictions, using bayestestR #1063", {
   skip_on_ci()
@@ -180,13 +190,13 @@ test_that("predictions, using bayestestR #1063", {
   skip_if(is.null(m))
 
   d <- insight::get_datagrid(m, by = "Days", include_random = TRUE)
-  x <- marginaleffects::avg_predictions(m, newdata = d, by = "Days")
+  x <- marginaleffects::avg_predictions(m, newdata = d, by = "Days", allow_new_levels = TRUE)
   out <- model_parameters(x)
   expect_named(
     out,
     c(
       "Median", "CI", "CI_low", "CI_high", "pd", "ROPE_CI", "ROPE_low",
-      "ROPE_high", "ROPE_Percentage", "Days", "subgrp", "grp", "Subject"
+      "ROPE_high", "ROPE_Percentage", "Days"
     )
   )
 })
