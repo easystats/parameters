@@ -181,6 +181,7 @@ test_that("predictions, bmrs with special response formula", {
   skip_if_offline()
   skip_if_not_installed("httr2")
   skip_if_not_installed("brms")
+  skip_if_not_installed("marginaleffects", minimum_version = "0.28.0.21")
 
   m <- insight::download_model("brms_ipw_1")
   skip_if(is.null(m))
@@ -189,6 +190,29 @@ test_that("predictions, bmrs with special response formula", {
   out <- model_parameters(x)
   expect_identical(dim(out), c(1L, 10L))
 })
+
+
+test_that("modelbased, tidiers work", {
+  skip_if_not_installed("marginaleffects", minimum_version = "0.28.0.21")
+  skip_if_not_installed("modelbased")
+  skip_if(getRversion() < "4.5.0")
+
+  data(penguins)
+  m <- lm(bill_len ~ island * sex + bill_dep + species, data = penguins)
+
+  ## FIXME: Need to wait for https://github.com/vincentarelbundock/marginaleffects/issues/1573
+  out <- modelbased::estimate_contrasts(m, "island", by = "sex", comparison = ratio ~ pairwise)
+  expect_named(
+    out,
+    c("Level1", "Level2", "sex", "Ratio", "SE", "CI_low", "CI_high", "t", "df", "p")
+  )
+  expect_identical(dim(out), c(6L, 10L))
+
+  out <- modelbased::estimate_contrasts(m, "island", by = "sex", comparison = ratio ~ inequality)
+  expect_named(out, c("sex", "Mean_Ratio", "SE", "CI_low", "CI_high", "z", "p"))
+  expect_identical(dim(out), c(2L, 7L))
+})
+
 
 ## TODO: check this test locally
 
@@ -210,6 +234,7 @@ test_that("predictions, using bayestestR #1063", {
   skip_if_offline()
   skip_if_not_installed("httr2")
   skip_if_not_installed("brms")
+  skip_if_not_installed("marginaleffects", minimum_version = "0.28.0.21")
 
   m <- insight::download_model("brms_mixed_3")
   skip_if(is.null(m))

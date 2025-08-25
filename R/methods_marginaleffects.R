@@ -32,7 +32,21 @@ model_parameters.marginaleffects <- function(model,
       colnames(marginaleffects::components(model, "modeldata"))
     )
     # columns we want to keep
-    by_cols <- marginaleffects::components(model, "variable_names_by")
+    by_cols <- union(
+      marginaleffects::components(model, "variable_names_by"),
+      marginaleffects::components(model, "variable_names_by_hypothesis")
+    )
+
+    ## FIXME: hack to workaround https://github.com/vincentarelbundock/marginaleffects/issues/1573
+    duplicated_names <- grep(
+      paste0("(", paste0(by_cols, "\\.\\d+", collapse = "|"), ")"),
+      colnames(tidy_model),
+      value = TRUE
+    )
+    # if we have duplicated "by" columns, we want to remove those as well
+    if (length(duplicated_names) > 0) {
+      all_data_cols <- c(all_data_cols, duplicated_names)
+    }
 
     # remove redundant columns
     to_remove <- setdiff(all_data_cols, by_cols)
@@ -126,6 +140,23 @@ model_parameters.predictions <- function(model,
       ...
     ))
   } else {
+    # columns we want to keep
+    by_cols <- union(
+      marginaleffects::components(model, "variable_names_by"),
+      marginaleffects::components(model, "variable_names_by_hypothesis")
+    )
+
+    ## FIXME: hack to workaround https://github.com/vincentarelbundock/marginaleffects/issues/1573
+    duplicated_names <- grep(
+      paste0("(", paste0(by_cols, "\\.\\d+", collapse = "|"), ")"),
+      colnames(model),
+      value = TRUE
+    )
+    # if we have duplicated "by" columns, we want to remove those as well
+    if (length(duplicated_names) > 0) {
+      model[duplicated_names] <- NULL
+    }
+
     # handle non-Bayesian models
     out <- .rename_reserved_marginaleffects(model)
     out <- datawizard::data_rename(out, "estimate", "predicted")
