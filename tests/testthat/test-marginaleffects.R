@@ -194,7 +194,7 @@ test_that("predictions, bmrs with special response formula", {
 
 test_that("modelbased, tidiers work", {
   skip_if_not_installed("marginaleffects", minimum_version = "0.28.0.21")
-  skip_if_not_installed("modelbased")
+  skip_if_not_installed("modelbased", minimum_version = "0.12.0.17")
   skip_if(getRversion() < "4.5.0")
 
   data(penguins)
