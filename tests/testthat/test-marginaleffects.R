@@ -181,6 +181,7 @@ test_that("predictions, bmrs with special response formula", {
   skip_if_offline()
   skip_if_not_installed("httr2")
   skip_if_not_installed("brms")
+  skip_if_not_installed("marginaleffects", minimum_version = "0.28.0.21")
 
   m <- insight::download_model("brms_ipw_1")
   skip_if(is.null(m))
@@ -189,6 +190,61 @@ test_that("predictions, bmrs with special response formula", {
   out <- model_parameters(x)
   expect_identical(dim(out), c(1L, 10L))
 })
+
+
+test_that("modelbased, tidiers work", {
+  skip_if_not_installed("marginaleffects", minimum_version = "0.28.0.21")
+  skip_if_not_installed("modelbased", minimum_version = "0.12.0.17")
+  skip_if(getRversion() < "4.5.0")
+
+  data(penguins)
+  m <- lm(bill_len ~ island * sex + bill_dep + species, data = penguins)
+
+  ## FIXME: Need to wait for https://github.com/vincentarelbundock/marginaleffects/issues/1573
+  out <- modelbased::estimate_contrasts(m, "island", by = "sex", comparison = ratio ~ pairwise)
+  expect_named(
+    out,
+    c("Level1", "Level2", "sex", "Ratio", "SE", "CI_low", "CI_high", "t", "df", "p")
+  )
+  expect_identical(dim(out), c(6L, 10L))
+
+  datagrid <- insight::get_datagrid(m, by = c("island", "sex"), factors = "all")
+  out <- marginaleffects::avg_predictions(
+    model = m,
+    variables = c("island", "sex"),
+    newdata = datagrid,
+    hypothesis = ratio ~ pairwise | sex
+  )
+  params <- model_parameters(out)
+  expect_named(
+    params,
+    c(
+      "Parameter", "Predicted", "SE", "CI", "CI_low", "CI_high",
+      "S", "Statistic", "df", "p", "sex"
+    )
+  )
+  expect_identical(dim(params), c(6L, 11L))
+
+  out <- modelbased::estimate_contrasts(m, "island", by = "sex", comparison = ratio ~ inequality)
+  expect_named(out, c("sex", "Mean_Ratio", "SE", "CI_low", "CI_high", "z", "p"))
+  expect_identical(dim(out), c(2L, 7L))
+
+  datagrid <- insight::get_datagrid(m, by = c("island", "sex"), factors = "all")
+  out <- marginaleffects::avg_predictions(
+    model = m,
+    variables = c("island", "sex"),
+    newdata = datagrid,
+    hypothesis = ratio ~ pairwise | sex
+  )
+  out <- marginaleffects::hypotheses(out, hypothesis = ~I(mean(abs(x))) | sex)
+  params <- model_parameters(out)
+  expect_named(
+    params,
+    c("Coefficient", "SE", "Statistic", "p", "S", "CI", "CI_low", "CI_high", "sex")
+  )
+  expect_identical(dim(params), c(2L, 9L))
+})
+
 
 ## TODO: check this test locally
 
@@ -210,6 +266,7 @@ test_that("predictions, using bayestestR #1063", {
   skip_if_offline()
   skip_if_not_installed("httr2")
   skip_if_not_installed("brms")
+  skip_if_not_installed("marginaleffects", minimum_version = "0.28.0.21")
 
   m <- insight::download_model("brms_mixed_3")
   skip_if(is.null(m))
