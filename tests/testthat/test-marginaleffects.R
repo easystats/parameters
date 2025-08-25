@@ -166,10 +166,7 @@ test_that("predictions, bmrs with special response formula", {
 })
 
 
-## TODO: run check manually every now and then
-
 test_that("predictions, using bayestestR #1063", {
-  skip_on_ci()
   skip_on_cran()
   skip_if_not_installed("curl")
   skip_if_offline()
@@ -180,13 +177,13 @@ test_that("predictions, using bayestestR #1063", {
   skip_if(is.null(m))
 
   d <- insight::get_datagrid(m, by = "Days", include_random = TRUE)
-  x <- marginaleffects::avg_predictions(m, newdata = d, by = "Days")
+  x <- marginaleffects::avg_predictions(m, newdata = d, by = "Days", allow_new_levels = TRUE)
   out <- model_parameters(x)
   expect_named(
     out,
     c(
       "Median", "CI", "CI_low", "CI_high", "pd", "ROPE_CI", "ROPE_low",
-      "ROPE_high", "ROPE_Percentage", "Days", "subgrp", "grp", "Subject"
+      "ROPE_high", "ROPE_Percentage", "Days"
     )
   )
 })
