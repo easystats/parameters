@@ -158,11 +158,10 @@ model_parameters.predictions <- function(model,
   out$rowid <- out$Type <- out$rowid_dedup <- NULL
 
   # find at-variables
-  at_variables <- c(
-    marginaleffects::components(model, "variable_names_datagrid"),
+  at_variables <- insight::compact_character(c(
     marginaleffects::components(model, "variable_names_by"),
     marginaleffects::components(model, "variable_names_by_hypothesis")
-  )
+  ))
 
   # find cofficient name - differs for Bayesian models
   coef_name <- intersect(c("Predicted", "Coefficient"), colnames(out))[1]

@@ -208,9 +208,41 @@ test_that("modelbased, tidiers work", {
   )
   expect_identical(dim(out), c(6L, 10L))
 
+  datagrid <- insight::get_datagrid(m, by = c("island", "sex"), factors = "all")
+  out <- marginaleffects::avg_predictions(
+    model = m,
+    variables = c("island", "sex"),
+    newdata = datagrid,
+    hypothesis = ratio ~ pairwise | sex
+  )
+  params <- model_parameters(out)
+  expect_named(
+    params,
+    c(
+      "Parameter", "Predicted", "SE", "CI", "CI_low", "CI_high",
+      "S", "Statistic", "df", "p", "sex"
+    )
+  )
+  expect_identical(dim(params), c(6L, 11L))
+
   out <- modelbased::estimate_contrasts(m, "island", by = "sex", comparison = ratio ~ inequality)
   expect_named(out, c("sex", "Mean_Ratio", "SE", "CI_low", "CI_high", "z", "p"))
   expect_identical(dim(out), c(2L, 7L))
+
+  datagrid <- insight::get_datagrid(m, by = c("island", "sex"), factors = "all")
+  out <- marginaleffects::avg_predictions(
+    model = m,
+    variables = c("island", "sex"),
+    newdata = datagrid,
+    hypothesis = ratio ~ pairwise | sex
+  )
+  out <- marginaleffects::hypotheses(out, hypothesis = ~I(mean(abs(x))) | sex)
+  params <- model_parameters(out)
+  expect_named(
+    params,
+    c("Coefficient", "SE", "Statistic", "p", "S", "CI", "CI_low", "CI_high", "sex")
+  )
+  expect_identical(dim(params), c(2L, 9L))
 })
 
 
