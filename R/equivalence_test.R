@@ -736,6 +736,11 @@ equivalence_test.parameters_model <- function(x,
     {
       params <- insight::get_parameters(model)
 
+      # remove dispersion components
+      if (!is.null(params$Component)) {
+        params <- params[params$Component != "dispersion", ]
+      }
+
       # degrees of freedom
       dof <- insight::get_df(x = model, type = "wald")
 
