@@ -25,16 +25,17 @@ model_parameters.marginaleffects <- function(model,
   } else {
     # handle non-Bayesian models
     tidy_model <- marginaleffects::tidy(model, conf_level = ci, ...)
-    # remove redundant columns
-    to_remove <- setdiff(
-      # all columns
-      union(
-        colnames(marginaleffects::components(model, "newdata")),
-        colnames(marginaleffects::components(model, "modeldata"))
-      ),
-      # columns we want to keep
-      marginaleffects::components(model, "variable_names_by")
+
+    # all columns in data grid and model data, we only want to keep "by" variables
+    all_data_cols <- union(
+      colnames(marginaleffects::components(model, "newdata")),
+      colnames(marginaleffects::components(model, "modeldata"))
     )
+    # columns we want to keep
+    by_cols <- marginaleffects::components(model, "variable_names_by")
+
+    # remove redundant columns
+    to_remove <- setdiff(all_data_cols, by_cols)
     tidy_model <- tidy_model[, !colnames(tidy_model) %in% to_remove, drop = FALSE]
   }
 
