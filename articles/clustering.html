@@ -29,7 +29,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.28.0.4</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.28.0.6</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -225,7 +225,7 @@ consensus method for estimating the optimal number of clusters).</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Sum_Squares_Total | Sum_Squares_Between | Sum_Squares_Within |    R2</span></span>
 <span><span class="co">#&gt; --------------------------------------------------------------------</span></span>
-<span><span class="co">#&gt; 596.000           |             457.112 |            138.888 | 0.767</span></span>
+<span><span class="co">#&gt; 596               |             457.112 |            138.888 | 0.767</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; # You can access the predicted clusters via `predict()`.</span></span></code></pre></div>
 <p>Note that we can also visualize the <strong>centers</strong> (i.e.,
@@ -272,7 +272,7 @@ apply in the next section).</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Sum_Squares_Total | Sum_Squares_Between | Sum_Squares_Within |    R2</span></span>
 <span><span class="co">#&gt; --------------------------------------------------------------------</span></span>
-<span><span class="co">#&gt; 596.000           |             443.143 |            152.857 | 0.744</span></span>
+<span><span class="co">#&gt; 596               |             443.143 |            152.857 | 0.744</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; # You can access the predicted clusters via `predict()`.</span></span>
 <span></span>
@@ -304,7 +304,7 @@ improving the stability and robustness of the results.</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Sum_Squares_Total | Sum_Squares_Between | Sum_Squares_Within |    R2</span></span>
 <span><span class="co">#&gt; --------------------------------------------------------------------</span></span>
-<span><span class="co">#&gt; 596.000           |             457.112 |            138.888 | 0.767</span></span>
+<span><span class="co">#&gt; 596               |             457.112 |            138.888 | 0.767</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; # You can access the predicted clusters via `predict()`.</span></span>
 <span></span>
@@ -336,7 +336,7 @@ more information.</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Sum_Squares_Total | Sum_Squares_Between | Sum_Squares_Within |    R2</span></span>
 <span><span class="co">#&gt; --------------------------------------------------------------------</span></span>
-<span><span class="co">#&gt; 596.000           |             455.714 |            140.286 | 0.765</span></span>
+<span><span class="co">#&gt; 596               |             455.714 |            140.286 | 0.765</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; # You can access the predicted clusters via `predict()`.</span></span>
 <span></span>
@@ -407,7 +407,7 @@ and, because it’s based on bootstrapping, is quite slow.</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Sum_Squares_Total | Sum_Squares_Between | Sum_Squares_Within |    R2</span></span>
 <span><span class="co">#&gt; --------------------------------------------------------------------</span></span>
-<span><span class="co">#&gt; 596.000           |             288.295 |              3.390 | 0.484</span></span>
+<span><span class="co">#&gt; 596               |             288.295 |              3.390 | 0.484</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; # You can access the predicted clusters via `predict()`.</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">rez_hclust2</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://easystats.github.io/see/reference/theme_modern.html" class="external-link">theme_modern</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># Visualize</span></span></code></pre></div>
@@ -452,7 +452,7 @@ assessment, the elbow seems to be located around
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Sum_Squares_Total | Sum_Squares_Between | Sum_Squares_Within |    R2</span></span>
 <span><span class="co">#&gt; --------------------------------------------------------------------</span></span>
-<span><span class="co">#&gt; 596.000           |             364.406 |            183.751 | 0.611</span></span>
+<span><span class="co">#&gt; 596               |             364.406 |            183.751 | 0.611</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; # You can access the predicted clusters via `predict()`.</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">rez_dbscan</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://easystats.github.io/see/reference/theme_modern.html" class="external-link">theme_modern</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># Visualize</span></span></code></pre></div>
@@ -483,7 +483,7 @@ stability-based extraction method.</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Sum_Squares_Total | Sum_Squares_Between | Sum_Squares_Within |    R2</span></span>
 <span><span class="co">#&gt; --------------------------------------------------------------------</span></span>
-<span><span class="co">#&gt; 596.000           |             393.813 |            202.108 | 0.661</span></span>
+<span><span class="co">#&gt; 596               |             393.813 |            202.108 | 0.661</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; # You can access the predicted clusters via `predict()`.</span></span>
 <span></span>
@@ -513,7 +513,7 @@ clusters. See <code><a href="https://rdrr.io/pkg/fpc/man/pamk.html" class="exter
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Sum_Squares_Total | Sum_Squares_Between | Sum_Squares_Within |    R2</span></span>
 <span><span class="co">#&gt; --------------------------------------------------------------------</span></span>
-<span><span class="co">#&gt; 596.000           |             375.121 |            220.879 | 0.629</span></span>
+<span><span class="co">#&gt; 596               |             375.121 |            220.879 | 0.629</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; # You can access the predicted clusters via `predict()`.</span></span>
 <span></span>
@@ -547,7 +547,7 @@ according to BIC.</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Sum_Squares_Total | Sum_Squares_Between | Sum_Squares_Within |    R2</span></span>
 <span><span class="co">#&gt; --------------------------------------------------------------------</span></span>
-<span><span class="co">#&gt; 596.000           |             375.121 |            220.879 | 0.629</span></span>
+<span><span class="co">#&gt; 596               |             375.121 |            220.879 | 0.629</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; # You can access the predicted clusters via `predict()`.</span></span>
 <span></span>
