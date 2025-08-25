@@ -39,7 +39,7 @@ model_parameters.marginaleffects <- function(model,
 
     ## FIXME: hack to workaround https://github.com/vincentarelbundock/marginaleffects/issues/1573
     duplicated_names <- grep(
-      paste0("(", paste0(by_cols, "\\.\\d+", collapse = "|"), ")"),
+      paste0("(", paste0(by_cols, "\\.\\d+$", collapse = "|"), ")"),
       colnames(tidy_model),
       value = TRUE
     )
@@ -148,7 +148,7 @@ model_parameters.predictions <- function(model,
 
     ## FIXME: hack to workaround https://github.com/vincentarelbundock/marginaleffects/issues/1573
     duplicated_names <- grep(
-      paste0("(", paste0(by_cols, "\\.\\d+", collapse = "|"), ")"),
+      paste0("(", paste0(by_cols, "\\.\\d+$", collapse = "|"), ")"),
       colnames(model),
       value = TRUE
     )
