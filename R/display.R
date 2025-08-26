@@ -125,6 +125,6 @@ display.equivalence_test_lm <- display.parameters_model
 display.parameters_p_function <- display.parameters_model
 
 .display_default_format <- function(format) {
-  format <- getOption("easystats_display_format", "markdown")
+  format <- getOption("easystats_display_format", format)
   insight::validate_argument(format, c("markdown", "html", "md", "tt"))
 }
