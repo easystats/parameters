@@ -107,6 +107,10 @@ reference:
     contents:
       - n_parameters
 
+  - title: "Global options"
+    contents:
+      - parameters-options
+
   - title: "Example Data Sets"
     contents:
       - qol_cancer

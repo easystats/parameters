@@ -524,7 +524,7 @@ display.parameters_standardized <- function(object,
                                             format = "markdown",
                                             digits = 2,
                                             ...) {
-  format <- insight::validate_argument(format, c("markdown", "html", "md", "tt"))
+  format <- .display_default_format(format)
   fun_args <- list(x = object, digits = digits)
 
   if (format %in% c("html", "tt")) {
