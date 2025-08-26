@@ -31,10 +31,7 @@ model_parameters.marginaleffects <- function(model,
       colnames(marginaleffects::components(model, "modeldata"))
     )
     # columns we want to keep
-    by_cols <- union(
-      marginaleffects::components(model, "variable_names_by"),
-      marginaleffects::components(model, "variable_names_by_hypothesis")
-    )
+    by_cols <- .keep_me_columns(model)
     # remove redundant columns
     to_remove <- setdiff(all_data_cols, by_cols)
     out <- out[, !colnames(out) %in% to_remove, drop = FALSE]
@@ -128,10 +125,7 @@ model_parameters.predictions <- function(model,
     ))
   } else {
     # columns we want to keep
-    by_cols <- union(
-      marginaleffects::components(model, "variable_names_by"),
-      marginaleffects::components(model, "variable_names_by_hypothesis")
-    )
+    by_cols <- .keep_me_columns(model)
     # handle non-Bayesian models
     out <- .rename_reserved_marginaleffects(model)
     out <- datawizard::data_rename(out, "estimate", "predicted")
@@ -233,4 +227,21 @@ model_parameters.predictions <- function(model,
     x[duplicated_names] <- NULL
   }
   x
+}
+
+
+.keep_me_columns <- function(model) {
+  # columns we want to keep
+  by_cols <- union(
+    marginaleffects::components(model, "variable_names_by"),
+    marginaleffects::components(model, "variable_names_by_hypothesis")
+  )
+  # and newdata, if specified
+  if (!is.null(marginaleffects::components(model, "call")$newdata)) {
+    by_cols <- union(
+      by_cols,
+      colnames(marginaleffects::components(model, "newdata"))
+    )
+  }
+  by_cols
 }

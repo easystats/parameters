@@ -121,6 +121,26 @@ test_that("hypotheses()", {
 })
 
 
+test_that("slopes()", {
+  m <- lm(Sepal.Width ~ Species * Petal.Length, data = iris)
+
+  x <- marginaleffects::slopes(m,
+    variables = "Petal.Length",
+    newdata = insight::get_datagrid(m, by = "Species")
+  )
+  out <- model_parameters(x)
+  expect_named(
+    out,
+    c(
+      "rowid", "Parameter", "Comparison", "Coefficient", "SE", "Statistic",
+      "p", "S", "CI", "CI_low", "CI_high", "Species", "Petal.Length",
+      "Predicted"
+    )
+  )
+  expect_identical(dim(out), c(3L, 14L))
+})
+
+
 test_that("multiple contrasts: Issue #779", {
   skip_if(getRversion() < "4.0.0")
   data(mtcars)
