@@ -200,7 +200,6 @@ test_that("modelbased, tidiers work", {
   data(penguins)
   m <- lm(bill_len ~ island * sex + bill_dep + species, data = penguins)
 
-  ## FIXME: Need to wait for https://github.com/vincentarelbundock/marginaleffects/issues/1573
   out <- modelbased::estimate_contrasts(m, "island", by = "sex", comparison = ratio ~ pairwise)
   expect_named(
     out,
