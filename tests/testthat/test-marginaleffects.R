@@ -48,12 +48,12 @@ test_that("marginaleffects()", {
   model <- mgcv::gam(Sepal.Width ~ s(Petal.Length, by = Species), data = iris)
   mfx <- marginaleffects::avg_slopes(model, variables = "Petal.Length")
   out <- model_parameters(mfx)
-  expect_identical(dim(out), c(1L, 11L))
+  expect_identical(dim(out), c(1L, 10L))
   expect_named(
     out,
     c(
       "Parameter", "Comparison", "Coefficient", "SE", "Statistic",
-      "p", "S", "CI", "CI_low", "CI_high", "Predicted"
+      "p", "S", "CI", "CI_low", "CI_high"
     )
   )
   mfx <- marginaleffects::avg_slopes(model, variables = "Petal.Length", by = "Species")
