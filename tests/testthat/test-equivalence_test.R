@@ -18,6 +18,36 @@ test_that("equivalence_test, robust", {
   expect_snapshot(print(x))
 })
 
+test_that("equivalence_test, robust", {
+  skip_on_cran()
+  skip_if_not_installed("glmmTMB")
+
+  set.seed(123)
+  sim_data <- data.frame(
+    x = rbeta(100, 2, 5),
+    y = sample(0:1, 100, replace = TRUE),
+    z = rnorm(100),
+    dataset = rep(1:10, each = 10)
+  )
+
+  mod <- glmmTMB::glmmTMB(
+    x ~ y * z + (1 | dataset),
+    data = sim_data,
+    family = glmmTMB::beta_family(link = "logit")
+  )
+  out <- equivalence_test(mod)
+  expect_identical(dim(out), c(4L, 10L))
+  expect_identical(
+    out$ROPE_Equivalence,
+    c("Rejected", "Undecided", "Accepted", "Undecided")
+  )
+  expect_equal(
+    out$SGPV,
+    c(0, 0.8726, 0.9739, 0.6741),
+    tolerance = 1e-3
+  )
+})
+
 test_that("equivalence_test, unequal rope-range", {
   data(iris)
   m <- lm(Sepal.Length ~ Species, data = iris)
