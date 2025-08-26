@@ -1,4 +1,4 @@
-skip_if_not_installed("marginaleffects", minimum_version = "0.25.0")
+skip_if_not_installed("marginaleffects", minimum_version = "0.28.0.22")
 skip_if_not_installed("rstanarm")
 
 test_that("marginaleffects()", {
@@ -48,12 +48,12 @@ test_that("marginaleffects()", {
   model <- mgcv::gam(Sepal.Width ~ s(Petal.Length, by = Species), data = iris)
   mfx <- marginaleffects::avg_slopes(model, variables = "Petal.Length")
   out <- model_parameters(mfx)
-  expect_identical(dim(out), c(1L, 11L))
+  expect_identical(dim(out), c(1L, 10L))
   expect_named(
     out,
     c(
       "Parameter", "Comparison", "Coefficient", "SE", "Statistic",
-      "p", "S", "CI", "CI_low", "CI_high", "Predicted"
+      "p", "S", "CI", "CI_low", "CI_high"
     )
   )
   mfx <- marginaleffects::avg_slopes(model, variables = "Petal.Length", by = "Species")
@@ -181,7 +181,7 @@ test_that("predictions, bmrs with special response formula", {
   skip_if_offline()
   skip_if_not_installed("httr2")
   skip_if_not_installed("brms")
-  skip_if_not_installed("marginaleffects", minimum_version = "0.28.0.21")
+  skip_if_not_installed("marginaleffects", minimum_version = "0.28.0.22")
 
   m <- insight::download_model("brms_ipw_1")
   skip_if(is.null(m))
@@ -193,14 +193,13 @@ test_that("predictions, bmrs with special response formula", {
 
 
 test_that("modelbased, tidiers work", {
-  skip_if_not_installed("marginaleffects", minimum_version = "0.28.0.21")
+  skip_if_not_installed("marginaleffects", minimum_version = "0.28.0.22")
   skip_if_not_installed("modelbased", minimum_version = "0.12.0.17")
   skip_if(getRversion() < "4.5.0")
 
   data(penguins)
   m <- lm(bill_len ~ island * sex + bill_dep + species, data = penguins)
 
-  ## FIXME: Need to wait for https://github.com/vincentarelbundock/marginaleffects/issues/1573
   out <- modelbased::estimate_contrasts(m, "island", by = "sex", comparison = ratio ~ pairwise)
   expect_named(
     out,
@@ -266,7 +265,7 @@ test_that("predictions, using bayestestR #1063", {
   skip_if_offline()
   skip_if_not_installed("httr2")
   skip_if_not_installed("brms")
-  skip_if_not_installed("marginaleffects", minimum_version = "0.28.0.21")
+  skip_if_not_installed("marginaleffects", minimum_version = "0.28.0.22")
 
   m <- insight::download_model("brms_mixed_3")
   skip_if(is.null(m))

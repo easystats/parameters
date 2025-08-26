@@ -9,23 +9,22 @@ model_parameters.marginaleffects <- function(model,
                                              exponentiate = FALSE,
                                              verbose = TRUE,
                                              ...) {
-  insight::check_if_installed("marginaleffects", minimum_version = "0.28.0.21")
+  insight::check_if_installed("marginaleffects", minimum_version = "0.28.0.22")
 
   # Bayesian models have posterior draws as attribute
   is_bayesian <- !is.null(suppressWarnings(marginaleffects::get_draws(model, "PxD")))
 
   if (is_bayesian) {
     # Bayesian
-    tidy_model <- suppressWarnings(bayestestR::describe_posterior(
+    out <- suppressWarnings(bayestestR::describe_posterior(
       model,
       ci = ci,
       verbose = verbose,
       ...
     ))
   } else {
-    # handle non-Bayesian models
-    tidy_model <- marginaleffects::tidy(model, conf_level = ci, ...)
-
+    # non-Bayesian
+    out <- as.data.frame(model)
     # all columns in data grid and model data, we only want to keep "by" variables
     all_data_cols <- union(
       colnames(marginaleffects::components(model, "newdata")),
@@ -36,16 +35,12 @@ model_parameters.marginaleffects <- function(model,
       marginaleffects::components(model, "variable_names_by"),
       marginaleffects::components(model, "variable_names_by_hypothesis")
     )
-
-    ## FIXME: hack to workaround https://github.com/vincentarelbundock/marginaleffects/issues/1573
-    tidy_model <- .fix_duplicated_by_columns(tidy_model, by_cols)
-
     # remove redundant columns
     to_remove <- setdiff(all_data_cols, by_cols)
-    tidy_model <- tidy_model[, !colnames(tidy_model) %in% to_remove, drop = FALSE]
+    out <- out[, !colnames(out) %in% to_remove, drop = FALSE]
   }
 
-  out <- .rename_reserved_marginaleffects(tidy_model)
+  out <- .rename_reserved_marginaleffects(out)
 
   # need to standardize names for non-Bayesian models. Bayesian models have
   # been processed through describe_posterior() already
@@ -118,7 +113,7 @@ model_parameters.predictions <- function(model,
                                          exponentiate = FALSE,
                                          verbose = TRUE,
                                          ...) {
-  insight::check_if_installed("marginaleffects", minimum_version = "0.28.0.21")
+  insight::check_if_installed("marginaleffects", minimum_version = "0.28.0.22")
 
   # Bayesian models have posterior draws as attribute
   is_bayesian <- !is.null(suppressWarnings(marginaleffects::get_draws(model, "PxD")))
@@ -137,10 +132,6 @@ model_parameters.predictions <- function(model,
       marginaleffects::components(model, "variable_names_by"),
       marginaleffects::components(model, "variable_names_by_hypothesis")
     )
-
-    ## FIXME: hack to workaround https://github.com/vincentarelbundock/marginaleffects/issues/1573
-    model <- .fix_duplicated_by_columns(model, by_cols)
-
     # handle non-Bayesian models
     out <- .rename_reserved_marginaleffects(model)
     out <- datawizard::data_rename(out, "estimate", "predicted")
