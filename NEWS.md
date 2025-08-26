@@ -8,6 +8,11 @@
 * `model_parameters()` for *marginaleffects* objects is now more robust in
   detecting Bayesian models.
 
+## Bug fixes
+
+* Fixed issue with `equivalence_test()` for models of class `glmmTMB` with
+  `beta_family()`.
+
 # parameters 0.28.0
 
 ## Breaking Changes
