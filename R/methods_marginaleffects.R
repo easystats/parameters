@@ -23,6 +23,8 @@ model_parameters.marginaleffects <- function(model,
       ...
     ))
   } else {
+    # non-Bayesian
+    out <- as.data.frame(model)
     # all columns in data grid and model data, we only want to keep "by" variables
     all_data_cols <- union(
       colnames(marginaleffects::components(model, "newdata")),
