@@ -8,6 +8,9 @@
 * `model_parameters()` for *marginaleffects* objects is now more robust in
   detecting Bayesian models.
 
+* Modified code base to address changes in the *marginaleffects* package from
+  version 0.29.0 onwards.
+
 ## Bug fixes
 
 * Fixed issue with `equivalence_test()` for models of class `glmmTMB` with
