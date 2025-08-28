@@ -27,3 +27,4 @@
 \.code-workspace$
 \.lintr$
 ^CRAN-SUBMISSION$
+^\.github$
