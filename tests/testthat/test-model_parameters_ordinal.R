@@ -85,7 +85,7 @@ test_that("model_parameters.clm2", {
   mp <- model_parameters(m2, exponentiate = TRUE)
   expect_equal(
     mp$Coefficient,
-    c(0.48266, 0.85332, 1.30451, 2.006, 3.4376, 0.55237, -0.04069),
+    c(0.48266, 0.85332, 1.30451, 2.006, 3.4376, 1.73737, 0.96013),
     tolerance = 1e-4
   )
 
