@@ -16,6 +16,9 @@
 * Fixed issue with `equivalence_test()` for models of class `glmmTMB` with
   `beta_family()`.
 
+* `exponentiate = TRUE` in `model_parameters()` did not exponentiate location
+  and scale parameters for models from package *ordinal*.
+
 # parameters 0.28.0
 
 ## Breaking Changes
