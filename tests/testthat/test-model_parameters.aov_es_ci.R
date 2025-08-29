@@ -48,7 +48,7 @@ test_that("model_parameters.aov", {
 # anova ---------------------
 
 test_that("model_parameters.anova", {
-  skip_if_not_installed("effectsize", ion = "0.5.1")
+  skip_if_not_installed("effectsize")
 
   model <- anova(lm(Sepal.Length ~ Species * Cat1 * Cat2, data = iris))
   mp <- model_parameters(
