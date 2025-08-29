@@ -126,12 +126,11 @@ test_that("model_parameters.car-anova", {
 
   data(Moore, package = "carData")
   set.seed(123)
-  model <-
-    car::Anova(stats::lm(
-      formula = conformity ~ fcategory * partner.status,
-      data = Moore,
-      contrasts = list(fcategory = contr.sum, partner.status = contr.sum)
-    ))
+  model <- car::Anova(stats::lm(
+    formula = conformity ~ fcategory * partner.status,
+    data = Moore,
+    contrasts = list(fcategory = contr.sum, partner.status = contr.sum)
+  ))
 
   mp <- model_parameters(model, es_type = c("omega", "eta", "epsilon"), partial = TRUE, ci = 0.9)
   es <- effectsize::omega_squared(model, partial = TRUE, ci = 0.9)
