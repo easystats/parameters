@@ -20,26 +20,52 @@ test_that("model_parameters.aov", {
   expect_equal(na.omit(mp$Omega2_CI_high), es$CI_high, tolerance = 1e-3, ignore_attr = TRUE)
   expect_equal(na.omit(mp$Omega2_CI_high), 1, tolerance = 1e-3, ignore_attr = TRUE)
 
-  expect_identical(colnames(mp), c(
-    "Parameter", "Sum_Squares", "df", "Mean_Square", "F", "p",
-    "Omega2", "Omega2_CI_low", "Omega2_CI_high", "Eta2",
-    "Eta2_CI_low", "Eta2_CI_high", "Epsilon2", "Epsilon2_CI_low",
-    "Epsilon2_CI_high"
-  ))
+  expect_identical(
+    colnames(mp),
+    c(
+      "Parameter",
+      "Sum_Squares",
+      "df",
+      "Mean_Square",
+      "F",
+      "p",
+      "Omega2",
+      "Omega2_CI_low",
+      "Omega2_CI_high",
+      "Eta2",
+      "Eta2_CI_low",
+      "Eta2_CI_high",
+      "Epsilon2",
+      "Epsilon2_CI_low",
+      "Epsilon2_CI_high"
+    )
+  )
 
   model <- aov(Sepal.Length ~ Species * Cat1 * Cat2, data = iris)
   mp <- model_parameters(model, es_type = "eta", ci = 0.9, partial = FALSE, alternative = "greater")
   es <- effectsize::eta_squared(model, partial = FALSE, ci = 0.9)
   expect_equal(na.omit(mp$Eta2_CI_low), es$CI_low, tolerance = 1e-3, ignore_attr = TRUE)
-  expect_equal(mp$Eta2_CI_low, c(0.5572, 0, 0, 0, 0, 0, 0, NA), tolerance = 1e-3, ignore_attr = TRUE)
+  expect_equal(
+    mp$Eta2_CI_low,
+    c(0.5572, 0, 0, 0, 0, 0, 0, NA),
+    tolerance = 1e-3,
+    ignore_attr = TRUE
+  )
   expect_equal(na.omit(mp$Eta2_CI_high), es$CI_high, tolerance = 1e-3, ignore_attr = TRUE)
   expect_equal(na.omit(mp$Eta2_CI_high), rep(1, 7), tolerance = 1e-3, ignore_attr = TRUE)
 
   expect_identical(
     colnames(mp),
     c(
-      "Parameter", "Sum_Squares", "df", "Mean_Square", "F", "p",
-      "Eta2", "Eta2_CI_low", "Eta2_CI_high"
+      "Parameter",
+      "Sum_Squares",
+      "df",
+      "Mean_Square",
+      "F",
+      "p",
+      "Eta2",
+      "Eta2_CI_low",
+      "Eta2_CI_high"
     )
   )
 })
