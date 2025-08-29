@@ -6,7 +6,7 @@ iris$Cat2 <- rep_len(c("A", "B"), nrow(iris))
 # aov ----------------------------------
 
 test_that("model_parameters.aov", {
-  skip_if_not_installed("effectsize", minimum_version = "0.5.0")
+  skip_if_not_installed("effectsize")
   model <- aov(Sepal.Width ~ Species, data = iris)
   mp <- suppressMessages(model_parameters(model, es_type = c("omega", "eta", "epsilon")))
   expect_identical(mp$Parameter, c("Species", "Residuals"))
@@ -14,7 +14,7 @@ test_that("model_parameters.aov", {
 })
 
 test_that("model_parameters.aov", {
-  skip_if_not_installed("effectsize", minimum_version = "0.5.0")
+  skip_if_not_installed("effectsize")
   model <- aov(Sepal.Width ~ Species, data = iris)
   mp <- suppressMessages(model_parameters(model, es_type = c("omega", "eta", "epsilon")))
   expect_identical(sum(mp$df), 149)

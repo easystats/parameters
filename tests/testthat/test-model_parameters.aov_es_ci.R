@@ -4,7 +4,7 @@ iris$Cat2 <- rep_len(c("A", "B"), nrow(iris))
 # aov ----------------------------------
 
 test_that("model_parameters.aov", {
-  skip_if_not_installed("effectsize", minimum_version = "0.5.1")
+  skip_if_not_installed("effectsize")
 
   model <- aov(Sepal.Width ~ Species, data = iris)
   mp <- suppressMessages(model_parameters(
@@ -48,7 +48,7 @@ test_that("model_parameters.aov", {
 # anova ---------------------
 
 test_that("model_parameters.anova", {
-  skip_if_not_installed("effectsize", minimum_version = "0.5.1")
+  skip_if_not_installed("effectsize", ion = "0.5.1")
 
   model <- anova(lm(Sepal.Length ~ Species * Cat1 * Cat2, data = iris))
   mp <- model_parameters(
@@ -72,7 +72,7 @@ test_that("model_parameters.anova", {
 })
 
 test_that("model_parameters.anova", {
-  skip_if_not_installed("effectsize", minimum_version = "0.5.1")
+  skip_if_not_installed("effectsize")
   model <- aov(wt ~ cyl + Error(gear), data = mtcars)
   suppressWarnings({
     mp <- model_parameters(model, es_type = c("omega", "eta", "epsilon"), partial = TRUE, ci = 0.9)
@@ -96,7 +96,7 @@ test_that("model_parameters.anova", {
 test_that("model_parameters.car-anova", {
   skip_if_not_installed("car")
   skip_if_not_installed("carData")
-  skip_if_not_installed("effectsize", minimum_version = "0.5.1")
+  skip_if_not_installed("effectsize")
 
   data(Moore, package = "carData")
   set.seed(123)
@@ -125,7 +125,7 @@ test_that("model_parameters.car-anova", {
 
 # maov ----------------------------------
 test_that("model_parameters.maov", {
-  skip_if_not_installed("effectsize", minimum_version = "0.5.1")
+  skip_if_not_installed("effectsize")
 
   set.seed(123)
   fit <- lm(cbind(mpg, disp, hp) ~ factor(cyl), data = mtcars)
@@ -156,7 +156,7 @@ test_that("model_parameters.maov", {
 
 test_that("works with aov", {
   skip_on_cran()
-  skip_if_not_installed("effectsize", minimum_version = "0.5.1")
+  skip_if_not_installed("effectsize")
 
   set.seed(123)
   npk.aov <- aov(yield ~ block + N * P, npk)
@@ -267,7 +267,7 @@ test_that("works with aov", {
 
 test_that("works with manova", {
   skip_on_cran()
-  skip_if_not_installed("effectsize", minimum_version = "0.5.1")
+  skip_if_not_installed("effectsize")
 
   set.seed(123)
   # fake a 2nd response variable
@@ -318,7 +318,7 @@ test_that("works with manova", {
 test_that("works with Gam", {
   skip_on_cran()
   skip_if_not_installed("gam")
-  skip_if_not_installed("effectsize", minimum_version = "0.5.1")
+  skip_if_not_installed("effectsize")
 
   # setup
   set.seed(123)
@@ -371,7 +371,7 @@ test_that("works with Gam", {
 test_that("works with anova", {
   skip_on_cran()
   skip_if_not_installed("car")
-  skip_if_not_installed("effectsize", minimum_version = "0.7.1")
+  skip_if_not_installed("effectsize")
 
   set.seed(123)
   mod <-
