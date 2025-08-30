@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.28.0.16</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.28.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -53,6 +53,20 @@
       <small>Source: <a href="https://github.com/easystats/parameters/blob/main/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.28.1" id="parameters-0281">parameters 0.28.1<a class="anchor" aria-label="anchor" href="#parameters-0281"></a></h2><p class="text-muted">CRAN release: 2025-08-30</p>
+<div class="section level3">
+<h3 id="changes-0-28-1">Changes<a class="anchor" aria-label="anchor" href="#changes-0-28-1"></a></h3>
+<ul><li><p>Methods for <em>glmmTMB</em> objects (<code><a href="https://easystats.github.io/bayestestR/reference/ci.html" class="external-link">ci()</a></code>, <code><a href="../reference/model_parameters.html">model_parameters()</a></code>, <code><a href="../reference/standard_error.html">standard_error()</a></code>) now support the <code>vcov</code> argument to compute robust standard errors.</p></li>
+<li><p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> for <em>marginaleffects</em> objects is now more robust in detecting Bayesian models.</p></li>
+<li><p>Modified code base to address changes in the <em>marginaleffects</em> package from version 0.29.0 onwards.</p></li>
+</ul></div>
+<div class="section level3">
+<h3 id="bug-fixes-0-28-1">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-28-1"></a></h3>
+<ul><li><p>Fixed issue with <code><a href="https://easystats.github.io/bayestestR/reference/equivalence_test.html" class="external-link">equivalence_test()</a></code> for models of class <code>glmmTMB</code> with <code><a href="https://rdrr.io/pkg/glmmTMB/man/nbinom2.html" class="external-link">beta_family()</a></code>.</p></li>
+<li><p><code>exponentiate = TRUE</code> in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> did not exponentiate location and scale parameters for models from package <em>ordinal</em>.</p></li>
+</ul></div>
+</div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.28.0" id="parameters-0280">parameters 0.28.0<a class="anchor" aria-label="anchor" href="#parameters-0280"></a></h2><p class="text-muted">CRAN release: 2025-08-20</p>
 <div class="section level3">
