@@ -4,24 +4,21 @@
 # model_parameters ----------------
 
 #' @export
-model_parameters.marginaleffects <- function(model,
-                                             ci = 0.95,
-                                             exponentiate = FALSE,
-                                             verbose = TRUE,
-                                             ...) {
-  insight::check_if_installed("marginaleffects", minimum_version = "0.28.0.22")
+model_parameters.marginaleffects <- function(
+  model,
+  ci = 0.95,
+  exponentiate = FALSE,
+  verbose = TRUE,
+  ...
+) {
+  insight::check_if_installed("marginaleffects", minimum_version = "0.29.0")
 
   # Bayesian models have posterior draws as attribute
   is_bayesian <- !is.null(suppressWarnings(marginaleffects::get_draws(model, "PxD")))
 
   if (is_bayesian) {
     # Bayesian
-    out <- suppressWarnings(bayestestR::describe_posterior(
-      model,
-      ci = ci,
-      verbose = verbose,
-      ...
-    ))
+    out <- suppressWarnings(bayestestR::describe_posterior(model, ci = ci, verbose = verbose, ...))
   } else {
     # non-Bayesian
     out <- as.data.frame(model)
@@ -105,24 +102,21 @@ model_parameters.slopes <- model_parameters.marginaleffects
 
 
 #' @export
-model_parameters.predictions <- function(model,
-                                         ci = 0.95,
-                                         exponentiate = FALSE,
-                                         verbose = TRUE,
-                                         ...) {
-  insight::check_if_installed("marginaleffects", minimum_version = "0.28.0.22")
+model_parameters.predictions <- function(
+  model,
+  ci = 0.95,
+  exponentiate = FALSE,
+  verbose = TRUE,
+  ...
+) {
+  insight::check_if_installed("marginaleffects", minimum_version = "0.29.0")
 
   # Bayesian models have posterior draws as attribute
   is_bayesian <- !is.null(suppressWarnings(marginaleffects::get_draws(model, "PxD")))
 
   if (is_bayesian) {
     # Bayesian
-    out <- suppressWarnings(bayestestR::describe_posterior(
-      model,
-      ci = ci,
-      verbose = verbose,
-      ...
-    ))
+    out <- suppressWarnings(bayestestR::describe_posterior(model, ci = ci, verbose = verbose, ...))
   } else {
     # columns we want to keep
     by_cols <- .keep_me_columns(model)
@@ -151,11 +145,7 @@ model_parameters.predictions <- function(model,
   # find cofficient name - differs for Bayesian models
   coef_name <- intersect(c("Predicted", "Coefficient"), colnames(out))[1]
   if (!is.null(at_variables) && !is.na(coef_name) && all(at_variables %in% colnames(out))) {
-    out <- datawizard::data_relocate(
-      out,
-      select = at_variables,
-      after = coef_name
-    )
+    out <- datawizard::data_relocate(out, select = at_variables, after = coef_name)
   }
 
   # extract response, remove from data frame

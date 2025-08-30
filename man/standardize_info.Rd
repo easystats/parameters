@@ -51,7 +51,7 @@ parameters. This function gives a window on how standardized are obtained,
 i.e., by what they are divided. The "basic" method of standardization uses.
 }
 \examples{
-\dontshow{if (insight::check_if_installed("datawizard", minimum_version = "0.12.0", quietly = TRUE)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (insight::check_if_installed("datawizard", quietly = TRUE)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 model <- lm(mpg ~ ., data = mtcars)
 standardize_info(model)
 standardize_info(model, robust = TRUE)

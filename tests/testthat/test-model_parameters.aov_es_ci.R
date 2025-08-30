@@ -4,7 +4,7 @@ iris$Cat2 <- rep_len(c("A", "B"), nrow(iris))
 # aov ----------------------------------
 
 test_that("model_parameters.aov", {
-  skip_if_not_installed("effectsize", minimum_version = "0.5.1")
+  skip_if_not_installed("effectsize")
 
   model <- aov(Sepal.Width ~ Species, data = iris)
   mp <- suppressMessages(model_parameters(
@@ -20,26 +20,52 @@ test_that("model_parameters.aov", {
   expect_equal(na.omit(mp$Omega2_CI_high), es$CI_high, tolerance = 1e-3, ignore_attr = TRUE)
   expect_equal(na.omit(mp$Omega2_CI_high), 1, tolerance = 1e-3, ignore_attr = TRUE)
 
-  expect_identical(colnames(mp), c(
-    "Parameter", "Sum_Squares", "df", "Mean_Square", "F", "p",
-    "Omega2", "Omega2_CI_low", "Omega2_CI_high", "Eta2",
-    "Eta2_CI_low", "Eta2_CI_high", "Epsilon2", "Epsilon2_CI_low",
-    "Epsilon2_CI_high"
-  ))
+  expect_identical(
+    colnames(mp),
+    c(
+      "Parameter",
+      "Sum_Squares",
+      "df",
+      "Mean_Square",
+      "F",
+      "p",
+      "Omega2",
+      "Omega2_CI_low",
+      "Omega2_CI_high",
+      "Eta2",
+      "Eta2_CI_low",
+      "Eta2_CI_high",
+      "Epsilon2",
+      "Epsilon2_CI_low",
+      "Epsilon2_CI_high"
+    )
+  )
 
   model <- aov(Sepal.Length ~ Species * Cat1 * Cat2, data = iris)
   mp <- model_parameters(model, es_type = "eta", ci = 0.9, partial = FALSE, alternative = "greater")
   es <- effectsize::eta_squared(model, partial = FALSE, ci = 0.9)
   expect_equal(na.omit(mp$Eta2_CI_low), es$CI_low, tolerance = 1e-3, ignore_attr = TRUE)
-  expect_equal(mp$Eta2_CI_low, c(0.5572, 0, 0, 0, 0, 0, 0, NA), tolerance = 1e-3, ignore_attr = TRUE)
+  expect_equal(
+    mp$Eta2_CI_low,
+    c(0.5572, 0, 0, 0, 0, 0, 0, NA),
+    tolerance = 1e-3,
+    ignore_attr = TRUE
+  )
   expect_equal(na.omit(mp$Eta2_CI_high), es$CI_high, tolerance = 1e-3, ignore_attr = TRUE)
   expect_equal(na.omit(mp$Eta2_CI_high), rep(1, 7), tolerance = 1e-3, ignore_attr = TRUE)
 
   expect_identical(
     colnames(mp),
     c(
-      "Parameter", "Sum_Squares", "df", "Mean_Square", "F", "p",
-      "Eta2", "Eta2_CI_low", "Eta2_CI_high"
+      "Parameter",
+      "Sum_Squares",
+      "df",
+      "Mean_Square",
+      "F",
+      "p",
+      "Eta2",
+      "Eta2_CI_low",
+      "Eta2_CI_high"
     )
   )
 })
@@ -48,7 +74,7 @@ test_that("model_parameters.aov", {
 # anova ---------------------
 
 test_that("model_parameters.anova", {
-  skip_if_not_installed("effectsize", minimum_version = "0.5.1")
+  skip_if_not_installed("effectsize")
 
   model <- anova(lm(Sepal.Length ~ Species * Cat1 * Cat2, data = iris))
   mp <- model_parameters(
@@ -72,7 +98,7 @@ test_that("model_parameters.anova", {
 })
 
 test_that("model_parameters.anova", {
-  skip_if_not_installed("effectsize", minimum_version = "0.5.1")
+  skip_if_not_installed("effectsize")
   model <- aov(wt ~ cyl + Error(gear), data = mtcars)
   suppressWarnings({
     mp <- model_parameters(model, es_type = c("omega", "eta", "epsilon"), partial = TRUE, ci = 0.9)
@@ -96,16 +122,15 @@ test_that("model_parameters.anova", {
 test_that("model_parameters.car-anova", {
   skip_if_not_installed("car")
   skip_if_not_installed("carData")
-  skip_if_not_installed("effectsize", minimum_version = "0.5.1")
+  skip_if_not_installed("effectsize")
 
   data(Moore, package = "carData")
   set.seed(123)
-  model <-
-    car::Anova(stats::lm(
-      formula = conformity ~ fcategory * partner.status,
-      data = Moore,
-      contrasts = list(fcategory = contr.sum, partner.status = contr.sum)
-    ))
+  model <- car::Anova(stats::lm(
+    formula = conformity ~ fcategory * partner.status,
+    data = Moore,
+    contrasts = list(fcategory = contr.sum, partner.status = contr.sum)
+  ))
 
   mp <- model_parameters(model, es_type = c("omega", "eta", "epsilon"), partial = TRUE, ci = 0.9)
   es <- effectsize::omega_squared(model, partial = TRUE, ci = 0.9)
@@ -125,7 +150,7 @@ test_that("model_parameters.car-anova", {
 
 # maov ----------------------------------
 test_that("model_parameters.maov", {
-  skip_if_not_installed("effectsize", minimum_version = "0.5.1")
+  skip_if_not_installed("effectsize")
 
   set.seed(123)
   fit <- lm(cbind(mpg, disp, hp) ~ factor(cyl), data = mtcars)
@@ -156,7 +181,7 @@ test_that("model_parameters.maov", {
 
 test_that("works with aov", {
   skip_on_cran()
-  skip_if_not_installed("effectsize", minimum_version = "0.5.1")
+  skip_if_not_installed("effectsize")
 
   set.seed(123)
   npk.aov <- aov(yield ~ block + N * P, npk)
@@ -267,7 +292,7 @@ test_that("works with aov", {
 
 test_that("works with manova", {
   skip_on_cran()
-  skip_if_not_installed("effectsize", minimum_version = "0.5.1")
+  skip_if_not_installed("effectsize")
 
   set.seed(123)
   # fake a 2nd response variable
@@ -318,7 +343,7 @@ test_that("works with manova", {
 test_that("works with Gam", {
   skip_on_cran()
   skip_if_not_installed("gam")
-  skip_if_not_installed("effectsize", minimum_version = "0.5.1")
+  skip_if_not_installed("effectsize")
 
   # setup
   set.seed(123)
@@ -371,7 +396,7 @@ test_that("works with Gam", {
 test_that("works with anova", {
   skip_on_cran()
   skip_if_not_installed("car")
-  skip_if_not_installed("effectsize", minimum_version = "0.7.1")
+  skip_if_not_installed("effectsize")
 
   set.seed(123)
   mod <-

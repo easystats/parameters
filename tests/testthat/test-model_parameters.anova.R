@@ -95,7 +95,7 @@ test_that("model_parameters_Anova.mlm-2", {
 
 test_that("model_parameters_Anova-effectsize", {
   skip_if_not_installed("lme4")
-  skip_if_not_installed("effectsize", minimum_version = "0.4.3")
+  skip_if_not_installed("effectsize")
 
   df <- iris
   df$Sepal.Big <- ifelse(df$Sepal.Width >= 3, "Yes", "No")
