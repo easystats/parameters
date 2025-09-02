@@ -110,8 +110,8 @@ test_that("robust standard errors", {
   expect_true(all(p2$p != p3$p))
   expect_true(all(p1$p != p3$p))
 
-  expect_error(standard_error(mod, vcov = "HC3"))
-  expect_error(parameters(mod, vcov = "HC3"))
+  expect_error(standard_error(mod, vcov = "HC3"), NA)
+  expect_error(parameters(mod, vcov = "HC3"), NA)
   expect_error(parameters(mod, vcov = "hetero"), NA)
   expect_error(parameters(mod, vcov = "iid"), NA)
 })
