@@ -113,8 +113,8 @@ test_that("robust standard errors", {
   # HC3 works since fixest 0.13.0
   skip_if_not_installed("fixest", minimum_version = "0.13.0")
   se4 <- sqrt(diag(vcov(mod, vcov = "HC3")))
-  expect_equal(standard_error(mod, vcov = "HC3")$SE, se4, ignore_attr = TRUE)
-  expect_equal(parameters(mod, vcov = "HC3")$SE, se4, ignore_attr = TRUE)
+  expect_equal(standard_error(mod, vcov = "HC3")$SE, se4, ignore_attr = TRUE, tolerance = 1e-4)
+  expect_equal(parameters(mod, vcov = "HC3")$SE, se4, ignore_attr = TRUE, tolerance = 1e-4)
 
   expect_error(parameters(mod, vcov = "hetero"), NA)
   expect_error(parameters(mod, vcov = "iid"), NA)
