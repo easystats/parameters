@@ -87,7 +87,7 @@
       <img src="../logo.png" class="logo" alt=""><h1>Analysing Longitudinal or Panel Data</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/v0.28.1/vignettes/demean.Rmd" class="external-link"><code>vignettes/demean.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/main/vignettes/demean.Rmd" class="external-link"><code>vignettes/demean.Rmd</code></a></small>
       <div class="d-none name"><code>demean.Rmd</code></div>
     </div>
 
@@ -266,15 +266,14 @@ sample and shrink toward a common mean (<span class="citation">Shor et
 al. (2007)</span>).</p></li>
 <li><p>If predictor and group factors correlate, one can remove this
 correlation by group-meaning <span class="citation">(or “mean within
-clusters,” Bafumi and Gelman 2006; Gelman and Hill 2007, chap.
+clusters,” Bafumi and Gelman 2006; Gelman and Hill 2007,
 12.6.)</span>.</p></li>
 <li><p>When time-varying predictors are “decomposed” into their
 time-varying and time-invariant components (de-meaning), then mixed
 models can model <strong>both</strong> within- and between-subject
-effects <span class="citation">(Bell, Fairbrother, and Jones
-2019)</span> - this approach is essentially a further development of a
-long-known recommendation by Mundlak <span class="citation">(Mundlak
-1978)</span>.</p></li>
+effects <span class="citation">(Bell et al. 2019)</span> - this approach
+is essentially a further development of a long-known recommendation by
+Mundlak <span class="citation">(Mundlak 1978)</span>.</p></li>
 </ul>
 <p>For now, we will follow the last recommendation and use the within-
 and between-version of <code>phq4</code>.</p>
@@ -345,16 +344,15 @@ effects. Furthermore, FE models cannot include random slopes, which
 means that fixed effects regressions are neglecting “cross-cluster
 differences in the effects of lower-level controls (which) reduces the
 precision of estimated context effects, resulting in (…) low statistical
-power” <span class="citation">(Heisig, Schaeffer, and Giesecke
-2017)</span>.</p>
+power” <span class="citation">(Heisig et al. 2017)</span>.</p>
 </div>
 <div class="section level2">
 <h2 id="conclusion-complex-random-effects-within-between-models">Conclusion: Complex Random Effects Within-Between Models<a class="anchor" aria-label="anchor" href="#conclusion-complex-random-effects-within-between-models"></a>
 </h2>
 <p>Depending on the structure of the data, the best approach to
 analyzing panel data would be a so called “complex random effects
-within-between” model <span class="citation">(Bell, Fairbrother, and
-Jones 2019)</span>:</p>
+within-between” model <span class="citation">(Bell et al.
+2019)</span>:</p>
 <p>y<sub>it</sub> = β<sub>0</sub> + β<sub>1W</sub> (x<sub>it</sub> -
 ͞x<sub>i</sub>) + β<sub>2B</sub> ͞x<sub>i</sub> + β<sub>3</sub>
 z<sub>i</sub> + υ<sub>i0</sub> + υ<sub>i1</sub> (x<sub>it</sub> -
@@ -396,7 +394,7 @@ that only have a between-effect, can be simply included as fixed effects
 predictor (since they’re not constrained by level-1 effects).
 Time-constant <em>continuous</em> <strong>group-level
 predictors</strong> (for instance, GDP of countries) should be
-group-meaned, to have a proper “between”-effect <span class="citation">(Gelman and Hill 2007, chap. 12.6.)</span>.</p>
+group-meaned, to have a proper “between”-effect <span class="citation">(Gelman and Hill 2007, 12.6.)</span>.</p>
 <p>The benefit of this kind of model is that you have information on
 within-, between- and other time-constant (i.e. between) effects or
 group-level predictors…</p>
@@ -677,11 +675,11 @@ here</a>.</p>
 <div class="section level2">
 <h2 class="unnumbered" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
 </h2>
-<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
+<div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-bafumi_fitting_2006" class="csl-entry">
 Bafumi, Joseph, and Andrew Gelman. 2006. <span>“Fitting Multilevel
-Models When Predictors and Group Effects Correlate.”</span> In.
-Philadelphia, PA.
+Models When Predictors and Group Effects Correlate.”</span>
+(Philadelphia, PA).
 </div>
 <div id="ref-bell_fixed_2019" class="csl-entry">
 Bell, Andrew, Malcolm Fairbrother, and Kelvyn Jones. 2019. <span>“Fixed
@@ -697,7 +695,7 @@ Data.”</span> <em>Political Science Research and Methods</em> 3 (1):
 <div id="ref-gelman_data_2007" class="csl-entry">
 Gelman, Andrew, and Jennifer Hill. 2007. <em>Data Analysis Using
 Regression and Multilevel/Hierarchical Models</em>. Analytical Methods
-for Social Research. Cambridge; New York: Cambridge University Press.
+for Social Research. Cambridge University Press.
 </div>
 <div id="ref-heisig_costs_2017" class="csl-entry">
 Heisig, Jan Paul, Merlin Schaeffer, and Johannes Giesecke. 2017.
