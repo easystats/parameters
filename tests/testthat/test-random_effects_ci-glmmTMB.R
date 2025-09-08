@@ -1,7 +1,7 @@
 # Test Setup --------------------------------
 
 skip_on_os(c("mac", "linux", "solaris"))
-skip_if_not_installed("glmmTMB", minimum_version = "1.1.5")
+skip_if_not_installed("glmmTMB", minimum_version = "1.1.12")
 skip_if_not_installed("lme4")
 skip_on_cran()
 

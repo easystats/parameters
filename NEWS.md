@@ -1,4 +1,25 @@
-# parameters (devel)
+# parameters 0.28.1
+
+## Changes
+
+* Methods for *glmmTMB* objects (`ci()`, `model_parameters()`, `standard_error()`)
+  now support the `vcov` argument to compute robust standard errors.
+
+* `model_parameters()` for *marginaleffects* objects is now more robust in
+  detecting Bayesian models.
+
+* Modified code base to address changes in the *marginaleffects* package from
+  version 0.29.0 onwards.
+
+## Bug fixes
+
+* Fixed issue with `equivalence_test()` for models of class `glmmTMB` with
+  `beta_family()`.
+
+* `exponentiate = TRUE` in `model_parameters()` did not exponentiate location
+  and scale parameters for models from package *ordinal*.
+
+# parameters 0.28.0
 
 ## Breaking Changes
 
@@ -15,6 +36,9 @@
   environment, `print_html()` may also generate a markdown table. Thus, the
   generic `display()` method can be used, too, which has a `format` argument that
   also supports `"tt"` for `tinytable`.
+
+* Improved support for *coxme* models in `model_parameters()`. Random effects
+  and group level estimates are now returned as well.
 
 ## Bug fixes
 

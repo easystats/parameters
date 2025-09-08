@@ -231,6 +231,7 @@ cmprsk
 codecov
 countreg
 clm
+coxme
 cplm
 datanovia
 datawizard
@@ -326,6 +327,7 @@ nestedLogit
 nlme
 nnet
 nubmer
+onwards
 pam
 pamk
 patilindrajeets

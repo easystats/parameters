@@ -79,7 +79,7 @@
 #' }
 #' @export
 display.parameters_model <- function(object, format = "markdown", ...) {
-  format <- insight::validate_argument(format, c("markdown", "html", "md", "tt"))
+  format <- .display_default_format(format)
 
   if (format %in% c("html", "tt")) {
     print_html(x = object, backend = ifelse(format == "tt", "tt", "html"), ...)
@@ -123,3 +123,8 @@ display.equivalence_test_lm <- display.parameters_model
 
 #' @export
 display.parameters_p_function <- display.parameters_model
+
+.display_default_format <- function(format) {
+  format <- getOption("easystats_display_format", format)
+  insight::validate_argument(format, c("markdown", "html", "md", "tt"))
+}

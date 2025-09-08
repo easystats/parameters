@@ -1,5 +1,5 @@
 skip_on_cran()
-skip_if_not_installed("bayestestR", minimum_version = "0.15.0")
+skip_if_not_installed("bayestestR")
 skip_if_not_installed("distributional")
 skip_if_not_installed("withr")
 

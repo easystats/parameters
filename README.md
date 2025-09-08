@@ -334,7 +334,7 @@ research. *PeerJ*, *5*, e3544. <https://doi.org/10.7717/peerj.3544>
 
 Greenland, S., Rafi, Z., Matthews, R., & Higgs, M. (2022). *To Aid
 Scientific Inference, Emphasize Unconditional Compatibility Descriptions
-of Statistics*. Retrieved from <http://arxiv.org/abs/1909.08583>
+of Statistics*. Retrieved from <https://arxiv.org/abs/1909.08583>
 
 </div>
 

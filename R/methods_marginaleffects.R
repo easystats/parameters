@@ -4,30 +4,37 @@
 # model_parameters ----------------
 
 #' @export
-model_parameters.marginaleffects <- function(model,
-                                             ci = 0.95,
-                                             exponentiate = FALSE,
-                                             verbose = TRUE,
-                                             ...) {
-  insight::check_if_installed("marginaleffects")
+model_parameters.marginaleffects <- function(
+  model,
+  ci = 0.95,
+  exponentiate = FALSE,
+  verbose = TRUE,
+  ...
+) {
+  insight::check_if_installed("marginaleffects", minimum_version = "0.29.0")
 
   # Bayesian models have posterior draws as attribute
-  is_bayesian <- !is.null(attributes(model)$posterior_draws)
+  is_bayesian <- !is.null(suppressWarnings(marginaleffects::get_draws(model, "PxD")))
 
   if (is_bayesian) {
     # Bayesian
-    tidy_model <- suppressWarnings(bayestestR::describe_posterior(
-      model,
-      ci = ci,
-      verbose = verbose,
-      ...
-    ))
+    out <- suppressWarnings(bayestestR::describe_posterior(model, ci = ci, verbose = verbose, ...))
   } else {
-    # handle non-Bayesian models
-    tidy_model <- marginaleffects::tidy(model, conf_level = ci, ...)
+    # non-Bayesian
+    out <- as.data.frame(model)
+    # all columns in data grid and model data, we only want to keep "by" variables
+    all_data_cols <- union(
+      colnames(marginaleffects::components(model, "newdata")),
+      colnames(marginaleffects::components(model, "modeldata"))
+    )
+    # columns we want to keep
+    by_cols <- .keep_me_columns(model)
+    # remove redundant columns
+    to_remove <- setdiff(all_data_cols, by_cols)
+    out <- out[, !colnames(out) %in% to_remove, drop = FALSE]
   }
 
-  out <- .rename_reserved_marginaleffects(tidy_model)
+  out <- .rename_reserved_marginaleffects(out)
 
   # need to standardize names for non-Bayesian models. Bayesian models have
   # been processed through describe_posterior() already
@@ -48,9 +55,7 @@ model_parameters.marginaleffects <- function(model,
   # do not print or report these columns
   out <- out[, !colnames(out) %in% c("predicted_lo", "predicted_hi"), drop = FALSE]
 
-  if (inherits(model, "marginalmeans")) {
-    attr(out, "coefficient_name") <- "Marginal Means"
-  } else if (inherits(model, "comparisons")) {
+  if (inherits(model, "comparisons")) {
     attr(out, "coefficient_name") <- "Estimate"
     attr(out, "title") <- "Contrasts between Adjusted Predictions"
     if ("Type" %in% colnames(out)) {
@@ -89,10 +94,6 @@ model_parameters.comparisons <- model_parameters.marginaleffects
 
 
 #' @export
-model_parameters.marginalmeans <- model_parameters.marginaleffects
-
-
-#' @export
 model_parameters.hypotheses <- model_parameters.marginaleffects
 
 
@@ -101,27 +102,29 @@ model_parameters.slopes <- model_parameters.marginaleffects
 
 
 #' @export
-model_parameters.predictions <- function(model,
-                                         ci = 0.95,
-                                         exponentiate = FALSE,
-                                         verbose = TRUE,
-                                         ...) {
-  insight::check_if_installed("marginaleffects")
+model_parameters.predictions <- function(
+  model,
+  ci = 0.95,
+  exponentiate = FALSE,
+  verbose = TRUE,
+  ...
+) {
+  insight::check_if_installed("marginaleffects", minimum_version = "0.29.0")
 
-  if (is.null(attributes(model)$posterior_draws)) {
+  # Bayesian models have posterior draws as attribute
+  is_bayesian <- !is.null(suppressWarnings(marginaleffects::get_draws(model, "PxD")))
+
+  if (is_bayesian) {
+    # Bayesian
+    out <- suppressWarnings(bayestestR::describe_posterior(model, ci = ci, verbose = verbose, ...))
+  } else {
+    # columns we want to keep
+    by_cols <- .keep_me_columns(model)
     # handle non-Bayesian models
     out <- .rename_reserved_marginaleffects(model)
     out <- datawizard::data_rename(out, "estimate", "predicted")
     out <- datawizard::data_relocate(out, "predicted", before = 1)
     out <- insight::standardize_names(out, style = "easystats")
-  } else {
-    # Bayesian
-    out <- suppressWarnings(bayestestR::describe_posterior(
-      model,
-      ci = ci,
-      verbose = verbose,
-      ...
-    ))
   }
 
   out <- insight::standardize_column_order(out, style = "easystats")
@@ -134,23 +137,19 @@ model_parameters.predictions <- function(model,
   out$rowid <- out$Type <- out$rowid_dedup <- NULL
 
   # find at-variables
-  at_variables <- attributes(model)$newdata_at
-  if (is.null(at_variables)) {
-    at_variables <- attributes(model)$by
-  }
+  at_variables <- insight::compact_character(c(
+    marginaleffects::components(model, "variable_names_by"),
+    marginaleffects::components(model, "variable_names_by_hypothesis")
+  ))
 
   # find cofficient name - differs for Bayesian models
   coef_name <- intersect(c("Predicted", "Coefficient"), colnames(out))[1]
   if (!is.null(at_variables) && !is.na(coef_name) && all(at_variables %in% colnames(out))) {
-    out <- datawizard::data_relocate(
-      out,
-      select = at_variables,
-      after = coef_name
-    )
+    out <- datawizard::data_relocate(out, select = at_variables, after = coef_name)
   }
 
   # extract response, remove from data frame
-  reg_model <- attributes(model)$model
+  reg_model <- marginaleffects::components(model, "model")
   if (!is.null(reg_model) && insight::is_model(reg_model)) {
     resp <- insight::find_response(reg_model)
     # check if response could be extracted
@@ -204,4 +203,35 @@ model_parameters.predictions <- function(model,
     )
   }
   model
+}
+
+
+.fix_duplicated_by_columns <- function(x, by_cols) {
+  duplicated_names <- grep(
+    paste0("(", paste0(by_cols, "\\.\\d+$", collapse = "|"), ")"),
+    colnames(x),
+    value = TRUE
+  )
+  # if we have duplicated "by" columns, we want to remove those as well
+  if (length(duplicated_names) > 0) {
+    x[duplicated_names] <- NULL
+  }
+  x
+}
+
+
+.keep_me_columns <- function(model) {
+  # columns we want to keep
+  by_cols <- union(
+    marginaleffects::components(model, "variable_names_by"),
+    marginaleffects::components(model, "variable_names_by_hypothesis")
+  )
+  # and newdata, if specified
+  if (!is.null(marginaleffects::components(model, "call")$newdata)) {
+    by_cols <- union(
+      by_cols,
+      colnames(marginaleffects::components(model, "newdata"))
+    )
+  }
+  by_cols
 }
