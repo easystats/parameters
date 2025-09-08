@@ -1,12 +1,12 @@
 ---
 title: "Overview of Vignettes"
-output: 
+output:
   rmarkdown::html_vignette:
 vignette: >
   %\VignetteIndexEntry{Overview of Vignettes}
   \usepackage[utf8]{inputenc}
   %\VignetteEngine{knitr::rmarkdown}
-editor_options: 
+editor_options:
   chunk_output_type: console
 ---
 
@@ -36,10 +36,11 @@ All package vignettes are available at [https://easystats.github.io/parameters/]
 * [Model Parameters for Multiply Imputed Repeated Analyses](https://easystats.github.io/parameters/articles/model_parameters_mice.html)
 * [Analysing Longitudinal or Panel Data](https://easystats.github.io/parameters/articles/demean.html)
 
-## Formatting and Printing
+## Formatting, Printing and Plotting
 
 * [Formatting Model Parameters](https://easystats.github.io/parameters/articles/model_parameters_formatting.html)
 * [Printing Model Parameters](https://easystats.github.io/parameters/articles/model_parameters_print.html)
+* [Plotting functions](https://easystats.github.io/see/articles/parameters.html)
 
 ## Dimension Reduction and Clustering
 
