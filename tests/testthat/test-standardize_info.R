@@ -1,5 +1,5 @@
 test_that("standardize_info", {
-  skip_if_not_installed("datawizard", minimum_version = "0.12.0")
+  skip_if_not_installed("datawizard")
   skip_if_not_installed("nlme")
   skip_if_not_installed("lme4")
   fm1 <- nlme::lme(mpg ~ cyl, mtcars, random = ~ 1 | gear)

@@ -736,6 +736,11 @@ equivalence_test.parameters_model <- function(x,
     {
       params <- insight::get_parameters(model)
 
+      # remove dispersion components
+      if (!is.null(params$Component)) {
+        params <- params[params$Component != "dispersion", ]
+      }
+
       # degrees of freedom
       dof <- insight::get_df(x = model, type = "wald")
 
@@ -744,6 +749,11 @@ equivalence_test.parameters_model <- function(x,
 
       # se
       se <- standard_error(model, vcov = vcov, vcov_args = vcov_args, ...)
+
+      # remove dispersion components
+      if (!is.null(se$Component)) {
+        se <- se[se$Component != "dispersion", ]
+      }
 
       stats::pt((range[1] - params$mu) / se$SE, df = dof, lower.tail = TRUE) +
         stats::pt((range[2] - params$mu) / se$SE, df = dof, lower.tail = FALSE)

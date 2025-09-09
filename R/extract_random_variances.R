@@ -159,8 +159,18 @@
                                              ci_random = NULL,
                                              verbose = FALSE,
                                              ...) {
-  varcorr <- .get_variance_information(model, component)
-  if (!inherits(model, "lme")) {
+  # special handling for lme objects
+  if (inherits(model, "lme")) {
+    insight::check_if_installed("lme4")
+    varcorr <- lme4::VarCorr(model)
+    class(varcorr) <- "VarCorr.lme"
+  } else {
+    varcorr <- insight::get_mixed_info(model, component = component, verbose = FALSE)$vc
+  }
+
+  # we have own data frame methods for VarCorr objects from lme and coxme, so
+  # only change class attribute for other models
+  if (!inherits(model, c("lme", "coxme"))) {
     class(varcorr) <- "VarCorr.merMod"
   }
 
@@ -329,6 +339,47 @@ as.data.frame.VarCorr.lme <- function(x, row.names = NULL, optional = FALSE, ...
   out_cor <- out_cor[!is.na(out_cor$sdcor), ]
 
   rbind(out_sd, out_cor)
+}
+
+
+#' @export
+as.data.frame.VarCorr.coxme <- function(x, row.names = NULL, optional = FALSE, ...) {
+  # extract variances from VarCorr object
+  variances <- lapply(x, diag)
+  # create data frame, similar to as.data.frame.VarCorr.merMod
+  out <- do.call(rbind, lapply(names(variances), function(i) {
+    # information on variances
+    d <- data.frame(
+      grp = i,
+      var1 = names(variances[[i]]),
+      var2 = NA_character_,
+      vcov = as.numeric(variances[[i]]),
+      sdcor = sqrt(as.numeric(variances[[i]])),
+      stringsAsFactors = FALSE
+    )
+    # add correlations, if any
+    if (nrow(x[[i]]) > 1) {
+      d <- rbind(d, data.frame(
+        grp = i,
+        var1 = "(Intercept)",
+        var2 = rownames(x[[i]])[2],
+        vcov = NA_real_,
+        sdcor = as.numeric(x[[i]][2, 1]),
+        stringsAsFactors = FALSE
+      ))
+    }
+    d
+  }))
+
+  # bind residual variance
+  rbind(out, data.frame(
+    grp = "Residual",
+    var1 = NA_character_,
+    var2 = NA_character_,
+    vcov = NA_real_,
+    sdcor = NA_real_,
+    stringsAsFactors = FALSE
+  ))
 }
 
 
@@ -681,188 +732,6 @@ as.data.frame.VarCorr.lme <- function(x, row.names = NULL, optional = FALSE, ...
   }
 
   out
-}
-
-
-# Extract Variance and Correlation Components ----
-
-# store essential information about variance components...
-# basically, this function should return lme4::VarCorr(x)
-.get_variance_information <- function(model, model_component = "conditional") {
-  # check if packages are available
-  .check_mixedmodels_namespace(model)
-
-  # stanreg
-  # ---------------------------
-  if (inherits(model, "stanreg")) {
-    varcorr <- lme4::VarCorr(model)
-
-    # GLMMapdative
-    # ---------------------------
-  } else if (inherits(model, "MixMod")) {
-    vc1 <- vc2 <- NULL
-    re_names <- insight::find_random(model)
-
-    vc_cond <- !startsWith(colnames(model$D), "zi_")
-    if (any(vc_cond)) {
-      vc1 <- model$D[vc_cond, vc_cond, drop = FALSE]
-      attr(vc1, "stddev") <- sqrt(diag(vc1))
-      attr(vc1, "correlation") <- stats::cov2cor(model$D[vc_cond, vc_cond, drop = FALSE])
-    }
-
-    vc_zi <- startsWith(colnames(model$D), "zi_")
-    if (any(vc_zi)) {
-      colnames(model$D) <- gsub("^zi_(.*)", "\\1", colnames(model$D))
-      rownames(model$D) <- colnames(model$D)
-      vc2 <- model$D[vc_zi, vc_zi, drop = FALSE]
-      attr(vc2, "stddev") <- sqrt(diag(vc2))
-      attr(vc2, "correlation") <- stats::cov2cor(model$D[vc_zi, vc_zi, drop = FALSE])
-    }
-
-    vc1 <- list(vc1)
-    names(vc1) <- re_names[[1]]
-    attr(vc1, "sc") <- sqrt(insight::get_deviance(model, verbose = FALSE) / insight::get_df(model, type = "residual", verbose = FALSE)) # nolint
-    attr(vc1, "useSc") <- TRUE
-
-    if (!is.null(vc2)) {
-      vc2 <- list(vc2)
-      names(vc2) <- re_names[[2]]
-      attr(vc2, "sc") <- sqrt(insight::get_deviance(model, verbose = FALSE) / insight::get_df(model, type = "residual", verbose = FALSE)) # nolint
-      attr(vc2, "useSc") <- FALSE
-    }
-
-    varcorr <- insight::compact_list(list(vc1, vc2))
-    names(varcorr) <- c("cond", "zi")[seq_along(varcorr)]
-
-    # joineRML
-    # ---------------------------
-  } else if (inherits(model, "mjoint")) {
-    re_names <- insight::find_random(model, flatten = TRUE)
-    varcorr <- summary(model)$D
-    attr(varcorr, "stddev") <- sqrt(diag(varcorr))
-    attr(varcorr, "correlation") <- stats::cov2cor(varcorr)
-    varcorr <- list(varcorr)
-    names(varcorr) <- re_names[1]
-    attr(varcorr, "sc") <- model$coef$sigma2[[1]]
-    attr(varcorr, "useSc") <- TRUE
-
-    # nlme
-    # ---------------------------
-  } else if (inherits(model, "lme")) {
-    varcorr <- lme4::VarCorr(model)
-
-    # ordinal
-    # ---------------------------
-  } else if (inherits(model, "clmm")) {
-    varcorr <- ordinal::VarCorr(model)
-    attr(varcorr, "useSc") <- FALSE
-
-    # glmmadmb
-    # ---------------------------
-  } else if (inherits(model, "glmmadmb")) {
-    varcorr <- lme4::VarCorr(model)
-
-    # brms
-    # ---------------------------
-  } else if (inherits(model, "brmsfit")) {
-    varcorr <- lapply(names(lme4::VarCorr(model)), function(i) {
-      element <- lme4::VarCorr(model)[[i]]
-      if (i != "residual__") {
-        if (is.null(element$cov)) {
-          out <- as.matrix(drop(element$sd[, 1])^2)
-          colnames(out) <- rownames(out) <- gsub("Intercept", "(Intercept)", rownames(element$sd), fixed = TRUE)
-        } else {
-          out <- as.matrix(drop(element$cov[, 1, ]))
-          colnames(out) <- rownames(out) <- gsub("Intercept", "(Intercept)", rownames(element$cov), fixed = TRUE)
-        }
-        attr(out, "sttdev") <- element$sd[, 1]
-      } else {
-        out <- NULL
-      }
-      out
-    })
-    varcorr <- insight::compact_list(varcorr)
-    names(varcorr) <- setdiff(names(lme4::VarCorr(model)), "residual__")
-    attr(varcorr, "sc") <- lme4::VarCorr(model)$residual__$sd[1, 1]
-
-    # cpglmm
-    # ---------------------------
-  } else if (inherits(model, "cpglmm")) {
-    varcorr <- cplm::VarCorr(model)
-    attr(varcorr, "useSc") <- FALSE
-
-    # lme4 / glmmTMB
-    # ---------------------------
-  } else {
-    varcorr <- lme4::VarCorr(model)
-  }
-
-
-  # for glmmTMB, tell user that dispersion model is ignored
-
-  if (inherits(model, c("glmmTMB", "MixMod"))) {
-    if (is.null(model_component) || model_component == "conditional") {
-      varcorr <- .collapse_cond(varcorr)
-    } else {
-      varcorr <- .collapse_zi(varcorr)
-    }
-  }
-
-  varcorr
-}
-
-
-.check_mixedmodels_namespace <- function(model) {
-  # reason to be installed
-  reason <- "to compute random effect variances for mixed models"
-
-  # installed?
-  insight::check_if_installed("lme4", reason = reason)
-
-  if (inherits(model, "lme")) {
-    insight::check_if_installed("nlme", reason = reason)
-  }
-
-  if (inherits(model, "glmmTMB")) {
-    insight::check_if_installed("glmmTMB", reason = reason)
-  }
-
-  if (inherits(model, "clmm")) {
-    insight::check_if_installed("ordinal", reason = reason)
-  }
-
-  if (inherits(model, "brmsfit")) {
-    insight::check_if_installed("brms", reason = reason)
-  }
-
-  if (inherits(model, "cpglmm")) {
-    insight::check_if_installed("cplm", reason = reason)
-  }
-
-  if (inherits(model, "rstanarm")) {
-    insight::check_if_installed("rstanarm", reason = reason)
-  }
-}
-
-
-# glmmTMB returns a list of model information, one for conditional
-# and one for zero-inflation part, so here we "unlist" it, returning
-# only the conditional part.
-.collapse_cond <- function(x) {
-  if (is.list(x) && "cond" %in% names(x)) {
-    x[["cond"]]
-  } else {
-    x
-  }
-}
-
-
-.collapse_zi <- function(x) {
-  if (is.list(x) && "zi" %in% names(x)) {
-    x[["zi"]]
-  } else {
-    x
-  }
 }
 
 

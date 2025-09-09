@@ -30,11 +30,6 @@ withr::with_options(
       data = Salamanders
     ))
 
-    test_that("unsupported args", {
-      expect_message(model_parameters(m1, vcov = "HC3", effects = "fixed", component = "conditional"))
-      expect_message(model_parameters(m1, vcov = "HC3"))
-    })
-
     test_that("ci", {
       expect_equal(
         ci(m1)$CI_low,
@@ -765,6 +760,22 @@ withr::with_options(
       out <- as.data.frame(model_parameters(m, effects = "random", component = "all", group_level = TRUE))
       expect_identical(nrow(out), 46L)
       expect_equal(out$Coefficient, unlist(glmmTMB::ranef(m)), ignore_attr = TRUE, tolerance = 1e-4)
+    })
+
+    test_that("robust SE/VCOV", {
+      skip_if_not_installed("sandwich")
+      skip_if(packageVersion("insight") <= "1.4.0")
+
+      out1 <- standard_error(m1)
+      out2 <- sqrt(diag(insight::get_varcov(m1, component = "all")))
+      expect_equal(out1$SE, out2[1:6], ignore_attr = TRUE, tolerance = 1e-4)
+
+      out1 <- standard_error(m1, vcov = "HC0")
+      out2 <- sqrt(diag(insight::get_varcov(m1, vcov = "HC0", component = "all")))
+      expect_equal(out1$SE, out2[1:6], ignore_attr = TRUE, tolerance = 1e-4)
+
+      out <- model_parameters(m1, vcov = "HC0")
+      expect_snapshot(print(out, table_width = Inf))
     })
   }
 )
