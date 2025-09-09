@@ -1,4 +1,4 @@
-test_that("model_parameters.fixest", {
+test_that("model_parameters.fixest-1", {
   skip_on_cran()
   skip_if_not_installed("fixest")
   skip_if_not_installed("carData")
@@ -73,7 +73,7 @@ test_that("model_parameters.fixest", {
 })
 
 
-test_that("model_parameters.fixest", {
+test_that("model_parameters.fixest-2", {
   skip_on_cran()
   skip_if_not_installed("fixest")
   skip_if_not_installed("carData")
