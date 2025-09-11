@@ -42,6 +42,13 @@ model_parameters.marginaleffects <- function(
     out <- insight::standardize_names(out, style = "easystats")
   }
 
+  # edge case: for avg_comparisons() with custom hypothesis, "term" and "hypothesis"
+  # are identical columns, now both names "Parameter" - remove one
+  param_cols <- which(colnames(out) == "Parameter")
+  if (length(param_cols) > 1) {
+    out[param_cols[-1]] <- NULL
+  }
+
   # in case data grid contained column names that are reserved words,
   # rename those back now...
   colnames(out) <- gsub("#####$", "", colnames(out))

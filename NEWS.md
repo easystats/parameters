@@ -1,4 +1,4 @@
-# parameters (devel)
+# parameters 0.28.2
 
 ## Bug fixes
 
