@@ -1,3 +1,9 @@
+# parameters 0.28.2
+
+## Bug fixes
+
+* Updates tests to resolve issues with the latest version of the *fixest* package.
+
 # parameters 0.28.1
 
 ## Changes
