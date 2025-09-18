@@ -1,12 +1,12 @@
 ---
 title: "Clustering with easystats"
-output: 
+output:
   rmarkdown::html_vignette:
 vignette: >
   %\VignetteIndexEntry{Clustering with easystats}
   \usepackage[utf8]{inputenc}
   %\VignetteEngine{knitr::rmarkdown}
-editor_options: 
+editor_options:
   chunk_output_type: console
 ---
 
@@ -64,7 +64,7 @@ Clustering traditionally refers to the identification of groups of observations 
 
 There are many clustering algorithms (see [this for an overview](https://scikit-learn.org/stable/modules/clustering.html)), but they can grouped in two categories: **supervised** and **unsupervised** techniques. In **supervised** techniques, you have to explicitly specify [**how many clusters**](https://easystats.github.io/parameters/reference/n_clusters.html) you want to extract. **Unsupervised** techniques, on the other hand, will estimate this number as part of their algorithm. Note that there are no inherently superior and inferior clustering methods, each come with their sets of limitations and benefits.
 
-As an example in the tutorial below, we will use the **iris** dataset, for which we know that there are 3 "real" clusters (the 3 Species of flowers). Let's first start with visualizing the 3 "real" clusters on a 2D space of the variables created through PCA. 
+As an example in the tutorial below, we will use the **iris** dataset, for which we know that there are 3 "real" clusters (the 3 Species of flowers). Let's first start with visualizing the 3 "real" clusters on a 2D space of the variables created through PCA.
 
 
 ```{r}
@@ -161,14 +161,11 @@ Hierarchical K-Means, as its name suggest, is essentially a combination of K-Mea
 rez_hkmeans <- cluster_analysis(data, n = 3, method = "hkmeans")
 
 rez_hkmeans # Show results
-
-# Visualize
-plot(rez_hkmeans) + theme_modern() # Visualize
 ```
 
 ### K-Medoids (PAM)
 
-Clustering around "medoids", instead of "centroid", is considered to be a more robust version of K-means. See `cluster::pam()` for more information. 
+Clustering around "medoids", instead of "centroid", is considered to be a more robust version of K-means. See `cluster::pam()` for more information.
 
 ```{r}
 rez_pam <- cluster_analysis(data, n = 3, method = "pam")
@@ -203,7 +200,7 @@ plot(rez_hclust2) + theme_modern() # Visualize
 
 ### DBSCAN
 
-Although the DBSCAN method is quite powerful to identify clusters, it is highly dependent on its parameters, namely, `eps` and the `min_size`. Regarding the latter, the minimum size of any cluster is set by default to `0.1` (i.e., 10\% of rows), which is appropriate to avoid having too small clusters. 
+Although the DBSCAN method is quite powerful to identify clusters, it is highly dependent on its parameters, namely, `eps` and the `min_size`. Regarding the latter, the minimum size of any cluster is set by default to `0.1` (i.e., 10\% of rows), which is appropriate to avoid having too small clusters.
 
 The "optimal" **eps** value can be estimated using the [`n_clusters_dbscan()`](https://easystats.github.io/parameters/reference/cluster_analysis.html) function:
 

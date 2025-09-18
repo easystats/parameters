@@ -4,7 +4,8 @@
 #' x <- n_clusters_elbow(iris[1:4])
 #' x
 #' as.data.frame(x)
-#' plot(x)
+#' # plotting is also possible:
+#' # plot(x)
 #' }
 #' @export
 n_clusters_elbow <- function(x,
@@ -93,7 +94,8 @@ n_clusters_gap <- function(x,
 #'   x <- n_clusters_silhouette(iris[1:4])
 #'   x
 #'   as.data.frame(x)
-#'   plot(x)
+#'   # plotting is also possible:
+#'   # plot(x)
 #' }
 #' }
 #' @export
