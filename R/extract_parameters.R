@@ -67,6 +67,10 @@
     merge_by <- setdiff(merge_by, "Component")
   }
 
+  if (!("Group" %in% names(parameters)) && "Group" %in% merge_by) {
+    merge_by <- setdiff(merge_by, "Group")
+  }
+
 
   # ==== check Degrees of freedom
 

@@ -124,7 +124,7 @@ When \code{performance::r2()} returns multiple values, only the first is used
 by default.
 }
 \examples{
-\dontshow{if (require("domir") && require("performance")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (require("domir") && require("performance")) withAutoprint(\{ # examplesIf}
 data(mtcars)
 
 # Dominance Analysis with Logit Regression

@@ -64,17 +64,19 @@
 
 
 #' @keywords internal
-.ci_dof <- function(model,
-                    ci,
-                    dof,
-                    effects,
-                    component,
-                    method = "wald",
-                    se = NULL,
-                    vcov = NULL,
-                    vcov_args = NULL,
-                    verbose = TRUE,
-                    ...) {
+.ci_dof <- function(
+  model,
+  ci,
+  dof,
+  effects,
+  component,
+  method = "wald",
+  se = NULL,
+  vcov = NULL,
+  vcov_args = NULL,
+  verbose = TRUE,
+  ...
+) {
   # need parameters to calculate the CIs
   if (inherits(model, "emmGrid")) {
     params <- insight::get_parameters(
@@ -84,7 +86,8 @@
       merge_parameters = TRUE
     )
   } else {
-    params <- insight::get_parameters(model,
+    params <- insight::get_parameters(
+      model,
       effects = effects,
       component = component,
       verbose = FALSE
@@ -110,7 +113,8 @@
   if (is.null(se)) {
     if (!is.null(vcov) || isTRUE(list(...)[["robust"]])) {
       # robust (HC) standard errors?
-      stderror <- standard_error(model,
+      stderror <- standard_error(
+        model,
         component = component,
         vcov = vcov,
         vcov_args = vcov_args,
@@ -119,7 +123,8 @@
       )
     } else {
       # normal standard errors, including small-sample approximations
-      stderror <- switch(method,
+      stderror <- switch(
+        method,
         kenward = se_kenward(model),
         kr = se_kenward(model),
         satterthwaite = se_satterthwaite(model),
@@ -134,9 +139,11 @@
 
     # filter non-matching parameters, resp. sort stderror and parameters,
     # so both have the identical order of values
-    if (nrow(stderror) != nrow(params) ||
-      !all(stderror$Parameter %in% params$Parameter) ||
-      !all(order(stderror$Parameter) == order(params$Parameter))) {
+    if (
+      nrow(stderror) != nrow(params) ||
+        !all(stderror$Parameter %in% params$Parameter) ||
+        !all(order(stderror$Parameter) == order(params$Parameter))
+    ) {
       params <- stderror <- merge(stderror, params, sort = FALSE)
     }
 
@@ -164,19 +171,25 @@
 
   alpha <- (1 + ci) / 2
   fac <- suppressWarnings(stats::qt(alpha, df = dof))
-  out <- cbind(
-    CI_low = params$Estimate - se * fac,
-    CI_high = params$Estimate + se * fac
-  )
+  out <- cbind(CI_low = params$Estimate - se * fac, CI_high = params$Estimate + se * fac)
 
   out <- as.data.frame(out)
   out$CI <- ci
   out$Parameter <- params$Parameter
 
   out <- out[c("Parameter", "CI", "CI_low", "CI_high")]
-  if ("Component" %in% names(params)) out$Component <- params$Component
-  if ("Effects" %in% names(params) && effects != "fixed") out$Effects <- params$Effects
-  if ("Response" %in% names(params)) out$Response <- params$Response
+  if ("Component" %in% names(params)) {
+    out$Component <- params$Component
+  }
+  if ("Effects" %in% names(params) && effects != "fixed") {
+    out$Effects <- params$Effects
+  }
+  if ("Response" %in% names(params)) {
+    out$Response <- params$Response
+  }
+  if ("Group" %in% names(params) && inherits(model, c("lcmm", "externX", "externVar"))) {
+    out$Group <- params$Group
+  }
 
   # for cox-panel models, we have non-linear parameters with NA coefficient,
   # but test statistic and p-value - don't check for NA estimates in this case

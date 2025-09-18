@@ -299,7 +299,7 @@ here.
 }
 
 \examples{
-\dontshow{if (require("glmmTMB") && requireNamespace("sandwich")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (require("glmmTMB") && requireNamespace("sandwich")) withAutoprint(\{ # examplesIf}
 data(qol_cancer)
 model <- lm(QoL ~ time + age + education, data = qol_cancer)
 

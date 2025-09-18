@@ -20,7 +20,7 @@ determines the goodness of classification for each cluster group. See \code{MASS
 for details.
 }
 \examples{
-\dontshow{if (requireNamespace("MASS", quietly = TRUE)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (requireNamespace("MASS", quietly = TRUE)) withAutoprint(\{ # examplesIf}
 # Retrieve group classification from hierarchical cluster analysis
 clustering <- cluster_analysis(iris[, 1:4], n = 3)
 

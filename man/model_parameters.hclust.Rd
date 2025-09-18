@@ -20,7 +20,7 @@ rows in data).}
 Format cluster models obtained for example by \code{\link[=kmeans]{kmeans()}}.
 }
 \examples{
-\dontshow{if (require("factoextra", quietly = TRUE) && require("dbscan", quietly = TRUE) && require("cluster", quietly = TRUE) && require("fpc", quietly = TRUE)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (require("factoextra", quietly = TRUE) && require("dbscan", quietly = TRUE) && require("cluster", quietly = TRUE) && require("fpc", quietly = TRUE)) withAutoprint(\{ # examplesIf}
 \donttest{
 #
 # K-means -------------------------------
