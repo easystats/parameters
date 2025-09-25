@@ -456,7 +456,6 @@ equivalence_test.parameters_model <- function(x,
     ci <- ci[1]
   }
 
-
   # ==== check degrees of freedom ====
 
   df_column <- grep("(df|df_error)", colnames(x))
