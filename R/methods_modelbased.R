@@ -43,8 +43,8 @@ ci.estimate_means <- function(x, ...) {
   data.frame(
     Parameter = params$Parameter,
     CI = ci_value,
-    CI_low = model$CI_low,
-    CI_high = model$CI_high,
+    CI_low = x$CI_low,
+    CI_high = x$CI_high,
     stringsAsFactors = FALSE
   )
 }
