@@ -380,7 +380,7 @@ equivalence_test.estimate_means <- function(
   # ==== check degrees of freedom ====
 
   dof <- unique(insight::get_df(x))
-  if (length(dof) > 0) {
+  if (length(dof) > 1) {
     dof <- Inf
   }
 
@@ -391,8 +391,14 @@ equivalence_test.estimate_means <- function(
   # ==== the "narrower" intervals (1-2*alpha) for CET-rules. ====
 
   alpha <- 1 - ci
-  conf_int2 <- .ci_generic(x, ci = (ci - alpha), vcov = vcov, vcov_args = vcov_args, ...)
-  conf_int2 <- as.data.frame(t(conf_int2[, c("CI_low", "CI_high")]))
+  insight::check_if_installed("modelbased")
+
+  # we need to call the modelbased function again, so get the call
+  # modify CI and evaluate that call
+  cl <- insight::get_call(x)
+  cl$ci <- ci - alpha
+  x2 <- eval(cl)
+  conf_int2 <- as.data.frame(t(x2[c("CI_low", "CI_high")]))
 
   # ==== equivalence test for each parameter ====
 
@@ -413,9 +419,7 @@ equivalence_test.estimate_means <- function(
   )
 
   dat <- do.call(rbind, l)
-  if ("Component" %in% colnames(params)) {
-    dat$Component <- params$Component
-  }
+  params <- insight::get_parameters(x)
 
   out <- data.frame(
     Parameter = params$Parameter,
@@ -429,6 +433,10 @@ equivalence_test.estimate_means <- function(
   out$p <- .add_p_to_equitest(x, ci, range, vcov = vcov, vcov_args = vcov_args, ...)
 
   attr(out, "rope") <- range
+  attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
+  attr(out, "rule") <- rule
+  class(out) <- c("equivalence_test_lm", "see_equivalence_test_lm", class(out))
+
   out
 }
 
