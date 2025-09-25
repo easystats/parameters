@@ -299,6 +299,15 @@ equivalence_test.zeroinfl <- equivalence_test.lm
 #' @export
 equivalence_test.rma <- equivalence_test.lm
 
+#' @export
+equivalence_test.estimate_means <- equivalence_test.lm
+
+#' @export
+equivalence_test.estimate_contrasts <- equivalence_test.lm
+
+#' @export
+equivalence_test.estimate_slopes <- equivalence_test.lm
+
 
 # mixed models, also random effects ----------------------
 
@@ -407,6 +416,14 @@ equivalence_test.parameters_model <- function(x,
 
 #' @keywords internal
 .check_rope_range <- function(x, range, verbose) {
+  # for modelbased-objects, we extract the model to define the rope range
+  if (inherits(x, c("estimate_means", "estimate_contrasts", "estimate_slopes"))) {
+    x <- .safe(insight::get_model(x))
+    # if not successful, return defaults
+    if (is.null(x)) {
+      return(c(-1, 1))
+    }
+  }
   if (all(range == "default")) {
     range <- bayestestR::rope_range(x, verbose = verbose)
     if (is.list(range)) {

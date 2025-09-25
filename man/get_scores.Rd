@@ -37,7 +37,7 @@ is on the same scale as the original, single items that were used to compute
 the PCA/FA.
 }
 \examples{
-\dontshow{if (insight::check_if_installed("psych", quietly = TRUE)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (insight::check_if_installed("psych", quietly = TRUE)) withAutoprint(\{ # examplesIf}
 pca <- principal_components(mtcars[, 1:7], n = 2, rotation = "varimax")
 
 # PCA extracted two components

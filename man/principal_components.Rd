@@ -269,7 +269,7 @@ data along the new feature axes.
 }
 }
 \examples{
-\dontshow{if (require("nFactors", quietly = TRUE) && require("sparsepca", quietly = TRUE) && require("psych", quietly = TRUE)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (require("nFactors", quietly = TRUE) && require("sparsepca", quietly = TRUE) && require("psych", quietly = TRUE)) withAutoprint(\{ # examplesIf}
 library(parameters)
 
 \donttest{
