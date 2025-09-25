@@ -19,11 +19,7 @@ model_parameters.estimate_contrasts <- model_parameters.estimate_means
 #' @export
 standard_error.estimate_means <- function(model, ...) {
   params <- insight::get_parameters(model)
-  data.frame(
-    Parameter = params$Parameter,
-    SE = model$SE,
-    stringsAsFactors = FALSE
-  )
+  data.frame(Parameter = params$Parameter, SE = model$SE, stringsAsFactors = FALSE)
 }
 
 #' @export
@@ -36,10 +32,10 @@ standard_error.estimate_contrasts <- standard_error.estimate_means
 # ci ----------------
 
 #' @export
-ci.estimate_means <- function(model, ...) {
-  params <- insight::get_parameters(model)
+ci.estimate_means <- function(x, ...) {
+  params <- insight::get_parameters(x)
 
-  ci_value <- attributes(model)$ci
+  ci_value <- attributes(x)$ci
   if (is.null(ci_value)) {
     ci_value <- 0.95
   }
