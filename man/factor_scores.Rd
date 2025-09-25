@@ -21,7 +21,7 @@ element from the object and converts it into a data frame.
 \code{\link[psych:fa]{psych::fa()}}, \code{\link[=factor_analysis]{factor_analysis()}}, or \code{\link[psych:omega]{psych::omega()}}
 }
 \examples{
-\dontshow{if (insight::check_if_installed("psych", quietly = TRUE)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (insight::check_if_installed("psych", quietly = TRUE)) withAutoprint(\{ # examplesIf}
 data(mtcars)
 out <- factor_analysis(mtcars[, 1:7], n = 2)
 head(factor_scores(out))

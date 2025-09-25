@@ -78,7 +78,7 @@ similar to \code{summary(mice::pool())}, i.e. it generates the pooled summary
 of multiple imputed repeated regression analyses.
 }
 \examples{
-\dontshow{if (require("mice", quietly = TRUE) && require("gee", quietly = TRUE)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (require("mice", quietly = TRUE) && require("gee", quietly = TRUE)) withAutoprint(\{ # examplesIf}
 library(parameters)
 data(nhanes2, package = "mice")
 imp <- mice::mice(nhanes2)

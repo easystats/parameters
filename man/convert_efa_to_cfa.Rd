@@ -40,7 +40,7 @@ Enables a conversion between Exploratory Factor Analysis (EFA) and
 Confirmatory Factor Analysis (CFA) \code{lavaan}-ready structure.
 }
 \examples{
-\dontshow{if (require("psych") && require("lavaan")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (require("psych") && require("lavaan")) withAutoprint(\{ # examplesIf}
 \donttest{
 library(parameters)
 data(attitude)

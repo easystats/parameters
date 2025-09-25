@@ -89,7 +89,7 @@ implemented in the \href{https://easystats.github.io/see/}{\strong{see}-package}
 \code{n_components()} is a convenient short-cut  for \code{n_factors(type = "PCA")}.
 }
 \examples{
-\dontshow{if (require("PCDimension", quietly = TRUE) && require("nFactors", quietly = TRUE) && require("EGAnet", quietly = TRUE) && require("psych", quietly = TRUE)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (require("PCDimension", quietly = TRUE) && require("nFactors", quietly = TRUE) && require("EGAnet", quietly = TRUE) && require("psych", quietly = TRUE)) withAutoprint(\{ # examplesIf}
 library(parameters)
 n_factors(mtcars, type = "PCA")
 

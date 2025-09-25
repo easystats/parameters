@@ -1,7 +1,7 @@
 Type: Package
 Package: parameters
 Title: Processing of Model Parameters
-Version: 0.28.2
+Version: 0.28.2.3
 Authors@R:
     c(person(given = "Daniel",
              family = "Lüdecke",
@@ -224,10 +224,11 @@ VignetteBuilder:
     knitr
 Encoding: UTF-8
 Language: en-US
-RoxygenNote: 7.3.2
+RoxygenNote: 7.3.3
 Roxygen: list(markdown = TRUE)
 Config/testthat/edition: 3
 Config/testthat/parallel: true
 Config/Needs/website: easystats/easystatstemplate
 Config/Needs/check: stan-dev/cmdstanr
 Config/rcmdcheck/ignore-inconsequential-notes: true
+Remotes: easystats/insight, easystats/modelbased

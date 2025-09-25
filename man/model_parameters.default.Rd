@@ -337,7 +337,7 @@ which is converted into a p-value using \code{\link[bayestestR:pd_to_p]{bayestes
 }
 
 \examples{
-\dontshow{if (require("boot", quietly = TRUE) && require("sandwich") && require("clubSandwich") && require("brglm2")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (require("boot", quietly = TRUE) && require("sandwich") && require("clubSandwich") && require("brglm2")) withAutoprint(\{ # examplesIf}
 library(parameters)
 model <- lm(mpg ~ wt + cyl, data = mtcars)
 

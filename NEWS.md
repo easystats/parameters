@@ -1,3 +1,7 @@
+# parameters 0.28.2.1
+
+* `equivalence_test()` gets methods for objects from the *modelbased* package.
+
 # parameters 0.28.2
 
 ## Bug fixes
