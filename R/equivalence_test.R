@@ -299,15 +299,6 @@ equivalence_test.zeroinfl <- equivalence_test.lm
 #' @export
 equivalence_test.rma <- equivalence_test.lm
 
-#' @export
-equivalence_test.estimate_means <- equivalence_test.lm
-
-#' @export
-equivalence_test.estimate_contrasts <- equivalence_test.lm
-
-#' @export
-equivalence_test.estimate_slopes <- equivalence_test.lm
-
 
 # mixed models, also random effects ----------------------
 
@@ -362,6 +353,90 @@ equivalence_test.glmmTMB <- equivalence_test.merMod
 
 #' @export
 equivalence_test.MixMod <- equivalence_test.merMod
+
+
+# modelbased ------------------------------
+
+#' @export
+equivalence_test.estimate_means <- function(
+  x,
+  range = "default",
+  ci = 0.95,
+  rule = "classic",
+  vcov = NULL,
+  vcov_args = NULL,
+  verbose = TRUE,
+  ...
+) {
+  # ==== define rope range ====
+
+  range <- .check_rope_range(x, range, verbose)
+
+  if (length(ci) > 1) {
+    insight::format_alert("`ci` may only be of length 1. Using first ci-value now.")
+    ci <- ci[1]
+  }
+
+  # ==== check degrees of freedom ====
+
+  dof <- unique(insight::get_df(x))
+  if (length(dof) > 0) {
+    dof <- Inf
+  }
+
+  # ==== requested confidence intervals ====
+
+  conf_int <- as.data.frame(t(x[c("CI_low", "CI_high")]))
+
+  # ==== the "narrower" intervals (1-2*alpha) for CET-rules. ====
+
+  alpha <- 1 - ci
+  conf_int2 <- .ci_generic(x, ci = (ci - alpha), vcov = vcov, vcov_args = vcov_args, ...)
+  conf_int2 <- as.data.frame(t(conf_int2[, c("CI_low", "CI_high")]))
+
+  # ==== equivalence test for each parameter ====
+
+  l <- Map(
+    function(ci_wide, ci_narrow) {
+      .equivalence_test_numeric(
+        ci = ci,
+        ci_wide,
+        ci_narrow,
+        range_rope = range,
+        rule = rule,
+        dof = dof,
+        verbose = verbose
+      )
+    },
+    conf_int,
+    conf_int2
+  )
+
+  dat <- do.call(rbind, l)
+  if ("Component" %in% colnames(params)) {
+    dat$Component <- params$Component
+  }
+
+  out <- data.frame(
+    Parameter = params$Parameter,
+    CI = ifelse(rule == "bayes", ci, ci - alpha),
+    dat,
+    stringsAsFactors = FALSE
+  )
+
+  # ==== (adjusted) p-values for tests ====
+
+  out$p <- .add_p_to_equitest(x, ci, range, vcov = vcov, vcov_args = vcov_args, ...)
+
+  attr(out, "rope") <- range
+  out
+}
+
+#' @export
+equivalence_test.estimate_contrasts <- equivalence_test.estimate_means
+
+#' @export
+equivalence_test.estimate_slopes <- equivalence_test.estimate_means
 
 
 # Special classes -------------------------
