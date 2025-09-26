@@ -29,7 +29,7 @@ the examples below for more details."><meta property="og:image" content="https:/
 
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.28.2.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.28.2.4</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -284,8 +284,8 @@ case of bootstrapped frequentist models.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 8           8  64.61603</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 9           9  59.48502</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 10         10  59.10865</span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="n_clusters-2.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span><span class="co"># plotting is also possible:</span></span></span>
+<span class="r-in"><span><span class="co"># plot(x)</span></span></span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 <span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="co">#</span></span></span>
@@ -298,7 +298,7 @@ case of bootstrapped frequentist models.</p></dd>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
-<span class="r-plt img"><img src="n_clusters-3.png" alt="" width="700" height="433"></span>
+<span class="r-plt img"><img src="n_clusters-2.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 <span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="co">#</span></span></span>
@@ -307,9 +307,20 @@ case of bootstrapped frequentist models.</p></dd>
 <span class="r-in"><span>  <span class="va">x</span> <span class="op">&lt;-</span> <span class="fu">n_clusters_silhouette</span><span class="op">(</span><span class="va">iris</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="va">x</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="co"># plotting is also possible:</span></span></span>
+<span class="r-in"><span>  <span class="co"># plot(x)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
-<span class="r-plt img"><img src="n_clusters-4.png" alt="" width="700" height="433"></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    n_Clusters Silhouette</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1           1  0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2           2  0.5817500</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3           3  0.4599482</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4           4  0.4188923</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5           5  0.3536197</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6           6  0.3445645</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7           7  0.3152814</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8           8  0.3462564</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9           9  0.3180890</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10         10  0.3187029</span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 <span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="co">#</span></span></span>
@@ -328,7 +339,7 @@ case of bootstrapped frequentist models.</p></dd>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
-<span class="r-plt img"><img src="n_clusters-5.png" alt="" width="700" height="433"></span>
+<span class="r-plt img"><img src="n_clusters-3.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 <span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="co">#</span></span></span>
@@ -340,7 +351,7 @@ case of bootstrapped frequentist models.</p></dd>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="co"># Print 10 first rows</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
-<span class="r-plt img"><img src="n_clusters-6.png" alt="" width="700" height="433"></span>
+<span class="r-plt img"><img src="n_clusters-4.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
