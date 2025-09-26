@@ -12,7 +12,9 @@ withr::with_options(
   list(parameters_warning_exponentiate = TRUE),
   test_that("model_parameters lcmm", {
     out <- tryCatch(
-      datawizard::data_read("https://github.com/easystats/circus/raw/refs/heads/main/data/lcmm.rda"),
+      datawizard::data_read(
+        "https://github.com/easystats/circus/raw/refs/heads/main/data/lcmm.rda"
+      ),
       error = function(e) NULL
     )
     skip_if(is.null(out))

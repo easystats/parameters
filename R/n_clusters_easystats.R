@@ -8,12 +8,14 @@
 #' # plot(x)
 #' }
 #' @export
-n_clusters_elbow <- function(x,
-                             standardize = TRUE,
-                             include_factors = FALSE,
-                             clustering_function = stats::kmeans,
-                             n_max = 10,
-                             ...) {
+n_clusters_elbow <- function(
+  x,
+  standardize = TRUE,
+  include_factors = FALSE,
+  clustering_function = stats::kmeans,
+  n_max = 10,
+  ...
+) {
   t0 <- Sys.time()
   out <- .n_clusters_factoextra(
     x,
