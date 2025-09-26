@@ -148,6 +148,7 @@ Suggests:
     ivreg,
     knitr,
     lavaan,
+    lcmm,
     lfe,
     lm.beta,
     lme4,
