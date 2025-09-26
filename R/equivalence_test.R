@@ -430,7 +430,9 @@ equivalence_test.estimate_means <- function(
 
   # ==== (adjusted) p-values for tests ====
 
-  out$p <- .add_p_to_equitest(x, ci, range, vcov = vcov, vcov_args = vcov_args, ...)
+  if (!inherits(x, "estimate_means")) {
+    out$p <- .add_p_to_equitest(x, ci, range, vcov = vcov, vcov_args = vcov_args, ...)
+  }
 
   attr(out, "rope") <- range
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
