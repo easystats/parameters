@@ -1,6 +1,8 @@
-# parameters 0.28.2.1
+# parameters (devel)
 
 * `equivalence_test()` gets methods for objects from the *modelbased* package.
+
+* Added support for package *lcmm*.
 
 # parameters 0.28.2
 
