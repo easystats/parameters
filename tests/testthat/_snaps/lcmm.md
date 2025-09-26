@@ -1,18 +1,18 @@
 # model_parameters lcmm
 
     Code
-      model_parameters(out$mx_linear)
+      print(model_parameters(out$mx_linear), zap_small = TRUE)
     Output
-      Parameter        | Log-Odds |      SE |              95% CI |        z |     p
-      ------------------------------------------------------------------------------
-      intercept class1 |     1.12 |    0.90 | [   -0.64,    2.89] |     1.25 | 0.211
-      intercept class2 |     1.19 |    0.74 | [   -0.26,    2.65] |     1.61 | 0.107
-      X1 class1        |     1.85 |   13.74 | [  -25.08,   28.77] |     0.13 | 0.893
-      X1 class2        |     4.12 |   12.32 | [  -20.03,   28.26] |     0.33 | 0.738
-      X2 class1        |    10.50 | 2079.25 | [-4064.75, 4085.74] | 5.05e-03 | 0.996
-      X2 class2        |     9.64 | 2078.80 | [-4064.73, 4084.02] | 4.64e-03 | 0.996
-      X3 class1        |    -0.60 |    0.90 | [   -2.36,    1.17] |    -0.66 | 0.508
-      X3 class2        |     0.12 |    0.55 | [   -0.95,    1.19] |     0.23 | 0.822
+      Parameter        | Log-Odds |      SE |              95% CI |     z |     p
+      ---------------------------------------------------------------------------
+      intercept class1 |     1.12 |    0.90 | [   -0.64,    2.89] |  1.25 | 0.211
+      intercept class2 |     1.19 |    0.74 | [   -0.26,    2.65] |  1.61 | 0.107
+      X1 class1        |     1.85 |   13.74 | [  -25.08,   28.77] |  0.13 | 0.893
+      X1 class2        |     4.12 |   12.32 | [  -20.03,   28.26] |  0.33 | 0.738
+      X2 class1        |    10.50 | 2079.25 | [-4064.75, 4085.74] |  0.01 | 0.996
+      X2 class2        |     9.64 | 2078.80 | [-4064.73, 4084.02] |  0.00 | 0.996
+      X3 class1        |    -0.60 |    0.90 | [   -2.36,    1.17] | -0.66 | 0.508
+      X3 class2        |     0.12 |    0.55 | [   -0.95,    1.19] |  0.23 | 0.822
     Message
       
       Uncertainty intervals (equal-tailed) and p-values (two-tailed) computed
@@ -27,18 +27,18 @@
 ---
 
     Code
-      model_parameters(out$mx_beta)
+      print(model_parameters(out$mx_beta), zap_small = TRUE)
     Output
-      Parameter        | Log-Odds |    SE |            95% CI |        z |     p
-      --------------------------------------------------------------------------
-      intercept class1 |     0.12 | 67.86 | [-132.89, 133.13] | 1.76e-03 | 0.999
-      intercept class2 |     1.55 | 35.86 | [ -68.73,  71.83] |     0.04 | 0.966
-      X1 class1        |     0.51 | 24.20 | [ -46.92,  47.94] |     0.02 | 0.983
-      X1 class2        |    -1.02 | 26.22 | [ -52.41,  50.36] |    -0.04 | 0.969
-      X2 class1        |    15.95 | 14.97 | [ -13.39,  45.28] |     1.07 | 0.287
-      X2 class2        |    15.44 |  9.01 | [  -2.22,  33.09] |     1.71 | 0.087
-      X3 class1        |     0.44 | 14.56 | [ -28.09,  28.97] |     0.03 | 0.976
-      X3 class2        |    -0.35 | 18.61 | [ -36.81,  36.12] |    -0.02 | 0.985
+      Parameter        | Log-Odds |    SE |            95% CI |     z |     p
+      -----------------------------------------------------------------------
+      intercept class1 |     0.12 | 67.86 | [-132.89, 133.13] |  0.00 | 0.999
+      intercept class2 |     1.55 | 35.86 | [ -68.73,  71.83] |  0.04 | 0.966
+      X1 class1        |     0.51 | 24.20 | [ -46.92,  47.94] |  0.02 | 0.983
+      X1 class2        |    -1.02 | 26.22 | [ -52.41,  50.36] | -0.04 | 0.969
+      X2 class1        |    15.95 | 14.97 | [ -13.39,  45.28] |  1.07 | 0.287
+      X2 class2        |    15.44 |  9.01 | [  -2.22,  33.09] |  1.71 | 0.087
+      X3 class1        |     0.44 | 14.56 | [ -28.09,  28.97] |  0.03 | 0.976
+      X3 class2        |    -0.35 | 18.61 | [ -36.81,  36.12] | -0.02 | 0.985
     Message
       
       Uncertainty intervals (equal-tailed) and p-values (two-tailed) computed
@@ -47,7 +47,7 @@
 ---
 
     Code
-      model_parameters(out$mx_splines)
+      print(model_parameters(out$mx_splines), zap_small = TRUE)
     Output
       Parameter        | Log-Odds |      SE |              95% CI |     z |     p
       ---------------------------------------------------------------------------
@@ -67,7 +67,7 @@
 ---
 
     Code
-      model_parameters(out$m1_linear)
+      print(model_parameters(out$m1_linear), zap_small = TRUE)
     Output
       # longitudinal
       
@@ -90,7 +90,7 @@
 ---
 
     Code
-      model_parameters(out$m1_beta)
+      print(model_parameters(out$m1_beta), zap_small = TRUE)
     Output
       # longitudinal
       
@@ -101,12 +101,12 @@
       
       # beta
       
-      Parameter | Coefficient |       SE |         95% CI |     z |      p
-      --------------------------------------------------------------------
-      Beta1     |        0.54 |     0.07 | [ 0.41,  0.68] |  7.97 | < .001
-      Beta2     |       -0.76 |     0.09 | [-0.94, -0.58] | -8.36 | < .001
-      Beta3     |        0.70 |     0.02 | [ 0.67,  0.74] | 42.20 | < .001
-      Beta4     |        0.09 | 4.36e-03 | [ 0.08,  0.10] | 20.53 | < .001
+      Parameter | Coefficient |   SE |         95% CI |     z |      p
+      ----------------------------------------------------------------
+      Beta1     |        0.54 | 0.07 | [ 0.41,  0.68] |  7.97 | < .001
+      Beta2     |       -0.76 | 0.09 | [-0.94, -0.58] | -8.36 | < .001
+      Beta3     |        0.70 | 0.02 | [ 0.67,  0.74] | 42.20 | < .001
+      Beta4     |        0.09 | 0.00 | [ 0.08,  0.10] | 20.53 | < .001
     Message
       
       Uncertainty intervals (equal-tailed) and p-values (two-tailed) computed
@@ -115,7 +115,7 @@
 ---
 
     Code
-      model_parameters(out$m1_splines)
+      print(model_parameters(out$m1_splines), zap_small = TRUE)
     Output
       # longitudinal
       
@@ -143,7 +143,7 @@
 ---
 
     Code
-      model_parameters(out$m2_linear)
+      print(model_parameters(out$m2_linear), zap_small = TRUE)
     Output
       # membership
       
@@ -179,7 +179,7 @@
 ---
 
     Code
-      model_parameters(out$m2_beta)
+      print(model_parameters(out$m2_beta), zap_small = TRUE)
     Output
       # membership
       
@@ -203,12 +203,12 @@
       
       # beta
       
-      Parameter | Coefficient |       SE |         95% CI |     z |      p
-      --------------------------------------------------------------------
-      Beta1     |        0.60 |     0.06 | [ 0.48,  0.73] |  9.34 | < .001
-      Beta2     |       -0.83 |     0.09 | [-1.01, -0.66] | -9.39 | < .001
-      Beta3     |        0.73 |     0.03 | [ 0.67,  0.80] | 22.27 | < .001
-      Beta4     |        0.09 | 4.25e-03 | [ 0.08,  0.10] | 21.88 | < .001
+      Parameter | Coefficient |   SE |         95% CI |     z |      p
+      ----------------------------------------------------------------
+      Beta1     |        0.60 | 0.06 | [ 0.48,  0.73] |  9.34 | < .001
+      Beta2     |       -0.83 | 0.09 | [-1.01, -0.66] | -9.39 | < .001
+      Beta3     |        0.73 | 0.03 | [ 0.67,  0.80] | 22.27 | < .001
+      Beta4     |        0.09 | 0.00 | [ 0.08,  0.10] | 21.88 | < .001
     Message
       
       Uncertainty intervals (equal-tailed) and p-values (two-tailed) computed
@@ -217,7 +217,7 @@
 ---
 
     Code
-      model_parameters(out$m2_splines)
+      print(model_parameters(out$m2_splines), zap_small = TRUE)
     Output
       # membership
       
@@ -235,7 +235,7 @@
       Time class1      |       -0.48 | 0.59 | [-1.63,  0.67] | -0.81 | 0.415 
       Time class2      |        1.65 | 1.10 | [-0.50,  3.80] |  1.50 | 0.133 
       Time class3      |       -1.72 | 0.32 | [-2.35, -1.09] | -5.36 | < .001
-      I(Time^2) class1 |    6.95e-03 | 0.20 | [-0.38,  0.40] |  0.03 | 0.972 
+      I(Time^2) class1 |        0.01 | 0.20 | [-0.38,  0.40] |  0.03 | 0.972 
       I(Time^2) class2 |       -0.70 | 0.40 | [-1.49,  0.08] | -1.76 | 0.078 
       I(Time^2) class3 |       -0.04 | 0.13 | [-0.30,  0.22] | -0.33 | 0.743 
       
