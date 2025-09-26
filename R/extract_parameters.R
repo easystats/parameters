@@ -1,25 +1,26 @@
 # generic function ------------------------------------------------------
 
-
 #' @keywords internal
-.extract_parameters_generic <- function(model,
-                                        ci,
-                                        component,
-                                        merge_by = c("Parameter", "Component"),
-                                        standardize = NULL,
-                                        effects = "fixed",
-                                        ci_method = NULL,
-                                        p_adjust = NULL,
-                                        wb_component = FALSE,
-                                        verbose = TRUE,
-                                        keep_component_column = FALSE,
-                                        keep_parameters = NULL,
-                                        drop_parameters = NULL,
-                                        include_sigma = TRUE,
-                                        include_info = FALSE,
-                                        vcov = NULL,
-                                        vcov_args = NULL,
-                                        ...) {
+.extract_parameters_generic <- function(
+  model,
+  ci,
+  component,
+  merge_by = c("Parameter", "Component"),
+  standardize = NULL,
+  effects = "fixed",
+  ci_method = NULL,
+  p_adjust = NULL,
+  wb_component = FALSE,
+  verbose = TRUE,
+  keep_component_column = FALSE,
+  keep_parameters = NULL,
+  drop_parameters = NULL,
+  include_sigma = TRUE,
+  include_info = FALSE,
+  vcov = NULL,
+  vcov_args = NULL,
+  ...
+) {
   dots <- list(...)
 
   # ==== check if standardization is required and package available
@@ -39,7 +40,6 @@
     merge_by <- c("Parameter", "Component")
   }
 
-
   # ==== for refit, we completely refit the model, than extract parameters, ci etc. as usual
 
   if (isTRUE(standardize == "refit")) {
@@ -50,7 +50,8 @@
     model <- do.call(fun, fun_args)
   }
 
-  parameters <- insight::get_parameters(model,
+  parameters <- insight::get_parameters(
+    model,
     effects = effects,
     component = component,
     verbose = FALSE
@@ -60,20 +61,21 @@
   # check if all estimates are non-NA
   parameters <- .check_rank_deficiency(model, parameters)
 
-
   # ==== check if we really have a component column
 
   if (!("Component" %in% names(parameters)) && "Component" %in% merge_by) {
     merge_by <- setdiff(merge_by, "Component")
   }
 
+  if (!("Group" %in% names(parameters)) && "Group" %in% merge_by) {
+    merge_by <- setdiff(merge_by, "Group")
+  }
 
   # ==== check Degrees of freedom
 
   if (!.dof_method_ok(model, ci_method, type = "ci_method")) {
     ci_method <- NULL
   }
-
 
   # ==== for ordinal models, first, clean parameter names and then indicate
   #      intercepts (alpha-coefficients) in the component column
@@ -103,13 +105,13 @@
   # column name for coefficients, non-standardized
   coef_col <- "Coefficient"
 
-
   # ==== CI - only if we don't already have CI for std. parameters
 
   ci_cols <- NULL
   if (!is.null(ci)) {
     # set up arguments for CI function
-    fun_args <- list(model,
+    fun_args <- list(
+      model,
       ci = ci,
       component = component,
       vcov = vcov,
@@ -134,10 +136,10 @@
     }
   }
 
-
   # ==== p value
 
-  fun_args <- list(model,
+  fun_args <- list(
+    model,
     method = ci_method,
     effects = effects,
     verbose = verbose,
@@ -152,11 +154,11 @@
     parameters <- merge(parameters, pval, by = merge_by, sort = FALSE)
   }
 
-
   # ==== standard error - only if we don't already have SE for std. parameters
 
   std_err <- NULL
-  fun_args <- list(model,
+  fun_args <- list(
+    model,
     effects = effects,
     component = component,
     verbose = verbose,
@@ -173,7 +175,6 @@
     parameters <- merge(parameters, std_err, by = merge_by, sort = FALSE)
   }
 
-
   # ==== test statistic - fix values for robust vcov
 
   if (!is.null(vcov)) {
@@ -181,7 +182,6 @@
   } else if (!is.null(statistic)) {
     parameters <- merge(parameters, statistic, by = merge_by, sort = FALSE)
   }
-
 
   # ==== degrees of freedom
 
@@ -200,11 +200,9 @@
     }
   }
 
-
   # ==== Rematch order after merging
 
   parameters <- parameters[match(original_order, parameters$.id), ]
-
 
   # ==== Renaming
 
@@ -223,7 +221,6 @@
   colnames(parameters) <- gsub("(c|C)hisq", "Chi2", colnames(parameters))
   colnames(parameters) <- gsub("Estimate", "Coefficient", colnames(parameters), fixed = TRUE)
 
-
   # ==== add intercept groups for ordinal models
 
   if (inherits(model, "polr") && !is.null(intercept_groups)) {
@@ -233,23 +230,32 @@
     parameters$Component <- intercept_groups
   }
 
-
   # ==== remove Component / Effects column if not needed
 
-  if (!is.null(parameters$Component) && insight::has_single_value(parameters$Component, remove_na = TRUE) && !keep_component_column) parameters$Component <- NULL # nolint
-  if ((!is.null(parameters$Effects) && insight::n_unique(parameters$Effects) == 1) || effects == "fixed") parameters$Effects <- NULL # nolint
-
+  if (
+    !is.null(parameters$Component) &&
+      insight::has_single_value(parameters$Component, remove_na = TRUE) &&
+      !keep_component_column
+  ) {
+    parameters$Component <- NULL
+  }
+  if (
+    (!is.null(parameters$Effects) && insight::n_unique(parameters$Effects) == 1) ||
+      effects == "fixed"
+  ) {
+    parameters$Effects <- NULL
+  }
 
   # ==== filter parameters, if requested
 
   if (!is.null(keep_parameters) || !is.null(drop_parameters)) {
-    parameters <- .filter_parameters(parameters,
+    parameters <- .filter_parameters(
+      parameters,
       keep = keep_parameters,
       drop = drop_parameters,
       verbose = verbose
     )
   }
-
 
   # ==== adjust p-values?
 
@@ -257,18 +263,15 @@
     parameters <- .p_adjust(parameters, p_adjust, model, verbose)
   }
 
-
   # ==== remove all complete-missing cases
 
   parameters <- parameters[apply(parameters, 1, function(i) !all(is.na(i))), ]
-
 
   # ==== add within/between attributes
 
   if (inherits(model, c("glmmTMB", "MixMod")) && isTRUE(wb_component)) {
     parameters <- .add_within_between_effects(model, parameters)
   }
-
 
   # ==== Std Coefficients for other methods than "refit"
 
@@ -291,9 +294,9 @@
     coef_col <- "Std_Coefficient"
   }
 
-
   # ==== Reorder
 
+  # fmt: skip
   col_order <- c(
     "Parameter", coef_col, "SE", ci_cols, "t", "z", "t / F", "t/F",
     "z / Chisq", "z/Chisq", "z / Chi2", "z/Chi2", "F", "Chi2",
@@ -302,13 +305,11 @@
   )
   parameters <- parameters[col_order[col_order %in% names(parameters)]]
 
-
   # ==== add sigma and residual df
 
   if (isTRUE(include_sigma) || isTRUE(include_info)) {
     parameters <- .add_sigma_residual_df(parameters, model)
   }
-
 
   rownames(parameters) <- NULL
   parameters

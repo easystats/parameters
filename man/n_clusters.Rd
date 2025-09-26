@@ -172,7 +172,8 @@ if (require("mclust", quietly = TRUE) && require("NbClust", quietly = TRUE) &&
 x <- n_clusters_elbow(iris[1:4])
 x
 as.data.frame(x)
-plot(x)
+# plotting is also possible:
+# plot(x)
 }
 \dontshow{\}) # examplesIf}
 \donttest{
@@ -194,7 +195,8 @@ if (require("factoextra", quietly = TRUE)) {
   x <- n_clusters_silhouette(iris[1:4])
   x
   as.data.frame(x)
-  plot(x)
+  # plotting is also possible:
+  # plot(x)
 }
 }
 \donttest{
