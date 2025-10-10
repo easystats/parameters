@@ -61,7 +61,7 @@ parameters_type <- function(model, ...) {
   )
 
   # Special case
-  if (inherits(model, "polr")) {
+  if (inherits(model, c("polr", "svyolr"))) {
     params$Parameter <- gsub("Intercept: ", "", params$Parameter, fixed = TRUE)
   }
 
@@ -81,7 +81,6 @@ parameters_type <- function(model, ...) {
     }
   }
 
-
   # Remove "as.factor()", "log()" etc. from parameter names but save original parameter before
   original_parameter <- params$Parameter
   params$Parameter <- .clean_parameter_names(params$Parameter, full = TRUE)
@@ -90,7 +89,6 @@ parameters_type <- function(model, ...) {
   if (inherits(model, c("zeroinfl", "hurdle", "zerocount"))) {
     params$Parameter <- gsub("^(count_|zero_)", "", params$Parameter)
   }
-
 
   data <- insight::get_data(model, source = "mf", verbose = FALSE)
   if (is.null(data) || inherits(data, "ts") || nrow(data) == 0) {
@@ -112,12 +110,17 @@ parameters_type <- function(model, ...) {
   main <- .parameters_type_table(names = params$Parameter, data, reference)
   secondary <- .parameters_type_table(names = main$Secondary_Parameter, data, reference)
   names(secondary) <- paste0("Secondary_", names(secondary))
-  names(secondary)[names(secondary) == "Secondary_Secondary_Parameter"] <- "Tertiary_Parameter"
+  names(secondary)[
+    names(secondary) == "Secondary_Secondary_Parameter"
+  ] <- "Tertiary_Parameter"
 
   out <- cbind(params, main, secondary)
 
   # Deal with nested interactions
-  for (i in unique(paste0(out[out$Type == "interaction", "Variable"], out[out$Type == "interaction", "Secondary_Variable"]))) {
+  for (i in unique(paste0(
+    out[out$Type == "interaction", "Variable"],
+    out[out$Type == "interaction", "Secondary_Variable"]
+  ))) {
     interac <- out[paste0(out$Variable, out$Secondary_Variable) == i, ]
     if (!all(interac$Term %in% out$Parameter)) {
       out[paste0(out$Variable, out$Secondary_Variable) == i, "Type"] <- "nested"
@@ -133,9 +136,17 @@ parameters_type <- function(model, ...) {
   for (i in unique(out$Secondary_Parameter)) {
     if (!is.na(i) && i %in% out$Parameter) {
       .param_type <- out[!is.na(out$Parameter) & out$Parameter == i, "Type"]
-      .param_secondary_type <- out[!is.na(out$Secondary_Parameter) & out$Secondary_Parameter == i, "Secondary_Type"]
-      if (length(.param_type) == length(.param_secondary_type) || length(.param_type) == 1) {
-        out[!is.na(out$Secondary_Parameter) & out$Secondary_Parameter == i, "Secondary_Type"] <- .param_type
+      .param_secondary_type <- out[
+        !is.na(out$Secondary_Parameter) & out$Secondary_Parameter == i,
+        "Secondary_Type"
+      ]
+      if (
+        length(.param_type) == length(.param_secondary_type) || length(.param_type) == 1
+      ) {
+        out[
+          !is.na(out$Secondary_Parameter) & out$Secondary_Parameter == i,
+          "Secondary_Type"
+        ] <- .param_type
       }
     }
   }
@@ -166,7 +177,12 @@ parameters_type <- function(model, ...) {
     }
 
     # Check if any is factor
-    types <- unlist(lapply(var, function(x, data, reference) .parameters_type_basic(x, data, reference)[1], data = data, reference = reference))
+    types <- unlist(lapply(
+      var,
+      function(x, data, reference) .parameters_type_basic(x, data, reference)[1],
+      data = data,
+      reference = reference
+    ))
     link <- ifelse(any("factor" %in% types), "Difference", "Association")
     # Get type
     main <- .parameters_type_basic(var[1], data, reference)
@@ -214,14 +230,7 @@ parameters_type <- function(model, ...) {
     # Factors
   } else if (cleaned_name %in% reference$levels) {
     fac <- reference$levels_parent[match(cleaned_name, reference$levels)]
-    return(c(
-      "factor",
-      "Difference",
-      name,
-      fac,
-      gsub(fac, "", name, fixed = TRUE),
-      NA
-    ))
+    return(c("factor", "Difference", name, fac, gsub(fac, "", name, fixed = TRUE), NA))
 
     # Polynomials
   } else if (grepl("poly(", name, fixed = TRUE)) {
@@ -284,7 +293,14 @@ parameters_type <- function(model, ...) {
 
     # Smooth
   } else if (startsWith(name, "smooth_")) {
-    return(c("smooth", "Association", gsub("^smooth_(.*)\\[(.*)\\]", "\\2", name), NA, NA, NA))
+    return(c(
+      "smooth",
+      "Association",
+      gsub("^smooth_(.*)\\[(.*)\\]", "\\2", name),
+      NA,
+      NA,
+      NA
+    ))
   } else {
     return(c("unknown", NA, NA, NA, NA, NA))
   }
@@ -355,7 +371,9 @@ parameters_type <- function(model, ...) {
   out$ordered <- names(data[vapply(data, is.ordered, TRUE)])
 
   # Factors
-  out$factor <- names(data[vapply(data, is.factor, TRUE) | vapply(data, is.character, TRUE)])
+  out$factor <- names(data[
+    vapply(data, is.factor, TRUE) | vapply(data, is.character, TRUE)
+  ])
 
   out$levels <- NA
   out$levels_parent <- NA
@@ -370,15 +388,35 @@ parameters_type <- function(model, ...) {
   }
 
   for (fac in out$factor) {
-    if ((fac %in% out$ordered && is.null(contrast_coding[[fac]])) || (!is.null(contrast_coding[[fac]]) && any(contrast_coding[[fac]] %in% "contr.poly"))) {
-      levels <- paste0(fac, c(".L", ".Q", ".C", paste0("^", 4:1000))[seq_along(unique(data[[fac]]))])
-    } else if (!is.null(contrast_coding[[fac]]) && any(contrast_coding[[fac]] %in% c("contr.SAS2", "contr.sum", "contr.bayes", "contr.helmert"))) {
+    if (
+      (fac %in% out$ordered && is.null(contrast_coding[[fac]])) ||
+        (!is.null(contrast_coding[[fac]]) &&
+          any(contrast_coding[[fac]] %in% "contr.poly"))
+    ) {
+      levels <- paste0(
+        fac,
+        c(".L", ".Q", ".C", paste0("^", 4:1000))[seq_along(unique(data[[fac]]))]
+      )
+    } else if (
+      !is.null(contrast_coding[[fac]]) &&
+        any(
+          contrast_coding[[fac]] %in%
+            c("contr.SAS2", "contr.sum", "contr.bayes", "contr.helmert")
+        )
+    ) {
       levels <- paste0(fac, seq_along(unique(data[[fac]])))
-    } else if (!is.null(contrast_coding[[fac]]) && any(contrast_coding[[fac]] %in% "contr.treatment2")) {
+    } else if (
+      !is.null(contrast_coding[[fac]]) &&
+        any(contrast_coding[[fac]] %in% "contr.treatment2")
+    ) {
       levels <- paste0(fac, 2:length(unique(data[[fac]])))
-    } else if (!is.null(contrast_coding[[fac]]) && any(contrast_coding[[fac]] %in% "contr.SAS")) {
+    } else if (
+      !is.null(contrast_coding[[fac]]) && any(contrast_coding[[fac]] %in% "contr.SAS")
+    ) {
       levels <- paste0(fac, rev(unique(data[[fac]])))
-    } else if (!is.null(contrast_coding[[fac]]) && any(contrast_coding[[fac]] %in% "contr.custom")) {
+    } else if (
+      !is.null(contrast_coding[[fac]]) && any(contrast_coding[[fac]] %in% "contr.custom")
+    ) {
       levels <- paste0(fac, attributes(contrast_coding[[fac]])$column_names)
     } else {
       levels <- paste0(fac, unique(data[[fac]]))
