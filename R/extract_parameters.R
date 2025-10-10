@@ -83,6 +83,7 @@
   if (inherits(model, c("polr", "svyolr"))) {
     intercept_groups <- grep("Intercept:", parameters$Parameter, fixed = TRUE)
     parameters$Parameter <- gsub("Intercept: ", "", parameters$Parameter, fixed = TRUE)
+    statistic$Parameter <- gsub("Intercept: ", "", statistic$Parameter, fixed = TRUE)
   } else if (inherits(model, "clm") && !is.null(model$alpha)) {
     intercept_groups <- rep(
       c("intercept", "location", "scale"),

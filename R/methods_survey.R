@@ -88,7 +88,7 @@ standard_error.svyglm <- function(model, ...) {
 
 
 #' @export
-standard_error.svyolr <- standard_error.svyglm
+standard_error.svyolr <- standard_error.polr
 
 
 # confidence intervals -----------------------------------
@@ -108,7 +108,7 @@ ci.svyglm <- function(x, ci = 0.95, method = "wald", ...) {
 }
 
 #' @export
-ci.svyolr <- ci.svyglm
+ci.svyolr <- ci.polr
 
 
 # p values -----------------------------------------------
@@ -125,7 +125,7 @@ p_value.svyglm <- function(model, verbose = TRUE, ...) {
 
 
 #' @export
-p_value.svyolr <- p_value.svyglm
+p_value.svyolr <- p_value.polr
 
 
 #' @export
