@@ -10,11 +10,11 @@ test_that("robust-se polr", {
   m <- survey::svyolr(mealcat ~ avg.ed + mobility + stype, design = dclus1)
   out <- model_parameters(m)
   expect_identical(attributes(out)$coefficient_name, "Log-Odds")
-  expect_identicl(
+  expect_identical(
     out$Component,
     c("alpha", "alpha", "alpha", "beta", "beta", "beta", "beta")
   )
-  expect_identicl(
+  expect_identical(
     out$Parameter,
     c(
       "(0,25]|(25,50]",
