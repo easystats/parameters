@@ -248,6 +248,11 @@ model_parameters.glmmTMB <- function(
     component <- "conditional"
   }
 
+  # for ci_method kenward or satterthwaite, only conditional component
+  if (ci_method %in% c("satterthwaite", "kenward", "kr") && component != "conditional") {
+    component <- "conditional"
+  }
+
   # initialize
   params <- att <- NULL
   dispersion_param <- FALSE

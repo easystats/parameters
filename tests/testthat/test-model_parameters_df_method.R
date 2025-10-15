@@ -103,6 +103,9 @@ test_that("model_parameters, ci_method kenward", {
     c(24.08091, -2.887, -2.88887, -0.06828, -3.01082, -4.5299, -0.29339, -0.05735),
     tolerance = 1e-3
   )
+
+  expect_equal(mp5$SE, mp3$SE, tolerance = 1e-3)
+  expect_equal(mp5$df_error, mp3$df_error, tolerance = 1e-3)
 })
 
 test_that("model_parameters, ci_method wald (t)", {
