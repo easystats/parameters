@@ -396,14 +396,12 @@ model_parameters <- function(model, ...) {
 
 # DF naming convention --------------------
 
-
 # DF column naming
 # F has df, df_error
 # t has df_error
 # z has df_error = Inf
 # Chisq has df
 # https://github.com/easystats/parameters/issues/455
-
 
 # Options -------------------------------------
 
@@ -416,7 +414,6 @@ model_parameters <- function(model, ...) {
 # getOption("parameters_labels"): use value/variable labels instead pretty names
 # getOption("parameters_interaction"): separator char for interactions
 # getOption("parameters_select"): default for the `select` argument
-
 
 #' @rdname model_parameters
 #' @export
@@ -578,21 +575,23 @@ parameters <- model_parameters
 #' }
 #' @return A data frame of indices related to the model's parameters.
 #' @export
-model_parameters.default <- function(model,
-                                     ci = 0.95,
-                                     ci_method = NULL,
-                                     bootstrap = FALSE,
-                                     iterations = 1000,
-                                     standardize = NULL,
-                                     exponentiate = FALSE,
-                                     p_adjust = NULL,
-                                     vcov = NULL,
-                                     vcov_args = NULL,
-                                     include_info = getOption("parameters_info", FALSE),
-                                     keep = NULL,
-                                     drop = NULL,
-                                     verbose = TRUE,
-                                     ...) {
+model_parameters.default <- function(
+  model,
+  ci = 0.95,
+  ci_method = NULL,
+  bootstrap = FALSE,
+  iterations = 1000,
+  standardize = NULL,
+  exponentiate = FALSE,
+  p_adjust = NULL,
+  vcov = NULL,
+  vcov_args = NULL,
+  include_info = getOption("parameters_info", FALSE),
+  keep = NULL,
+  drop = NULL,
+  verbose = TRUE,
+  ...
+) {
   # validation check for inputs
   .is_model_valid(model)
 
@@ -642,13 +641,11 @@ model_parameters.default <- function(model,
       attr(out, "error")
     )
   } else if (is.null(out)) {
-    insight::format_error(
-      paste0(
-        "Sorry, `model_parameters()` does not currently work for objects of class `",
-        class(model)[1],
-        "`."
-      )
-    )
+    insight::format_error(paste0(
+      "Sorry, `model_parameters()` does not currently work for objects of class `",
+      class(model)[1],
+      "`."
+    ))
   }
 }
 
@@ -657,24 +654,26 @@ model_parameters.default <- function(model,
 # including a bunch of attributes required for further processing
 # (like printing etc.)
 
-.model_parameters_generic <- function(model,
-                                      ci = 0.95,
-                                      bootstrap = FALSE,
-                                      iterations = 1000,
-                                      merge_by = "Parameter",
-                                      standardize = NULL,
-                                      exponentiate = FALSE,
-                                      effects = "fixed",
-                                      component = "conditional",
-                                      ci_method = NULL,
-                                      p_adjust = NULL,
-                                      include_info = FALSE,
-                                      keep_parameters = NULL,
-                                      drop_parameters = NULL,
-                                      vcov = NULL,
-                                      vcov_args = NULL,
-                                      verbose = TRUE,
-                                      ...) {
+.model_parameters_generic <- function(
+  model,
+  ci = 0.95,
+  bootstrap = FALSE,
+  iterations = 1000,
+  merge_by = "Parameter",
+  standardize = NULL,
+  exponentiate = FALSE,
+  effects = "fixed",
+  component = "conditional",
+  ci_method = NULL,
+  p_adjust = NULL,
+  include_info = FALSE,
+  keep_parameters = NULL,
+  drop_parameters = NULL,
+  vcov = NULL,
+  vcov_args = NULL,
+  verbose = TRUE,
+  ...
+) {
   dots <- list(...)
 
   out <- tryCatch(
@@ -688,12 +687,7 @@ model_parameters.default <- function(model,
           ci_method <- "quantile"
         }
 
-        fun_args <- list(
-          model,
-          iterations = iterations,
-          ci = ci,
-          ci_method = ci_method
-        )
+        fun_args <- list(model, iterations = iterations, ci = ci, ci_method = ci_method)
         fun_args <- c(fun_args, dots)
         params <- do.call("bootstrap_parameters", fun_args)
 
@@ -723,12 +717,10 @@ model_parameters.default <- function(model,
         params <- do.call(".extract_parameters_generic", fun_args)
       }
 
-
       # ==== 2. second step, exponentiate -------
 
       # exponentiate coefficients and SE/CI, if requested
       params <- .exponentiate_parameters(params, model, exponentiate)
-
 
       # ==== 3. third step, add information as attributes -------
 
@@ -766,30 +758,31 @@ model_parameters.default <- function(model,
 
 #################### .glm ----------------------
 
-
 #' @export
-model_parameters.glm <- function(model,
-                                 ci = 0.95,
-                                 ci_method = NULL,
-                                 bootstrap = FALSE,
-                                 iterations = 1000,
-                                 standardize = NULL,
-                                 exponentiate = FALSE,
-                                 p_adjust = NULL,
-                                 vcov = NULL,
-                                 vcov_args = NULL,
-                                 include_info = getOption("parameters_info", FALSE),
-                                 keep = NULL,
-                                 drop = NULL,
-                                 verbose = TRUE,
-                                 ...) {
+model_parameters.glm <- function(
+  model,
+  ci = 0.95,
+  ci_method = NULL,
+  bootstrap = FALSE,
+  iterations = 1000,
+  standardize = NULL,
+  exponentiate = FALSE,
+  p_adjust = NULL,
+  vcov = NULL,
+  vcov_args = NULL,
+  include_info = getOption("parameters_info", FALSE),
+  keep = NULL,
+  drop = NULL,
+  verbose = TRUE,
+  ...
+) {
   dots <- list(...)
 
   # set default
   if (is.null(ci_method)) {
     if (isTRUE(bootstrap)) {
       ci_method <- "quantile"
-    } else if (!is.null(vcov) || !is.null(vcov_args)) {
+    } else if (!is.null(vcov) || !is.null(vcov_args) || inherits(model, "svyolr")) {
       ci_method <- "wald"
     } else {
       ci_method <- "profile"
@@ -805,7 +798,11 @@ model_parameters.glm <- function(model,
   }
 
   # tell user that profiled CIs don't respect vcov-args
-  if (identical(ci_method, "profile") && (!is.null(vcov) || !is.null(vcov_args)) && isTRUE(verbose)) {
+  if (
+    identical(ci_method, "profile") &&
+      (!is.null(vcov) || !is.null(vcov_args)) &&
+      isTRUE(verbose)
+  ) {
     insight::format_alert(
       "When `ci_method=\"profile\"`, `vcov` only modifies standard errors, test-statistic and p-values, but not confidence intervals.", # nolint
       "Use `ci_method=\"wald\"` to return confidence intervals based on robust standard errors."
