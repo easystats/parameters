@@ -5,8 +5,8 @@ se_kenward <- function(model) {
     model <- stats::update(model, . ~ ., REML = TRUE)
   }
 
-  dof <- insight::get_df(model, "kenward")
+  vcov_adjusted <- insight::get_varcov(model, vcov = "kenward-roger")
   params <- insight::get_parameters(model, effects = "fixed", component)
 
-  .data_frame(Parameter = params$Parameter, SE = attributes(dof)$se)
+  .data_frame(Parameter = params$Parameter, SE = abs(sqrt(diag(vcov_adjusted))))
 }
