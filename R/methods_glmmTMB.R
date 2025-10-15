@@ -520,7 +520,7 @@ ci.glmmTMB <- function(
   ...
 ) {
   method <- insight::validate_argument(
-    method <- tolower(method),
+    tolower(method),
     # fmt: skip
     c(
       "wald", "normal", "residual", "ml1", "betwithin", "satterthwaite",
