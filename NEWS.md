@@ -2,6 +2,8 @@
 
 * `equivalence_test()` gets methods for objects from the *modelbased* package.
 
+* Improved support for objects from package *survey*.
+
 * Added support for package *lcmm*.
 
 * Added `ci_method` options `"kenward-roger"` and `"satterthwaite"` for models
