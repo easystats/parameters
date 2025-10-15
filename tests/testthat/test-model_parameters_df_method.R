@@ -17,6 +17,11 @@ model3 <- suppressMessages(glmmTMB::glmmTMB(
   data = mtcars,
   REML = TRUE
 ))
+model4 <- suppressMessages(glmmTMB::glmmTMB(
+  mpg ~ as.factor(gear) * hp + as.factor(am) + wt + (1 | cyl),
+  data = mtcars,
+  REML = FALSE
+))
 
 mp0 <- model_parameters(model, digits = 5, effects = "fixed")
 mp1 <- model_parameters(model, digits = 5, ci_method = "normal", effects = "fixed")
@@ -106,6 +111,16 @@ test_that("model_parameters, ci_method kenward", {
 
   expect_equal(mp5$SE, mp3$SE, tolerance = 1e-3)
   expect_equal(mp5$df_error, mp3$df_error, tolerance = 1e-3)
+
+  expect_warning(expect_warning(expect_warning(
+    {
+      mp6 <- model_parameters(model4, digits = 5, ci_method = "kr", effects = "fixed")
+    },
+    regex = "Model was not fitted"
+  )))
+
+  expect_equal(mp5$SE, mp6$SE, tolerance = 1e-3)
+  expect_equal(mp5$df_error, mp6$df_error, tolerance = 1e-3)
 })
 
 test_that("model_parameters, ci_method wald (t)", {
