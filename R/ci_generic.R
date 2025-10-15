@@ -1,19 +1,22 @@
 # generic function for CI calculation
-.ci_generic <- function(model,
-                        ci = 0.95,
-                        method = "wald",
-                        dof = NULL,
-                        effects = "fixed",
-                        component = "all",
-                        vcov = NULL,
-                        vcov_args = NULL,
-                        verbose = TRUE,
-                        ...) {
+.ci_generic <- function(
+  model,
+  ci = 0.95,
+  method = "wald",
+  dof = NULL,
+  effects = "fixed",
+  component = "all",
+  vcov = NULL,
+  vcov_args = NULL,
+  verbose = TRUE,
+  ...
+) {
   # check method
   if (is.null(method)) {
     method <- "wald"
   }
   method <- tolower(method)
+  # fmt: skip
   method <- insight::validate_argument(
     method,
     c(
@@ -23,6 +26,7 @@
   )
 
   effects <- insight::validate_argument(effects, c("fixed", "random", "all"))
+  # fmt: skip
   component <- insight::validate_argument(
     component,
     c(
@@ -31,7 +35,8 @@
     )
   )
 
-  if (method == "ml1") { # nolint
+  if (method == "ml1") {
+    # nolint
     return(ci_ml1(model, ci = ci))
   } else if (method == "betwithin") {
     return(ci_betwithin(model, ci = ci))

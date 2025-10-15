@@ -154,7 +154,7 @@ dof <- degrees_of_freedom
       ))
     }
     return(FALSE)
-}
+  }
 
   if (!info$is_linear && method %in% c("satterthwaite", "kenward", "kr")) {
     if (verbose) {

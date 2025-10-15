@@ -4,6 +4,11 @@
 
 * Added support for package *lcmm*.
 
+* Added `ci_method` options `"kenward-roger"` and `"satterthwaite"` for models
+  from package *glmmTMB*. Consequently, `se_kenward()`, `se_satterthwaite()`,
+  `ci_kenward()`, `ci_satterthwaite()`, `p_value_kenward()` and
+  `p_value_satterthwaite()` can now be used with `glmmTMB` models.
+
 # parameters 0.28.2
 
 ## Bug fixes
