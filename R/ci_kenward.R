@@ -1,7 +1,10 @@
 #' @rdname p_value_kenward
 #' @export
 ci_kenward <- function(model, ci = 0.95) {
-  .check_REML_fit(model)
+  if (!.check_REML_fit(model)) {
+    model <- stats::update(model, . ~ ., REML = TRUE)
+  }
+
   df_kr <- dof_kenward(model)
   out <- lapply(ci, function(i) {
     .ci_dof(
