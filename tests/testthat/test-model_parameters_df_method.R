@@ -29,6 +29,12 @@ mp2 <- model_parameters(model, digits = 5, ci_method = "s", effects = "fixed")
 mp3 <- model_parameters(model, digits = 5, ci_method = "kr", effects = "fixed")
 mp4 <- model_parameters(model, digits = 5, ci_method = "wald", effects = "fixed")
 mp5 <- model_parameters(model3, digits = 5, ci_method = "kr", effects = "fixed")
+mp6 <- model_parameters(
+  model3,
+  digits = 5,
+  ci_method = "satterthwaite",
+  effects = "fixed"
+)
 
 test_that("model_parameters, ci_method default (residual)", {
   expect_equal(
@@ -85,6 +91,8 @@ test_that("model_parameters, ci_method satterthwaite", {
     c(24.57489, 4.93385, -1.91805, -0.05477, -2.96368, -4.41987, -0.16904, -0.05117),
     tolerance = 1e-3
   )
+  expect_equal(mp2$SE, mp6$SE, tolerance = 1e-3)
+  expect_equal(mp2$df_error, mp6$df_error, tolerance = 1e-3)
 })
 
 test_that("model_parameters, ci_method kenward", {
@@ -114,13 +122,13 @@ test_that("model_parameters, ci_method kenward", {
 
   expect_warning(expect_warning(expect_warning(
     {
-      mp6 <- model_parameters(model4, digits = 5, ci_method = "kr", effects = "fixed")
+      mp7 <- model_parameters(model4, digits = 5, ci_method = "kr", effects = "fixed")
     },
     regex = "Model was not fitted"
   )))
 
-  expect_equal(mp5$SE, mp6$SE, tolerance = 1e-3)
-  expect_equal(mp5$df_error, mp6$df_error, tolerance = 1e-3)
+  expect_equal(mp5$SE, mp7$SE, tolerance = 1e-3)
+  expect_equal(mp5$df_error, mp7$df_error, tolerance = 1e-3)
 })
 
 test_that("model_parameters, ci_method wald (t)", {
