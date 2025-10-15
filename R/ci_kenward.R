@@ -1,11 +1,11 @@
 #' @rdname p_value_kenward
 #' @export
-ci_kenward <- function(model, ...) {
+ci_kenward <- function(model, ci = 0.95, ...) {
   UseMethod("ci_kenward")
 }
 
 #' @export
-ci_kenward.default <- function(model, ci = 0.95) {
+ci_kenward.default <- function(model, ci = 0.95, ...) {
   if (!.check_REML_fit(model)) {
     model <- stats::update(model, . ~ ., REML = TRUE)
   }
@@ -28,7 +28,7 @@ ci_kenward.default <- function(model, ci = 0.95) {
 }
 
 #' @export
-ci_kenward.glmmTMB <- function(model, ci = 0.95) {
+ci_kenward.glmmTMB <- function(model, ci = 0.95, ...) {
   if (!.check_REML_fit(model)) {
     model <- stats::update(model, . ~ ., REML = TRUE)
   }

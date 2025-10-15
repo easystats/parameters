@@ -19,7 +19,7 @@ se_kenward.default <- function(model, ...) {
 
 
 #' @export
-se_kenward.glmmTMB <- function(model, component = "conditional") {
+se_kenward.glmmTMB <- function(model, component = "conditional", ...) {
   if (!.check_REML_fit(model)) {
     model <- stats::update(model, . ~ ., REML = TRUE)
   }
