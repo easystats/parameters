@@ -37,32 +37,42 @@
 #'   fixed effects from restricted maximum likelihood. Biometrics, 983-997.
 #' @export
 p_value_kenward <- function(model, dof = NULL) {
-  UseMethod("p_value_kenward")
-}
+  if (!.check_REML_fit(model)) {
+    model <- stats::update(model, . ~ ., REML = TRUE)
+  }
 
-
-#' @export
-p_value_kenward.lmerMod <- function(model, dof = NULL) {
   if (is.null(dof)) {
     dof <- dof_kenward(model)
   }
   .p_value_dof(model, dof, method = "kenward")
 }
 
-
 # helper ------------------------------
 
-.p_value_dof <- function(model,
-                         dof,
-                         method = NULL,
-                         statistic = NULL,
-                         se = NULL,
-                         component = c("all", "conditional", "zi", "zero_inflated", "dispersion", "precision", "scale", "smooth_terms", "full", "marginal"),
-                         effects = c("fixed", "random", "all"),
-                         verbose = TRUE,
-                         vcov = NULL,
-                         vcov_args = NULL,
-                         ...) {
+.p_value_dof <- function(
+  model,
+  dof,
+  method = NULL,
+  statistic = NULL,
+  se = NULL,
+  component = c(
+    "all",
+    "conditional",
+    "zi",
+    "zero_inflated",
+    "dispersion",
+    "precision",
+    "scale",
+    "smooth_terms",
+    "full",
+    "marginal"
+  ),
+  effects = c("fixed", "random", "all"),
+  verbose = TRUE,
+  vcov = NULL,
+  vcov_args = NULL,
+  ...
+) {
   component <- match.arg(component)
   effects <- match.arg(effects)
 
@@ -87,7 +97,8 @@ p_value_kenward.lmerMod <- function(model, dof = NULL) {
       se <- se_kenward(model)$SE
     }
   } else if (!is.null(vcov)) {
-    se <- standard_error(model,
+    se <- standard_error(
+      model,
       vcov = vcov,
       vcov_args = vcov_args,
       component = component,
@@ -106,14 +117,17 @@ p_value_kenward.lmerMod <- function(model, dof = NULL) {
   }
 
   p <- 2 * stats::pt(abs(statistic), df = dof, lower.tail = FALSE)
-  out <- .data_frame(
-    Parameter = params$Parameter,
-    p = unname(p)
-  )
+  out <- .data_frame(Parameter = params$Parameter, p = unname(p))
 
-  if ("Component" %in% names(params)) out$Component <- params$Component
-  if ("Effects" %in% names(params) && effects != "fixed") out$Effects <- params$Effects
-  if ("Response" %in% names(params)) out$Response <- params$Response
+  if ("Component" %in% names(params)) {
+    out$Component <- params$Component
+  }
+  if ("Effects" %in% names(params) && effects != "fixed") {
+    out$Effects <- params$Effects
+  }
+  if ("Response" %in% names(params)) {
+    out$Response <- params$Response
+  }
 
   out
 }
@@ -124,21 +138,28 @@ p_value_kenward.lmerMod <- function(model, dof = NULL) {
     params$SE <- NULL
   }
   params <- merge(params, dof, by = "Parameter")
-  p <- 2 * stats::pt(abs(params$Estimate / params$SE), df = params$df_error, lower.tail = FALSE)
+  p <- 2 *
+    stats::pt(abs(params$Estimate / params$SE), df = params$df_error, lower.tail = FALSE)
 
-  .data_frame(
-    Parameter = params$Parameter,
-    p = unname(p)
-  )
+  .data_frame(Parameter = params$Parameter, p = unname(p))
 }
 
 
 # helper -------------------------
 
-.check_REML_fit <- function(model) {
-  insight::check_if_installed("lme4")
-
-  if (!(lme4::getME(model, "is_REML"))) {
-    insight::format_warning("Model was not fitted by REML. Re-fitting model now, but p-values, df, etc. still might be unreliable.")
+.check_REML_fit <- function(model, verbose = TRUE) {
+  if (inherits(model, "glmmTMB")) {
+    is_reml <- isTRUE(model$modelInfo$REML)
+  } else {
+    insight::check_if_installed("lme4")
+    is_reml <- lme4::getME(model, "is_REML")
   }
+
+  if (!is_reml && verbose) {
+    insight::format_warning(
+      "Model was not fitted by REML. Re-fitting model now, but p-values, df, etc. still might be unreliable."
+    )
+  }
+
+  is_reml
 }

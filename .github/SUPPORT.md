@@ -7,9 +7,7 @@ Start by making a minimal **repr**oducible **ex**ample using the
 [reprex](http://reprex.tidyverse.org/) package. If you haven't heard of or used
 reprex before, you're in for a treat! Seriously, reprex will make all of your
 R-question-asking endeavors easier (which is a pretty insane ROI for the five to
-ten minutes it'll take you to learn what it's all about). For additional reprex
-pointers, check out the [Get help!](https://www.tidyverse.org/help/) resource
-used by the tidyverse team.
+ten minutes it'll take you to learn what it's all about).
 
 Armed with your reprex, the next step is to figure out where to ask:
 

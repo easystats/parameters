@@ -1,25 +1,26 @@
 # generic function ------------------------------------------------------
 
-
 #' @keywords internal
-.extract_parameters_generic <- function(model,
-                                        ci,
-                                        component,
-                                        merge_by = c("Parameter", "Component"),
-                                        standardize = NULL,
-                                        effects = "fixed",
-                                        ci_method = NULL,
-                                        p_adjust = NULL,
-                                        wb_component = FALSE,
-                                        verbose = TRUE,
-                                        keep_component_column = FALSE,
-                                        keep_parameters = NULL,
-                                        drop_parameters = NULL,
-                                        include_sigma = TRUE,
-                                        include_info = FALSE,
-                                        vcov = NULL,
-                                        vcov_args = NULL,
-                                        ...) {
+.extract_parameters_generic <- function(
+  model,
+  ci,
+  component,
+  merge_by = c("Parameter", "Component"),
+  standardize = NULL,
+  effects = "fixed",
+  ci_method = NULL,
+  p_adjust = NULL,
+  wb_component = FALSE,
+  verbose = TRUE,
+  keep_component_column = FALSE,
+  keep_parameters = NULL,
+  drop_parameters = NULL,
+  include_sigma = TRUE,
+  include_info = FALSE,
+  vcov = NULL,
+  vcov_args = NULL,
+  ...
+) {
   dots <- list(...)
 
   # ==== check if standardization is required and package available
@@ -39,7 +40,6 @@
     merge_by <- c("Parameter", "Component")
   }
 
-
   # ==== for refit, we completely refit the model, than extract parameters, ci etc. as usual
 
   if (isTRUE(standardize == "refit")) {
@@ -50,7 +50,8 @@
     model <- do.call(fun, fun_args)
   }
 
-  parameters <- insight::get_parameters(model,
+  parameters <- insight::get_parameters(
+    model,
     effects = effects,
     component = component,
     verbose = FALSE
@@ -60,13 +61,15 @@
   # check if all estimates are non-NA
   parameters <- .check_rank_deficiency(model, parameters)
 
-
   # ==== check if we really have a component column
 
   if (!("Component" %in% names(parameters)) && "Component" %in% merge_by) {
     merge_by <- setdiff(merge_by, "Component")
   }
 
+  if (!("Group" %in% names(parameters)) && "Group" %in% merge_by) {
+    merge_by <- setdiff(merge_by, "Group")
+  }
 
   # ==== check Degrees of freedom
 
@@ -74,13 +77,13 @@
     ci_method <- NULL
   }
 
-
   # ==== for ordinal models, first, clean parameter names and then indicate
   #      intercepts (alpha-coefficients) in the component column
 
-  if (inherits(model, "polr")) {
+  if (inherits(model, c("polr", "svyolr"))) {
     intercept_groups <- grep("Intercept:", parameters$Parameter, fixed = TRUE)
     parameters$Parameter <- gsub("Intercept: ", "", parameters$Parameter, fixed = TRUE)
+    statistic$Parameter <- gsub("Intercept: ", "", statistic$Parameter, fixed = TRUE)
   } else if (inherits(model, "clm") && !is.null(model$alpha)) {
     intercept_groups <- rep(
       c("intercept", "location", "scale"),
@@ -103,13 +106,13 @@
   # column name for coefficients, non-standardized
   coef_col <- "Coefficient"
 
-
   # ==== CI - only if we don't already have CI for std. parameters
 
   ci_cols <- NULL
   if (!is.null(ci)) {
     # set up arguments for CI function
-    fun_args <- list(model,
+    fun_args <- list(
+      model,
       ci = ci,
       component = component,
       vcov = vcov,
@@ -134,10 +137,10 @@
     }
   }
 
-
   # ==== p value
 
-  fun_args <- list(model,
+  fun_args <- list(
+    model,
     method = ci_method,
     effects = effects,
     verbose = verbose,
@@ -152,11 +155,11 @@
     parameters <- merge(parameters, pval, by = merge_by, sort = FALSE)
   }
 
-
   # ==== standard error - only if we don't already have SE for std. parameters
 
   std_err <- NULL
-  fun_args <- list(model,
+  fun_args <- list(
+    model,
     effects = effects,
     component = component,
     verbose = verbose,
@@ -173,7 +176,6 @@
     parameters <- merge(parameters, std_err, by = merge_by, sort = FALSE)
   }
 
-
   # ==== test statistic - fix values for robust vcov
 
   if (!is.null(vcov)) {
@@ -182,7 +184,6 @@
     parameters <- merge(parameters, statistic, by = merge_by, sort = FALSE)
   }
 
-
   # ==== degrees of freedom
 
   if (is.null(ci_method)) {
@@ -190,7 +191,9 @@
   } else {
     df_error <- insight::get_df(x = model, type = ci_method, verbose = FALSE)
   }
-  if (!is.null(df_error) && (length(df_error) == 1 || length(df_error) == nrow(parameters))) {
+  if (
+    !is.null(df_error) && (length(df_error) == 1 || length(df_error) == nrow(parameters))
+  ) {
     if (length(df_error) == 1) {
       parameters$df_error <- df_error
     } else {
@@ -200,11 +203,9 @@
     }
   }
 
-
   # ==== Rematch order after merging
 
   parameters <- parameters[match(original_order, parameters$.id), ]
-
 
   # ==== Renaming
 
@@ -217,39 +218,59 @@
         colnames(parameters),
         fixed = TRUE
       )
-      colnames(parameters) <- gsub("chi-squared", "Chi2", colnames(parameters), fixed = TRUE)
+      colnames(parameters) <- gsub(
+        "chi-squared",
+        "Chi2",
+        colnames(parameters),
+        fixed = TRUE
+      )
     }
   }
   colnames(parameters) <- gsub("(c|C)hisq", "Chi2", colnames(parameters))
-  colnames(parameters) <- gsub("Estimate", "Coefficient", colnames(parameters), fixed = TRUE)
-
+  colnames(parameters) <- gsub(
+    "Estimate",
+    "Coefficient",
+    colnames(parameters),
+    fixed = TRUE
+  )
 
   # ==== add intercept groups for ordinal models
 
-  if (inherits(model, "polr") && !is.null(intercept_groups)) {
+  if (inherits(model, c("polr", "svyolr")) && !is.null(intercept_groups)) {
     parameters$Component <- "beta"
     parameters$Component[intercept_groups] <- "alpha"
-  } else if (inherits(model, c("clm", "clm2", "ordinal_weightit")) && !is.null(intercept_groups)) {
+  } else if (
+    inherits(model, c("clm", "clm2", "ordinal_weightit")) && !is.null(intercept_groups)
+  ) {
     parameters$Component <- intercept_groups
   }
 
-
   # ==== remove Component / Effects column if not needed
 
-  if (!is.null(parameters$Component) && insight::has_single_value(parameters$Component, remove_na = TRUE) && !keep_component_column) parameters$Component <- NULL # nolint
-  if ((!is.null(parameters$Effects) && insight::n_unique(parameters$Effects) == 1) || effects == "fixed") parameters$Effects <- NULL # nolint
-
+  if (
+    !is.null(parameters$Component) &&
+      insight::has_single_value(parameters$Component, remove_na = TRUE) &&
+      !keep_component_column
+  ) {
+    parameters$Component <- NULL
+  }
+  if (
+    (!is.null(parameters$Effects) && insight::n_unique(parameters$Effects) == 1) ||
+      effects == "fixed"
+  ) {
+    parameters$Effects <- NULL
+  }
 
   # ==== filter parameters, if requested
 
   if (!is.null(keep_parameters) || !is.null(drop_parameters)) {
-    parameters <- .filter_parameters(parameters,
+    parameters <- .filter_parameters(
+      parameters,
       keep = keep_parameters,
       drop = drop_parameters,
       verbose = verbose
     )
   }
-
 
   # ==== adjust p-values?
 
@@ -257,18 +278,15 @@
     parameters <- .p_adjust(parameters, p_adjust, model, verbose)
   }
 
-
   # ==== remove all complete-missing cases
 
   parameters <- parameters[apply(parameters, 1, function(i) !all(is.na(i))), ]
-
 
   # ==== add within/between attributes
 
   if (inherits(model, c("glmmTMB", "MixMod")) && isTRUE(wb_component)) {
     parameters <- .add_within_between_effects(model, parameters)
   }
-
 
   # ==== Std Coefficients for other methods than "refit"
 
@@ -291,9 +309,9 @@
     coef_col <- "Std_Coefficient"
   }
 
-
   # ==== Reorder
 
+  # fmt: skip
   col_order <- c(
     "Parameter", coef_col, "SE", ci_cols, "t", "z", "t / F", "t/F",
     "z / Chisq", "z/Chisq", "z / Chi2", "z/Chi2", "F", "Chi2",
@@ -302,13 +320,11 @@
   )
   parameters <- parameters[col_order[col_order %in% names(parameters)]]
 
-
   # ==== add sigma and residual df
 
   if (isTRUE(include_sigma) || isTRUE(include_info)) {
     parameters <- .add_sigma_residual_df(parameters, model)
   }
-
 
   rownames(parameters) <- NULL
   parameters
@@ -316,7 +332,6 @@
 
 
 # helper ----------------
-
 
 .add_sigma_residual_df <- function(params, model) {
   if (is.null(params$Component) || !"sigma" %in% params$Component) {
@@ -333,7 +348,8 @@
 .filter_parameters <- function(params, keep = NULL, drop = NULL, verbose = TRUE) {
   if (!is.null(keep) && is.list(keep)) {
     for (i in names(keep)) {
-      params <- .filter_parameters_vector(params,
+      params <- .filter_parameters_vector(
+        params,
         keep[[i]],
         drop = NULL,
         column = i,
@@ -341,7 +357,8 @@
       )
     }
   } else {
-    params <- .filter_parameters_vector(params,
+    params <- .filter_parameters_vector(
+      params,
       keep,
       drop,
       column = NULL,
@@ -352,18 +369,21 @@
 }
 
 
-.filter_parameters_vector <- function(params,
-                                      keep = NULL,
-                                      drop = NULL,
-                                      column = NULL,
-                                      verbose = TRUE) {
+.filter_parameters_vector <- function(
+  params,
+  keep = NULL,
+  drop = NULL,
+  column = NULL,
+  verbose = TRUE
+) {
   # check pattern
   if (!is.null(keep) && length(keep) > 1) {
     keep <- paste0("(", paste(keep, collapse = "|"), ")")
     if (verbose) {
-      insight::format_alert(
-        sprintf("The `keep` argument has more than 1 element. Merging into following regular expression: `%s`.", keep)
-      )
+      insight::format_alert(sprintf(
+        "The `keep` argument has more than 1 element. Merging into following regular expression: `%s`.",
+        keep
+      ))
     }
   }
 
@@ -371,9 +391,10 @@
   if (!is.null(drop) && length(drop) > 1) {
     drop <- paste0("(", paste(drop, collapse = "|"), ")")
     if (verbose) {
-      insight::format_alert(
-        sprintf("The `drop` argument has more than 1 element. Merging into following regular expression: `%s`.", drop)
-      )
+      insight::format_alert(sprintf(
+        "The `drop` argument has more than 1 element. Merging into following regular expression: `%s`.",
+        drop
+      ))
     }
   }
 
@@ -398,7 +419,6 @@
     rows_to_drop <- !grepl(drop, params[[column]], perl = TRUE)
   }
 
-
   out <- params[rows_to_keep & rows_to_drop, ]
 
   if (nrow(out) == 0) {
@@ -416,28 +436,34 @@
 
 # mixed models function ------------------------------------------------------
 
-
 #' @keywords internal
-.extract_parameters_mixed <- function(model,
-                                      ci = 0.95,
-                                      ci_method = "wald",
-                                      standardize = NULL,
-                                      p_adjust = NULL,
-                                      wb_component = FALSE,
-                                      keep_parameters = NULL,
-                                      drop_parameters = NULL,
-                                      include_sigma = FALSE,
-                                      include_info = FALSE,
-                                      vcov = NULL,
-                                      vcov_args = NULL,
-                                      verbose = TRUE,
-                                      ...) {
+.extract_parameters_mixed <- function(
+  model,
+  ci = 0.95,
+  ci_method = "wald",
+  standardize = NULL,
+  p_adjust = NULL,
+  wb_component = FALSE,
+  keep_parameters = NULL,
+  drop_parameters = NULL,
+  include_sigma = FALSE,
+  include_info = FALSE,
+  vcov = NULL,
+  vcov_args = NULL,
+  verbose = TRUE,
+  ...
+) {
   dots <- list(...)
 
   special_ci_methods <- c("betwithin", "satterthwaite", "ml1", "kenward", "kr")
 
   # get parameters and statistic
-  parameters <- insight::get_parameters(model, effects = "fixed", component = "all", verbose = FALSE)
+  parameters <- insight::get_parameters(
+    model,
+    effects = "fixed",
+    component = "all",
+    verbose = FALSE
+  )
   statistic <- insight::get_statistic(model, component = "all")
 
   # check if all estimates are non-NA
@@ -447,11 +473,14 @@
   original_order <- parameters$.id <- seq_len(nrow(parameters))
 
   # remove SE column
-  parameters <- datawizard::data_remove(parameters, c("SE", "Std. Error"), verbose = FALSE)
+  parameters <- datawizard::data_remove(
+    parameters,
+    c("SE", "Std. Error"),
+    verbose = FALSE
+  )
 
   # column name for coefficients, non-standardized
   coef_col <- "Coefficient"
-
 
   # Degrees of freedom
   if (.dof_method_ok(model, ci_method)) {
@@ -468,14 +497,14 @@
   # for KR-dof, we have the SE as well, to save computation time
   df_error$SE <- attr(dof, "se", exact = TRUE)
 
-
   # CI - only if we don't already have CI for std. parameters
 
   ci_cols <- NULL
   if (!is.null(ci)) {
     # HC vcov?
     if (!is.null(vcov)) {
-      fun_args <- list(model,
+      fun_args <- list(
+        model,
         ci = ci,
         vcov = vcov,
         vcov_args = vcov_args,
@@ -496,15 +525,10 @@
     parameters <- merge(parameters, ci_df, by = "Parameter", sort = FALSE)
   }
 
-
   # standard error - only if we don't already have SE for std. parameters
   if (!"SE" %in% colnames(parameters)) {
     if (!is.null(vcov)) {
-      fun_args <- list(model,
-        vcov = vcov,
-        vcov_args = vcov_args,
-        verbose = verbose
-      )
+      fun_args <- list(model, vcov = vcov, vcov_args = vcov_args, verbose = verbose)
       fun_args <- c(fun_args, dots)
       parameters <- merge(
         parameters,
@@ -527,14 +551,9 @@
     }
   }
 
-
   # p value
   if (!is.null(vcov)) {
-    fun_args <- list(model,
-      vcov = vcov,
-      vcov_args = vcov_args,
-      verbose = verbose
-    )
+    fun_args <- list(model, vcov = vcov, vcov_args = vcov_args, verbose = verbose)
     fun_args <- c(fun_args, dots)
     parameters <- merge(
       parameters,
@@ -561,14 +580,12 @@
     )
   }
 
-
   # adjust standard errors and test-statistic as well
   if ((!is.null(vcov) || ci_method %in% special_ci_methods)) {
     parameters$Statistic <- parameters$Estimate / parameters$SE
   } else {
     parameters <- merge(parameters, statistic, by = "Parameter", sort = FALSE)
   }
-
 
   # dof
   if (!"df" %in% names(parameters)) {
@@ -588,7 +605,6 @@
     }
   }
 
-
   # Rematch order after merging
   parameters <- parameters[match(original_order, parameters$.id), ]
 
@@ -600,13 +616,19 @@
     fixed = TRUE
   )
   colnames(parameters) <- gsub("Std. Error", "SE", colnames(parameters), fixed = TRUE)
-  colnames(parameters) <- gsub("Estimate", "Coefficient", colnames(parameters), fixed = TRUE)
+  colnames(parameters) <- gsub(
+    "Estimate",
+    "Coefficient",
+    colnames(parameters),
+    fixed = TRUE
+  )
   colnames(parameters) <- gsub("t value", "t", colnames(parameters), fixed = TRUE)
   colnames(parameters) <- gsub("z value", "z", colnames(parameters), fixed = TRUE)
 
   # filter parameters, if requested
   if (!is.null(keep_parameters) || !is.null(drop_parameters)) {
-    parameters <- .filter_parameters(parameters,
+    parameters <- .filter_parameters(
+      parameters,
       keep = keep_parameters,
       drop = drop_parameters,
       verbose = verbose
@@ -644,18 +666,17 @@
   }
 
   # Reorder
+  # fmt: skip
   col_order <- c(
     "Parameter", coef_col, "SE", ci_cols, "t", "z", "df", "df_error", "p",
     "Component"
   )
   parameters <- parameters[col_order[col_order %in% colnames(parameters)]]
 
-
   # add sigma
   if (isTRUE(include_sigma) || isTRUE(include_info)) {
     parameters <- .add_sigma_residual_df(parameters, model)
   }
-
 
   rownames(parameters) <- NULL
   parameters
@@ -683,22 +704,18 @@
   }
 
   if (!is.null(within_effects)) {
-    index <- unique(unlist(sapply(
-      within_effects,
-      grep,
-      x = parameters$Parameter,
-      fixed = TRUE
-    ), use.names = FALSE))
+    index <- unique(unlist(
+      sapply(within_effects, grep, x = parameters$Parameter, fixed = TRUE),
+      use.names = FALSE
+    ))
     parameters$Component[index] <- "within"
   }
 
   if (!is.null(between_effects)) {
-    index <- unique(unlist(sapply(
-      between_effects,
-      grep,
-      x = parameters$Parameter,
-      fixed = TRUE
-    ), use.names = FALSE))
+    index <- unique(unlist(
+      sapply(between_effects, grep, x = parameters$Parameter, fixed = TRUE),
+      use.names = FALSE
+    ))
     parameters$Component[index] <- "between"
   }
 
@@ -707,8 +724,11 @@
     parameters$Component[interactions] <- "interactions"
   }
 
-  if (((!all(c("within", "between") %in% parameters$Component)) && inherits(model, "merMod")) ||
-    all(parameters$Component == "rewb-contextual")) {
+  if (
+    ((!all(c("within", "between") %in% parameters$Component)) &&
+      inherits(model, "merMod")) ||
+      all(parameters$Component == "rewb-contextual")
+  ) {
     parameters$Component <- NULL
   }
 
@@ -718,34 +738,38 @@
 
 .find_within_between <- function(model, which_effect) {
   mf <- stats::model.frame(model)
-  unlist(sapply(names(mf), function(i) {
-    if (!is.null(attr(mf[[i]], which_effect, exact = TRUE))) {
-      i
-    }
-  }), use.names = FALSE)
+  unlist(
+    sapply(names(mf), function(i) {
+      if (!is.null(attr(mf[[i]], which_effect, exact = TRUE))) {
+        i
+      }
+    }),
+    use.names = FALSE
+  )
 }
 
 
 # Bayes function ------------------------------------------------------
 
-
 #' @keywords internal
-.extract_parameters_bayesian <- function(model,
-                                         centrality = "median",
-                                         dispersion = FALSE,
-                                         ci = 0.95,
-                                         ci_method = "eti",
-                                         test = "pd",
-                                         rope_range = "default",
-                                         rope_ci = 0.95,
-                                         bf_prior = NULL,
-                                         diagnostic = c("ESS", "Rhat"),
-                                         priors = FALSE,
-                                         standardize = NULL,
-                                         keep_parameters = NULL,
-                                         drop_parameters = NULL,
-                                         verbose = TRUE,
-                                         ...) {
+.extract_parameters_bayesian <- function(
+  model,
+  centrality = "median",
+  dispersion = FALSE,
+  ci = 0.95,
+  ci_method = "eti",
+  test = "pd",
+  rope_range = "default",
+  rope_ci = 0.95,
+  bf_prior = NULL,
+  diagnostic = c("ESS", "Rhat"),
+  priors = FALSE,
+  standardize = NULL,
+  keep_parameters = NULL,
+  drop_parameters = NULL,
+  verbose = TRUE,
+  ...
+) {
   # no ROPE for multi-response models
   if (insight::is_multivariate(model) && any(c("rope", "p_rope") %in% test)) {
     test <- setdiff(test, c("rope", "p_rope"))
@@ -810,7 +834,10 @@
 
       parameters <- merge(
         std_parameters,
-        parameters[c("Parameter", setdiff(colnames(parameters), colnames(std_parameters)))],
+        parameters[c(
+          "Parameter",
+          setdiff(colnames(parameters), colnames(std_parameters))
+        )],
         sort = FALSE
       )
     }
@@ -821,10 +848,18 @@
   }
 
   # Remove unnecessary columns
-  if ("CI" %in% names(parameters) && insight::has_single_value(parameters$CI, remove_na = TRUE)) {
+  if (
+    "CI" %in%
+      names(parameters) &&
+      insight::has_single_value(parameters$CI, remove_na = TRUE)
+  ) {
     parameters$CI <- NULL
   }
-  if ("ROPE_CI" %in% names(parameters) && insight::has_single_value(parameters$ROPE_CI, remove_na = TRUE)) {
+  if (
+    "ROPE_CI" %in%
+      names(parameters) &&
+      insight::has_single_value(parameters$ROPE_CI, remove_na = TRUE)
+  ) {
     parameters$ROPE_CI <- NULL
   }
   if ("ROPE_low" %in% names(parameters) && "ROPE_high" %in% names(parameters)) {
@@ -834,7 +869,8 @@
 
   # filter parameters, if requested
   if (!is.null(keep_parameters) || !is.null(drop_parameters)) {
-    parameters <- .filter_parameters(parameters,
+    parameters <- .filter_parameters(
+      parameters,
       keep = keep_parameters,
       drop = drop_parameters,
       verbose = verbose
@@ -851,17 +887,17 @@
 
 # SEM function ------------------------------------------------------
 
-
 #' @keywords internal
-.extract_parameters_lavaan <- function(model,
-                                       ci = 0.95,
-                                       standardize = FALSE,
-                                       keep_parameters = NULL,
-                                       drop_parameters = NULL,
-                                       verbose = TRUE,
-                                       ...) {
+.extract_parameters_lavaan <- function(
+  model,
+  ci = 0.95,
+  standardize = FALSE,
+  keep_parameters = NULL,
+  drop_parameters = NULL,
+  verbose = TRUE,
+  ...
+) {
   insight::check_if_installed("lavaan")
-
 
   # lavaan::parameterEstimates does not accept NULL `level`, but a lot of our
   # other methods do. It is often useful to pass `NULL` to speed things up,
@@ -891,9 +927,11 @@
   if (length(ci) > 1L) {
     ci <- ci[1]
     if (verbose) {
-      insight::format_alert(
-        paste0("lavaan models only accept one level of CI. Keeping the first one: `ci = ", ci, "`.")
-      )
+      insight::format_alert(paste0(
+        "lavaan models only accept one level of CI. Keeping the first one: `ci = ",
+        ci,
+        "`."
+      ))
     }
   }
 
@@ -901,6 +939,7 @@
   dot_args <- list(...)
 
   # list all argument names from the `lavaan` function
+  # fmt: skip
   dot_args <- dot_args[names(dot_args) %in% c(
     "zstat", "pvalue", "standardized", "fmi", "level", "boot.ci.type", "cov.std",
     "fmi.options", "rsquare", "remove.system.eq", "remove.eq", "remove.ineq",
@@ -910,10 +949,7 @@
   # Get estimates
   sem_data <- do.call(
     lavaan::parameterEstimates,
-    c(
-      list(object = model, se = TRUE, ci = TRUE, level = ci),
-      dot_args
-    )
+    c(list(object = model, se = TRUE, ci = TRUE, level = ci), dot_args)
   )
 
   label <- sem_data$label
@@ -924,7 +960,8 @@
       standardize <- "all"
     }
 
-    type <- switch(standardize,
+    type <- switch(
+      standardize,
       all = ,
       std.all = "std.all",
       latent = ,
@@ -943,7 +980,6 @@
     sem_data <- do.call("f", fun_args)
     names(sem_data)[names(sem_data) == "est.std"] <- "est"
   }
-
 
   params <- data.frame(
     To = sem_data$lhs,
@@ -981,7 +1017,8 @@
 
   # filter parameters, if requested
   if (!is.null(keep_parameters) || !is.null(drop_parameters)) {
-    params <- .filter_parameters(params,
+    params <- .filter_parameters(
+      params,
       keep = keep_parameters,
       drop = drop_parameters,
       verbose = verbose
@@ -994,7 +1031,6 @@
 
 # tools -------------------------
 
-
 .check_rank_deficiency <- function(model, p, verbose = TRUE) {
   # for cox-panel models, we have non-linear parameters with NA coefficient,
   # but test statistic and p-value - don't check for NA estimates in this case
@@ -1003,12 +1039,10 @@
   }
   if (anyNA(p$Estimate)) {
     if (isTRUE(verbose)) {
-      insight::format_alert(
-        sprintf(
-          "Model matrix is rank deficient. Parameters `%s` were not estimable.",
-          toString(p$Parameter[is.na(p$Estimate)])
-        )
-      )
+      insight::format_alert(sprintf(
+        "Model matrix is rank deficient. Parameters `%s` were not estimable.",
+        toString(p$Parameter[is.na(p$Estimate)])
+      ))
     }
     p <- p[!is.na(p$Estimate), ]
   }

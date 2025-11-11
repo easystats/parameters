@@ -167,12 +167,13 @@ if (require("mclust", quietly = TRUE) && require("NbClust", quietly = TRUE) &&
   # n_clusters(iris[1:4], standardize = FALSE, package = "all", fast = FALSE)
 }
 }
-\dontshow{if (require("see", quietly = TRUE) && require("factoextra", quietly = TRUE)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (require("see", quietly = TRUE) && require("factoextra", quietly = TRUE)) withAutoprint(\{ # examplesIf}
 \donttest{
 x <- n_clusters_elbow(iris[1:4])
 x
 as.data.frame(x)
-plot(x)
+# plotting is also possible:
+# plot(x)
 }
 \dontshow{\}) # examplesIf}
 \donttest{
@@ -194,7 +195,8 @@ if (require("factoextra", quietly = TRUE)) {
   x <- n_clusters_silhouette(iris[1:4])
   x
   as.data.frame(x)
-  plot(x)
+  # plotting is also possible:
+  # plot(x)
 }
 }
 \donttest{

@@ -513,7 +513,7 @@ which is converted into a p-value using \code{\link[bayestestR:pd_to_p]{bayestes
 }
 
 \examples{
-\dontshow{if (require("lme4") && require("glmmTMB")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (require("lme4") && require("glmmTMB")) withAutoprint(\{ # examplesIf}
 library(parameters)
 data(mtcars)
 model <- lme4::lmer(mpg ~ wt + (1 | gear), data = mtcars)

@@ -114,7 +114,7 @@ for \code{lavaan} models implemented in the
 \href{https://easystats.github.io/see/}{\strong{see}-package}.
 }
 \examples{
-\dontshow{if (all(insight::check_if_installed(c("psych", "lavaan"), quietly = TRUE))) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (all(insight::check_if_installed(c("psych", "lavaan"), quietly = TRUE))) withAutoprint(\{ # examplesIf}
 library(parameters)
 \donttest{
 # Principal Component Analysis (PCA) ---------

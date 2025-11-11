@@ -4,15 +4,18 @@
 #' x <- n_clusters_elbow(iris[1:4])
 #' x
 #' as.data.frame(x)
-#' plot(x)
+#' # plotting is also possible:
+#' # plot(x)
 #' }
 #' @export
-n_clusters_elbow <- function(x,
-                             standardize = TRUE,
-                             include_factors = FALSE,
-                             clustering_function = stats::kmeans,
-                             n_max = 10,
-                             ...) {
+n_clusters_elbow <- function(
+  x,
+  standardize = TRUE,
+  include_factors = FALSE,
+  clustering_function = stats::kmeans,
+  n_max = 10,
+  ...
+) {
   t0 <- Sys.time()
   out <- .n_clusters_factoextra(
     x,
@@ -93,7 +96,8 @@ n_clusters_gap <- function(x,
 #'   x <- n_clusters_silhouette(iris[1:4])
 #'   x
 #'   as.data.frame(x)
-#'   plot(x)
+#'   # plotting is also possible:
+#'   # plot(x)
 #' }
 #' }
 #' @export
@@ -244,20 +248,34 @@ n_clusters_hclust <- function(x,
 
 # Utils -------------------------------------------------------------------
 
-
 #' @keywords internal
-.n_clusters_factoextra <- function(x,
-                                   method = "wss",
-                                   standardize = TRUE,
-                                   include_factors = FALSE,
-                                   clustering_function = stats::kmeans,
-                                   n_max = 10,
-                                   ...) {
-  x <- .prepare_data_clustering(x, include_factors = include_factors, standardize = standardize, ...)
+.n_clusters_factoextra <- function(
+  x,
+  method = "wss",
+  standardize = TRUE,
+  include_factors = FALSE,
+  clustering_function = stats::kmeans,
+  n_max = 10,
+  ...
+) {
+  x <- .prepare_data_clustering(
+    x,
+    include_factors = include_factors,
+    standardize = standardize,
+    ...
+  )
 
   insight::check_if_installed("factoextra")
 
-  factoextra::fviz_nbclust(x, clustering_function, method = method, k.max = n_max, verbose = FALSE)$data
+  suppressWarnings(
+    factoextra::fviz_nbclust(
+      x,
+      clustering_function,
+      method = method,
+      k.max = n_max,
+      verbose = FALSE
+    )$data
+  )
 }
 
 

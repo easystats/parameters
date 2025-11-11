@@ -1,8 +1,6 @@
 # Package glmmTMB
 
-
 # model_parameters -----
-
 
 #' @title Parameters from Mixed Models
 #' @name model_parameters.glmmTMB
@@ -167,31 +165,40 @@
 #' }
 #' @return A data frame of indices related to the model's parameters.
 #' @export
-model_parameters.glmmTMB <- function(model,
-                                     ci = 0.95,
-                                     ci_method = "wald",
-                                     ci_random = NULL,
-                                     bootstrap = FALSE,
-                                     iterations = 1000,
-                                     standardize = NULL,
-                                     effects = "all",
-                                     component = "all",
-                                     group_level = FALSE,
-                                     exponentiate = FALSE,
-                                     p_adjust = NULL,
-                                     vcov = NULL,
-                                     vcov_args = NULL,
-                                     wb_component = FALSE,
-                                     include_info = getOption("parameters_mixed_info", FALSE),
-                                     include_sigma = FALSE,
-                                     keep = NULL,
-                                     drop = NULL,
-                                     verbose = TRUE,
-                                     ...) {
+model_parameters.glmmTMB <- function(
+  model,
+  ci = 0.95,
+  ci_method = "wald",
+  ci_random = NULL,
+  bootstrap = FALSE,
+  iterations = 1000,
+  standardize = NULL,
+  effects = "all",
+  component = "all",
+  group_level = FALSE,
+  exponentiate = FALSE,
+  p_adjust = NULL,
+  vcov = NULL,
+  vcov_args = NULL,
+  wb_component = FALSE,
+  include_info = getOption("parameters_mixed_info", FALSE),
+  include_sigma = FALSE,
+  keep = NULL,
+  drop = NULL,
+  verbose = TRUE,
+  ...
+) {
   insight::check_if_installed("glmmTMB")
 
   # p-values, CI and se might be based on different df-methods
-  ci_method <- .check_df_method(ci_method)
+  ci_method <- insight::validate_argument(
+    ci_method,
+    # fmt: skip
+    c(
+      "wald", "normal", "residual", "ml1", "betwithin", "satterthwaite",
+      "kenward", "kr", "boot", "profile", "uniroot", "robust"
+    )
+  )
 
   # which components to return?
   effects <- insight::validate_argument(
@@ -238,6 +245,11 @@ model_parameters.glmmTMB <- function(model,
   has_disp <- is.list(cs) && !is.null(cs$disp)
 
   if (!has_zeroinf && !has_disp && component != "conditional") {
+    component <- "conditional"
+  }
+
+  # for ci_method kenward or satterthwaite, only conditional component
+  if (ci_method %in% c("satterthwaite", "kenward", "kr") && component != "conditional") {
     component <- "conditional"
   }
 
@@ -296,7 +308,6 @@ model_parameters.glmmTMB <- function(model,
     params$Effects <- "fixed"
     att <- attributes(params)
   }
-
 
   # add random effects, either group level or re variances
   # ======================================================
@@ -357,10 +368,16 @@ model_parameters.glmmTMB <- function(model,
 
 # helper -----------------------------------------
 
-
 # this functions adds the dispersion parameter, if it is not already
 # present in the output
-.add_dispersion_param_glmmTMB <- function(model, params, effects, component, ci, verbose) {
+.add_dispersion_param_glmmTMB <- function(
+  model,
+  params,
+  effects,
+  component,
+  ci,
+  verbose
+) {
   dispersion_param <- FALSE
   if (
     # must be glmmTMB
@@ -410,16 +427,18 @@ model_parameters.glmmTMB <- function(model,
 # whether group level estimates or random effects variances are requested,
 # the related parameters are returned. It also correctly deals with the
 # dispersion parameter, if present in random effects
-.add_random_effects_glmmTMB <- function(model,
-                                        params,
-                                        ci,
-                                        ci_method,
-                                        ci_random,
-                                        effects,
-                                        component,
-                                        dispersion_param,
-                                        group_level,
-                                        verbose = TRUE) {
+.add_random_effects_glmmTMB <- function(
+  model,
+  params,
+  ci,
+  ci_method,
+  ci_random,
+  effects,
+  component,
+  dispersion_param,
+  group_level,
+  verbose = TRUE
+) {
   params_random <- params_variance <- NULL
   random_effects <- insight::find_random(model, flatten = TRUE)
 
@@ -496,18 +515,24 @@ model_parameters.glmmTMB <- function(model,
 # ci -----
 
 #' @export
-ci.glmmTMB <- function(x,
-                       ci = 0.95,
-                       dof = NULL,
-                       method = "wald",
-                       component = "all",
-                       verbose = TRUE,
-                       ...) {
-  method <- tolower(method)
+ci.glmmTMB <- function(
+  x,
+  ci = 0.95,
+  dof = NULL,
+  method = "wald",
+  component = "all",
+  verbose = TRUE,
+  ...
+) {
   method <- insight::validate_argument(
-    method,
-    c("wald", "normal", "ml1", "betwithin", "profile", "uniroot", "robust", "residual")
+    tolower(method),
+    # fmt: skip
+    c(
+      "wald", "normal", "residual", "ml1", "betwithin", "satterthwaite",
+      "kenward", "kr", "boot", "profile", "uniroot", "robust"
+    )
   )
+
   component <- insight::validate_argument(
     component,
     c("all", "conditional", "zi", "zero_inflated", "dispersion")
@@ -524,16 +549,27 @@ ci.glmmTMB <- function(x,
     } else {
       pp <- NULL
     }
-    out <- lapply(ci, function(i) .ci_profile_glmmTMB(x, ci = i, profiled = pp, component = component, ...))
+    out <- lapply(ci, function(i) {
+      .ci_profile_glmmTMB(x, ci = i, profiled = pp, component = component, ...)
+    })
     do.call(rbind, out)
 
     # uniroot CIs
   } else if (method == "uniroot") {
-    out <- lapply(ci, function(i) .ci_uniroot_glmmTMB(x, ci = i, component = component, ...))
+    out <- lapply(ci, function(i) {
+      .ci_uniroot_glmmTMB(x, ci = i, component = component, ...)
+    })
     do.call(rbind, out)
   } else {
     # all other
-    .ci_generic(model = x, ci = ci, dof = dof, method = method, component = component, ...)
+    .ci_generic(
+      model = x,
+      ci = ci,
+      dof = dof,
+      method = method,
+      component = component,
+      ...
+    )
   }
 }
 
@@ -541,45 +577,54 @@ ci.glmmTMB <- function(x,
 # standard_error -----
 
 #' @export
-standard_error.glmmTMB <- function(model,
-                                   effects = "fixed",
-                                   component = "all",
-                                   vcov = NULL,
-                                   vcov_args = NULL,
-                                   verbose = TRUE,
-                                   ...) {
+standard_error.glmmTMB <- function(
+  model,
+  effects = "fixed",
+  component = "all",
+  method = NULL,
+  vcov = NULL,
+  vcov_args = NULL,
+  verbose = TRUE,
+  ...
+) {
   component <- insight::validate_argument(
     component,
     c("all", "conditional", "zi", "zero_inflated", "dispersion")
   )
-  effects <- insight::validate_argument(
-    effects,
-    c("fixed", "random")
-  )
+  effects <- insight::validate_argument(effects, c("fixed", "random"))
 
   if (effects == "random") {
     .se_random_effects_glmmTMB(model)
   } else if (!is.null(vcov)) {
     .se_robust_glmmTMB(model, component, vcov, vcov_args, verbose, ...)
   } else {
-    .se_fixed_effects_glmmTMB(model, component, verbose)
+    .se_fixed_effects_glmmTMB(model, component, method, verbose)
   }
 }
 
 
 # helper --------------------------------------------------------------------
 
-
 # extract standard errors for fixed effects parameters
-.se_fixed_effects_glmmTMB <- function(model, component, verbose = TRUE) {
+.se_fixed_effects_glmmTMB <- function(model, component, method = NULL, verbose = TRUE) {
   if (is.null(.check_component(model, component, verbose = verbose))) {
     return(NULL)
+  }
+
+  # kenward approx
+  if (!is.null(method) && method %in% c("kenward", "kr")) {
+    return(se_kenward(model, component = "conditional"))
   }
 
   cs <- insight::compact_list(stats::coef(summary(model)))
   x <- lapply(names(cs), function(i) {
     .data_frame(
-      Parameter = insight::find_parameters(model, effects = "fixed", component = i, flatten = TRUE),
+      Parameter = insight::find_parameters(
+        model,
+        effects = "fixed",
+        component = i,
+        flatten = TRUE
+      ),
       SE = as.vector(cs[[i]][, 2]),
       Component = i
     )
@@ -595,18 +640,15 @@ standard_error.glmmTMB <- function(model,
 
 
 # extract robust standard errors for fixed effects parameters
-.se_robust_glmmTMB <- function(model,
-                               component = "all",
-                               vcov,
-                               vcov_args = NULL,
-                               verbose = TRUE,
-                               ...) {
-  fun_args <- list(
-    model,
-    component = component,
-    vcov = vcov,
-    vcov_args = vcov_args
-  )
+.se_robust_glmmTMB <- function(
+  model,
+  component = "all",
+  vcov,
+  vcov_args = NULL,
+  verbose = TRUE,
+  ...
+) {
+  fun_args <- list(model, component = component, vcov = vcov, vcov_args = vcov_args)
   fun_args <- c(fun_args, list(...))
   do.call("standard_error.default", fun_args)
 }
@@ -635,13 +677,14 @@ standard_error.glmmTMB <- function(model,
 
 # simulate model -----
 
-
 #' @export
-simulate_model.glmmTMB <- function(model,
-                                   iterations = 1000,
-                                   component = "all",
-                                   verbose = FALSE,
-                                   ...) {
+simulate_model.glmmTMB <- function(
+  model,
+  iterations = 1000,
+  component = "all",
+  verbose = FALSE,
+  ...
+) {
   component <- insight::validate_argument(
     component,
     c("all", "conditional", "zi", "zero_inflated", "dispersion")
@@ -655,7 +698,6 @@ simulate_model.glmmTMB <- function(model,
 
   has_zeroinflated <- !is.null(info) && isTRUE(info$is_zero_inflated)
   has_dispersion <- !is.null(info) && isTRUE(info$is_dispersion)
-
 
   # check component-argument ----
 
@@ -688,8 +730,9 @@ simulate_model.glmmTMB <- function(model,
     insight::format_error("No dispersion model found.")
   }
 
-
-  if (is.null(iterations)) iterations <- 1000
+  if (is.null(iterations)) {
+    iterations <- 1000
+  }
 
   if (all(component == c("conditional", "zero_inflated"))) {
     d1 <- .simulate_model(model, iterations, component = "conditional", ...)
@@ -725,13 +768,15 @@ simulate_model.glmmTMB <- function(model,
 # simulate_parameters -----
 
 #' @export
-simulate_parameters.glmmTMB <- function(model,
-                                        iterations = 1000,
-                                        centrality = "median",
-                                        ci = 0.95,
-                                        ci_method = "quantile",
-                                        test = "p-value",
-                                        ...) {
+simulate_parameters.glmmTMB <- function(
+  model,
+  iterations = 1000,
+  centrality = "median",
+  ci = 0.95,
+  ci_method = "quantile",
+  test = "p-value",
+  ...
+) {
   sim_data <- simulate_model(model, iterations = iterations, ...)
   out <- .summary_bootstrap(
     data = sim_data,
