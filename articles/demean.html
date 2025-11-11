@@ -475,14 +475,14 @@ pattern).</p>
 <span></span>
 <span><span class="va">d</span> <span class="op">&lt;-</span> <span class="fu">datawizard</span><span class="fu">::</span><span class="fu"><a href="https://easystats.github.io/datawizard/reference/demean.html" class="external-link">demean</a></span><span class="op">(</span><span class="va">d</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"x"</span>, <span class="st">"y"</span><span class="op">)</span>, by <span class="op">=</span> <span class="st">"grp"</span><span class="op">)</span></span></code></pre></div>
 <p>Let’s look at the raw data…</p>
-<p><img src="demean_files/figure-html/unnamed-chunk-14-1.png" width="100%"></p>
+<p><img src="demean_files/figure-html/unnamed-chunk-14-1.png" class="r-plt" width="100%"></p>
 <div class="section level3">
 <h3 id="model-1-linear-relationship-between-typing-errors-and-typing-speed">Model 1: Linear relationship between typing errors and typing
 speed<a class="anchor" aria-label="anchor" href="#model-1-linear-relationship-between-typing-errors-and-typing-speed"></a>
 </h3>
 <p>We can now assume a (linear) relationship between typing errors and
 typing speed.</p>
-<p><img src="demean_files/figure-html/unnamed-chunk-15-1.png" width="100%"></p>
+<p><img src="demean_files/figure-html/unnamed-chunk-15-1.png" class="r-plt" width="100%"></p>
 <p>Looking at the coefficients, we have following model with a
 coefficient of <code>-1.92</code>.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
@@ -494,7 +494,7 @@ coefficient of <code>-1.92</code>.</p>
 <span><span class="co">#&gt; x           |       -1.92 | 0.18 | [-2.27, -1.56] | -10.69 | &lt; .001</span></span></code></pre></div>
 <p>However, we have ignored the clustered structure in our data, in this
 example due to repeated measurements.</p>
-<p><img src="demean_files/figure-html/unnamed-chunk-17-1.png" width="100%"></p>
+<p><img src="demean_files/figure-html/unnamed-chunk-17-1.png" class="r-plt" width="100%"></p>
 </div>
 <div class="section level3">
 <h3 id="model-2-within-subject-effect-of-typing-speed">Model 2: Within-subject effect of typing speed<a class="anchor" aria-label="anchor" href="#model-2-within-subject-effect-of-typing-speed"></a>
@@ -502,7 +502,7 @@ example due to repeated measurements.</p>
 <p>A fixed effects regression (FE-regression) would now remove all
 between-effects and include only the within-effects as well as the
 group-level indicator.</p>
-<p><img src="demean_files/figure-html/unnamed-chunk-18-1.png" width="100%"></p>
+<p><img src="demean_files/figure-html/unnamed-chunk-18-1.png" class="r-plt" width="100%"></p>
 <p>This returns the coefficient of the “within”-effect, which is
 <code>1.2</code>, with a standard error of <code>0.07</code>. Note that
 the FE-model does <em>not</em> take the variation <em>between</em>
@@ -521,7 +521,7 @@ and biased standard errors.</p>
 <p>To understand, why the above model 1 (<code>m1</code>) returns a
 biased estimate, which is a “weighted average” of the within- and
 between-effects, let us look at the between-effect now.</p>
-<p><img src="demean_files/figure-html/unnamed-chunk-20-1.png" width="100%"></p>
+<p><img src="demean_files/figure-html/unnamed-chunk-20-1.png" class="r-plt" width="100%"></p>
 <p>As we can see, the between-effect is <code>-2.93</code>, which is
 different from the <code>-1.92</code> estimated in the model
 <code>m1</code>.</p>
@@ -538,7 +538,7 @@ different from the <code>-1.92</code> estimated in the model
 </h3>
 <p>Since FE-models can only model within-effects, we now use a mixed
 model with within- and between-effects.</p>
-<p><img src="demean_files/figure-html/unnamed-chunk-22-1.png" width="100%"></p>
+<p><img src="demean_files/figure-html/unnamed-chunk-22-1.png" class="r-plt" width="100%"></p>
 <p>We see, the estimate for the within-effects is <em>not</em> biased.
 Furthermore, we get the correct between-effect as well (standard errors
 differ, because the variance in the grouping structure is more
@@ -726,7 +726,7 @@ Data.”</span> <em>Political Analysis</em> 15 (2): 165–81. <a href="https://d
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.9000.</p>
 </div>
 
     </footer>
