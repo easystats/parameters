@@ -322,7 +322,7 @@ standardize_info.default <- function(model,
   if (info$is_linear) {
     if (inherits(model, c("gls", "lme"))) {
       response <- insight::get_response(model)
-    } else if (inherits(model, "fixef")) {
+    } else if (inherits(model, "fixest")) {
       response <- model.matrix(model, type = "lhs")
     } else {
       response <- stats::model.frame(model)[[1]]
@@ -369,7 +369,7 @@ standardize_info.default <- function(model,
 .std_info_response_basic <- function(model, info, params, robust = FALSE, w = NULL, ...) {
   if (inherits(model, c("gls", "lme"))) {
     response <- insight::get_response(model)
-  } else if (inherits(model, "fixef")) {
+  } else if (inherits(model, "fixest")) {
     response <- model.matrix(model, type = "lhs")
   } else {
     response <- stats::model.frame(model)[[1]]
