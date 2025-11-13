@@ -320,7 +320,13 @@ standardize_info.default <- function(model,
 #' @keywords internal
 .std_info_response_smart <- function(model, info, data, model_matrix, types, robust = FALSE, w = NULL, ...) {
   if (info$is_linear) {
-    response <- insight::get_response(model)
+    if (inherits(model, c("gls", "lme"))) {
+      response <- insight::get_response(model)
+    } else if (inherits(model, "fixef")) {
+      response <- model.matrix(model, type = "lhs")
+    } else {
+      response <- stats::model.frame(model)[[1]]
+    }
 
     means <- deviations <- rep(NA_real_, length = length(names(model_matrix)))
     for (i in seq_along(names(model_matrix))) {
@@ -361,7 +367,13 @@ standardize_info.default <- function(model,
 
 #' @keywords internal
 .std_info_response_basic <- function(model, info, params, robust = FALSE, w = NULL, ...) {
-  response <- insight::get_response(model)
+  if (inherits(model, c("gls", "lme"))) {
+    response <- insight::get_response(model)
+  } else if (inherits(model, "fixef")) {
+    response <- model.matrix(model, type = "lhs")
+  } else {
+    response <- stats::model.frame(model)[[1]]
+  }
 
   if (info$is_linear) {
     if (robust) {
