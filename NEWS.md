@@ -1,5 +1,8 @@
 # parameters (devel)
 
+* fixed bug in `standardize_info(<fixest>)` that was preventing 
+  `standardise_parameters()` from working for `fixest` models.
+
 * `equivalence_test()` gets methods for objects from the *modelbased* package.
 
 * Improved support for objects from package *survey*.

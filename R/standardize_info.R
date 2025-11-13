@@ -50,7 +50,6 @@ standardize_info.default <- function(model,
     insight::find_parameters(model, effects = "fixed", flatten = TRUE, ...)
   }
   types <- parameters_type(model)
-  # model_matrix <- as.data.frame(stats::model.matrix(model))
   model_matrix <- as.data.frame(insight::get_modelmatrix(model))
   model_data <- insight::get_data(model, source = "mf", verbose = FALSE)
   wgts <- insight::get_weights(model, remove_na = TRUE)
@@ -321,11 +320,8 @@ standardize_info.default <- function(model,
 #' @keywords internal
 .std_info_response_smart <- function(model, info, data, model_matrix, types, robust = FALSE, w = NULL, ...) {
   if (info$is_linear) {
-    if (inherits(model, c("gls", "lme"))) {
-      response <- insight::get_response(model)
-    } else {
-      response <- stats::model.frame(model)[[1]]
-    }
+    response <- insight::get_response(model)
+
     means <- deviations <- rep(NA_real_, length = length(names(model_matrix)))
     for (i in seq_along(names(model_matrix))) {
       variable <- names(model_matrix)[i]
@@ -365,11 +361,7 @@ standardize_info.default <- function(model,
 
 #' @keywords internal
 .std_info_response_basic <- function(model, info, params, robust = FALSE, w = NULL, ...) {
-  if (inherits(model, c("gls", "lme"))) {
-    response <- insight::get_response(model)
-  } else {
-    response <- stats::model.frame(model)[[1]]
-  }
+  response <- insight::get_response(model)
 
   if (info$is_linear) {
     if (robust) {
