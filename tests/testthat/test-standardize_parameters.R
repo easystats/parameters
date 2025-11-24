@@ -178,23 +178,22 @@ test_that("standardize_parameters (with functions /  interactions)", {
   m1 <- lm(Y ~ X * Z)
   m2 <- lm(Y ~ X * scale(Z))
   m3 <- lm(Y ~ scale(X) * Z)
-  m4 <- lm(Y ~ scale(X) * scale(Z))
+  m4 <- lm(scale(Y) ~ scale(X) + scale(Z) + scale(scale(X) * scale(Z))) # ground truth
 
   expect_equal(
     standardize_parameters(m1, method = "basic")$Std_Coefficient,
+    model_parameters(m4)$Coefficient,
+    ignore_attr = TRUE
+  )
+  expect_equal(
     standardize_parameters(m2, method = "basic")$Std_Coefficient,
+    model_parameters(m4)$Coefficient,
     ignore_attr = TRUE
   )
   expect_equal(
-    standardize_parameters(m1, method = "basic")$Std_Coefficient,
     standardize_parameters(m3, method = "basic")$Std_Coefficient,
-    ignore_attr = TRUE
+    model_parameters(m4)$Coefficient
   )
-  # expect_equal(
-  #   standardize_parameters(m1, method = "basic")$Std_Coefficient,
-  #   standardize_parameters(m4, method = "basic")$Std_Coefficient
-  # )
-
 
   # transformed resp or pred should not affect
   mtcars$cyl_exp <- exp(mtcars$cyl)
