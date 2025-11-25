@@ -1,6 +1,7 @@
+skip_on_cran()
+
 skip_if_not_installed("MASS")
 skip_if_not_installed("survey")
-skip_on_cran()
 
 test_that("robust-se polr", {
   data(api, package = "survey")

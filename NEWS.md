@@ -1,6 +1,6 @@
-# parameters (devel)
+# parameters 0.28.3
 
-* fixed bug in `standardize_info(<fixest>)` that was preventing 
+* fixed bug in `standardize_info(<fixest>)` that was preventing
   `standardise_parameters()` from working for `fixest` models.
 
 * `equivalence_test()` gets methods for objects from the *modelbased* package.

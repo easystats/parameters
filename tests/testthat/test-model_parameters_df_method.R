@@ -1,7 +1,8 @@
 skip_if_not_installed("lmerTest")
 skip_if_not_installed("pbkrtest")
 skip_if_not_installed("lme4")
-skip_if_not_installed("glmmTMB")
+skip_if_not_installed("glmmTMB", minimum_version = "1.1.13")
+skip_if_not_installed("insight", minimum_version = "1.4.3")
 
 mtcars$cyl <- as.factor(mtcars$cyl)
 model <- suppressMessages(lme4::lmer(
