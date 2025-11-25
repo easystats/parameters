@@ -1,5 +1,31 @@
 # Changelog
 
+## parameters 0.28.3
+
+CRAN release: 2025-11-25
+
+- fixed bug in `standardize_info(<fixest>)` that was preventing
+  [`standardise_parameters()`](https://easystats.github.io/parameters/reference/standardize_parameters.md)
+  from working for `fixest` models.
+
+- [`equivalence_test()`](https://easystats.github.io/bayestestR/reference/equivalence_test.html)
+  gets methods for objects from the *modelbased* package.
+
+- Improved support for objects from package *survey*.
+
+- Added support for package *lcmm*.
+
+- Added `ci_method` options `"kenward-roger"` and `"satterthwaite"` for
+  models from package *glmmTMB*. Consequently,
+  [`se_kenward()`](https://easystats.github.io/parameters/reference/p_value_kenward.md),
+  [`se_satterthwaite()`](https://easystats.github.io/parameters/reference/p_value_satterthwaite.md),
+  [`ci_kenward()`](https://easystats.github.io/parameters/reference/p_value_kenward.md),
+  [`ci_satterthwaite()`](https://easystats.github.io/parameters/reference/p_value_satterthwaite.md),
+  [`p_value_kenward()`](https://easystats.github.io/parameters/reference/p_value_kenward.md)
+  and
+  [`p_value_satterthwaite()`](https://easystats.github.io/parameters/reference/p_value_satterthwaite.md)
+  can now be used with `glmmTMB` models.
+
 ## parameters 0.28.2
 
 CRAN release: 2025-09-10
