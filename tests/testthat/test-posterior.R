@@ -1,10 +1,10 @@
+skip_on_cran()
+
 skip_if_not_installed("curl")
 skip_if_offline()
 skip_if_not_installed("posterior")
 skip_if_not_installed("brms")
 skip_if_not_installed("httr2")
-
-skip_on_cran()
 
 model <- insight::download_model("brms_1")
 skip_if(is.null(model))
@@ -12,7 +12,12 @@ skip_if(is.null(model))
 test_that("mp-posterior-draws", {
   x <- posterior::as_draws(model)
   mp <- model_parameters(x)
-  expect_equal(mp$Median, c(39.68234, -3.19505, -1.4936, 2.62881, -79.73344), tolerance = 1e-2, ignore_attr = TRUE)
+  expect_equal(
+    mp$Median,
+    c(39.68234, -3.19505, -1.4936, 2.62881, -79.73344),
+    tolerance = 1e-2,
+    ignore_attr = TRUE
+  )
   expect_identical(mp$Parameter, c("b_Intercept", "b_wt", "b_cyl", "sigma", "lp__"))
   expect_identical(colnames(mp), c("Parameter", "Median", "CI_low", "CI_high", "pd"))
 })
@@ -20,28 +25,48 @@ test_that("mp-posterior-draws", {
 test_that("mp-posterior-draws_list", {
   x <- posterior::as_draws_list(model)
   mp <- model_parameters(x)
-  expect_equal(mp$Median, c(39.68234, -3.19505, -1.4936, 2.62881, -79.73344), tolerance = 1e-2, ignore_attr = TRUE)
+  expect_equal(
+    mp$Median,
+    c(39.68234, -3.19505, -1.4936, 2.62881, -79.73344),
+    tolerance = 1e-2,
+    ignore_attr = TRUE
+  )
   expect_identical(mp$Parameter, c("b_Intercept", "b_wt", "b_cyl", "sigma", "lp__"))
 })
 
 test_that("mp-posterior-draws_df", {
   x <- posterior::as_draws_df(model)
   mp <- model_parameters(x)
-  expect_equal(mp$Median, c(39.68234, -3.19505, -1.4936, 2.62881, -79.73344), tolerance = 1e-2, ignore_attr = TRUE)
+  expect_equal(
+    mp$Median,
+    c(39.68234, -3.19505, -1.4936, 2.62881, -79.73344),
+    tolerance = 1e-2,
+    ignore_attr = TRUE
+  )
   expect_identical(mp$Parameter, c("b_Intercept", "b_wt", "b_cyl", "sigma", "lp__"))
 })
 
 test_that("mp-posterior-draws_matrix", {
   x <- posterior::as_draws_matrix(model)
   mp <- model_parameters(x)
-  expect_equal(mp$Median, c(39.68234, -3.19505, -1.4936, 2.62881, -79.73344), tolerance = 1e-2, ignore_attr = TRUE)
+  expect_equal(
+    mp$Median,
+    c(39.68234, -3.19505, -1.4936, 2.62881, -79.73344),
+    tolerance = 1e-2,
+    ignore_attr = TRUE
+  )
   expect_identical(mp$Parameter, c("b_Intercept", "b_wt", "b_cyl", "sigma", "lp__"))
 })
 
 test_that("mp-posterior-draws_array", {
   x <- posterior::as_draws_array(model)
   mp <- model_parameters(x)
-  expect_equal(mp$Median, c(39.68234, -3.19505, -1.4936, 2.62881, -79.73344), tolerance = 1e-2, ignore_attr = TRUE)
+  expect_equal(
+    mp$Median,
+    c(39.68234, -3.19505, -1.4936, 2.62881, -79.73344),
+    tolerance = 1e-2,
+    ignore_attr = TRUE
+  )
   expect_identical(mp$Parameter, c("b_Intercept", "b_wt", "b_cyl", "sigma", "lp__"))
 })
 
