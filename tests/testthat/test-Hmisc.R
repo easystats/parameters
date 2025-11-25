@@ -1,3 +1,5 @@
+skip_on_cran()
+
 test_that("issue 697", {
   skip_if_not_installed("Hmisc")
   skip_if_not_installed("rms")
