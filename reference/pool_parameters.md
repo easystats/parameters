@@ -161,7 +161,7 @@ models <- lapply(1:5, function(i) {
 m <- with(data = imp, exp = glm(hyp ~ age + chl, family = binomial))
 # residual df
 summary(mice::pool(m))$df
-#> [1] 19.248074 19.248074 19.248074  4.562049
+#> [1] 19.249674 19.249831 19.249863  4.562049
 # df = Inf
 pool_parameters(models)$df_error
 #> [1] Inf Inf Inf Inf
