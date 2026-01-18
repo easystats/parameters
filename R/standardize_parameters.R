@@ -620,7 +620,10 @@ print_html.parameters_standardized <- function(x, digits = 2, ...) {
 
   .dev_pred <- deviations[[col_dev_pred]]
   .dev_resp <- deviations[[col_dev_resp]]
-  if (!include_response) .dev_resp <- 1
+  if (!include_response) {
+    .dev_resp <- 1
+    .dev_pred[deviations$Parameter %in% "(Intercept)"] <- NA
+  }
   .dev_factor <- .dev_pred / .dev_resp
 
   # Sapply standardization
@@ -640,6 +643,10 @@ print_html.parameters_standardized <- function(x, digits = 2, ...) {
   )
 
   to_complete <- apply(pars[, colnames(pars) %in% .col_2_scale], 1, anyNA)
+  if (!include_response) {
+    to_complete <- to_complete & !deviations$Parameter %in% "(Intercept)"
+  }
+
   if (length(i_missing) || any(to_complete)) {
     i_missing <- union(i_missing, which(to_complete))
 
