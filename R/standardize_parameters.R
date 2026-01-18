@@ -617,7 +617,6 @@ print_html.parameters_standardized <- function(x, digits = 2, ...) {
     insight::format_error("`method` must be one of \"basic\", \"posthoc\", \"smart\", \"pseudo\" or \"sdy\".")
   }
 
-
   .dev_pred <- deviations[[col_dev_pred]]
   .dev_resp <- deviations[[col_dev_resp]]
   if (!include_response) {
