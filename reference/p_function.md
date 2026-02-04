@@ -357,9 +357,9 @@ A non-significant p-value could occur because the test hypothesis is
 false, but could also be the result of any of the model assumptions
 being incorrect.
 
-  
+\
 ![Conditional versus unconditional interpretations of
-P-values](figures/unconditional_interpretation.png)  
+P-values](figures/unconditional_interpretation.png)\
 
 "Emphasizing unconditional interpretations helps avoid overconfident and
 misleading inferences in light of uncertainties about the assumptions

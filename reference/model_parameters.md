@@ -117,8 +117,8 @@ method has several arguments to tweak the output. There is also a
 [[`plot()`](https://rdrr.io/r/graphics/plot.default.html)-method](https://easystats.github.io/see/articles/parameters.html)
 implemented in the [**see**-package](https://easystats.github.io/see/),
 and a dedicated method for use inside rmarkdown files,
-[`print_md()`](https://easystats.github.io/parameters/reference/print.parameters_model.md).  
-  
+[`print_md()`](https://easystats.github.io/parameters/reference/print.parameters_model.md).\
+\
 **For developers**, if speed performance is an issue, you can use the
 (undocumented) `pretty_names` argument, e.g.
 `model_parameters(..., pretty_names = FALSE)`. This will skip the

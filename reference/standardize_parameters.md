@@ -179,8 +179,8 @@ When the model's formula contains transformations (e.g. `y ~ exp(X)`)
 transformations): While `"refit"` standardizes the data *prior* to the
 transformation (e.g. equivalent to `exp(scale(X))`), the `"basic"`
 method standardizes the transformed data (e.g. equivalent to
-`scale(exp(X))`).  
-  
+`scale(exp(X))`).\
+\
 See the *Transformed Variables* section in
 [`datawizard::standardize.default()`](https://easystats.github.io/datawizard/reference/standardize.default.html)
 for more details on how different transformations are dealt with when
