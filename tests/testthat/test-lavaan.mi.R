@@ -1,4 +1,4 @@
-skip_in_cran()
+skip_on_cran()
 skip_if_not_installed("lavaan.mi")
 skip_if_not_installed("mice")
 
