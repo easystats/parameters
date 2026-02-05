@@ -1,3 +1,9 @@
+# parameters (devel)
+
+## Changes
+
+* `model_parameters()` now supports objects from the *lavaan.mi* package.
+
 # parameters 0.28.3
 
 * fixed bug in `standardize_info(<fixest>)` that was preventing
