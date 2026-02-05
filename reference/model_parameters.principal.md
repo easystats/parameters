@@ -57,7 +57,7 @@ model_parameters(
 - component:
 
   What type of links to return. Can be `"all"` or some of
-  `c("regression", "correlation", "loading", "variance", "mean")`.
+  `c("regression", "correlation", "loading", "variance", "mean", "defined")`.
 
 - keep:
 
