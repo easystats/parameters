@@ -58,41 +58,32 @@ This document outlines the common coding conventions observed in the
 
 ## Element / Column names (for returned data frames)
 
-- First letter of the column name is capital, unless (6) applies
-  (*example:* `Parameter`).
-
-- First letter of nouns is capital, unless (6) applies (*example:*
-  `ROPE_Percentage`, `Prior_Scale`).
-
-- Using underscore rather than camelCase to separate words (*example:*
-  `CI_high`).
-
-- Multiple words: common/main part first and
-  adjective/specifier/variational part after, unless (8) applies
-  (*example:* `Median_standardized`, `ROPE_percentage`).
-
-- Abbreviations: all uppercase (*example:* `ESS`, `MCSE`, `ROPE`).
-
-- Keep conventions for reserved words (*example:* `p`, `pd`, `Rhat`).
-
-- Adjectives / verbs: all lower case, unless (1) applies (*example:*
-  `high` or `low` in `CI_high` or `CI_low`).
-
-- In case of multiple occurrences of column names that indicate the same
-  measure or content (like `CI_low` or `SE`), the common part is
-  appended as suffix to the context specific part (*example:* `CI_low`
-  and `Eta2_partial_CI_low`, and **not** `CI_low` and
-  `CI_low_Eta2_partial`).
-
-- The “squared” term in column names that refers to “common” statistics
-  (`Eta2`, `Chi2`, `Omega2`, …) should be written as `2`, not `sq`,
-  `squared` or `pétit-deux` (*example:* `Chi2`, and **not** `Chisq`,
-  `Eta2`, and **not** `Eta_squared`). This rule does **not** apply to
-  function names.
-
-- Converting between “easystats” style and “broom” style can be done
-  with
-  [`insight::standardize_names()`](https://easystats.github.io/insight/reference/standardize_names.html).
+1.  First letter of the column name is capital, unless (6) applies
+    (*example:* `Parameter`).
+2.  First letter of nouns is capital, unless (6) applies (*example:*
+    `ROPE_Percentage`, `Prior_Scale`).
+3.  Using underscore rather than camelCase to separate words (*example:*
+    `CI_high`).
+4.  Multiple words: common/main part first and
+    adjective/specifier/variational part after, unless (8) applies
+    (*example:* `Median_standardized`, `ROPE_percentage`).
+5.  Abbreviations: all uppercase (*example:* `ESS`, `MCSE`, `ROPE`).
+6.  Keep conventions for reserved words (*example:* `p`, `pd`, `Rhat`).
+7.  Adjectives / verbs: all lower case, unless (1) applies (*example:*
+    `high` or `low` in `CI_high` or `CI_low`).
+8.  In case of multiple occurrences of column names that indicate the
+    same measure or content (like `CI_low` or `SE`), the common part is
+    appended as suffix to the context specific part (*example:* `CI_low`
+    and `Eta2_partial_CI_low`, and **not** `CI_low` and
+    `CI_low_Eta2_partial`).
+9.  The “squared” term in column names that refers to “common”
+    statistics (`Eta2`, `Chi2`, `Omega2`, …) should be written as `2`,
+    not `sq`, `squared` or `pétit-deux` (*example:* `Chi2`, and **not**
+    `Chisq`, `Eta2`, and **not** `Eta_squared`). This rule does **not**
+    apply to function names.
+10. Converting between “easystats” style and “broom” style can be done
+    with
+    [`insight::standardize_names()`](https://easystats.github.io/insight/reference/standardize_names.html).
 
 ## Documentation (roxygen2)
 

@@ -101,17 +101,17 @@
 </ul></div>
 <div class="section level2">
 <h2 id="element--column-names-for-returned-data-frames">Element / Column names (for returned data frames)<a class="anchor" aria-label="anchor" href="#element--column-names-for-returned-data-frames"></a></h2>
-<ul><li><p>First letter of the column name is capital, unless (6) applies (<em>example:</em> <code>Parameter</code>).</p></li>
-<li><p>First letter of nouns is capital, unless (6) applies (<em>example:</em> <code>ROPE_Percentage</code>, <code>Prior_Scale</code>).</p></li>
-<li><p>Using underscore rather than camelCase to separate words (<em>example:</em> <code>CI_high</code>).</p></li>
-<li><p>Multiple words: common/main part first and adjective/specifier/variational part after, unless (8) applies (<em>example:</em> <code>Median_standardized</code>, <code>ROPE_percentage</code>).</p></li>
-<li><p>Abbreviations: all uppercase (<em>example:</em> <code>ESS</code>, <code>MCSE</code>, <code>ROPE</code>).</p></li>
-<li><p>Keep conventions for reserved words (<em>example:</em> <code>p</code>, <code>pd</code>, <code>Rhat</code>).</p></li>
-<li><p>Adjectives / verbs: all lower case, unless (1) applies (<em>example:</em> <code>high</code> or <code>low</code> in <code>CI_high</code> or <code>CI_low</code>).</p></li>
-<li><p>In case of multiple occurrences of column names that indicate the same measure or content (like <code>CI_low</code> or <code>SE</code>), the common part is appended as suffix to the context specific part (<em>example:</em> <code>CI_low</code> and <code>Eta2_partial_CI_low</code>, and <strong>not</strong> <code>CI_low</code> and <code>CI_low_Eta2_partial</code>).</p></li>
-<li><p>The “squared” term in column names that refers to “common” statistics (<code>Eta2</code>, <code>Chi2</code>, <code>Omega2</code>, …) should be written as <code>2</code>, not <code>sq</code>, <code>squared</code> or <code>pétit-deux</code> (<em>example:</em> <code>Chi2</code>, and <strong>not</strong> <code>Chisq</code>, <code>Eta2</code>, and <strong>not</strong> <code>Eta_squared</code>). This rule does <strong>not</strong> apply to function names.</p></li>
-<li><p>Converting between “easystats” style and “broom” style can be done with <code><a href="https://easystats.github.io/insight/reference/standardize_names.html" class="external-link">insight::standardize_names()</a></code>.</p></li>
-</ul></div>
+<ol style="list-style-type: decimal"><li>First letter of the column name is capital, unless (6) applies (<em>example:</em> <code>Parameter</code>).</li>
+<li>First letter of nouns is capital, unless (6) applies (<em>example:</em> <code>ROPE_Percentage</code>, <code>Prior_Scale</code>).</li>
+<li>Using underscore rather than camelCase to separate words (<em>example:</em> <code>CI_high</code>).</li>
+<li>Multiple words: common/main part first and adjective/specifier/variational part after, unless (8) applies (<em>example:</em> <code>Median_standardized</code>, <code>ROPE_percentage</code>).</li>
+<li>Abbreviations: all uppercase (<em>example:</em> <code>ESS</code>, <code>MCSE</code>, <code>ROPE</code>).</li>
+<li>Keep conventions for reserved words (<em>example:</em> <code>p</code>, <code>pd</code>, <code>Rhat</code>).</li>
+<li>Adjectives / verbs: all lower case, unless (1) applies (<em>example:</em> <code>high</code> or <code>low</code> in <code>CI_high</code> or <code>CI_low</code>).</li>
+<li>In case of multiple occurrences of column names that indicate the same measure or content (like <code>CI_low</code> or <code>SE</code>), the common part is appended as suffix to the context specific part (<em>example:</em> <code>CI_low</code> and <code>Eta2_partial_CI_low</code>, and <strong>not</strong> <code>CI_low</code> and <code>CI_low_Eta2_partial</code>).</li>
+<li>The “squared” term in column names that refers to “common” statistics (<code>Eta2</code>, <code>Chi2</code>, <code>Omega2</code>, …) should be written as <code>2</code>, not <code>sq</code>, <code>squared</code> or <code>pétit-deux</code> (<em>example:</em> <code>Chi2</code>, and <strong>not</strong> <code>Chisq</code>, <code>Eta2</code>, and <strong>not</strong> <code>Eta_squared</code>). This rule does <strong>not</strong> apply to function names.</li>
+<li>Converting between “easystats” style and “broom” style can be done with <code><a href="https://easystats.github.io/insight/reference/standardize_names.html" class="external-link">insight::standardize_names()</a></code>.</li>
+</ol></div>
 <div class="section level2">
 <h2 id="documentation-roxygen2">Documentation (roxygen2)<a class="anchor" aria-label="anchor" href="#documentation-roxygen2"></a></h2>
 <p>All exported functions must be documented using <code>roxygen2</code>-style comments (<code>#'</code>). The documentation should include:</p>
