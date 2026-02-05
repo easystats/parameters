@@ -4,7 +4,7 @@
 \alias{predict.parameters_clusters}
 \title{Predict method for parameters_clusters objects}
 \usage{
-predict.parameters_clusters(object, newdata = NULL, names = NULL, ...)
+\method{predict}{parameters_clusters}(object, newdata = NULL, names = NULL, ...)
 }
 \arguments{
 \item{object}{a model object for which prediction is desired.}

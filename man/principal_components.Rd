@@ -57,7 +57,7 @@ rotated_data(x, verbose = TRUE)
 
 \method{print_html}{parameters_efa}(x, digits = 2, sort = FALSE, threshold = NULL, labels = NULL, ...)
 
-predict.parameters_efa(
+\method{predict}{parameters_efa}(
   object,
   newdata = NULL,
   names = NULL,
