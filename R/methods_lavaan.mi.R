@@ -3,12 +3,13 @@ model_parameters.lavaan.mi <- function(
   model,
   ci = 0.95,
   standardize = FALSE,
+  component = c("regression", "correlation", "loading", "defined"),
   keep_parameters = NULL,
   drop_parameters = NULL,
   verbose = TRUE,
   ...
 ) {
-  .extract_parameters_lavaan_mi(
+  params <- .extract_parameters_lavaan_mi(
     model,
     ci = ci,
     standardize = standardize,
@@ -17,6 +18,18 @@ model_parameters.lavaan.mi <- function(
     verbose = verbose,
     ...
   )
+
+  # Filter
+  if (all(component == "all")) {
+    component <- c("regression", "correlation", "loading", "variance", "defined", "mean")
+  }
+  params <- params[tolower(params$Component) %in% component, ]
+
+  # add class-attribute for printing
+  class(params) <- c("parameters_sem", "see_parameters_sem", class(params))
+  attr(params, "ci") <- ci
+  attr(params, "model") <- model
+  params
 }
 
 
@@ -101,13 +114,24 @@ model_parameters.lavaan.mi <- function(
     )
 
     # this function errors on unknown arguments
-    valid <- names(formals(lavaan::standardizedsolution))
+    f <- utils::getFromNamespace("standardizedSolution.mi", "lavaan.mi")
+    valid <- names(formals(f))
     dots <- list(...)
     dots <- dots[names(dots) %in% valid]
     fun_args <- c(list(model, se = TRUE, level = ci, type = type), dots)
-    f <- utils::getFromNamespace("standardizedSolution.mi", "lavaan.mi")
     sem_data <- do.call("f", fun_args)
     names(sem_data)[names(sem_data) == "est.std"] <- "est"
+  }
+
+  # extract statistic column - different to normal lavaan objects
+  if (!is.null(sem_data$t)) {
+    statistic <- sem_data$t
+    stat_col <- "t"
+  } else if (!is.null(sem_data$t)) {
+    statistic <- sem_data$z
+    stat_col <- "z"
+  } else {
+    statistic <- NULL
   }
 
   params <- data.frame(
@@ -118,10 +142,14 @@ model_parameters.lavaan.mi <- function(
     SE = sem_data$se,
     CI_low = sem_data$ci.lower,
     CI_high = sem_data$ci.upper,
-    z = sem_data$z,
-    p = sem_data$pvalue,
     stringsAsFactors = FALSE
   )
+
+  if (!is.null(statistic)) {
+    params[[stat_col]] <- statistic
+  }
+
+  params$p <- sem_data$pvalue
 
   if (!is.null(label)) {
     params$Label <- label

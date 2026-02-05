@@ -3,8 +3,11 @@ skip_if_not_installed("lavaan.mi")
 skip_if_not_installed("mice")
 
 test_that("model_parameters.lavaan.mi", {
+  # required for lavaan.mi to work
+  library(lavaan.mi)
+
   set.seed(20260205)
-  mtcars_amp <- mice::ampute(mtcars)$amp
+  mtcars_amp <- suppressWarnings(mice::ampute(mtcars)$amp)
   imp <- mice::mice(mtcars_amp, printFlag = FALSE)
 
   mod <- "
