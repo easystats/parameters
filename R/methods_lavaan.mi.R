@@ -119,7 +119,7 @@ model_parameters.lavaan.mi <- function(
     dots <- list(...)
     dots <- dots[names(dots) %in% valid]
     fun_args <- c(list(model, se = TRUE, level = ci, type = type), dots)
-    sem_data <- do.call("f", fun_args)
+    sem_data <- do.call(f, fun_args)
     names(sem_data)[names(sem_data) == "est.std"] <- "est"
   }
 
