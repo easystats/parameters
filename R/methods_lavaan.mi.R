@@ -127,7 +127,7 @@ model_parameters.lavaan.mi <- function(
   if (!is.null(sem_data$t)) {
     statistic <- sem_data$t
     stat_col <- "t"
-  } else if (!is.null(sem_data$t)) {
+  } else if (!is.null(sem_data$z)) {
     statistic <- sem_data$z
     stat_col <- "z"
   } else {
