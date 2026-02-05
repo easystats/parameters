@@ -1,19 +1,21 @@
 # Packages lavaan, blavaan
 
-
 # model parameters ---------------------------
 
 #' @rdname model_parameters.principal
 #' @export
-model_parameters.lavaan <- function(model,
-                                    ci = 0.95,
-                                    standardize = FALSE,
-                                    component = c("regression", "correlation", "loading", "defined"),
-                                    keep = NULL,
-                                    drop = NULL,
-                                    verbose = TRUE,
-                                    ...) {
-  params <- .extract_parameters_lavaan(model,
+model_parameters.lavaan <- function(
+  model,
+  ci = 0.95,
+  standardize = FALSE,
+  component = c("regression", "correlation", "loading", "defined"),
+  keep = NULL,
+  drop = NULL,
+  verbose = TRUE,
+  ...
+) {
+  params <- .extract_parameters_lavaan(
+    model,
     ci = ci,
     standardize = standardize,
     keep_parameters = keep,
@@ -37,21 +39,23 @@ model_parameters.lavaan <- function(model,
 
 
 #' @export
-model_parameters.blavaan <- function(model,
-                                     centrality = "median",
-                                     dispersion = FALSE,
-                                     ci = 0.95,
-                                     ci_method = "eti",
-                                     test = "pd",
-                                     rope_range = "default",
-                                     rope_ci = 0.95,
-                                     diagnostic = c("ESS", "Rhat"),
-                                     component = "all",
-                                     standardize = NULL,
-                                     keep = NULL,
-                                     drop = NULL,
-                                     verbose = TRUE,
-                                     ...) {
+model_parameters.blavaan <- function(
+  model,
+  centrality = "median",
+  dispersion = FALSE,
+  ci = 0.95,
+  ci_method = "eti",
+  test = "pd",
+  rope_range = "default",
+  rope_ci = 0.95,
+  diagnostic = c("ESS", "Rhat"),
+  component = "all",
+  standardize = NULL,
+  keep = NULL,
+  drop = NULL,
+  verbose = TRUE,
+  ...
+) {
   # Processing
   params <- .extract_parameters_bayesian(
     model,
@@ -95,7 +99,6 @@ model_parameters.blavaan <- function(model,
 
 # ci ---------------------------
 
-
 #' @export
 ci.lavaan <- function(x, ci = 0.95, ...) {
   out <- .extract_parameters_lavaan(model = x, ci = ci, ...)
@@ -105,7 +108,6 @@ ci.lavaan <- function(x, ci = 0.95, ...) {
 
 
 # SE ---------------------------
-
 
 #' @export
 standard_error.lavaan <- function(model, ...) {
@@ -126,7 +128,6 @@ standard_error.blavaan <- function(model, ...) {
 
 
 # p-value ---------------------------
-
 
 #' @export
 p_value.lavaan <- function(model, ...) {

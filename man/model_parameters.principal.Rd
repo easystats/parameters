@@ -40,7 +40,7 @@ variances of observed and latent variables, but not the variances of
 exogenous covariates. See \code{lavaan::standardizedsolution} for details.}
 
 \item{component}{What type of links to return. Can be \code{"all"} or some of
-\code{c("regression", "correlation", "loading", "variance", "mean")}.}
+\code{c("regression", "correlation", "loading", "variance", "mean", "defined")}.}
 
 \item{keep}{Character containing a regular expression pattern that
 describes the parameters that should be included (for \code{keep}) or excluded
