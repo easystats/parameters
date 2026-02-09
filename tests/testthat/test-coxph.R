@@ -113,7 +113,7 @@ test_that("model_parameters coxph, correct robust SE", {
     ignore_attr = TRUE
   )
 
-  out <- model_parameters(m.index, digits = 5, p_digits = 5, exponentiate = TRUE)
+  out <- model_parameters(m, digits = 5, p_digits = 5, exponentiate = TRUE)
   expect_equal(
     out$CI_low,
     s$conf.int[, "lower .95"],
