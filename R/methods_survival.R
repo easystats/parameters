@@ -88,6 +88,13 @@ standard_error.coxph <- function(model, method = NULL, ...) {
 
 
 #' @export
+ci.coxph <- function(x, ...) {
+  junk <- utils::capture.output(out <- ci.default(x, ...))
+  out
+}
+
+
+#' @export
 p_value.coxph <- function(model, ...) {
   params <- insight::get_parameters(model)
   stats <- insight::get_statistic(model)
