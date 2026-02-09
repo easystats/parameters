@@ -7,7 +7,7 @@
 ## Bug fixes
 
 * Fixed issue where wrong (non-robust) standard errors were calculated for
-  `coxph` objects.
+  `coxph` and `svycoxph` objects.
 
 # parameters 0.28.3
 

@@ -73,17 +73,19 @@ withr::with_package(
 )
 
 test_that("model_parameters coxph, correct robust SE", {
+  skip_if_not_installed("survey")
+
   # Importing data
   d <- survival::pbc
 
-  # Defining radomization
+  # Defining randomization
   d$randomized <- with(d, !is.na(trt) & trt > 0)
 
   # Defining randomization probability weights
   d$randprob <- fitted(glm(randomized ~ age * edema, data = d, family = binomial))
 
   # Generating survey design object
-  d.svy <- svydesign(
+  d.svy <- survey::svydesign(
     id = ~1,
     prob = ~randprob,
     strata = ~edema,
@@ -120,4 +122,6 @@ test_that("model_parameters coxph, correct robust SE", {
     tolerance = 1e-4,
     ignore_attr = TRUE
   )
+  unloadNamespace("survey")
+  unloadNamespace("survival")
 })
