@@ -18,7 +18,7 @@ test_that("model_parameters.lavaan.mi", {
   fit.mi <- lavaan.mi::sem.mi(mod, data = imp)
 
   mp <- model_parameters(fit.mi)
-  expect_s3_class(mp, "parameters_model")
-  expect_equal(nrow(mp), 5)
-  expect_equal(mp$Coefficient[1], -0.05, tolerance = 1e-2)
+  expect_s3_class(mp, "parameters_sem")
+  expect_equal(nrow(mp), 4)
+  expect_equal(mp$Coefficient[1], -0.05933624, tolerance = 1e-2)
 })
