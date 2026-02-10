@@ -15,7 +15,7 @@
 #' @param labels A character vector containing labels to be added to the
 #'   loadings data. Usually, the question related to the item.
 #' @param component What type of links to return. Can be `"all"` or some of
-#' `c("regression", "correlation", "loading", "variance", "mean")`.
+#' `c("regression", "correlation", "loading", "variance", "mean", "defined")`.
 #' @param ... Arguments passed to or from other methods.
 #' @inheritParams principal_components
 #' @inheritParams model_parameters.default
@@ -145,12 +145,14 @@
 #'   1-30. http://www.jstatsoft.org/v85/i04/
 #'
 #' @export
-model_parameters.principal <- function(model,
-                                       sort = FALSE,
-                                       threshold = NULL,
-                                       labels = NULL,
-                                       verbose = TRUE,
-                                       ...) {
+model_parameters.principal <- function(
+  model,
+  sort = FALSE,
+  threshold = NULL,
+  labels = NULL,
+  verbose = TRUE,
+  ...
+) {
   # n
   n <- model$factors
 
@@ -167,7 +169,11 @@ model_parameters.principal <- function(model,
   # Labels
   if (!is.null(labels)) {
     loadings$Label <- labels
-    loadings <- loadings[c("Variable", "Label", names(loadings)[!names(loadings) %in% c("Variable", "Label")])]
+    loadings <- loadings[c(
+      "Variable",
+      "Label",
+      names(loadings)[!names(loadings) %in% c("Variable", "Label")]
+    )]
     loading_cols <- 3:(n + 2)
   } else {
     loading_cols <- 2:(n + 1)
@@ -196,7 +202,11 @@ model_parameters.principal <- function(model,
   }
 
   # Add some more attributes
-  attr(loadings, "loadings_long") <- .long_loadings(loadings, threshold = threshold, loadings_columns = loading_cols)
+  attr(loadings, "loadings_long") <- .long_loadings(
+    loadings,
+    threshold = threshold,
+    loadings_columns = loading_cols
+  )
   # here we match the original columns in the data set with the assigned components
   # for each variable, so we know which column in the original data set belongs
   # to which extracted component...
@@ -224,11 +234,13 @@ model_parameters.fa.ci <- model_parameters.fa
 
 
 #' @export
-model_parameters.omega <- function(model,
-                                   sort = FALSE,
-                                   threshold = NULL,
-                                   labels = NULL,
-                                   ...) {
+model_parameters.omega <- function(
+  model,
+  sort = FALSE,
+  threshold = NULL,
+  labels = NULL,
+  ...
+) {
   # n
   n <- model$stats$factors
 
@@ -248,7 +260,11 @@ model_parameters.omega <- function(model,
   # Labels
   if (!is.null(labels)) {
     loadings$Label <- labels
-    loadings <- loadings[c("Variable", "Label", names(loadings)[!names(loadings) %in% c("Variable", "Label")])]
+    loadings <- loadings[c(
+      "Variable",
+      "Label",
+      names(loadings)[!names(loadings) %in% c("Variable", "Label")]
+    )]
     loading_cols <- 3:(n + 4)
   } else {
     loading_cols <- 2:(n + 3)
@@ -279,7 +295,11 @@ model_parameters.omega <- function(model,
   }
 
   # Add some more attributes
-  attr(loadings, "loadings_long") <- .long_loadings(loadings, threshold = threshold, loadings_columns = loading_cols)
+  attr(loadings, "loadings_long") <- .long_loadings(
+    loadings,
+    threshold = threshold,
+    loadings_columns = loading_cols
+  )
   # here we match the original columns in the data set with the assigned components
   # for each variable, so we know which column in the original data set belongs
   # to which extracted component...
@@ -296,18 +316,19 @@ model_parameters.omega <- function(model,
 
 
 #' @export
-model_parameters.item_omega <- function(model,
-                                        sort = FALSE,
-                                        threshold = NULL,
-                                        labels = NULL,
-                                        ...) {
+model_parameters.item_omega <- function(
+  model,
+  sort = FALSE,
+  threshold = NULL,
+  labels = NULL,
+  ...
+) {
   x <- attributes(model)$model
   model_parameters(x, sort = sort, threshold = threshold, labels = labels, ...)
 }
 
 
 # helper ------------------------------------------------
-
 
 .get_fa_variance_summary <- function(model) {
   n <- model$factors
