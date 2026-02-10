@@ -203,6 +203,7 @@ withr::with_options(list(parameters_interaction = "*", easystats_table_width = I
 
   # Digits ------
   test_that("digits and ci_digits", {
+    data(mtcars)
     mtcars$cyl <- as.factor(mtcars$cyl)
     mtcars$gear <- as.factor(mtcars$gear)
     model <- lm(mpg ~ hp + gear + vs + cyl + drat, data = mtcars)
@@ -238,7 +239,7 @@ withr::with_options(list(parameters_interaction = "*", easystats_table_width = I
     )
     out <- model_parameters(model)
     expect_identical(
-      capture.output(print(print(out, digits = 4))),
+      capture.output(print(out, digits = 4)),
       c(
         "Parameter   | Coefficient |     SE |             95% CI |   t(24) |     p",
         "-------------------------------------------------------------------------",
@@ -253,7 +254,7 @@ withr::with_options(list(parameters_interaction = "*", easystats_table_width = I
       )
     )
     expect_identical(
-      capture.output(print(print(out, digits = 4, ci_digits = 1))),
+      capture.output(print(out, digits = 4, ci_digits = 1)),
       c(
         "Parameter   | Coefficient |     SE |       95% CI |   t(24) |     p",
         "-------------------------------------------------------------------",
