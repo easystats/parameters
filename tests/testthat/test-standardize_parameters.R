@@ -478,7 +478,16 @@ test_that("include_response | (g)lm", {
 
   expect_equal(coef(m_z), par_z1$Std_Coefficient, ignore_attr = TRUE)
   expect_equal(par_z1$Std_Coefficient[-1], par_z2$Std_Coefficient[-1], tolerance = 1e-5)
-  expect_equal(par_z0$Std_Coefficient * sd(iris$Sepal.Length), par_z2$Std_Coefficient, tolerance = 1e-5)
+  expect_equal(
+    par_z2$Std_Coefficient,
+    c(NA, 4.78199126158876, -1.21786737232628),
+    tolerance = 1e-5
+  )
+  expect_equal(
+    par_z0$Std_Coefficient[-1] * sd(iris$Sepal.Length),
+    par_z2$Std_Coefficient[-1],
+    tolerance = 1e-5
+  )
 
   # glm ---
   m <- glm(am ~ mpg, mtcars, family = binomial())
