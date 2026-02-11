@@ -1,9 +1,10 @@
 # Test Setup --------------------------------
 
+skip_on_cran()
+
 skip_on_os(c("mac", "linux", "solaris"))
 skip_if_not_installed("glmmTMB", minimum_version = "1.1.12")
 skip_if_not_installed("lme4")
-skip_on_cran()
 
 
 # tests --------------------------------
@@ -21,9 +22,18 @@ m1 <- suppressWarnings(glmmTMB::glmmTMB(
   data = cake
 ))
 m2 <- glmmTMB::glmmTMB(Reaction ~ Days + (Days | Subject), data = sleepstudy)
-m3 <- suppressWarnings(glmmTMB::glmmTMB(angle ~ temperature + (temperature | recipe), data = cake))
-m4 <- suppressWarnings(glmmTMB::glmmTMB(angle ~ temperature + (temperature | replicate), data = cake))
-m5 <- suppressWarnings(glmmTMB::glmmTMB(Reaction ~ Days + (Days + Months | Subject), data = sleepstudy))
+m3 <- suppressWarnings(glmmTMB::glmmTMB(
+  angle ~ temperature + (temperature | recipe),
+  data = cake
+))
+m4 <- suppressWarnings(glmmTMB::glmmTMB(
+  angle ~ temperature + (temperature | replicate),
+  data = cake
+))
+m5 <- suppressWarnings(glmmTMB::glmmTMB(
+  Reaction ~ Days + (Days + Months | Subject),
+  data = sleepstudy
+))
 
 set.seed(123)
 expect_message(
@@ -65,26 +75,54 @@ test_that("random effects CIs, two slopes, categorical", {
   expect_identical(
     mp1$Parameter,
     c(
-      "(Intercept)", "temperature.L", "temperature.Q", "temperature.C",
-      "temperature^4", "temperature^5", "SD (Intercept)", "SD (Intercept)",
-      "SD (temperature.L)", "SD (temperature.Q)", "SD (temperature.C)",
-      "SD (temperature^4)", "SD (temperature^5)", "SD (temperature.L)",
-      "SD (temperature.Q)", "SD (temperature.C)", "SD (temperature^4)",
-      "SD (temperature^5)", "Cor (Intercept~temperature.L)", "Cor (Intercept~temperature.Q)",
-      "Cor (Intercept~temperature.C)", "Cor (Intercept~temperature^4)",
-      "Cor (Intercept~temperature^5)", "Cor (Intercept~temperature.L)",
-      "Cor (Intercept~temperature.Q)", "Cor (Intercept~temperature.C)",
-      "Cor (Intercept~temperature^4)", "Cor (Intercept~temperature^5)",
-      "Cor (temperature.L~temperature.Q)", "Cor (temperature.L~temperature.C)",
-      "Cor (temperature.L~temperature^4)", "Cor (temperature.L~temperature^5)",
-      "Cor (temperature.Q~temperature.C)", "Cor (temperature.Q~temperature^4)",
-      "Cor (temperature.Q~temperature^5)", "Cor (temperature.C~temperature^4)",
-      "Cor (temperature.C~temperature^5)", "Cor (temperature^4~temperature^5)",
-      "Cor (temperature.L~temperature.Q)", "Cor (temperature.L~temperature.C)",
-      "Cor (temperature.L~temperature^4)", "Cor (temperature.L~temperature^5)",
-      "Cor (temperature.Q~temperature.C)", "Cor (temperature.Q~temperature^4)",
-      "Cor (temperature.Q~temperature^5)", "Cor (temperature.C~temperature^4)",
-      "Cor (temperature.C~temperature^5)", "Cor (temperature^4~temperature^5)",
+      "(Intercept)",
+      "temperature.L",
+      "temperature.Q",
+      "temperature.C",
+      "temperature^4",
+      "temperature^5",
+      "SD (Intercept)",
+      "SD (Intercept)",
+      "SD (temperature.L)",
+      "SD (temperature.Q)",
+      "SD (temperature.C)",
+      "SD (temperature^4)",
+      "SD (temperature^5)",
+      "SD (temperature.L)",
+      "SD (temperature.Q)",
+      "SD (temperature.C)",
+      "SD (temperature^4)",
+      "SD (temperature^5)",
+      "Cor (Intercept~temperature.L)",
+      "Cor (Intercept~temperature.Q)",
+      "Cor (Intercept~temperature.C)",
+      "Cor (Intercept~temperature^4)",
+      "Cor (Intercept~temperature^5)",
+      "Cor (Intercept~temperature.L)",
+      "Cor (Intercept~temperature.Q)",
+      "Cor (Intercept~temperature.C)",
+      "Cor (Intercept~temperature^4)",
+      "Cor (Intercept~temperature^5)",
+      "Cor (temperature.L~temperature.Q)",
+      "Cor (temperature.L~temperature.C)",
+      "Cor (temperature.L~temperature^4)",
+      "Cor (temperature.L~temperature^5)",
+      "Cor (temperature.Q~temperature.C)",
+      "Cor (temperature.Q~temperature^4)",
+      "Cor (temperature.Q~temperature^5)",
+      "Cor (temperature.C~temperature^4)",
+      "Cor (temperature.C~temperature^5)",
+      "Cor (temperature^4~temperature^5)",
+      "Cor (temperature.L~temperature.Q)",
+      "Cor (temperature.L~temperature.C)",
+      "Cor (temperature.L~temperature^4)",
+      "Cor (temperature.L~temperature^5)",
+      "Cor (temperature.Q~temperature.C)",
+      "Cor (temperature.Q~temperature^4)",
+      "Cor (temperature.Q~temperature^5)",
+      "Cor (temperature.C~temperature^4)",
+      "Cor (temperature.C~temperature^5)",
+      "Cor (temperature^4~temperature^5)",
       "SD (Observations)"
     )
   )
@@ -92,14 +130,55 @@ test_that("random effects CIs, two slopes, categorical", {
   expect_identical(
     mp1$Group,
     c(
-      "", "", "", "", "", "", "recipe", "replicate", "recipe", "recipe",
-      "recipe", "recipe", "recipe", "replicate", "replicate", "replicate",
-      "replicate", "replicate", "recipe", "recipe", "recipe", "recipe",
-      "recipe", "replicate", "replicate", "replicate", "replicate",
-      "replicate", "recipe", "recipe", "recipe", "recipe", "recipe",
-      "recipe", "recipe", "recipe", "recipe", "recipe", "replicate",
-      "replicate", "replicate", "replicate", "replicate", "replicate",
-      "replicate", "replicate", "replicate", "replicate", "Residual"
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "recipe",
+      "replicate",
+      "recipe",
+      "recipe",
+      "recipe",
+      "recipe",
+      "recipe",
+      "replicate",
+      "replicate",
+      "replicate",
+      "replicate",
+      "replicate",
+      "recipe",
+      "recipe",
+      "recipe",
+      "recipe",
+      "recipe",
+      "replicate",
+      "replicate",
+      "replicate",
+      "replicate",
+      "replicate",
+      "recipe",
+      "recipe",
+      "recipe",
+      "recipe",
+      "recipe",
+      "recipe",
+      "recipe",
+      "recipe",
+      "recipe",
+      "recipe",
+      "replicate",
+      "replicate",
+      "replicate",
+      "replicate",
+      "replicate",
+      "replicate",
+      "replicate",
+      "replicate",
+      "replicate",
+      "replicate",
+      "Residual"
     )
   )
 })
@@ -116,7 +195,11 @@ test_that("random effects CIs, simple slope", {
   expect_identical(
     mp2$Parameter,
     c(
-      "(Intercept)", "Days", "SD (Intercept)", "SD (Days)", "Cor (Intercept~Days)",
+      "(Intercept)",
+      "Days",
+      "SD (Intercept)",
+      "SD (Days)",
+      "Cor (Intercept~Days)",
       "SD (Observations)"
     )
   )
@@ -139,27 +222,68 @@ test_that("random effects CIs, categorical slope-1", {
   expect_identical(
     mp3$Parameter,
     c(
-      "(Intercept)", "temperature.L", "temperature.Q", "temperature.C",
-      "temperature^4", "temperature^5", "SD (Intercept)", "SD (temperature.L)",
-      "SD (temperature.Q)", "SD (temperature.C)", "SD (temperature^4)",
-      "SD (temperature^5)", "Cor (Intercept~temperature.L)", "Cor (Intercept~temperature.Q)",
-      "Cor (Intercept~temperature.C)", "Cor (Intercept~temperature^4)",
-      "Cor (Intercept~temperature^5)", "Cor (temperature.L~temperature.Q)",
-      "Cor (temperature.L~temperature.C)", "Cor (temperature.L~temperature^4)",
-      "Cor (temperature.L~temperature^5)", "Cor (temperature.Q~temperature.C)",
-      "Cor (temperature.Q~temperature^4)", "Cor (temperature.Q~temperature^5)",
-      "Cor (temperature.C~temperature^4)", "Cor (temperature.C~temperature^5)",
-      "Cor (temperature^4~temperature^5)", "SD (Observations)"
+      "(Intercept)",
+      "temperature.L",
+      "temperature.Q",
+      "temperature.C",
+      "temperature^4",
+      "temperature^5",
+      "SD (Intercept)",
+      "SD (temperature.L)",
+      "SD (temperature.Q)",
+      "SD (temperature.C)",
+      "SD (temperature^4)",
+      "SD (temperature^5)",
+      "Cor (Intercept~temperature.L)",
+      "Cor (Intercept~temperature.Q)",
+      "Cor (Intercept~temperature.C)",
+      "Cor (Intercept~temperature^4)",
+      "Cor (Intercept~temperature^5)",
+      "Cor (temperature.L~temperature.Q)",
+      "Cor (temperature.L~temperature.C)",
+      "Cor (temperature.L~temperature^4)",
+      "Cor (temperature.L~temperature^5)",
+      "Cor (temperature.Q~temperature.C)",
+      "Cor (temperature.Q~temperature^4)",
+      "Cor (temperature.Q~temperature^5)",
+      "Cor (temperature.C~temperature^4)",
+      "Cor (temperature.C~temperature^5)",
+      "Cor (temperature^4~temperature^5)",
+      "SD (Observations)"
     )
   )
 
   expect_identical(
     mp3$Group,
     c(
-      "", "", "", "", "", "", "recipe", "recipe", "recipe", "recipe",
-      "recipe", "recipe", "recipe", "recipe", "recipe", "recipe", "recipe",
-      "recipe", "recipe", "recipe", "recipe", "recipe", "recipe", "recipe",
-      "recipe", "recipe", "recipe", "Residual"
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "recipe",
+      "recipe",
+      "recipe",
+      "recipe",
+      "recipe",
+      "recipe",
+      "recipe",
+      "recipe",
+      "recipe",
+      "recipe",
+      "recipe",
+      "recipe",
+      "recipe",
+      "recipe",
+      "recipe",
+      "recipe",
+      "recipe",
+      "recipe",
+      "recipe",
+      "recipe",
+      "recipe",
+      "Residual"
     )
   )
 })
@@ -183,28 +307,68 @@ test_that("random effects CIs, categorical slope-2", {
   expect_identical(
     mp4$Parameter,
     c(
-      "(Intercept)", "temperature.L", "temperature.Q", "temperature.C",
-      "temperature^4", "temperature^5", "SD (Intercept)", "SD (temperature.L)",
-      "SD (temperature.Q)", "SD (temperature.C)", "SD (temperature^4)",
-      "SD (temperature^5)", "Cor (Intercept~temperature.L)", "Cor (Intercept~temperature.Q)",
-      "Cor (Intercept~temperature.C)", "Cor (Intercept~temperature^4)",
-      "Cor (Intercept~temperature^5)", "Cor (temperature.L~temperature.Q)",
-      "Cor (temperature.L~temperature.C)", "Cor (temperature.L~temperature^4)",
-      "Cor (temperature.L~temperature^5)", "Cor (temperature.Q~temperature.C)",
-      "Cor (temperature.Q~temperature^4)", "Cor (temperature.Q~temperature^5)",
-      "Cor (temperature.C~temperature^4)", "Cor (temperature.C~temperature^5)",
-      "Cor (temperature^4~temperature^5)", "SD (Observations)"
+      "(Intercept)",
+      "temperature.L",
+      "temperature.Q",
+      "temperature.C",
+      "temperature^4",
+      "temperature^5",
+      "SD (Intercept)",
+      "SD (temperature.L)",
+      "SD (temperature.Q)",
+      "SD (temperature.C)",
+      "SD (temperature^4)",
+      "SD (temperature^5)",
+      "Cor (Intercept~temperature.L)",
+      "Cor (Intercept~temperature.Q)",
+      "Cor (Intercept~temperature.C)",
+      "Cor (Intercept~temperature^4)",
+      "Cor (Intercept~temperature^5)",
+      "Cor (temperature.L~temperature.Q)",
+      "Cor (temperature.L~temperature.C)",
+      "Cor (temperature.L~temperature^4)",
+      "Cor (temperature.L~temperature^5)",
+      "Cor (temperature.Q~temperature.C)",
+      "Cor (temperature.Q~temperature^4)",
+      "Cor (temperature.Q~temperature^5)",
+      "Cor (temperature.C~temperature^4)",
+      "Cor (temperature.C~temperature^5)",
+      "Cor (temperature^4~temperature^5)",
+      "SD (Observations)"
     )
   )
 
   expect_identical(
     mp4$Group,
     c(
-      "", "", "", "", "", "", "replicate", "replicate", "replicate",
-      "replicate", "replicate", "replicate", "replicate", "replicate",
-      "replicate", "replicate", "replicate", "replicate", "replicate",
-      "replicate", "replicate", "replicate", "replicate", "replicate",
-      "replicate", "replicate", "replicate", "Residual"
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "replicate",
+      "replicate",
+      "replicate",
+      "replicate",
+      "replicate",
+      "replicate",
+      "replicate",
+      "replicate",
+      "replicate",
+      "replicate",
+      "replicate",
+      "replicate",
+      "replicate",
+      "replicate",
+      "replicate",
+      "replicate",
+      "replicate",
+      "replicate",
+      "replicate",
+      "replicate",
+      "replicate",
+      "Residual"
     )
   )
 })
@@ -221,9 +385,15 @@ test_that("random effects CIs, double slope", {
   expect_identical(
     mp5$Parameter,
     c(
-      "(Intercept)", "Days", "SD (Intercept)", "SD (Days)", "SD (Months)",
-      "Cor (Intercept~Days)", "Cor (Intercept~Months)",
-      "Cor (Days~Months)", "SD (Observations)"
+      "(Intercept)",
+      "Days",
+      "SD (Intercept)",
+      "SD (Days)",
+      "SD (Months)",
+      "Cor (Intercept~Days)",
+      "Cor (Intercept~Months)",
+      "Cor (Days~Months)",
+      "SD (Observations)"
     )
   )
 })
@@ -236,7 +406,10 @@ test_that("random effects CIs, simple slope", {
 
   set.seed(123)
   m2 <- glmmTMB::glmmTMB(Reaction ~ Days + (0 + Days | Subject), data = sleepstudy)
-  m5 <- suppressWarnings(glmmTMB::glmmTMB(Reaction ~ Days + (0 + Days + Months | Subject), data = sleepstudy))
+  m5 <- suppressWarnings(glmmTMB::glmmTMB(
+    Reaction ~ Days + (0 + Days + Months | Subject),
+    data = sleepstudy
+  ))
 
   set.seed(123)
   mp2 <- model_parameters(m2, ci_random = TRUE)
@@ -269,7 +442,11 @@ test_that("random effects CIs, simple slope", {
   expect_identical(
     mp5$Parameter,
     c(
-      "(Intercept)", "Days", "SD (Days)", "SD (Months)", "Cor (Days~Months)",
+      "(Intercept)",
+      "Days",
+      "SD (Days)",
+      "SD (Months)",
+      "Cor (Days~Months)",
       "SD (Observations)"
     )
   )
@@ -279,5 +456,8 @@ test_that("random effects CIs, simple slope", {
 # messages for profiled CI
 test_that("profiled CI messages", {
   mp2 <- model_parameters(m2, ci_method = "profile")
-  expect_message(utils::capture.output(print(mp2)), regexp = "(.*)profile-likelihood(.*)z-distribution(.*)")
+  expect_message(
+    utils::capture.output(print(mp2)),
+    regexp = "(.*)profile-likelihood(.*)z-distribution(.*)"
+  )
 })

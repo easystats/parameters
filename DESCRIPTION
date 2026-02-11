@@ -1,7 +1,7 @@
 Type: Package
 Package: parameters
 Title: Processing of Model Parameters
-Version: 0.28.2.10
+Version: 0.28.3.2
 Authors@R:
     c(person(given = "Daniel",
              family = "Lüdecke",
@@ -80,7 +80,7 @@ Depends:
 Imports:
     bayestestR (>= 0.17.0),
     datawizard (>= 1.3.0),
-    insight (>= 1.4.2),
+    insight (>= 1.4.4),
     graphics,
     methods,
     stats,
@@ -148,6 +148,7 @@ Suggests:
     ivreg,
     knitr,
     lavaan,
+    lavaan.mi,
     lcmm,
     lfe,
     lm.beta,
@@ -232,4 +233,3 @@ Config/testthat/parallel: true
 Config/Needs/website: easystats/easystatstemplate
 Config/Needs/check: stan-dev/cmdstanr
 Config/rcmdcheck/ignore-inconsequential-notes: true
-Remotes: easystats/insight, easystats/modelbased

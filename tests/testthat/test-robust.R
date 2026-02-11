@@ -1,13 +1,10 @@
-skip_if_not_installed("sandwich")
 skip_on_cran()
+skip_if_not_installed("sandwich")
 
 # standard errors -------------------------------------
 test_that("robust-se glm warn with profile-CI", {
   mglm <- glm(mpg ~ wt, data = mtcars)
-  expect_message(
-    ci(mglm, vcov = "HC3"),
-    regex = "available"
-  )
+  expect_message(ci(mglm, vcov = "HC3"), regex = "available")
   expect_message(
     model_parameters(mglm, vcov = "HC3", ci_method = "profile"),
     regex = "modifies"
@@ -200,7 +197,6 @@ test_that("robust-p survival", {
 
 # CI -------------------------------------
 
-
 test_that("robust-ci lm", {
   data(iris)
   m <- lm(Petal.Length ~ Sepal.Length * Species, data = iris)
@@ -266,10 +262,7 @@ test_that("robust-ci ivreg", {
   se <- sqrt(diag(sandwich::vcovCL(m)))
   dof <- degrees_of_freedom(m, method = "wald", verbose = FALSE)
   fac <- suppressWarnings(stats::qt(0.975, df = dof))
-  ci2 <- as.data.frame(cbind(
-    CI_low = coef(m) - se * fac,
-    CI_high = coef(m) + se * fac
-  ))
+  ci2 <- as.data.frame(cbind(CI_low = coef(m) - se * fac, CI_high = coef(m) + se * fac))
   expect_equal(ci1$CI_low, ci2$CI_low, tolerance = 1e-4, ignore_attr = TRUE)
   expect_equal(ci1$CI_high, ci2$CI_high, tolerance = 1e-4, ignore_attr = TRUE)
 
@@ -278,10 +271,7 @@ test_that("robust-ci ivreg", {
   se <- sqrt(diag(sandwich::vcovOPG(m)))
   dof <- degrees_of_freedom(m, method = "wald", verbose = FALSE)
   fac <- suppressWarnings(stats::qt(0.975, df = dof))
-  ci2 <- as.data.frame(cbind(
-    CI_low = coef(m) - se * fac,
-    CI_high = coef(m) + se * fac
-  ))
+  ci2 <- as.data.frame(cbind(CI_low = coef(m) - se * fac, CI_high = coef(m) + se * fac))
   expect_equal(ci1$CI_low, ci2$CI_low, tolerance = 1e-4, ignore_attr = TRUE)
   expect_equal(ci1$CI_high, ci2$CI_high, tolerance = 1e-4, ignore_attr = TRUE)
 })
@@ -296,10 +286,7 @@ test_that("robust-ci zeroinfl", {
   se <- sqrt(diag(sandwich::vcovCL(m)))
   dof <- degrees_of_freedom(m, method = "wald", verbose = FALSE)
   fac <- suppressWarnings(stats::qt(0.975, df = dof))
-  ci2 <- as.data.frame(cbind(
-    CI_low = coef(m) - se * fac,
-    CI_high = coef(m) + se * fac
-  ))
+  ci2 <- as.data.frame(cbind(CI_low = coef(m) - se * fac, CI_high = coef(m) + se * fac))
   expect_equal(ci1$CI_low, ci2$CI_low, tolerance = 1e-4, ignore_attr = TRUE)
   expect_equal(ci1$CI_high, ci2$CI_high, tolerance = 1e-4, ignore_attr = TRUE)
 
@@ -308,10 +295,7 @@ test_that("robust-ci zeroinfl", {
   se <- sqrt(diag(sandwich::vcovOPG(m)))
   dof <- degrees_of_freedom(m, method = "wald", verbose = FALSE)
   fac <- suppressWarnings(stats::qt(0.975, df = dof))
-  ci2 <- as.data.frame(cbind(
-    CI_low = coef(m) - se * fac,
-    CI_high = coef(m) + se * fac
-  ))
+  ci2 <- as.data.frame(cbind(CI_low = coef(m) - se * fac, CI_high = coef(m) + se * fac))
   expect_equal(ci1$CI_low, ci2$CI_low, tolerance = 1e-4, ignore_attr = TRUE)
   expect_equal(ci1$CI_high, ci2$CI_high, tolerance = 1e-4, ignore_attr = TRUE)
 })
@@ -354,7 +338,11 @@ test_that("robust-se lmer", {
     Sepal.Length ~ Species * Sepal.Width + Petal.Length + (1 | grp),
     data = iris
   )
-  se1 <- standard_error(m, vcov = "vcovCR", vcov_args = list(type = "CR1", cluster = iris$grp))
+  se1 <- standard_error(
+    m,
+    vcov = "vcovCR",
+    vcov_args = list(type = "CR1", cluster = iris$grp)
+  )
   se2 <- sqrt(diag(clubSandwich::vcovCR(m, type = "CR1", cluster = iris$grp)))
   expect_equal(se1$SE, se2, tolerance = 1e-4, ignore_attr = TRUE)
 })
