@@ -444,10 +444,19 @@ format_parameters.parameters_model <- function(model, ...) {
     }
     resp <- insight::find_response(model, combine = FALSE)
     mf <- mf[, setdiff(colnames(mf), resp), drop = FALSE]
+    # we need data a 2nd time, to identify on-the-fly-factors
+    mf_data <- insight::get_data(model, source = "mf", verbose = FALSE)
+    factors <- attributes(mf_data)$factors
 
     # return variable labels, and for factors, add labels for each level
     lbs <- lapply(colnames(mf), function(i) {
       vec <- mf[[i]]
+      # if variable is not a factor, we check whether variable
+      # was converted to factor on-the-fly.
+      if (!is.factor(vec) && !is.null(factors) && i %in% factors) {
+        # if so, we need to convert to factor, to have "factor levels"
+        vec <- as.factor(vec)
+      }
       if (is.factor(vec)) {
         variable_label <- attr(vec, "label", exact = TRUE)
         value_labels <- names(attr(vec, "labels", exact = TRUE))
@@ -510,14 +519,18 @@ format_parameters.parameters_model <- function(model, ...) {
           # for on-the-fly conversion of factors, the names of the factors can
           # can also contain "factor()" or "as.factor()" - we need to remove these
           if (any(grepl("(as\\.factor|factor|as\\.character)", out))) {
-            out_clean <- gsub("(as\\.factor|factor|as\\.character)\\((.*)\\)(.*)", "\\2", out)
+            out_clean <- gsub(
+              "(as\\.factor|factor|as\\.character)\\((.*)\\)(.*)",
+              "\\2",
+              out
+            )
           } else {
             out_clean <- out
           }
           # combine labels
           labs <- c(
             labs,
-            paste(sapply(out, function(l) pretty_labels[l]), collapse = " * ")
+            paste(sapply(out_clean, function(l) pretty_labels[l]), collapse = " * ")
           )
         }
         # add interaction terms to labels string
