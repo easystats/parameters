@@ -214,7 +214,7 @@ if (require("mgcv")) {
 #> The following object is masked from ‘package:lme4’:
 #> 
 #>     lmList
-#> This is mgcv 1.9-4. For overview type '?mgcv'.
+#> This is mgcv 1.9-3. For overview type 'help("mgcv-package")'.
 #> 
 #> Attaching package: ‘mgcv’
 #> The following object is masked from ‘package:mclust’:

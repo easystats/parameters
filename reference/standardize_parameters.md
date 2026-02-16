@@ -323,7 +323,7 @@ standardize_parameters(model, method = "posthoc")
 #> 
 #> Parameter   | Std. Coef. |         95% CI
 #> -----------------------------------------
-#> (Intercept) |       0.00 | [ 0.00,  0.00]
+#> (Intercept) |            |               
 #> cyl         |       1.46 | [-4.63,  9.37]
 #> mpg         |       3.36 | [-2.31, 12.59]
 #> cyl × mpg   |      -0.20 | [-1.44,  0.86]
@@ -334,7 +334,7 @@ standardize_parameters(model, method = "basic", exponentiate = TRUE)
 #> 
 #> Parameter   | Std_Odds_Ratio |           95% CI
 #> -----------------------------------------------
-#> (Intercept) |           1.00 | [1.00,     1.00]
+#> (Intercept) |                |                 
 #> cyl         |           4.32 | [0.01, 11681.98]
 #> mpg         |          28.80 | [0.10, 2.92e+05]
 #> cyl × mpg   |           0.54 | [0.01,    13.94]
