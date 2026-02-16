@@ -306,17 +306,7 @@
       parameters$CI_high <- std_parms$CI_high
     }
 
-    # For models where the response is NOT standardized, the (Intercept) is set
-    # to NA and so we also need to set all inferential statistics to NA
-    if (anyNA(std_parms[parameters$Parameter %in% "(Intercept)", "Std_Coefficient"])) {
-      parameters[
-        parameters$Parameter %in% "(Intercept)",
-        setdiff(
-          colnames(parameters),
-          c(".id", "Parameter", "Component", "Response", "Effects", "Group", "CI")
-        )
-      ] <- NA
-    }
+    parameters <- .NA_inferential_cols(parameters)
 
     coef_col <- "Std_Coefficient"
   }
@@ -675,17 +665,7 @@
       parameters$CI_high <- std_parms$CI_high
     }
 
-    # For models where the response is NOT standardized, the (Intercept) is set
-    # to NA and so we also need to set all inferential statistics to NA
-    if (anyNA(std_parms[parameters$Parameter %in% "(Intercept)", "Std_Coefficient"])) {
-      parameters[
-        parameters$Parameter %in% "(Intercept)",
-        setdiff(
-          colnames(parameters),
-          c(".id", "Parameter", "Component", "Response", "Effects", "Group", "CI")
-        )
-      ] <- NA
-    }
+    parameters <- .NA_inferential_cols(parameters)
 
     coef_col <- "Std_Coefficient"
   }
@@ -1072,4 +1052,18 @@
     p <- p[!is.na(p$Estimate), ]
   }
   p
+}
+
+.NA_inferential_cols <- function(pr) {
+  # For models where the response is NOT standardized, the (Intercept) is set
+  # to NA and so we also need to set all inferential statistics to NA
+  rows_to_NA <- pr$Parameter %in% "(Intercept)" | is.na(pr$Std_Coefficient)
+  if (any(rows_to_NA)) {
+    # fmt: skip
+    cols_not_to_NA <- c(".id", "Parameter", "Component", "Response", "Effects", "Group",
+                        "CI", "Std_Coefficient")
+    cols_to_NA <- setdiff(colnames(pr), cols_not_to_NA)
+    pr[rows_to_NA, cols_to_NA] <- NA
+  }
+  pr
 }
