@@ -2,6 +2,9 @@
 
 ## Changes
 
+* `standardize_parameters()` (and by extension `model_parameters()`) with any of
+  the _post-hoc_ methods no longer standardizes the `"(Intercept)"` parameter -
+  instead setting it (and any inferential statistics related to it) to `NA`.
 * `model_parameters()` now supports objects from the *lavaan.mi* package.
 
 ## Bug fixes
