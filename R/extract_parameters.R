@@ -306,6 +306,8 @@
       parameters$CI_high <- std_parms$CI_high
     }
 
+    parameters <- .NA_inferential_cols(parameters)
+
     coef_col <- "Std_Coefficient"
   }
 
@@ -648,6 +650,7 @@
 
   # Std Coefficients for other methods than "refit"
   if (!is.null(standardize)) {
+    # give minimal attributes required for standardization
     temp_pars <- parameters
     class(temp_pars) <- c("parameters_model", class(temp_pars))
     attr(temp_pars, "ci") <- ci
@@ -661,6 +664,8 @@
       parameters$CI_low <- std_parms$CI_low
       parameters$CI_high <- std_parms$CI_high
     }
+
+    parameters <- .NA_inferential_cols(parameters)
 
     coef_col <- "Std_Coefficient"
   }
@@ -1047,4 +1052,18 @@
     p <- p[!is.na(p$Estimate), ]
   }
   p
+}
+
+.NA_inferential_cols <- function(pr) {
+  # For models where the response is NOT standardized, the (Intercept) is set
+  # to NA and so we also need to set all inferential statistics to NA
+  rows_to_NA <- pr$Parameter %in% "(Intercept)" | is.na(pr$Std_Coefficient)
+  if (any(rows_to_NA)) {
+    # fmt: skip
+    cols_not_to_NA <- c(".id", "Parameter", "Component", "Response", "Effects", "Group",
+                        "CI", "Std_Coefficient")
+    cols_to_NA <- setdiff(colnames(pr), cols_not_to_NA)
+    pr[rows_to_NA, cols_to_NA] <- NA
+  }
+  pr
 }
