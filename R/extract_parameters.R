@@ -306,6 +306,18 @@
       parameters$CI_high <- std_parms$CI_high
     }
 
+    # For models where the response is NOT standardized, the (Intercept) is set
+    # to NA and so we also need to set all inferential statistics to NA
+    if (anyNA(std_parms[parameters$Parameter %in% "(Intercept)", "Std_Coefficient"])) {
+      parameters[
+        parameters$Parameter %in% "(Intercept)",
+        setdiff(
+          colnames(parameters),
+          c(".id", "Parameter", "Component", "Response", "Effects", "Group", "CI")
+        )
+      ] <- NA
+    }
+
     coef_col <- "Std_Coefficient"
   }
 
@@ -648,6 +660,7 @@
 
   # Std Coefficients for other methods than "refit"
   if (!is.null(standardize)) {
+    # give minimal attributes required for standardization
     temp_pars <- parameters
     class(temp_pars) <- c("parameters_model", class(temp_pars))
     attr(temp_pars, "ci") <- ci
@@ -660,6 +673,18 @@
     if (!is.null(ci)) {
       parameters$CI_low <- std_parms$CI_low
       parameters$CI_high <- std_parms$CI_high
+    }
+
+    # For models where the response is NOT standardized, the (Intercept) is set
+    # to NA and so we also need to set all inferential statistics to NA
+    if (anyNA(std_parms[parameters$Parameter %in% "(Intercept)", "Std_Coefficient"])) {
+      parameters[
+        parameters$Parameter %in% "(Intercept)",
+        setdiff(
+          colnames(parameters),
+          c(".id", "Parameter", "Component", "Response", "Effects", "Group", "CI")
+        )
+      ] <- NA
     }
 
     coef_col <- "Std_Coefficient"
