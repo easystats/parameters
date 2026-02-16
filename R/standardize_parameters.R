@@ -763,8 +763,8 @@ print_html.parameters_standardized <- function(x, digits = 2, ...) {
   .dev_factor <- .dev_pred / .dev_resp
 
   # Sapply standardization
-  pars[, colnames(pars) %in% .col_2_scale] <- lapply(
-    pars[, colnames(pars) %in% .col_2_scale, drop = FALSE],
+  pars[, intersect(colnames(pars), .col_2_scale)] <- lapply(
+    pars[, intersect(colnames(pars), .col_2_scale), drop = FALSE],
     function(x) {
       if (exponentiate) {
         if (method == "sdy") {
