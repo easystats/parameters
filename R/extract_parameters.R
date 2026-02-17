@@ -776,14 +776,53 @@
   verbose = TRUE,
   ...
 ) {
-  if (isTRUE(standardize == "refit")) {
-    model <- datawizard::standardize(model, verbose = FALSE)
-    standardize <- NULL
+  if (
+    isTRUE(test == "all") && (!is.null(standardize) || insight::is_multivariate(model))
+  ) {
+    exception_type <- ifelse(
+      !is.null(standardize),
+      "when standardizing",
+      "for multivariate models"
+    )
+    insight::format_error(
+      sprintf("`test = \"all\"` is not supported %s;", exception_type),
+      "Please specify the tests you want to perform using the `test` argument."
+    )
+  }
 
-    # Don't test BF on standardized params
-    test_no_BF <- setdiff(test, c("bf", "bayesfactor", "bayes_factor"))
-    if (length(test_no_BF) == 0) {
-      test_no_BF <- NULL
+  # No scale-dependent inferential statistics
+  if (
+    !is.null(standardize) &&
+      any(
+        c(
+          "bf",
+          "bayesfactor",
+          "bayes_factor",
+          "rope",
+          "p_rope",
+          "equivalence_test",
+          "equitest"
+        ) %in%
+          test
+      )
+  ) {
+    test <- setdiff(
+      test,
+      c(
+        "bf",
+        "bayesfactor",
+        "bayes_factor",
+        "rope",
+        "p_rope",
+        "equivalence_test",
+        "equitest"
+      )
+    )
+    if (verbose) {
+      insight::format_warning(
+        "Scale-dependent inferential statistics (such as `rope` and `bayes_factor`) are not meaningful for standardized parameters",
+        "These have been removed from the output."
+      )
     }
   }
 
@@ -791,10 +830,19 @@
   if (insight::is_multivariate(model) && any(c("rope", "p_rope") %in% test)) {
     test <- setdiff(test, c("rope", "p_rope"))
     if (verbose) {
-      insight::format_alert(
+      insight::format_warning(
         "Multivariate response models are not yet supported for tests `rope` and `p_rope`."
       )
     }
+  }
+
+  if (length(test) == 0) {
+    test <- NULL
+  }
+
+  if (isTRUE(standardize == "refit")) {
+    model <- datawizard::standardize(model, verbose = verbose)
+    standardize <- NULL
   }
 
   # MCMCglmm need special handling

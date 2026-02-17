@@ -298,7 +298,16 @@ test_that("standardize_parameters (Bayes)", {
   expect_shape(posts, dim = c(1000L, 4L))
   expect_s3_class(posts, "data.frame")
 
-  stdpr1 <- model_parameters(model, standardize = "basic", test = "pd")
+  expect_error(
+    model_parameters(model, standardize = "basic", test = "all"),
+    regexp = "all"
+  )
+
+  expect_warning(
+    stdpr1 <- model_parameters(model, standardize = "basic", test = c("pd", "bf")),
+    regexp = "Scale-dependent"
+  )
+
   expect_shape(stdpr1, nrow = 4L)
   expect_equal(
     stdpr1$Std_Median,
