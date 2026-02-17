@@ -48,6 +48,7 @@
     fun_args[["robust"]] <- NULL
     fun <- datawizard::standardize
     model <- do.call(fun, fun_args)
+    standardize <- NULL
   }
 
   parameters <- insight::get_parameters(
@@ -290,7 +291,7 @@
 
   # ==== Std Coefficients for other methods than "refit"
 
-  if (!is.null(standardize) && !isTRUE(standardize == "refit")) {
+  if (!is.null(standardize)) {
     # give minimal attributes required for standardization
     temp_pars <- parameters
     class(temp_pars) <- c("parameters_model", class(temp_pars))
@@ -775,6 +776,17 @@
   verbose = TRUE,
   ...
 ) {
+  if (isTRUE(standardize == "refit")) {
+    model <- datawizard::standardize(model, verbose = FALSE)
+    standardize <- NULL
+
+    # Don't test BF on standardized params
+    test_no_BF <- setdiff(test, c("bf", "bayesfactor", "bayes_factor"))
+    if (length(test_no_BF) == 0) {
+      test_no_BF <- NULL
+    }
+  }
+
   # no ROPE for multi-response models
   if (insight::is_multivariate(model) && any(c("rope", "p_rope") %in% test)) {
     test <- setdiff(test, c("rope", "p_rope"))
@@ -816,36 +828,24 @@
       verbose = verbose,
       ...
     )
+  }
 
-    if (!is.null(standardize)) {
-      # Don't test BF on standardized params
-      test_no_BF <- test[!test %in% c("bf", "bayesfactor", "bayes_factor")]
-      if (length(test_no_BF) == 0) {
-        test_no_BF <- NULL
-      }
-      std_post <- standardize_posteriors(model, method = standardize)
-      std_parameters <- bayestestR::describe_posterior(
-        std_post,
-        centrality = centrality,
-        dispersion = dispersion,
-        ci = ci,
-        ci_method = ci_method,
-        test = test_no_BF,
-        rope_range = rope_range,
-        rope_ci = rope_ci,
-        verbose = verbose,
-        ...
-      )
+  if (!is.null(standardize)) {
+    # give minimal attributes required for standardization
+    temp_pars <- parameters
+    class(temp_pars) <- c("parameters_model", class(temp_pars))
+    attr(temp_pars, "ci") <- ci
+    attr(temp_pars, "object_name") <- model # pass the model as is (this is a cheat - teehee!)
 
-      parameters <- merge(
-        std_parameters,
-        parameters[c(
-          "Parameter",
-          setdiff(colnames(parameters), colnames(std_parameters))
-        )],
-        sort = FALSE
-      )
-    }
+    std_parameters <- standardize_parameters(temp_pars, method = standardize)
+
+    parameters <- merge(
+      std_parameters,
+      parameters[c("Parameter", setdiff(colnames(parameters), colnames(std_parameters)))],
+      sort = FALSE
+    )
+
+    parameters <- .NA_inferential_cols(parameters)
   }
 
   if (length(ci) > 1) {
@@ -1057,11 +1057,12 @@
 .NA_inferential_cols <- function(pr) {
   # For models where the response is NOT standardized, the (Intercept) is set
   # to NA and so we also need to set all inferential statistics to NA
-  rows_to_NA <- pr$Parameter %in% "(Intercept)" | is.na(pr$Std_Coefficient)
+  coef_name <- colnames(pr)[grepl("^Std_", colnames(pr))]
+  rows_to_NA <- pr$Parameter %in% "(Intercept)" | is.na(pr[[coef_name]])
   if (any(rows_to_NA)) {
     # fmt: skip
     cols_not_to_NA <- c(".id", "Parameter", "Component", "Response", "Effects", "Group",
-                        "CI", "Std_Coefficient")
+                        "CI", coef_name)
     cols_to_NA <- setdiff(colnames(pr), cols_not_to_NA)
     pr[rows_to_NA, cols_to_NA] <- NA
   }
