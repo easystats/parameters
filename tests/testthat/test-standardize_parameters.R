@@ -9,7 +9,6 @@ test_that("standardize_parameters (simple)", {
   es <- standardize_parameters(model)
   expect_equal(es[2, 2], r, tolerance = 0.01)
 
-
   expect_error(standardize_parameters(model, robust = TRUE), NA)
 })
 
@@ -17,11 +16,17 @@ test_that("standardize_parameters (simple)", {
 test_that("Robust post hoc", {
   model <- lm(mpg ~ hp, weights = gear, data = mtcars)
   expect_error(standardize_parameters(model, method = "basic", robust = TRUE), NA)
-  expect_error(standardize_parameters(model, method = "basic", robust = TRUE, two_sd = TRUE), NA)
+  expect_error(
+    standardize_parameters(model, method = "basic", robust = TRUE, two_sd = TRUE),
+    NA
+  )
 
   model <- lm(mpg ~ hp, data = mtcars)
   expect_error(standardize_parameters(model, method = "basic", robust = TRUE), NA)
-  expect_error(standardize_parameters(model, method = "basic", robust = TRUE, two_sd = TRUE), NA)
+  expect_error(
+    standardize_parameters(model, method = "basic", robust = TRUE, two_sd = TRUE),
+    NA
+  )
 })
 
 # Labels ------------------------------------------------------------------
@@ -71,9 +76,7 @@ test_that("standardize_parameters (bootstrap_model)", {
   out_boot1 <- standardize_parameters(bm_draws, method = "basic")
   out_boot2 <- standardize_parameters(bm_tab, method = "basic")
 
-  expect_equal(out_boot1$Std_Coefficient, out_true$Std_Coefficient,
-    tolerance = 0.05
-  )
+  expect_equal(out_boot1$Std_Coefficient, out_true$Std_Coefficient, tolerance = 0.05)
   expect_equal(out_boot1, out_boot2, ignore_attr = TRUE)
   expect_error(standardize_parameters(bm_draws, method = "refit"))
   expect_error(standardize_parameters(bm_tab, method = "refit"))
@@ -105,37 +108,17 @@ test_that("standardize_parameters (lm with ci)", {
 
   z_basic <- standardize_parameters(model, method = "basic")
 
-  expect_equal(
-    z_basic$Std_Coefficient,
-    c(0, -0.034, -0.028, 0.844),
-    tolerance = 0.01
-  )
+  expect_equal(z_basic$Std_Coefficient, c(0, -0.034, -0.028, 0.844), tolerance = 0.01)
 
   ## CI
-  expect_equal(
-    z_basic$CI_low,
-    c(0, -0.294, -0.433, 0.491),
-    tolerance = 0.01
-  )
+  expect_equal(z_basic$CI_low, c(0, -0.294, -0.433, 0.491), tolerance = 0.01)
 
-  expect_equal(
-    z_basic$CI_high,
-    c(0, 0.225, 0.375, 1.196),
-    tolerance = 0.01
-  )
+  expect_equal(z_basic$CI_high, c(0, 0.225, 0.375, 1.196), tolerance = 0.01)
 
   z_basic.0.80 <- standardize_parameters(model, ci = 0.8, method = "basic")
-  expect_equal(
-    z_basic.0.80$CI_low,
-    c(0, -0.203, -0.292, 0.614),
-    tolerance = 0.01
-  )
+  expect_equal(z_basic.0.80$CI_low, c(0, -0.203, -0.292, 0.614), tolerance = 0.01)
 
-  expect_equal(
-    z_basic.0.80$CI_high,
-    c(0, 0.135, 0.234, 1.073),
-    tolerance = 0.01
-  )
+  expect_equal(z_basic.0.80$CI_high, c(0, 0.135, 0.234, 1.073), tolerance = 0.01)
 
   data("mtcars")
   m0 <- lm(mpg ~ cyl + factor(am), mtcars)
@@ -161,7 +144,8 @@ test_that("standardize_parameters (aov)", {
   m_aov <- aov(Sepal.Length ~ Species * Cat1, data = dat3)
   m_lm <- lm(Sepal.Length ~ Species * Cat1, data = dat3)
 
-  expect_equal(standardize_parameters(m_aov),
+  expect_equal(
+    standardize_parameters(m_aov),
     standardize_parameters(m_lm),
     ignore_attr = TRUE
   )
@@ -222,10 +206,7 @@ test_that("standardize_parameters (with functions /  interactions)", {
 
 # exponentiate ------------------------------------------------------------
 test_that("standardize_parameters (exponentiate)", {
-  mod_b <- glm(am ~ mpg + cyl + hp,
-    data = mtcars,
-    family = poisson()
-  )
+  mod_b <- glm(am ~ mpg + cyl + hp, data = mtcars, family = poisson())
   mod_refit <- standardize_parameters(mod_b, method = "refit", exponentiate = TRUE)
 
   expect_equal(
@@ -244,11 +225,7 @@ test_that("standardize_parameters (exponentiate)", {
     ignore_attr = TRUE
   )
 
-
-  mod_b <- glm(am ~ mpg + cyl,
-    data = mtcars,
-    family = binomial()
-  )
+  mod_b <- glm(am ~ mpg + cyl, data = mtcars, family = binomial())
   mod_refit <- standardize_parameters(mod_b, method = "refit", exponentiate = TRUE)
 
   expect_equal(
@@ -267,11 +244,7 @@ test_that("standardize_parameters (exponentiate)", {
     tolerance = 1e-5
   )
 
-
-  mod_b <- glm(am ~ mpg + cyl + hp,
-    data = mtcars,
-    family = stats::gaussian()
-  )
+  mod_b <- glm(am ~ mpg + cyl + hp, data = mtcars, family = stats::gaussian())
   mod_refit <- standardize_parameters(mod_b, method = "refit", exponentiate = TRUE)
 
   expect_equal(
@@ -299,9 +272,11 @@ test_that("standardize_parameters (Bayes)", {
 
   set.seed(1234)
   suppressWarnings({
-    model <- rstanarm::stan_glm(Sepal.Length ~ Species + Petal.Width,
+    model <- rstanarm::stan_glm(
+      Sepal.Length ~ Species + Petal.Width,
       data = iris,
-      iter = 500, refresh = 0
+      iter = 500,
+      refresh = 0
     )
   })
 
@@ -342,20 +317,21 @@ test_that("standardize_parameters (Pseudo - GLMM)", {
   dat <- transform(dat, Y = X + Z + rnorm(1000))
   dat <- cbind(dat, datawizard::demean(dat, c("X", "Z"), "ID"))
 
-
-  m <- lme4::lmer(Y ~ scale(X_within) * X_between + C + (scale(X_within) | ID),
+  m <- lme4::lmer(
+    Y ~ scale(X_within) * X_between + C + (scale(X_within) | ID),
     data = dat
   )
 
   ## No robust methods... (yet)
-  expect_message(standardize_parameters(m, method = "pseudo", robust = TRUE, verbose = FALSE), regexp = "robust")
-
+  expect_message(
+    standardize_parameters(m, method = "pseudo", robust = TRUE, verbose = FALSE),
+    regexp = "robust"
+  )
 
   ## Correctly identify within and between terms
   dev_resp <- standardize_info(m, include_pseudo = TRUE)$Deviation_Response_Pseudo
   expect_identical(insight::n_unique(dev_resp[c(2, 4, 5, 6)]), 1L)
   expect_true(dev_resp[2] != dev_resp[3])
-
 
   ## Calc
   b <- lme4::fixef(m)[-1]
@@ -371,8 +347,14 @@ test_that("standardize_parameters (Pseudo - GLMM)", {
   SD_y <- SD_y[c(1, 2, 1, 1, 1)]
 
   expect_equal(
-    data.frame(Deviation_Response_Pseudo = c(SD_y[2], SD_y), Deviation_Pseudo = c(0, SD_x)),
-    standardize_info(m, include_pseudo = TRUE)[, c("Deviation_Response_Pseudo", "Deviation_Pseudo")],
+    data.frame(
+      Deviation_Response_Pseudo = c(SD_y[2], SD_y),
+      Deviation_Pseudo = c(0, SD_x)
+    ),
+    standardize_info(m, include_pseudo = TRUE)[, c(
+      "Deviation_Response_Pseudo",
+      "Deviation_Pseudo"
+    )],
     tolerance = 1e-5
   )
   expect_equal(
@@ -381,35 +363,31 @@ test_that("standardize_parameters (Pseudo - GLMM)", {
     tolerance = 1e-5
   )
 
-
   ## scaling should not affect
-  m1 <- lme4::lmer(Y ~ X_within + X_between + C + (X_within | ID),
+  m1 <- lme4::lmer(Y ~ X_within + X_between + C + (X_within | ID), data = dat)
+  m2 <- lme4::lmer(scale(Y) ~ X_within + X_between + C + (X_within | ID), data = dat)
+  m3 <- lme4::lmer(
+    Y ~ scale(X_within) + X_between + C + (scale(X_within) | ID),
     data = dat
   )
-  m2 <- lme4::lmer(scale(Y) ~ X_within + X_between + C + (X_within | ID),
-    data = dat
-  )
-  m3 <- lme4::lmer(Y ~ scale(X_within) + X_between + C + (scale(X_within) | ID),
-    data = dat
-  )
-  m4 <- lme4::lmer(Y ~ X_within + scale(X_between) + C + (X_within | ID),
-    data = dat
-  )
+  m4 <- lme4::lmer(Y ~ X_within + scale(X_between) + C + (X_within | ID), data = dat)
 
   std1 <- standardize_parameters(m1, method = "pseudo")
-  expect_equal(std1$Std_Coefficient,
+  expect_equal(
+    std1$Std_Coefficient,
     standardize_parameters(m2, method = "pseudo")$Std_Coefficient,
     tolerance = 0.001
   )
-  expect_equal(std1$Std_Coefficient,
+  expect_equal(
+    std1$Std_Coefficient,
     standardize_parameters(m3, method = "pseudo")$Std_Coefficient,
     tolerance = 0.001
   )
-  expect_equal(std1$Std_Coefficient,
+  expect_equal(
+    std1$Std_Coefficient,
     standardize_parameters(m4, method = "pseudo")$Std_Coefficient,
     tolerance = 0.001
   )
-
 
   ## Give warning for within that is also between
   mW <- lme4::lmer(Y ~ X_between + Z_within + C + (1 | ID), dat)
@@ -439,30 +417,19 @@ test_that("standardize_parameters (pscl)", {
   })
 
   # post hoc does it right (bar intercept)
-  expect_equal(sm1$Std_Coefficient[-c(1, 6)],
+  expect_equal(
+    sm1$Std_Coefficient[-c(1, 6)],
     sm2$Std_Coefficient[-c(1, 6)],
     tolerance = 0.01
   )
 
   # basic / smart miss the ZI
-  expect_equal(mp$Coefficient[6:8],
-    sm3$Std_Coefficient[6:8],
-    tolerance = 0.01
-  )
-  expect_equal(mp$Coefficient[7:8],
-    sm4$Std_Coefficient[7:8],
-    tolerance = 0.1
-  )
+  expect_equal(mp$Coefficient[6:8], sm3$Std_Coefficient[6:8], tolerance = 0.01)
+  expect_equal(mp$Coefficient[7:8], sm4$Std_Coefficient[7:8], tolerance = 0.1)
 
   # get count numerics al right
-  expect_equal(sm1$Std_Coefficient[4:5],
-    sm3$Std_Coefficient[4:5],
-    tolerance = 0.01
-  )
-  expect_equal(sm1$Std_Coefficient[4:5],
-    sm4$Std_Coefficient[4:5],
-    tolerance = 0.01
-  )
+  expect_equal(sm1$Std_Coefficient[4:5], sm3$Std_Coefficient[4:5], tolerance = 0.01)
+  expect_equal(sm1$Std_Coefficient[4:5], sm4$Std_Coefficient[4:5], tolerance = 0.01)
 })
 
 test_that("include_response | (g)lm", {
@@ -508,14 +475,22 @@ test_that("include_response | parameters", {
   pars <- model_parameters(m, effects = "fixed")
   pars_z0 <- standardize_parameters(pars, method = "basic")
   pars_z1 <- standardize_parameters(pars, method = "basic", include_response = FALSE)
-  expect_equal(pars_z0$Std_Coefficient[-1] * sd(iris$Sepal.Length), pars_z1$Std_Coefficient[-1], tolerance = 1e-5)
+  expect_equal(
+    pars_z0$Std_Coefficient[-1] * sd(iris$Sepal.Length),
+    pars_z1$Std_Coefficient[-1],
+    tolerance = 1e-5
+  )
 
   # boot ---
   skip_if_not_installed("boot")
   pars <- bootstrap_parameters(m)
   pars_z0 <- standardize_parameters(pars, method = "basic")
   pars_z1 <- standardize_parameters(pars, method = "basic", include_response = FALSE)
-  expect_equal(pars_z0$Std_Coefficient[-1] * sd(iris$Sepal.Length), pars_z1$Std_Coefficient[-1], tolerance = 1e-5)
+  expect_equal(
+    pars_z0$Std_Coefficient[-1] * sd(iris$Sepal.Length),
+    pars_z1$Std_Coefficient[-1],
+    tolerance = 1e-5
+  )
 })
 
 
@@ -525,7 +500,11 @@ test_that("include_response | bayes", {
 
   data(iris)
   iris$Sepal.Length <- iris$Sepal.Length * 5
-  m <- rstanarm::stan_glm(Sepal.Length ~ Petal.Length + Petal.Width, data = iris, refresh = 0)
+  m <- rstanarm::stan_glm(
+    Sepal.Length ~ Petal.Length + Petal.Width,
+    data = iris,
+    refresh = 0
+  )
 
   expect_warning({
     m_z <- datawizard::standardize(m, include_response = FALSE)
@@ -536,7 +515,15 @@ test_that("include_response | bayes", {
   par_z0 <- standardize_posteriors(m, method = "basic")
   par_z2 <- standardize_posteriors(m, method = "basic", include_response = FALSE)
 
-  expect_equal(sapply(insight::get_parameters(m_z), mean), sapply(par_z1, mean), tolerance = 0.1)
+  expect_equal(
+    sapply(insight::get_parameters(m_z), mean),
+    sapply(par_z1, mean),
+    tolerance = 0.1
+  )
   expect_equal(sapply(par_z1, mean)[-1], sapply(par_z2, mean)[-1], tolerance = 0.1)
-  expect_equal(sapply(par_z0, mean) * sd(iris$Sepal.Length), sapply(par_z2, mean), tolerance = 0.1)
+  expect_equal(
+    sapply(par_z0, mean) * sd(iris$Sepal.Length),
+    sapply(par_z2, mean),
+    tolerance = 0.1
+  )
 })
