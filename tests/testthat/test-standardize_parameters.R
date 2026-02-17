@@ -295,8 +295,31 @@ test_that("standardize_parameters (Bayes)", {
   )
 
   posts <- standardize_posteriors(model, method = "posthoc")
-  expect_identical(dim(posts), c(1000L, 4L))
+  expect_shape(posts, dim = c(1000L, 4L))
   expect_s3_class(posts, "data.frame")
+
+  stdpr1 <- model_parameters(model, standardize = "basic", test = "pd")
+  expect_shape(stdpr1, nrow = 4L)
+  expect_equal(
+    stdpr1$Std_Median,
+    c(0, -0.02771546, -0.02487128, 0.83883116),
+    tolerance = 0.1
+  )
+  expect_equal(stdpr1$pd, c(NA, 0.590, 0.548, 1), tolerance = 0.1)
+
+  # test 2
+  set.seed(1111)
+  mod <- rstanarm::stan_glm(am ~ hp, data = mtcars, family = binomial(), refresh = 0)
+
+  suppressWarnings(pr1 <- model_parameters(mod, standardize = "refit", test = "pd"))
+  expect_shape(pr1, nrow = 2L)
+  expect_equal(pr1$Median, c(-0.4414492, -0.5999897), tolerance = 0.01)
+  expect_equal(pr1$pd, c(0.88425, 0.93000), tolerance = 0.01)
+
+  pr2 <- model_parameters(mod, standardize = "basic", test = "pd")
+  expect_shape(pr2, nrow = 2L)
+  expect_equal(pr2$Std_Median, c(NA, -0.5967393), tolerance = 0.01)
+  expect_equal(pr2$pd, c(NA, 0.94025), tolerance = 0.01)
 })
 
 
