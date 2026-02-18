@@ -782,7 +782,7 @@
     exception_type <- ifelse(
       is.null(standardize),
       "for multivariate models",
-      "when standardizing",
+      "when standardizing"
     )
     insight::format_error(
       sprintf("`test = \"all\"` is not supported %s;", exception_type),
@@ -1106,6 +1106,9 @@
   # For models where the response is NOT standardized, the (Intercept) is set
   # to NA and so we also need to set all inferential statistics to NA
   coef_name <- colnames(pr)[startsWith(colnames(pr), "Std_")]
+  if (length(coef_name) != 1L) {
+    insight::format_error("Wrong number of standardized coefficient columns detected.")
+  }
   rows_to_NA <- pr$Parameter == "(Intercept)" | is.na(pr[[coef_name]])
   if (any(rows_to_NA)) {
     # fmt: skip
