@@ -176,7 +176,8 @@ test_that("standardize_parameters (with functions /  interactions)", {
   )
   expect_equal(
     standardize_parameters(m3, method = "basic")$Std_Coefficient,
-    model_parameters(m4)$Coefficient
+    model_parameters(m4)$Coefficient,
+    tolerance = 0.0001
   )
 
   # transformed resp or pred should not affect

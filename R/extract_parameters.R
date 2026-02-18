@@ -780,9 +780,9 @@
     isTRUE(test == "all") && (!is.null(standardize) || insight::is_multivariate(model))
   ) {
     exception_type <- ifelse(
-      !is.null(standardize),
+      is.null(standardize),
+      "for multivariate models",
       "when standardizing",
-      "for multivariate models"
     )
     insight::format_error(
       sprintf("`test = \"all\"` is not supported %s;", exception_type),
@@ -1105,8 +1105,8 @@
 .NA_inferential_cols <- function(pr) {
   # For models where the response is NOT standardized, the (Intercept) is set
   # to NA and so we also need to set all inferential statistics to NA
-  coef_name <- colnames(pr)[grepl("^Std_", colnames(pr))]
-  rows_to_NA <- pr$Parameter %in% "(Intercept)" | is.na(pr[[coef_name]])
+  coef_name <- colnames(pr)[startsWith(colnames(pr), "Std_")]
+  rows_to_NA <- pr$Parameter == "(Intercept)" | is.na(pr[[coef_name]])
   if (any(rows_to_NA)) {
     # fmt: skip
     cols_not_to_NA <- c(".id", "Parameter", "Component", "Response", "Effects", "Group",
