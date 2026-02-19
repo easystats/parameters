@@ -215,7 +215,11 @@
   }
 
   # add parameters with value and variable
-  attr(params, "pretty_labels") <- .format_value_labels(params, model)
+  if (isFALSE(dot.arguments$pretty_names)) {
+    attr(params, "pretty_labels") <- params$Parameter
+  } else if (is.null(attr(params, "pretty_labels", exact = TRUE))) {
+    attr(params, "pretty_labels") <- .format_value_labels(params, model)
+  }
 
   row.names(params) <- NULL
   params
