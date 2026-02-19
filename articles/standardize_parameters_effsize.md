@@ -39,7 +39,7 @@ standardize_parameters(m)
     > 
     > Parameter   | Std. Coef. |        95% CI
     > ----------------------------------------
-    > (Intercept) |  -9.80e-16 | [-0.21, 0.21]
+    > (Intercept) |  -9.44e-16 | [-0.21, 0.21]
     > complaints  |       0.83 | [ 0.61, 1.04]
 
 Standardizing the coefficient of this *simple* linear regression gives a
@@ -271,7 +271,7 @@ standardize_parameters(mod)
     > 
     > Parameter   | Std. Coef. |        95% CI
     > ----------------------------------------
-    > (Intercept) |   2.77e-16 | [-0.03, 0.03]
+    > (Intercept) |   2.85e-16 | [-0.03, 0.03]
     > xtra hours  |       0.77 | [ 0.73, 0.81]
     > n comps     |       0.39 | [ 0.36, 0.42]
     > age         |       0.04 | [ 0.00, 0.07]

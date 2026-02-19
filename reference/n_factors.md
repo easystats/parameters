@@ -105,7 +105,7 @@ defaults for the function arguments.
 ## Note
 
 There is also a
-[[`plot()`](https://rdrr.io/r/graphics/plot.default.html)-method](https://easystats.github.io/see/articles/parameters.html)
+[`plot()`-method](https://easystats.github.io/see/articles/parameters.html)
 implemented in the [**see**-package](https://easystats.github.io/see/).
 `n_components()` is a convenient short-cut for
 `n_factors(type = "PCA")`.

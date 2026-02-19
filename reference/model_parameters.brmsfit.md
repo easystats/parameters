@@ -299,7 +299,7 @@ When `standardize = "refit"`, columns `diagnostic`, `bf_prior` and
 arguments `diagnostic`, `bf_prior` and `priors` are ignored.
 
 There is also a
-[[`plot()`](https://rdrr.io/r/graphics/plot.default.html)-method](https://easystats.github.io/see/articles/parameters.html)
+[`plot()`-method](https://easystats.github.io/see/articles/parameters.html)
 implemented in the [**see**-package](https://easystats.github.io/see/).
 
 ## Confidence intervals and approximation of degrees of freedom

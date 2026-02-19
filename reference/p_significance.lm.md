@@ -182,7 +182,7 @@ equivalent Bayesian model, see following code:
 ## Note
 
 There is also a
-[[`plot()`](https://rdrr.io/r/graphics/plot.default.html)-method](https://easystats.github.io/see/articles/bayestestR.html)
+[`plot()`-method](https://easystats.github.io/see/articles/bayestestR.html)
 implemented in the [**see**-package](https://easystats.github.io/see/).
 
 ## Statistical inference - how to quantify evidence

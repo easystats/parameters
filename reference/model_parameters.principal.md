@@ -145,7 +145,7 @@ are present:
 ## Note
 
 There is also a
-[[`plot()`](https://rdrr.io/r/graphics/plot.default.html)-method](https://easystats.github.io/see/articles/parameters.html)
+[`plot()`-method](https://easystats.github.io/see/articles/parameters.html)
 for `lavaan` models implemented in the
 [**see**-package](https://easystats.github.io/see/).
 

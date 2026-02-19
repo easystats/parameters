@@ -140,9 +140,9 @@ model_parameters(
   `partial = TRUE`. For objects of class `htest` or `BFBayesFactor`,
   `adjust = TRUE` can be used to return bias-corrected effect sizes,
   which is advisable for small samples and large tables. See also
-  [[`?effectsize::eta_squared`](https://easystats.github.io/effectsize/reference/eta_squared.html)](https://easystats.github.io/effectsize/reference/eta_squared.html)
+  [`?effectsize::eta_squared`](https://easystats.github.io/effectsize/reference/eta_squared.html)
   for arguments `partial` and `generalized`;
-  [[`?effectsize::phi`](https://easystats.github.io/effectsize/reference/phi.html)](https://easystats.github.io/effectsize/reference/phi.html)
+  [`?effectsize::phi`](https://easystats.github.io/effectsize/reference/phi.html)
   for `adjust`; and
   [`?effectsize::oddratio`](https://easystats.github.io/effectsize/reference/oddsratio.html)
   for `log`.

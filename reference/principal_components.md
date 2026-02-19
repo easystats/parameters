@@ -270,7 +270,7 @@ are of class `parameters_pca()`.
   [`psych::omega()`](https://rdrr.io/pkg/psych/man/omega.html).
 
 - Running
-  [[`plot()`](https://rdrr.io/r/graphics/plot.default.html)](https://easystats.github.io/see/articles/parameters.html#principal-component-analysis)
+  [`plot()`](https://easystats.github.io/see/articles/parameters.html#principal-component-analysis)
   visually displays the loadings (that requires the
   [**see**-package](https://easystats.github.io/see/) to work).
 

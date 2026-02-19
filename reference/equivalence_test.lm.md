@@ -245,7 +245,7 @@ for further information.
 ## Note
 
 There is also a
-[[`plot()`](https://rdrr.io/r/graphics/plot.default.html)-method](https://easystats.github.io/see/articles/parameters.html)
+[`plot()`-method](https://easystats.github.io/see/articles/parameters.html)
 implemented in the [**see**-package](https://easystats.github.io/see/).
 
 ## Statistical inference - how to quantify evidence
