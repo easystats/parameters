@@ -107,12 +107,12 @@ test_that("model_parameters, standardize-posthoc", {
   )
   expect_equal(
     params$SE,
-    c(0, 0.66228, 0.70202, 0.05968, 0.13914, 0.09762, 0.0945),
+    c(NA, 0.66228, 0.70202, 0.05968, 0.13914, 0.09762, 0.0945),
     tolerance = 1e-3
   )
   expect_equal(
     params$CI_high,
-    c(0, 1.80607, 0.8943, 0.4659, 2.01759, -0.06121, -0.00151),
+    c(NA, 1.80607, 0.8943, 0.4659, 2.01759, -0.06121, -0.00151),
     tolerance = 1e-3
   )
 })
@@ -133,12 +133,12 @@ test_that("model_parameters, standardize-posthoc", {
   )
   expect_equal(
     params$SE,
-    c(0, 0.66228, 0.70202, 0.05968, 0.13914, 0.09762, 0.0945),
+    c(NA, 0.66228, 0.70202, 0.05968, 0.13914, 0.09762, 0.0945),
     tolerance = 1e-3
   )
   expect_equal(
     params$CI_high,
-    c(0, 1.79483, 0.88238, 0.46488, 2.01523, -0.06287, -0.00312),
+    c(NA, 1.79483, 0.88238, 0.46488, 2.01523, -0.06287, -0.00312),
     tolerance = 1e-3
   )
 })
@@ -153,7 +153,7 @@ test_that("model_parameters, standardize-posthoc, wald-t", {
   )
   expect_equal(
     params$CI_high,
-    c(0, 1.80607, 0.8943, 0.4659, 2.01759, -0.06121, -0.00151),
+    c(NA, 1.80607, 0.8943, 0.4659, 2.01759, -0.06121, -0.00151),
     tolerance = 1e-3
   )
 })
@@ -174,12 +174,12 @@ test_that("model_parameters, standardize-basic", {
   )
   expect_equal(
     params$SE,
-    c(0, 0.31325, 0.33204, 0.05968, 0.13914, 0.2962, 0.30761),
+    c(NA, 0.31325, 0.33204, 0.05968, 0.13914, 0.2962, 0.30761),
     tolerance = 1e-3
   )
   expect_equal(
     params$CI_high,
-    c(0, 0.84893, 0.41735, 0.46488, 2.01523, -0.19075, -0.01014),
+    c(NA, 0.84893, 0.41735, 0.46488, 2.01523, -0.19075, -0.01014),
     tolerance = 1e-3
   )
 })
@@ -200,12 +200,12 @@ test_that("model_parameters, standardize-basic", {
   )
   expect_equal(
     params$SE,
-    c(0, 0.31325, 0.33204, 0.05968, 0.13914, 0.2962, 0.30761),
+    c(NA, 0.31325, 0.33204, 0.05968, 0.13914, 0.2962, 0.30761),
     tolerance = 1e-3
   )
   expect_equal(
     params$CI_high,
-    c(0, 0.85424, 0.42299, 0.4659, 2.01759, -0.18572, -0.00492),
+    c(NA, 0.85424, 0.42299, 0.4659, 2.01759, -0.18572, -0.00492),
     tolerance = 1e-3
   )
 })
@@ -219,7 +219,7 @@ test_that("model_parameters, standardize-basic", {
   )
   expect_equal(
     params$CI_high,
-    c(0, 0.85424, 0.42299, 0.4659, 2.01759, -0.18572, -0.00492),
+    c(NA, 0.85424, 0.42299, 0.4659, 2.01759, -0.18572, -0.00492),
     tolerance = 1e-3
   )
 })

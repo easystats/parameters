@@ -2,12 +2,22 @@
 
 ## Changes
 
+* `standardize_parameters()` (and by extension `model_parameters()`) with any of
+  the _post-hoc_ standardization methods no longer standardizes the
+  `"(Intercept)"` parameter - instead setting it to `NA`.
+
+* `standardize_parameters()` with any of the _post-hoc_ standardization methods
+  sets all inferential statistics (z, p, etc...) for the `"(Intercept)"` and any
+  other `NA` parameters to `NA`.
+
 * `model_parameters()` now supports objects from the *lavaan.mi* package.
 
 ## Bug fixes
 
 * Fixed issue where wrong (non-robust) standard errors were calculated for
   `coxph` and `svycoxph` objects.
+
+* Fixed issues with Tukey-p-value adjustment for *emmeans* objects.
 
 # parameters 0.28.3
 
