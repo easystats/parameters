@@ -98,10 +98,19 @@ format_p_adjust <- function(method) {
     {
       correction <- 1
       by_vars <- model@misc$by.vars
-      if (!is.null(by_vars) && by_vars %in% colnames(params)) {
-        correction <- insight::n_unique(params[[by_vars]])
+      if (
+        !is.null(by_vars) && length(by_vars) > 0 && all(by_vars %in% colnames(params))
+      ) {
+        if (length(by_vars) == 1) {
+          correction <- insight::n_unique(params[[by_vars]])
+        } else {
+          # compute unique combinations of multiple by-variables
+          by_data <- params[by_vars]
+          by_groups <- interaction(by_data, drop = TRUE)
+          correction <- insight::n_unique(by_groups)
+        }
       } else {
-        correction <- .safe(prod(vapply(model@model.info$xlev, length, numeric(1))))
+        # correction <- .safe(prod(vapply(model@model.info$xlev, length, numeric(1))))
         correction <- .safe(insight::n_unique(unlist(strsplit(
           model@levels$contrast,
           " - ",
