@@ -17,7 +17,7 @@
 * Fixed issue where wrong (non-robust) standard errors were calculated for
   `coxph` and `svycoxph` objects.
 
-* Fixes issues with Tukey-p-value adjustment for *emmeans* objects.
+* Fixed issues with Tukey-p-value adjustment for *emmeans* objects.
 
 # parameters 0.28.3
 
