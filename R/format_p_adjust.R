@@ -101,7 +101,12 @@ format_p_adjust <- function(method) {
       if (!is.null(by_vars) && by_vars %in% colnames(params)) {
         correction <- insight::n_unique(params[[by_vars]])
       } else {
-        correction <- prod(vapply(model@model.info$xlev, length, numeric(1)))
+        correction <- .safe(prod(vapply(model@model.info$xlev, length, numeric(1))))
+        correction <- .safe(insight::n_unique(unlist(strsplit(
+          model@levels$contrast,
+          " - ",
+          fixed = TRUE
+        ))))
       }
 
       correction

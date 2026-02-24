@@ -88,6 +88,13 @@ test_that("model_parameters, emmeans, p-adjust", {
   myc <- pairs(emmeans::emmeans(warp.lm, ~ wool + tension))
   mp <- model_parameters(myc, p_adjust = "tukey")
   expect_equal(mp$p, as.data.frame(myc)$p.value, tolerance = 1e-4)
+
+  skip_if(getRversion() < "4.5.0")
+  data(penguins)
+  m <- lm(bill_len ~ sex * species + island, data = penguins)
+  emm <- pairs(emmeans::emmeans(m, ~ sex + species))
+  mp <- model_parameters(emm, p_adjust = "tukey")
+  expect_equal(mp$p, as.data.frame(emm)$p.value, tolerance = 1e-4)
 })
 
 
