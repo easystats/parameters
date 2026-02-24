@@ -29,7 +29,12 @@ test_that("model_parameters, p-adjust after keep/drop", {
   )
 
   expect_message(
-    mp <- model_parameters(model, include_info = TRUE, keep = c("wt", "hp"), p_adjust = "bonferroni"),
+    mp <- model_parameters(
+      model,
+      include_info = TRUE,
+      keep = c("wt", "hp"),
+      p_adjust = "bonferroni"
+    ),
     "more than 1 element"
   )
   expect_equal(
@@ -40,7 +45,12 @@ test_that("model_parameters, p-adjust after keep/drop", {
   )
 
   expect_message(
-    mp <- model_parameters(model, include_info = TRUE, keep = c("cyl", "gear"), p_adjust = "bonferroni"),
+    mp <- model_parameters(
+      model,
+      include_info = TRUE,
+      keep = c("cyl", "gear"),
+      p_adjust = "bonferroni"
+    ),
     "more than 1 element"
   )
   expect_equal(
@@ -58,9 +68,26 @@ test_that("model_parameters, emmeans, p-adjust", {
   mp <- model_parameters(m)
   expect_equal(mp$p, as.data.frame(m)$p.value, tolerance = 1e-4)
 
-  m <- pairs(emmeans::emmeans(aov(Sepal.Width ~ Species, data = iris), ~Species), adjust = "scheffe")
+  m <- pairs(
+    emmeans::emmeans(aov(Sepal.Width ~ Species, data = iris), ~Species),
+    adjust = "scheffe"
+  )
   mp <- model_parameters(m, p_adjust = "scheffe")
   expect_equal(mp$p, as.data.frame(m)$p.value, tolerance = 1e-4)
+
+  m <- pairs(
+    emmeans::emmeans(aov(Sepal.Width ~ Species, data = iris), ~Species),
+    adjust = "tukey"
+  )
+  mp <- model_parameters(m, p_adjust = "tukey")
+  expect_equal(mp$p, as.data.frame(m)$p.value, tolerance = 1e-4)
+
+  data(warpbreaks)
+  warp.lm <- lm(breaks ~ wool * tension, data = warpbreaks)
+
+  myc <- pairs(emmeans::emmeans(warp.lm, ~ wool + tension))
+  mp <- model_parameters(myc, p_adjust = "tukey")
+  expect_equal(mp$p, as.data.frame(myc)$p.value, tolerance = 1e-4)
 })
 
 
@@ -84,7 +111,11 @@ test_that("model_parameters, simultaenous confidence intervals", {
   set.seed(123)
   mp <- model_parameters(model, p_adjust = "sup-t")
   expect_equal(mp$p, c(0, 0.27904, 0, 0, NA, NA), tolerance = 1e-3)
-  expect_equal(mp$CI_low, c(67.70195, -0.48377, -4.66802, -7.51974, 8.42651, 11.50991), tolerance = 1e-3)
+  expect_equal(
+    mp$CI_low,
+    c(67.70195, -0.48377, -4.66802, -7.51974, 8.42651, 11.50991),
+    tolerance = 1e-3
+  )
 
   skip_if_not_installed("glmmTMB")
   data("Salamanders", package = "glmmTMB")
@@ -99,18 +130,49 @@ test_that("model_parameters, simultaenous confidence intervals", {
   expect_equal(
     mp$p,
     c(
-      0.56769, 0.57466, 0.98029, 0.83123, 0.22681, 0.06271, 0.99876,
-      0.00068, 0.61786, 0.95269, 0.81296, 0.60973, 0.97504, 0.80566,
-      0.81871, 0.00024, NA, NA
+      0.56769,
+      0.57466,
+      0.98029,
+      0.83123,
+      0.22681,
+      0.06271,
+      0.99876,
+      0.00068,
+      0.61786,
+      0.95269,
+      0.81296,
+      0.60973,
+      0.97504,
+      0.80566,
+      0.81871,
+      0.00024,
+      NA,
+      NA
     ),
     tolerance = 1e-3
   )
   expect_equal(
     mp$CI_low,
     c(
-      -1.6935, -2.6841, -0.45839, -1.30244, -0.14911, -0.01933, -0.76516,
-      0.4494, -0.77256, -2.41501, -3.08449, -0.87083, -2.50859, -2.91223,
-      -8.38616, -4.18299, 0.92944, 0.16671
+      -1.6935,
+      -2.6841,
+      -0.45839,
+      -1.30244,
+      -0.14911,
+      -0.01933,
+      -0.76516,
+      0.4494,
+      -0.77256,
+      -2.41501,
+      -3.08449,
+      -0.87083,
+      -2.50859,
+      -2.91223,
+      -8.38616,
+      -4.18299,
+      0.92944,
+      0.16671
     ),
-    tolerance = 1e-3)
+    tolerance = 1e-3
+  )
 })
