@@ -17,6 +17,8 @@
 * Fixed issue where wrong (non-robust) standard errors were calculated for
   `coxph` and `svycoxph` objects.
 
+* Fixed issues with Tukey-p-value adjustment for *emmeans* objects.
+
 # parameters 0.28.3
 
 * fixed bug in `standardize_info(<fixest>)` that was preventing

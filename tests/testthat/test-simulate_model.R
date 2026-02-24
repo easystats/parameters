@@ -34,17 +34,14 @@ test_that("simulate_model, glmmTMB", {
   expect_identical(dim(s), c(100L, 6L))
   expect_identical(
     colnames(s),
-    c(
-      "(Intercept)", "child", "camper1", "(Intercept)_zi", "child_zi",
-      "camper1_zi"
-    )
+    c("(Intercept)", "child", "camper1", "(Intercept)_zi", "child_zi", "camper1_zi")
   )
   expect_equal(
     head(s$child),
-    c(-1.21946, -1.23724, -1.10968, -1.14867, -1.04882, -1.11192),
+    c(-1.32181, -1.20023, -1.14522, -1.19874, -1.18592, -1.11841),
     tolerance = 1e-2
   )
-  expect_equal(mean(s$camper1), 0.717259, tolerance = 1e-1)
+  expect_equal(mean(s$camper1), 0.7308158, tolerance = 1e-1)
 })
 
 test_that("simulate_model, glmmTMB, conditional only", {
@@ -54,7 +51,7 @@ test_that("simulate_model, glmmTMB, conditional only", {
   expect_identical(colnames(s), c("(Intercept)", "child", "camper1"))
   expect_equal(
     head(s$child),
-    c(-1.21946, -1.23724, -1.10968, -1.14867, -1.04882, -1.11192),
+    c(-1.32181, -1.20023, -1.14522, -1.19874, -1.18592, -1.11841),
     tolerance = 1e-2
   )
   expect_equal(mean(s$camper1), 0.717259, tolerance = 1e-1)

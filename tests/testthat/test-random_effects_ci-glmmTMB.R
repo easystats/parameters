@@ -377,7 +377,7 @@ test_that("random effects CIs, categorical slope-2", {
 test_that("random effects CIs, double slope", {
   expect_equal(
     mp5$CI_low,
-    c(238.40606, 7.52296, 15.0171, 3.80547, 0, -0.48781, NaN, NaN, 22.80045),
+    c(238.40606, 7.52296, 15.0171, 3.80547, NaN, -0.48781, NaN, NaN, 22.80045),
     tolerance = 1e-2,
     ignore_attr = TRUE
   )

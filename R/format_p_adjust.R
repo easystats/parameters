@@ -14,7 +14,8 @@
 format_p_adjust <- function(method) {
   method <- tolower(method)
 
-  switch(method,
+  switch(
+    method,
     holm = "Holm (1979)",
     hochberg = "Hochberg (1988)",
     hommel = "Hommel (1988)",
@@ -44,7 +45,7 @@ format_p_adjust <- function(method) {
     # for interaction terms, e.g. for "by" argument in emmeans
     # pairwise comparison, we have to adjust the rank resp. the
     # number of estimates in a comparison family
-    rank_adjust <- .p_adjust_rank(model, params)
+    rank_adjust <- .p_adjust_rank(model, params, tolower(p_adjust))
 
     # only proceed if valid argument-value
     if (tolower(p_adjust) %in% tolower(all_methods)) {
@@ -68,13 +69,19 @@ format_p_adjust <- function(method) {
       } else if (tolower(p_adjust) == "sidak") {
         # sidak adjustment
         params$p <- 1 - (1 - params$p)^(nrow(params) / rank_adjust)
-      }  else if (tolower(p_adjust) == "sup-t") {
+      } else if (tolower(p_adjust) == "sup-t") {
         # sup-t adjustment
         params <- .p_adjust_supt(model, params)
       }
 
-      if (isTRUE(all(old_p_vals == params$p)) && !identical(p_adjust, "none") && verbose) {
-        insight::format_warning(paste0("Could not apply ", p_adjust, "-adjustment to p-values. Either something went wrong, or the non-adjusted p-values were already very large.")) # nolint
+      if (
+        isTRUE(all(old_p_vals == params$p)) && !identical(p_adjust, "none") && verbose
+      ) {
+        insight::format_warning(paste0(
+          "Could not apply ",
+          p_adjust,
+          "-adjustment to p-values. Either something went wrong, or the non-adjusted p-values were already very large."
+        )) # nolint
       }
     } else if (verbose) {
       insight::format_alert(paste0("`p_adjust` must be one of ", toString(all_methods)))
@@ -86,14 +93,31 @@ format_p_adjust <- function(method) {
 
 # calculate rank adjustment -----
 
-.p_adjust_rank <- function(model, params) {
+.p_adjust_rank <- function(model, params, adjust = "tukey") {
   tryCatch(
     {
       correction <- 1
       by_vars <- model@misc$by.vars
-      if (!is.null(by_vars) && by_vars %in% colnames(params)) {
-        correction <- insight::n_unique(params[[by_vars]])
+      if (
+        !is.null(by_vars) && length(by_vars) > 0 && all(by_vars %in% colnames(params))
+      ) {
+        if (length(by_vars) == 1) {
+          correction <- insight::n_unique(params[[by_vars]])
+        } else {
+          # compute unique combinations of multiple by-variables
+          by_data <- params[by_vars]
+          by_groups <- interaction(by_data, drop = TRUE)
+          correction <- insight::n_unique(by_groups)
+        }
+      } else if (identical(adjust, "tukey")) {
+        # correction <- .safe(prod(vapply(model@model.info$xlev, length, numeric(1))))
+        correction <- .safe(insight::n_unique(unlist(strsplit(
+          model@levels$contrast,
+          " - ",
+          fixed = TRUE
+        ))))
       }
+
       correction
     },
     error = function(e) {
@@ -106,22 +130,26 @@ format_p_adjust <- function(method) {
 # tukey adjustment -----
 
 .p_adjust_tukey <- function(params, stat_column, rank_adjust = 1, verbose = TRUE) {
-  df_column <- colnames(params)[stats::na.omit(match(c("df", "df_error"), colnames(params)))][1]
+  df_column <- colnames(params)[stats::na.omit(match(
+    c("df", "df_error"),
+    colnames(params)
+  ))][1]
   if (!is.na(df_column) && length(stat_column)) {
     params$p <- suppressWarnings(stats::ptukey(
       sqrt(2) * abs(params[[stat_column]]),
-      nmeans = nrow(params) / rank_adjust,
+      nmeans = rank_adjust,
       df = params[[df_column]],
       lower.tail = FALSE
     ))
     # for specific contrasts, ptukey might fail, and the tukey-adjustement
     # could just be simple p-value calculation
     if (all(is.na(params$p))) {
-      params$p <- 2 * stats::pt(
-        abs(params[[stat_column]]),
-        df = params[[df_column]],
-        lower.tail = FALSE
-      )
+      params$p <- 2 *
+        stats::pt(
+          abs(params[[stat_column]]),
+          df = params[[df_column]],
+          lower.tail = FALSE
+        )
       verbose <- FALSE
     }
   }
@@ -132,7 +160,10 @@ format_p_adjust <- function(method) {
 # scheffe adjustment -----
 
 .p_adjust_scheffe <- function(model, params, stat_column, rank_adjust = 1) {
-  df_column <- colnames(params)[stats::na.omit(match(c("df", "df_error"), colnames(params)))][1]
+  df_column <- colnames(params)[stats::na.omit(match(
+    c("df", "df_error"),
+    colnames(params)
+  ))][1]
   if (!is.na(df_column) && length(stat_column)) {
     # 1st try
     scheffe_ranks <- try(qr(model@linfct)$rank, silent = TRUE)
@@ -146,7 +177,8 @@ format_p_adjust <- function(method) {
       scheffe_ranks <- nrow(params)
     }
     scheffe_ranks <- scheffe_ranks / rank_adjust
-    params$p <- stats::pf(params[[stat_column]]^2 / scheffe_ranks,
+    params$p <- stats::pf(
+      params[[stat_column]]^2 / scheffe_ranks,
       df1 = scheffe_ranks,
       df2 = params[[df_column]],
       lower.tail = FALSE
@@ -182,7 +214,9 @@ format_p_adjust <- function(method) {
   # get correlation matrix, based on the covariance matrix
   vc <- .safe(stats::cov2cor(insight::get_varcov(model, component = component)))
   if (is.null(vc)) {
-    insight::format_warning("Could not calculate covariance matrix for `sup-t` adjustment.")
+    insight::format_warning(
+      "Could not calculate covariance matrix for `sup-t` adjustment."
+    )
     return(params)
   }
   # get confidence interval level, or set default
@@ -197,18 +231,30 @@ format_p_adjust <- function(method) {
   }
   # calculate updated confidence interval level, based on simultaenous
   # confidence intervals (https://onlinelibrary.wiley.com/doi/10.1002/jae.2656)
-  crit <- mvtnorm::qmvt(ci_level, df = params[[df_column]][1], tail = "both.tails", corr = vc)$quantile
+  crit <- mvtnorm::qmvt(
+    ci_level,
+    df = params[[df_column]][1],
+    tail = "both.tails",
+    corr = vc
+  )$quantile
   # update confidence intervals
   params$CI_low <- params$Coefficient - crit * params$SE
   params$CI_high <- params$Coefficient + crit * params$SE
   # udpate p-values
   for (i in 1:nrow(params)) {
-    params$p[i] <- 1 - mvtnorm::pmvt(
-      lower = rep(-abs(stats::qt(params$p[i] / 2, df = params[[df_column]][i])), nrow(vc)),
-      upper = rep(abs(stats::qt(params$p[i] / 2, df = params[[df_column]][i])), nrow(vc)),
-      corr = vc,
-      df = params[[df_column]][i]
-    )
+    params$p[i] <- 1 -
+      mvtnorm::pmvt(
+        lower = rep(
+          -abs(stats::qt(params$p[i] / 2, df = params[[df_column]][i])),
+          nrow(vc)
+        ),
+        upper = rep(
+          abs(stats::qt(params$p[i] / 2, df = params[[df_column]][i])),
+          nrow(vc)
+        ),
+        corr = vc,
+        df = params[[df_column]][i]
+      )
   }
   params
 }
