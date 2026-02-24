@@ -40,7 +40,7 @@ variances of observed and latent variables, but not the variances of
 exogenous covariates. See \code{lavaan::standardizedsolution} for details.}
 
 \item{component}{What type of links to return. Can be \code{"all"} or some of
-\code{c("regression", "correlation", "loading", "variance", "mean")}.}
+\code{c("regression", "correlation", "loading", "variance", "mean", "defined")}.}
 
 \item{keep}{Character containing a regular expression pattern that
 describes the parameters that should be included (for \code{keep}) or excluded
@@ -114,7 +114,7 @@ for \code{lavaan} models implemented in the
 \href{https://easystats.github.io/see/}{\strong{see}-package}.
 }
 \examples{
-\dontshow{if (all(insight::check_if_installed(c("psych", "lavaan"), quietly = TRUE))) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (all(insight::check_if_installed(c("psych", "lavaan"), quietly = TRUE))) withAutoprint(\{ # examplesIf}
 library(parameters)
 \donttest{
 # Principal Component Analysis (PCA) ---------

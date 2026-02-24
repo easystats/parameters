@@ -291,6 +291,7 @@ labelled
 lakens
 lavaan
 lavaSearch
+lcmm
 lesslikely
 lm
 lme
@@ -319,6 +320,7 @@ mgcv
 mhurdle
 mlogit
 mmrm
+modelbased
 modelsummary
 multcomp
 multicollinearity

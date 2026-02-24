@@ -89,7 +89,7 @@ Some model objects do not return standard errors (e.g. objects of class
 are returned.
 }
 \examples{
-\dontshow{if (require("mice") && require("datawizard")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (require("mice") && require("datawizard")) withAutoprint(\{ # examplesIf}
 # example for multiple imputed datasets
 data("nhanes2", package = "mice")
 imp <- mice::mice(nhanes2, printFlag = FALSE)

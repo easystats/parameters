@@ -432,7 +432,7 @@ For certain models (like mixed models), profiled intervals may be more
 accurate, however, this is currently not supported.
 }
 \examples{
-\dontshow{if (requireNamespace("see")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (requireNamespace("see")) withAutoprint(\{ # examplesIf}
 model <- lm(Sepal.Length ~ Species, data = iris)
 p_function(model)
 

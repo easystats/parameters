@@ -20,7 +20,7 @@ rows in data).}
 Format cluster models obtained for example by \code{\link[=kmeans]{kmeans()}}.
 }
 \examples{
-\dontshow{if (require("factoextra", quietly = TRUE) && require("dbscan", quietly = TRUE) && require("cluster", quietly = TRUE) && require("fpc", quietly = TRUE)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (all(insight::check_if_installed(c("dbscan", "cluster", "fpc"), quietly = TRUE))) withAutoprint(\{ # examplesIf}
 \donttest{
 #
 # K-means -------------------------------
@@ -58,23 +58,6 @@ attributes(rez)$Total_Sum_Squares
 attributes(rez)$Between_Sum_Squares
 
 #
-# Hierarchical K-means (factoextra::hkclust) ----------------------
-data <- iris[1:4]
-model <- factoextra::hkmeans(data, k = 3)
-
-rez <- model_parameters(model)
-rez
-
-# Get clusters
-predict(rez)
-
-# Clusters centers in long form
-attributes(rez)$means
-
-# Between and Total Sum of Squares
-attributes(rez)$Sum_Squares_Total
-attributes(rez)$Sum_Squares_Between
-
 # K-Medoids (PAM and HPAM) ==============
 model <- cluster::pam(iris[1:4], k = 3)
 model_parameters(model)

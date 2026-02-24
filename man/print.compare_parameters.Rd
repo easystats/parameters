@@ -255,7 +255,7 @@ print unicode-chars for symbols as column names, wherever possible (e.g.,
 }
 
 \examples{
-\dontshow{if (require("gt", quietly = TRUE)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (require("gt", quietly = TRUE)) withAutoprint(\{ # examplesIf}
 \donttest{
 data(iris)
 lm1 <- lm(Sepal.Length ~ Species, data = iris)

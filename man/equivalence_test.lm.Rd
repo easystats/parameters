@@ -266,7 +266,7 @@ documentation in \code{\link[=p_function]{p_function()}}).
 }
 
 \examples{
-\dontshow{if (requireNamespace("sandwich")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (requireNamespace("sandwich")) withAutoprint(\{ # examplesIf}
 data(qol_cancer)
 model <- lm(QoL ~ time + age + education, data = qol_cancer)
 

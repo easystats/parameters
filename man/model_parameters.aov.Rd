@@ -154,7 +154,7 @@ covariates are mean-centred and factors are coded with orthogonal contrasts
 \code{contr.helmert}, but \emph{not} by the default \code{contr.treatment}).
 }
 \examples{
-\dontshow{if (requireNamespace("effectsize", quietly = TRUE)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (requireNamespace("effectsize", quietly = TRUE)) withAutoprint(\{ # examplesIf}
 df <- iris
 df$Sepal.Big <- ifelse(df$Sepal.Width >= 3, "Yes", "No")
 
@@ -174,7 +174,7 @@ model_parameters(
 model <- aov(Sepal.Length ~ Sepal.Big + Error(Species), data = df)
 model_parameters(model)
 \dontshow{\}) # examplesIf}
-\dontshow{if (requireNamespace("lme4", quietly = TRUE) && requireNamespace("effectsize", quietly = TRUE)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (requireNamespace("lme4", quietly = TRUE) && requireNamespace("effectsize", quietly = TRUE)) withAutoprint(\{ # examplesIf}
 \donttest{
 df <- iris
 df$Sepal.Big <- ifelse(df$Sepal.Width >= 3, "Yes", "No")

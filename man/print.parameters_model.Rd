@@ -336,7 +336,7 @@ freedom.
 }
 
 \examples{
-\dontshow{if (require("gt", quietly = TRUE) && require("glmmTMB", quietly = TRUE)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (require("gt", quietly = TRUE) && require("glmmTMB", quietly = TRUE)) withAutoprint(\{ # examplesIf}
 \donttest{
 library(parameters)
 model <- glmmTMB::glmmTMB(

@@ -56,7 +56,7 @@ excludes random-effects until the cAIC can't be improved further.
 }
 
 \examples{
-\dontshow{if (requireNamespace("lme4")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (requireNamespace("lme4")) withAutoprint(\{ # examplesIf}
 model <- lm(mpg ~ ., data = mtcars)
 select_parameters(model)
 

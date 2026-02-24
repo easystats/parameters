@@ -1,24 +1,26 @@
 #' @export
-model_parameters.coxme <- function(model,
-                                   ci = 0.95,
-                                   ci_method = NULL,
-                                   ci_random = NULL,
-                                   bootstrap = FALSE,
-                                   iterations = 1000,
-                                   standardize = NULL,
-                                   effects = "all",
-                                   group_level = FALSE,
-                                   exponentiate = FALSE,
-                                   p_adjust = NULL,
-                                   vcov = NULL,
-                                   vcov_args = NULL,
-                                   wb_component = FALSE,
-                                   include_info = getOption("parameters_mixed_info", FALSE),
-                                   include_sigma = FALSE,
-                                   keep = NULL,
-                                   drop = NULL,
-                                   verbose = TRUE,
-                                   ...) {
+model_parameters.coxme <- function(
+  model,
+  ci = 0.95,
+  ci_method = NULL,
+  ci_random = NULL,
+  bootstrap = FALSE,
+  iterations = 1000,
+  standardize = NULL,
+  effects = "all",
+  group_level = FALSE,
+  exponentiate = FALSE,
+  p_adjust = NULL,
+  vcov = NULL,
+  vcov_args = NULL,
+  wb_component = FALSE,
+  include_info = getOption("parameters_mixed_info", FALSE),
+  include_sigma = FALSE,
+  keep = NULL,
+  drop = NULL,
+  verbose = TRUE,
+  ...
+) {
   insight::check_if_installed("lme4")
   dots <- list(...)
 
@@ -27,7 +29,8 @@ model_parameters.coxme <- function(model,
     if (isTRUE(bootstrap)) {
       ci_method <- "quantile"
     } else {
-      ci_method <- switch(insight::find_statistic(model),
+      ci_method <- switch(
+        insight::find_statistic(model),
         `t-statistic` = "residual",
         "wald"
       )
@@ -46,8 +49,17 @@ model_parameters.coxme <- function(model,
     ci_method <- insight::validate_argument(
       ci_method,
       c(
-        "wald", "normal", "residual", "ml1", "betwithin", "satterthwaite",
-        "kenward", "kr", "boot", "profile", "uniroot"
+        "wald",
+        "normal",
+        "residual",
+        "ml1",
+        "betwithin",
+        "satterthwaite",
+        "kenward",
+        "kr",
+        "boot",
+        "profile",
+        "uniroot"
       )
     )
   }
@@ -88,7 +100,7 @@ model_parameters.coxme <- function(model,
 
   # for refit, we completely refit the model, than extract parameters,
   # ci etc. as usual - therefor, we set "standardize" to NULL
-  if (!is.null(standardize) && standardize == "refit") {
+  if (isTRUE(standardize == "refit")) {
     model <- datawizard::standardize(model, verbose = FALSE)
     standardize <- NULL
   }
@@ -99,16 +111,13 @@ model_parameters.coxme <- function(model,
   if (effects %in% c("fixed", "all")) {
     # Processing
     if (bootstrap) {
-      params <- bootstrap_parameters(
-        model,
-        iterations = iterations,
-        ci = ci,
-        ...
-      )
+      params <- bootstrap_parameters(model, iterations = iterations, ci = ci, ...)
       if (effects != "fixed") {
         effects <- "fixed"
         if (verbose) {
-          insight::format_alert("Bootstrapping only returns fixed effects of the mixed model.")
+          insight::format_alert(
+            "Bootstrapping only returns fixed effects of the mixed model."
+          )
         }
       }
     } else {
@@ -182,7 +191,6 @@ model_parameters.coxme <- function(model,
     wb_component = wb_component,
     ...
   )
-
 
   attr(params, "object_name") <- insight::safe_deparse_symbol(substitute(model))
   class(params) <- c("parameters_model", "see_parameters_model", class(params))

@@ -92,7 +92,7 @@ the \emph{g} parameters; See the \emph{Bayes Factors for ANOVAs} paper
 }
 }
 \examples{
-\dontshow{if (require("BayesFactor")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (require("BayesFactor")) withAutoprint(\{ # examplesIf}
 \donttest{
 # Bayesian t-test
 model <- BayesFactor::ttestBF(x = rnorm(100, 1, 1))

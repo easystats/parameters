@@ -40,7 +40,7 @@ knitted from rmarkdown to PDF or Word files. See
 for examples.
 }
 \examples{
-\dontshow{if (require("gt", quietly = TRUE)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (require("gt", quietly = TRUE)) withAutoprint(\{ # examplesIf}
 model <- lm(mpg ~ wt + cyl, data = mtcars)
 mp <- model_parameters(model)
 display(mp)
@@ -66,7 +66,7 @@ print_html(
 )
 }
 \dontshow{\}) # examplesIf}
-\dontshow{if (all(insight::check_if_installed(c("glmmTMB", "lme4", "tinytable"), quietly = TRUE))) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (all(insight::check_if_installed(c("glmmTMB", "lme4", "tinytable"), quietly = TRUE))) withAutoprint(\{ # examplesIf}
 \donttest{
 data(iris)
 data(Salamanders, package = "glmmTMB")

@@ -33,7 +33,7 @@ conclude that a model is much better than another if both models make very
 similar predictions.
 }
 \examples{
-\dontshow{if (all(insight::check_if_installed(c("brms", "RcppEigen", "BH"), quietly = TRUE))) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (all(insight::check_if_installed(c("brms", "RcppEigen", "BH"), quietly = TRUE))) withAutoprint(\{ # examplesIf}
 \donttest{
 library(brms)
 

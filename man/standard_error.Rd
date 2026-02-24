@@ -86,7 +86,7 @@ For Bayesian models (from \strong{rstanarm} or \strong{brms}), the standard
 error is the SD of the posterior samples.
 }
 \examples{
-\dontshow{if (require("sandwich") && require("clubSandwich")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (require("sandwich") && require("clubSandwich")) withAutoprint(\{ # examplesIf}
 model <- lm(Petal.Length ~ Sepal.Length * Species, data = iris)
 standard_error(model)
 

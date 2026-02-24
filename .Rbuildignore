@@ -28,3 +28,4 @@
 \.lintr$
 ^CRAN-SUBMISSION$
 ^\.github$
+^GEMINI\.md$

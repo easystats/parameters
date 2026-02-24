@@ -308,7 +308,7 @@ here.
 }
 
 \examples{
-\dontshow{if (require("pscl", quietly = TRUE)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (require("pscl", quietly = TRUE)) withAutoprint(\{ # examplesIf}
 data(iris)
 model <- lm(Petal.Length ~ Sepal.Length + Species, data = iris)
 p_value(model)

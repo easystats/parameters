@@ -2,13 +2,18 @@
 #' @export
 ci_satterthwaite <- function(model, ci = 0.95, ...) {
   df_satter <- dof_satterthwaite(model)
+  if (inherits(model, "glmmTMB")) {
+    component <- "conditional"
+  } else {
+    component <- "all"
+  }
   out <- lapply(ci, function(i) {
     .ci_dof(
       model = model,
       ci = i,
       dof = df_satter,
       effects = "fixed",
-      component = "all",
+      component = component,
       method = "satterthwaite",
       ...
     )

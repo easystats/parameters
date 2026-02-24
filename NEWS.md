@@ -1,3 +1,40 @@
+# parameters (devel)
+
+## Changes
+
+* `standardize_parameters()` (and by extension `model_parameters()`) with any of
+  the _post-hoc_ standardization methods no longer standardizes the
+  `"(Intercept)"` parameter - instead setting it to `NA`.
+
+* `standardize_parameters()` with any of the _post-hoc_ standardization methods
+  sets all inferential statistics (z, p, etc...) for the `"(Intercept)"` and any
+  other `NA` parameters to `NA`.
+
+* `model_parameters()` now supports objects from the *lavaan.mi* package.
+
+## Bug fixes
+
+* Fixed issue where wrong (non-robust) standard errors were calculated for
+  `coxph` and `svycoxph` objects.
+
+* Fixed issues with Tukey-p-value adjustment for *emmeans* objects.
+
+# parameters 0.28.3
+
+* fixed bug in `standardize_info(<fixest>)` that was preventing
+  `standardise_parameters()` from working for `fixest` models.
+
+* `equivalence_test()` gets methods for objects from the *modelbased* package.
+
+* Improved support for objects from package *survey*.
+
+* Added support for package *lcmm*.
+
+* Added `ci_method` options `"kenward-roger"` and `"satterthwaite"` for models
+  from package *glmmTMB*. Consequently, `se_kenward()`, `se_satterthwaite()`,
+  `ci_kenward()`, `ci_satterthwaite()`, `p_value_kenward()` and
+  `p_value_satterthwaite()` can now be used with `glmmTMB` models.
+
 # parameters 0.28.2
 
 ## Bug fixes

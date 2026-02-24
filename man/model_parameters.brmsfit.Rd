@@ -442,7 +442,7 @@ here.
 }
 
 \examples{
-\dontshow{if (require("rstanarm")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (require("rstanarm")) withAutoprint(\{ # examplesIf}
 \donttest{
 library(parameters)
 model <- suppressWarnings(stan_glm(

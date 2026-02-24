@@ -208,7 +208,7 @@ here.
 }
 
 \examples{
-\dontshow{if (require("brglm2", quietly = TRUE)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (require("brglm2", quietly = TRUE)) withAutoprint(\{ # examplesIf}
 data("stemcell", package = "brglm2")
 model <- brglm2::bracl(
   research ~ as.numeric(religion) + gender,

@@ -183,7 +183,7 @@ here.
 }
 
 \examples{
-\dontshow{if (require("pscl")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (require("pscl")) withAutoprint(\{ # examplesIf}
 data("bioChemists", package = "pscl")
 model <- pscl::zeroinfl(
   art ~ fem + mar + kid5 + ment | kid5 + phd,

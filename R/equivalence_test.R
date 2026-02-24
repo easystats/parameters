@@ -355,6 +355,100 @@ equivalence_test.glmmTMB <- equivalence_test.merMod
 equivalence_test.MixMod <- equivalence_test.merMod
 
 
+# modelbased ------------------------------
+
+#' @export
+equivalence_test.estimate_means <- function(
+  x,
+  range = "default",
+  ci = 0.95,
+  rule = "classic",
+  vcov = NULL,
+  vcov_args = NULL,
+  verbose = TRUE,
+  ...
+) {
+  # ==== define rope range ====
+
+  range <- .check_rope_range(x, range, verbose)
+
+  if (length(ci) > 1) {
+    insight::format_alert("`ci` may only be of length 1. Using first ci-value now.")
+    ci <- ci[1]
+  }
+
+  # ==== check degrees of freedom ====
+
+  dof <- unique(insight::get_df(x))
+  if (length(dof) > 1) {
+    dof <- Inf
+  }
+
+  # ==== requested confidence intervals ====
+
+  conf_int <- as.data.frame(t(x[c("CI_low", "CI_high")]))
+
+  # ==== the "narrower" intervals (1-2*alpha) for CET-rules. ====
+
+  alpha <- 1 - ci
+  insight::check_if_installed("modelbased")
+
+  # we need to call the modelbased function again, so get the call
+  # modify CI and evaluate that call
+  cl <- insight::get_call(x)
+  cl$ci <- ci - alpha
+  x2 <- eval(cl)
+  conf_int2 <- as.data.frame(t(x2[c("CI_low", "CI_high")]))
+
+  # ==== equivalence test for each parameter ====
+
+  l <- Map(
+    function(ci_wide, ci_narrow) {
+      .equivalence_test_numeric(
+        ci = ci,
+        ci_wide,
+        ci_narrow,
+        range_rope = range,
+        rule = rule,
+        dof = dof,
+        verbose = verbose
+      )
+    },
+    conf_int,
+    conf_int2
+  )
+
+  dat <- do.call(rbind, l)
+  params <- insight::get_parameters(x)
+
+  out <- data.frame(
+    Parameter = params$Parameter,
+    CI = ifelse(rule == "bayes", ci, ci - alpha),
+    dat,
+    stringsAsFactors = FALSE
+  )
+
+  # ==== (adjusted) p-values for tests ====
+
+  if (!inherits(x, "estimate_means")) {
+    out$p <- .add_p_to_equitest(x, ci, range, vcov = vcov, vcov_args = vcov_args, ...)
+  }
+
+  attr(out, "rope") <- range
+  attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
+  attr(out, "rule") <- rule
+  class(out) <- c("equivalence_test_lm", "see_equivalence_test_lm", class(out))
+
+  out
+}
+
+#' @export
+equivalence_test.estimate_contrasts <- equivalence_test.estimate_means
+
+#' @export
+equivalence_test.estimate_slopes <- equivalence_test.estimate_means
+
+
 # Special classes -------------------------
 
 #' @export
@@ -407,6 +501,14 @@ equivalence_test.parameters_model <- function(x,
 
 #' @keywords internal
 .check_rope_range <- function(x, range, verbose) {
+  # for modelbased-objects, we extract the model to define the rope range
+  if (inherits(x, c("estimate_means", "estimate_contrasts", "estimate_slopes"))) {
+    x <- .safe(insight::get_model(x))
+    # if not successful, return defaults
+    if (is.null(x)) {
+      return(c(-1, 1))
+    }
+  }
   if (all(range == "default")) {
     range <- bayestestR::rope_range(x, verbose = verbose)
     if (is.list(range)) {
@@ -438,7 +540,6 @@ equivalence_test.parameters_model <- function(x,
     insight::format_alert("`ci` may only be of length 1. Using first ci-value now.")
     ci <- ci[1]
   }
-
 
   # ==== check degrees of freedom ====
 

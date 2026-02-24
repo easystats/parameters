@@ -1,17 +1,19 @@
 # model_parameters -----------------------------------------
 
 #' @export
-model_parameters.svyglm <- function(model,
-                                    ci = 0.95,
-                                    ci_method = "wald",
-                                    standardize = NULL,
-                                    exponentiate = FALSE,
-                                    p_adjust = NULL,
-                                    include_info = getOption("parameters_info", FALSE),
-                                    keep = NULL,
-                                    drop = NULL,
-                                    verbose = TRUE,
-                                    ...) {
+model_parameters.svyglm <- function(
+  model,
+  ci = 0.95,
+  ci_method = "wald",
+  standardize = NULL,
+  exponentiate = FALSE,
+  p_adjust = NULL,
+  include_info = getOption("parameters_info", FALSE),
+  keep = NULL,
+  drop = NULL,
+  verbose = TRUE,
+  ...
+) {
   if (insight::n_obs(model) > 1e4 && ci_method == "likelihood") {
     insight::format_alert(
       "Likelihood confidence intervals may take longer time to compute. Use 'ci_method=\"wald\"' for faster computation of CIs." # nolint
@@ -45,6 +47,9 @@ model_parameters.svyglm <- function(model,
   out
 }
 
+#' @export
+model_parameters.svyolr <- model_parameters.glm
+
 
 # simulate_model -----------------------------------------
 
@@ -64,10 +69,7 @@ standard_error.svyglm.nb <- function(model, ...) {
     requireNamespace("survey", quietly = TRUE)
   }
   se <- sqrt(diag(stats::vcov(model, stderr = "robust")))
-  .data_frame(
-    Parameter = .remove_backticks_from_string(names(se)),
-    SE = as.vector(se)
-  )
+  .data_frame(Parameter = .remove_backticks_from_string(names(se)), SE = as.vector(se))
 }
 
 
@@ -86,7 +88,7 @@ standard_error.svyglm <- function(model, ...) {
 
 
 #' @export
-standard_error.svyolr <- standard_error.svyglm
+standard_error.svyolr <- standard_error.polr
 
 
 # confidence intervals -----------------------------------
@@ -106,7 +108,7 @@ ci.svyglm <- function(x, ci = 0.95, method = "wald", ...) {
 }
 
 #' @export
-ci.svyolr <- ci.svyglm
+ci.svyolr <- ci.polr
 
 
 # p values -----------------------------------------------
@@ -118,15 +120,12 @@ p_value.svyglm <- function(model, verbose = TRUE, ...) {
   statistic <- insight::get_statistic(model)
   dof <- insight::get_df(model, type = "residual")
   p <- 2 * stats::pt(-abs(statistic$Statistic), df = dof)
-  .data_frame(
-    Parameter = statistic$Parameter,
-    p = as.vector(p)
-  )
+  .data_frame(Parameter = statistic$Parameter, p = as.vector(p))
 }
 
 
 #' @export
-p_value.svyolr <- p_value.svyglm
+p_value.svyolr <- p_value.polr
 
 
 #' @export
@@ -137,12 +136,14 @@ p_value.svyglm.nb <- function(model, ...) {
 
   est <- stats::coef(model)
   se <- sqrt(diag(stats::vcov(model, stderr = "robust")))
-  p <- 2 * stats::pt(abs(est / se), df = insight::get_df(model, type = "wald"), lower.tail = FALSE)
+  p <- 2 *
+    stats::pt(
+      abs(est / se),
+      df = insight::get_df(model, type = "wald"),
+      lower.tail = FALSE
+    )
 
-  .data_frame(
-    Parameter = .remove_backticks_from_string(names(p)),
-    p = as.vector(p)
-  )
+  .data_frame(Parameter = .remove_backticks_from_string(names(p)), p = as.vector(p))
 }
 
 
@@ -155,11 +156,18 @@ p_value.svyglm.zip <- p_value.svyglm.nb
 .ci_likelihood <- function(model, ci) {
   glm_ci <- tryCatch(
     {
-      out <- as.data.frame(stats::confint(model, level = ci, method = "likelihood"), stringsAsFactors = FALSE)
+      out <- as.data.frame(
+        stats::confint(model, level = ci, method = "likelihood"),
+        stringsAsFactors = FALSE
+      )
       names(out) <- c("CI_low", "CI_high")
 
       out$CI <- ci
-      out$Parameter <- insight::get_parameters(model, effects = "fixed", component = "conditional")$Parameter
+      out$Parameter <- insight::get_parameters(
+        model,
+        effects = "fixed",
+        component = "conditional"
+      )$Parameter
 
       out <- out[c("Parameter", "CI", "CI_low", "CI_high")]
       rownames(out) <- NULL
