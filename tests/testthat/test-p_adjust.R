@@ -2,6 +2,7 @@ skip_on_cran()
 
 
 test_that("model_parameters, p-adjust", {
+  data(mtcars)
   model <- lm(mpg ~ wt * cyl + am + log(hp), data = mtcars)
   mp <- model_parameters(model)
   expect_equal(mp$p, c(0, 0.00304, 0.02765, 0.65851, 0.01068, 0.02312), tolerance = 1e-3)
@@ -12,7 +13,7 @@ test_that("model_parameters, p-adjust", {
   mp <- model_parameters(model, p_adjust = "scheffe")
   expect_equal(mp$p, c(0, 0.1425, 0.50499, 0.99981, 0.30911, 0.46396), tolerance = 1e-3)
   mp <- model_parameters(model, p_adjust = "tukey")
-  expect_equal(mp$p, c(0, 0.03225, 0.21714, 0.99748, 0.09875, 0.18822), tolerance = 1e-3)
+  expect_equal(mp$p, c(0, 0.00304, 0.02765, 0.65851, 0.01068, 0.02312), tolerance = 1e-3)
   mp <- model_parameters(model, p_adjust = "sidak")
   expect_equal(mp$p, c(0, 0.0181, 0.15483, 0.99841, 0.06242, 0.13092), tolerance = 1e-3)
 })
@@ -63,6 +64,7 @@ test_that("model_parameters, p-adjust after keep/drop", {
 
 
 test_that("model_parameters, emmeans, p-adjust", {
+  data(iris)
   skip_if_not_installed("emmeans")
   m <- pairs(emmeans::emmeans(aov(Sepal.Width ~ Species, data = iris), ~Species))
   mp <- model_parameters(m)

@@ -45,7 +45,7 @@ format_p_adjust <- function(method) {
     # for interaction terms, e.g. for "by" argument in emmeans
     # pairwise comparison, we have to adjust the rank resp. the
     # number of estimates in a comparison family
-    rank_adjust <- .p_adjust_rank(model, params)
+    rank_adjust <- .p_adjust_rank(model, params, tolower(p_adjust))
 
     # only proceed if valid argument-value
     if (tolower(p_adjust) %in% tolower(all_methods)) {
@@ -93,7 +93,7 @@ format_p_adjust <- function(method) {
 
 # calculate rank adjustment -----
 
-.p_adjust_rank <- function(model, params) {
+.p_adjust_rank <- function(model, params, adjust = "tukey") {
   tryCatch(
     {
       correction <- 1
@@ -109,7 +109,7 @@ format_p_adjust <- function(method) {
           by_groups <- interaction(by_data, drop = TRUE)
           correction <- insight::n_unique(by_groups)
         }
-      } else {
+      } else if (identical(adjust, "tukey")) {
         # correction <- .safe(prod(vapply(model@model.info$xlev, length, numeric(1))))
         correction <- .safe(insight::n_unique(unlist(strsplit(
           model@levels$contrast,
