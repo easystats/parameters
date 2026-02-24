@@ -541,7 +541,7 @@ withr::with_options(list(parameters_exponentiate = FALSE), {
     count ~ child + camper + (1 + xb | persons),
     ziformula = ~ child + camper + (1 + zg | persons),
     data = fish,
-    family = glmmTMB::truncated_poisson()
+    family = poisson()
   ))
 
   test_that("model_parameters.mixed-ran_pars", {
@@ -590,7 +590,7 @@ withr::with_options(list(parameters_exponentiate = FALSE), {
     )
     expect_equal(
       params$Coefficient,
-      c(3.40563, 1.21316, -1, 2.73583, 1.56833, 1),
+      c(2.17996, 1.05919, -0.98828, 5.86354, 12.51802, 0.979),
       tolerance = 1e-2
     )
   })
@@ -679,8 +679,8 @@ withr::with_options(list(parameters_exponentiate = FALSE), {
         "Cor (Intercept~xb: persons) | "
       )
     )
-    expect_equal(mp$Coefficient, c(3.40563, 1.21316, -1), tolerance = 1e-3)
-    expect_equal(mp$CI_low, c(1.64567, 0.5919, -1), tolerance = 1e-3)
+    expect_equal(mp$Coefficient, c(2.18, 1.0592, -0.9883), tolerance = 1e-3)
+    expect_equal(mp$CI_low, c(1.1599, 0.5946, NaN), tolerance = 1e-3)
 
     mp <- model_parameters(
       m4,
@@ -705,8 +705,8 @@ withr::with_options(list(parameters_exponentiate = FALSE), {
         "camper [1]  "
       )
     )
-    expect_equal(mp$Coefficient, c(1.88964, 0.15712, -0.17007), tolerance = 1e-3)
-    expect_equal(mp$CI_low, c(0.5878, -0.78781, -0.92836), tolerance = 1e-3)
+    expect_equal(mp$Coefficient, c(-4.042, -1.3724, -4.829), tolerance = 1e-3)
+    expect_equal(mp$CI_low, c(-4.4415, -5.3849, -4.8295), tolerance = 1e-3)
 
     mp <- model_parameters(
       m4,
@@ -736,8 +736,8 @@ withr::with_options(list(parameters_exponentiate = FALSE), {
         "Cor (Intercept~zg: persons) | "
       )
     )
-    expect_equal(mp$Coefficient, c(2.73583, 1.56833, 1), tolerance = 1e-3)
-    expect_equal(mp$CI_low, c(1.16329, 0.64246, -1), tolerance = 1e-3)
+    expect_equal(mp$Coefficient, c(5.8635, 12.518, 0.979), tolerance = 1e-3)
+    expect_equal(mp$CI_low, c(3.8307, 10.9496, NaN), tolerance = 1e-3)
 
     mp <- model_parameters(
       m4,
@@ -765,9 +765,9 @@ withr::with_options(list(parameters_exponentiate = FALSE), {
         "",
         "Parameter   | Log-Mean |   SE ",
         "------------------------------",
-        "(Intercept) |     2.55 | 0.25 ",
-        "child       |    -1.09 | 0.10 ",
-        "camper [1]  |     0.27 | 0.10 ",
+        "(Intercept) |     1.67 | 0.66 ",
+        "child       |    -1.04 | 0.09 ",
+        "camper [1]  |     0.27 | 0.09 ",
         "",
         "# Random Effects",
         "",
@@ -780,12 +780,12 @@ withr::with_options(list(parameters_exponentiate = FALSE), {
     )
     expect_equal(
       mp$Coefficient,
-      c(2.54713, -1.08747, 0.2723, 3.40563, 1.21316, -1),
+      c(1.6724, -1.0426, 0.2684, 2.18, 1.0592, -0.9883),
       tolerance = 1e-3
     )
     expect_equal(
       mp$CI_low,
-      c(2.06032, -1.27967, 0.07461, 1.64567, 0.5919, -1),
+      c(0.3884, -1.2188, 0.0826, 1.1599, 0.5946, NaN),
       tolerance = 1e-3
     )
 
@@ -813,11 +813,11 @@ withr::with_options(list(parameters_exponentiate = FALSE), {
       c(
         "# Fixed Effects (Zero-Inflatio",
         "",
-        "Parameter   | Log-Mean |   SE ",
+        "Parameter   | Log-Mean |      ",
         "------------------------------",
-        "(Intercept) |     1.89 | 0.66 ",
-        "child       |     0.16 | 0.48 ",
-        "camper [1]  |    -0.17 | 0.39 ",
+        "(Intercept) |    -4.04 |     0",
+        "child       |    -1.37 |     2",
+        "camper [1]  |    -4.83 | 2.25e",
         "",
         "# Random Effects (Zero-Inflati",
         "",
@@ -830,12 +830,12 @@ withr::with_options(list(parameters_exponentiate = FALSE), {
     )
     expect_equal(
       mp$Coefficient,
-      c(1.88964, 0.15712, -0.17007, 2.73583, 1.56833, 1),
+      c(-4.042, -1.3724, -4.829, 5.8635, 12.518, 0.979),
       tolerance = 1e-3
     )
     expect_equal(
       mp$CI_low,
-      c(0.5878, -0.78781, -0.92836, 1.16329, 0.64246, -1),
+      c(-4.4415, -5.3849, -4.8295, 3.8307, 10.9496, NaN),
       tolerance = 1e-3
     )
 
@@ -871,17 +871,17 @@ withr::with_options(list(parameters_exponentiate = FALSE), {
         "",
         "Parameter   | Log-Mean |   SE ",
         "------------------------------",
-        "(Intercept) |     2.55 | 0.25 ",
-        "child       |    -1.09 | 0.10 ",
-        "camper [1]  |     0.27 | 0.10 ",
+        "(Intercept) |     1.67 | 0.66 ",
+        "child       |    -1.04 | 0.09 ",
+        "camper [1]  |     0.27 | 0.09 ",
         "",
         "# Fixed Effects (Zero-Inflatio",
         "",
-        "Parameter   | Log-Odds |   SE ",
+        "Parameter   | Log-Odds |      ",
         "------------------------------",
-        "(Intercept) |     1.89 | 0.66 ",
-        "child       |     0.16 | 0.48 ",
-        "camper [1]  |    -0.17 | 0.39 ",
+        "(Intercept) |    -4.04 |     0",
+        "child       |    -1.37 |     2",
+        "camper [1]  |    -4.83 | 2.25e",
         "",
         "# Random Effects Variances",
         "",
@@ -903,36 +903,36 @@ withr::with_options(list(parameters_exponentiate = FALSE), {
     expect_equal(
       mp$Coefficient,
       c(
-        2.54713,
-        -1.08747,
-        0.2723,
-        1.88964,
-        0.15712,
-        -0.17007,
-        3.40563,
-        1.21316,
-        -1,
-        2.73583,
-        1.56833,
-        1
+        1.6724,
+        -1.0426,
+        0.2684,
+        -4.042,
+        -1.3724,
+        -4.829,
+        2.18,
+        1.0592,
+        -0.9883,
+        5.8635,
+        12.518,
+        0.979
       ),
       tolerance = 1e-3
     )
     expect_equal(
       mp$CI_low,
       c(
-        2.06032,
-        -1.27967,
-        0.07461,
-        0.5878,
-        -0.78781,
-        -0.92836,
-        1.64567,
-        0.5919,
-        -1,
-        1.16329,
-        0.64246,
-        -1
+        0.3884,
+        -1.2188,
+        0.0826,
+        -4.4415,
+        -5.3849,
+        -4.8295,
+        1.1599,
+        0.5946,
+        NaN,
+        3.8307,
+        10.9496,
+        NaN
       ),
       tolerance = 1e-3
     )
