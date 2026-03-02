@@ -19,6 +19,10 @@
 
 * Fixed issues with Tukey-p-value adjustment for *emmeans* objects.
 
+* Fixed unintended removal of columns in `model_parameters()` for objects from
+  package *marginaleffects*. This happened, when a variable in a model was named
+  `Type`.
+
 # parameters 0.28.3
 
 * fixed bug in `standardize_info(<fixest>)` that was preventing
