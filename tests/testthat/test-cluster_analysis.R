@@ -11,5 +11,11 @@ test_that("cluster_analysis, predict, matrix", {
   iris.mat.km <- cluster_analysis(iris.mat, n = 4, method = "kmeans")
   x2 <- predict(iris.mat.km)
 
-  expect_equal(x1, x2)
+  expect_identical(x1, x2)
+})
+
+test_that("cluster_analysis, works with include_factors, #847", {
+  d <- iris[3:5]
+  rz_kmeans <- cluster_analysis(d, n = 3, method = "kmeans", include_factors = TRUE)
+  expect_identical(rz_kmeans$Cluster, c("1", "2", "3"))
 })

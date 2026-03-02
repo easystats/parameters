@@ -1,4 +1,3 @@
-
 #' @export
 standard_error.coxr <- function(model, ...) {
   params <- insight::get_parameters(model)

@@ -2,7 +2,7 @@
 #' @export
 dof_betwithin <- function(model) {
   if (!insight::is_mixed_model(model)) {
-    stop("Model must be a mixed model.", call. = FALSE)
+    insight::format_error("Model must be a mixed model.")
   }
 
   ngrps <- sum(.n_randomeffects(model))

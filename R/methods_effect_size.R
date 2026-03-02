@@ -17,21 +17,21 @@ ci.parameters_standardized <- function(x, ci = 0.95, verbose = TRUE, ...) {
   # check if we have model. if so, use df from model
   model <- .get_object(x)
   if (!is.null(model)) {
-    df <- degrees_of_freedom(model, method = "any")
-    if (!is.null(df)) {
-      if (length(df) > 1 && length(df) != nrow(x)) {
-        df <- Inf
+    dof <- insight::get_df(model, type = "wald")
+    if (!is.null(dof)) {
+      if (length(dof) > 1 && length(dof) != nrow(x)) {
+        dof <- Inf
       }
     } else {
-      df <- Inf
+      dof <- Inf
     }
   } else {
-    df <- Inf
+    dof <- Inf
   }
 
   out <- lapply(ci, function(i) {
     alpha <- (1 + i) / 2
-    fac <- stats::qt(alpha, df = df)
+    fac <- stats::qt(alpha, df = dof)
     data.frame(
       Parameter = x$Parameter,
       CI = i,

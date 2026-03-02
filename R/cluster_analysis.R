@@ -7,7 +7,8 @@
 #' - Maechler M, Rousseeuw P, Struyf A, Hubert M, Hornik K (2014) cluster: Cluster
 #' Analysis Basics and Extensions. R package.
 #'
-#' @param x A data frame.
+#' @param x A data frame (with at least two variables), or a matrix (with at
+#'   least two columns).
 #' @param n Number of clusters used for supervised cluster methods. If `NULL`,
 #' the number of clusters to extract is determined by calling [`n_clusters()`].
 #' Note that this argument does not apply for unsupervised clustering methods
@@ -47,7 +48,8 @@
 #'   as `nrow(x)`.
 #'
 #' @note
-#' There is also a [`plot()`-method](https://easystats.github.io/see/articles/parameters.html) implemented in the [**see**-package](https://easystats.github.io/see/).
+#' There is also a [`plot()`-method](https://easystats.github.io/see/articles/parameters.html)
+#' implemented in the [**see**-package](https://easystats.github.io/see/).
 #'
 #' @details
 #' The `print()` and `plot()` methods show the (standardized) mean value for
@@ -133,13 +135,27 @@ cluster_analysis <- function(x,
                              iterations = 100,
                              ...) {
   # match arguments
-  method <- match.arg(method, choices = c("kmeans", "hkmeans", "pam", "pamk", "hclust", "dbscan", "hdbscan", "mixture"), several.ok = TRUE)
+  method <- match.arg(
+    method,
+    choices = c("kmeans", "hkmeans", "pam", "pamk", "hclust", "dbscan", "hdbscan", "mixture"),
+    several.ok = TRUE
+  )
 
   # Preparation -------------------------------------------------------------
 
   # coerce to data frame if input is a matrix
   if (is.matrix(x)) {
     x <- as.data.frame(x)
+  }
+
+  # validation check - needs data frame
+  if (!is.data.frame(x)) {
+    insight::format_error("`x` needs to be a data frame.")
+  }
+
+  # validation check - need at least two columns
+  if (ncol(x) < 2) {
+    insight::format_error("At least two variables required to compute a cluster analysis.")
   }
 
   # check if we have a correlation/covariance or distance matrix?
@@ -151,13 +167,13 @@ cluster_analysis <- function(x,
   }
 
   # Preprocess data
-  data <- .prepare_data_clustering(x, include_factors = include_factors, standardize = standardize, ...)
+  cluster_data <- .prepare_data_clustering(x, include_factors = include_factors, standardize = standardize, ...)
 
   # Get number of clusters
   if (is.null(n) && any(method %in% c("kmeans", "hkmeans", "pam"))) {
     n <- tryCatch(
       {
-        nc <- n_clusters(data, standardize = FALSE, ...)
+        nc <- n_clusters(cluster_data, standardize = FALSE, ...)
         n <- attributes(nc)$n
         if (verbose) {
           insight::print_color(sprintf(
@@ -181,34 +197,64 @@ cluster_analysis <- function(x,
   }
 
 
-
   # Apply clustering --------------------------------------------------------
 
 
   if (any(method == "kmeans")) {
-    rez <- .cluster_analysis_kmeans(data, n = n, kmeans_method = kmeans_method, iterations = iterations, ...)
-  } else if (any(method %in% c("hkmeans"))) {
+    rez <- .cluster_analysis_kmeans(
+      cluster_data,
+      n = n,
+      kmeans_method = kmeans_method,
+      iterations = iterations,
+      ...
+    )
+  } else if (any(method == "hkmeans")) {
     rez <- .cluster_analysis_hkmeans(
-      data,
-      n = n, kmeans_method = kmeans_method, hclust_method = hclust_method,
+      cluster_data,
+      n = n,
+      kmeans_method = kmeans_method,
+      hclust_method = hclust_method,
       iterations = iterations, ...
     )
-  } else if (any(method %in% c("pam"))) {
-    rez <- .cluster_analysis_pam(data, n = n, distance_method = distance_method, ...)
-  } else if (any(method %in% c("pamk"))) {
-    rez <- .cluster_analysis_pamk(data, distance_method = distance_method, ...)
-  } else if (any(method %in% c("hclust"))) {
+  } else if (any(method == "pam")) {
+    rez <- .cluster_analysis_pam(
+      cluster_data,
+      n = n,
+      distance_method = distance_method,
+      ...
+    )
+  } else if (any(method == "pamk")) {
+    rez <- .cluster_analysis_pamk(
+      cluster_data,
+      distance_method = distance_method,
+      ...
+    )
+  } else if (any(method == "hclust")) {
     rez <- .cluster_analysis_hclust(
-      data,
-      n = n, distance_method = distance_method, hclust_method = hclust_method,
-      iterations = iterations, ...
+      cluster_data,
+      n = n,
+      distance_method = distance_method,
+      hclust_method = hclust_method,
+      iterations = iterations,
+      ...
     )
   } else if (any(method == "dbscan")) {
-    rez <- .cluster_analysis_dbscan(data, dbscan_eps = dbscan_eps, ...)
+    rez <- .cluster_analysis_dbscan(
+      cluster_data,
+      dbscan_eps = dbscan_eps,
+      ...
+    )
   } else if (any(method == "hdbscan")) {
-    rez <- .cluster_analysis_hdbscan(data, ...)
+    rez <- .cluster_analysis_hdbscan(
+      cluster_data,
+      ...
+    )
   } else if (any(method %in% c("mixture", "mclust"))) {
-    rez <- .cluster_analysis_mixture(data, n = n, ...)
+    rez <- .cluster_analysis_mixture(
+      cluster_data,
+      n = n,
+      ...
+    )
   } else {
     insight::format_error("Did not find `method` argument. Could be misspecified.")
   }
@@ -217,17 +263,21 @@ cluster_analysis <- function(x,
   # Create NA-vector of same length as original data frame
   clusters <- rep(NA, times = nrow(x))
   # Create vector with cluster group classification (with missing)
-  complete_cases <- stats::complete.cases(x[names(data)])
+  if (include_factors) {
+    complete_cases <- stats::complete.cases(x)
+  } else {
+    complete_cases <- stats::complete.cases(x[vapply(x, is.numeric, TRUE)])
+  }
   clusters[complete_cases] <- rez$clusters
 
   # Get clustering parameters
-  out <- model_parameters(rez$model, data = data, clusters = clusters, ...)
+  out <- model_parameters(rez$model, data = cluster_data, clusters = clusters, ...)
   performance <- cluster_performance(out)
 
   attr(out, "model") <- rez$model
   attr(out, "method") <- method
   attr(out, "clusters") <- clusters
-  attr(out, "data") <- data
+  attr(out, "data") <- cluster_data
   attr(out, "performance") <- performance
 
   class(out) <- c("cluster_analysis", class(out))
@@ -235,25 +285,30 @@ cluster_analysis <- function(x,
 }
 
 
-
 # Clustering Methods --------------------------------------------------------
 
 #' @keywords internal
-.cluster_analysis_kmeans <- function(data, n = 2, kmeans_method = "Hartigan-Wong", iterations = 100, ...) {
-  model <- stats::kmeans(data, centers = n, algorithm = kmeans_method, iter.max = iterations, ...)
+.cluster_analysis_kmeans <- function(cluster_data, n = 2, kmeans_method = "Hartigan-Wong", iterations = 100, ...) {
+  model <- stats::kmeans(
+    cluster_data,
+    centers = n,
+    algorithm = kmeans_method,
+    iter.max = iterations,
+    ...
+  )
   list(model = model, clusters = model$cluster)
 }
 
 
 #' @keywords internal
-.cluster_analysis_hkmeans <- function(data,
+.cluster_analysis_hkmeans <- function(cluster_data,
                                       n = 2,
                                       kmeans_method = "Hartigan-Wong",
                                       hclust_method = "complete",
                                       iterations = 100,
                                       ...) {
   insight::check_if_installed("factoextra")
-  model <- factoextra::hkmeans(data,
+  model <- factoextra::hkmeans(cluster_data,
     k = n, km.algorithm = kmeans_method,
     iter.max = iterations, hc.method = hclust_method, ...
   )
@@ -262,27 +317,25 @@ cluster_analysis <- function(x,
 
 
 #' @keywords internal
-.cluster_analysis_pam <- function(data = NULL, n = 2, distance_method = "euclidean", ...) {
+.cluster_analysis_pam <- function(cluster_data = NULL, n = 2, distance_method = "euclidean", ...) {
   insight::check_if_installed("cluster")
 
-  model <- cluster::pam(data, k = n, metric = distance_method, ...)
-
+  model <- cluster::pam(cluster_data, k = n, metric = distance_method, ...)
   list(model = model, clusters = model$clustering)
 }
 
 
 #' @keywords internal
-.cluster_analysis_pamk <- function(data = NULL, distance_method = "euclidean", pamk_method = "ch", ...) {
+.cluster_analysis_pamk <- function(cluster_data = NULL, distance_method = "euclidean", pamk_method = "ch", ...) {
   insight::check_if_installed("fpc")
 
-  model <- fpc::pamk(data, metric = distance_method, criterion = pamk_method, ...)
-
+  model <- fpc::pamk(cluster_data, metric = distance_method, criterion = pamk_method, ...)
   list(model = model$pamobject, clusters = model$pamobject$clustering)
 }
 
 
 #' @keywords internal
-.cluster_analysis_hclust <- function(data,
+.cluster_analysis_hclust <- function(cluster_data,
                                      n = 2,
                                      distance_method = "euclidean",
                                      hclust_method = "complete",
@@ -290,7 +343,7 @@ cluster_analysis <- function(x,
                                      ...) {
   if (is.null(n)) {
     rez <- n_clusters_hclust(
-      data,
+      cluster_data,
       preprocess = FALSE,
       distance_method = distance_method,
       hclust_method = hclust_method,
@@ -300,12 +353,16 @@ cluster_analysis <- function(x,
     out <- list(model = attributes(rez)$model, clusters = rez$Cluster)
   } else {
     if (distance_method %in% c("correlation", "uncentered", "abscor")) {
-      insight::format_warning(paste0(
-        "Method `", distance_method, "` not supported by regular `hclust()`. Please specify another one or set `n = NULL` to use pvclust."
-      ))
+      insight::format_warning(
+        paste0(
+          "Method `",
+          distance_method,
+          "` not supported by regular `hclust()`. Please specify another one or set `n = NULL` to use pvclust."
+        )
+      )
     }
-    dist <- dist(data, method = distance_method, ...)
-    model <- stats::hclust(dist, method = hclust_method, ...)
+    cluster_dist <- stats::dist(cluster_data, method = distance_method, ...)
+    model <- stats::hclust(cluster_dist, method = hclust_method, ...)
     out <- list(model = model, clusters = stats::cutree(model, k = n))
   }
   out
@@ -313,36 +370,38 @@ cluster_analysis <- function(x,
 
 
 #' @keywords internal
-.cluster_analysis_dbscan <- function(data = NULL, dbscan_eps = 0.15, min_size = 0.05, borderPoints = FALSE, ...) {
+.cluster_analysis_dbscan <- function(cluster_data = NULL,
+                                     dbscan_eps = 0.15,
+                                     min_size = 0.05,
+                                     borderPoints = FALSE,
+                                     ...) {
   insight::check_if_installed("dbscan")
 
-  if (min_size < 1) min_size <- round(min_size * nrow(data))
-  model <- dbscan::dbscan(data, eps = dbscan_eps, minPts = min_size, borderPoints = borderPoints, ...)
+  if (min_size < 1) min_size <- round(min_size * nrow(cluster_data))
+  model <- dbscan::dbscan(cluster_data, eps = dbscan_eps, minPts = min_size, borderPoints = borderPoints, ...)
 
   list(model = model, clusters = model$cluster)
 }
 
 
 #' @keywords internal
-.cluster_analysis_hdbscan <- function(data = NULL, min_size = 0.05, ...) {
+.cluster_analysis_hdbscan <- function(cluster_data = NULL, min_size = 0.05, ...) {
   insight::check_if_installed("dbscan")
 
-  if (min_size < 1) min_size <- round(min_size * nrow(data))
-  model <- dbscan::hdbscan(data, minPts = min_size, ...)
+  if (min_size < 1) min_size <- round(min_size * nrow(cluster_data))
+  model <- dbscan::hdbscan(cluster_data, minPts = min_size, ...)
 
   list(model = model, clusters = model$cluster)
 }
 
 
 #' @keywords internal
-.cluster_analysis_mixture <- function(data = NULL, n = NULL, ...) {
+.cluster_analysis_mixture <- function(cluster_data = NULL, n = NULL, ...) {
   insight::check_if_installed("mclust")
 
-  model <- mclust::Mclust(data, G = n, verbose = FALSE, ...)
-
+  model <- mclust::Mclust(cluster_data, G = n, verbose = FALSE, ...)
   list(model = model, clusters = model$classification)
 }
-
 
 
 # Methods ----------------------------------------------------------------
@@ -371,12 +430,12 @@ print.cluster_analysis <- function(x, ...) {
 
 #' @export
 summary.cluster_analysis <- function(object, ...) {
-  data <- as.data.frame(object)
+  obj_data <- as.data.frame(object)
   cols <- names(attributes(object)$data)
-  data <- data[names(data) %in% c(cols, "Cluster")] # Keep only data
+  obj_data <- obj_data[names(obj_data) %in% c(cols, "Cluster")] # Keep only data
 
-  class(data) <- c("cluster_analysis_summary", class(data))
-  data
+  class(obj_data) <- c("cluster_analysis_summary", class(obj_data))
+  obj_data
 }
 
 
@@ -384,7 +443,7 @@ summary.cluster_analysis <- function(object, ...) {
 
 #' @export
 visualisation_recipe.cluster_analysis_summary <- function(x, ...) {
-  data <- datawizard::data_to_long(
+  data_long <- datawizard::data_to_long(
     x,
     select = names(x)[-1], # skip 'Cluster' column
     names_to = "Group",
@@ -397,13 +456,13 @@ visualisation_recipe.cluster_analysis_summary <- function(x, ...) {
 
   layers[["l1"]] <- list(
     geom = "bar",
-    data = data,
+    data = data_long,
     aes = list(x = "Cluster", y = "Center", fill = "Group"),
     position = "dodge"
   )
   layers[["l2"]] <- list(
     geom = "hline",
-    data = data,
+    data = data_long,
     aes = list(yintercept = 0),
     linetype = "dotted"
   )
@@ -417,7 +476,7 @@ visualisation_recipe.cluster_analysis_summary <- function(x, ...) {
 
   # Out
   class(layers) <- c("visualisation_recipe", "see_visualisation_recipe", class(layers))
-  attr(layers, "data") <- data
+  attr(layers, "data") <- data_long
   layers
 }
 
@@ -425,13 +484,19 @@ visualisation_recipe.cluster_analysis_summary <- function(x, ...) {
 #' @export
 visualisation_recipe.cluster_analysis <- function(x, show_data = "text", ...) {
   ori_data <- stats::na.omit(attributes(x)$data)
+
+  # Check number of columns: if more than 2, display PCs, if less, fail
+  if (ncol(ori_data) <= 2) {
+    insight::format_error("Less than 2 variables in the dataset. Cannot compute enough principal components to represent clustering.") # nolint
+  }
+
   # Get 2 PCA Components
   pca <- principal_components(ori_data, n = 2)
-  data <- stats::predict(pca)
-  names(data) <- c("x", "y")
-  data$Cluster <- as.character(stats::na.omit(attributes(x)$clusters))
+  prediction_data <- stats::predict(pca)
+  names(prediction_data) <- c("x", "y")
+  prediction_data$Cluster <- as.character(stats::na.omit(attributes(x)$clusters))
 
-  data$label <- row.names(ori_data)
+  prediction_data$label <- row.names(ori_data)
   if (!is.null(show_data) && show_data %in% c("label", "text")) {
     label <- "label"
   } else {
@@ -443,7 +508,7 @@ visualisation_recipe.cluster_analysis <- function(x, show_data = "text", ...) {
   data_centers$Cluster <- as.character(as.data.frame(x)$Cluster)
 
   # Outliers
-  data$Cluster[data$Cluster == "0"] <- NA
+  prediction_data$Cluster[prediction_data$Cluster == "0"] <- NA
   data_centers <- data_centers[data_centers$Cluster != "0", ]
 
   layers <- list()
@@ -452,7 +517,7 @@ visualisation_recipe.cluster_analysis <- function(x, show_data = "text", ...) {
 
   layers[["l1"]] <- list(
     geom = show_data,
-    data = data,
+    data = prediction_data,
     aes = list(x = "x", y = "y", label = label, color = "Cluster")
   )
 
@@ -471,7 +536,7 @@ visualisation_recipe.cluster_analysis <- function(x, show_data = "text", ...) {
 
   # Out
   class(layers) <- c("visualisation_recipe", "see_visualisation_recipe", class(layers))
-  attr(layers, "data") <- data
+  attr(layers, "data") <- prediction_data
   layers
 }
 

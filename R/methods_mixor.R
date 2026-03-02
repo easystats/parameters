@@ -1,5 +1,3 @@
-
-#' @rdname model_parameters.merMod
 #' @export
 model_parameters.mixor <- function(model,
                                    ci = 0.95,
@@ -8,17 +6,20 @@ model_parameters.mixor <- function(model,
                                    iterations = 1000,
                                    standardize = NULL,
                                    exponentiate = FALSE,
-                                   verbose = TRUE,
                                    include_sigma = FALSE,
+                                   p_adjust = NULL,
+                                   keep = NULL,
+                                   drop = NULL,
+                                   verbose = TRUE,
                                    ...) {
   effects <- match.arg(effects, choices = c("all", "fixed", "random"))
 
   # standardize only works for fixed effects...
   if (!is.null(standardize) && standardize != "refit") {
     if (!missing(effects) && effects != "fixed" && verbose) {
-      warning(insight::format_message(
+      insight::format_warning(
         "Standardizing coefficients only works for fixed effects of the mixed model."
-      ), call. = FALSE)
+      )
     }
     effects <- "fixed"
   }
@@ -33,6 +34,9 @@ model_parameters.mixor <- function(model,
     exponentiate = exponentiate,
     effects = effects,
     include_sigma = include_sigma,
+    keep_parameters = keep,
+    drop_parameters = drop,
+    verbose = verbose,
     ...
   )
 

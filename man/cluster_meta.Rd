@@ -42,7 +42,7 @@ matrix (such as the one produced by \code{dist()}) and submitted for instance to
 hierarchical clustering (\code{hclust()}). See the example below.
 }
 \examples{
-\dontrun{
+\donttest{
 data <- iris[1:4]
 
 rez1 <- cluster_analysis(data, n = 2, method = "kmeans")

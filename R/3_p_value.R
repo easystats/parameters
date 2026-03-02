@@ -2,11 +2,7 @@
 #' @name p_value
 #'
 #' @description This function attempts to return, or compute, p-values of a model's
-#' parameters. See the documentation for your object's class:
-#' - [Bayesian models][p_value.BFBayesFactor] (**rstanarm**, **brms**, **MCMCglmm**, ...)
-#' - [Zero-inflated models][p_value.zeroinfl] (`hurdle`, `zeroinfl`, `zerocount`, ...)
-#' - [Marginal effects models][p_value.poissonmfx] (**mfx**)
-#' - [Models with special components][p_value.DirichletRegModel] (`DirichletRegModel`, `clm2`, `cgam`, ...)
+#' parameters.
 #'
 #' @param model A statistical model.
 #' @param adjust Character value naming the method used to adjust p-values or
@@ -17,14 +13,29 @@
 #'
 #' @inheritSection model_parameters Confidence intervals and approximation of degrees of freedom
 #'
+#' @inheritSection model_parameters.zcpglm Model components
+#'
+#' @details
+#' For Bayesian models, the p-values corresponds to the *probability of
+#' direction* ([`bayestestR::p_direction()`]), which is converted to a p-value
+#' using `bayestestR::convert_pd_to_p()`.
+#'
 #' @return A data frame with at least two columns: the parameter names and the
 #'   p-values. Depending on the model, may also include columns for model
 #'   components etc.
 #'
-#' @examples
+#' @examplesIf require("pscl", quietly = TRUE)
 #' data(iris)
 #' model <- lm(Petal.Length ~ Sepal.Length + Species, data = iris)
 #' p_value(model)
+#'
+#' data("bioChemists", package = "pscl")
+#' model <- pscl::zeroinfl(
+#'   art ~ fem + mar + kid5 | kid5 + phd,
+#'   data = bioChemists
+#' )
+#' p_value(model)
+#' p_value(model, component = "zi")
 #' @export
 p_value <- function(model, ...) {
   UseMethod("p_value")
@@ -48,6 +59,7 @@ p_value.default <- function(model,
   .is_model_valid(model)
 
   dots <- list(...)
+  p <- NULL
 
   if (is.character(method)) {
     method <- tolower(method)
@@ -55,8 +67,8 @@ p_value.default <- function(model,
     method <- "wald"
   }
 
-  # robust standard errors with backward compatibility for `robust = TRUE`
-  if (!is.null(vcov) || isTRUE(dots[["robust"]])) {
+  # robust standard errors
+  if (!is.null(vcov)) {
     method <- "robust"
   }
 
@@ -66,33 +78,29 @@ p_value.default <- function(model,
   }
 
   if (method == "ml1") {
-    p <- p_value_ml1(model)
-    return(p)
+    return(p_value_ml1(model))
   }
 
   if (method == "betwithin") {
-    p <- p_value_betwithin(model)
-    return(p)
+    return(p_value_betwithin(model))
   }
 
   if (method %in% c("residual", "wald", "normal", "satterthwaite", "kenward", "kr")) {
     if (is.null(dof)) {
-      dof <- degrees_of_freedom(model, method = method, verbose = FALSE)
+      dof <- insight::get_df(x = model, type = method, verbose = FALSE)
     }
-    p <- .p_value_dof(
+    return(.p_value_dof(
       model,
       dof = dof,
       method = method,
       component = component,
       verbose = verbose,
       ...
-    )
-    return(p)
+    ))
   }
 
   if (method %in% c("hdi", "eti", "si", "bci", "bcai", "quantile")) {
-    p <- bayestestR::p_direction(model, ...)
-    return(p)
+    return(bayestestR::p_direction(model, ...))
   }
 
   # robust standard errors
@@ -105,16 +113,16 @@ p_value.default <- function(model,
     if (inherits(vcov, "data.frame") || "SE" %in% colnames(vcov)) {
       se <- vcov
     } else {
-      args <- list(model,
+      fun_args <- list(model,
         vcov_args = vcov_args,
         vcov = vcov,
         verbose = verbose
       )
-      args <- c(args, dots)
-      se <- do.call("standard_error", args)
+      fun_args <- c(fun_args, dots)
+      se <- do.call("standard_error", fun_args)
     }
 
-    dof <- degrees_of_freedom(model, method = "wald", verbose = FALSE)
+    dof <- insight::get_df(x = model, type = "wald", verbose = FALSE)
     se <- merge(se, co, sort = FALSE)
     se$Statistic <- se$Estimate / se$SE
     se$p <- 2 * stats::pt(abs(se$Statistic), df = dof, lower.tail = FALSE)
@@ -123,47 +131,41 @@ p_value.default <- function(model,
 
   # default 1st try: summary()
   if (is.null(p)) {
-    p <- tryCatch(
-      {
-        # Zelig-models are weird
-        if (grepl("Zelig-", class(model)[1], fixed = TRUE)) {
-          unlist(model$get_pvalue())
-        } else {
-          # try to get p-value from classical summary for default models
-          .get_pval_from_summary(model)
-        }
-      },
-      error = function(e) NULL
-    )
+    p <- .safe({
+      # Zelig-models are weird
+      if (grepl("Zelig-", class(model)[1], fixed = TRUE)) {
+        unlist(model$get_pvalue())
+      } else {
+        # try to get p-value from classical summary for default models
+        .get_pval_from_summary(model)
+      }
+    })
   }
 
   # default 2nd try: p value from test-statistic
   if (is.null(p)) {
-    p <- tryCatch(
-      {
-        stat <- insight::get_statistic(model)
-        p_from_stat <- 2 * stats::pt(abs(stat$Statistic), df = Inf, lower.tail = FALSE)
-        names(p_from_stat) <- stat$Parameter
-        p_from_stat
-      },
-      error = function(e) NULL
-    )
-  }
-
-  # output
-  if (!is.null(p)) {
-    params <- insight::get_parameters(model, component = component)
-    if (length(p) == nrow(params) && "Component" %in% colnames(params)) {
-      p <- .data_frame(Parameter = params$Parameter, p = as.vector(p), Component = params$Component)
-    } else {
-      p <- .data_frame(Parameter = names(p), p = as.vector(p))
-    }
-    return(p)
+    p <- .safe({
+      stat <- insight::get_statistic(model)
+      p_from_stat <- 2 * stats::pt(abs(stat$Statistic), df = Inf, lower.tail = FALSE)
+      names(p_from_stat) <- stat$Parameter
+      p_from_stat
+    })
   }
 
   # failure warning
-  if (is.null(p) && isTRUE(verbose)) {
-    warning("Could not extract p-values from model object.", call. = FALSE)
+  if (is.null(p)) {
+    if (isTRUE(verbose)) {
+      insight::format_warning("Could not extract p-values from model object.")
+    }
+    return(NULL)
+  }
+
+  # output
+  params <- insight::get_parameters(model, component = component)
+  if (length(p) == nrow(params) && "Component" %in% colnames(params)) {
+    .data_frame(Parameter = params$Parameter, p = as.vector(p), Component = params$Component)
+  } else {
+    .data_frame(Parameter = names(p), p = as.vector(p))
   }
 }
 
@@ -178,23 +180,22 @@ p_value.default <- function(model,
   if (ncol(cs) >= 4) {
     # do we have a p-value column based on t?
     pvcn <- which(colnames(cs) == "Pr(>|t|)")
-
     # if not, do we have a p-value column based on z?
     if (length(pvcn) == 0) {
       pvcn <- which(colnames(cs) == "Pr(>|z|)")
     }
-
     # if not, default to 4
-    if (length(pvcn) == 0) pvcn <- 4
-
+    if (length(pvcn) == 0) {
+      pvcn <- 4
+    }
     p <- cs[, pvcn]
-
     if (is.null(names(p))) {
       coef_names <- rownames(cs)
-      if (length(coef_names) == length(p)) names(p) <- coef_names
+      if (length(coef_names) == length(p)) {
+        names(p) <- coef_names
+      }
     }
   }
-
   names(p) <- .remove_backticks_from_string(names(p))
   p
 }

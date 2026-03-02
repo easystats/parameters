@@ -1,10 +1,3 @@
-#' @rdname model_parameters.kmeans
-#'
-#' @examples
-#' if (require("mclust", quietly = TRUE)) {
-#'   model <- mclust::Mclust(iris[1:4], verbose = FALSE)
-#'   model_parameters(model)
-#' }
 #' @export
 model_parameters.Mclust <- function(model, data = NULL, clusters = NULL, ...) {
   if (is.null(data)) data <- as.data.frame(model$data)

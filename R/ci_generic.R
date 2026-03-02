@@ -1,32 +1,42 @@
 # generic function for CI calculation
-.ci_generic <- function(model,
-                        ci = 0.95,
-                        method = "wald",
-                        dof = NULL,
-                        effects = c("fixed", "random", "all"),
-                        component = c(
-                          "all", "conditional", "zi", "zero_inflated",
-                          "dispersion", "precision", "scale",
-                          "smooth_terms", "full", "marginal"
-                        ),
-                        vcov = NULL,
-                        vcov_args = NULL,
-                        verbose = TRUE,
-                        ...) {
+.ci_generic <- function(
+  model,
+  ci = 0.95,
+  method = "wald",
+  dof = NULL,
+  effects = "fixed",
+  component = "all",
+  vcov = NULL,
+  vcov_args = NULL,
+  verbose = TRUE,
+  ...
+) {
   # check method
   if (is.null(method)) {
     method <- "wald"
   }
-  method <- match.arg(tolower(method), choices = c(
-    "wald", "ml1", "betwithin", "kr",
-    "satterthwaite", "kenward", "boot",
-    "profile", "residual", "normal"
-  ))
+  method <- tolower(method)
+  # fmt: skip
+  method <- insight::validate_argument(
+    method,
+    c(
+      "wald", "ml1", "betwithin", "kr", "satterthwaite", "kenward", "boot",
+      "profile", "residual", "normal"
+    )
+  )
 
-  effects <- match.arg(effects)
-  component <- match.arg(component)
+  effects <- insight::validate_argument(effects, c("fixed", "random", "all"))
+  # fmt: skip
+  component <- insight::validate_argument(
+    component,
+    c(
+      "all", "conditional", "zi", "zero_inflated", "dispersion", "precision",
+      "scale", "smooth_terms", "full", "marginal"
+    )
+  )
 
   if (method == "ml1") {
+    # nolint
     return(ci_ml1(model, ci = ci))
   } else if (method == "betwithin") {
     return(ci_betwithin(model, ci = ci))
@@ -59,17 +69,19 @@
 
 
 #' @keywords internal
-.ci_dof <- function(model,
-                    ci,
-                    dof,
-                    effects,
-                    component,
-                    method = "wald",
-                    se = NULL,
-                    vcov = NULL,
-                    vcov_args = NULL,
-                    verbose = TRUE,
-                    ...) {
+.ci_dof <- function(
+  model,
+  ci,
+  dof,
+  effects,
+  component,
+  method = "wald",
+  se = NULL,
+  vcov = NULL,
+  vcov_args = NULL,
+  verbose = TRUE,
+  ...
+) {
   # need parameters to calculate the CIs
   if (inherits(model, "emmGrid")) {
     params <- insight::get_parameters(
@@ -79,7 +91,8 @@
       merge_parameters = TRUE
     )
   } else {
-    params <- insight::get_parameters(model,
+    params <- insight::get_parameters(
+      model,
       effects = effects,
       component = component,
       verbose = FALSE
@@ -87,21 +100,26 @@
   }
 
   # check if all estimates are non-NA
-  params <- .check_rank_deficiency(params, verbose = FALSE)
+  params <- .check_rank_deficiency(model, params, verbose = FALSE)
   # for polr, we need to fix parameter names
   params$Parameter <- gsub("Intercept: ", "", params$Parameter, fixed = TRUE)
 
-  # sanity check...
+  # validation check...
   if (is.null(method)) {
     method <- "wald"
   }
   method <- tolower(method)
 
+  # Fist, we want standard errors for parameters
+  # --------------------------------------------
+
   # if we have adjusted SE, e.g. from kenward-roger, don't recompute
   # standard errors to save time...
   if (is.null(se)) {
     if (!is.null(vcov) || isTRUE(list(...)[["robust"]])) {
-      stderror <- standard_error(model,
+      # robust (HC) standard errors?
+      stderror <- standard_error(
+        model,
         component = component,
         vcov = vcov,
         vcov_args = vcov_args,
@@ -109,34 +127,41 @@
         ...
       )
     } else {
-      stderror <- switch(method,
-        "kenward" = se_kenward(model),
-        "kr" = se_kenward(model),
-        "satterthwaite" = se_satterthwaite(model),
+      # normal standard errors, including small-sample approximations
+      stderror <- switch(
+        method,
+        kenward = se_kenward(model),
+        kr = se_kenward(model),
+        satterthwaite = se_satterthwaite(model),
         standard_error(model, component = component)
       )
     }
 
     # if we have a non-empty stderror, use it
-    if (datawizard::is_empty_object(stderror)) {
+    if (insight::is_empty_object(stderror)) {
       return(NULL)
     }
 
     # filter non-matching parameters, resp. sort stderror and parameters,
     # so both have the identical order of values
-    if (nrow(stderror) != nrow(params) ||
-      !all(stderror$Parameter %in% params$Parameter) ||
-      !all(order(stderror$Parameter) == order(params$Parameter))) {
+    if (
+      nrow(stderror) != nrow(params) ||
+        !all(stderror$Parameter %in% params$Parameter) ||
+        !all(order(stderror$Parameter) == order(params$Parameter))
+    ) {
       params <- stderror <- merge(stderror, params, sort = FALSE)
     }
 
     se <- stderror$SE
   }
 
+  # Next, we need degrees of freedom
+  # --------------------------------
+
   # check if we have a valid dof vector
   if (is.null(dof)) {
     # residual df
-    dof <- degrees_of_freedom(model, method = method, verbose = FALSE)
+    dof <- insight::get_df(x = model, type = method, verbose = FALSE)
     # make sure we have a value for degrees of freedom
     if (is.null(dof) || length(dof) == 0 || .is_chi2_model(model, dof)) {
       dof <- Inf
@@ -146,30 +171,39 @@
     }
   }
 
-  # calculate CIs
+  # Now we can calculate CIs
+  # ------------------------
+
   alpha <- (1 + ci) / 2
   fac <- suppressWarnings(stats::qt(alpha, df = dof))
-  out <- cbind(
-    CI_low = params$Estimate - se * fac,
-    CI_high = params$Estimate + se * fac
-  )
+  out <- cbind(CI_low = params$Estimate - se * fac, CI_high = params$Estimate + se * fac)
 
   out <- as.data.frame(out)
   out$CI <- ci
   out$Parameter <- params$Parameter
 
   out <- out[c("Parameter", "CI", "CI_low", "CI_high")]
-  if ("Component" %in% names(params)) out$Component <- params$Component
-  if ("Effects" %in% names(params) && effects != "fixed") out$Effects <- params$Effects
-  if ("Response" %in% names(params)) out$Response <- params$Response
+  if ("Component" %in% names(params)) {
+    out$Component <- params$Component
+  }
+  if ("Effects" %in% names(params) && effects != "fixed") {
+    out$Effects <- params$Effects
+  }
+  if ("Response" %in% names(params)) {
+    out$Response <- params$Response
+  }
+  if ("Group" %in% names(params) && inherits(model, c("lcmm", "externX", "externVar"))) {
+    out$Group <- params$Group
+  }
 
-  if (anyNA(params$Estimate)) {
+  # for cox-panel models, we have non-linear parameters with NA coefficient,
+  # but test statistic and p-value - don't check for NA estimates in this case
+  if (anyNA(params$Estimate) && !inherits(model, "coxph.penal")) {
     out[stats::complete.cases(out), ]
   } else {
     out
   }
 }
-
 
 
 .is_chi2_model <- function(model, dof) {

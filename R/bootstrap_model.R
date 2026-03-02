@@ -40,18 +40,14 @@
 #'
 #' @seealso [`bootstrap_parameters()`], [`simulate_model()`], [`simulate_parameters()`]
 #'
-#' @examples
-#' \dontrun{
-#' if (require("boot", quietly = TRUE)) {
-#'   model <- lm(mpg ~ wt + factor(cyl), data = mtcars)
-#'   b <- bootstrap_model(model)
-#'   print(head(b))
+#' @examplesIf require("boot", quietly = TRUE) && require("emmeans", quietly = TRUE)
+#' \donttest{
+#' model <- lm(mpg ~ wt + factor(cyl), data = mtcars)
+#' b <- bootstrap_model(model)
+#' print(head(b))
 #'
-#'   if (require("emmeans", quietly = TRUE)) {
-#'     est <- emmeans(b, consec ~ cyl)
-#'     print(model_parameters(est))
-#'   }
-#' }
+#' est <- emmeans::emmeans(b, consec ~ cyl)
+#' print(model_parameters(est))
 #' }
 #' @export
 bootstrap_model <- function(model,
@@ -61,17 +57,14 @@ bootstrap_model <- function(model,
 }
 
 
-
-
-
-
 #' @rdname bootstrap_model
 #' @export
 bootstrap_model.default <- function(model,
                                     iterations = 1000,
                                     type = "ordinary",
-                                    parallel = c("no", "multicore", "snow"),
+                                    parallel = "no",
                                     n_cpus = 1,
+                                    cluster = NULL,
                                     verbose = FALSE,
                                     ...) {
   # check for valid input
@@ -79,23 +72,24 @@ bootstrap_model.default <- function(model,
 
   insight::check_if_installed("boot")
 
-  type <- match.arg(type, choices = c("ordinary", "parametric", "balanced", "permutation", "antithetic"))
-  parallel <- match.arg(parallel)
+  type <- insight::validate_argument(
+    type,
+    c("ordinary", "parametric", "balanced", "permutation", "antithetic")
+  )
+  parallel <- insight::validate_argument(parallel, c("no", "multicore", "snow"))
 
-  model_data <- data <- insight::get_data(model)
+  model_data <- data <- insight::get_data(model, verbose = FALSE) # nolint
   model_response <- insight::find_response(model)
 
   boot_function <- function(model, data, indices) {
-    d <- data[indices, ] # allows boot to select sample
+    d <- data[indices, , drop = FALSE] # allows boot to select sample
 
     if (inherits(model, "biglm")) {
       fit <- suppressMessages(stats::update(model, moredata = d))
+    } else if (verbose) {
+      fit <- stats::update(model, data = d)
     } else {
-      if (verbose) {
-        fit <- stats::update(model, data = d)
-      } else {
-        fit <- suppressMessages(stats::update(model, data = d))
-      }
+      fit <- suppressMessages(stats::update(model, data = d))
     }
 
     params <- insight::get_parameters(fit, verbose = FALSE)
@@ -107,7 +101,7 @@ bootstrap_model.default <- function(model,
       params <- stats::setNames(params$Estimate, params$Parameter) # Transform to named vector
     }
 
-    return(params)
+    params
   }
 
   if (type == "parametric") {
@@ -115,7 +109,7 @@ bootstrap_model.default <- function(model,
       out <- model_data
       resp <- stats::simulate(x, nsim = 1)
       out[[model_response]] <- resp
-      return(out)
+      out
     }
     results <- boot::boot(
       data = data,
@@ -150,31 +144,40 @@ bootstrap_model.default <- function(model,
 }
 
 
-#' @rdname bootstrap_model
 #' @export
 bootstrap_model.merMod <- function(model,
                                    iterations = 1000,
                                    type = "parametric",
-                                   parallel = c("no", "multicore", "snow"),
+                                   parallel = "no",
                                    n_cpus = 1,
                                    cluster = NULL,
                                    verbose = FALSE,
                                    ...) {
   insight::check_if_installed("lme4")
 
-  type <- match.arg(type, choices = c("parametric", "semiparametric"))
-  parallel <- match.arg(parallel)
+  type <- insight::validate_argument(type, c("parametric", "semiparametric"))
+  parallel <- insight::validate_argument(parallel, c("no", "multicore", "snow"))
 
   boot_function <- function(model) {
     params <- insight::get_parameters(model, verbose = FALSE)
     n_params <- insight::n_parameters(model)
+
+    # for glmmTMB, remove dispersion paramters, if any
+    if (inherits(model, "glmmTMB") && "Component" %in% names(params) && "dispersion" %in% params$Component) {
+      # find number of dispersion parameters
+      n_disp <- sum(params$Component == "dispersion")
+      # remove dispersion parameters
+      params <- params[params$Component != "dispersion", ]
+      # make sure number of parameters is updated
+      n_params <- n_params - n_disp
+    }
 
     if (nrow(params) != n_params) {
       params <- stats::setNames(rep.int(NA, n_params), params$Parameter)
     } else {
       params <- stats::setNames(params$Estimate, params$Parameter) # Transform to named vector
     }
-    return(params)
+    params
   }
 
   if (verbose) {
@@ -214,68 +217,55 @@ bootstrap_model.merMod <- function(model,
 bootstrap_model.glmmTMB <- bootstrap_model.merMod
 
 
-
-
-
-
-# bootstrap_model.htest <- function(model, n = 1000, verbose = FALSE, ...) {
-#   data <- insight::get_data(model)
-#
-#   boot_function <- function(model, data, indices) {
-#     d <- data[indices, ] # allows boot to select sample
-#
-#     if (verbose) {
-#       fit <- suppressMessages(update(model, data = d))
-#     } else {
-#       fit <- update(model, data = d)
-#     }
-#
-#     return(model$estimate)
-#   }
-#
-#   results <- boot::boot(data = data, statistic = boot_function, R = n, model = model)
-#
-#   return(results)
-# }
-
-
-
-
-
-
-
-
-
-
-
 #' @export
-as.data.frame.lm <- function(x,
-                             row.names = NULL,
-                             optional = FALSE,
-                             iterations = 1000,
-                             verbose = FALSE,
-                             ...) {
-  bootstrap_model(x, iterations = iterations, verbose = verbose, ...)
-}
+bootstrap_model.nestedLogit <- function(model,
+                                        iterations = 1000,
+                                        type = "ordinary",
+                                        parallel = "no",
+                                        n_cpus = 1,
+                                        verbose = FALSE,
+                                        ...) {
+  insight::check_if_installed("boot")
 
+  type <- insight::validate_argument(
+    type,
+    c("ordinary", "balanced", "permutation", "antithetic")
+  )
+  parallel <- insight::validate_argument(parallel, c("no", "multicore", "snow"))
 
-#' @export
-as.data.frame.merMod <- function(x,
-                                 row.names = NULL,
-                                 optional = FALSE,
-                                 iterations = 1000,
-                                 verbose = FALSE,
-                                 ...) {
-  bootstrap_model(x, iterations = iterations, verbose = verbose, ...)
-}
+  model_data <- data <- insight::get_data(model, verbose = FALSE) # nolint
+  model_response <- insight::find_response(model)
 
+  boot_function <- function(model, data, indices) {
+    d <- data[indices, , drop = FALSE] # allows boot to select sample
 
-#' @export
-as.data.frame.glmmTMB <- function(x,
-                                  row.names = NULL,
-                                  optional = FALSE,
-                                  iterations = 1000,
-                                  verbose = FALSE,
-                                  ...) {
-  bootstrap_model(x, iterations = iterations, verbose = verbose, ...)
+    if (verbose) {
+      fit <- stats::update(model, data = d)
+    } else {
+      fit <- suppressMessages(stats::update(model, data = d))
+    }
+
+    params <- insight::get_parameters(fit, verbose = FALSE)
+    stats::setNames(params$Estimate, params$Parameter) # Transform to named vector
+  }
+
+  results <- boot::boot(
+    data = data,
+    statistic = boot_function,
+    R = iterations,
+    sim = type,
+    parallel = parallel,
+    ncpus = n_cpus,
+    model = model
+  )
+
+  out <- as.data.frame(results$t)
+  out <- out[stats::complete.cases(out), ]
+
+  params <- insight::get_parameters(model, verbose = FALSE)
+  names(out) <- paste0(params$Parameter, ".", params$Component)
+
+  class(out) <- unique(c("bootstrap_model", "see_bootstrap_model", class(out)))
+  attr(out, "original_model") <- model
+  out
 }

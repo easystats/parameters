@@ -9,6 +9,8 @@
 #' or `"all"` to compute all tests. For each "test", the corresponding
 #' **bayestestR** function is called (e.g. [bayestestR::rope()] or
 #' [bayestestR::p_direction()]) and its results included in the summary output.
+#' @param ... Arguments passed to other methods, like [`bootstrap_model()`] or
+#' [`bayestestR::describe_posterior()`].
 #' @inheritParams bootstrap_model
 #' @inheritParams bayestestR::describe_posterior
 #'
@@ -33,31 +35,52 @@
 #'   p-values can be biased, and it is suggested to use proper permutation tests
 #'   to obtain non-parametric p-values.
 #'
-#' @examples
-#' \dontrun{
-#' if (require("boot", quietly = TRUE)) {
-#'   set.seed(2)
-#'   model <- lm(Sepal.Length ~ Species * Petal.Width, data = iris)
-#'   b <- bootstrap_parameters(model)
-#'   print(b)
+#' @examplesIf require("boot", quietly = TRUE) && require("emmeans", quietly = TRUE)
+#' \donttest{
+#' set.seed(2)
+#' model <- lm(Sepal.Length ~ Species * Petal.Width, data = iris)
+#' b <- bootstrap_parameters(model)
+#' print(b)
 #'
-#'   if (require("emmeans")) {
-#'     est <- emmeans(b, trt.vs.ctrl ~ Species)
-#'     print(model_parameters(est))
-#'   }
-#' }
+#' # different type of bootstrapping
+#' set.seed(2)
+#' b <- bootstrap_parameters(model, type = "balanced")
+#' print(b)
+#'
+#' est <- emmeans::emmeans(b, trt.vs.ctrl ~ Species)
+#' print(model_parameters(est))
 #' }
 #' @export
-bootstrap_parameters <- function(model,
-                                 iterations = 1000,
-                                 centrality = "median",
-                                 ci = 0.95,
-                                 ci_method = "quantile",
-                                 test = "p-value",
-                                 ...) {
-  data <- bootstrap_model(model, iterations = iterations, ...)
+bootstrap_parameters <- function(model, ...) {
+  UseMethod("bootstrap_parameters")
+}
+
+
+# methods ----------------------------------------------------------------------
+
+#' @rdname bootstrap_parameters
+#' @export
+bootstrap_parameters.default <- function(model,
+                                         iterations = 1000,
+                                         centrality = "median",
+                                         ci = 0.95,
+                                         ci_method = "quantile",
+                                         test = "p-value",
+                                         ...) {
+  boot_data <- bootstrap_model(model, iterations = iterations, ...)
+  bootstrap_parameters(boot_data, centrality = centrality, ci = ci, ci_method = ci_method, test = test, ...)
+}
+
+
+#' @export
+bootstrap_parameters.bootstrap_model <- function(model,
+                                                 centrality = "median",
+                                                 ci = 0.95,
+                                                 ci_method = "quantile",
+                                                 test = "p-value",
+                                                 ...) {
   out <- .summary_bootstrap(
-    data = data,
+    data = model,
     test = test,
     centrality = centrality,
     ci = ci,
@@ -66,12 +89,16 @@ bootstrap_parameters <- function(model,
   )
 
   class(out) <- c("bootstrap_parameters", "parameters_model", class(out))
-  attr(out, "boot_samples") <- data
+  attr(out, "boot_samples") <- model
   out
 }
 
 
+#' @export
+model_parameters.bootstrap_model <- bootstrap_parameters.bootstrap_model
 
+
+# utilities --------------------------------------------------------------------
 
 #' @keywords internal
 .summary_bootstrap <- function(data, test, centrality, ci, ci_method, ...) {
@@ -94,14 +121,14 @@ bootstrap_parameters <- function(model,
   )
 
   # Remove unnecessary columns
-  if ("CI" %in% names(parameters) && insight::n_unique(parameters$CI) == 1) {
+  if ("CI" %in% names(parameters) && insight::has_single_value(parameters$CI, remove_na = TRUE)) {
     parameters$CI <- NULL
   } else if ("CI" %in% names(parameters) && insight::n_unique(parameters$CI) > 1) {
     parameters <- datawizard::reshape_ci(parameters)
   }
 
   # Coef
-  if (length(c(centrality)) == 1) {
+  if (length(centrality) == 1) {
     names(parameters)[names(parameters) == insight::format_capitalize(centrality)] <- "Coefficient"
   }
 
@@ -110,7 +137,7 @@ bootstrap_parameters <- function(model,
     parameters$.row_order <- seq_len(nrow(parameters))
     # calculate probability of direction, then convert to p.
     p <- bayestestR::p_direction(data, null = 0, ...)
-    p$p <- bayestestR::pd_to_p(p$pd)
+    p$p <- as.numeric(bayestestR::pd_to_p(p$pd))
     p$pd <- NULL
     parameters <- merge(parameters, p, all = TRUE)
     parameters <- parameters[order(parameters$.row_order), ]

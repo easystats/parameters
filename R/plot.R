@@ -20,13 +20,6 @@ plot.compare_parameters <- function(x, ...) {
 
 
 #' @export
-plot.parameters_stan <- function(x, ...) {
-  insight::check_if_installed("see")
-  NextMethod()
-}
-
-
-#' @export
 plot.parameters_simulate <- function(x, ...) {
   insight::check_if_installed("see")
   NextMethod()
@@ -42,13 +35,6 @@ plot.parameters_brms_meta <- function(x, ...) {
 
 #' @export
 plot.n_factors <- function(x, ...) {
-  insight::check_if_installed("see")
-  NextMethod()
-}
-
-
-#' @export
-plot.parameters_distribution <- function(x, ...) {
   insight::check_if_installed("see")
   NextMethod()
 }

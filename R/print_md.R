@@ -1,6 +1,6 @@
 # normal print ----------------------------
 
-#' @rdname display.parameters_model
+#' @rdname print.parameters_model
 #' @export
 print_md.parameters_model <- function(x,
                                       pretty_names = TRUE,
@@ -11,7 +11,7 @@ print_md.parameters_model <- function(x,
                                       footer = NULL,
                                       align = NULL,
                                       digits = 2,
-                                      ci_digits = 2,
+                                      ci_digits = digits,
                                       p_digits = 3,
                                       footer_digits = 3,
                                       ci_brackets = c("(", ")"),
@@ -19,6 +19,7 @@ print_md.parameters_model <- function(x,
                                       show_formula = FALSE,
                                       zap_small = FALSE,
                                       groups = NULL,
+                                      include_reference = FALSE,
                                       verbose = TRUE,
                                       ...) {
   # check if user supplied digits attributes
@@ -26,7 +27,7 @@ print_md.parameters_model <- function(x,
     digits <- .additional_arguments(x, "digits", digits)
   }
   if (missing(ci_digits)) {
-    ci_digits <- .additional_arguments(x, "ci_digits", ci_digits)
+    ci_digits <- .additional_arguments(x, "ci_digits", digits)
   }
   if (missing(p_digits)) {
     p_digits <- .additional_arguments(x, "p_digits", p_digits)
@@ -53,7 +54,7 @@ print_md.parameters_model <- function(x,
   table_caption <- .print_caption(x, caption, format = "markdown")
 
   # main table
-  formatted_table <- .print_core(
+  formatted_table <- format(
     x = x,
     pretty_names = pretty_names,
     split_components = split_components,
@@ -66,6 +67,7 @@ print_md.parameters_model <- function(x,
     ci_brackets = ci_brackets,
     format = "markdown",
     groups = groups,
+    include_reference = include_reference,
     ...
   )
 
@@ -89,13 +91,12 @@ print_md.parameters_model <- function(x,
     footer <- ""
   }
   if (!identical(footer, "")) {
-    if (!is.null(footer)) {
-      footer <- paste0("\n", footer, "\n", footer_stats)
-    } else {
+    if (is.null(footer)) {
       footer <- footer_stats
+    } else {
+      footer <- paste0("\n", footer, "\n", footer_stats)
     }
   }
-
 
   insight::export_table(
     formatted_table,
@@ -109,38 +110,36 @@ print_md.parameters_model <- function(x,
 }
 
 #' @export
-print_md.parameters_stan <- print_md.parameters_model
-
-#' @export
 print_md.parameters_brms_meta <- print_md.parameters_model
 
 #' @export
 print_md.parameters_simulate <- print_md.parameters_model
 
 
-
-
-
 # compare parameters -------------------------
 
 
+#' @rdname print.compare_parameters
 #' @export
 print_md.compare_parameters <- function(x,
                                         digits = 2,
-                                        ci_digits = 2,
+                                        ci_digits = digits,
                                         p_digits = 3,
                                         caption = NULL,
                                         subtitle = NULL,
                                         footer = NULL,
                                         select = NULL,
                                         split_components = TRUE,
+                                        ci_brackets = c("(", ")"),
+                                        zap_small = FALSE,
+                                        groups = NULL,
                                         ...) {
   # check if user supplied digits attributes
   if (missing(digits)) {
     digits <- .additional_arguments(x, "digits", digits)
   }
   if (missing(ci_digits)) {
-    ci_digits <- .additional_arguments(x, "ci_digits", ci_digits)
+    ci_digits <- .additional_arguments(x, "ci_digits", digits)
   }
   if (missing(p_digits)) {
     p_digits <- .additional_arguments(x, "p_digits", p_digits)
@@ -149,6 +148,9 @@ print_md.compare_parameters <- function(x,
   # get attributes
   if (missing(select) || is.null(select)) {
     select <- attributes(x)$output_style
+  }
+  if (missing(groups)) {
+    groups <- attributes(x)$parameter_groups
   }
 
   formatted_table <- format(
@@ -159,9 +161,17 @@ print_md.compare_parameters <- function(x,
     ci_digits = ci_digits,
     p_digits = p_digits,
     ci_width = NULL,
-    ci_brackets = c("(", ")"),
-    format = "markdown"
+    ci_brackets = ci_brackets,
+    format = "markdown",
+    zap_small = zap_small,
+    groups = groups
   )
+
+  # replace brackets by parenthesis
+  if (!is.null(ci_brackets) && "Parameter" %in% colnames(formatted_table)) {
+    formatted_table$Parameter <- gsub("[", ci_brackets[1], formatted_table$Parameter, fixed = TRUE)
+    formatted_table$Parameter <- gsub("]", ci_brackets[2], formatted_table$Parameter, fixed = TRUE)
+  }
 
   insight::export_table(
     formatted_table,
@@ -173,15 +183,12 @@ print_md.compare_parameters <- function(x,
 }
 
 
-
-
-
 # SEM print ----------------------------
 
 #' @export
 print_md.parameters_sem <- function(x,
                                     digits = 2,
-                                    ci_digits = 2,
+                                    ci_digits = digits,
                                     p_digits = 3,
                                     ci_brackets = c("(", ")"),
                                     ...) {
@@ -191,7 +198,7 @@ print_md.parameters_sem <- function(x,
     digits <- .additional_arguments(x, "digits", digits)
   }
   if (missing(ci_digits)) {
-    ci_digits <- .additional_arguments(x, "ci_digits", ci_digits)
+    ci_digits <- .additional_arguments(x, "ci_digits", digits)
   }
   if (missing(p_digits)) {
     p_digits <- .additional_arguments(x, "p_digits", p_digits)
@@ -212,8 +219,6 @@ print_md.parameters_sem <- function(x,
 }
 
 
-
-
 # PCA / EFA / CFA ----------------------------
 
 #' @export
@@ -221,10 +226,23 @@ print_md.parameters_efa_summary <- function(x, digits = 3, ...) {
   table_caption <- "(Explained) Variance of Components"
 
   if ("Parameter" %in% names(x)) {
-    x$Parameter <- c("Eigenvalues", "Variance Explained", "Variance Explained (Cumulative)", "Variance Explained (Proportion)")
+    x$Parameter <- c("Eigenvalues", "Variance Explained", "Variance Explained (Cumulative)", "Variance Explained (Proportion)") # nolint
   } else if ("Component" %in% names(x)) {
-    names(x) <- c("Component", "Eigenvalues", "Variance Explained", "Variance Explained (Cumulative)", "Variance Explained (Proportion)")
+    names(x) <- c("Component", "Eigenvalues", "Variance Explained", "Variance Explained (Cumulative)", "Variance Explained (Proportion)") # nolint
   }
+
+  # we may have factor correlations
+  fc <- attributes(x)$factor_correlations
+
+  # if we have factor correlations, we need to add them to the table
+  if (!is.null(fc)) {
+    x <- list(x, fc)
+    table_caption <- list(
+      table_caption,
+      "Factor Correlations"
+    )
+  }
+
   insight::export_table(x, digits = digits, format = "markdown", caption = table_caption, align = "firstleft")
 }
 
@@ -232,7 +250,23 @@ print_md.parameters_efa_summary <- function(x, digits = 3, ...) {
 print_md.parameters_pca_summary <- print_md.parameters_efa_summary
 
 #' @export
-print_md.parameters_efa <- function(x, digits = 2, sort = FALSE, threshold = NULL, labels = NULL, ...) {
+print_md.parameters_omega_summary <- function(x, ...) {
+  out <- .print_omega_summary(x, format = "markdown")
+  insight::export_table(out$tables, caption = out$captions, format = "markdown", ...)
+}
+
+
+#' @export
+print_md.parameters_efa <- function(x,
+                                    digits = 2,
+                                    sort = FALSE,
+                                    threshold = NULL,
+                                    labels = NULL,
+                                    ...) {
+  # extract attributes
+  if (is.null(threshold)) {
+    threshold <- attributes(x)$threshold
+  }
   .print_parameters_cfa_efa(
     x,
     threshold = threshold,
@@ -247,89 +281,39 @@ print_md.parameters_efa <- function(x, digits = 2, sort = FALSE, threshold = NUL
 #' @export
 print_md.parameters_pca <- print_md.parameters_efa
 
-
-
+#' @export
+print_md.parameters_omega <- print_md.parameters_efa
 
 
 # Equivalence test ----------------------------
 
 #' @export
-print_md.equivalence_test_lm <- function(x, digits = 2, ci_brackets = c("(", ")"), zap_small = FALSE, ...) {
-  rule <- attributes(x)$rule
-  rope <- attributes(x)$rope
-
-  if (!is.null(rule)) {
-    if (rule == "cet") {
-      table_caption <- "Conditional Equivalence Testing"
-    } else if (rule == "classic") {
-      table_caption <- "TOST-test for Practical Equivalence"
-    } else {
-      table_caption <- "Test for Practical Equivalence"
-    }
-  } else {
-    table_caption <- "Test for Practical Equivalence"
-  }
-
-  if ("Component" %in% colnames(x)) {
-    x <- x[x$Component %in% c("conditional", "count"), ]
-  }
-
-  formatted_table <- insight::format_table(
+print_md.equivalence_test_lm <- function(
+  x,
+  digits = 2,
+  ci_brackets = c("(", ")"),
+  zap_small = FALSE,
+  ...
+) {
+  .print_equivalence_test_lm(
     x,
-    pretty_names = TRUE,
     digits = digits,
-    ci_width = NULL,
     ci_brackets = ci_brackets,
     zap_small = zap_small,
-    ...
-  )
-
-  colnames(formatted_table)[which(colnames(formatted_table) == "Equivalence (ROPE)")] <- "H0"
-  formatted_table$ROPE <- NULL
-
-  # col_order <- c("Parameter", "H0", "% in ROPE", colnames(formatted_table)[grepl(" CI$", colnames(formatted_table))])
-  # col_order <- c(col_order, setdiff(colnames(formatted_table), col_order))
-  # formatted_table <- formatted_table[col_order]
-
-  # replace brackets by parenthesis
-  if (!is.null(ci_brackets) && "Parameter" %in% colnames(formatted_table)) {
-    formatted_table$Parameter <- gsub("[", ci_brackets[1], formatted_table$Parameter, fixed = TRUE)
-    formatted_table$Parameter <- gsub("]", ci_brackets[2], formatted_table$Parameter, fixed = TRUE)
-  }
-
-  if (!is.null(rope)) {
-    names(formatted_table)[names(formatted_table) == "% in ROPE"] <- sprintf("%% in ROPE (%.*f, %.*f)", digits, rope[1], digits, rope[2])
-  }
-
-  insight::export_table(formatted_table, format = "markdown", caption = table_caption, align = "firstleft")
-}
-
-
-
-
-
-# distribution print ----------------------------
-
-#' @export
-print_md.parameters_distribution <- function(x, digits = 2, ci_brackets = c("(", ")"), ...) {
-  formatted_table <- format(
-    x = x,
-    digits = digits,
     format = "markdown",
-    ci_width = NULL,
-    ci_brackets = ci_brackets,
     ...
   )
-
-  insight::export_table(formatted_table, format = "markdown", align = "firstleft", ...)
 }
 
 
+# p_function ----------------------------
 
-
-
-# Reexports models ------------------------
-
-#' @importFrom insight print_md
 #' @export
-insight::print_md
+print_md.parameters_p_function <- function(x,
+                                           digits = 2,
+                                           ci_width = "auto",
+                                           ci_brackets = c("(", ")"),
+                                           pretty_names = TRUE,
+                                           ...) {
+  .print_p_function(x, digits, ci_width, ci_brackets, pretty_names, format = "markdown", ...)
+}

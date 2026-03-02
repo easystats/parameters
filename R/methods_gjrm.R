@@ -1,4 +1,3 @@
-#' @rdname model_parameters.averaging
 #' @export
 model_parameters.SemiParBIV <- function(model,
                                         ci = 0.95,
@@ -7,6 +6,8 @@ model_parameters.SemiParBIV <- function(model,
                                         standardize = NULL,
                                         exponentiate = FALSE,
                                         p_adjust = NULL,
+                                        keep = NULL,
+                                        drop = NULL,
                                         verbose = TRUE,
                                         ...) {
   out <- .model_parameters_generic(
@@ -18,6 +19,8 @@ model_parameters.SemiParBIV <- function(model,
     merge_by = c("Parameter", "Component"),
     standardize = standardize,
     exponentiate = exponentiate,
+    keep_parameters = keep,
+    drop_parameters = drop,
     p_adjust = p_adjust,
     ...
   )
@@ -30,7 +33,7 @@ model_parameters.SemiParBIV <- function(model,
 #' @export
 p_value.SemiParBIV <- function(model, ...) {
   s <- summary(model)
-  s <- datawizard::compact_list(s[startsWith(names(s), "tableP")])
+  s <- insight::compact_list(s[startsWith(names(s), "tableP")])
   params <- do.call(rbind, lapply(seq_along(s), function(i) {
     out <- as.data.frame(s[[i]])
     out$Parameter <- rownames(out)
@@ -46,7 +49,7 @@ p_value.SemiParBIV <- function(model, ...) {
 #' @export
 standard_error.SemiParBIV <- function(model, ...) {
   s <- summary(model)
-  s <- datawizard::compact_list(s[startsWith(names(s), "tableP")])
+  s <- insight::compact_list(s[startsWith(names(s), "tableP")])
   params <- do.call(rbind, lapply(seq_along(s), function(i) {
     out <- as.data.frame(s[[i]])
     out$Parameter <- rownames(out)

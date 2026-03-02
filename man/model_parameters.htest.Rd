@@ -2,7 +2,6 @@
 % Please edit documentation in R/methods_htest.R, R/methods_lmtest.R
 \name{model_parameters.htest}
 \alias{model_parameters.htest}
-\alias{model_parameters.pairwise.htest}
 \alias{model_parameters.coeftest}
 \title{Parameters from hypothesis tests}
 \usage{
@@ -11,25 +10,20 @@
   ci = 0.95,
   alternative = NULL,
   bootstrap = FALSE,
-  effectsize_type = NULL,
+  es_type = NULL,
   verbose = TRUE,
-  cramers_v = NULL,
-  phi = NULL,
-  standardized_d = NULL,
-  hedges_g = NULL,
-  omega_squared = NULL,
-  eta_squared = NULL,
-  epsilon_squared = NULL,
-  cohens_g = NULL,
-  rank_biserial = NULL,
-  rank_epsilon_squared = NULL,
-  kendalls_w = NULL,
   ...
 )
 
-\method{model_parameters}{pairwise.htest}(model, verbose = TRUE, ...)
-
-\method{model_parameters}{coeftest}(model, ci = 0.95, ci_method = "wald", verbose = TRUE, ...)
+\method{model_parameters}{coeftest}(
+  model,
+  ci = 0.95,
+  ci_method = "wald",
+  keep = NULL,
+  drop = NULL,
+  verbose = TRUE,
+  ...
+)
 }
 \arguments{
 \item{model}{Object of class \code{htest} or \code{pairwise.htest}.}
@@ -45,17 +39,31 @@ the \href{https://easystats.github.io/effectsize/}{effectsize_CIs vignette}.}
 
 \item{bootstrap}{Should estimates be bootstrapped?}
 
-\item{effectsize_type}{The effect size of interest. Not that possibly not all
+\item{es_type}{The effect size of interest. Not that possibly not all
 effect sizes are applicable to the model object. See 'Details'. For Anova
 models, can also be a character vector with multiple effect size names.}
 
 \item{verbose}{Toggle warnings and messages.}
 
-\item{cramers_v, phi, cohens_g, standardized_d, hedges_g, omega_squared, eta_squared, epsilon_squared, rank_biserial, rank_epsilon_squared, kendalls_w}{Deprecated. Please use \code{effectsize_type}.}
-
 \item{...}{Arguments passed to or from other methods. For instance, when
-\code{bootstrap = TRUE}, arguments like \code{type} or \code{parallel} are
-passed down to \code{bootstrap_model()}.}
+\code{bootstrap = TRUE}, arguments like \code{type} or \code{parallel} are passed down to
+\code{bootstrap_model()}.
+
+Further non-documented arguments are:
+\itemize{
+\item \code{digits}, \code{p_digits}, \code{ci_digits} and \code{footer_digits} to set the number of
+digits for the output. \code{groups} can be used to group coefficients. These
+arguments will be passed to the print-method, or can directly be used in
+\code{print()}, see documentation in \code{\link[=print.parameters_model]{print.parameters_model()}}.
+\item If \code{s_value = TRUE}, the p-value will be replaced by the S-value in the
+output (cf. \emph{Rafi and Greenland 2020}).
+\item \code{pd} adds an additional column with the \emph{probability of direction} (see
+\code{\link[bayestestR:p_direction]{bayestestR::p_direction()}} for details). Furthermore, see 'Examples' for
+this function.
+\item For developers, whose interest mainly is to get a "tidy" data frame of
+model summaries, it is recommended to set \code{pretty_names = FALSE} to speed
+up computation of the summary table.
+}}
 
 \item{ci_method}{Method for computing degrees of freedom for
 confidence intervals (CI) and the related p-values. Allowed are following
@@ -66,6 +74,28 @@ options (which vary depending on the model class): \code{"residual"},
 \emph{Confidence intervals and approximation of degrees of freedom} in
 \code{\link[=model_parameters]{model_parameters()}} for further details. When \code{ci_method=NULL}, in most
 cases \code{"wald"} is used then.}
+
+\item{keep}{Character containing a regular expression pattern that
+describes the parameters that should be included (for \code{keep}) or excluded
+(for \code{drop}) in the returned data frame. \code{keep} may also be a
+named list of regular expressions. All non-matching parameters will be
+removed from the output. If \code{keep} is a character vector, every parameter
+name in the \emph{"Parameter"} column that matches the regular expression in
+\code{keep} will be selected from the returned data frame (and vice versa,
+all parameter names matching \code{drop} will be excluded). Furthermore, if
+\code{keep} has more than one element, these will be merged with an \code{OR}
+operator into a regular expression pattern like this: \code{"(one|two|three)"}.
+If \code{keep} is a named list of regular expression patterns, the names of the
+list-element should equal the column name where selection should be
+applied. This is useful for model objects where \code{model_parameters()}
+returns multiple columns with parameter components, like in
+\code{\link[=model_parameters.lavaan]{model_parameters.lavaan()}}. Note that the regular expression pattern
+should match the parameter names as they are stored in the returned data
+frame, which can be different from how they are printed. Inspect the
+\verb{$Parameter} column of the parameters table to get the exact parameter
+names.}
+
+\item{drop}{See \code{keep}.}
 }
 \value{
 A data frame of indices related to the model's parameters.
@@ -78,7 +108,10 @@ Parameters of h-tests (correlations, t-tests, chi-squared, ...).
 \item For an object of class \code{htest}, data is extracted via \code{\link[insight:get_data]{insight::get_data()}}, and passed to the relevant function according to:
 \itemize{
 \item A \strong{t-test} depending on \code{type}: \code{"cohens_d"} (default), \code{"hedges_g"}, or one of \code{"p_superiority"}, \code{"u1"}, \code{"u2"}, \code{"u3"}, \code{"overlap"}.
-\item A \strong{Chi-squared tests of independence} or \strong{Fisher's Exact Test}, depending on \code{type}: \code{"cramers_v"} (default), \code{"tschuprows_t"}, \code{"phi"}, \code{"cohens_w"}, \code{"pearsons_c"}, \code{"cohens_h"}, \code{"oddsratio"}, or \code{"riskratio"}.
+\itemize{
+\item For a \strong{Paired t-test}: depending on \code{type}: \code{"rm_rm"}, \code{"rm_av"}, \code{"rm_b"}, \code{"rm_d"}, \code{"rm_z"}.
+}
+\item A \strong{Chi-squared tests of independence} or \strong{Fisher's Exact Test}, depending on \code{type}: \code{"cramers_v"} (default), \code{"tschuprows_t"}, \code{"phi"}, \code{"cohens_w"}, \code{"pearsons_c"}, \code{"cohens_h"}, \code{"oddsratio"}, \code{"riskratio"}, \code{"arr"}, or \code{"nnt"}.
 \item A \strong{Chi-squared tests of goodness-of-fit}, depending on \code{type}: \code{"fei"} (default) \code{"cohens_w"}, \code{"pearsons_c"}
 \item A \strong{One-way ANOVA test}, depending on \code{type}: \code{"eta"} (default), \code{"omega"} or \code{"epsilon"} -squared, \code{"f"}, or \code{"f2"}.
 \item A \strong{McNemar test} returns \emph{Cohen's g}.
@@ -91,10 +124,11 @@ Parameters of h-tests (correlations, t-tests, chi-squared, ...).
 \itemize{
 \item A \strong{t-test} depending on \code{type}: \code{"cohens_d"} (default) or one of \code{"p_superiority"}, \code{"u1"}, \code{"u2"}, \code{"u3"}, \code{"overlap"}.
 \item A \strong{correlation test} returns \emph{r}.
-\item A \strong{contingency table test}, depending on \code{type}: \code{"cramers_v"} (default), \code{"phi"}, \code{"tschuprows_t"}, \code{"cohens_w"}, \code{"pearsons_c"}, \code{"cohens_h"}, \code{"oddsratio"}, or \code{"riskratio"}.
+\item A \strong{contingency table test}, depending on \code{type}: \code{"cramers_v"} (default), \code{"phi"}, \code{"tschuprows_t"}, \code{"cohens_w"}, \code{"pearsons_c"}, \code{"cohens_h"}, \code{"oddsratio"}, or \code{"riskratio"}, \code{"arr"}, or \code{"nnt"}.
 \item A \strong{proportion test} returns \emph{p}.
 }
 \item Objects of class \code{anova}, \code{aov}, \code{aovlist} or \code{afex_aov}, depending on \code{type}: \code{"eta"} (default), \code{"omega"} or \code{"epsilon"} -squared, \code{"f"}, or \code{"f2"}.
+\item Objects of class \code{datawizard_crosstab(s)} / \code{datawizard_table(s)} built with \code{\link[datawizard:data_tabulate]{datawizard::data_tabulate()}} - same as Chi-squared tests of independence / goodness-of-fit, respectively.
 \item Other objects are passed to \code{\link[parameters:standardize_parameters]{parameters::standardize_parameters()}}.
 }
 
@@ -107,13 +141,13 @@ model <- cor.test(mtcars$mpg, mtcars$cyl, method = "pearson")
 model_parameters(model)
 
 model <- t.test(iris$Sepal.Width, iris$Sepal.Length)
-model_parameters(model, effectsize_type = "hedges_g")
+model_parameters(model, es_type = "hedges_g")
 
 model <- t.test(mtcars$mpg ~ mtcars$vs)
-model_parameters(model, effectsize_type = "hedges_g")
+model_parameters(model, es_type = "hedges_g")
 
 model <- t.test(iris$Sepal.Width, mu = 1)
-model_parameters(model, effectsize_type = "cohens_d")
+model_parameters(model, es_type = "cohens_d")
 
 data(airquality)
 airquality$Month <- factor(airquality$Month, labels = month.abb[5:9])
@@ -122,10 +156,10 @@ model_parameters(model)
 
 smokers <- c(83, 90, 129, 70)
 patients <- c(86, 93, 136, 82)
-model <- pairwise.prop.test(smokers, patients)
+model <- suppressWarnings(pairwise.prop.test(smokers, patients))
 model_parameters(model)
 
-model <- stats::chisq.test(table(mtcars$am, mtcars$cyl))
-model_parameters(model, effectsize_type = "cramers_v")
+model <- suppressWarnings(chisq.test(table(mtcars$am, mtcars$cyl)))
+model_parameters(model, es_type = "cramers_v")
 
 }

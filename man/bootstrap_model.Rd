@@ -3,7 +3,6 @@
 \name{bootstrap_model}
 \alias{bootstrap_model}
 \alias{bootstrap_model.default}
-\alias{bootstrap_model.merMod}
 \title{Model bootstrapping}
 \usage{
 bootstrap_model(model, iterations = 1000, ...)
@@ -12,17 +11,7 @@ bootstrap_model(model, iterations = 1000, ...)
   model,
   iterations = 1000,
   type = "ordinary",
-  parallel = c("no", "multicore", "snow"),
-  n_cpus = 1,
-  verbose = FALSE,
-  ...
-)
-
-\method{bootstrap_model}{merMod}(
-  model,
-  iterations = 1000,
-  type = "parametric",
-  parallel = c("no", "multicore", "snow"),
+  parallel = "no",
   n_cpus = 1,
   cluster = NULL,
   verbose = FALSE,
@@ -46,10 +35,10 @@ other models, see argument \code{sim} in \code{?boot::boot} (defaults to
 
 \item{n_cpus}{Number of processes to be used in parallel operation.}
 
-\item{verbose}{Toggle warnings and messages.}
-
 \item{cluster}{Optional cluster when \code{parallel = "snow"}. See \code{?lme4::bootMer}
 for details.}
+
+\item{verbose}{Toggle warnings and messages.}
 }
 \value{
 A data frame of bootstrapped estimates.
@@ -81,18 +70,16 @@ to obtain non-parametric p-values.
 }
 
 \examples{
-\dontrun{
-if (require("boot", quietly = TRUE)) {
-  model <- lm(mpg ~ wt + factor(cyl), data = mtcars)
-  b <- bootstrap_model(model)
-  print(head(b))
+\dontshow{if (require("boot", quietly = TRUE) && require("emmeans", quietly = TRUE)) withAutoprint(\{ # examplesIf}
+\donttest{
+model <- lm(mpg ~ wt + factor(cyl), data = mtcars)
+b <- bootstrap_model(model)
+print(head(b))
 
-  if (require("emmeans", quietly = TRUE)) {
-    est <- emmeans(b, consec ~ cyl)
-    print(model_parameters(est))
-  }
+est <- emmeans::emmeans(b, consec ~ cyl)
+print(model_parameters(est))
 }
-}
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 \code{\link[=bootstrap_parameters]{bootstrap_parameters()}}, \code{\link[=simulate_model]{simulate_model()}}, \code{\link[=simulate_parameters]{simulate_parameters()}}

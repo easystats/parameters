@@ -1,9 +1,10 @@
-#' @rdname model_parameters.merMod
 #' @export
 model_parameters.merModList <- function(model,
                                         ci = 0.95,
                                         exponentiate = FALSE,
                                         p_adjust = NULL,
+                                        keep = NULL,
+                                        drop = NULL,
                                         verbose = TRUE,
                                         ...) {
   out <- .model_parameters_generic(
@@ -14,6 +15,8 @@ model_parameters.merModList <- function(model,
     merge_by = "Parameter",
     standardize = NULL,
     exponentiate = exponentiate,
+    keep_parameters = keep,
+    drop_parameters = drop,
     p_adjust = p_adjust,
     ...
   )
@@ -37,13 +40,6 @@ standard_error.merModList <- function(model, ...) {
     SE = s$fe$std.error
   )
   insight::text_remove_backticks(out, verbose = FALSE)
-}
-
-
-#' @export
-degrees_of_freedom.merModList <- function(model, ...) {
-  s <- suppressWarnings(summary(model))
-  s$fe$df
 }
 
 

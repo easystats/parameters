@@ -3,7 +3,6 @@
 # model parameters -------------------
 
 
-#' @inheritParams model_parameters.merMod
 #' @export
 model_parameters.wbm <- function(model,
                                  ci = 0.95,
@@ -15,6 +14,8 @@ model_parameters.wbm <- function(model,
                                  exponentiate = FALSE,
                                  p_adjust = NULL,
                                  include_sigma = FALSE,
+                                 keep = NULL,
+                                 drop = NULL,
                                  verbose = TRUE,
                                  ...) {
   effects <- match.arg(effects, choices = c("fixed", "random", "all"))
@@ -33,6 +34,8 @@ model_parameters.wbm <- function(model,
     ci_method = NULL,
     include_sigma = include_sigma,
     ci_random = ci_random,
+    keep_parameters = keep,
+    drop_parameters = drop,
     verbose = verbose,
     ...
   )
@@ -49,6 +52,38 @@ model_parameters.wbm <- function(model,
 model_parameters.wbgee <- model_parameters.wbm
 
 
+#' @export
+model_parameters.asym <- function(model,
+                                  ci = 0.95,
+                                  ci_method = NULL,
+                                  bootstrap = FALSE,
+                                  iterations = 1000,
+                                  standardize = NULL,
+                                  exponentiate = FALSE,
+                                  p_adjust = NULL,
+                                  include_info = getOption("parameters_info", FALSE),
+                                  keep = NULL,
+                                  drop = NULL,
+                                  verbose = TRUE,
+                                  ...) {
+  params <- model_parameters.default(
+    model,
+    ci = ci,
+    ci_method = ci_method,
+    bootstrap = bootstrap,
+    iterations = iterations,
+    standardize = standardize,
+    exponentiate = exponentiate,
+    p_adjust = p_adjust,
+    include_info = include_info,
+    keep = keep,
+    drop = drop,
+    verbose = verbose,
+    ...
+  )
+  attr(params, "no_caption") <- TRUE
+  params
+}
 
 
 # standard errors -------------------
@@ -76,8 +111,6 @@ standard_error.wbm <- function(model, ...) {
 standard_error.wbgee <- standard_error.wbm
 
 
-
-
 # p values -------------------
 
 
@@ -103,25 +136,24 @@ p_value.wbm <- function(model, ...) {
 p_value.wbgee <- p_value.wbm
 
 
-
-
-
 # utils -------------------
 
 
 .mixed_model_parameters_generic <- function(model,
                                             ci,
                                             ci_random = NULL,
-                                            bootstrap,
-                                            iterations,
-                                            merge_by,
-                                            standardize,
-                                            exponentiate,
-                                            effects,
-                                            p_adjust,
-                                            group_level,
-                                            ci_method,
+                                            bootstrap, # nolint
+                                            iterations, # nolint
+                                            merge_by, # nolint
+                                            standardize, # nolint
+                                            exponentiate, # nolint
+                                            effects, # nolint
+                                            p_adjust, # nolint
+                                            group_level, # nolint
+                                            ci_method, # nolint
                                             include_sigma = FALSE,
+                                            keep_parameters = NULL,
+                                            drop_parameters = NULL,
                                             verbose = TRUE,
                                             ...) {
   params <- params_random <- params_variance <- att <- NULL
@@ -139,6 +171,8 @@ p_value.wbgee <- p_value.wbm
       p_adjust = p_adjust,
       ci_method = ci_method,
       include_sigma = include_sigma,
+      keep_parameters = keep_parameters,
+      drop_parameters = drop_parameters,
       verbose = verbose,
       ...
     )

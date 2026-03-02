@@ -3,12 +3,10 @@
 # model parameters ---------------------
 
 
-#' @rdname model_parameters.averaging
 #' @export
 model_parameters.rqss <- model_parameters.cgam
 
 
-#' @rdname model_parameters.averaging
 #' @export
 model_parameters.rqs <- function(model,
                                  ci = 0.95,
@@ -16,6 +14,9 @@ model_parameters.rqs <- function(model,
                                  iterations = 1000,
                                  standardize = NULL,
                                  exponentiate = FALSE,
+                                 p_adjust = NULL,
+                                 keep = NULL,
+                                 drop = NULL,
                                  verbose = TRUE,
                                  ...) {
   out <- .model_parameters_generic(
@@ -26,14 +27,16 @@ model_parameters.rqs <- function(model,
     merge_by = c("Parameter", "Component"),
     standardize = standardize,
     exponentiate = exponentiate,
+    keep_parameters = keep,
+    drop_parameters = drop,
+    p_adjust = p_adjust,
+    verbose = verbose,
     ...
   )
 
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(model))
   out
 }
-
-
 
 
 # ci ---------------------
@@ -57,9 +60,6 @@ ci.nlrq <- ci.default
 
 #' @export
 ci.rqs <- ci.default
-
-
-
 
 
 # standard errors ---------------------
@@ -137,9 +137,9 @@ standard_error.rqss <- function(model,
   )
 
   switch(component,
-    "all" = rbind(out_cond, out_smooth),
-    "conditional" = out_cond,
-    "smooth_terms" = out_smooth
+    all = rbind(out_cond, out_smooth),
+    conditional = out_cond,
+    smooth_terms = out_smooth
   )
 }
 
@@ -184,8 +184,6 @@ standard_error.rqss <- function(model,
   }
   se
 }
-
-
 
 
 # p values ---------------------
@@ -262,9 +260,9 @@ p_value.rqss <- function(model,
   )
 
   switch(component,
-    "all" = rbind(out_cond, out_smooth),
-    "conditional" = out_cond,
-    "smooth_terms" = out_smooth
+    all = rbind(out_cond, out_smooth),
+    conditional = out_cond,
+    smooth_terms = out_smooth
   )
 }
 
@@ -318,36 +316,3 @@ p_value.rqss <- function(model,
 
   p
 }
-
-
-
-
-# degrees of freedom ---------------------
-
-
-#' @export
-degrees_of_freedom.rqs <- function(model, ...) {
-  tryCatch(
-    {
-      s <- suppressWarnings(summary(model, covariance = TRUE))
-      cs <- lapply(s, function(i) i$rdf)
-      unique(unlist(cs))
-    },
-    error = function(e) {
-      NULL
-    }
-  )
-}
-
-
-
-#' @export
-degrees_of_freedom.rqss <- degrees_of_freedom.multinom
-
-
-#' @export
-degrees_of_freedom.rq <- degrees_of_freedom.rqs
-
-
-#' @export
-degrees_of_freedom.nlrq <- degrees_of_freedom.mhurdle

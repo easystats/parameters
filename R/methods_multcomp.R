@@ -2,7 +2,6 @@
 #'
 #' Parameters from Hypothesis Testing.
 #'
-#' @rdname model_parameters.averaging
 #' @param model Object of class [multcomp::glht()] (**multcomp**)
 #'   or of class `PMCMR`, `trendPMCMR` or `osrt` (**PMCMRplus**).
 #' @inheritParams model_parameters.default
@@ -27,7 +26,9 @@
 #'   model_parameters(mod)
 #' }
 #' if (require("PMCMRplus", quietly = TRUE)) {
-#'   model <- kwAllPairsConoverTest(count ~ spray, data = InsectSprays)
+#'   model <- suppressWarnings(
+#'     kwAllPairsConoverTest(count ~ spray, data = InsectSprays)
+#'   )
 #'   model_parameters(model)
 #' }
 #' }
@@ -35,6 +36,8 @@
 model_parameters.glht <- function(model,
                                   ci = 0.95,
                                   exponentiate = FALSE,
+                                  keep = NULL,
+                                  drop = NULL,
                                   verbose = TRUE,
                                   ...) {
   # p-adjustment method
@@ -50,6 +53,8 @@ model_parameters.glht <- function(model,
     standardize = NULL,
     exponentiate = exponentiate,
     p_adjust = NULL,
+    keep_parameters = keep,
+    drop_parameters = drop,
     verbose = verbose,
     ...
   )
@@ -95,12 +100,6 @@ standard_error.glht <- function(model, ...) {
     Parameter = insight::find_parameters(model, flatten = TRUE),
     SE = unname(s$test$sigma)
   )
-}
-
-
-#' @export
-degrees_of_freedom.glht <- function(model, ...) {
-  model$df
 }
 
 

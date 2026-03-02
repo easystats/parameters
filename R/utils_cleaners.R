@@ -13,12 +13,13 @@
 
   pattern <- if (full) {
     c(
-      "as.factor", "as.numeric", "factor", "offset", "lag", "diff", "catg",
-      "matrx", "pol", "strata", "strat", "scale", "scored", "interaction",
-      "lsp", "pb", "lo", "t2", "te", "ti", "tt", "mi", "mo", "gp"
+      "as.factor", "as.numeric", "as.ordered", "factor", "ordered", "offset",
+      "lag", "diff", "catg", "matrx", "pol", "strata", "strat", "scale",
+      "scored", "interaction", "lsp", "pb", "lo", "t2", "te", "ti", "tt", "mi",
+      "mo", "gp"
     )
   } else {
-    c("as.factor", "as.numeric", "factor", "catg", "interaction")
+    c("as.factor", "as.numeric", "as.ordered", "factor", "ordered", "catg", "interaction")
   }
 
   for (j in seq_along(pattern)) {
@@ -30,7 +31,7 @@
       x <- insight::trim_ws(sub("offset\\(([^-+ )]*)\\)(.*)", "\\1\\2", x))
       # some exceptions here...
     } else if (full && pattern[j] == "scale" && any(grepl("scale(", x, fixed = TRUE))) {
-      x[grepl("scale(", x, fixed = TRUE)] <- insight::clean_names(x[grepl("scale(", x, fixed = TRUE)])
+      x[grepl("scale(", x, fixed = TRUE)] <- insight::clean_names(grep("scale(", x, fixed = TRUE, value = TRUE))
     } else if (any(grepl(pattern[j], x, fixed = TRUE))) {
       p <- paste0(pattern[j], "\\(((\\w|\\.)*)\\)(.*)")
       x <- insight::trim_ws(sub(p, "\\1\\3", x))
@@ -39,8 +40,6 @@
 
   gsub("`", "", x, fixed = TRUE)
 }
-
-
 
 
 #' @keywords internal

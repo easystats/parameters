@@ -15,6 +15,8 @@
 #' @inheritParams bootstrap_model
 #' @inheritParams p_value
 #'
+#' @inheritSection model_parameters.zcpglm Model components
+#'
 #' @return A data frame.
 #'
 #' @seealso [`simulate_parameters()`], [`bootstrap_model()`], [`bootstrap_parameters()`]
@@ -54,12 +56,11 @@ simulate_model <- function(model, iterations = 1000, ...) {
 }
 
 
-
 # Models with single component only -----------------------------------------
 
-
+#' @rdname simulate_model
 #' @export
-simulate_model.default <- function(model, iterations = 1000, ...) {
+simulate_model.default <- function(model, iterations = 1000, component = "all", ...) {
   # check for valid input
   .is_model_valid(model)
 
@@ -180,6 +181,12 @@ simulate_model.coxph <- simulate_model.default
 simulate_model.logistf <- simulate_model.default
 
 #' @export
+simulate_model.flic <- simulate_model.default
+
+#' @export
+simulate_model.flac <- simulate_model.default
+
+#' @export
 simulate_model.truncreg <- simulate_model.default
 
 #' @export
@@ -216,22 +223,22 @@ simulate_model.brmultinom <- simulate_model.default
 simulate_model.bracl <- simulate_model.default
 
 
-
-
-
-
 # helper -----------------------------------------
 
 
-.simulate_model <- function(model, iterations, component = "conditional", effects = "fixed", ...) {
+.simulate_model <- function(model,
+                            iterations,
+                            component = "conditional",
+                            effects = "fixed",
+                            ...) {
   if (is.null(iterations)) iterations <- 1000
 
   params <- insight::get_parameters(model, effects = effects, component = component, verbose = FALSE)
-  beta <- stats::setNames(params$Estimate, params$Parameter) # Transform to named vector
+  beta_mu <- stats::setNames(params$Estimate, params$Parameter) # Transform to named vector
 
   # "..." allow specification of vcov-args (#784)
   varcov <- insight::get_varcov(model, component = component, effects = effects, ...)
-  as.data.frame(.mvrnorm(n = iterations, mu = beta, Sigma = varcov))
+  as.data.frame(.mvrnorm(n = iterations, mu = beta_mu, Sigma = varcov))
 
   ## Alternative approach, similar to arm::sim()
 
@@ -242,7 +249,7 @@ simulate_model.bracl <- simulate_model.default
   # b <- array(NA, c(100, k))
   # for (i in 1:iterations) {
   #   s[i] <- stats::sigma(model) * sqrt((n - k) / rchisq(1, n - k))
-  #   b[i,] <- .mvrnorm(n = 1, mu = beta, Sigma = beta.cov * s[i] ^ 2)
+  #   b[i,] <- .mvrnorm(n = 1, mu = beta_mu, Sigma = beta.cov * s[i] ^ 2)
   # }
 }
 
@@ -264,7 +271,8 @@ simulate_model.bracl <- simulate_model.default
   X <- drop(mu) + eS$vectors %*% diag(sqrt(pmax(ev, 0)), p) %*% t(matrix(stats::rnorm(p * n), n))
   nm <- names(mu)
 
-  if (is.null(nm) && !is.null(dn <- dimnames(Sigma))) {
+  dn <- dimnames(Sigma)
+  if (is.null(nm) && !is.null(dn)) {
     nm <- dn[[1L]]
   }
 

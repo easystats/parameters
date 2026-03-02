@@ -1,4 +1,3 @@
-#' @rdname model_parameters.stanreg
 #' @export
 model_parameters.bayesQR <- function(model,
                                      centrality = "median",

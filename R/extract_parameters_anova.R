@@ -1,20 +1,32 @@
 #' @keywords internal
-.extract_parameters_anova <- function(model, test = "multivariate") {
+.extract_parameters_anova <- function(model,
+                                      test = "multivariate",
+                                      p_adjust = NULL,
+                                      include_intercept = FALSE,
+                                      verbose = TRUE) {
   # Processing
-  if ("manova" %in% class(model)) {
+  if (inherits(model, "manova")) {
     parameters <- .extract_anova_manova(model)
-  } else if ("maov" %in% class(model)) {
+  } else if (inherits(model, "maov")) {
     parameters <- .extract_anova_maov(model)
-  } else if ("aov" %in% class(model)) {
+  } else if (inherits(model, "aov")) {
     parameters <- .extract_anova_aov(model)
-  } else if ("anova" %in% class(model)) {
+  } else if (inherits(model, "anova")) {
     parameters <- .extract_anova_anova(model)
-  } else if ("Anova.mlm" %in% class(model)) {
+  } else if (inherits(model, "Anova.mlm")) {
     parameters <- .extract_anova_mlm(model, test)
-  } else if ("aovlist" %in% class(model)) {
+  } else if (inherits(model, "aovlist")) {
     parameters <- .extract_anova_aovlist(model)
-  } else if ("anova.rms" %in% class(model)) {
+  } else if (inherits(model, "anova.rms")) {
     parameters <- .extract_anova_aov_rms(model)
+  } else if (inherits(model, "seqanova.svyglm")) {
+    parameters <- .extract_anova_aov_svyglm(model)
+  }
+
+  # remove intercept
+  intercepts <- parameters$Parameter %in% c("Intercept", "(Intercept)")
+  if (any(intercepts) && !include_intercept) {
+    parameters <- parameters[!intercepts, ]
   }
 
   # Rename
@@ -49,6 +61,7 @@
   names(parameters) <- gsub("Resid. Dev", "Deviance_error", names(parameters), fixed = TRUE)
   # error-df
   if (!"df_error" %in% names(parameters)) {
+    names(parameters) <- gsub("DenDF", "df_error", names(parameters), fixed = TRUE)
     names(parameters) <- gsub("den Df", "df_error", names(parameters), fixed = TRUE)
     names(parameters) <- gsub("Res.Df", "df_error", names(parameters), fixed = TRUE)
     names(parameters) <- gsub("Resid. Df", "df_error", names(parameters), fixed = TRUE)
@@ -68,12 +81,21 @@
 
   # Reorder
   row.names(parameters) <- NULL
-  order <- c("Response", "Group", "Parameter", "Coefficient", "SE", "Pillai", "AIC", "BIC", "Log_Likelihood", "Chi2", "Chi2_df", "RSS", "Sum_Squares", "Sum_Squares_Partial", "Sum_Squares_Error", "df", "Deviance", "Statistic", "df_num", "df_error", "Deviance_error", "Mean_Square", "F", "Rao", "p")
-  parameters <- parameters[order[order %in% names(parameters)]]
+  col_order <- c(
+    "Response", "Group", "Parameter", "Coefficient", "DEff", "SE", "Pillai", "AIC",
+    "BIC", "Log_Likelihood", "Chi2", "Chi2_df", "RSS", "Sum_Squares",
+    "Sum_Squares_Partial", "Sum_Squares_Error", "df", "Deviance", "Statistic",
+    "df_num", "df_error", "Deviance_error", "Mean_Square", "F", "Rao", "p"
+  )
+  parameters <- parameters[col_order[col_order %in% names(parameters)]]
+
+  # ==== adjust p-values?
+  if (!is.null(p_adjust)) {
+    parameters <- .p_adjust(parameters, p_adjust, model, verbose)
+  }
 
   insight::text_remove_backticks(parameters, verbose = FALSE)
 }
-
 
 
 # helpers -----
@@ -93,6 +115,8 @@
 .extract_anova_manova <- function(model) {
   parameters <- as.data.frame(summary(model)$stats)
   parameters$Parameter <- insight::trim_ws(row.names(parameters))
+  parameters$df_num <- parameters[["num Df"]]
+  parameters$df_error <- parameters[["den Df"]]
   parameters[["den Df"]] <- NULL
   parameters[["num Df"]] <- NULL
   parameters
@@ -184,8 +208,12 @@
   if (!is.null(m_attr$value) && isTRUE(startsWith(m_attr$heading[[1]], "Linear hypothesis"))) {
     # Drop unrestricted model (not interesting in linear hypothesis tests)
     # Use formula to subset if available (e.g. with car::linearHypothesis)
-    if (length(grep("Model", m_attr$heading)) != 0) {
-      idx <- sub(".*: ", "", strsplit(m_attr$heading[grep("Model", m_attr$heading, fixed = TRUE)], "\n")[[1]])
+    if (any(grepl("Model", m_attr$heading, fixed = TRUE))) {
+      idx <- sub(".*: ", "", strsplit(
+        grep("Model", m_attr$heading, fixed = TRUE, value = TRUE),
+        "\n",
+        fixed = TRUE
+      )[[1]])
       idx <- idx != "restricted model"
       parameters <- parameters[idx, , drop = FALSE]
     }
@@ -220,16 +248,16 @@
       }
       eigs <- Re(eigen(qr.coef(qr_value, model$SSP[[i]]), symmetric = FALSE)$values)
       test <- switch(model$test,
-        "Pillai" = .pillai_test(eigs, model$df[i], model$error.df),
-        "Wilks" = .wilks_test(eigs, model$df[i], model$error.df),
-        "Hotelling-Lawley" = .hl_test(eigs, model$df[i], model$error.df),
-        "Roy" = .roy_test(eigs, model$df[i], model$error.df)
+        Pillai = .pillai_test(eigs, model$df[i], model$error.df),
+        Wilks = .wilks_test(eigs, model$df[i], model$error.df),
+        `Hotelling-Lawley` = .hl_test(eigs, model$df[i], model$error.df),
+        Roy = .roy_test(eigs, model$df[i], model$error.df)
       )
       data.frame(
         Parameter = model$terms[i],
         df = model$df[i],
         Statistic = test[1],
-        `F` = test[2],
+        `F` = test[2], # nolint
         df_num = test[3],
         df_error = test[4],
         p = stats::pf(test[2], test[3], test[4], lower.tail = FALSE),
@@ -243,6 +271,21 @@
 }
 
 
+# Anova.seqanova.svyglm -------------
+.extract_anova_aov_svyglm <- function(model) {
+  if (identical(attributes(model)$method, "Wald")) {
+    params <- lapply(model, function(x) {
+      data.frame(F = as.vector(x$Ftest), df = x$df, df_error = x$ddf, p = as.vector(x$p))
+    })
+  } else {
+    params <- lapply(model, function(x) {
+      data.frame(Chi2 = x$chisq, DEff = x$lambda, df = x$df, df_error = x$ddf, p = as.vector(x$p))
+    })
+  }
+
+  params <- do.call(rbind, params)
+  cbind(data.frame(Parameter = sapply(model, "[[", "test.terms"), params))
+}
 
 
 # test helper -------------
@@ -299,13 +342,12 @@
 }
 
 
-
 # parameter-power ----------------
 
 
 .power_for_aov <- function(model, params) {
   if (requireNamespace("effectsize", quietly = TRUE)) {
-    power <- tryCatch(
+    power_aov <- tryCatch(
       {
         cohens_f2 <- effectsize::cohens_f_squared(model, partial = TRUE, verbose = FALSE)
 
@@ -323,8 +365,8 @@
     )
   }
 
-  if (!is.null(power)) {
-    params <- merge(params, cohens_f2[c("Parameter", "Power")], sort = FALSE, all = TRUE)
+  if (!is.null(power_aov)) {
+    params <- merge(params, power_aov[c("Parameter", "Power")], sort = FALSE, all = TRUE)
   }
 
   params

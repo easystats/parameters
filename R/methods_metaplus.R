@@ -4,7 +4,6 @@
 ###### .metaplus -------------------
 
 
-#' @rdname model_parameters.averaging
 #' @export
 model_parameters.metaplus <- function(model,
                                       ci = 0.95,
@@ -13,15 +12,17 @@ model_parameters.metaplus <- function(model,
                                       standardize = NULL,
                                       exponentiate = FALSE,
                                       include_studies = TRUE,
+                                      keep = NULL,
+                                      drop = NULL,
                                       verbose = TRUE,
                                       ...) {
   if (!missing(ci)) {
     if (isTRUE(verbose)) {
-      message(insight::format_message(
+      insight::format_alert(
         "'metaplus' models do not support other levels for confidence intervals than 0.95. Argument 'ci' is ignored."
-      ))
+      )
     }
-    ci <- .95
+    ci <- 0.95
   }
 
   meta_analysis_overall <- suppressWarnings(.model_parameters_generic(
@@ -32,6 +33,8 @@ model_parameters.metaplus <- function(model,
     merge_by = "Parameter",
     standardize = standardize,
     exponentiate = exponentiate,
+    keep_parameters = keep,
+    drop_parameters = drop,
     ...
   ))
 
@@ -107,10 +110,10 @@ standard_error.metaplus <- function(model, ...) {
 
   out <- .data_frame(
     Parameter = .remove_backticks_from_string(rownames(model$results)),
-    SE = cis / (2 * stats::qnorm(.975))
+    SE = cis / (2 * stats::qnorm(0.975))
   )
 
-  out$Parameter[grepl("muhat", out$Parameter)] <- "(Intercept)"
+  out$Parameter[grepl("muhat", out$Parameter, fixed = TRUE)] <- "(Intercept)"
   out
 }
 
@@ -121,7 +124,7 @@ p_value.metaplus <- function(model, ...) {
     Parameter = .remove_backticks_from_string(rownames(model$results)),
     p = as.vector(model$results[, "pvalue"])
   )
-  out$Parameter[grepl("muhat", out$Parameter)] <- "(Intercept)"
+  out$Parameter[grepl("muhat", out$Parameter, fixed = TRUE)] <- "(Intercept)"
   out
 }
 
@@ -134,17 +137,14 @@ ci.metaplus <- function(x, ...) {
     CI_high = as.vector(x$results[, "95% ci.ub"])
   )
 
-  out$Parameter[grepl("muhat", out$Parameter)] <- "(Intercept)"
+  out$Parameter[grepl("muhat", out$Parameter, fixed = TRUE)] <- "(Intercept)"
   out
 }
-
-
 
 
 ###### .meta_random -------------------
 
 
-#' @rdname model_parameters.averaging
 #' @export
 model_parameters.meta_random <- function(model,
                                          ci = 0.95,
@@ -254,7 +254,7 @@ standard_error.meta_random <- function(model, ...) {
     SE = params$sd,
     stringsAsFactors = FALSE
   )
-  out$Parameter[grepl("d", out$Parameter)] <- "(Intercept)"
+  out$Parameter[grepl("d", out$Parameter, fixed = TRUE)] <- "(Intercept)"
   out
 }
 
@@ -277,16 +277,13 @@ ci.meta_random <- function(x, method = "eti", ...) {
     stringsAsFactors = FALSE
   )
 
-  out$Parameter[grepl("d", out$Parameter)] <- "(Intercept)"
+  out$Parameter[grepl("d", out$Parameter, fixed = TRUE)] <- "(Intercept)"
   out
 }
 
 
-
-
 ###### .meta_fixed -------------------
 
-#' @rdname model_parameters.averaging
 #' @export
 model_parameters.meta_fixed <- model_parameters.meta_random
 
@@ -299,12 +296,9 @@ standard_error.meta_fixed <- standard_error.meta_random
 ci.meta_fixed <- ci.meta_random
 
 
-
-
 ###### .meta_bma -------------------
 
 
-#' @rdname model_parameters.averaging
 #' @export
 model_parameters.meta_bma <- function(model,
                                       ci = 0.95,
@@ -315,7 +309,7 @@ model_parameters.meta_bma <- function(model,
                                       ...) {
   # process arguments
   params <- as.data.frame(model$estimates)
-  ci_method <- match.arg(ci_method, choices = c("hdi", "eti", "quantile"))
+  ci_method <- insight::validate_argument(ci_method, c("hdi", "eti", "quantile"))
 
   # parameters of studies included
   study_params <- model$meta$fixed$data
@@ -400,8 +394,6 @@ standard_error.meta_bma <- standard_error.meta_random
 ci.meta_bma <- ci.meta_random
 
 
-
-
 # helper ------
 
 
@@ -413,11 +405,10 @@ ci.meta_bma <- ci.meta_random
 
 .metabma_ci_columns <- function(ci_method, ci) {
   switch(toupper(ci_method),
-    "HDI" = sprintf(c("hpd%i_lower", "hpd%i_upper"), 100 * ci),
+    HDI = sprintf(c("hpd%i_lower", "hpd%i_upper"), 100 * ci),
     c(sprintf("%g%%", (100 * (1 - ci)) / 2), sprintf("%g%%", 100 - (100 * (1 - ci)) / 2))
   )
 }
-
 
 
 # format_parameters -----------------------------------

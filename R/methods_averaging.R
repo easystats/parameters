@@ -2,47 +2,19 @@
 
 #################### .averaging
 
-
-#' Parameters from special models
-#'
-#' Parameters from special regression models not listed under one of the previous categories yet.
-#'
-#' @param component Model component for which parameters should be shown. May be
-#'   one of `"conditional"`, `"precision"` (**betareg**),
-#'   `"scale"` (**ordinal**), `"extra"` (**glmx**),
-#'   `"marginal"` (**mfx**), `"conditional"` or `"full"` (for
-#'   `MuMIn::model.avg()`) or `"all"`.
-#' @param include_studies Logical, if `TRUE` (default), includes parameters
-#'   for all studies. Else, only parameters for overall-effects are shown.
-#' @inheritParams model_parameters.default
-#' @inheritParams model_parameters.stanreg
-#' @inheritParams simulate_model
-#'
-#' @seealso [insight::standardize_names()] to rename
-#'   columns into a consistent, standardized naming scheme.
-#'
-#' @examples
-#' library(parameters)
-#' if (require("brglm2", quietly = TRUE)) {
-#'   data("stemcell")
-#'   model <- bracl(
-#'     research ~ as.numeric(religion) + gender,
-#'     weights = frequency,
-#'     data = stemcell,
-#'     type = "ML"
-#'   )
-#'   model_parameters(model)
-#' }
-#' @return A data frame of indices related to the model's parameters.
 #' @export
 model_parameters.averaging <- function(model,
                                        ci = 0.95,
-                                       component = c("conditional", "full"),
+                                       component = "conditional",
                                        exponentiate = FALSE,
                                        p_adjust = NULL,
+                                       include_info = getOption("parameters_info", FALSE),
+                                       keep = NULL,
+                                       drop = NULL,
                                        verbose = TRUE,
                                        ...) {
-  component <- match.arg(component)
+  component <- insight::validate_argument(component, c("conditional", "full"))
+
   out <- .model_parameters_generic(
     model = model,
     ci = ci,
@@ -50,6 +22,9 @@ model_parameters.averaging <- function(model,
     exponentiate = exponentiate,
     component = component,
     p_adjust = p_adjust,
+    keep_parameters = keep,
+    drop_parameters = drop,
+    include_info = include_info,
     ...
   )
 
@@ -60,7 +35,7 @@ model_parameters.averaging <- function(model,
 
 #' @export
 standard_error.averaging <- function(model, component = "conditional", ...) {
-  component <- match.arg(component, choices = c("conditional", "full"))
+  component <- insight::validate_argument(component, c("conditional", "full"))
   params <- insight::get_parameters(model, component = component)
   if (component == "full") {
     s <- summary(model)$coefmat.full
@@ -74,10 +49,9 @@ standard_error.averaging <- function(model, component = "conditional", ...) {
 }
 
 
-#' @rdname p_value.DirichletRegModel
 #' @export
-p_value.averaging <- function(model, component = c("conditional", "full"), ...) {
-  component <- match.arg(component)
+p_value.averaging <- function(model, component = "conditional", ...) {
+  component <- insight::validate_argument(component, c("conditional", "full"))
   params <- insight::get_parameters(model, component = component)
   if (component == "full") {
     s <- summary(model)$coefmat.full
@@ -85,15 +59,33 @@ p_value.averaging <- function(model, component = c("conditional", "full"), ...) 
     s <- summary(model)$coefmat.subset
   }
 
+  # to data frame
+  s <- as.data.frame(s)
+
+  # do we have a p-value column based on t?
+  pvcn <- which(colnames(s) == "Pr(>|t|)")
+  # if not, do we have a p-value column based on z?
+  if (length(pvcn) == 0) {
+    pvcn <- which(colnames(s) == "Pr(>|z|)")
+  }
+  # if not, default to ncol
+  if (length(pvcn) == 0) {
+    if (ncol(s) > 4) {
+      pvcn <- 5
+    } else {
+      pvcn <- 4
+    }
+  }
+
   .data_frame(
     Parameter = .remove_backticks_from_string(params$Parameter),
-    p = as.vector(s[, 5])
+    p = as.vector(s[, pvcn])
   )
 }
 
 
 #' @export
-ci.averaging <- function(x, ci = 0.95, component = c("conditional", "full"), ...) {
-  component <- match.arg(component)
+ci.averaging <- function(x, ci = 0.95, component = "conditional", ...) {
+  component <- insight::validate_argument(component, c("conditional", "full"))
   .ci_generic(model = x, ci = ci, dof = Inf, component = component)
 }

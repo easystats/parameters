@@ -8,7 +8,9 @@
 #' @param fun What function to use, `mean` by default.
 #' @param ... Other arguments to be passed to or from other functions.
 #'
-#' @return A dataframe containing the cluster centers. Attributes include performance statistics and distance between each observation and its respective cluster centre.
+#' @return A dataframe containing the cluster centers. Attributes include
+#'   performance statistics and distance between each observation and its
+#'   respective cluster centre.
 #'
 #'
 #' @examples
@@ -35,7 +37,7 @@ cluster_centers <- function(data, clusters, fun = mean, ...) {
   attr(params, "Sum_Squares_Total") <- ss$TSS
   attr(params, "Sum_Squares_Between") <- ss$BSS
   attr(params, "variance") <- ss$BSS / ss$TSS
-  attr(params, "scale") <- sapply(data, stats::sd)
+  attr(params, "scale") <- vapply(data, stats::sd, numeric(1))
   attr(params, "distance") <- .cluster_centers_distance(data, clusters, centers, attributes(params)$scale)
 
   params
@@ -75,7 +77,7 @@ cluster_centers <- function(data, clusters, fun = mean, ...) {
 
 #' @keywords internal
 .cluster_centers_distance <- function(data, clusters, centers, scale) {
-  dis <- c()
+  dis <- NULL
   for (c in unique(clusters)) {
     center <- centers[centers$Cluster == c, ]
     center$Cluster <- NULL # Remove column
@@ -100,7 +102,7 @@ cluster_centers <- function(data, clusters, fun = mean, ...) {
   TSS <- sum(scale(data, scale = FALSE)^2)
   # Within clusters sum of squares (WCSS)
   WSS <- sapply(split(data, clusters), function(x) sum(scale(x, scale = FALSE)^2))
-  # Between clsuters sum of squares
+  # Between clusters sum of squares
   BSS <- TSS - sum(WSS)
 
   # Compute BSS directly (without TSS to double check)

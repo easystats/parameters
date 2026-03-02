@@ -8,7 +8,7 @@ pool_parameters(
   x,
   exponentiate = FALSE,
   effects = "fixed",
-  component = "conditional",
+  component = "all",
   verbose = TRUE,
   ...
 )
@@ -22,29 +22,46 @@ pool_parameters(
 coefficients (and related confidence intervals). This is typical for
 logistic regression, or more generally speaking, for models with log or
 logit links. It is also recommended to use \code{exponentiate = TRUE} for models
-with log-transformed response values. \strong{Note:} Delta-method standard
-errors are also computed (by multiplying the standard errors by the
-transformed coefficients). This is to mimic behaviour of other software
-packages, such as Stata, but these standard errors poorly estimate
-uncertainty for the transformed coefficient. The transformed confidence
-interval more clearly captures this uncertainty. For \code{compare_parameters()},
-\code{exponentiate = "nongaussian"} will only exponentiate coefficients from
-non-Gaussian families.}
+with log-transformed response values. For models with a log-transformed
+response variable, when \code{exponentiate = TRUE}, a one-unit increase in the
+predictor is associated with multiplying the outcome by that predictor's
+coefficient. \strong{Note:} Delta-method standard errors are also computed (by
+multiplying the standard errors by the transformed coefficients). This is
+to mimic behaviour of other software packages, such as Stata, but these
+standard errors poorly estimate uncertainty for the transformed
+coefficient. The transformed confidence interval more clearly captures this
+uncertainty. For \code{compare_parameters()}, \code{exponentiate = "nongaussian"}
+will only exponentiate coefficients from non-Gaussian families.}
 
-\item{effects}{Should parameters for fixed effects (\code{"fixed"}), random
-effects (\code{"random"}), or both (\code{"all"}) be returned? Only applies
-to mixed models. May be abbreviated. If the calculation of random effects
+\item{effects}{Should parameters for fixed effects (\code{"fixed"}), random effects
+(\code{"random"}), or both fixed and random effects (\code{"all"}) be returned? By
+default, the variance components for random effects are returned. If
+group-level effects are requested, \code{"grouplevel"} returns the group-level
+random effects (BLUPs), while \code{"random_total"} return the overall (sum of
+fixed and random) effects (similar to what \code{coef()} returns). Using
+\code{"grouplevel"} is equivalent to setting \code{group_level = TRUE}. The \code{effects}
+argument only applies to mixed models. If the calculation of random effects
 parameters takes too long, you may use \code{effects = "fixed"}.}
 
-\item{component}{Should all parameters, parameters for the conditional model,
-for the zero-inflation part of the model, or the dispersion model be returned?
-Applies to models with zero-inflation and/or dispersion component. \code{component}
-may be one of \code{"conditional"}, \code{"zi"}, \code{"zero-inflated"}, \code{"dispersion"} or
-\code{"all"} (default). May be abbreviated.}
+\item{component}{Which type of parameters to return, such as parameters for the
+conditional model, the zero-inflation part of the model, the dispersion
+term, or other auxiliary parameters be returned? Applies to models with
+zero-inflation and/or dispersion formula, or if parameters such as \code{sigma}
+should be included. May be abbreviated. Note that the \emph{conditional}
+component is also called \emph{count} or \emph{mean} component, depending on the
+model. There are three convenient shortcuts: \code{component = "all"} returns
+all possible parameters. If \code{component = "location"}, location parameters
+such as \code{conditional}, \code{zero_inflated}, or \code{smooth_terms}, are returned
+(everything that are fixed or random effects - depending on the \code{effects}
+argument - but no auxiliary parameters). For \code{component = "distributional"}
+(or \code{"auxiliary"}), components like \code{sigma}, \code{dispersion}, or \code{beta}
+(and other auxiliary parameters) are returned.}
 
 \item{verbose}{Toggle warnings and messages.}
 
-\item{...}{Currently not used.}
+\item{...}{Arguments passed down to \code{model_parameters()}, if \code{x} is a list
+of model-objects. Can be used, for instance, to specify arguments like
+\code{ci} or \code{ci_method} etc.}
 }
 \value{
 A data frame of indices related to the model's parameters.
@@ -62,31 +79,43 @@ small samples (\emph{Barnard and Rubin, 1999}).
 }
 \note{
 Models with multiple components, (for instance, models with zero-inflation,
-where predictors appear in the count and zero-inflation part) may fail in
-case of identical names for coefficients in the different model components,
-since the coefficient table is grouped by coefficient names for pooling. In
-such cases, coefficients of count and zero-inflation model parts would be
-combined. Therefore, the \code{component} argument defaults to
-\code{"conditional"} to avoid this.
+where predictors appear in the count and zero-inflation part, or models with
+dispersion component) may fail in rare situations. In this case, compute
+the pooled parameters for components separately, using the \code{component}
+argument.
 
 Some model objects do not return standard errors (e.g. objects of class
 \code{htest}). For these models, no pooled confidence intervals nor p-values
 are returned.
 }
 \examples{
+\dontshow{if (require("mice") && require("datawizard")) withAutoprint(\{ # examplesIf}
 # example for multiple imputed datasets
-if (require("mice")) {
-  data("nhanes2")
-  imp <- mice(nhanes2, printFlag = FALSE)
-  models <- lapply(1:5, function(i) {
-    lm(bmi ~ age + hyp + chl, data = complete(imp, action = i))
-  })
-  pool_parameters(models)
+data("nhanes2", package = "mice")
+imp <- mice::mice(nhanes2, printFlag = FALSE)
+models <- lapply(1:5, function(i) {
+  lm(bmi ~ age + hyp + chl, data = mice::complete(imp, action = i))
+})
+pool_parameters(models)
 
-  # should be identical to:
-  m <- with(data = imp, exp = lm(bmi ~ age + hyp + chl))
-  summary(pool(m))
-}
+# should be identical to:
+m <- with(data = imp, exp = lm(bmi ~ age + hyp + chl))
+summary(mice::pool(m))
+
+# For glm, mice used residual df, while `pool_parameters()` uses `Inf`
+nhanes2$hyp <- datawizard::slide(as.numeric(nhanes2$hyp))
+imp <- mice::mice(nhanes2, printFlag = FALSE)
+models <- lapply(1:5, function(i) {
+  glm(hyp ~ age + chl, family = binomial, data = mice::complete(imp, action = i))
+})
+m <- with(data = imp, exp = glm(hyp ~ age + chl, family = binomial))
+# residual df
+summary(mice::pool(m))$df
+# df = Inf
+pool_parameters(models)$df_error
+# use residual df instead
+pool_parameters(models, ci_method = "residual")$df_error
+\dontshow{\}) # examplesIf}
 }
 \references{
 Barnard, J. and Rubin, D.B. (1999). Small sample degrees of freedom with

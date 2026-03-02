@@ -13,11 +13,21 @@ parameters(model, ...)
 \item{model}{Statistical Model.}
 
 \item{...}{Arguments passed to or from other methods. Non-documented
-arguments are \code{digits}, \code{p_digits}, \code{ci_digits} and
-\code{footer_digits} to set the number of digits for the output.
-\code{group} can also be passed to the \code{print()} method. See details
-in \code{\link[=print.parameters_model]{print.parameters_model()}} and 'Examples' in
-\code{\link[=model_parameters.default]{model_parameters.default()}}.}
+arguments are
+\itemize{
+\item \code{digits}, \code{p_digits}, \code{ci_digits} and \code{footer_digits} to set the number of
+digits for the output. \code{groups} can be used to group coefficients. These
+arguments will be passed to the print-method, or can directly be used in
+\code{print()}, see documentation in \code{\link[=print.parameters_model]{print.parameters_model()}}.
+\item If \code{s_value = TRUE}, the p-value will be replaced by the S-value in the
+output (cf. \emph{Rafi and Greenland 2020}).
+\item \code{pd} adds an additional column with the \emph{probability of direction} (see
+\code{\link[bayestestR:p_direction]{bayestestR::p_direction()}} for details). Furthermore, see 'Examples' in
+\code{\link[=model_parameters.default]{model_parameters.default()}}.
+\item For developers, whose interest mainly is to get a "tidy" data frame of
+model summaries, it is recommended to set \code{pretty_names = FALSE} to speed
+up computation of the summary table.
+}}
 }
 \value{
 A data frame of indices related to the model's parameters.
@@ -30,16 +40,17 @@ the model-specific documentation:
 \item \link[=model_parameters.default]{Default method}: \code{lm}, \code{glm}, \strong{stats}, \strong{censReg},
 \strong{MASS}, \strong{survey}, ...
 \item \link[=model_parameters.cgam]{Additive models}: \strong{bamlss}, \strong{gamlss}, \strong{mgcv},
-\strong{scam}, \strong{VGAM}, \code{Gam}, \code{gamm}, ...
-\item \link[=model_parameters.aov]{ANOVA}: \strong{afex}, \code{aov}, \code{anova}, ...
-\item \link[=model_parameters.stanreg]{Bayesian}: \strong{BayesFactor}, \strong{blavaan}, \strong{brms},
+\strong{scam}, \strong{VGAM}, \code{Gam} (although the output of \code{Gam} is more Anova-alike),
+\code{gamm}, ...
+\item \link[=model_parameters.aov]{ANOVA}: \strong{afex}, \code{aov}, \code{anova}, \code{Gam}, ...
+\item \link[=model_parameters.brmsfit]{Bayesian}: \strong{BayesFactor}, \strong{blavaan}, \strong{brms},
 \strong{MCMCglmm}, \strong{posterior}, \strong{rstanarm}, \code{bayesQR}, \code{bcplm}, \code{BGGM}, \code{blmrm},
 \code{blrm}, \code{mcmc.list}, \code{MCMCglmm}, ...
-\item \link[=model_parameters.kmeans]{Clustering}: \strong{hclust}, \strong{kmeans}, \strong{mclust}, \strong{pam}, ...
+\item \link[=model_parameters.hclust]{Clustering}: \strong{hclust}, \strong{kmeans}, \strong{mclust}, \strong{pam}, ...
 \item \link[=model_parameters.htest]{Correlations, t-tests, etc.}: \strong{lmtest}, \code{htest},
 \code{pairwise.htest}, ...
 \item \link[=model_parameters.rma]{Meta-Analysis}: \strong{metaBMA}, \strong{metafor}, \strong{metaplus}, ...
-\item \link[=model_parameters.merMod]{Mixed models}: \strong{cplm}, \strong{glmmTMB}, \strong{lme4},
+\item \link[=model_parameters.glmmTMB]{Mixed models}: \strong{cplm}, \strong{glmmTMB}, \strong{lme4},
 \strong{lmerTest}, \strong{nlme}, \strong{ordinal}, \strong{robustlmm}, \strong{spaMM}, \code{mixed}, \code{MixMod}, ...
 \item \link[=model_parameters.mlm]{Multinomial, ordinal and cumulative link}: \strong{brglm2},
 \strong{DirichletReg}, \strong{nnet}, \strong{ordinal}, \code{mlm}, ...
@@ -48,13 +59,18 @@ the model-specific documentation:
 \strong{psych}, \code{sem}, ...
 \item \link[=model_parameters.zcpglm]{Zero-inflated and hurdle}: \strong{cplm}, \strong{mhurdle},
 \strong{pscl}, ...
-\item \link[=model_parameters.averaging]{Other models}: \strong{aod}, \strong{bbmle}, \strong{betareg},
-\strong{emmeans}, \strong{epiR}, \strong{ggeffects}, \strong{glmx}, \strong{ivfixed}, \strong{ivprobit},
-\strong{JRM}, \strong{lmodel2}, \strong{logitsf}, \strong{marginaleffects}, \strong{margins}, \strong{maxLik},
+\item \link[=model_parameters.glimML]{Other models}: \strong{aod}, \strong{bbmle}, \strong{betareg},
+\strong{emmeans}, \strong{epiR}, \strong{glmx}, \strong{ivfixed}, \strong{ivprobit}, \strong{JRM},
+\strong{lmodel2}, \strong{logitsf}, \strong{marginaleffects}, \strong{margins}, \strong{maxLik},
 \strong{mediation}, \strong{mfx}, \strong{multcomp}, \strong{mvord}, \strong{plm}, \strong{PMCMRplus},
 \strong{quantreg}, \strong{selection}, \strong{systemfit}, \strong{tidymodels}, \strong{varEST},
-\strong{WRS2}, \code{bfsl}, \code{deltaMethod}, \code{fitdistr}, \code{mjoint}, \code{mle}, \code{model.avg}, ...
+\strong{WRS2}, \code{bfsl}, \code{deltaMethod}, \code{fitdistr}, \code{mjoint}, \code{mle}, \code{model.avg},
+...
 }
+}
+\details{
+A full overview can be found here:
+https://easystats.github.io/parameters/reference/
 }
 \note{
 The \code{\link[=print.parameters_model]{print()}} method has several
@@ -66,7 +82,7 @@ method for use inside rmarkdown files,
 \code{\link[=print_md.parameters_model]{print_md()}}. \cr \cr \strong{For developers}, if
 speed performance is an issue, you can use the (undocumented) \code{pretty_names}
 argument, e.g. \code{model_parameters(..., pretty_names = FALSE)}. This will
-skip the formatting of the coefficient names and make \code{model_parameters()}
+skip the formatting of the coefficient names and makes \code{model_parameters()}
 faster.
 }
 \section{Standardization of model coefficients}{
@@ -93,7 +109,7 @@ models). This method is particularly recommended for complex models that
 include interactions or transformations (e.g., polynomial or spline terms).
 The \code{robust} (default to \code{FALSE}) argument enables a robust standardization
 of data, i.e., based on the \code{median} and \code{MAD} instead of the \code{mean} and
-\code{SD}. \strong{See \code{\link[=standardize]{standardize()}} for more details.}
+\code{SD}. \strong{See \code{\link[datawizard:standardize]{datawizard::standardize()}} for more details.}
 \strong{Note} that \code{standardize_parameters(method = "refit")} may not return
 the same results as fitting a model on data that has been standardized with
 \code{standardize()}; \code{standardize_parameters()} used the data used by the model
@@ -126,7 +142,7 @@ As a results, the coefficients for effects of factors are similar to a Glass'
 delta.
 \item \strong{pseudo} (\emph{for 2-level (G)LMMs only}): In this (post-hoc) method, the
 response and the predictor are standardized based on the level of prediction
-(levels are detected with \code{\link[performance:check_heterogeneity_bias]{performance::check_heterogeneity_bias()}}): Predictors
+(levels are detected with \code{\link[performance:check_group_variation]{performance::check_group_variation()}}): Predictors
 are standardized based on their SD at level of prediction (see also
 \code{\link[datawizard:demean]{datawizard::demean()}}); The outcome (in linear LMMs) is standardized based
 on a fitted random-intercept-model, where \code{sqrt(random-intercept-variance)}
@@ -315,11 +331,67 @@ p-values are based on the probability of direction (\code{\link[bayestestR:p_dir
 which is converted into a p-value using \code{\link[bayestestR:pd_to_p]{bayestestR::pd_to_p()}}.
 }
 
+\section{Statistical inference - how to quantify evidence}{
+
+There is no standardized approach to drawing conclusions based on the
+available data and statistical models. A frequently chosen but also much
+criticized approach is to evaluate results based on their statistical
+significance (\emph{Amrhein et al. 2017}).
+
+A more sophisticated way would be to test whether estimated effects exceed
+the "smallest effect size of interest", to avoid even the smallest effects
+being considered relevant simply because they are statistically significant,
+but clinically or practically irrelevant (\emph{Lakens et al. 2018, Lakens 2024}).
+
+A rather unconventional approach, which is nevertheless advocated by various
+authors, is to interpret results from classical regression models either in
+terms of probabilities, similar to the usual approach in Bayesian statistics
+(\emph{Schweder 2018; Schweder and Hjort 2003; Vos 2022}) or in terms of relative
+measure of "evidence" or "compatibility" with the data (\emph{Greenland et al. 2022;
+Rafi and Greenland 2020}), which nevertheless comes close to a probabilistic
+interpretation.
+
+A more detailed discussion of this topic is found in the documentation of
+\code{\link[=p_function]{p_function()}}.
+
+The \strong{parameters} package provides several options or functions to aid
+statistical inference. These are, for example:
+\itemize{
+\item \code{\link[=equivalence_test.lm]{equivalence_test()}}, to compute the (conditional)
+equivalence test for frequentist models
+\item \code{\link[=p_significance.lm]{p_significance()}}, to compute the probability of
+\emph{practical significance}, which can be conceptualized as a unidirectional
+equivalence test
+\item \code{\link[=p_function]{p_function()}}, or \emph{consonance function}, to compute p-values and
+compatibility (confidence) intervals for statistical models
+\item the \code{pd} argument (setting \code{pd = TRUE}) in \code{model_parameters()} includes
+a column with the \emph{probability of direction}, i.e. the probability that a
+parameter is strictly positive or negative. See \code{\link[bayestestR:p_direction]{bayestestR::p_direction()}}
+for details. If plotting is desired, the \code{\link[=p_direction.lm]{p_direction()}}
+function can be used, together with \code{plot()}.
+\item the \code{s_value} argument (setting \code{s_value = TRUE}) in \code{model_parameters()}
+replaces the p-values with their related \emph{S}-values (\emph{Rafi and Greenland 2020})
+\item finally, it is possible to generate distributions of model coefficients by
+generating bootstrap-samples (setting \code{bootstrap = TRUE}) or simulating
+draws from model coefficients using \code{\link[=simulate_model]{simulate_model()}}. These samples
+can then be treated as "posterior samples" and used in many functions from
+the \strong{bayestestR} package.
+}
+
+Most of the above shown options or functions derive from methods originally
+implemented for Bayesian models (\emph{Makowski et al. 2019}). However, assuming
+that model assumptions are met (which means, the model fits well to the data,
+the correct model is chosen that reflects the data generating process
+(distributional model family) etc.), it seems appropriate to interpret
+results from classical frequentist models in a "Bayesian way" (more details:
+documentation in \code{\link[=p_function]{p_function()}}).
+}
+
 \section{Interpretation of Interaction Terms}{
 
 Note that the \emph{interpretation} of interaction terms depends on many
 characteristics of the model. The number of parameters, and overall
-performance of the model, can differ \emph{or not} between \code{a * b}
+performance of the model, can differ \emph{or not} between \code{a * b},
 \code{a : b}, and \code{a / b}, suggesting that sometimes interaction terms
 give different parameterizations of the same model, but other times it gives
 completely different models (depending on \code{a} or \code{b} being factors
@@ -340,12 +412,12 @@ warnings for the different functions in the \strong{parameters} package. However
 some messages providing additional information can be displayed or suppressed
 using \code{options()}:
 \itemize{
-\item \code{parameters_summary}: \code{options(parameters_summary = TRUE)} will override the
-\code{summary} argument in \code{model_parameters()} and always show the model summary
-for non-mixed models.
-\item \code{parameters_mixed_summary}: \code{options(parameters_mixed_summary = TRUE)} will
-override the \code{summary} argument in \code{model_parameters()} for mixed models, and
-will then always show the model summary.
+\item \code{parameters_info}: \code{options(parameters_info = TRUE)} will override the
+\code{include_info} argument in \code{model_parameters()} and always show the model
+summary for non-mixed models.
+\item \code{parameters_mixed_info}: \code{options(parameters_mixed_info = TRUE)} will
+override the \code{include_info} argument in \code{model_parameters()} for mixed
+models, and will then always show the model summary.
 \item \code{parameters_cimethod}: \code{options(parameters_cimethod = TRUE)} will show the
 additional information about the approximation method used to calculate
 confidence intervals and p-values. Set to \code{FALSE} to hide this message when
@@ -368,18 +440,57 @@ will replace the interaction mark (by default, \code{*}) with the related charac
 \item \code{parameters_select}: \verb{options(parameters_select = <value>)} will set the
 default for the \code{select} argument. See argument's documentation for available
 options.
+\item \code{easystats_table_width}: \verb{options(easystats_table_width = <value>)} will
+set the default width for tables in text-format, i.e. for most of the outputs
+printed to console. If not specified, tables will be adjusted to the current
+available width, e.g. of the of the console (or any other source for textual
+output, like markdown files). The argument \code{table_width} can also be used in
+most \code{print()} methods to specify the table width as desired.
+\item \code{insight_use_symbols}: \code{options(insight_use_symbols = TRUE)} will try to
+print unicode-chars for symbols as column names, wherever possible (e.g.,
+\ifelse{html}{\out{&omega;}}{\eqn{\omega}} instead of \code{Omega}).
 }
 }
 
 \references{
 \itemize{
+\item Amrhein, V., Korner-Nievergelt, F., and Roth, T. (2017). The earth is
+flat (p > 0.05): Significance thresholds and the crisis of unreplicable
+research. PeerJ, 5, e3544. \doi{10.7717/peerj.3544}
+\item Greenland S, Rafi Z, Matthews R, Higgs M. To Aid Scientific Inference,
+Emphasize Unconditional Compatibility Descriptions of Statistics. (2022)
+https://arxiv.org/abs/1909.08583v7 (Accessed November 10, 2022)
 \item Hoffman, L. (2015). Longitudinal analysis: Modeling within-person
 fluctuation and change. Routledge.
-\item Neter, J., Wasserman, W., & Kutner, M. H. (1989). Applied linear
+\item Lakens, D. (2024). Improving Your Statistical Inferences (Version v1.5.1).
+Retrieved from https://lakens.github.io/statistical_inferences/.
+\doi{10.5281/ZENODO.6409077}
+\item Lakens, D., Scheel, A. M., and Isager, P. M. (2018). Equivalence Testing
+for Psychological Research: A Tutorial. Advances in Methods and Practices
+in Psychological Science, 1(2), 259–269.
+\item Makowski, D., Ben-Shachar, M. S., Chen, S. H. A., and Lüdecke, D. (2019).
+Indices of Effect Existence and Significance in the Bayesian Framework.
+Frontiers in Psychology, 10, 2767. \doi{10.3389/fpsyg.2019.02767}
+\item Montiel Olea, J. L., and Plagborg-Møller, M. (2019). Simultaneous
+confidence bands: Theory, implementation, and an application to SVARs.
+Journal of Applied Econometrics, 34(1), 1–17. \doi{10.1002/jae.2656}
+\item Neter, J., Wasserman, W., and Kutner, M. H. (1989). Applied linear
 regression models.
+\item Rafi Z, Greenland S. Semantic and cognitive tools to aid statistical
+science: replace confidence and significance by compatibility and surprise.
+BMC Medical Research Methodology (2020) 20:244.
+\item Schweder T. Confidence is epistemic probability for empirical science.
+Journal of Statistical Planning and Inference (2018) 195:116–125.
+\doi{10.1016/j.jspi.2017.09.016}
+\item Schweder T, Hjort NL. Frequentist analogues of priors and posteriors.
+In Stigum, B. (ed.), Econometrics and the Philosophy of Economics: Theory
+Data Confrontation in Economics, pp. 285-217. Princeton University Press,
+Princeton, NJ, 2003
+\item Vos P, Holbert D. Frequentist statistical inference without repeated sampling.
+Synthese 200, 89 (2022). \doi{10.1007/s11229-022-03560-x}
 }
 }
 \seealso{
-\code{\link[insight:standardize_names]{insight::standardize_names()}} to
-rename columns into a consistent, standardized naming scheme.
+\code{\link[insight:standardize_names]{insight::standardize_names()}} to rename columns into a consistent,
+standardized naming scheme.
 }

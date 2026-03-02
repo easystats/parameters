@@ -1,11 +1,5 @@
-
 #' @export
 ci.ivprobit <- ci.default
-
-
-
-#' @export
-degrees_of_freedom.ivprobit <- degrees_of_freedom.ivFixed
 
 
 #' @export
@@ -21,6 +15,5 @@ standard_error.ivprobit <- function(model, ...) {
 p_value.ivprobit <- p_value.default
 
 
-#' @rdname model_parameters.averaging
 #' @export
 model_parameters.ivprobit <- model_parameters.ivFixed

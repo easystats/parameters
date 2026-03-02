@@ -1,9 +1,11 @@
-#' @rdname model_parameters.averaging
 #' @export
 model_parameters.bfsl <- function(model,
                                   ci = 0.95,
                                   ci_method = "residual",
                                   p_adjust = NULL,
+                                  include_info = getOption("parameters_info", FALSE),
+                                  keep = NULL,
+                                  drop = NULL,
                                   verbose = TRUE,
                                   ...) {
   out <- .model_parameters_generic(
@@ -12,6 +14,9 @@ model_parameters.bfsl <- function(model,
     ci_method = ci_method,
     merge_by = "Parameter",
     p_adjust = p_adjust,
+    keep_parameters = keep,
+    drop_parameters = drop,
+    include_info = include_info,
     ...
   )
 
@@ -31,21 +36,4 @@ standard_error.bfsl <- function(model, ...) {
     row.names = NULL
   )
   insight::text_remove_backticks(params, verbose = FALSE)
-}
-
-
-
-#' @export
-degrees_of_freedom.bfsl <- function(model, method = "residual", ...) {
-  if (is.null(method)) {
-    method <- "wald"
-  }
-
-  method <- match.arg(tolower(method), choices = c("analytical", "any", "fit", "wald", "residual", "normal"))
-
-  if (method %in% c("wald", "residual", "fit")) {
-    model$df.residual
-  } else {
-    degrees_of_freedom.default(model, method = method, ...)
-  }
 }

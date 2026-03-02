@@ -43,7 +43,7 @@ model_parameters.cgam <- function(model,
                                   drop = NULL,
                                   verbose = TRUE,
                                   ...) {
-  # sanity check, warn if unsupported argument is used.
+  # validation check, warn if unsupported argument is used.
   dot_args <- .check_dots(
     dots = list(...),
     not_allowed = c("vcov", "vcov_args", "component"),
@@ -60,7 +60,7 @@ model_parameters.cgam <- function(model,
       ...
     )
   } else {
-    args <- list(
+    fun_args <- list(
       model,
       ci = ci,
       ci_method = ci_method,
@@ -74,8 +74,8 @@ model_parameters.cgam <- function(model,
       vcov = NULL,
       vcov_args = NULL
     )
-    args <- c(args, dot_args)
-    params <- do.call(".extract_parameters_generic", args)
+    fun_args <- c(fun_args, dot_args)
+    params <- do.call(".extract_parameters_generic", fun_args)
   }
 
   # fix statistic column
@@ -84,7 +84,7 @@ model_parameters.cgam <- function(model,
   }
 
   # fix estimated df column
-  if (inherits(model, c("gam", "cgam", "scam", "rqss")) && "smooth_terms" %in% params$Component && !("df" %in% names(params))) {
+  if (inherits(model, c("gam", "cgam", "scam", "rqss")) && "smooth_terms" %in% params$Component && !("df" %in% names(params))) { # nolint
     params$df <- params$Coefficient
     params$df[params$Component != "smooth_terms"] <- NA
     params$df_error[params$Component == "smooth_terms"] <- NA
@@ -126,11 +126,12 @@ model_parameters.cgam <- function(model,
 }
 
 
-
-#' @rdname p_value.DirichletRegModel
 #' @export
-p_value.cgam <- function(model, component = c("all", "conditional", "smooth_terms"), ...) {
-  component <- match.arg(component)
+p_value.cgam <- function(model, component = "all", ...) {
+  component <- insight::validate_argument(
+    component,
+    c("all", "conditional", "smooth_terms")
+  )
 
   params <- insight::get_parameters(model, component = "all")
   cs <- summary(model)
@@ -165,39 +166,4 @@ standard_error.cgam <- function(model, ...) {
     SE = se,
     Component = params$Component
   )
-}
-
-
-#' @export
-degrees_of_freedom.cgam <- function(model, method = "wald", ...) {
-  if (is.null(method)) {
-    method <- "wald"
-  }
-  method <- match.arg(tolower(method), choices = c("analytical", "any", "fit", "wald", "residual", "normal"))
-
-  if (method %in% c("wald", "residual", "fit")) {
-    stats::df.residual(model)
-  } else {
-    degrees_of_freedom.default(model, method = method, ...)
-  }
-}
-
-
-#' @export
-degrees_of_freedom.cgamm <- function(model, method = "wald", ...) {
-  if (is.null(method)) {
-    method <- "wald"
-  }
-  method <- match.arg(tolower(method), choices = c("analytical", "any", "fit", "wald", "residual", "normal"))
-
-  if (method %in% c("wald", "residual", "fit")) {
-    dof <- model$resid_df_obs
-    if (is.null(dof)) {
-      dof <- degrees_of_freedom.default(model, method = method, ...)
-    }
-  } else {
-    dof <- degrees_of_freedom.default(model, method = method, ...)
-  }
-
-  dof
 }

@@ -20,25 +20,13 @@ p_value.complmrob <- p_value.default
 ci.complmrob <- ci.default
 
 
-#' @export
-degrees_of_freedom.complmrob <- function(model, method = "wald", ...) {
-  .degrees_of_freedom_no_dfresid_method(model, method)
-}
-
-
-
-
-
 ############# .Gam --------------
 
 
-#' @rdname model_parameters.cgam
 #' @inheritParams model_parameters.aov
 #' @export
 model_parameters.Gam <- function(model,
-                                 omega_squared = NULL,
-                                 eta_squared = NULL,
-                                 epsilon_squared = NULL,
+                                 es_type = NULL,
                                  df_error = NULL,
                                  type = NULL,
                                  table_wide = FALSE,
@@ -46,9 +34,7 @@ model_parameters.Gam <- function(model,
                                  ...) {
   model_parameters(
     summary(model)$parametric.anova,
-    omega_squared = omega_squared,
-    eta_squared = eta_squared,
-    epsilon_squared = epsilon_squared,
+    es_type = es_type,
     df_error = df_error,
     type = type,
     table_wide = table_wide,

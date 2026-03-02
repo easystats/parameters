@@ -2,20 +2,14 @@
 
 # model parameters -----------------
 
-#' @rdname model_parameters.zcpglm
 #' @export
 model_parameters.zeroinfl <- model_parameters.zcpglm
 
-#' @rdname model_parameters.zcpglm
 #' @export
 model_parameters.hurdle <- model_parameters.zcpglm
 
-
-#' @rdname model_parameters.zcpglm
 #' @export
 model_parameters.zerocount <- model_parameters.zcpglm
-
-
 
 
 # ci -----------------
@@ -29,8 +23,14 @@ ci.zeroinfl <- function(x,
                         verbose = TRUE,
                         ...) {
   method <- tolower(method)
-  method <- match.arg(method, choices = c("wald", "normal", "residual", "robust"))
-  component <- match.arg(component, choices = c("all", "conditional", "zi", "zero_inflated"))
+  method <- insight::validate_argument(
+    method,
+    c("wald", "normal", "residual", "robust")
+  )
+  component <- insight::validate_argument(
+    component,
+    c("all", "conditional", "zi", "zero_inflated")
+  )
 
   if (is.null(.check_component(x, component, verbose = verbose))) {
     return(NULL)
@@ -40,19 +40,14 @@ ci.zeroinfl <- function(x,
   .ci_generic(model = x, ci = ci, dof = dof, method = method, component = component, ...)
 }
 
-
 #' @export
 ci.hurdle <- ci.zeroinfl
-
 
 #' @export
 ci.zerocount <- ci.zeroinfl
 
 
-
-
 # standard error -----------------
-
 
 #' @export
 standard_error.zeroinfl <- function(model,
@@ -60,7 +55,10 @@ standard_error.zeroinfl <- function(model,
                                     method = NULL,
                                     verbose = TRUE,
                                     ...) {
-  component <- match.arg(component, choices = c("all", "conditional", "zi", "zero_inflated"))
+  component <- insight::validate_argument(
+    component,
+    c("all", "conditional", "zi", "zero_inflated")
+  )
   if (is.null(.check_component(model, component, verbose = verbose))) {
     return(NULL)
   }
@@ -70,7 +68,7 @@ standard_error.zeroinfl <- function(model,
     return(standard_error.default(model, component = component, ...))
   }
 
-  cs <- datawizard::compact_list(stats::coef(summary(model)))
+  cs <- insight::compact_list(stats::coef(summary(model)))
   x <- lapply(names(cs), function(i) {
     if (i == "count") {
       comp <- "conditional"
@@ -100,28 +98,21 @@ standard_error.zeroinfl <- function(model,
   .filter_component(se, component)
 }
 
-
 #' @export
 standard_error.hurdle <- standard_error.zeroinfl
-
 
 #' @export
 standard_error.zerocount <- standard_error.zeroinfl
 
 
-
-
 # p values -----------------------
 
-
-#' @rdname p_value.zcpglm
 #' @export
-p_value.zeroinfl <- function(model,
-                             component = c("all", "conditional", "zi", "zero_inflated"),
-                             method = NULL,
-                             verbose = TRUE,
-                             ...) {
-  component <- match.arg(component)
+p_value.zeroinfl <- function(model, component = "all", method = NULL, verbose = TRUE, ...) {
+  component <- insight::validate_argument(
+    component,
+    c("all", "conditional", "zi", "zero_inflated")
+  )
   if (is.null(.check_component(model, component, verbose = verbose))) {
     return(NULL)
   }
@@ -131,7 +122,7 @@ p_value.zeroinfl <- function(model,
     return(p_value.default(model, component = component, ...))
   }
 
-  cs <- datawizard::compact_list(stats::coef(summary(model)))
+  cs <- insight::compact_list(stats::coef(summary(model)))
   x <- lapply(names(cs), function(i) {
     if (i == "count") {
       comp <- "conditional"
@@ -160,19 +151,14 @@ p_value.zeroinfl <- function(model,
   .filter_component(p, component)
 }
 
-
 #' @export
 p_value.hurdle <- p_value.zeroinfl
-
 
 #' @export
 p_value.zerocount <- p_value.zeroinfl
 
 
-
-
 # simulate model -----------------
-
 
 #' @export
 simulate_model.zeroinfl <- simulate_model.glmmTMB
@@ -182,8 +168,6 @@ simulate_model.hurdle <- simulate_model.zeroinfl
 
 #' @export
 simulate_model.zerocount <- simulate_model.zeroinfl
-
-
 
 
 # simulate paramaters -----------------
@@ -230,10 +214,8 @@ simulate_parameters.zeroinfl <- function(model,
   out
 }
 
-
 #' @export
 simulate_parameters.hurdle <- simulate_parameters.zeroinfl
-
 
 #' @export
 simulate_parameters.zerocount <- simulate_parameters.zeroinfl

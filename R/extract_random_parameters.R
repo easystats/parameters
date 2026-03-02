@@ -1,4 +1,3 @@
-
 .extract_random_parameters <- function(model, ...) {
   UseMethod(".extract_random_parameters")
 }
@@ -25,7 +24,7 @@
     out$CI_high <- out$Coefficient + fac * out$SE
     ci_cols <- c("CI_low", "CI_high")
   } else {
-    ci_cols <- c()
+    ci_cols <- NULL
     for (i in ci) {
       fac <- stats::qnorm((1 + i) / 2)
       ci_low <- paste0("CI_low_", i)
@@ -53,7 +52,6 @@
 }
 
 
-
 .extract_random_parameters.glmmTMB <- function(model,
                                                ci = 0.95,
                                                effects = "random",
@@ -65,9 +63,12 @@
 
   # filter component
   out <- switch(component,
-    "zi" = ,
-    "zero_inflated" = out[out$Component == "zi", ],
-    "conditional" = out[out$Component == "cond", ],
+    zi = ,
+    zero_inflated = out[out$Component == "zi", ],
+    cond = ,
+    conditional = out[out$Component == "cond", ],
+    disp = ,
+    dispersion = out[out$Component == "disp", ],
     out
   )
 
@@ -80,6 +81,7 @@
   # rename
   out$Component[out$Component == "zi"] <- "zero_inflated"
   out$Component[out$Component == "cond"] <- "conditional"
+  out$Component[out$Component == "disp"] <- "dispersion"
 
   if (length(ci) == 1) {
     fac <- stats::qnorm((1 + ci) / 2)
@@ -87,7 +89,7 @@
     out$CI_high <- out$Coefficient + fac * out$SE
     ci_cols <- c("CI_low", "CI_high")
   } else {
-    ci_cols <- c()
+    ci_cols <- NULL
     for (i in ci) {
       fac <- stats::qnorm((1 + i) / 2)
       ci_low <- paste0("CI_low_", i)
@@ -105,7 +107,10 @@
   out$df_error <- NA
   out$p <- NA
 
-  out <- out[c("Parameter", "Level", "Coefficient", "SE", ci_cols, stat_column, "df_error", "p", "Component", "Effects", "Group")]
+  out <- out[c(
+    "Parameter", "Level", "Coefficient", "SE", ci_cols, stat_column,
+    "df_error", "p", "Component", "Effects", "Group"
+  )]
 
   if (effects == "random") {
     out[c(stat_column, "df_error", "p")] <- NULL
@@ -116,4 +121,58 @@
 
 .extract_random_parameters.MixMod <- function(model, ...) {
   NULL
+}
+
+
+.extract_random_parameters.coxme <- function(model, ci = NULL, effects = "random", ...) {
+  insight::check_if_installed(c("lme4", "coxme"))
+
+  # extract random effects
+  re_grp <- insight::find_random(model, split_nested = TRUE, flatten = TRUE)
+
+  do.call(rbind, lapply(re_grp, function(grp) {
+    # coerce to data frame
+    out <- as.data.frame(lme4::ranef(model)[[grp]], stringsAsFactors = FALSE)
+    colnames(out)[1] <- "(Intercept)"
+
+    # reshape, to have a long format
+    out$.grp <- unique(insight::get_data(model)[[grp]])
+    out <- datawizard::reshape_longer(out, select = -".grp")
+    out$grpvar <- grp
+
+    # rename columns
+    colnames(out) <- c("Level", "Parameter", "Coefficient", "Group")
+    out$SE <- NA
+
+    # re-order columns
+    out <- out[c("Group", "Parameter", "Level", "Coefficient", "SE")]
+    out$Parameter[out$Parameter == "Intercept"] <- "(Intercept)"
+
+    # sort
+    out <- datawizard::data_arrange(out, c("Group", "Parameter", "Level"))
+
+    # coerce to character
+    out$Parameter <- as.character(out$Parameter)
+    out$Level <- as.character(out$Level)
+    out$Group <- as.character(out$Group)
+    out$Effects <- "random"
+
+    out$CI_low <- out$CI_high <- NA
+    ci_cols <- c("CI_low", "CI_high")
+
+    stat_column <- gsub("-statistic", "", insight::find_statistic(model), fixed = TRUE)
+
+    # to match rbind
+    out[[stat_column]] <- NA
+    out$df_error <- NA
+    out$p <- NA
+
+    out <- out[c("Parameter", "Level", "Coefficient", "SE", ci_cols, stat_column, "df_error", "p", "Effects", "Group")]
+
+    if (effects == "random") {
+      out[c(stat_column, "df_error", "p")] <- NULL
+    }
+
+    out
+  }))
 }

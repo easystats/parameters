@@ -1,4 +1,3 @@
-
 .extract_random_variances <- function(model, ...) {
   UseMethod(".extract_random_variances")
 }
@@ -28,10 +27,8 @@
   )
 
   # check for errors
-  if (is.null(out)) {
-    if (isTRUE(verbose)) {
-      insight::format_warning("Something went wrong when calculating random effects parameters. Only showing model's fixed effects now. You may use `effects=\"fixed\"` to speed up the call to `model_parameters()`.")
-    }
+  if (is.null(out) && isTRUE(verbose)) {
+    insight::format_warning("Something went wrong when calculating random effects parameters. Only showing model's fixed effects now. You may use `effects=\"fixed\"` to speed up the call to `model_parameters()`.") # nolint
   }
 
   out
@@ -48,7 +45,10 @@
                                               ci_random = NULL,
                                               verbose = FALSE,
                                               ...) {
-  component <- match.arg(component, choices = c("all", "conditional", "zero_inflated", "zi", "dispersion"))
+  component <- insight::validate_argument(
+    component,
+    c("all", "conditional", "zero_inflated", "zi", "dispersion")
+  )
 
   out <- suppressWarnings(
     .extract_random_variances_helper(
@@ -66,14 +66,14 @@
   # check for errors
   if (is.null(out)) {
     if (isTRUE(verbose)) {
-      insight::format_warning("Something went wrong when calculating random effects parameters. Only showing model's fixed effects now. You may use `effects=\"fixed\"` to speed up the call to `model_parameters()`.")
+      insight::format_warning("Something went wrong when calculating random effects parameters. Only showing model's fixed effects now. You may use `effects=\"fixed\"` to speed up the call to `model_parameters()`.") # nolint
     }
     return(NULL)
   }
 
   out$Component <- "conditional"
 
-  if (insight::model_info(model, verbose = FALSE)$is_zero_inflated && !is.null(insight::find_random(model)$zero_inflated_random)) {
+  if (insight::model_info(model, verbose = FALSE)$is_zero_inflated && !is.null(insight::find_random(model)$zero_inflated_random)) { # nolint
     zi_var <- suppressWarnings(
       .extract_random_variances_helper(
         model,
@@ -111,7 +111,42 @@
 .extract_random_variances.MixMod <- .extract_random_variances.glmmTMB
 
 
+# svy2lme ------------------------
 
+.extract_random_variances.svy2lme <- function(model, ci = 0.95, effects = "random", ...) {
+  s <- sqrt(as.vector(model$s2))
+  stdev <- matrix(s * sqrt(diag(model$L)), ncol = 1)
+  vcnames <- c(paste0("SD (", model$znames, ")"), "SD (Observations)")
+  grp_names <- names(model$znames)
+  if (is.null(grp_names)) {
+    grp_names <- model$znames
+  }
+
+  out <- data.frame(
+    Parameter = vcnames,
+    Level = NA,
+    Coefficient = c(as.vector(stdev), s),
+    SE = NA,
+    CI_low = NA,
+    CI_high = NA,
+    t = NA,
+    df_error = NA,
+    p = NA,
+    Effects = "random",
+    Group = c(grp_names, "Residual"),
+    stringsAsFactors = FALSE
+  )
+
+  # fix intercept names
+  out$Parameter <- gsub("(Intercept)", "Intercept", out$Parameter, fixed = TRUE)
+
+  if (effects == "random") {
+    out[c("t", "df_error", "p")] <- NULL
+  }
+
+  rownames(out) <- NULL
+  out
+}
 
 
 # workhorse ------------------------
@@ -124,8 +159,18 @@
                                              ci_random = NULL,
                                              verbose = FALSE,
                                              ...) {
-  varcorr <- .get_variance_information(model, component)
-  if (!inherits(model, "lme")) {
+  # special handling for lme objects
+  if (inherits(model, "lme")) {
+    insight::check_if_installed("lme4")
+    varcorr <- lme4::VarCorr(model)
+    class(varcorr) <- "VarCorr.lme"
+  } else {
+    varcorr <- insight::get_mixed_info(model, component = component, verbose = FALSE)$vc
+  }
+
+  # we have own data frame methods for VarCorr objects from lme and coxme, so
+  # only change class attribute for other models
+  if (!inherits(model, c("lme", "coxme"))) {
     class(varcorr) <- "VarCorr.merMod"
   }
 
@@ -162,20 +207,20 @@
   }
 
   # rename sigma
-  sigma <- out$grp == "Residual"
-  if (any(sigma)) {
-    out$Parameter[sigma] <- "SD (Observations)"
+  sigma_res <- out$grp == "Residual"
+  if (any(sigma_res)) {
+    out$Parameter[sigma_res] <- "SD (Observations)"
   }
 
   # rename columns
   out <- datawizard::data_rename(
     out,
-    pattern = c("grp", "sdcor"),
+    select = c("grp", "sdcor"),
     replacement = c("Group", "Coefficient")
   )
 
   # fix names for uncorrelated slope-intercepts
-  pattern <- paste0("(", paste0(insight::find_random(model, flatten = TRUE), collapse = "|"), ")\\.\\d+$")
+  pattern <- paste0("(", paste(insight::find_random(model, flatten = TRUE), collapse = "|"), ")\\.\\d+$")
   out$Group <- gsub(pattern, "\\1", out$Group)
 
   # remove non-used columns
@@ -203,7 +248,7 @@
   if (length(ci) == 1) {
     ci_cols <- c("CI_low", "CI_high")
   } else {
-    ci_cols <- c()
+    ci_cols <- NULL
     for (i in ci) {
       ci_low <- paste0("CI_low_", i)
       ci_high <- paste0("CI_high_", i)
@@ -232,7 +277,6 @@
 }
 
 
-
 #' @export
 as.data.frame.VarCorr.lme <- function(x, row.names = NULL, optional = FALSE, ...) {
   # retrieve RE SD and COR
@@ -242,7 +286,7 @@ as.data.frame.VarCorr.lme <- function(x, row.names = NULL, optional = FALSE, ...
   } else {
     corrs <- NULL
   }
-  grps <- grepl(" =$", names(stddevs))
+  grps <- endsWith(names(stddevs), " =")
 
   # for multiple grouping factors, split at each group
   if (any(grps)) {
@@ -257,7 +301,9 @@ as.data.frame.VarCorr.lme <- function(x, row.names = NULL, optional = FALSE, ...
         sdcor = unname(values[-1])
       )
     }))
-    if (!is.null(corrs)) {
+    if (is.null(corrs)) {
+      out_cor <- NULL
+    } else {
       out_cor <- do.call(rbind, lapply(seq_along(from), function(i) {
         values <- corrs[from[i]:to[i]]
         .data_frame(
@@ -267,8 +313,6 @@ as.data.frame.VarCorr.lme <- function(x, row.names = NULL, optional = FALSE, ...
           sdcor = unname(values[-1])
         )
       }))
-    } else {
-      out_cor <- NULL
     }
   } else {
     out_sd <- .data_frame(
@@ -277,15 +321,15 @@ as.data.frame.VarCorr.lme <- function(x, row.names = NULL, optional = FALSE, ...
       var2 = NA_character_,
       sdcor = unname(stddevs)
     )
-    if (!is.null(corrs)) {
+    if (is.null(corrs)) {
+      out_cor <- NULL
+    } else {
       out_cor <- .data_frame(
         grp = gsub("(.*) =(.*)", "\\1", attributes(x)$title),
         var1 = "(Intercept)",
         var2 = names(corrs),
         sdcor = unname(corrs)
       )
-    } else {
-      out_cor <- NULL
     }
   }
 
@@ -298,12 +342,57 @@ as.data.frame.VarCorr.lme <- function(x, row.names = NULL, optional = FALSE, ...
 }
 
 
+#' @export
+as.data.frame.VarCorr.coxme <- function(x, row.names = NULL, optional = FALSE, ...) {
+  # extract variances from VarCorr object
+  variances <- lapply(x, diag)
+  # create data frame, similar to as.data.frame.VarCorr.merMod
+  out <- do.call(rbind, lapply(names(variances), function(i) {
+    # information on variances
+    d <- data.frame(
+      grp = i,
+      var1 = names(variances[[i]]),
+      var2 = NA_character_,
+      vcov = as.numeric(variances[[i]]),
+      sdcor = sqrt(as.numeric(variances[[i]])),
+      stringsAsFactors = FALSE
+    )
+    # add correlations, if any
+    if (nrow(x[[i]]) > 1) {
+      d <- rbind(d, data.frame(
+        grp = i,
+        var1 = "(Intercept)",
+        var2 = rownames(x[[i]])[2],
+        vcov = NA_real_,
+        sdcor = as.numeric(x[[i]][2, 1]),
+        stringsAsFactors = FALSE
+      ))
+    }
+    d
+  }))
 
+  # bind residual variance
+  rbind(out, data.frame(
+    grp = "Residual",
+    var1 = NA_character_,
+    var2 = NA_character_,
+    vcov = NA_real_,
+    sdcor = NA_real_,
+    stringsAsFactors = FALSE
+  ))
+}
 
 
 # extract CI for random SD ------------------------
 
-.random_sd_ci <- function(model, out, ci_method, ci, ci_random, corr_param, sigma_param, component = NULL, verbose = FALSE) {
+.random_sd_ci <- function(model,
+                          out,
+                          ci_method,
+                          ci, ci_random,
+                          corr_param,
+                          sigma_param,
+                          component = NULL,
+                          verbose = FALSE) {
   ## TODO needs to be removed once MCM > 0.1.5 is on CRAN
   if (startsWith(insight::safe_deparse(insight::get_call(model)), "mcm_lmer")) {
     return(out)
@@ -316,8 +405,8 @@ as.data.frame.VarCorr.lme <- function(x, row.names = NULL, optional = FALSE, ...
 
   if (is.null(ci_random)) {
     # check sample size, don't compute by default when larger than 1000
-    nobs <- insight::n_obs(model)
-    if (nobs >= 1000) {
+    n_obs <- insight::n_obs(model)
+    if (n_obs >= 1000) {
       return(out)
     }
 
@@ -326,7 +415,7 @@ as.data.frame.VarCorr.lme <- function(x, row.names = NULL, optional = FALSE, ...
     rs <- insight::find_random_slopes(model)
 
     # quit if if random slopes and larger sample size or more than 1 grouping factor
-    if (!is.null(rs) && (nobs >= 500 || length(re) > 1)) {
+    if (!is.null(rs) && (n_obs >= 500 || length(re) > 1)) {
       return(out)
     }
 
@@ -343,7 +432,13 @@ as.data.frame.VarCorr.lme <- function(x, row.names = NULL, optional = FALSE, ...
     if (!is.null(ci_method) && ci_method %in% c("profile", "boot")) {
       out <- tryCatch(
         {
-          var_ci <- as.data.frame(suppressWarnings(stats::confint(model, parm = "theta_", oldNames = FALSE, method = ci_method, level = ci)))
+          var_ci <- as.data.frame(suppressWarnings(stats::confint(
+            model,
+            parm = "theta_",
+            oldNames = FALSE,
+            method = ci_method,
+            level = ci
+          )))
           colnames(var_ci) <- c("CI_low", "CI_high")
 
           rn <- row.names(var_ci)
@@ -371,10 +466,11 @@ as.data.frame.VarCorr.lme <- function(x, row.names = NULL, optional = FALSE, ...
         },
         error = function(e) {
           if (isTRUE(verbose)) {
-            message(insight::format_message(
+            insight::format_alert(
               "Cannot compute profiled standard errors and confidence intervals for random effects parameters.",
-              "Your model may suffer from singularity (see '?lme4::isSingular' and '?performance::check_singularity')."
-            ))
+              "Your model may suffer from singularity (see '?lme4::isSingular' and '?performance::check_singularity').",
+              "You may try to impose a prior on the random effects parameters, e.g. using the {.pkg glmmTMB} package."
+            )
           }
           out
         }
@@ -383,6 +479,14 @@ as.data.frame.VarCorr.lme <- function(x, row.names = NULL, optional = FALSE, ...
       # lme4 - wald / normal CI
 
       merDeriv_loaded <- isNamespaceLoaded("merDeriv")
+      # detach on exit
+      on.exit(
+        if (!merDeriv_loaded) {
+          .unregister_vcov()
+        },
+        add = TRUE,
+        after = FALSE
+      )
 
       # Wald based CIs
       # see https://stat.ethz.ch/pipermail/r-sig-mixed-models/2022q1/029985.html
@@ -440,7 +544,7 @@ as.data.frame.VarCorr.lme <- function(x, row.names = NULL, optional = FALSE, ...
               for (gr in setdiff(unique(out$Group), "Residual")) {
                 rnd_slope_corr_grp <- rnd_slope_corr & out$Group == gr
                 dummy <- gsub("Cor \\((.*)~(.*)\\)", "\\2.\\1", out$Parameter[rnd_slope_corr_grp])
-                var_ci$Parameter[var_ci$Group == gr][match(dummy, var_ci$Parameter[var_ci$Group == gr])] <- out$Parameter[rnd_slope_corr_grp]
+                var_ci$Parameter[var_ci$Group == gr][match(dummy, var_ci$Parameter[var_ci$Group == gr])] <- out$Parameter[rnd_slope_corr_grp] # nolint
               }
             }
 
@@ -465,8 +569,8 @@ as.data.frame.VarCorr.lme <- function(x, row.names = NULL, optional = FALSE, ...
             if (any(var_ci_corr_param)) {
               coefs <- out$Coefficient[var_ci_corr_param]
               delta_se <- out$SE[var_ci_corr_param] / (1 - coefs^2)
-              out$CI_low[var_ci_corr_param] <- tanh(atanh(coefs) - stats::qnorm(.975) * delta_se)
-              out$CI_high[var_ci_corr_param] <- tanh(atanh(coefs) + stats::qnorm(.975) * delta_se)
+              out$CI_low[var_ci_corr_param] <- tanh(atanh(coefs) - stats::qnorm(0.975) * delta_se)
+              out$CI_high[var_ci_corr_param] <- tanh(atanh(coefs) + stats::qnorm(0.975) * delta_se)
             }
 
             # Wald CI, based on delta-method.
@@ -475,14 +579,15 @@ as.data.frame.VarCorr.lme <- function(x, row.names = NULL, optional = FALSE, ...
             # Also, if the SD is small, then the CI might go negative
             coefs <- out$Coefficient[!var_ci_corr_param]
             delta_se <- out$SE[!var_ci_corr_param] / coefs
-            out$CI_low[!var_ci_corr_param] <- exp(log(coefs) - stats::qnorm(.975) * delta_se)
-            out$CI_high[!var_ci_corr_param] <- exp(log(coefs) + stats::qnorm(.975) * delta_se)
+            out$CI_low[!var_ci_corr_param] <- exp(log(coefs) - stats::qnorm(0.975) * delta_se)
+            out$CI_high[!var_ci_corr_param] <- exp(log(coefs) + stats::qnorm(0.975) * delta_se)
 
             # warn if singular fit
-            if (isTRUE(verbose) && insight::check_if_installed("performance", quietly = TRUE) && isTRUE(performance::check_singularity(model))) {
+            if (isTRUE(verbose) && insight::check_if_installed("performance", quietly = TRUE) && isTRUE(performance::check_singularity(model))) { # nolint
               insight::format_alert(
-                "Your model may suffer from singularity (see see `?lme4::isSingular` and `?performance::check_singularity`).",
-                "Some of the standard errors and confidence intervals of the random effects parameters are probably not meaningful!"
+                "Your model may suffer from singularity (see see `?lme4::isSingular` and `?performance::check_singularity`).", # nolint
+                "Some of the standard errors and confidence intervals of the random effects parameters are probably not meaningful!", # nolint
+                "You may try to impose a prior on the random effects parameters, e.g. using the {.pkg glmmTMB} package." # nolint
               )
             }
             out
@@ -490,30 +595,26 @@ as.data.frame.VarCorr.lme <- function(x, row.names = NULL, optional = FALSE, ...
           error = function(e) {
             if (isTRUE(verbose)) {
               if (grepl("nAGQ of at least 1 is required", e$message, fixed = TRUE)) {
-                insight::format_alert("Argument `nAGQ` needs to be larger than 0 to compute confidence intervals for random effect parameters.")
+                insight::format_alert("Argument `nAGQ` needs to be larger than 0 to compute confidence intervals for random effect parameters.") # nolint
               }
               if (grepl("Multiple cluster variables detected.", e$message, fixed = TRUE)) {
-                insight::format_alert("Confidence intervals for random effect parameters are currently not supported for multiple grouping variables.")
+                insight::format_alert("Confidence intervals for random effect parameters are currently not supported for multiple grouping variables.") # nolint
               }
               if (grepl("exactly singular", e$message, fixed = TRUE) ||
                 grepl("computationally singular", e$message, fixed = TRUE) ||
                 grepl("Exact singular", e$message, fixed = TRUE)) {
                 insight::format_alert(
                   "Cannot compute standard errors and confidence intervals for random effects parameters.",
-                  "Your model may suffer from singularity (see see `?lme4::isSingular` and `?performance::check_singularity`)."
+                  "Your model may suffer from singularity (see see `?lme4::isSingular` and `?performance::check_singularity`).", # nolint
+                  "You may try to impose a prior on the random effects parameters, e.g. using the {.pkg glmmTMB} package." # nolint
                 )
               }
             }
             out
           }
         )
-
-        # detach
-        if (!merDeriv_loaded) {
-          .unregister_vcov()
-        }
       } else if (isTRUE(verbose)) {
-        message(insight::format_message("Package 'merDeriv' needs to be installed to compute confidence intervals for random effect parameters."))
+        insight::format_alert("Package 'merDeriv' needs to be installed to compute confidence intervals for random effect parameters.") # nolint
       }
     }
   } else if (inherits(model, "glmmTMB")) {
@@ -553,8 +654,8 @@ as.data.frame.VarCorr.lme <- function(x, row.names = NULL, optional = FALSE, ...
           # add Group
           var_ci$Group <- NA
           if (length(group_factor) > 1) {
-            var_ci$Group[var_ci$Component == "conditional"] <- gsub(paste0("^", group_factor2, "\\.cond\\.(.*)"), "\\1", var_ci$Parameter[var_ci$Component == "conditional"])
-            var_ci$Group[var_ci$Component == "zi"] <- gsub(paste0("^", group_factor2, "\\.zi\\.(.*)"), "\\1", var_ci$Parameter[var_ci$Component == "zi"])
+            var_ci$Group[var_ci$Component == "conditional"] <- gsub(paste0("^", group_factor2, "\\.cond\\.(.*)"), "\\1", var_ci$Parameter[var_ci$Component == "conditional"]) # nolint
+            var_ci$Group[var_ci$Component == "zi"] <- gsub(paste0("^", group_factor2, "\\.zi\\.(.*)"), "\\1", var_ci$Parameter[var_ci$Component == "zi"]) # nolint
           } else {
             var_ci$Group <- group_factor
             # check if sigma was properly identified
@@ -594,17 +695,19 @@ as.data.frame.VarCorr.lme <- function(x, row.names = NULL, optional = FALSE, ...
         # check results - warn user
         if (isTRUE(verbose)) {
           missing_ci <- any(is.na(var_ci$CI_low) | is.na(var_ci$CI_high))
-          singular_fit <- insight::check_if_installed("performance", quietly = TRUE) & isTRUE(performance::check_singularity(model))
+          singular_fit <- insight::check_if_installed("performance", quietly = TRUE) & isTRUE(performance::check_singularity(model)) # nolint
 
           if (singular_fit) {
             insight::format_alert(
               "Your model may suffer from singularity (see `?lme4::isSingular` and `?performance::check_singularity`).",
-              "Some of the confidence intervals of the random effects parameters are probably not meaningful!"
+              "Some of the confidence intervals of the random effects parameters are probably not meaningful!",
+              "You may try to impose a prior on the random effects parameters, e.g. using the {.pkg glmmTMB} package." # nolint
             )
           } else if (missing_ci) {
             insight::format_alert(
               "Your model may suffer from singularity (see `?lme4::isSingular` and `?performance::check_singularity`).",
-              "Some of the confidence intervals of the random effects parameters could not be calculated or are probably not meaningful!"
+              "Some of the confidence intervals of the random effects parameters could not be calculated or are probably not meaningful!", # nolint
+              "You may try to impose a prior on the random effects parameters, e.g. using the {.pkg glmmTMB} package." # nolint
             )
           }
         }
@@ -630,186 +733,6 @@ as.data.frame.VarCorr.lme <- function(x, row.names = NULL, optional = FALSE, ...
 
   out
 }
-
-
-
-
-
-# Extract Variance and Correlation Components ----
-
-# store essential information about variance components...
-# basically, this function should return lme4::VarCorr(x)
-.get_variance_information <- function(model, model_component = "conditional") {
-  # reason to be installed
-  reason <- "to compute random effect variances for mixed models"
-
-  # installed?
-  insight::check_if_installed("lme4", reason = reason)
-
-  if (inherits(model, "lme")) {
-    insight::check_if_installed("nlme", reason = reason)
-  }
-
-  if (inherits(model, "clmm")) {
-    insight::check_if_installed("ordinal", reason = reason)
-  }
-
-  if (inherits(model, "brmsfit")) {
-    insight::check_if_installed("brms", reason = reason)
-  }
-
-  if (inherits(model, "cpglmm")) {
-    insight::check_if_installed("cplm", reason = reason)
-  }
-
-  if (inherits(model, "rstanarm")) {
-    insight::check_if_installed("rstanarm", reason = reason)
-  }
-
-  # stanreg
-  # ---------------------------
-  if (inherits(model, "stanreg")) {
-    varcorr <- lme4::VarCorr(model)
-
-    # GLMMapdative
-    # ---------------------------
-  } else if (inherits(model, "MixMod")) {
-    vc1 <- vc2 <- NULL
-    re_names <- insight::find_random(model)
-
-    vc_cond <- !startsWith(colnames(model$D), "zi_")
-    if (any(vc_cond)) {
-      vc1 <- model$D[vc_cond, vc_cond, drop = FALSE]
-      attr(vc1, "stddev") <- sqrt(diag(vc1))
-      attr(vc1, "correlation") <- stats::cov2cor(model$D[vc_cond, vc_cond, drop = FALSE])
-    }
-
-    vc_zi <- startsWith(colnames(model$D), "zi_")
-    if (any(vc_zi)) {
-      colnames(model$D) <- gsub("^zi_(.*)", "\\1", colnames(model$D))
-      rownames(model$D) <- colnames(model$D)
-      vc2 <- model$D[vc_zi, vc_zi, drop = FALSE]
-      attr(vc2, "stddev") <- sqrt(diag(vc2))
-      attr(vc2, "correlation") <- stats::cov2cor(model$D[vc_zi, vc_zi, drop = FALSE])
-    }
-
-    vc1 <- list(vc1)
-    names(vc1) <- re_names[[1]]
-    attr(vc1, "sc") <- sqrt(insight::get_deviance(model, verbose = FALSE) / insight::get_df(model, type = "residual", verbose = FALSE))
-    attr(vc1, "useSc") <- TRUE
-
-    if (!is.null(vc2)) {
-      vc2 <- list(vc2)
-      names(vc2) <- re_names[[2]]
-      attr(vc2, "sc") <- sqrt(insight::get_deviance(model, verbose = FALSE) / insight::get_df(model, type = "residual", verbose = FALSE))
-      attr(vc2, "useSc") <- FALSE
-    }
-
-    varcorr <- datawizard::compact_list(list(vc1, vc2))
-    names(varcorr) <- c("cond", "zi")[seq_along(varcorr)]
-
-    # joineRML
-    # ---------------------------
-  } else if (inherits(model, "mjoint")) {
-    re_names <- insight::find_random(model, flatten = TRUE)
-    varcorr <- summary(model)$D
-    attr(varcorr, "stddev") <- sqrt(diag(varcorr))
-    attr(varcorr, "correlation") <- stats::cov2cor(varcorr)
-    varcorr <- list(varcorr)
-    names(varcorr) <- re_names[1]
-    attr(varcorr, "sc") <- model$coef$sigma2[[1]]
-    attr(varcorr, "useSc") <- TRUE
-
-    # nlme
-    # ---------------------------
-  } else if (inherits(model, "lme")) {
-    varcorr <- lme4::VarCorr(model)
-
-    # ordinal
-    # ---------------------------
-  } else if (inherits(model, "clmm")) {
-    varcorr <- ordinal::VarCorr(model)
-    attr(varcorr, "useSc") <- FALSE
-
-    # glmmadmb
-    # ---------------------------
-  } else if (inherits(model, "glmmadmb")) {
-    varcorr <- lme4::VarCorr(model)
-
-    # brms
-    # ---------------------------
-  } else if (inherits(model, "brmsfit")) {
-    varcorr <- lapply(names(lme4::VarCorr(model)), function(i) {
-      element <- lme4::VarCorr(model)[[i]]
-      if (i != "residual__") {
-        if (!is.null(element$cov)) {
-          out <- as.matrix(drop(element$cov[, 1, ]))
-          colnames(out) <- rownames(out) <- gsub("Intercept", "(Intercept)", rownames(element$cov), fixed = TRUE)
-        } else {
-          out <- as.matrix(drop(element$sd[, 1])^2)
-          colnames(out) <- rownames(out) <- gsub("Intercept", "(Intercept)", rownames(element$sd), fixed = TRUE)
-        }
-        attr(out, "sttdev") <- element$sd[, 1]
-      } else {
-        out <- NULL
-      }
-      out
-    })
-    varcorr <- datawizard::compact_list(varcorr)
-    names(varcorr) <- setdiff(names(lme4::VarCorr(model)), "residual__")
-    attr(varcorr, "sc") <- lme4::VarCorr(model)$residual__$sd[1, 1]
-
-    # cpglmm
-    # ---------------------------
-  } else if (inherits(model, "cpglmm")) {
-    varcorr <- cplm::VarCorr(model)
-    attr(varcorr, "useSc") <- FALSE
-
-    # lme4 / glmmTMB
-    # ---------------------------
-  } else {
-    varcorr <- lme4::VarCorr(model)
-  }
-
-
-  # for glmmTMB, tell user that dispersion model is ignored
-
-  if (inherits(model, c("glmmTMB", "MixMod"))) {
-    if (is.null(model_component) || model_component == "conditional") {
-      varcorr <- .collapse_cond(varcorr)
-    } else {
-      varcorr <- .collapse_zi(varcorr)
-    }
-  }
-
-  varcorr
-}
-
-
-
-
-
-# glmmTMB returns a list of model information, one for conditional
-# and one for zero-inflation part, so here we "unlist" it, returning
-# only the conditional part.
-.collapse_cond <- function(x) {
-  if (is.list(x) && "cond" %in% names(x)) {
-    x[["cond"]]
-  } else {
-    x
-  }
-}
-
-
-.collapse_zi <- function(x) {
-  if (is.list(x) && "zi" %in% names(x)) {
-    x[["zi"]]
-  } else {
-    x
-  }
-}
-
-
 
 
 # this is used to only temporarily load merDeriv and to point registered

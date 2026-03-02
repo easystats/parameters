@@ -62,16 +62,15 @@ random_parameters <- function(model, component = "conditional") {
 }
 
 
-
 # helper -----------------------------------
 
 .n_randomeffects <- function(model) {
-  sapply(
+  vapply(
     insight::get_data(model, verbose = FALSE)[insight::find_random(model, split_nested = TRUE, flatten = TRUE)],
-    function(i) insight::n_unique(i)
+    insight::n_unique,
+    numeric(1)
   )
 }
-
 
 
 .randomeffects_summary <- function(model, component = "conditional") {
@@ -86,21 +85,21 @@ random_parameters <- function(model, component = "conditional") {
     out$Sigma2 <- re_variances$var.residual
 
     # Random Intercept Variance
-    if (!datawizard::is_empty_object(re_variances$var.intercept)) {
+    if (!insight::is_empty_object(re_variances$var.intercept)) {
       var_intercept <- as.list(re_variances$var.intercept)
       names(var_intercept) <- paste0("tau00_", names(re_variances$var.intercept))
       out <- c(out, var_intercept)
     }
 
     # Random Slope Variance
-    if (!datawizard::is_empty_object(re_variances$var.slope) && !datawizard::is_empty_object(model_rs)) {
+    if (!insight::is_empty_object(re_variances$var.slope) && !insight::is_empty_object(model_rs)) {
       var_slope <- as.list(re_variances$var.slope)
       names(var_slope) <- paste0("tau11_", names(re_variances$var.slope))
       out <- c(out, var_slope)
     }
 
     # Slope-Intercept Correlation
-    if (!datawizard::is_empty_object(re_variances$cor.slope_intercept) && !datawizard::is_empty_object(model_rs)) {
+    if (!insight::is_empty_object(re_variances$cor.slope_intercept) && !insight::is_empty_object(model_rs)) {
       cor_slope_intercept <- as.list(re_variances$cor.slope_intercept)
       csi_names <- gsub("(.*)(\\.\\d)(.*)", "\\1\\3", names(re_variances$var.slope))
       # csi_names <- names(re_variances$var.slope)
@@ -109,7 +108,7 @@ random_parameters <- function(model, component = "conditional") {
     }
 
     # Slopes Correlation
-    if (!datawizard::is_empty_object(re_variances$cor.slopes) && !datawizard::is_empty_object(model_rs)) {
+    if (!insight::is_empty_object(re_variances$cor.slopes) && !insight::is_empty_object(model_rs)) {
       cor_slopes <- as.list(re_variances$cor.slopes)
       names(cor_slopes) <- paste0("rho00_", names(cor_slopes))
       out <- c(out, cor_slopes)
@@ -118,8 +117,8 @@ random_parameters <- function(model, component = "conditional") {
 
   # Number of levels per random-effect groups
   n_re <- as.list(.n_randomeffects(model))
-  if (datawizard::is_empty_object(n_re)) {
-    n_re <- stats::setNames(as.numeric(NA), "N")
+  if (insight::is_empty_object(n_re)) {
+    n_re <- stats::setNames(NA_real_, "N")
   } else {
     names(n_re) <- paste0("N_", names(n_re))
     out <- c(out, n_re)
@@ -169,7 +168,7 @@ random_parameters <- function(model, component = "conditional") {
   out$Description <- gsub("^rho00_(.*)", "Correlations", out$Description)
 
   out$Type[grepl("N_(.*)", out$Description)] <- ""
-  out$Term[grepl("N_(.*)", out$Description)] <- gsub("N_(.*)", "\\1", out$Description[grepl("N_(.*)", out$Description)])
+  out$Term[grepl("N_(.*)", out$Description)] <- gsub("N_(.*)", "\\1", grep("N_(.*)", out$Description, value = TRUE))
   out$Description <- gsub("_(.*)", "", out$Description)
 
   out$Type[startsWith(out$Description, "X")] <- ""

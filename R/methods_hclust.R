@@ -1,7 +1,31 @@
-#' @rdname model_parameters.kmeans
-#' @inheritParams cluster_centers
+#' Parameters from Cluster Models (k-means, ...)
 #'
-#' @examples
+#' Format cluster models obtained for example by [kmeans()].
+#'
+#' @param model Cluster model.
+#' @param data A data frame.
+#' @param clusters A vector with clusters assignments (must be same length as
+#' rows in data).
+#' @param ... Arguments passed to or from other methods.
+#'
+#' @examplesIf all(insight::check_if_installed(c("dbscan", "cluster", "fpc"), quietly = TRUE))
+#' \donttest{
+#' #
+#' # K-means -------------------------------
+#' model <- kmeans(iris[1:4], centers = 3)
+#' rez <- model_parameters(model)
+#' rez
+#'
+#' # Get clusters
+#' predict(rez)
+#'
+#' # Clusters centers in long form
+#' attributes(rez)$means
+#'
+#' # Between and Total Sum of Squares
+#' attributes(rez)$Sum_Squares_Total
+#' attributes(rez)$Sum_Squares_Between
+#'
 #' #
 #' # Hierarchical clustering (hclust) ---------------------------
 #' data <- iris[1:4]
@@ -20,6 +44,35 @@
 #' # Between and Total Sum of Squares
 #' attributes(rez)$Total_Sum_Squares
 #' attributes(rez)$Between_Sum_Squares
+#'
+#' #
+#' # K-Medoids (PAM and HPAM) ==============
+#' model <- cluster::pam(iris[1:4], k = 3)
+#' model_parameters(model)
+#'
+#' model <- fpc::pamk(iris[1:4], criterion = "ch")
+#' model_parameters(model)
+#'
+#' # DBSCAN ---------------------------
+#' model <- dbscan::dbscan(iris[1:4], eps = 1.45, minPts = 10)
+#'
+#' rez <- model_parameters(model, iris[1:4])
+#' rez
+#'
+#' # Get clusters
+#' predict(rez)
+#'
+#' # Clusters centers in long form
+#' attributes(rez)$means
+#'
+#' # Between and Total Sum of Squares
+#' attributes(rez)$Sum_Squares_Total
+#' attributes(rez)$Sum_Squares_Between
+#'
+#' # HDBSCAN
+#' model <- dbscan::hdbscan(iris[1:4], minPts = 10)
+#' model_parameters(model, iris[1:4])
+#' }
 #' @export
 model_parameters.hclust <- function(model, data = NULL, clusters = NULL, ...) {
   if (is.null(data)) {
@@ -55,37 +108,6 @@ model_parameters.hclust <- function(model, data = NULL, clusters = NULL, ...) {
 }
 
 
-
-
-#' @inheritParams n_clusters
-#' @rdname model_parameters.kmeans
-#' @examples
-#' \donttest{
-#' #
-#' # pvclust (finds "significant" clusters) ---------------------------
-#' if (require("pvclust", quietly = TRUE)) {
-#'   data <- iris[1:4]
-#'   # NOTE: pvclust works on transposed data
-#'   model <- pvclust::pvclust(datawizard::data_transpose(data),
-#'     method.dist = "euclidean",
-#'     nboot = 50,
-#'     quiet = TRUE
-#'   )
-#'
-#'   rez <- model_parameters(model, data, ci = 0.90)
-#'   rez
-#'
-#'   # Get clusters
-#'   predict(rez)
-#'
-#'   # Clusters centers in long form
-#'   attributes(rez)$means
-#'
-#'   # Between and Total Sum of Squares
-#'   attributes(rez)$Sum_Squares_Total
-#'   attributes(rez)$Sum_Squares_Between
-#' }
-#' }
 #' @export
 model_parameters.pvclust <- function(model, data = NULL, clusters = NULL, ci = 0.95, ...) {
   if (is.null(data)) {
@@ -108,7 +130,6 @@ model_parameters.pvclust <- function(model, data = NULL, clusters = NULL, ci = 0
 }
 
 
-
 # Utils -------------------------------------------------------------------
 
 
@@ -125,7 +146,9 @@ model_parameters.pvclust <- function(model, data = NULL, clusters = NULL, ci = 0
 
   # Add points not in significant clusters
   remaining_rows <- row.names(data)[!row.names(data) %in% out$Row]
-  if (length(remaining_rows) > 0) out <- rbind(out, data.frame(Cluster = 0, Row = remaining_rows, stringsAsFactors = FALSE), make.row.names = FALSE, stringsAsFactors = FALSE)
+  if (length(remaining_rows) > 0) {
+    out <- rbind(out, data.frame(Cluster = 0, Row = remaining_rows, stringsAsFactors = FALSE), make.row.names = FALSE, stringsAsFactors = FALSE)
+  }
 
   # Reorder according to original order of rows
   out <- out[order(match(out$Row, row.names(data))), ]

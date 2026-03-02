@@ -8,8 +8,10 @@
 #'
 #' Extract and compute indices and measures to describe parameters of meta-analysis models.
 #'
+#' @param include_studies Logical, if `TRUE` (default), includes parameters for
+#' all studies. Else, only parameters for overall-effects are shown.
 #' @inheritParams model_parameters.default
-#' @inheritParams model_parameters.averaging
+#' @inheritParams model_parameters.glimML
 #'
 #' @examples
 #' library(parameters)
@@ -21,7 +23,7 @@
 #'   model <- rma(yi = effectsize, sei = stderr, method = "REML", data = mydat)
 #'   model_parameters(model)
 #' }
-#' \dontrun{
+#' \donttest{
 #' # with subgroups
 #' if (require("metafor", quietly = TRUE)) {
 #'   data(dat.bcg)
@@ -34,13 +36,14 @@
 #'     data = dat.bcg
 #'   )
 #'   dat$alloc <- ifelse(dat$alloc == "random", "random", "other")
-#'   model <- rma(yi, vi, mods = ~alloc, data = dat, digits = 3, slab = author)
+#'   d <<- dat
+#'   model <- rma(yi, vi, mods = ~alloc, data = d, digits = 3, slab = author)
 #'   model_parameters(model)
 #' }
 #'
 #' if (require("metaBMA", quietly = TRUE)) {
 #'   data(towels)
-#'   m <- meta_random(logOR, SE, study, data = towels)
+#'   m <- suppressWarnings(meta_random(logOR, SE, study, data = towels))
 #'   model_parameters(m)
 #' }
 #' }
@@ -54,6 +57,8 @@ model_parameters.rma <- function(model,
                                  standardize = NULL,
                                  exponentiate = FALSE,
                                  include_studies = TRUE,
+                                 keep = NULL,
+                                 drop = NULL,
                                  verbose = TRUE,
                                  ...) {
   # handle ci-level that was defined in function call...
@@ -61,6 +66,14 @@ model_parameters.rma <- function(model,
   if (!is.null(ci_level) && missing(ci)) {
     ci <- ci_level / 100
   }
+
+  # validation check, warn if unsupported argument is used.
+  .check_dots(
+    dots = list(...),
+    not_allowed = c("vcov", "vcov_args"),
+    class(model)[1],
+    verbose = verbose
+  )
 
   meta_analysis_overall <- .model_parameters_generic(
     model = model,
@@ -70,6 +83,9 @@ model_parameters.rma <- function(model,
     merge_by = "Parameter",
     standardize = standardize,
     exponentiate = exponentiate,
+    keep_parameters = keep,
+    drop_parameters = drop,
+    verbose = verbose,
     ...
   )
 
@@ -79,7 +95,7 @@ model_parameters.rma <- function(model,
   # subgroup analyses?
   if (!is.null(model$formula.mods)) {
     group_variable <- deparse(model$formula.mods[[2]])[1]
-    model_data <- insight::get_data(model)
+    model_data <- insight::get_data(model, verbose = FALSE)
     if (group_variable %in% colnames(model_data)) {
       subgroups <- sort(unique(model_data[[group_variable]]))
     }

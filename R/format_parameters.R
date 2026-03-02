@@ -11,7 +11,7 @@
 #' @section Interpretation of Interaction Terms:
 #' Note that the *interpretation* of interaction terms depends on many
 #' characteristics of the model. The number of parameters, and overall
-#' performance of the model, can differ *or not* between `a * b`
+#' performance of the model, can differ *or not* between `a * b`,
 #' `a : b`, and `a / b`, suggesting that sometimes interaction terms
 #' give different parameterizations of the same model, but other times it gives
 #' completely different models (depending on `a` or `b` being factors
@@ -49,11 +49,7 @@ format_parameters <- function(model, ...) {
 format_parameters.default <- function(model, brackets = c("[", "]"), ...) {
   # check for valid input
   .is_model_valid(model)
-
-  tryCatch(
-    .format_parameter_default(model, brackets = brackets, ...),
-    error = function(e) NULL
-  )
+  .safe(.format_parameter_default(model, brackets = brackets, ...))
 }
 
 
@@ -66,20 +62,26 @@ format_parameters.parameters_model <- function(model, ...) {
 }
 
 
-
-
 # Utilities ---------------------------------------------------------------
 
-
-.format_parameter_default <- function(model, effects = "fixed", brackets = c("[", "]"), ...) {
-  original_names <- names <- insight::find_parameters(model, effects = effects, flatten = TRUE)
+.format_parameter_default <- function(
+  model,
+  effects = "fixed",
+  brackets = c("[", "]"),
+  ...
+) {
+  original_names <- parameter_names <- insight::find_parameters(
+    model,
+    effects = effects,
+    flatten = TRUE
+  )
 
   # save some time, if model info is passed as argument
   dot_args <- list(...)
-  if (!is.null(dot_args$model_info)) {
-    info <- dot_args$model_info
-  } else {
+  if (is.null(dot_args$model_info)) {
     info <- insight::model_info(model, verbose = FALSE)
+  } else {
+    info <- dot_args$model_info
   }
 
   ## TODO remove is.list() when insight 0.8.3 on CRAN
@@ -89,10 +91,13 @@ format_parameters.parameters_model <- function(model, ...) {
 
   # quick fix, for multivariate response models, we use
   # info from first model only
-  if (insight::is_multivariate(model) && !"is_zero_inflated" %in% names(info)) {
+  if (
+    insight::is_multivariate(model) &&
+      !"is_zero_inflated" %in% names(info) &&
+      !inherits(model, c("vgam", "vglm"))
+  ) {
     info <- info[[1]]
   }
-
 
   # Type-specific changes
   types <- parameters_type(model)
@@ -101,22 +106,21 @@ format_parameters.parameters_model <- function(model, ...) {
   }
   types$Parameter <- .clean_parameter_names(types$Parameter, full = TRUE)
 
-
   # special handling hurdle- and zeroinfl-models ---------------------
   if (isTRUE(info$is_zero_inflated) || isTRUE(info$is_hurdle)) {
-    names <- gsub("^(count_|zero_)", "", names)
+    parameter_names <- gsub("^(count_|zero_)", "", parameter_names)
     types$Parameter <- gsub("^(count_|zero_)", "", types$Parameter)
   }
 
   # special handling polr ---------------------
-  if (inherits(model, "polr")) {
+  if (inherits(model, c("polr", "svyolr"))) {
     original_names <- gsub("Intercept: ", "", original_names, fixed = TRUE)
-    names <- gsub("Intercept: ", "", names, fixed = TRUE)
+    parameter_names <- gsub("Intercept: ", "", parameter_names, fixed = TRUE)
   }
 
   # special handling bracl ---------------------
   if (inherits(model, "bracl")) {
-    names <- gsub("(.*):(.*)", "\\2", names)
+    parameter_names <- gsub("(.*):(.*)", "\\2", parameter_names)
   }
 
   # special handling DirichletRegModel ---------------------
@@ -125,38 +129,37 @@ format_parameters.parameters_model <- function(model, ...) {
     cf <- stats::coef(model)
     if (model$parametrization == "common") {
       pattern <- paste0("(", paste(model$varnames, collapse = "|"), ")\\.(.*)")
-      dirich_names <- names <- gsub(pattern, "\\2", names(unlist(cf)))
+      dirich_names <- parameter_names <- gsub(pattern, "\\2", names(unlist(cf)))
     } else {
-      dirich_names <- names <- gsub("(.*)\\.(.*)\\.(.*)", "\\3", names(unlist(cf)))
+      dirich_names <- parameter_names <- gsub(
+        "(.*)\\.(.*)\\.(.*)",
+        "\\3",
+        names(unlist(cf))
+      )
     }
-    original_names <- names
+    original_names <- parameter_names
     if (!is.null(dirich_names)) {
       types$Parameter <- dirich_names
     }
   }
 
-
   # remove "as.factor()", "log()" etc. from parameter names
-  names <- .clean_parameter_names(names)
-
+  parameter_names <- .clean_parameter_names(parameter_names)
 
   for (i in seq_len(nrow(types))) {
     name <- types$Parameter[i]
 
-    # No interaction
-    if (!types$Type[i] %in% c("interaction", "nested", "simple")) {
-      type <- types[i, ]
-      names[i] <- .format_parameter(
-        name,
-        variable = type$Variable,
-        type = type$Type,
-        level = type$Level,
-        brackets = brackets
-      )
-
+    if (types$Type[i] %in% c("interaction", "nested", "simple")) {
       # Interaction or nesting
-    } else {
-      components <- unlist(strsplit(name, ":", fixed = TRUE))
+
+      # for "serp" models, coefficients end with ":1", ":2", etc. - we need
+      # to take this into account when splitting the name into components.
+      if (inherits(model, "serp")) {
+        pattern <- "(:(?![0-9]+$))"
+        components <- unlist(strsplit(name, pattern, perl = TRUE), use.names = FALSE)
+      } else {
+        components <- unlist(strsplit(name, ":", fixed = TRUE), use.names = FALSE)
+      }
       is_nested <- types$Type[i] == "nested"
       is_simple <- types$Type[i] == "simple"
 
@@ -170,7 +173,9 @@ format_parameters.parameters_model <- function(model, ...) {
           # variable for each response, thus we have multiple rows here,
           # where only one row is required.
 
-          if (nrow(type) > 1) type <- type[1, ]
+          if (nrow(type) > 1) {
+            type <- type[1, ]
+          }
 
           components[j] <- .format_parameter(
             components[j],
@@ -180,7 +185,10 @@ format_parameters.parameters_model <- function(model, ...) {
             brackets = brackets
           )
         } else if (components[j] %in% types$Secondary_Parameter) {
-          type <- types[!is.na(types$Secondary_Parameter) & types$Secondary_Parameter == components[j], ]
+          type <- types[
+            !is.na(types$Secondary_Parameter) &
+              types$Secondary_Parameter == components[j],
+          ]
           components[j] <- .format_parameter(
             components[j],
             variable = type[1, ]$Secondary_Variable,
@@ -190,20 +198,30 @@ format_parameters.parameters_model <- function(model, ...) {
           )
         }
       }
-      names[i] <- .format_interaction(
-        components,
+      parameter_names[i] <- .format_interaction(
+        components = components,
         type = types[i, "Type"],
         is_nested = is_nested,
         is_simple = is_simple,
         ...
       )
+    } else {
+      # No interaction
+      type <- types[i, ]
+      parameter_names[i] <- .format_parameter(
+        name,
+        variable = type$Variable,
+        type = type$Type,
+        level = type$Level,
+        brackets = brackets
+      )
     }
   }
 
   # do some final formatting, like replacing underscores or dots with whitespace.
-  names <- gsub("(\\.|_)(?![^\\[]*\\])", " ", names, perl = TRUE)
+  parameter_names <- gsub("(\\.|_)(?![^\\[]*\\])", " ", parameter_names, perl = TRUE)
   # remove double spaces
-  names <- gsub("  ", " ", names, fixed = TRUE)
+  parameter_names <- gsub("  ", " ", parameter_names, fixed = TRUE)
 
   # "types$Parameter" here is cleaned, i.e. patterns like "log()", "as.factor()"
   # etc. are removed. However, these patterns are needed in "format_table()",
@@ -212,8 +230,8 @@ format_parameters.parameters_model <- function(model, ...) {
   # so output will be NA resp. blank fields... Thus, I think we should use
   # the original parameter-names here.
 
-  names(names) <- original_names # types$Parameter
-  names
+  names(parameter_names) <- original_names # types$Parameter
+  parameter_names
 }
 
 
@@ -226,27 +244,54 @@ format_parameters.parameters_model <- function(model, ...) {
 
   # Polynomials
   if (type %in% c("poly", "poly_raw")) {
-    name <- .format_poly(name = name, variable = variable, type = type, degree = level, brackets = brackets)
+    name <- .format_poly(
+      name = name,
+      variable = variable,
+      type = type,
+      degree = level,
+      brackets = brackets
+    )
   }
 
   # Splines
   if (type == "spline") {
-    name <- .format_poly(name = name, variable = variable, type = type, degree = level, brackets = brackets)
+    name <- .format_poly(
+      name = name,
+      variable = variable,
+      type = type,
+      degree = level,
+      brackets = brackets
+    )
   }
 
   # log-transformation
   if (type == "logarithm") {
-    name <- .format_log(name = name, variable = variable, type = type, brackets = brackets)
+    name <- .format_log(
+      name = name,
+      variable = variable,
+      type = type,
+      brackets = brackets
+    )
   }
 
   # exp-transformation
   if (type == "exponentiation") {
-    name <- .format_log(name = name, variable = variable, type = type, brackets = brackets)
+    name <- .format_log(
+      name = name,
+      variable = variable,
+      type = type,
+      brackets = brackets
+    )
   }
 
   # log-transformation
   if (type == "squareroot") {
-    name <- .format_log(name = name, variable = variable, type = type, brackets = brackets)
+    name <- .format_log(
+      name = name,
+      variable = variable,
+      type = type,
+      brackets = brackets
+    )
   }
 
   # As Is
@@ -270,12 +315,14 @@ format_parameters.parameters_model <- function(model, ...) {
 
 
 #' @keywords internal
-.format_interaction <- function(components,
-                                type,
-                                is_nested = FALSE,
-                                is_simple = FALSE,
-                                interaction_mark = NULL,
-                                ...) {
+.format_interaction <- function(
+  components,
+  type,
+  is_nested = FALSE,
+  is_simple = FALSE,
+  interaction_mark = NULL,
+  ...
+) {
   # sep <- ifelse(is_nested | is_simple, " : ", " * ")
   # sep <- ifelse(is_nested, " / ", " * ")
   # sep <- ifelse(is_simple, " : ", ifelse(is_nested, " / ", " * "))
@@ -296,16 +343,16 @@ format_parameters.parameters_model <- function(model, ...) {
     if (type == "interaction") {
       components <- paste0(
         "(",
-        paste0(utils::head(components, -1), collapse = sep),
+        paste(utils::head(components, -1), collapse = sep),
         ")",
         sep,
         utils::tail(components, 1)
       )
     } else {
-      components <- paste0(components, collapse = sep)
+      components <- paste(components, collapse = sep)
     }
   } else {
-    components <- paste0(components, collapse = sep)
+    components <- paste(components, collapse = sep)
   }
   components
 }
@@ -324,11 +371,11 @@ format_parameters.parameters_model <- function(model, ...) {
   if (all(grepl(pattern_cut_right, level))) {
     lower_bounds <- gsub(pattern_cut_right, "\\1", level)
     upper_bounds <- gsub(pattern_cut_right, "\\2", level)
-    level <- paste0(as.numeric(lower_bounds) + 1, "-", upper_bounds)
+    level <- paste0(">", as.numeric(lower_bounds), "-", upper_bounds)
   } else if (all(grepl(pattern_cut_left, level))) {
     lower_bounds <- gsub(pattern_cut_left, "\\1", level)
     upper_bounds <- gsub(pattern_cut_left, "\\2", level)
-    level <- paste0(lower_bounds, "-", as.numeric(upper_bounds) - 1)
+    level <- paste0(lower_bounds, "-<", as.numeric(upper_bounds))
   }
   paste0(variable, " ", brackets[1], level, brackets[2])
 }
@@ -336,7 +383,14 @@ format_parameters.parameters_model <- function(model, ...) {
 
 #' @keywords internal
 .format_poly <- function(name, variable, type, degree, brackets = c("[", "]")) {
-  paste0(variable, " ", brackets[1], format_order(as.numeric(degree), textual = FALSE), " degree", brackets[2])
+  paste0(
+    variable,
+    " ",
+    brackets[1],
+    format_order(as.numeric(degree), textual = FALSE),
+    " degree",
+    brackets[2]
+  )
 }
 
 
@@ -348,13 +402,17 @@ format_parameters.parameters_model <- function(model, ...) {
 
 #' @keywords internal
 .format_ordered <- function(degree, brackets = c("[", "]")) {
-  switch(degree,
-    ".L" = paste0(brackets[1], "linear", brackets[2]),
-    ".Q" = paste0(brackets[1], "quadratic", brackets[2]),
-    ".C" = paste0(brackets[1], "cubic", brackets[2]),
+  switch(
+    degree,
+    .L = paste0(brackets[1], "linear", brackets[2]),
+    .Q = paste0(brackets[1], "quadratic", brackets[2]),
+    .C = paste0(brackets[1], "cubic", brackets[2]),
     paste0(
       brackets[1],
-      parameters::format_order(as.numeric(gsub("^", "", degree, fixed = TRUE)), textual = FALSE),
+      parameters::format_order(
+        as.numeric(gsub("^", "", degree, fixed = TRUE)),
+        textual = FALSE
+      ),
       " degree",
       brackets[2]
     )
@@ -362,18 +420,30 @@ format_parameters.parameters_model <- function(model, ...) {
 }
 
 
-
 # replace pretty names with value labels, when present ---------------
 
 .format_value_labels <- function(params, model = NULL) {
-  labels <- NULL
+  pretty_labels <- NULL
   if (is.null(model)) {
     model <- .get_object(params)
   }
 
-  if (!is.null(model)) {
+  # validation check
+  if (!is.null(model) && insight::is_regression_model(model) && !is.data.frame(model)) {
     # get data, but exclude response - we have no need for that label
-    mf <- insight::get_data(model)[, -1, drop = FALSE]
+    mf <- insight::get_data(model, source = "mf", verbose = FALSE)
+    # sanity check - any labels?
+    has_labels <- vapply(
+      mf,
+      function(i) !is.null(attr(i, "labels", exact = TRUE)),
+      logical(1)
+    )
+    # if we don't have labels, we try to get data from environment
+    if (!any(has_labels)) {
+      mf <- insight::get_data(model, source = "environment", verbose = FALSE)
+    }
+    resp <- insight::find_response(model, combine = FALSE)
+    mf <- mf[, setdiff(colnames(mf), resp), drop = FALSE]
 
     # return variable labels, and for factors, add labels for each level
     lbs <- lapply(colnames(mf), function(i) {
@@ -392,14 +462,17 @@ format_parameters.parameters_model <- function(model, ...) {
         out <- attr(vec, "label", exact = TRUE)
       }
       if (is.null(out)) {
-        return(i)
+        i
       } else {
-        return(out)
+        out
       }
     })
 
     # coefficient names (not labels)
     preds <- lapply(colnames(mf), function(i) {
+      if (is.character(mf[[i]])) {
+        mf[[i]] <- as.factor(mf[[i]])
+      }
       if (is.factor(mf[[i]])) {
         i <- paste0(i, levels(mf[[i]]))
       }
@@ -408,35 +481,55 @@ format_parameters.parameters_model <- function(model, ...) {
 
     # name elements
     names(lbs) <- names(preds) <- colnames(mf)
-    labels <- tryCatch(stats::setNames(unlist(lbs), unlist(preds)), error = function(e) NULL)
+    pretty_labels <- .safe(stats::setNames(
+      unlist(lbs, use.names = FALSE),
+      unlist(preds, use.names = FALSE)
+    ))
 
     # retrieve pretty names attribute
     pn <- attributes(params)$pretty_names
     # replace former pretty names with labels, if we have any labels
     # (else, default pretty names are returned)
-    if (!is.null(labels)) {
+    if (!is.null(pretty_labels)) {
+      # for models from pscl, we have "count_" and "zero_" prefixes, which
+      # we need to add to the "pretty_labels" names, so that we can match
+      # them with the parameters
+      if (inherits(model, c("zeroinfl", "hurdle"))) {
+        pretty_labels <- c(
+          stats::setNames(pretty_labels, paste0("count_", names(pretty_labels))),
+          stats::setNames(pretty_labels, paste0("zero_", names(pretty_labels)))
+        )
+      }
       # check if we have any interactions, and if so, create combined labels
       interactions <- pn[grepl(":", names(pn), fixed = TRUE)]
       if (length(interactions)) {
-        labs <- c()
+        labs <- NULL
         for (i in names(interactions)) {
           # extract single coefficient names from interaction term
           out <- unlist(strsplit(i, ":", fixed = TRUE))
           # combine labels
-          labs <- c(labs, paste0(sapply(out, function(l) labels[l]), collapse = " * "))
+          labs <- c(
+            labs,
+            paste(sapply(out, function(l) pretty_labels[l]), collapse = " * ")
+          )
         }
         # add interaction terms to labels string
         names(labs) <- names(interactions)
-        labels <- c(labels, labs)
+        pretty_labels <- c(pretty_labels, labs)
       }
       # make sure "invalid" labels are ignored
-      common_labels <- intersect(names(labels), names(pn))
-      pn[common_labels] <- labels[common_labels]
+      common_labels <- intersect(names(pretty_labels), names(pn))
+      pn[common_labels] <- pretty_labels[common_labels]
     }
-    labels <- pn
+    pretty_labels <- pn
   }
 
-  labels
+  # missing labels return original parameter name (e.g., variance components in mixed models)
+  out <- stats::setNames(params$Parameter, params$Parameter)
+  pretty_labels <- pretty_labels[names(pretty_labels) %in% params$Parameter]
+  out[match(names(pretty_labels), params$Parameter)] <- pretty_labels
+
+  out
 }
 
 
@@ -447,15 +540,16 @@ format_parameters.parameters_model <- function(model, ...) {
   win_os <- tryCatch(
     {
       si <- Sys.info()
-      if (!is.null(si["sysname"])) {
-        si["sysname"] == "Windows" || startsWith(R.version$os, "mingw")
-      } else {
+      if (is.null(si["sysname"])) {
         FALSE
+      } else {
+        si["sysname"] == "Windows" || startsWith(R.version$os, "mingw")
       }
     },
     error = function(e) {
       TRUE
     }
   )
-  l10n_info()[["UTF-8"]] && ((win_os && getRversion() >= "4.2") || (!win_os && getRversion() >= "4.0"))
+  l10n_info()[["UTF-8"]] &&
+    ((win_os && getRversion() >= "4.2") || (!win_os && getRversion() >= "4.0"))
 }

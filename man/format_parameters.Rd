@@ -28,7 +28,7 @@ to make them more human-readable.
 
 Note that the \emph{interpretation} of interaction terms depends on many
 characteristics of the model. The number of parameters, and overall
-performance of the model, can differ \emph{or not} between \code{a * b}
+performance of the model, can differ \emph{or not} between \code{a * b},
 \code{a : b}, and \code{a / b}, suggesting that sometimes interaction terms
 give different parameterizations of the same model, but other times it gives
 completely different models (depending on \code{a} or \code{b} being factors

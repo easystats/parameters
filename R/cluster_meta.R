@@ -32,7 +32,7 @@
 #'
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' data <- iris[1:4]
 #'
 #' rez1 <- cluster_analysis(data, n = 2, method = "kmeans")
@@ -77,37 +77,33 @@ cluster_meta <- function(list_of_clusters, rownames = NULL, ...) {
     x[[name]] <- solution
   }
 
-  # Sanity check
-  if (length(unique(sapply(x, length))) != 1) {
+  # validation check
+  if (length(unique(lengths(x))) != 1) {
     insight::format_error("The clustering solutions are not of equal lengths.")
   }
 
   # Convert to dataframe
-  data <- as.data.frame(x)
-  if (!is.null(names(solution))) row.names(data) <- names(solution)
-  if (!is.null(rownames)) row.names(data) <- rownames
+  cluster_data <- as.data.frame(x)
+  if (!is.null(names(solution))) row.names(cluster_data) <- names(solution)
+  if (!is.null(rownames)) row.names(cluster_data) <- rownames
 
   # Get probability matrix
-  m <- .cluster_meta_matrix(data)
+  m <- .cluster_meta_matrix(cluster_data)
   class(m) <- c("cluster_meta", class(m))
   m
 }
-
-
 
 
 #' @keywords internal
 .cluster_meta_matrix <- function(data) {
   # Internal function
   .get_prob <- function(x) {
-    if (any(is.na(x))) {
+    if (anyNA(x)) {
       NA
+    } else if (length(unique(x[!is.na(x)])) == 1) {
+      0
     } else {
-      if (length(unique(x[!is.na(x)])) == 1) {
-        0
-      } else {
-        1
-      }
+      1
     }
   }
 
@@ -120,16 +116,14 @@ cluster_meta <- function(list_of_clusters, rownames = NULL, ...) {
         m[row, col] <- 0
         next
       }
-      subset <- data[row.names(data) %in% c(row, col), ]
-      rez <- sapply(subset[2:ncol(subset)], .get_prob)
+      subset_rows <- data[row.names(data) %in% c(row, col), ]
+      rez <- sapply(subset_rows[2:ncol(subset_rows)], .get_prob)
       m[row, col] <- sum(rez, na.rm = TRUE) / length(stats::na.omit(rez))
     }
   }
 
   m
 }
-
-
 
 
 # Methods ----------------------------------------------------------------

@@ -1,4 +1,3 @@
-
 #' @export
 standard_error.gmnl <- function(model, ...) {
   cs <- summary(model)$CoefTable

@@ -3,11 +3,15 @@ model <- lm(mpg ~ wt + as.factor(gear) + am, data = mtcars)
 
 test_that("p_calibrate model", {
   expect_silent(p_calibrate(model, verbose = FALSE))
-  expect_warning(out <- p_calibrate(model))
-  expect_equal(dim(out), c(5, 3))
-  expect_equal(colnames(out), c("Parameter", "p", "p_calibrated"))
+  expect_warning({
+    out <- p_calibrate(model)
+  })
+  expect_identical(dim(out), c(5L, 3L))
+  expect_named(out, c("Parameter", "p", "p_calibrated"))
   expect_equal(out$p_calibrated, c(0, 5e-05, 0.48261, NA, NA), tolerance = 1e-4)
-  expect_warning(out <- p_calibrate(model, type = "bayes"))
+  expect_warning({
+    out <- p_calibrate(model, type = "bayes")
+  })
   expect_equal(out$p_calibrated, c(0, 5e-05, 0.93276, NA, NA), tolerance = 1e-4)
 })
 
@@ -26,7 +30,7 @@ test_that("p_calibrate print", {
   out <- p_calibrate(model, verbose = FALSE)
   ref <- capture.output(print(out))
 
-  expect_equal(
+  expect_identical(
     ref,
     c(
       "Parameter        |      p | p (calibrated)",

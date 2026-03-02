@@ -1,16 +1,17 @@
-#' @rdname model_parameters.averaging
 #' @export
 model_parameters.glmx <- function(model,
                                   ci = 0.95,
                                   bootstrap = FALSE,
                                   iterations = 1000,
-                                  component = c("all", "conditional", "extra"),
+                                  component = "all",
                                   standardize = NULL,
                                   exponentiate = FALSE,
                                   p_adjust = NULL,
+                                  keep = NULL,
+                                  drop = NULL,
                                   verbose = TRUE,
                                   ...) {
-  component <- match.arg(component)
+  component <- insight::validate_argument(component, c("all", "conditional", "extra"))
   if (component == "all") {
     merge_by <- c("Parameter", "Component")
   } else {
@@ -26,6 +27,8 @@ model_parameters.glmx <- function(model,
     merge_by = merge_by,
     standardize = standardize,
     exponentiate = exponentiate,
+    keep_parameters = keep,
+    drop_parameters = drop,
     p_adjust = p_adjust,
     ...
   )
@@ -61,10 +64,12 @@ p_value.glmx <- function(model, ...) {
 }
 
 
-
 #' @export
-simulate_model.glmx <- function(model, iterations = 1000, component = c("all", "conditional", "extra"), ...) {
-  component <- match.arg(component)
+simulate_model.glmx <- function(model, iterations = 1000, component = "all", ...) {
+  component <- insight::validate_argument(
+    component,
+    c("all", "conditional", "extra")
+  )
   out <- .simulate_model(model, iterations, component = component, ...)
 
   class(out) <- c("parameters_simulate_model", class(out))

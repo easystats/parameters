@@ -2,7 +2,7 @@
 #' @name compare_parameters
 #'
 #' @description Compute and extract model parameters of multiple regression
-#'   models. See [model_parameters()] for further details.
+#'   models. See [`model_parameters()`] for further details.
 #'
 #' @param ... One or more regression model objects, or objects returned by
 #'   `model_parameters()`. Regression models may be of different model
@@ -10,14 +10,19 @@
 #'   If model objects are passed with names or the list has named elements,
 #'   these names will be used as column names.
 #' @param component Model component for which parameters should be shown. See
-#'   documentation for related model class in [model_parameters()].
+#'   documentation for related model class in [`model_parameters()`].
 #' @param column_names Character vector with strings that should be used as
 #'   column headers. Must be of same length as number of models in `...`.
 #' @param ci_method Method for computing degrees of freedom for p-values
 #'   and confidence intervals (CI). See documentation for related model class
 #'   in [model_parameters()].
+#' @param coefficient_names Character vector with strings that should be used
+#'   as column headers for the coefficient column. Must be of same length as
+#'   number of models in `...`, or length 1. If length 1, this name will be
+#'   used for all coefficient columns. If `NULL`, the name for the coefficient
+#'   column will detected automatically (as in `model_parameters()`).
 #' @inheritParams model_parameters.default
-#' @inheritParams model_parameters.cpglmm
+#' @inheritParams model_parameters.glmmTMB
 #' @inheritParams print.parameters_model
 #'
 #' @details
@@ -32,7 +37,7 @@
 #'
 #' @return A data frame of indices related to the model's parameters.
 #'
-#' @examples
+#' @examplesIf require("gt", quietly = TRUE)
 #' data(iris)
 #' lm1 <- lm(Sepal.Length ~ Species, data = iris)
 #' lm2 <- lm(Sepal.Length ~ Species + Petal.Length, data = iris)
@@ -41,7 +46,7 @@
 #' # custom style
 #' compare_parameters(lm1, lm2, select = "{estimate}{stars} ({se})")
 #'
-#' \dontrun{
+#' \donttest{
 #' # custom style, in HTML
 #' result <- compare_parameters(lm1, lm2, select = "{estimate}<br>({se})|{p}")
 #' print_html(result)
@@ -51,7 +56,7 @@
 #' m1 <- lm(mpg ~ wt, data = mtcars)
 #' m2 <- glm(vs ~ wt + cyl, data = mtcars, family = "binomial")
 #' compare_parameters(m1, m2)
-#' \dontrun{
+#' \donttest{
 #' # exponentiate coefficients, but not for lm
 #' compare_parameters(m1, m2, exponentiate = "nongaussian")
 #'
@@ -75,16 +80,13 @@ compare_parameters <- function(...,
                                select = NULL,
                                column_names = NULL,
                                pretty_names = TRUE,
+                               coefficient_names = NULL,
                                keep = NULL,
                                drop = NULL,
-                               verbose = TRUE,
-                               df_method = ci_method) {
+                               include_reference = FALSE,
+                               groups = NULL,
+                               verbose = TRUE) {
   models <- list(...)
-
-  ## TODO remove later
-  if (!missing(df_method) && !identical(ci_method, df_method)) {
-    insight::format_error("Argument `df_method` is defunct. Please use `ci_method` instead.")
-  }
 
   if (length(models) == 1) {
     if (insight::is_model(models[[1]]) || inherits(models[[1]], "parameters_model")) {
@@ -104,44 +106,57 @@ compare_parameters <- function(...,
       names(models) <- model_names
     }
   } else {
-    model_names <- match.call(expand.dots = FALSE)$`...`
+    model_names <- match.call(expand.dots = FALSE)[["..."]]
     if (length(names(model_names)) > 0) {
       model_names <- names(model_names)
-    } else if (any(vapply(model_names, is.call, logical(1)))) {
+    } else if (any(vapply(model_names, is.call, TRUE))) {
       model_names <- paste("Model", seq_along(models), sep = " ")
     } else {
-      model_names <- sapply(model_names, as.character)
+      model_names <- vapply(model_names, as.character, character(1))
       names(models) <- model_names
     }
   }
 
-  supported_models <- sapply(models, function(i) {
-    insight::is_model_supported(i) | inherits(i, "lavaan") | inherits(i, "parameters_model")
-  })
+  supported_models <- vapply(models, function(i) {
+    insight::is_model_supported(i) || inherits(i, "lavaan") || inherits(i, "parameters_model")
+  }, TRUE)
 
   if (!all(supported_models)) {
-    insight::format_warning(
-      sprintf("Following objects are not supported: %s", paste0(model_names[!supported_models], collapse = ", ")),
-      "Dropping unsupported models now."
-    )
+    if (verbose) {
+      insight::format_alert(
+        sprintf("Following objects are not supported: %s", toString(model_names[!supported_models])),
+        "Dropping unsupported models now."
+      )
+    }
     models <- models[supported_models]
     model_names <- model_names[supported_models]
   }
 
   # set default
   if (is.null(select)) {
-    select <- "ci"
+    if (is.null(ci) || is.na(ci)) {
+      # if user set CI to NULL, show only estimates by default
+      select <- "{estimate}"
+    } else {
+      # if we have CI, include them
+      select <- "ci"
+    }
   }
 
   # provide own names
   if (!is.null(column_names)) {
     if (length(column_names) != length(model_names)) {
       if (isTRUE(verbose)) {
-        insight::format_warning("Number of column names does not match number of models.")
+        insight::format_alert("Number of column names does not match number of models.")
       }
     } else {
       model_names <- column_names
     }
+  }
+
+  # make sure we have enough coefficient names - else, repeat first value
+  if (!is.null(coefficient_names) && length(coefficient_names) < length(models)) {
+    coefficient_names <- rep(coefficient_names[1], length(models))
   }
 
   # iterate all models and create list of model parameters
@@ -154,7 +169,7 @@ compare_parameters <- function(...,
       dat <- model
     } else {
       # set default-ci_type for Bayesian models
-      if (.is_bayesian_model(model) && !ci_method %in% c("hdi", "quantile", "ci", "eti", "si", "bci", "bcai")) {
+      if (insight::is_bayesian_model(model, exclude = c("bmerMod", "bayesx", "blmerMod", "bglmerMod")) && !ci_method %in% c("hdi", "quantile", "ci", "eti", "si", "bci", "bcai")) { # nolint
         ci_method_tmp <- "eti"
       } else {
         ci_method_tmp <- ci_method
@@ -173,14 +188,17 @@ compare_parameters <- function(...,
         keep = keep,
         drop = drop,
         wb_component = FALSE,
+        include_reference = include_reference,
         verbose = verbose
       )
     }
 
     # set specific names for coefficient column
     coef_name <- attributes(dat)$coefficient_name
-    if (!is.null(coef_name)) {
+    if (!is.null(coef_name) && is.null(coefficient_names)) {
       colnames(dat)[colnames(dat) == "Coefficient"] <- coef_name
+    } else if (!is.null(coefficient_names)) {
+      colnames(dat)[colnames(dat) == "Coefficient"] <- coefficient_names[i]
     }
 
     # set pretty parameter names
@@ -193,6 +211,9 @@ compare_parameters <- function(...,
     if (!"Effects" %in% colnames(dat)) {
       dat$Effects <- "fixed"
     }
+    if (!"Group" %in% colnames(dat)) {
+      dat$Group <- ""
+    }
 
     # add zi-suffix to parameter names
     if (any(dat$Component == "zero_inflated")) {
@@ -200,7 +221,7 @@ compare_parameters <- function(...,
     }
 
     # add suffix
-    ignore <- colnames(dat) %in% c("Parameter", "Component", "Effects")
+    ignore <- colnames(dat) %in% c("Parameter", "Component", "Effects", "Group")
     colnames(dat)[!ignore] <- paste0(colnames(dat)[!ignore], ".", model_name)
 
     # save model number, for sorting
@@ -214,7 +235,9 @@ compare_parameters <- function(...,
   names(object_attributes) <- model_names
 
   # merge all data frames
-  all_models <- suppressWarnings(Reduce(function(x, y) merge(x, y, all = TRUE, sort = FALSE, by = c("Parameter", "Component", "Effects")), m))
+  all_models <- suppressWarnings(Reduce(function(x, y) {
+    merge(x, y, all = TRUE, sort = FALSE, by = c("Parameter", "Component", "Effects", "Group"))
+  }, m))
 
   # find columns with model numbers and create new variable "params_order",
   # which is pasted together of all model-column indices. Take lowest index of
@@ -225,9 +248,15 @@ compare_parameters <- function(...,
   all_models <- all_models[order(params_order), ]
   all_models[model_cols] <- NULL
 
+  # remove empty group-column
+  if (!any(nzchar(as.character(all_models$Group), keepNA = TRUE))) {
+    all_models$Group <- NULL
+  }
+
   attr(all_models, "model_names") <- gsub("\"", "", unlist(lapply(model_names, insight::safe_deparse)), fixed = TRUE)
   attr(all_models, "output_style") <- select
   attr(all_models, "all_attributes") <- object_attributes
+  attr(all_models, "parameter_groups") <- groups
   class(all_models) <- c("compare_parameters", "see_compare_parameters", unique(class(all_models)))
 
   all_models
@@ -263,21 +292,16 @@ compare_models <- compare_parameters
       }
     } else {
       match_pretty_names <- att$pretty_names[x$Parameter]
-      if (!anyNA(match_pretty_names)) {
-        x$Parameter <- att$pretty_names[x$Parameter]
-      } else {
+      if (anyNA(match_pretty_names)) {
         match_pretty_names <- match(names(att$pretty_names), x$Parameter)
         match_pretty_names <- match_pretty_names[!is.na(match_pretty_names)]
         if (length(match_pretty_names)) {
           x$Parameter[match_pretty_names] <- att$pretty_names[x$Parameter[match_pretty_names]]
         }
+      } else {
+        x$Parameter <- att$pretty_names[x$Parameter]
       }
     }
   }
-
-  if (!is.null(x$Parameter)) {
-    x$Parameter <- gsub("]", ")", gsub("[", "(", x$Parameter, fixed = TRUE), fixed = TRUE)
-  }
-
   x
 }

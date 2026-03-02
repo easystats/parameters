@@ -2,12 +2,6 @@
 % Please edit documentation in R/methods_aov.R
 \name{model_parameters.aov}
 \alias{model_parameters.aov}
-\alias{model_parameters.anova}
-\alias{model_parameters.aovlist}
-\alias{model_parameters.afex_aov}
-\alias{model_parameters.anova.rms}
-\alias{model_parameters.Anova.mlm}
-\alias{model_parameters.maov}
 \title{Parameters from ANOVAs}
 \usage{
 \method{model_parameters}{aov}(
@@ -16,129 +10,21 @@
   df_error = NULL,
   ci = NULL,
   alternative = NULL,
+  p_adjust = NULL,
   test = NULL,
   power = FALSE,
-  effectsize_type = NULL,
+  es_type = NULL,
   keep = NULL,
   drop = NULL,
+  include_intercept = FALSE,
   table_wide = FALSE,
   verbose = TRUE,
-  omega_squared = NULL,
-  eta_squared = NULL,
-  epsilon_squared = NULL,
-  ...
-)
-
-\method{model_parameters}{anova}(
-  model,
-  type = NULL,
-  df_error = NULL,
-  ci = NULL,
-  alternative = NULL,
-  test = NULL,
-  power = FALSE,
-  effectsize_type = NULL,
-  keep = NULL,
-  drop = NULL,
-  table_wide = FALSE,
-  verbose = TRUE,
-  omega_squared = NULL,
-  eta_squared = NULL,
-  epsilon_squared = NULL,
-  ...
-)
-
-\method{model_parameters}{aovlist}(
-  model,
-  type = NULL,
-  df_error = NULL,
-  ci = NULL,
-  alternative = NULL,
-  test = NULL,
-  power = FALSE,
-  effectsize_type = NULL,
-  keep = NULL,
-  drop = NULL,
-  table_wide = FALSE,
-  verbose = TRUE,
-  omega_squared = NULL,
-  eta_squared = NULL,
-  epsilon_squared = NULL,
-  ...
-)
-
-\method{model_parameters}{afex_aov}(
-  model,
-  effectsize_type = NULL,
-  df_error = NULL,
-  type = NULL,
-  keep = NULL,
-  drop = NULL,
-  verbose = TRUE,
-  ...
-)
-
-\method{model_parameters}{anova.rms}(
-  model,
-  type = NULL,
-  df_error = NULL,
-  ci = NULL,
-  alternative = NULL,
-  test = NULL,
-  power = FALSE,
-  effectsize_type = NULL,
-  keep = NULL,
-  drop = NULL,
-  table_wide = FALSE,
-  verbose = TRUE,
-  omega_squared = NULL,
-  eta_squared = NULL,
-  epsilon_squared = NULL,
-  ...
-)
-
-\method{model_parameters}{Anova.mlm}(
-  model,
-  type = NULL,
-  df_error = NULL,
-  ci = NULL,
-  alternative = NULL,
-  test = NULL,
-  power = FALSE,
-  effectsize_type = NULL,
-  keep = NULL,
-  drop = NULL,
-  table_wide = FALSE,
-  verbose = TRUE,
-  omega_squared = NULL,
-  eta_squared = NULL,
-  epsilon_squared = NULL,
-  ...
-)
-
-\method{model_parameters}{maov}(
-  model,
-  type = NULL,
-  df_error = NULL,
-  ci = NULL,
-  alternative = NULL,
-  test = NULL,
-  power = FALSE,
-  effectsize_type = NULL,
-  keep = NULL,
-  drop = NULL,
-  table_wide = FALSE,
-  verbose = TRUE,
-  omega_squared = NULL,
-  eta_squared = NULL,
-  epsilon_squared = NULL,
   ...
 )
 }
 \arguments{
-\item{model}{Object of class \code{\link[=aov]{aov()}}, \code{\link[=anova]{anova()}},
-\code{aovlist}, \code{Gam}, \code{\link[=manova]{manova()}}, \code{Anova.mlm},
-\code{afex_aov} or \code{maov}.}
+\item{model}{Object of class \code{\link[=aov]{aov()}}, \code{\link[=anova]{anova()}}, \code{aovlist}, \code{Gam},
+\code{\link[=manova]{manova()}}, \code{Anova.mlm}, \code{afex_aov} or \code{maov}.}
 
 \item{type}{Numeric, type of sums of squares. May be 1, 2 or 3. If 2 or 3,
 ANOVA-tables using \code{car::Anova()} will be returned. (Ignored for
@@ -149,16 +35,22 @@ error estimate, i.e., the residuals). This is used to compute effect sizes
 for ANOVA-tables from mixed models. See 'Examples'. (Ignored for
 \code{afex_aov}.)}
 
-\item{ci}{Confidence Interval (CI) level for effect sizes
-\code{omega_squared}, \code{eta_squared} etc. The default, \code{NULL},
-will compute no confidence intervals. \code{ci} should be a scalar between
-0 and 1.}
+\item{ci}{Confidence Interval (CI) level for effect sizes specified in
+\code{es_type}. The default, \code{NULL}, will compute no confidence
+intervals. \code{ci} should be a scalar between 0 and 1.}
 
 \item{alternative}{A character string specifying the alternative hypothesis;
 Controls the type of CI returned: \code{"two.sided"} (default, two-sided CI),
 \code{"greater"} or \code{"less"} (one-sided CI). Partial matching is allowed
 (e.g., \code{"g"}, \code{"l"}, \code{"two"}...). See section \emph{One-Sided CIs} in
 the \href{https://easystats.github.io/effectsize/}{effectsize_CIs vignette}.}
+
+\item{p_adjust}{String value, if not \code{NULL}, indicates the method to adjust
+p-values. See \code{\link[stats:p.adjust]{stats::p.adjust()}} for details. Further possible
+adjustment methods are \code{"tukey"}, \code{"scheffe"}, \code{"sidak"}, \code{"sup-t"}, and
+\code{"none"} to explicitly disable adjustment for \code{emmGrid} objects (from
+\strong{emmeans}). \code{"sup-t"} computes simultaneous confidence bands, also called
+sup-t confidence band (Montiel Olea & Plagborg-Møller, 2019).}
 
 \item{test}{String, indicating the type of test for \code{Anova.mlm} to be
 returned. If \code{"multivariate"} (or \code{NULL}), returns the summary of
@@ -168,7 +60,7 @@ the multivariate test (that is also given by the \code{print}-method). If
 \item{power}{Logical, if \code{TRUE}, adds a column with power for each
 parameter.}
 
-\item{effectsize_type}{The effect size of interest. Not that possibly not all
+\item{es_type}{The effect size of interest. Not that possibly not all
 effect sizes are applicable to the model object. See 'Details'. For Anova
 models, can also be a character vector with multiple effect size names.}
 
@@ -194,13 +86,14 @@ names.}
 
 \item{drop}{See \code{keep}.}
 
+\item{include_intercept}{Logical, if \code{TRUE}, includes the intercept
+(\code{(Intercept)}) in the anova table.}
+
 \item{table_wide}{Logical that decides whether the ANOVA table should be in
 wide format, i.e. should the numerator and denominator degrees of freedom
 be in the same row. Default: \code{FALSE}.}
 
 \item{verbose}{Toggle warnings and messages.}
-
-\item{omega_squared, eta_squared, epsilon_squared}{Deprecated. Please use \code{effectsize_type}.}
 
 \item{...}{Arguments passed to \code{\link[effectsize:effectsize]{effectsize::effectsize()}}. For example,
 to calculate \emph{partial} effect sizes types, use \code{partial = TRUE}. For objects
@@ -225,7 +118,10 @@ Parameters from ANOVAs
 \item For an object of class \code{htest}, data is extracted via \code{\link[insight:get_data]{insight::get_data()}}, and passed to the relevant function according to:
 \itemize{
 \item A \strong{t-test} depending on \code{type}: \code{"cohens_d"} (default), \code{"hedges_g"}, or one of \code{"p_superiority"}, \code{"u1"}, \code{"u2"}, \code{"u3"}, \code{"overlap"}.
-\item A \strong{Chi-squared tests of independence} or \strong{Fisher's Exact Test}, depending on \code{type}: \code{"cramers_v"} (default), \code{"tschuprows_t"}, \code{"phi"}, \code{"cohens_w"}, \code{"pearsons_c"}, \code{"cohens_h"}, \code{"oddsratio"}, or \code{"riskratio"}.
+\itemize{
+\item For a \strong{Paired t-test}: depending on \code{type}: \code{"rm_rm"}, \code{"rm_av"}, \code{"rm_b"}, \code{"rm_d"}, \code{"rm_z"}.
+}
+\item A \strong{Chi-squared tests of independence} or \strong{Fisher's Exact Test}, depending on \code{type}: \code{"cramers_v"} (default), \code{"tschuprows_t"}, \code{"phi"}, \code{"cohens_w"}, \code{"pearsons_c"}, \code{"cohens_h"}, \code{"oddsratio"}, \code{"riskratio"}, \code{"arr"}, or \code{"nnt"}.
 \item A \strong{Chi-squared tests of goodness-of-fit}, depending on \code{type}: \code{"fei"} (default) \code{"cohens_w"}, \code{"pearsons_c"}
 \item A \strong{One-way ANOVA test}, depending on \code{type}: \code{"eta"} (default), \code{"omega"} or \code{"epsilon"} -squared, \code{"f"}, or \code{"f2"}.
 \item A \strong{McNemar test} returns \emph{Cohen's g}.
@@ -238,10 +134,11 @@ Parameters from ANOVAs
 \itemize{
 \item A \strong{t-test} depending on \code{type}: \code{"cohens_d"} (default) or one of \code{"p_superiority"}, \code{"u1"}, \code{"u2"}, \code{"u3"}, \code{"overlap"}.
 \item A \strong{correlation test} returns \emph{r}.
-\item A \strong{contingency table test}, depending on \code{type}: \code{"cramers_v"} (default), \code{"phi"}, \code{"tschuprows_t"}, \code{"cohens_w"}, \code{"pearsons_c"}, \code{"cohens_h"}, \code{"oddsratio"}, or \code{"riskratio"}.
+\item A \strong{contingency table test}, depending on \code{type}: \code{"cramers_v"} (default), \code{"phi"}, \code{"tschuprows_t"}, \code{"cohens_w"}, \code{"pearsons_c"}, \code{"cohens_h"}, \code{"oddsratio"}, or \code{"riskratio"}, \code{"arr"}, or \code{"nnt"}.
 \item A \strong{proportion test} returns \emph{p}.
 }
 \item Objects of class \code{anova}, \code{aov}, \code{aovlist} or \code{afex_aov}, depending on \code{type}: \code{"eta"} (default), \code{"omega"} or \code{"epsilon"} -squared, \code{"f"}, or \code{"f2"}.
+\item Objects of class \code{datawizard_crosstab(s)} / \code{datawizard_table(s)} built with \code{\link[datawizard:data_tabulate]{datawizard::data_tabulate()}} - same as Chi-squared tests of independence / goodness-of-fit, respectively.
 \item Other objects are passed to \code{\link[parameters:standardize_parameters]{parameters::standardize_parameters()}}.
 }
 
@@ -257,52 +154,43 @@ covariates are mean-centred and factors are coded with orthogonal contrasts
 \code{contr.helmert}, but \emph{not} by the default \code{contr.treatment}).
 }
 \examples{
-if (requireNamespace("effectsize", quietly = TRUE)) {
-  df <- iris
-  df$Sepal.Big <- ifelse(df$Sepal.Width >= 3, "Yes", "No")
+\dontshow{if (requireNamespace("effectsize", quietly = TRUE)) withAutoprint(\{ # examplesIf}
+df <- iris
+df$Sepal.Big <- ifelse(df$Sepal.Width >= 3, "Yes", "No")
 
-  model <- aov(Sepal.Length ~ Sepal.Big, data = df)
-  model_parameters(
-    model,
-    omega_squared = "partial",
-    eta_squared = "partial",
-    epsilon_squared = "partial"
-  )
+model <- aov(Sepal.Length ~ Sepal.Big, data = df)
+model_parameters(model)
 
-  model_parameters(
-    model,
-    effectsize_type = c("omega", "eta"),
-    ci = .9
-  )
+model_parameters(model, es_type = c("omega", "eta"), ci = 0.9)
 
-  model <- anova(lm(Sepal.Length ~ Sepal.Big, data = df))
-  model_parameters(model)
-  model_parameters(
-    model,
-    effectsize_type = c("omega", "eta", "epsilon")
-  )
+model <- anova(lm(Sepal.Length ~ Sepal.Big, data = df))
+model_parameters(model)
+model_parameters(
+  model,
+  es_type = c("omega", "eta", "epsilon"),
+  alternative = "greater"
+)
 
-  model <- aov(Sepal.Length ~ Sepal.Big + Error(Species), data = df)
-  model_parameters(model)
+model <- aov(Sepal.Length ~ Sepal.Big + Error(Species), data = df)
+model_parameters(model)
+\dontshow{\}) # examplesIf}
+\dontshow{if (requireNamespace("lme4", quietly = TRUE) && requireNamespace("effectsize", quietly = TRUE)) withAutoprint(\{ # examplesIf}
+\donttest{
+df <- iris
+df$Sepal.Big <- ifelse(df$Sepal.Width >= 3, "Yes", "No")
+mm <- lme4::lmer(Sepal.Length ~ Sepal.Big + Petal.Width + (1 | Species), data = df)
+model <- anova(mm)
 
-  \dontrun{
-    if (require("lme4")) {
-      mm <- lmer(Sepal.Length ~ Sepal.Big + Petal.Width + (1 | Species),
-        data = df
-      )
-      model <- anova(mm)
+# simple parameters table
+model_parameters(model)
 
-      # simple parameters table
-      model_parameters(model)
-
-      # parameters table including effect sizes
-      model_parameters(
-        model,
-        effectsize_type = "eta",
-        ci = .9,
-        df_error = dof_satterthwaite(mm)[2:3]
-      )
-    }
-  }
+# parameters table including effect sizes
+model_parameters(
+  model,
+  es_type = "eta",
+  ci = 0.9,
+  df_error = dof_satterthwaite(mm)[2:3]
+)
 }
+\dontshow{\}) # examplesIf}
 }

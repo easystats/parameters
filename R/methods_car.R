@@ -1,11 +1,10 @@
-#' @rdname model_parameters.averaging
 #' @export
 model_parameters.deltaMethod <- function(model, p_adjust = NULL, verbose = TRUE, ...) {
   dots <- list(...)
   if ("ci" %in% names(dots)) {
-    warning(insight::format_message(
-      "The `ci` argument is not supported by `model_parameters` for objects of this class. Use the `level` argument of the `deltaMethod` function instead."
-    ), call. = FALSE)
+    insight::format_warning(
+      "The `ci` argument is not supported by `model_parameters` for objects of this class. Use the `level` argument of the `deltaMethod` function instead." # nolint
+    )
     dots[["ci"]] <- NULL
   }
 
@@ -13,7 +12,7 @@ model_parameters.deltaMethod <- function(model, p_adjust = NULL, verbose = TRUE,
   params <- insight::standardize_names(datawizard::rownames_as_column(model, "Parameter"))
 
   # find CIs
-  ci_cols <- grepl("%$", colnames(params))
+  ci_cols <- endsWith(colnames(params), "%")
   cis <- as.numeric(gsub("%", "", colnames(params)[ci_cols], fixed = TRUE)) / 100
   ci <- diff(cis)
 
@@ -38,7 +37,7 @@ model_parameters.deltaMethod <- function(model, p_adjust = NULL, verbose = TRUE,
     params <- .p_adjust(params, p_adjust, model, verbose)
   }
 
-  args <- list(
+  fun_args <- list(
     params,
     model,
     ci = ci,
@@ -47,12 +46,12 @@ model_parameters.deltaMethod <- function(model, p_adjust = NULL, verbose = TRUE,
     iterations = NULL,
     ci_method = "residual",
     p_adjust = p_adjust,
-    summary = FALSE,
+    include_info = FALSE,
     verbose = verbose
   )
-  args <- c(args, dots)
+  fun_args <- c(fun_args, dots)
 
-  params <- do.call(".add_model_parameters_attributes", args)
+  params <- do.call(".add_model_parameters_attributes", fun_args)
 
   class(params) <- c("parameters_model", "see_parameters_model", class(params))
   attr(params, "object_name") <- insight::safe_deparse_symbol(substitute(model))

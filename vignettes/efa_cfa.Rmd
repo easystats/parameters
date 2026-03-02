@@ -130,8 +130,13 @@ As we can see, the 25 items nicely spread on the 5 latent factors, the famous
 individual for these new variables:
 
 ```{r}
+predictions <- predict(
+  efa,
+  names = c("Neuroticism", "Conscientiousness", "Extraversion", "Agreeableness", "Opennness"),
+  verbose = FALSE
+)
 # let's look only at the first five individuals
-head(predict(efa, names = c("Neuroticism", "Conscientiousness", "Extraversion", "Agreeableness", "Opennness")), 5)
+head(predictions, 5)
 ```
 
 ## How many factors to retain in Factor Analysis (FA)
@@ -239,10 +244,10 @@ package, and compare these models against each other:
 library(lavaan)
 library(performance)
 
-big5 <- lavaan::cfa(structure_big5, data = test)
-big6 <- lavaan::cfa(structure_big6, data = test)
+big5 <- suppressWarnings(lavaan::cfa(structure_big5, data = test))
+big6 <- suppressWarnings(lavaan::cfa(structure_big6, data = test))
 
-performance::compare_performance(big5, big6)
+performance::compare_performance(big5, big6, verbose = FALSE)
 ```
 
 

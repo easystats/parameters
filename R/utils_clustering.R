@@ -6,14 +6,14 @@
                                      standardize = FALSE,
                                      preprocess = TRUE,
                                      ...) {
-  if (preprocess == FALSE) {
+  if (isFALSE(preprocess)) {
     return(x)
   }
 
   # include factors?
   if (include_factors) {
     # ordered factors to numeric
-    factors <- sapply(x, is.ordered)
+    factors <- vapply(x, is.ordered, TRUE)
     if (any(factors)) {
       x[factors] <- sapply(
         x[factors],
@@ -32,14 +32,16 @@
     }
   } else {
     # remove factors
-    x <- x[sapply(x, is.numeric)]
+    x <- x[vapply(x, is.numeric, TRUE)]
   }
 
   # Remove all missing values from data, only use numerics
   x <- stats::na.omit(x)
 
-  if (standardize == TRUE) {
+  if (isTRUE(standardize)) {
     x <- datawizard::standardize(x, ...)
+    # remove "dw_transformer" attribute
+    x[] <- lapply(x, as.numeric)
   }
 
   x

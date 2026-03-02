@@ -1,294 +1,55 @@
 ############# .merMod -----------------
 
 
-#' @title Parameters from Mixed Models
-#' @name model_parameters.merMod
-#'
-#' @description Parameters from (linear) mixed models.
-#'
-#' @param model A mixed model.
-#' @param effects Should parameters for fixed effects (`"fixed"`), random
-#'   effects (`"random"`), or both (`"all"`) be returned? Only applies
-#'   to mixed models. May be abbreviated. If the calculation of random effects
-#'   parameters takes too long, you may use `effects = "fixed"`.
-#' @param wb_component Logical, if `TRUE` and models contains within- and
-#'   between-effects (see `datawizard::demean()`), the `Component` column
-#'   will indicate which variables belong to the within-effects,
-#'   between-effects, and cross-level interactions. By default, the
-#'   `Component` column indicates, which parameters belong to the
-#'   conditional or zero-inflation component of the model.
-#' @param include_sigma Logical, if `TRUE`, includes the residual standard
-#'   deviation. For mixed models, this is defined as the sum of the distribution-specific
-#'   variance and the variance for the additive overdispersion term (see
-#'   [insight::get_variance()] for details). Defaults to `FALSE` for mixed models
-#'   due to the longer computation time.
-#' @param ci_random Logical, if `TRUE`, includes the confidence intervals for
-#'   random effects parameters. Only applies if `effects` is not `"fixed"` and
-#'   if `ci` is not `NULL`. Set `ci_random = FALSE` if computation of the model
-#'   summary is too much time consuming. By default, `ci_random = NULL`, which
-#'   uses a heuristic to guess if computation of confidence intervals for random
-#'   effects is fast enough or not. For models with larger sample size and/or
-#'   more complex random effects structures, confidence intervals will not be
-#'   computed by default, for simpler models or fewer observations, confidence
-#'   intervals will be included. Set explicitly to `TRUE` or `FALSE` to enforce
-#'   or omit calculation of confidence intervals.
-#' @param ... Arguments passed to or from other methods. For instance, when
-#'   `bootstrap = TRUE`, arguments like `type` or `parallel` are
-#'   passed down to `bootstrap_model()`.
-#' @inheritParams model_parameters.default
-#' @inheritParams model_parameters.stanreg
-#'
-#' @inheritSection model_parameters Confidence intervals and approximation of degrees of freedom
-#'
-#' @section Confidence intervals for random effect variances:
-#' For models of class `merMod` and `glmmTMB`, confidence intervals for random
-#' effect variances can be calculated.
-#'
-#' - For models of from package **lme4**, when `ci_method` is either `"profile"`
-#' or `"boot"`, and `effects` is either `"random"` or `"all"`, profiled resp.
-#' bootstrapped confidence intervals are computed for the random effects.
-#'
-#' - For all other options of `ci_method`, and only when the **merDeriv**
-#' package is installed, confidence intervals for random effects are based on
-#' normal-distribution approximation, using the delta-method to transform
-#' standard errors for constructing the intervals around the log-transformed
-#' SD parameters. These are than back-transformed, so that random effect
-#' variances, standard errors and confidence intervals are shown on the original
-#' scale. Due to the transformation, the intervals are asymmetrical, however,
-#' they are within the correct bounds (i.e. no negative interval for the SD,
-#' and the interval for the correlations is within the range from -1 to +1).
-#'
-#' - For models of class `glmmTMB`, confidence intervals for random effect
-#' variances always use a Wald t-distribution approximation.
-#'
-#' @section Dispersion parameters in *glmmTMB*:
-#' For some models from package **glmmTMB**, both the dispersion parameter and
-#' the residual variance from the random effects parameters are shown. Usually,
-#' these are the same but presented on different scales, e.g.
-#'
-#' ```
-#' model <- glmmTMB(Sepal.Width ~ Petal.Length + (1|Species), data = iris)
-#' exp(fixef(model)$disp) # 0.09902987
-#' sigma(model)^2         # 0.09902987
-#' ```
-#'
-#' For models where the dispersion parameter and the residual variance are
-#' the same, only the residual variance is shown in the output.
-#'
-#' @seealso [insight::standardize_names()] to
-#'   rename columns into a consistent, standardized naming scheme.
-#'
-#' @note If the calculation of random effects parameters takes too long, you may
-#' use `effects = "fixed"`. There is also a [`plot()`-method](https://easystats.github.io/see/articles/parameters.html)
-#' implemented in the [**see**-package](https://easystats.github.io/see/).
-#'
-#' @examples
-#' library(parameters)
-#' if (require("lme4")) {
-#'   data(mtcars)
-#'   model <- lmer(mpg ~ wt + (1 | gear), data = mtcars)
-#'   model_parameters(model)
-#' }
-#' \donttest{
-#' if (require("glmmTMB")) {
-#'   data(Salamanders)
-#'   model <- glmmTMB(
-#'     count ~ spp + mined + (1 | site),
-#'     ziformula = ~mined,
-#'     family = poisson(),
-#'     data = Salamanders
-#'   )
-#'   model_parameters(model, effects = "all")
-#' }
-#'
-#' if (require("lme4")) {
-#'   model <- lmer(mpg ~ wt + (1 | gear), data = mtcars)
-#'   model_parameters(model, bootstrap = TRUE, iterations = 50)
-#' }
-#' }
-#' @return A data frame of indices related to the model's parameters.
 #' @export
-model_parameters.merMod <- function(model,
-                                    ci = 0.95,
-                                    ci_method = NULL,
-                                    ci_random = NULL,
-                                    bootstrap = FALSE,
-                                    iterations = 1000,
-                                    standardize = NULL,
-                                    effects = "all",
-                                    group_level = FALSE,
-                                    exponentiate = FALSE,
-                                    p_adjust = NULL,
-                                    wb_component = TRUE,
-                                    summary = getOption("parameters_mixed_summary", FALSE),
-                                    keep = NULL,
-                                    drop = NULL,
-                                    verbose = TRUE,
-                                    df_method = ci_method,
-                                    include_sigma = FALSE,
-                                    vcov = NULL,
-                                    vcov_args = NULL,
-                                    ...) {
-  dots <- list(...)
+model_parameters.merMod <- model_parameters.coxme
 
-  ## TODO remove later
-  if (!missing(df_method) && !identical(ci_method, df_method)) {
-    insight::format_error("Argument `df_method` is defunct. Please use `ci_method` instead.")
-  }
+# helper ----------------------------------------------------------------------
 
-  # set default
-  if (is.null(ci_method)) {
-    if (isTRUE(bootstrap)) {
-      ci_method <- "quantile"
+.add_random_effects_lme4 <- function(model,
+                                     params,
+                                     ci,
+                                     ci_method,
+                                     ci_random,
+                                     effects,
+                                     group_level,
+                                     verbose = TRUE,
+                                     ...) {
+  params_random <- params_variance <- NULL
+
+  # only proceed if random effects are requested
+  if (effects %in% c("random", "all")) {
+    # group level estimates (BLUPs) or random effects variances?
+    if (isTRUE(group_level)) {
+      params_random <- .extract_random_parameters(model, ci = ci, effects = effects)
     } else {
-      ci_method <- switch(insight::find_statistic(model),
-        "t-statistic" = "residual",
-        "wald"
-      )
-    }
-  }
-
-  # p-values, CI and se might be based of wald, or KR
-  ci_method <- tolower(ci_method)
-
-  if (isTRUE(bootstrap)) {
-    ci_method <- match.arg(
-      ci_method,
-      choices = c("hdi", "quantile", "ci", "eti", "si", "bci", "bcai")
-    )
-  } else {
-    ci_method <- match.arg(
-      ci_method,
-      choices = c(
-        "wald", "normal", "residual", "ml1", "betwithin", "satterthwaite",
-        "kenward", "kr", "boot", "profile", "uniroot"
-      )
-    )
-  }
-
-  # which component to return?
-  effects <- match.arg(effects, choices = c("fixed", "random", "all"))
-  params <- params_random <- params_variance <- NULL
-
-  # post hoc standardize only works for fixed effects...
-  if (!is.null(standardize) && standardize != "refit") {
-    if (!missing(effects) && effects != "fixed" && verbose) {
-      warning(insight::format_message(
-        "Standardizing coefficients only works for fixed effects of the mixed model."
-      ), call. = FALSE)
-    }
-    effects <- "fixed"
-  }
-
-  # for refit, we completely refit the model, than extract parameters,
-  # ci etc. as usual - therefor, we set "standardize" to NULL
-  if (!is.null(standardize) && standardize == "refit") {
-    model <- datawizard::standardize(model, verbose = FALSE)
-    standardize <- NULL
-  }
-
-  if (effects %in% c("fixed", "all")) {
-    # Processing
-    if (bootstrap) {
-      params <- bootstrap_parameters(
-        model,
-        iterations = iterations,
-        ci = ci,
-        ...
-      )
-      if (effects != "fixed") {
-        effects <- "fixed"
-        if (verbose) {
-          warning(insight::format_message(
-            "Bootstrapping only returns fixed effects of the mixed model."
-          ), call. = FALSE)
-        }
-      }
-    } else {
-      args <- list(
+      params_variance <- .extract_random_variances(
         model,
         ci = ci,
+        effects = effects,
         ci_method = ci_method,
-        standardize = standardize,
-        p_adjust = p_adjust,
-        wb_component = wb_component,
-        keep_parameters = keep,
-        drop_parameters = drop,
-        verbose = verbose,
-        include_sigma = include_sigma,
-        summary = summary,
-        vcov = vcov,
-        vcov_args = vcov_args
+        ci_random = ci_random,
+        verbose = verbose
       )
-      args <- c(args, dots)
-      params <- do.call(".extract_parameters_mixed", args)
     }
 
-    params$Effects <- "fixed"
+    # merge random and fixed effects, if necessary
+    if (!is.null(params) && (!is.null(params_random) || !is.null(params_variance))) {
+      params$Level <- NA
+      params$Group <- ""
 
-    # exponentiate coefficients and SE/CI, if requested
-    params <- .exponentiate_parameters(params, model, exponentiate)
-  }
-
-  att <- attributes(params)
-
-  if (effects %in% c("random", "all") && isTRUE(group_level)) {
-    params_random <- .extract_random_parameters(model, ci = ci, effects = effects)
-  }
-
-  if (effects %in% c("random", "all") && isFALSE(group_level)) {
-    params_variance <- .extract_random_variances(model, ci = ci, effects = effects, ci_method = ci_method, ci_random = ci_random, verbose = verbose)
-  }
-
-  # merge random and fixed effects, if necessary
-  if (!is.null(params) && (!is.null(params_random) || !is.null(params_variance))) {
-    params$Level <- NA
-    params$Group <- ""
-
-    if (!is.null(params_random)) {
-      params <- params[match(colnames(params_random), colnames(params))]
-    } else {
-      params <- params[match(colnames(params_variance), colnames(params))]
+      if (is.null(params_random)) {
+        params <- params[match(colnames(params_variance), colnames(params))]
+      } else {
+        params <- params[match(colnames(params_random), colnames(params))]
+      }
     }
   }
 
-  params <- rbind(params, params_random, params_variance)
-  # remove empty column
-  if (!is.null(params$Level) && all(is.na(params$Level))) {
-    params$Level <- NULL
-  }
-
-  # due to rbind(), we lose attributes from "extract_parameters()",
-  # so we add those attributes back here...
-  if (!is.null(att)) {
-    attributes(params) <- utils::modifyList(att, attributes(params))
-  }
-
-  params <- .add_model_parameters_attributes(
-    params,
-    model,
-    ci = ci,
-    exponentiate,
-    bootstrap,
-    iterations,
-    ci_method = ci_method,
-    p_adjust = p_adjust,
-    verbose = verbose,
-    summary = summary,
-    group_level = group_level,
-    wb_component = wb_component,
-    ...
-  )
-
-
-  attr(params, "object_name") <- insight::safe_deparse_symbol(substitute(model))
-  class(params) <- c("parameters_model", "see_parameters_model", class(params))
-
-  params
+  rbind(params, params_random, params_variance)
 }
 
 
-#' @rdname ci.default
 #' @export
 ci.merMod <- function(x,
                       ci = 0.95,
@@ -297,7 +58,7 @@ ci.merMod <- function(x,
                       iterations = 500,
                       ...) {
   method <- tolower(method)
-  method <- match.arg(method, choices = c(
+  method <- insight::validate_argument(method, c(
     "wald", "ml1", "betwithin", "kr",
     "satterthwaite", "kenward", "boot",
     "profile", "residual", "normal"
@@ -324,7 +85,6 @@ ci.merMod <- function(x,
 }
 
 
-#' @rdname standard_error
 #' @export
 standard_error.merMod <- function(model,
                                   effects = "fixed",
@@ -333,7 +93,7 @@ standard_error.merMod <- function(model,
                                   vcov_args = NULL,
                                   ...) {
   dots <- list(...)
-  effects <- match.arg(effects, choices = c("fixed", "random"))
+  effects <- insight::validate_argument(effects, c("fixed", "random"))
 
   if (effects == "random") {
     out <- .standard_errors_random(model)
@@ -349,12 +109,12 @@ standard_error.merMod <- function(model,
   }
 
   if (!is.null(vcov) || isTRUE(dots[["robust"]])) {
-    args <- list(model,
+    fun_args <- list(model,
       vcov = vcov,
       vcov_args = vcov_args
     )
-    args <- c(args, dots)
-    out <- do.call("standard_error.default", args)
+    fun_args <- c(fun_args, dots)
+    out <- do.call("standard_error.default", fun_args)
     return(out)
   }
 
@@ -368,7 +128,6 @@ standard_error.merMod <- function(model,
     return(out)
   }
 }
-
 
 
 # helpers --------------
@@ -397,7 +156,6 @@ standard_error.merMod <- function(model,
 }
 
 
-
 se_mixed_default <- function(model) {
   params <- insight::find_parameters(model,
     effects = "fixed",
@@ -406,8 +164,6 @@ se_mixed_default <- function(model) {
   )
   .data_frame(Parameter = params, SE = .get_se_from_summary(model))
 }
-
-
 
 
 #' @export

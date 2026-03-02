@@ -17,15 +17,15 @@ format_order <- function(order, textual = TRUE, ...) {
     order <- insight::format_number(order)
     parts <- unlist(strsplit(order, " ", fixed = TRUE))
     parts[length(parts)] <- switch(utils::tail(parts, 1),
-      "one" = "first",
-      "two" = "second",
-      "three" = "third",
-      "four" = "fourth",
-      "five" = "fifth",
-      "six" = "sixth",
-      "seven" = "seventh",
-      "eight" = "eigth",
-      "nine" = "ninth"
+      one = "first",
+      two = "second",
+      three = "third",
+      four = "fourth",
+      five = "fifth",
+      six = "sixth",
+      seven = "seventh",
+      eight = "eigth",
+      nine = "ninth"
     )
     out <- paste(parts, collapse = " ")
   } else {
@@ -36,18 +36,21 @@ format_order <- function(order, textual = TRUE, ...) {
     if (last_two %in% c(11, 12, 13)) {
       out <- paste0(number, "th")
     } else {
-      out <- paste0(number, switch(last,
-        "1" = "st",
-        "2" = "nd",
-        "3" = "rd",
-        "4" = "th",
-        "5" = "th",
-        "6" = "th",
-        "7" = "th",
-        "8" = "th",
-        "9" = "th",
-        "0" = "th"
-      ))
+      out <- paste0(
+        number,
+        switch(last,
+          `1` = "st",
+          `2` = "nd",
+          `3` = "rd",
+          `4` = "th",
+          `5` = "th",
+          `6` = "th",
+          `7` = "th",
+          `8` = "th",
+          `9` = "th",
+          `0` = "th"
+        )
+      )
     }
   }
 

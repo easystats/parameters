@@ -1,13 +1,17 @@
-#' @rdname model_parameters.zcpglm
 #' @export
 model_parameters.mhurdle <- function(model,
                                      ci = 0.95,
-                                     component = c("all", "conditional", "zi", "zero_inflated", "infrequent_purchase", "ip", "auxiliary"),
+                                     component = "all",
                                      exponentiate = FALSE,
                                      p_adjust = NULL,
+                                     keep = NULL,
+                                     drop = NULL,
                                      verbose = TRUE,
                                      ...) {
-  component <- match.arg(component)
+  component <- insight::validate_argument(
+    component,
+    c("all", "conditional", "zi", "zero_inflated", "infrequent_purchase", "ip", "auxiliary")
+  )
 
   params <- .model_parameters_generic(
     model,
@@ -17,6 +21,8 @@ model_parameters.mhurdle <- function(model,
     effects = "fixed",
     component = component,
     p_adjust = p_adjust,
+    keep_parameters = keep,
+    drop_parameters = drop,
     verbose = verbose,
     ...
   )
@@ -58,12 +64,6 @@ ci.mhurdle <- function(x, ci = 0.95, ...) {
 
 
 #' @export
-degrees_of_freedom.mhurdle <- function(model, method = NULL, ...) {
-  .degrees_of_freedom_no_dfresid_method(model, method)
-}
-
-
-#' @export
 standard_error.mhurdle <- function(model, component = c("all", "conditional", "zi", "zero_inflated", "infrequent_purchase", "ip", "auxiliary"), ...) {
   component <- match.arg(component)
   s <- summary(model)
@@ -84,7 +84,6 @@ standard_error.mhurdle <- function(model, component = c("all", "conditional", "z
 
   params[c("Parameter", "SE", "Component")]
 }
-
 
 
 #' @export

@@ -2,7 +2,7 @@
 #' @export
 dof_ml1 <- function(model) {
   if (!insight::is_mixed_model(model)) {
-    stop("Model must be a mixed model.", call. = FALSE)
+    insight::format_error("Model must be a mixed model.")
   }
 
   re_groups <- insight::get_random(model)
@@ -17,7 +17,7 @@ dof_ml1 <- function(model) {
   term_assignment <- .find_term_assignment(model_data, predictors, parameters)
 
   ddf <- sapply(model_data, function(.x) {
-    min(sapply(re_groups, .get_df_ml1_approx, x = .x))
+    min(vapply(re_groups, .get_df_ml1_approx, numeric(1), x = .x))
   })
 
   ltab <- table(ddf)
@@ -31,13 +31,11 @@ dof_ml1 <- function(model) {
 
   out <- numeric(length = length(parameters))
   ## FIXME: number of items to replace is not a multiple of replacement length
-  suppressWarnings(out[which("(Intercept)" != parameters)] <- ddf[term_assignment])
+  suppressWarnings(out[which("(Intercept)" != parameters)] <- ddf[term_assignment]) # nolint
   if (has_intcp) out[which("(Intercept)" == parameters)] <- min(ddf)
 
   stats::setNames(out, parameters)
 }
-
-
 
 
 .get_df_ml1_approx <- function(x, g) {
@@ -55,13 +53,11 @@ dof_ml1 <- function(model) {
   var.within <- stats::var(x - x.bar)
   var.between <- stats::var(x.bar)
   if (var.within >= var.between) {
-    return(n)
+    n
   } else {
-    return(m)
+    m
   }
 }
-
-
 
 
 .find_term_assignment <- function(model_data, predictors, parameters) {

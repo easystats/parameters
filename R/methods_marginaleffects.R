@@ -3,90 +3,255 @@
 
 # model_parameters ----------------
 
-#' @rdname model_parameters.averaging
 #' @export
-model_parameters.marginaleffects <- function(model,
-                                             ci = 0.95,
-                                             ...) {
-  insight::check_if_installed("marginaleffects")
-  out <- insight::standardize_names(
-    marginaleffects::tidy(model, conf_level = ci, ...),
-    style = "easystats"
-  )
+model_parameters.marginaleffects <- function(
+  model,
+  ci = 0.95,
+  exponentiate = FALSE,
+  verbose = TRUE,
+  ...
+) {
+  insight::check_if_installed("marginaleffects", minimum_version = "0.29.0")
+
+  # Bayesian models have posterior draws as attribute
+  is_bayesian <- !is.null(suppressWarnings(marginaleffects::get_draws(model, "PxD")))
+
+  if (is_bayesian) {
+    # Bayesian
+    out <- suppressWarnings(bayestestR::describe_posterior(
+      model,
+      ci = ci,
+      verbose = verbose,
+      ...
+    ))
+  } else {
+    # non-Bayesian
+    out <- as.data.frame(model)
+    # all columns in data grid and model data, we only want to keep "by" variables
+    all_data_cols <- union(
+      colnames(marginaleffects::components(model, "newdata")),
+      colnames(marginaleffects::components(model, "modeldata"))
+    )
+    # columns we want to keep
+    by_cols <- .keep_me_columns(model)
+    # remove redundant columns
+    to_remove <- setdiff(all_data_cols, by_cols)
+    out <- out[, !colnames(out) %in% to_remove, drop = FALSE]
+  }
+
+  out <- .rename_reserved_marginaleffects(out)
+
+  # need to standardize names for non-Bayesian models. Bayesian models have
+  # been processed through describe_posterior() already
+  if (!is_bayesian) {
+    out <- insight::standardize_names(out, style = "easystats")
+  }
+
+  # edge case: for avg_comparisons() with custom hypothesis, "term" and "hypothesis"
+  # are identical columns, now both names "Parameter" - remove one
+  param_cols <- which(colnames(out) == "Parameter")
+  if (length(param_cols) > 1) {
+    out[param_cols[-1]] <- NULL
+  }
+
+  # in case data grid contained column names that are reserved words,
+  # rename those back now...
+  colnames(out) <- gsub("#####$", "", colnames(out))
 
   # contrast_ columns provide indispensable information about the comparisons
   colnames(out)[colnames(out) == "contrast"] <- "Comparison"
   colnames(out) <- gsub("^contrast_", "Comparison: ", colnames(out))
 
-  out <- tryCatch(
-    .add_model_parameters_attributes(out, model, ci, ...),
-    error = function(e) out
-  )
-
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(model))
 
-  if (inherits(model, "marginalmeans")) {
-    attr(out, "coefficient_name") <- "Marginal Means"
-  } else if (inherits(model, "comparisons")) {
+  # do not print or report these columns
+  out <- out[, !colnames(out) %in% c("predicted_lo", "predicted_hi"), drop = FALSE]
+
+  if (inherits(model, "comparisons")) {
     attr(out, "coefficient_name") <- "Estimate"
     attr(out, "title") <- "Contrasts between Adjusted Predictions"
     if ("Type" %in% colnames(out)) {
       attr(out, "prediction_type") <- out$Type[1]
     }
-  } else if (inherits(model, "marginaleffects")) {
+  } else if (inherits(model, "slopes")) {
     attr(out, "coefficient_name") <- "Slope"
   } else if (inherits(model, "predictions")) {
     attr(out, "coefficient_name") <- "Predicted"
+  } else if (inherits(model, "hypotheses")) {
+    attr(out, "coefficient_name") <- "Estimate"
   }
+
+  # exponentiate coefficients and SE/CI, if requested
+  out <- .exponentiate_parameters(out, model = NULL, exponentiate)
+
+  # add further information as attributes
+  out <- .safe(
+    .add_model_parameters_attributes(
+      out,
+      model = model,
+      ci = ci,
+      exponentiate = exponentiate,
+      verbose = verbose,
+      ...
+    ),
+    out
+  )
 
   class(out) <- c("parameters_model", "see_parameters_model", class(out))
   out
 }
 
-#' @rdname model_parameters.averaging
 #' @export
 model_parameters.comparisons <- model_parameters.marginaleffects
 
 
-#' @rdname model_parameters.averaging
 #' @export
-model_parameters.marginalmeans <- model_parameters.marginaleffects
+model_parameters.hypotheses <- model_parameters.marginaleffects
 
 
-#' @rdname model_parameters.averaging
 #' @export
-model_parameters.deltamethod <- model_parameters.marginaleffects
+model_parameters.slopes <- model_parameters.marginaleffects
 
 
-#' @rdname model_parameters.averaging
 #' @export
-model_parameters.predictions <- function(model,
-                                         ci = 0.95,
-                                         ...) {
-  insight::check_if_installed("marginaleffects")
-  out <- insight::standardize_names(model, style = "easystats")
-  out <- insight::standardize_column_order(out, style = "easystats")
+model_parameters.predictions <- function(
+  model,
+  ci = 0.95,
+  exponentiate = FALSE,
+  verbose = TRUE,
+  ...
+) {
+  insight::check_if_installed("marginaleffects", minimum_version = "0.29.0")
 
-  # remove and reorder some columns
-  out$rowid <- out$Type <- NULL
-  out <- datawizard::data_relocate(out, select = attributes(model)$newdata_at, before = "Predicted")
+  # Bayesian models have posterior draws as attribute
+  is_bayesian <- !is.null(suppressWarnings(marginaleffects::get_draws(model, "PxD")))
 
-  # extract response, remove from data frame
-  reg_model <- attributes(model)$model
-  if (!is.null(reg_model) && insight::is_model(reg_model)) {
-    resp <- insight::find_response(reg_model)
-    out[[resp]] <- NULL
+  if (is_bayesian) {
+    # Bayesian
+    out <- suppressWarnings(bayestestR::describe_posterior(
+      model,
+      ci = ci,
+      verbose = verbose,
+      ...
+    ))
+  } else {
+    # columns we want to keep
+    by_cols <- .keep_me_columns(model)
+    # handle non-Bayesian models
+    out <- .rename_reserved_marginaleffects(model)
+    out <- datawizard::data_rename(out, "estimate", "predicted")
+    out <- datawizard::data_relocate(out, "predicted", before = 1)
+    out <- insight::standardize_names(out, style = "easystats")
   }
 
-  out <- tryCatch(
-    .add_model_parameters_attributes(out, model, ci, ...),
-    error = function(e) out
+  out <- insight::standardize_column_order(out, style = "easystats")
+
+  # in case data grid contained column names that are reserved words,
+  # rename those back now...
+  colnames(out) <- gsub("#####$", "", colnames(out))
+
+  # remove and reorder some columns
+  out$rowid <- out$rowid_dedup <- NULL
+  # need to remove "Type", but only if it's not a valid variable name
+  if (!"Type" %in% by_cols) {
+    out$Type <- NULL
+  }
+
+  # find at-variables
+  at_variables <- insight::compact_character(c(
+    marginaleffects::components(model, "variable_names_by"),
+    marginaleffects::components(model, "variable_names_by_hypothesis")
+  ))
+
+  # find cofficient name - differs for Bayesian models
+  coef_name <- intersect(c("Predicted", "Coefficient"), colnames(out))[1]
+  if (
+    !is.null(at_variables) && !is.na(coef_name) && all(at_variables %in% colnames(out))
+  ) {
+    out <- datawizard::data_relocate(out, select = at_variables, after = coef_name)
+  }
+
+  # extract response, remove from data frame
+  reg_model <- marginaleffects::components(model, "model")
+  if (!is.null(reg_model) && insight::is_model(reg_model)) {
+    resp <- insight::find_response(reg_model)
+    # check if response could be extracted
+    if (!is.null(resp)) {
+      # for some models, like brms-special response formula, we have multiple
+      # values in "resp", so we iterate all of them separately
+      for (r in resp) {
+        out[[r]] <- NULL
+      }
+    }
+  }
+
+  out <- .safe(
+    .add_model_parameters_attributes(
+      out,
+      model = model,
+      ci = ci,
+      exponentiate = exponentiate,
+      verbose = verbose,
+      ...
+    ),
+    out
   )
 
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(model))
   attr(out, "coefficient_name") <- "Predicted"
   attr(out, "no_caption") <- TRUE
 
+  # exponentiate coefficients and SE/CI, if requested
+  out <- .exponentiate_parameters(out, model = NULL, exponentiate)
+
   class(out) <- c("parameters_model", "see_parameters_model", class(out))
   out
+}
+
+
+.rename_reserved_marginaleffects <- function(model) {
+  # get focal terms - we might escape column names where focal terms
+  # equal "reserved" names, like t- or z-statistic
+  focal_terms <- attributes(model)$focal_terms
+  reserved <- c("t", "z")
+  renamed_focal <- NULL
+
+  # any focal terms equals reserved words? if so, rename
+  if (any(reserved %in% focal_terms)) {
+    renamed_focal <- focal_terms[focal_terms %in% reserved]
+    model <- datawizard::data_rename(
+      model,
+      select = renamed_focal,
+      replacement = paste0(renamed_focal, "#####")
+    )
+  }
+  model
+}
+
+
+.fix_duplicated_by_columns <- function(x, by_cols) {
+  duplicated_names <- grep(
+    paste0("(", paste0(by_cols, "\\.\\d+$", collapse = "|"), ")"),
+    colnames(x),
+    value = TRUE
+  )
+  # if we have duplicated "by" columns, we want to remove those as well
+  if (length(duplicated_names) > 0) {
+    x[duplicated_names] <- NULL
+  }
+  x
+}
+
+
+.keep_me_columns <- function(model) {
+  # columns we want to keep
+  by_cols <- union(
+    marginaleffects::components(model, "variable_names_by"),
+    marginaleffects::components(model, "variable_names_by_hypothesis")
+  )
+  # and newdata, if specified
+  if (!is.null(marginaleffects::components(model, "call")$newdata)) {
+    by_cols <- union(by_cols, colnames(marginaleffects::components(model, "newdata")))
+  }
+  by_cols
 }

@@ -11,29 +11,20 @@ ci.mira <- function(x, ci = 0.95, ...) {
 }
 
 
-# degrees of freedom ----------------------------
-
-#' @export
-degrees_of_freedom.mira <- function(model, ...) {
-  insight::check_if_installed("mice")
-  degrees_of_freedom(mice::pool(model), ...)
-}
-
-
-#' @export
-degrees_of_freedom.mipo <- function(model, ...) {
-  as.vector(summary(model)$df)
-}
-
-
 # p values ---------------------------------------
 
 #' @export
 p_value.mipo <- function(model, ...) {
-  .data_frame(
-    Parameter = as.vector(summary(model)$term),
-    p = as.vector(summary(model)$p.value)
+  s <- summary(model)
+  out <- .data_frame(
+    Parameter = as.vector(s$term),
+    p = as.vector(s$p.value)
   )
+  # check for ordinal-alike models
+  if (!is.null(model$pooled) && "y.level" %in% colnames(model$pooled)) {
+    out$Response <- as.vector(model$pooled$y.level)
+  }
+  out
 }
 
 
@@ -48,10 +39,16 @@ p_value.mira <- function(model, ...) {
 
 #' @export
 standard_error.mipo <- function(model, ...) {
-  .data_frame(
-    Parameter = as.vector(summary(model)$term),
-    SE = as.vector(summary(model)$std.error)
+  s <- summary(model)
+  out <- .data_frame(
+    Parameter = as.vector(s$term),
+    SE = as.vector(s$std.error)
   )
+  # check for ordinal-alike models
+  if (!is.null(model$pooled) && "y.level" %in% colnames(model$pooled)) {
+    out$Response <- as.vector(model$pooled$y.level)
+  }
+  out
 }
 
 
@@ -70,16 +67,55 @@ format_parameters.mira <- format_parameters.rma
 
 # model_parameters ---------------------------------
 
-#' @rdname model_parameters.mira
 #' @export
-model_parameters.mipo <- model_parameters.default
+model_parameters.mipo <- function(model,
+                                  ci = 0.95,
+                                  exponentiate = FALSE,
+                                  p_adjust = NULL,
+                                  keep = NULL,
+                                  drop = NULL,
+                                  verbose = TRUE,
+                                  ...) {
+  # validation check, warn if unsupported argument is used.
+  dot_args <- .check_dots(
+    dots = list(...),
+    not_allowed = c("vcov", "vcov_args"),
+    class(model)[1],
+    verbose = verbose
+  )
+
+  # check if we have ordinal/categorical response
+  if (!is.null(model$pooled) && "y.level" %in% colnames(model$pooled)) {
+    merge_by <- c("Parameter", "Response")
+  } else {
+    merge_by <- "Parameter"
+  }
+
+  fun_args <- list(
+    model,
+    ci = ci,
+    merge_by = merge_by,
+    exponentiate = exponentiate,
+    p_adjust = p_adjust,
+    keep_parameters = keep,
+    drop_parameters = drop,
+    vcov = NULL,
+    vcov_args = NULL
+  )
+  fun_args <- c(fun_args, dot_args)
+
+  out <- do.call(".model_parameters_generic", fun_args)
+  attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(model))
+  out
+}
 
 
 #' Parameters from multiply imputed repeated analyses
 #'
-#' Format models of class `mira`, obtained from `mice::width.mids()`.
+#' Format models of class `mira`, obtained from `mice::width.mids()`, or of
+#' class `mipo`.
 #'
-#' @param model An object of class `mira`.
+#' @param model An object of class `mira` or `mipo`.
 #' @inheritParams model_parameters.default
 #' @param ... Arguments passed to or from other methods.
 #'
@@ -87,52 +123,47 @@ model_parameters.mipo <- model_parameters.default
 #'   similar to `summary(mice::pool())`, i.e. it generates the pooled summary
 #'   of multiple imputed repeated regression analyses.
 #'
-#' @examples
+#' @examplesIf require("mice", quietly = TRUE) && require("gee", quietly = TRUE)
 #' library(parameters)
-#' if (require("mice", quietly = TRUE)) {
-#'   data(nhanes2)
-#'   imp <- mice(nhanes2)
-#'   fit <- with(data = imp, exp = lm(bmi ~ age + hyp + chl))
-#'   model_parameters(fit)
-#' }
-#' \dontrun{
+#' data(nhanes2, package = "mice")
+#' imp <- mice::mice(nhanes2)
+#' fit <- with(data = imp, exp = lm(bmi ~ age + hyp + chl))
+#' model_parameters(fit)
+#' \donttest{
 #' # model_parameters() also works for models that have no "tidy"-method in mice
-#' if (require("mice", quietly = TRUE) && require("gee", quietly = TRUE)) {
-#'   data(warpbreaks)
-#'   set.seed(1234)
-#'   warpbreaks$tension[sample(1:nrow(warpbreaks), size = 10)] <- NA
-#'   imp <- mice(warpbreaks)
-#'   fit <- with(data = imp, expr = gee(breaks ~ tension, id = wool))
+#' data(warpbreaks)
+#' set.seed(1234)
+#' warpbreaks$tension[sample(1:nrow(warpbreaks), size = 10)] <- NA
+#' imp <- mice::mice(warpbreaks)
+#' fit <- with(data = imp, expr = gee::gee(breaks ~ tension, id = wool))
 #'
-#'   # does not work:
-#'   # summary(pool(fit))
+#' # does not work:
+#' # summary(mice::pool(fit))
 #'
-#'   model_parameters(fit)
+#' model_parameters(fit)
 #' }
-#' }
-#'
-#'
 #'
 #' # and it works with pooled results
-#' if (require("mice")) {
-#'   data("nhanes2")
-#'   imp <- mice(nhanes2)
-#'   fit <- with(data = imp, exp = lm(bmi ~ age + hyp + chl))
-#'   pooled <- pool(fit)
+#' data("nhanes2", package = "mice")
+#' imp <- mice::mice(nhanes2)
+#' fit <- with(data = imp, exp = lm(bmi ~ age + hyp + chl))
+#' pooled <- mice::pool(fit)
 #'
-#'   model_parameters(pooled)
-#' }
+#' model_parameters(pooled)
 #' @export
 model_parameters.mira <- function(model,
                                   ci = 0.95,
                                   exponentiate = FALSE,
                                   p_adjust = NULL,
+                                  keep = NULL,
+                                  drop = NULL,
                                   verbose = TRUE,
                                   ...) {
   insight::check_if_installed("mice")
+  micemodel <- suppressWarnings(mice::pool(model))
 
   out <- .model_parameters_generic(
-    model = mice::pool(model),
+    model = micemodel,
     ci = ci,
     bootstrap = FALSE,
     iterations = 10,
@@ -140,6 +171,9 @@ model_parameters.mira <- function(model,
     standardize = NULL,
     exponentiate = exponentiate,
     p_adjust = p_adjust,
+    keep_parameters = keep,
+    drop_parameters = drop,
+    verbose = verbose,
     ...
   )
 

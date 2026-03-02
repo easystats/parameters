@@ -1,4 +1,3 @@
-#' @rdname model_parameters.averaging
 #' @export
 model_parameters.PMCMR <- function(model, ...) {
   insight::check_if_installed("PMCMRplus")

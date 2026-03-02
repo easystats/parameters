@@ -1,4 +1,3 @@
-
 #' @export
 standard_error.LORgee <- standard_error.default
 

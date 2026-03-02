@@ -5,7 +5,6 @@
 ############# .bracl --------------
 
 
-#' @rdname model_parameters.mlm
 #' @export
 model_parameters.bracl <- function(model,
                                    ci = 0.95,
@@ -14,9 +13,12 @@ model_parameters.bracl <- function(model,
                                    standardize = NULL,
                                    exponentiate = FALSE,
                                    p_adjust = NULL,
+                                   include_info = getOption("parameters_info", FALSE),
+                                   keep = NULL,
+                                   drop = NULL,
                                    verbose = TRUE,
                                    ...) {
-  # sanity check, warn if unsupported argument is used.
+  # validation check, warn if unsupported argument is used.
   dot_args <- .check_dots(
     dots = list(...),
     not_allowed = c("vcov", "vcov_args"),
@@ -25,14 +27,15 @@ model_parameters.bracl <- function(model,
   )
 
   # detect number of levels of response
-  nl <- tryCatch(
-    {
-      nlevels(factor(insight::get_response(model)))
-    },
-    error = function(e) {
-      0
-    }
-  )
+  resp <- insight::get_response(model)
+
+  # for cbind(), response is a data frame, not a factor. We then need to use
+  # number of columns as "nl"
+  if (is.data.frame(resp)) {
+    nl <- ncol(resp)
+  } else {
+    nl <- .safe(nlevels(factor(resp)), 0)
+  }
 
   # merge by response as well if more than 2 levels
   if (nl > 2) {
@@ -41,7 +44,7 @@ model_parameters.bracl <- function(model,
     merge_by <- "Parameter"
   }
 
-  args <- list(
+  fun_args <- list(
     model,
     ci = ci,
     bootstrap = bootstrap,
@@ -50,12 +53,15 @@ model_parameters.bracl <- function(model,
     standardize = standardize,
     exponentiate = exponentiate,
     p_adjust = p_adjust,
+    keep_parameters = keep,
+    drop_parameters = drop,
+    include_info = include_info,
     vcov = NULL,
     vcov_args = NULL
   )
-  args <- c(args, dot_args)
+  fun_args <- c(fun_args, dot_args)
 
-  out <- do.call(".model_parameters_generic", args)
+  out <- do.call(".model_parameters_generic", fun_args)
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(model))
   out
 }
@@ -63,7 +69,7 @@ model_parameters.bracl <- function(model,
 
 #' @export
 ci.bracl <- function(x, ci = 0.95, method = NULL, verbose = TRUE, ...) {
-  # sanity check, warn if unsupported argument is used.
+  # validation check, warn if unsupported argument is used.
   dot_args <- .check_dots(
     dots = list(...),
     not_allowed = c("vcov", "vcov_args"),
@@ -83,7 +89,7 @@ ci.bracl <- function(x, ci = 0.95, method = NULL, verbose = TRUE, ...) {
 
 #' @export
 standard_error.bracl <- function(model, verbose = TRUE, ...) {
-  # sanity check, warn if unsupported argument is used.
+  # validation check, warn if unsupported argument is used.
   dot_args <- .check_dots(
     dots = list(...),
     not_allowed = c("vcov", "vcov_args"),
@@ -108,7 +114,7 @@ standard_error.bracl <- function(model, verbose = TRUE, ...) {
 
 #' @export
 p_value.bracl <- function(model, verbose = TRUE, ...) {
-  # sanity check, warn if unsupported argument is used.
+  # validation check, warn if unsupported argument is used.
   dot_args <- .check_dots(
     dots = list(...),
     not_allowed = c("vcov", "vcov_args"),
@@ -131,57 +137,67 @@ p_value.bracl <- function(model, verbose = TRUE, ...) {
 }
 
 
-
-
 ############# .multinom --------------
 
 
 #' @export
-model_parameters.multinom <- model_parameters.bracl
-
-
-#' @export
-ci.multinom <- ci.bracl
-
-
-
-
-
-#' @export
-degrees_of_freedom.multinom <- function(model, method = NULL, ...) {
-  if (identical(method, "normal")) {
-    Inf
-  } else {
-    insight::n_obs(model) - model$edf
-  }
+model_parameters.multinom <- function(model,
+                                      ci = 0.95,
+                                      ci_method = "normal",
+                                      bootstrap = FALSE,
+                                      iterations = 1000,
+                                      standardize = NULL,
+                                      exponentiate = FALSE,
+                                      p_adjust = NULL,
+                                      include_info = getOption("parameters_info", FALSE),
+                                      keep = NULL,
+                                      drop = NULL,
+                                      verbose = TRUE,
+                                      ...) {
+  model_parameters.bracl(
+    model,
+    ci = ci,
+    ci_method = ci_method,
+    bootstrap = bootstrap,
+    iterations = iterations,
+    standardize = standardize,
+    exponentiate = exponentiate,
+    p_adjust = p_adjust,
+    include_info = include_info,
+    keep = keep,
+    drop = drop,
+    verbose = verbose,
+    ...
+  )
 }
 
+
 #' @export
-degrees_of_freedom.nnet <- degrees_of_freedom.multinom
-
-
+ci.multinom <- function(x, ci = 0.95, method = "normal", verbose = TRUE, ...) {
+  ci.bracl(x, ci = ci, method = method, verbose = verbose, ...)
+}
 
 
 #' @export
 standard_error.multinom <- function(model, ...) {
   se <- tryCatch(
     {
-      stderr <- summary(model)$standard.errors
-      if (is.null(stderr)) {
+      std_err <- summary(model)$standard.errors
+      if (is.null(std_err)) {
         vc <- insight::get_varcov(model)
-        stderr <- as.vector(sqrt(diag(vc)))
+        std_err <- as.vector(sqrt(diag(vc)))
       } else {
-        if (is.matrix(stderr)) {
-          tmp <- c()
-          for (i in seq_len(nrow(stderr))) {
-            tmp <- c(tmp, as.vector(stderr[i, ]))
+        if (is.matrix(std_err)) {
+          tmp <- NULL
+          for (i in seq_len(nrow(std_err))) {
+            tmp <- c(tmp, as.vector(std_err[i, ]))
           }
         } else {
-          tmp <- as.vector(stderr)
+          tmp <- as.vector(std_err)
         }
-        stderr <- tmp
+        std_err <- tmp
       }
-      stderr
+      std_err
     },
     error = function(e) {
       vc <- insight::get_varcov(model)
@@ -207,7 +223,7 @@ standard_error.multinom <- function(model, ...) {
 
 
 #' @export
-p_value.multinom <- function(model, method = "residual", ...) {
+p_value.multinom <- function(model, method = "normal", ...) {
   stat <- insight::get_statistic(model)
   out <- p_value.default(model, method = method, ...)
   if (!is.null(stat$Response)) {
@@ -225,9 +241,9 @@ simulate_parameters.multinom <- function(model,
                                          ci_method = "quantile",
                                          test = "p-value",
                                          ...) {
-  data <- simulate_model(model, iterations = iterations, ...)
+  sim_data <- simulate_model(model, iterations = iterations, ...)
   out <- .summary_bootstrap(
-    data = data,
+    data = sim_data,
     test = test,
     centrality = centrality,
     ci = ci,
@@ -250,8 +266,6 @@ simulate_parameters.multinom <- function(model,
 
   out
 }
-
-
 
 
 ############# .brmultinom --------------

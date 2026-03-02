@@ -33,8 +33,8 @@ standardize_posteriors(
 \item{model}{A statistical model.}
 
 \item{method}{The method used for standardizing the parameters. Can be
-\code{"refit"} (default), \code{"posthoc"}, \code{"smart"}, \code{"basic"} or \code{"pseudo"}. See
-'Details'.}
+\code{"refit"} (default), \code{"posthoc"}, \code{"smart"}, \code{"basic"}, \code{"pseudo"} or
+\code{"sdy"}. See Details'.}
 
 \item{ci}{Confidence Interval (CI) level}
 
@@ -84,7 +84,7 @@ models). This method is particularly recommended for complex models that
 include interactions or transformations (e.g., polynomial or spline terms).
 The \code{robust} (default to \code{FALSE}) argument enables a robust standardization
 of data, i.e., based on the \code{median} and \code{MAD} instead of the \code{mean} and
-\code{SD}. \strong{See \code{\link[=standardize]{standardize()}} for more details.}
+\code{SD}. \strong{See \code{\link[datawizard:standardize]{datawizard::standardize()}} for more details.}
 \itemize{
 \item \strong{Note} that \code{standardize_parameters(method = "refit")} may not return
 the same results as fitting a model on data that has been standardized with
@@ -119,13 +119,24 @@ As a results, the coefficients for effects of factors are similar to a Glass'
 delta.
 \item \strong{pseudo} (\emph{for 2-level (G)LMMs only}): In this (post-hoc) method, the
 response and the predictor are standardized based on the level of prediction
-(levels are detected with \code{\link[performance:check_heterogeneity_bias]{performance::check_heterogeneity_bias()}}): Predictors
+(levels are detected with \code{\link[performance:check_group_variation]{performance::check_group_variation()}}): Predictors
 are standardized based on their SD at level of prediction (see also
 \code{\link[datawizard:demean]{datawizard::demean()}}); The outcome (in linear LMMs) is standardized based
 on a fitted random-intercept-model, where \code{sqrt(random-intercept-variance)}
 is used for level 2 predictors, and \code{sqrt(residual-variance)} is used for
 level 1 predictors (Hoffman 2015, page 342). A warning is given when a
 within-group variable is found to have access between-group variance.
+\item \strong{sdy} (\emph{for logistic regression models only}): This y-standardization
+is useful when comparing coefficients of logistic regression models across
+models for the same sample. Unobserved heterogeneity varies across models
+with different independent variables, and thus, odds ratios from the same
+predictor of different models cannot be compared directly. The
+y-standardization makes coefficients "comparable across models by dividing
+them with the estimated standard deviation of the latent variable for each
+model" (Mood 2010). Thus, whenever one has multiple logistic regression models
+that are fit to the same data and share certain predictors (e.g. nested
+models), it can be useful to use this standardization approach to make
+log-odds or odds ratios comparable.
 }
 }
 
@@ -137,8 +148,9 @@ When the model's formula contains transformations (e.g. \code{y ~ exp(X)}) \code
 equivalent to \code{exp(scale(X))}), the \code{"basic"} method standardizes the
 transformed data (e.g. equivalent to \code{scale(exp(X))}).
 \cr\cr
-See the \emph{Transformed Variables} section in \code{\link[=standardize.default]{standardize.default()}} for more
-details on how different transformations are dealt with when \code{method = "refit"}.
+See the \emph{Transformed Variables} section in \code{\link[datawizard:standardize.default]{datawizard::standardize.default()}}
+for more details on how different transformations are dealt with when
+\code{method = "refit"}.
 }
 
 \subsection{Confidence Intervals}{
@@ -186,22 +198,19 @@ standardize_parameters(model, method = "posthoc")
 standardize_parameters(model, method = "basic", exponentiate = TRUE)
 }
 
-if (require("lme4")) {
+\dontshow{if (require("lme4", quietly = TRUE)) withAutoprint(\{ # examplesIf}
 \donttest{
-  m <- lme4::lmer(mpg ~ cyl + am + vs + (1 | cyl), mtcars)
-  standardize_parameters(m, method = "pseudo", ci_method = "satterthwaite")
+m <- lme4::lmer(mpg ~ cyl + am + vs + (1 | cyl), mtcars)
+standardize_parameters(m, method = "pseudo", ci_method = "satterthwaite")
 }
+\dontshow{\}) # examplesIf}
+\dontshow{if (require("rstanarm", quietly = TRUE)) withAutoprint(\{ # examplesIf}
+\donttest{
+model <- rstanarm::stan_glm(rating ~ critical + privileges, data = attitude, refresh = 0)
+head(standardize_posteriors(model, method = "refit", verbose = FALSE))
+head(standardize_posteriors(model, method = "basic", verbose = FALSE))
 }
-
-\dontrun{
-if (require("rstanarm")) {
-  model <- rstanarm::stan_glm(rating ~ critical + privileges, data = attitude, refresh = 0)
-  standardize_posteriors(model, method = "refit")
-  standardize_posteriors(model, method = "posthoc")
-  standardize_posteriors(model, method = "smart")
-  head(standardize_posteriors(model, method = "basic"))
-}
-}
+\dontshow{\}) # examplesIf}
 }
 \references{
 \itemize{
@@ -215,6 +224,8 @@ Psychometrika, 80(2), 365-378.
 regression models.
 \item Gelman, A. (2008). Scaling regression inputs by dividing by two standard
 deviations. Statistics in medicine, 27(15), 2865-2873.
+\item Mood C. Logistic Regression: Why We Cannot Do What We Think We Can Do, and
+What We Can Do About It. European Sociological Review (2010) 26:67–82.
 }
 }
 \seealso{

@@ -51,15 +51,13 @@ standardise_posteriors <- standardize_posteriors
 
 #' @keywords internal
 .standardize_posteriors_posthoc <- function(pars, method, model, mi, robust, two_sd, include_response, verbose) {
-  # Sanity Check for "pseudo"
+  # validation check for "pseudo"
   method <- .should_pseudo(method, model)
 
   method <- .cant_smart_or_posthoc(method, model, mi, pars$Parameter)
 
   if (robust && method == "pseudo") {
-    warning("`robust` standardization not available for `pseudo` method.",
-      call. = FALSE
-    )
+    insight::format_alert("`robust` standardization not available for `pseudo` method.")
     robust <- FALSE
   }
 
@@ -74,7 +72,7 @@ standardise_posteriors <- standardize_posteriors
   i <- match(deviations$Parameter, colnames(pars))
   pars <- pars[, i]
 
-  if (method == "basic") {
+  if (method == "basic") { # nolint
     col_dev_resp <- "Deviation_Response_Basic"
     col_dev_pred <- "Deviation_Basic"
   } else if (method == "posthoc") {

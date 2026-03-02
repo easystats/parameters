@@ -36,7 +36,7 @@
 #' model <- lm(Sepal.Length ~ Species * Petal.Width + Petal.Length, data = iris)
 #' simulate_parameters(model)
 #'
-#' \dontrun{
+#' \donttest{
 #' if (require("glmmTMB", quietly = TRUE)) {
 #'   model <- glmmTMB(
 #'     count ~ spp + mined + (1 | site),
@@ -54,8 +54,6 @@ simulate_parameters <- function(model, ...) {
 }
 
 
-
-
 #' @rdname simulate_parameters
 #' @export
 simulate_parameters.default <- function(model,
@@ -68,9 +66,9 @@ simulate_parameters.default <- function(model,
   # check for valid input
   .is_model_valid(model)
 
-  data <- simulate_model(model, iterations = iterations, ...)
+  sim_data <- simulate_model(model, iterations = iterations, ...)
   out <- .summary_bootstrap(
-    data = data,
+    data = sim_data,
     test = test,
     centrality = centrality,
     ci = ci,

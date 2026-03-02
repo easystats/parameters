@@ -3,17 +3,20 @@
 #################### .mvord
 
 
-#' @rdname model_parameters.averaging
 #' @export
 model_parameters.mvord <- function(model,
                                    ci = 0.95,
-                                   component = c("all", "conditional", "thresholds", "correlation"),
+                                   component = "all",
                                    standardize = NULL,
                                    exponentiate = FALSE,
                                    p_adjust = NULL,
+                                   include_info = getOption("parameters_info", FALSE),
+                                   keep = NULL,
+                                   drop = NULL,
                                    verbose = TRUE,
                                    ...) {
-  component <- match.arg(component)
+  component <- insight::validate_argument(component, c("all", "conditional", "thresholds", "correlation"))
+
   out <- .model_parameters_generic(
     model = model,
     ci = ci,
@@ -24,6 +27,9 @@ model_parameters.mvord <- function(model,
     standardize = standardize,
     exponentiate = exponentiate,
     p_adjust = p_adjust,
+    keep_parameters = keep,
+    drop_parameters = drop,
+    include_info = include_info,
     ...
   )
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(model))
@@ -35,7 +41,9 @@ model_parameters.mvord <- function(model,
 standard_error.mvord <- function(model, component = c("all", "conditional", "thresholds", "correlation"), ...) {
   component <- match.arg(component)
   params <- insight::get_parameters(model, component = "all")
-  junk <- utils::capture.output(s <- summary(model))
+  junk <- utils::capture.output({
+    s <- summary(model)
+  })
 
   params$SE <- c(
     unname(s$thresholds[, "Std. Error"]),
@@ -45,7 +53,7 @@ standard_error.mvord <- function(model, component = c("all", "conditional", "thr
 
   params <- params[c("Parameter", "SE", "Component", "Response")]
 
-  if (insight::n_unique(params$Response) == 1) {
+  if (insight::has_single_value(params$Response, remove_na = TRUE)) {
     params$Response <- NULL
   }
 
@@ -61,7 +69,9 @@ standard_error.mvord <- function(model, component = c("all", "conditional", "thr
 p_value.mvord <- function(model, component = c("all", "conditional", "thresholds", "correlation"), ...) {
   component <- match.arg(component)
   params <- insight::get_parameters(model, component = "all")
-  junk <- utils::capture.output(s <- summary(model))
+  junk <- utils::capture.output({
+    s <- summary(model)
+  })
 
   params$p <- c(
     unname(s$thresholds[, "Pr(>|z|)"]),
@@ -71,7 +81,7 @@ p_value.mvord <- function(model, component = c("all", "conditional", "thresholds
 
   params <- params[c("Parameter", "p", "Component", "Response")]
 
-  if (insight::n_unique(params$Response) == 1) {
+  if (insight::has_single_value(params$Response, remove_na = TRUE)) {
     params$Response <- NULL
   }
 

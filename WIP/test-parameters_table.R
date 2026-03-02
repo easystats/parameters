@@ -1,4 +1,4 @@
-if (require("testthat") && require("parameters") && require("effectsize") && require("lme4")) {
+if (require("effectsize") && require("lme4")) {
   x <- parameters::model_parameters(lm(Sepal.Length ~ Species, data = iris), standardize = "refit")
   t <- parameters::parameters_table(x)
   expect_true(all(names(t) == c("Parameter", "Coefficient", "SE", "95% CI", "t(147)", "p")))

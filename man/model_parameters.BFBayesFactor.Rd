@@ -14,48 +14,50 @@
   rope_range = "default",
   rope_ci = 0.95,
   priors = TRUE,
-  effectsize_type = NULL,
+  es_type = NULL,
   include_proportions = FALSE,
   verbose = TRUE,
-  cohens_d = NULL,
-  cramers_v = NULL,
   ...
 )
 }
 \arguments{
 \item{model}{Object of class \code{BFBayesFactor}.}
 
-\item{centrality}{The point-estimates (centrality indices) to compute.  Character (vector) or list with one or more of these options: \code{"median"}, \code{"mean"}, \code{"MAP"} or \code{"all"}.}
+\item{centrality}{The point-estimates (centrality indices) to compute. Character
+(vector) or list with one or more of these options: \code{"median"}, \code{"mean"}, \code{"MAP"}
+(see \code{\link[bayestestR:map_estimate]{map_estimate()}}), \code{"trimmed"} (which is just \code{mean(x, trim = threshold)}),
+\code{"mode"} or \code{"all"}.}
 
-\item{dispersion}{Logical, if \code{TRUE}, computes indices of dispersion related to the estimate(s) (\code{SD} and \code{MAD} for \code{mean} and \code{median}, respectively).}
+\item{dispersion}{Logical, if \code{TRUE}, computes indices of dispersion related
+to the estimate(s) (\code{SD} and \code{MAD} for \code{mean} and \code{median}, respectively).
+Dispersion is not available for \code{"MAP"} or \code{"mode"} centrality indices.}
 
 \item{ci}{Value or vector of probability of the CI (between 0 and 1)
-to be estimated. Default to \code{.95} (\verb{95\%}).}
+to be estimated. Default to \code{0.95} (\verb{95\%}).}
 
-\item{ci_method}{The type of index used for Credible Interval. Can be
-\code{"ETI"} (default, see \code{\link[bayestestR:eti]{eti()}}), \code{"HDI"}
-(see \code{\link[bayestestR:hdi]{hdi()}}), \code{"BCI"} (see
-\code{\link[bayestestR:bci]{bci()}}), \code{"SPI"} (see \code{\link[bayestestR:spi]{spi()}}), or
-\code{"SI"} (see \code{\link[bayestestR:si]{si()}}).}
+\item{ci_method}{The type of index used for Credible Interval. Can be \code{"ETI"}
+(default, see \code{\link[bayestestR:eti]{eti()}}), \code{"HDI"} (see \code{\link[bayestestR:hdi]{hdi()}}), \code{"BCI"} (see \code{\link[bayestestR:bci]{bci()}}),
+\code{"SPI"} (see \code{\link[bayestestR:spi]{spi()}}), or \code{"SI"} (see \code{\link[bayestestR:si]{si()}}).}
 
 \item{test}{The indices of effect existence to compute. Character (vector) or
 list with one or more of these options: \code{"p_direction"} (or \code{"pd"}),
-\code{"rope"}, \code{"p_map"}, \code{"equivalence_test"} (or \code{"equitest"}),
-\code{"bayesfactor"} (or \code{"bf"}) or \code{"all"} to compute all tests.
-For each "test", the corresponding \pkg{bayestestR} function is called
-(e.g. \code{\link[bayestestR:rope]{rope()}} or \code{\link[bayestestR:p_direction]{p_direction()}}) and its results
-included in the summary output.}
+\code{"rope"}, \code{"p_map"}, \code{"p_significance"} (or \code{"ps"}), \code{"p_rope"},
+\code{"equivalence_test"} (or \code{"equitest"}), \code{"bayesfactor"} (or \code{"bf"}) or
+\code{"all"} to compute all tests. For each "test", the corresponding
+\strong{bayestestR} function is called (e.g. \code{\link[bayestestR:rope]{rope()}} or \code{\link[bayestestR:p_direction]{p_direction()}})
+and its results included in the summary output.}
 
-\item{rope_range}{ROPE's lower and higher bounds. Should be a list of two
-values (e.g., \code{c(-0.1, 0.1)}) or \code{"default"}. If \code{"default"},
-the bounds are set to \code{x +- 0.1*SD(response)}.}
+\item{rope_range}{ROPE's lower and higher bounds. Should be a vector of two
+values (e.g., \code{c(-0.1, 0.1)}), \code{"default"} or a list of numeric vectors of
+the same length as numbers of parameters. If \code{"default"}, the bounds are
+set to \code{x +- 0.1*SD(response)}.}
 
 \item{rope_ci}{The Credible Interval (CI) probability, corresponding to the
 proportion of HDI, to use for the percentage in ROPE.}
 
 \item{priors}{Add the prior used for each parameter.}
 
-\item{effectsize_type}{The effect size of interest. Not that possibly not all
+\item{es_type}{The effect size of interest. Not that possibly not all
 effect sizes are applicable to the model object. See 'Details'. For Anova
 models, can also be a character vector with multiple effect size names.}
 
@@ -64,9 +66,7 @@ cell proportions/counts for Bayesian contingency table analysis (from
 \code{BayesFactor::contingencyTableBF()}). Defaults to \code{FALSE}, as this
 information is often redundant.}
 
-\item{verbose}{Toggle warnings and messages.}
-
-\item{cohens_d, cramers_v}{Deprecated. Please use \code{effectsize_type}.}
+\item{verbose}{Toggle off warnings.}
 
 \item{...}{Additional arguments to be passed to or from methods.}
 }
@@ -92,22 +92,26 @@ the \emph{g} parameters; See the \emph{Bayes Factors for ANOVAs} paper
 }
 }
 \examples{
+\dontshow{if (require("BayesFactor")) withAutoprint(\{ # examplesIf}
 \donttest{
-if (require("BayesFactor")) {
-  # Bayesian t-test
-  model <- ttestBF(x = rnorm(100, 1, 1))
-  model_parameters(model)
-  model_parameters(model, cohens_d = TRUE, ci = .9)
+# Bayesian t-test
+model <- BayesFactor::ttestBF(x = rnorm(100, 1, 1))
+model_parameters(model)
+model_parameters(model, es_type = "cohens_d", ci = 0.9)
 
-  # Bayesian contingency table analysis
-  data(raceDolls)
-  bf <- contingencyTableBF(raceDolls, sampleType = "indepMulti", fixedMargin = "cols")
-  model_parameters(bf,
-    centrality = "mean",
-    dispersion = TRUE,
-    verbose = FALSE,
-    effectsize_type = "cramers_v"
-  )
+# Bayesian contingency table analysis
+data(raceDolls)
+bf <- BayesFactor::contingencyTableBF(
+  raceDolls,
+  sampleType = "indepMulti",
+  fixedMargin = "cols"
+)
+model_parameters(bf,
+  centrality = "mean",
+  dispersion = TRUE,
+  verbose = FALSE,
+  es_type = "cramers_v"
+)
 }
-}
+\dontshow{\}) # examplesIf}
 }

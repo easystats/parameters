@@ -77,16 +77,15 @@ reduce_parameters <- function(x, method = "PCA", n = "max", distance = "euclidea
 #' @export
 reduce_data <- function(x, method = "PCA", n = "max", distance = "euclidean", ...) {
   if (!is.data.frame(x)) {
-    stop("Only works on data frames.", call. = FALSE)
+    insight::format_error("Only works on data frames.")
   }
   reduce_parameters(x, method = method, n = n, distance = distance, ...)
 }
 
 
-
 #' @export
 reduce_parameters.data.frame <- function(x, method = "PCA", n = "max", distance = "euclidean", ...) {
-  x <- datawizard::to_numeric(x)
+  x <- datawizard::to_numeric(x, dummy_factors = TRUE)
 
   # N factors
   if (n == "max") {
@@ -101,9 +100,9 @@ reduce_parameters.data.frame <- function(x, method = "PCA", n = "max", distance 
     features <- as.data.frame(attributes(features)$scores)
   } else if (tolower(method) %in% c("cmds", "pcoa")) {
     features <- .cmds(x, n = nfac, distance = distance, ...)
-  } else if (tolower(method) %in% c("drr")) {
+  } else if (tolower(method) == "drr") {
     features <- .drr(x, n = nfac, ...)
-  } else if (tolower(method) %in% c("ica")) {
+  } else if (tolower(method) == "ica") {
     features <- .ica(x, n = nfac, ...)
   } else {
     insight::format_error("`method` must be one of \"PCA\", \"cMDS\", \"DRR\" or \"ICA\".")
@@ -112,27 +111,27 @@ reduce_parameters.data.frame <- function(x, method = "PCA", n = "max", distance 
   # Get weights / pseudo-loadings (correlations)
   cormat <- as.data.frame(stats::cor(x = x, y = features))
   cormat <- cbind(data.frame(Variable = row.names(cormat)), cormat)
-  weights <- as.data.frame(.sort_loadings(cormat, cols = 2:ncol(cormat)))
+  pca_weights <- as.data.frame(.sort_loadings(cormat, cols = 2:ncol(cormat)))
 
   if (n == "max") {
-    weights <- .filter_loadings(weights, threshold = "max", 2:ncol(weights))
-    non_empty <- sapply(weights[2:ncol(weights)], function(x) !all(is.na(x)))
-    weights <- weights[c(TRUE, non_empty)]
+    pca_weights <- .filter_loadings(pca_weights, threshold = "max", 2:ncol(pca_weights))
+    non_empty <- vapply(pca_weights[2:ncol(pca_weights)], function(x) !all(is.na(x)), TRUE)
+    pca_weights <- pca_weights[c(TRUE, non_empty)]
     features <- features[, non_empty]
-    weights[is.na(weights)] <- 0
-    weights <- .filter_loadings(.sort_loadings(weights, cols = 2:ncol(weights)), threshold = "max", 2:ncol(weights))
+    pca_weights[is.na(pca_weights)] <- 0
+    pca_weights <- .filter_loadings(.sort_loadings(pca_weights, cols = 2:ncol(pca_weights)), threshold = "max", 2:ncol(pca_weights))
   }
 
   # Create varnames
-  varnames <- sapply(weights[2:ncol(weights)], function(x) {
-    name <- weights$Variable[!is.na(x)]
+  varnames <- vapply(pca_weights[2:ncol(pca_weights)], function(x) {
+    name <- pca_weights$Variable[!is.na(x)]
     weight <- insight::format_value(x[!is.na(x)])
     paste0(paste(name, weight, sep = "_"), collapse = "/")
-  })
+  }, character(1))
   names(features) <- as.character(varnames)
 
   # Attributes
-  attr(features, "loadings") <- weights
+  attr(features, "loadings") <- pca_weights
   class(features) <- c("parameters_reduction", class(features))
 
   # Out
@@ -140,11 +139,10 @@ reduce_parameters.data.frame <- function(x, method = "PCA", n = "max", distance 
 }
 
 
-
 #' @export
 reduce_parameters.lm <- function(x, method = "PCA", n = "max", distance = "euclidean", ...) {
-  data <- reduce_parameters(
-    datawizard::to_numeric(insight::get_predictors(x, ...), ...),
+  model_data <- reduce_parameters(
+    datawizard::to_numeric(insight::get_predictors(x, ...), ..., dummy_factors = TRUE),
     method = method,
     n = n,
     distance = distance
@@ -154,15 +152,12 @@ reduce_parameters.lm <- function(x, method = "PCA", n = "max", distance = "eucli
   y[insight::find_response(x)] <- insight::get_response(x)
   y$.row <- NULL
 
-  formula <- paste(insight::find_response(x), "~", paste(paste0("`", names(data), "`"), collapse = " + "))
-  stats::update(x, formula = formula, data = cbind(data, y))
+  new_formula <- paste(insight::find_response(x), "~", paste(paste0("`", names(model_data), "`"), collapse = " + "))
+  stats::update(x, formula = new_formula, data = cbind(model_data, y))
 }
 
 #' @export
 reduce_parameters.merMod <- reduce_parameters.lm
-
-
-
 
 
 #' @export
@@ -172,11 +167,6 @@ principal_components.lm <- function(x, ...) {
 
 #' @export
 principal_components.merMod <- principal_components.lm
-
-
-
-
-
 
 
 #' @keywords internal
@@ -192,26 +182,20 @@ principal_components.merMod <- principal_components.lm
 }
 
 
-
-
-
-
-
-
 #' @keywords internal
 .drr <- function(x, n = "all", ...) {
   n <- .get_n_factors(x, n = n, type = "PCA", rotation = "none")
 
   insight::check_if_installed("DRR")
 
-  junk <- utils::capture.output(suppressMessages(rez <- DRR::drr(x, n)))
+  junk <- utils::capture.output(suppressMessages({
+    rez <- DRR::drr(x, n)
+  }))
 
   features <- as.data.frame(rez$fitted.data)
   names(features) <- paste0("DRR", seq_len(ncol(features)))
   features
 }
-
-
 
 
 #' @keywords internal

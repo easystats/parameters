@@ -3,7 +3,6 @@
 # model parameters ---------------------
 
 
-#' @rdname model_parameters.averaging
 #' @export
 model_parameters.model_fit <- function(model,
                                        ci = 0.95,
@@ -34,7 +33,6 @@ model_parameters.model_fit <- function(model,
 }
 
 
-
 # ci ------------------
 
 
@@ -42,7 +40,6 @@ model_parameters.model_fit <- function(model,
 ci.model_fit <- function(x, ci = 0.95, method = NULL, ...) {
   ci(x$fit, ci = ci, method = method, ...)
 }
-
 
 
 # standard error ------------------
@@ -54,17 +51,6 @@ standard_error.model_fit <- function(model, ...) {
 }
 
 
-
-# degrees of freedom ------------------
-
-
-#' @export
-degrees_of_freedom.model_fit <- function(model, ...) {
-  degrees_of_freedom(model$fit, ...)
-}
-
-
-
 # p values ------------------
 
 
@@ -72,7 +58,6 @@ degrees_of_freedom.model_fit <- function(model, ...) {
 p_value.model_fit <- function(model, ...) {
   p_value(model$fit, ...)
 }
-
 
 
 # simulate model ------------------

@@ -1,6 +1,6 @@
 ---
 title: "Analysing Longitudinal or Panel Data"
-output: 
+output:
   rmarkdown::html_vignette:
     toc: true
     fig_width: 10.08
@@ -9,7 +9,7 @@ vignette: >
   %\VignetteIndexEntry{Analysing Longitudinal or Panel Data}
   \usepackage[utf8]{inputenc}
   %\VignetteEngine{knitr::rmarkdown}
-editor_options: 
+editor_options:
   chunk_output_type: console
 bibliography: bibliography.bib
 ---
@@ -27,7 +27,6 @@ knitr::opts_chunk$set(
 
 pkgs <- c(
   "datawizard",
-  "poorman",
   "see",
   "ggplot2",
   "parameters",
@@ -43,7 +42,7 @@ if (!all(sapply(pkgs, requireNamespace, quietly = TRUE))) {
 set.seed(333)
 ```
 
-This vignette explains the rational behind the `demean()` function. 
+This vignette explains the rational behind the `demean()` function.
 
 We give recommendations how to analyze multilevel or hierarchical data
 structures, when macro-indicators (or level-2 predictors, or higher-level units,
@@ -86,11 +85,11 @@ turn, results in biased estimates, because both the within- *and* between-effect
 are captured in *one* estimate.
 
 You can check if your model may suffer from heterogeneity bias using the
-`check_heterogeneity_bias()` function:
+`check_group_variation()` function:
 
 ```{r}
 library(performance)
-check_heterogeneity_bias(qol_cancer, select = c("phq4", "education"), group = "ID")
+check_group_variation(qol_cancer, select = c("phq4", "education"), by = "ID")
 ```
 
 # Adressing heterogeneity bias: the Fixed Effects Regression (FE) approach
@@ -110,10 +109,7 @@ and as such, FE avoids estimating a parameter for each higher-level unit.
 ## Computing the de-meaned and group-meaned variables
 
 ```{r}
-qol_cancer <- cbind(
-  qol_cancer,
-  datawizard::demean(qol_cancer, select = c("phq4", "QoL"), group = "ID")
-)
+qol_cancer <- datawizard::demean(qol_cancer, select = c("phq4", "QoL"), by = "ID")
 ```
 
 Now we have:
@@ -202,7 +198,7 @@ There are several ways how to address this using a mixed models approach:
     @gelman_data_2007, Chap. 12.6.].
 
   * When time-varying predictors are "decomposed" into their time-varying and
-    time-invariant components (demeaning), then mixed models can model **both**
+    time-invariant components (de-meaning), then mixed models can model **both**
     within- and between-subject effects [@bell_fixed_2019] - this approach is
     essentially a further development of a long-known recommendation by Mundlak
     [@mundlak_pooling_1978].
@@ -274,16 +270,17 @@ knitr::asis_output(f)
 In R-code, the model is written down like this:
 
 ```{r}
-rewb <- lmer(
+# We ignore the convergence warnings for now...
+rewb <- suppressWarnings(lmer(
   QoL ~ time + phq4_within + phq4_between + education +
     (1 + time | ID) + (1 + phq4_within | ID),
   data = qol_cancer
-)
+))
 ```
 
 **What about time-constant predictors?**
 
-After demeaning time-varying predictors, "at the higher level, the mean term is
+After de-meaning time-varying predictors, "at the higher level, the mean term is
 no longer constrained by Level 1 effects, so it is free to account for all the
 higher-level variance associated with that variable" [@bell_explaining_2015].
 
@@ -329,7 +326,6 @@ faster, typists make more mistakes (individual-level pattern).
 
 ```{r}
 library(ggplot2)
-library(poorman)
 library(see)
 
 set.seed(123)
@@ -339,28 +335,28 @@ x <- seq(2, 2 * n, 2)
 
 d <- do.call(rbind, lapply(1:n, function(i) {
   data.frame(
-    x = seq(1, n, by = .2),
-    y = 2 * x[i] + b[i] * seq(1, n, by = .2) + rnorm(21),
+    x = seq(1, n, by = 0.2),
+    y = 2 * x[i] + b[i] * seq(1, n, by = 0.2) + rnorm(21),
     grp = as.factor(2 * i)
   )
 }))
 
-d <- d %>%
-  group_by(grp) %>%
-  mutate(x = rev(15 - (x + 1.5 * as.numeric(grp)))) %>%
-  ungroup()
+d <- d |>
+  datawizard::data_group(grp) |>
+  datawizard::data_modify(x = rev(15 - (x + 1.5 * as.numeric(grp)))) |>
+  datawizard::data_ungroup()
 
 labs <- c("very slow", "slow", "average", "fast", "very fast")
 levels(d$grp) <- rev(labs)
 
-d <- cbind(d, datawizard::demean(d, c("x", "y"), group = "grp"))
+d <- datawizard::demean(d, c("x", "y"), by = "grp")
 ```
 
 Let's look at the raw data...
 
 ```{r echo=FALSE}
 ggplot(d, aes(x, y)) +
-  geom_point(colour = "#555555", size = 2.5, alpha = .5) +
+  geom_point(colour = "#555555", size = 2.5, alpha = 0.5) +
   see::theme_modern() +
   labs(x = "Typing Speed", y = "Typing Errors", colour = "Type Experience")
 ```
@@ -372,8 +368,8 @@ speed.
 
 ```{r echo=FALSE}
 ggplot(d, aes(x, y)) +
-  geom_point(colour = "#555555", size = 2.5, alpha = .5) +
-  geom_smooth(method = "lm", se = F, colour = "#555555") +
+  geom_point(colour = "#555555", size = 2.5, alpha = 0.5) +
+  geom_smooth(method = "lm", se = FALSE, colour = "#555555") +
   see::theme_modern() +
   labs(x = "Typing Speed", y = "Typing Errors", colour = "Type Experience")
 ```
@@ -391,8 +387,8 @@ due to repeated measurements.
 
 ```{r echo=FALSE}
 ggplot(d, aes(x, y)) +
-  geom_point(mapping = aes(colour = grp), size = 2.5, alpha = .5) +
-  geom_smooth(method = "lm", se = F, colour = "#555555") +
+  geom_point(mapping = aes(colour = grp), size = 2.5, alpha = 0.5) +
+  geom_smooth(method = "lm", se = FALSE, colour = "#555555") +
   see::scale_color_flat() +
   see::theme_modern() +
   labs(x = "Typing Speed", y = "Typing Errors", colour = "Type Experience")
@@ -406,7 +402,7 @@ and include only the within-effects as well as the group-level indicator.
 ```{r echo=FALSE}
 ggplot(d, aes(x, y)) +
   geom_smooth(mapping = aes(colour = grp), method = "lm", se = FALSE) +
-  geom_point(mapping = aes(colour = grp), size = 2.2, alpha = .6) +
+  geom_point(mapping = aes(colour = grp), size = 2.2, alpha = 0.6) +
   see::scale_color_flat() +
   see::theme_modern() +
   labs(x = "Typing Speed", y = "Typing Errors", colour = "Type Experience")
@@ -430,8 +426,8 @@ between-effect now.
 
 ```{r echo=FALSE}
 ggplot(d, aes(x, y)) +
-  geom_point(mapping = aes(colour = grp), size = 2.2, alpha = .6) +
-  geom_smooth(mapping = aes(x = x_between, y = y_between), method = "lm", se = F, colour = "#444444") +
+  geom_point(mapping = aes(colour = grp), size = 2.2, alpha = 0.6) +
+  geom_smooth(mapping = aes(x = x_between, y = y_between), method = "lm", se = FALSE, colour = "#444444") +
   see::scale_color_flat() +
   see::theme_modern() +
   labs(x = "Typing Speed", y = "Typing Errors", colour = "Type Experience")
@@ -453,8 +449,8 @@ within- and between-effects.
 ```{r echo=FALSE}
 ggplot(d, aes(x, y)) +
   geom_smooth(mapping = aes(colour = grp), method = "lm", se = FALSE) +
-  geom_point(mapping = aes(colour = grp), size = 2.2, alpha = .6) +
-  geom_smooth(mapping = aes(x = x_between, y = y_between), method = "lm", se = F, colour = "#444444") +
+  geom_point(mapping = aes(colour = grp), size = 2.2, alpha = 0.6) +
+  geom_smooth(mapping = aes(x = x_between, y = y_between), method = "lm", se = FALSE, colour = "#444444") +
   see::scale_color_flat() +
   see::theme_modern() +
   labs(x = "Typing Speed", y = "Typing Errors", colour = "Type Experience")
@@ -506,8 +502,8 @@ x <- seq(2, 2 * n, 2)
 
 d <- do.call(rbind, lapply(1:n, function(i) {
   data.frame(
-    x = seq(1, n, by = .2),
-    y = 2 * x[i] + b[i] * seq(1, n, by = .2) + rnorm(21),
+    x = seq(1, n, by = 0.2),
+    y = 2 * x[i] + b[i] * seq(1, n, by = 0.2) + rnorm(21),
     grp = as.factor(2 * i)
   )
 }))
@@ -517,15 +513,15 @@ d$grp[sample(which(d$grp == 8), 10)] <- 6
 d$grp[sample(which(d$grp == 4), 8)] <- 2
 d$grp[sample(which(d$grp == 10), 9)] <- 6
 
-d <- d %>%
-  group_by(grp) %>%
-  mutate(x = rev(15 - (x + 1.5 * as.numeric(grp)))) %>%
-  ungroup()
+d <- d |>
+  datawizard::data_group(grp) |>
+  datawizard::data_modify(x = rev(15 - (x + 1.5 * as.numeric(grp)))) |>
+  datawizard::data_ungroup()
 
 labs <- c("very slow", "slow", "average", "fast", "very fast")
 levels(d$grp) <- rev(labs)
 
-d <- cbind(d, datawizard::demean(d, c("x", "y"), group = "grp"))
+d <- datawizard::demean(d, c("x", "y"), by = "grp")
 
 # Between-subject effect of typing speed
 m1 <- lm(y ~ x_between, data = d)
@@ -535,5 +531,15 @@ model_parameters(m1)
 m2 <- lmer(y ~ x_between + (1 | grp), data = d)
 model_parameters(m2)
 ```
+
+# A final note - latent mean centering
+
+It can be even more complicated. The person-mean is only observed, but the
+true value is not known. Thus, in certain situations, the coefficients after
+de-meaning still might be (more or less) biased, because it doesn't
+appropriately account for the uncertainty in the person-means. In this case,
+_latent mean centering_ is recommended, however, there are only few options
+to do this. One way is using the great **brms** package, and this approach
+[is described here](https://vuorre.com/posts/latent-mean-centering/).
 
 # References

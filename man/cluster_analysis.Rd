@@ -20,7 +20,8 @@ cluster_analysis(
 )
 }
 \arguments{
-\item{x}{A data frame.}
+\item{x}{A data frame (with at least two variables), or a matrix (with at
+least two columns).}
 
 \item{n}{Number of clusters used for supervised cluster methods. If \code{NULL},
 the number of clusters to extract is determined by calling \code{\link[=n_clusters]{n_clusters()}}.
@@ -89,7 +90,8 @@ mean values).
 Clusters classification can be obtained via \code{print(x, newdata = NULL, ...)}.
 }
 \note{
-There is also a \href{https://easystats.github.io/see/articles/parameters.html}{\code{plot()}-method} implemented in the \href{https://easystats.github.io/see/}{\strong{see}-package}.
+There is also a \href{https://easystats.github.io/see/articles/parameters.html}{\code{plot()}-method}
+implemented in the \href{https://easystats.github.io/see/}{\strong{see}-package}.
 }
 \examples{
 set.seed(33)

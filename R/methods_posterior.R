@@ -1,4 +1,3 @@
-#' @rdname model_parameters.stanreg
 #' @export
 model_parameters.draws <- function(model,
                                    centrality = "median",
@@ -8,6 +7,7 @@ model_parameters.draws <- function(model,
                                    test = "pd",
                                    rope_range = "default",
                                    rope_ci = 0.95,
+                                   exponentiate = FALSE,
                                    keep = NULL,
                                    drop = NULL,
                                    verbose = TRUE,
@@ -33,13 +33,15 @@ model_parameters.draws <- function(model,
     ...
   )
 
+  # exponentiate coefficients and SE/CI, if requested
+  params <- .exponentiate_parameters(params, exponentiate = exponentiate)
+
   attr(params, "ci") <- ci
   attr(params, "object_name") <- insight::safe_deparse_symbol(substitute(model))
   class(params) <- c("parameters_model", "see_parameters_model", class(params))
 
   params
 }
-
 
 
 # Standard Errors ---------------------------------------------
@@ -49,10 +51,9 @@ standard_error.draws <- function(model, verbose = TRUE, ...) {
   params <- .posterior_draws_to_df(model)
   .data_frame(
     Parameter = colnames(params),
-    SE = unname(sapply(params, stats::sd, na.rm = TRUE))
+    SE = unname(vapply(params, stats::sd, 1, na.rm = TRUE))
   )
 }
-
 
 
 # p-Values ---------------------------------------------
@@ -63,10 +64,9 @@ p_value.draws <- function(model, ...) {
   p <- bayestestR::p_direction(params)
   .data_frame(
     Parameter = .remove_backticks_from_string(p$Parameter),
-    p = sapply(p$pd, bayestestR::convert_pd_to_p, simplify = TRUE)
+    p = vapply(p$pd, bayestestR::convert_pd_to_p, 1)
   )
 }
-
 
 
 # helper ------------------------------

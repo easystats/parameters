@@ -1,36 +1,11 @@
-#' Parameters from Cluster Models (k-means, ...)
-#'
-#' Format cluster models obtained for example by [kmeans()].
-#'
-#' @param model Cluster model.
-#' @inheritParams model_parameters.default
-#' @param ... Arguments passed to or from other methods.
-#'
-#' @examples
-#' \dontrun{
-#' #
-#' # K-means -------------------------------
-#' model <- kmeans(iris[1:4], centers = 3)
-#' rez <- model_parameters(model)
-#' rez
-#'
-#' # Get clusters
-#' predict(rez)
-#'
-#' # Clusters centers in long form
-#' attributes(rez)$means
-#'
-#' # Between and Total Sum of Squares
-#' attributes(rez)$Sum_Squares_Total
-#' attributes(rez)$Sum_Squares_Between
-#' }
 #' @export
 model_parameters.kmeans <- function(model, ...) {
   params <- cbind(
     data.frame(
       Cluster = row.names(model$centers),
       n_Obs = model$size,
-      Sum_Squares = model$withinss
+      Sum_Squares = model$withinss,
+      stringsAsFactors = FALSE
     ),
     model$centers
   )
@@ -57,54 +32,24 @@ model_parameters.kmeans <- function(model, ...) {
 }
 
 
-
-
-
 # factoextra::hkmeans -----------------------------------------------------
 
 
-
-#' @rdname model_parameters.kmeans
-#' @inheritParams cluster_centers
-#'
-#' @examples
-#' \dontrun{
-#' #
-#' # Hierarchical K-means (factoextra::hkclust) ----------------------
-#' if (require("factoextra", quietly = TRUE)) {
-#'   data <- iris[1:4]
-#'   model <- factoextra::hkmeans(data, k = 3)
-#'
-#'   rez <- model_parameters(model)
-#'   rez
-#'
-#'   # Get clusters
-#'   predict(rez)
-#'
-#'   # Clusters centers in long form
-#'   attributes(rez)$means
-#'
-#'   # Between and Total Sum of Squares
-#'   attributes(rez)$Sum_Squares_Total
-#'   attributes(rez)$Sum_Squares_Between
-#' }
-#' }
 #' @export
 model_parameters.hkmeans <- model_parameters.kmeans
-
 
 
 # Methods -------------------------------------------------------------------
 
 
-
-
 #' @export
 print.parameters_clusters <- function(x, digits = 2, ...) {
-  title <- "# Clustering Solution"
-  if ("title" %in% attributes(x)) title <- attributes(x)$title
+  clusterHeading <- "# Clustering Solution"
+  if ("title" %in% attributes(x)) {
+    clusterHeading <- attributes(x)$title
+  }
 
-  insight::print_color(title, "blue")
+  insight::print_color(clusterHeading, "blue")
 
   cat("\n\n")
   insight::print_colour(.text_components_variance(x), "yellow")
@@ -114,10 +59,6 @@ print.parameters_clusters <- function(x, digits = 2, ...) {
 
   invisible(x)
 }
-
-
-
-
 
 
 # Predict -----------------------------------------------------------------
@@ -149,7 +90,7 @@ predict.parameters_clusters <- function(object, newdata = NULL, names = NULL, ..
     } else if (is.character(names)) {
       out <- names[as.numeric(out)]
     } else {
-      stop("`names` must be a character vector or a list.", call. = FALSE)
+      insight::format_error("`names` must be a character vector or a list.")
     }
     out <- as.character(out)
   }

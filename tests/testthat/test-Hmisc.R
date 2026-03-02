@@ -1,7 +1,13 @@
-requiet("Hmisc")
-requiet("rms")
+skip_on_cran()
 
 test_that("issue 697", {
+  skip_if_not_installed("Hmisc")
+  skip_if_not_installed("rms")
+
+  # for some reason, Hmisc::transcan() doesn't find na.retain (which is an internal
+  # function in Hmisc)
+  na.retain <<- Hmisc:::na.retain
+
   set.seed(1)
   n <- 100
   df <- data.frame(
@@ -22,14 +28,18 @@ test_that("issue 697", {
   suppressWarnings(
     mod <- Hmisc::fit.mult.impute(
       y ~ x1 + x2,
-      fitter = orm, xtrans = imputer, data = df, pr = FALSE
+      fitter = rms::orm,
+      xtrans = imputer,
+      data = df,
+      pr = FALSE
     )
   )
 
   expect_s3_class(parameters(mod), "parameters_model")
   expect_s3_class(standard_error(mod), "data.frame")
   expect_s3_class(p_value(mod), "data.frame")
-  expect_equal(nrow(parameters(mod)), 3)
-  expect_equal(nrow(standard_error(mod)), 3)
-  expect_equal(nrow(p_value(mod)), 3)
+
+  expect_identical(nrow(parameters(mod)), 3L)
+  expect_identical(nrow(standard_error(mod)), 3L)
+  expect_identical(nrow(p_value(mod)), 3L)
 })

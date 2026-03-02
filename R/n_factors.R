@@ -7,32 +7,30 @@
 #' with the fewer factors.
 #'
 #' @param x A data frame.
-#' @param type Can be `"FA"` or `"PCA"`, depending on what you want to
-#'   do.
+#' @param type Can be `"FA"` or `"PCA"`, depending on what you want to do.
 #' @param rotation Only used for VSS (Very Simple Structure criterion, see
-#'   [psych::VSS()]). The rotation to apply. Can be `"none"`,
-#'   `"varimax"`, `"quartimax"`, `"bentlerT"`, `"equamax"`,
-#'   `"varimin"`, `"geominT"` and `"bifactor"` for orthogonal
-#'   rotations, and `"promax"`, `"oblimin"`, `"simplimax"`,
-#'   `"bentlerQ"`, `"geominQ"`, `"biquartimin"` and
-#'   `"cluster"` for oblique transformations.
-#' @param algorithm Factoring method used by VSS. Can be `"pa"` for
-#'   Principal Axis Factor Analysis, `"minres"` for minimum residual (OLS)
-#'   factoring, `"mle"` for Maximum Likelihood FA and `"pc"` for
-#'   Principal Components. `"default"` will select `"minres"` if
-#'   `type = "FA"` and `"pc"` if `type = "PCA"`.
+#'   [psych::VSS()]). The rotation to apply. Can be `"none"`, `"varimax"`,
+#'   `"quartimax"`, `"bentlerT"`, `"equamax"`, `"varimin"`, `"geominT"` and
+#'   `"bifactor"` for orthogonal rotations, and `"promax"`, `"oblimin"`,
+#'   `"simplimax"`, `"bentlerQ"`, `"geominQ"`, `"biquartimin"` and `"cluster"`
+#'   for oblique transformations.
+#' @param algorithm Factoring method used by VSS. Can be `"pa"` for Principal
+#'   Axis Factor Analysis, `"minres"` for minimum residual (OLS) factoring,
+#'   `"mle"` for Maximum Likelihood FA and `"pc"` for Principal Components.
+#'   `"default"` will select `"minres"` if `type = "FA"` and `"pc"` if
+#'   `type = "PCA"`.
 #' @param package Package from which respective methods are used. Can be
-#'   `"all"` or a vector containing `"nFactors"`, `"psych"`, `"PCDimension"`, `"fit"` or
-#'   `"EGAnet"`. Note that `"fit"` (which actually also relies on the `psych`
-#'   package) and `"EGAnet"` can be very slow for bigger
-#'   datasets. Thus, the default is `c("nFactors", "psych")`. You must have
-#'   the respective packages installed for the methods to be used.
+#'   `"all"` or a vector containing `"nFactors"`, `"psych"`, `"PCDimension"`,
+#'   `"fit"` or `"EGAnet"`. Note that `"fit"` (which actually also relies on the
+#'   `psych` package) and `"EGAnet"` can be very slow for bigger datasets. Thus,
+#'   the default is `c("nFactors", "psych")`. You must have the respective
+#'   packages installed for the methods to be used.
 #' @param safe If `TRUE`, the function will run all the procedures in try
 #'   blocks, and will only return those that work and silently skip the ones
 #'   that may fail.
-#' @param cor An optional correlation matrix that can be used (note that the
-#'   data must still be passed as the first argument). If `NULL`, will
-#'   compute it by running `cor()` on the passed data.
+#' @param correlation_matrix An optional correlation matrix that can be used
+#'   (note that the data must still be passed as the first argument). If `NULL`,
+#'   will compute it by running `cor()` on the passed data.
 #' @param n_max If set to a value (e.g., `10`), will drop from the results all
 #' methods that suggest a higher number of components. The interpretation becomes
 #' 'from all the methods that suggested a number lower than n_max, the results
@@ -44,80 +42,76 @@
 #'
 #' @note There is also a
 #'   [`plot()`-method](https://easystats.github.io/see/articles/parameters.html)
-#'   implemented in the
-#'   [**see**-package](https://easystats.github.io/see/)..
-#'   `n_components()` is a convenient short for `n_factors(type =
-#'   "PCA")`.
+#'   implemented in the [**see**-package](https://easystats.github.io/see/).
+#'   `n_components()` is a convenient short-cut  for `n_factors(type = "PCA")`.
 #'
-#' @examples
+#' @examplesIf require("PCDimension", quietly = TRUE) && require("nFactors", quietly = TRUE) && require("EGAnet", quietly = TRUE) && require("psych", quietly = TRUE)
 #' library(parameters)
-#' if (require("nFactors", quietly = TRUE) && require("EGAnet", quietly = TRUE)) {
-#'   n_factors(mtcars, type = "PCA")
+#' n_factors(mtcars, type = "PCA")
 #'
-#'   result <- n_factors(mtcars[1:5], type = "FA")
-#'   as.data.frame(result)
-#'   summary(result)
-#'   \dontrun{
-#'   if (require("PCDimension", quietly = TRUE)) {
-#'     # Setting package = 'all' will increase the number of methods (but is slow)
-#'     n_factors(mtcars, type = "PCA", package = "all")
-#'     n_factors(mtcars, type = "FA", algorithm = "mle", package = "all")
-#'   }
-#'   }
+#' result <- n_factors(mtcars[1:5], type = "FA")
+#' as.data.frame(result)
+#' summary(result)
+#' \donttest{
+#' # Setting package = 'all' will increase the number of methods (but is slow)
+#' n_factors(mtcars, type = "PCA", package = "all")
+#' n_factors(mtcars, type = "FA", algorithm = "mle", package = "all")
 #' }
+#'
 #' @return A data frame.
 #'
-#' @references \itemize{
-#'   \item Bartlett, M. S. (1950). Tests of significance in factor analysis.
+#' @references
+#'
+#' - Bartlett, M. S. (1950). Tests of significance in factor analysis.
 #'   British Journal of statistical psychology, 3(2), 77-85.
 #'
-#'   \item Bentler, P. M., & Yuan, K. H. (1996). Test of linear trend in
+#' - Bentler, P. M., & Yuan, K. H. (1996). Test of linear trend in
 #'   eigenvalues of a covariance matrix with application to data analysis.
 #'   British Journal of Mathematical and Statistical Psychology, 49(2), 299-312.
 #'
-#'   \item Cattell, R. B. (1966). The scree test for the number of factors.
+#' - Cattell, R. B. (1966). The scree test for the number of factors.
 #'   Multivariate behavioral research, 1(2), 245-276.
 #'
-#'   \item Finch, W. H. (2019). Using Fit Statistic Differences to Determine the
+#' - Finch, W. H. (2019). Using Fit Statistic Differences to Determine the
 #'   Optimal Number of Factors to Retain in an Exploratory Factor Analysis.
 #'   Educational and Psychological Measurement.
 #'
-#'   \item Zoski, K. W., & Jurs, S. (1996). An objective counterpart to the
+#' - Zoski, K. W., & Jurs, S. (1996). An objective counterpart to the
 #'   visual scree test for factor analysis: The standard error scree.
 #'   Educational and Psychological Measurement, 56(3), 443-451.
 #'
-#'   \item Zoski, K., & Jurs, S. (1993). Using multiple regression to determine
+#' - Zoski, K., & Jurs, S. (1993). Using multiple regression to determine
 #'   the number of factors to retain in factor analysis. Multiple Linear
 #'   Regression Viewpoints, 20(1), 5-9.
 #'
-#'   \item Nasser, F., Benson, J., & Wisenbaker, J. (2002). The performance of
+#' - Nasser, F., Benson, J., & Wisenbaker, J. (2002). The performance of
 #'   regression-based variations of the visual scree for determining the number
 #'   of common factors. Educational and psychological measurement, 62(3),
 #'   397-419.
 #'
-#'   \item Golino, H., Shi, D., Garrido, L. E., Christensen, A. P., Nieto, M.
+#' - Golino, H., Shi, D., Garrido, L. E., Christensen, A. P., Nieto, M.
 #'   D., Sadana, R., & Thiyagarajan, J. A. (2018). Investigating the performance
 #'   of Exploratory Graph Analysis and traditional techniques to identify the
 #'   number of latent factors: A simulation and tutorial.
 #'
-#'   \item Golino, H. F., & Epskamp, S. (2017). Exploratory graph analysis: A
+#' - Golino, H. F., & Epskamp, S. (2017). Exploratory graph analysis: A
 #'   new approach for estimating the number of dimensions in psychological
 #'   research. PloS one, 12(6), e0174035.
 #'
-#'   \item Revelle, W., & Rocklin, T. (1979). Very simple structure: An
+#' - Revelle, W., & Rocklin, T. (1979). Very simple structure: An
 #'   alternative procedure for estimating the optimal number of interpretable
 #'   factors. Multivariate Behavioral Research, 14(4), 403-414.
 #'
-#'   \item Velicer, W. F. (1976). Determining the number of components from the
+#' - Velicer, W. F. (1976). Determining the number of components from the
 #'   matrix of partial correlations. Psychometrika, 41(3), 321-327.
-#' }
+#'
 #' @export
 n_factors <- function(x,
                       type = "FA",
                       rotation = "varimax",
                       algorithm = "default",
                       package = c("nFactors", "psych"),
-                      cor = NULL,
+                      correlation_matrix = NULL,
                       safe = TRUE,
                       n_max = NULL,
                       ...) {
@@ -126,33 +120,39 @@ n_factors <- function(x,
   }
 
   # Get number of observations
-  if (!is.data.frame(x)) {
-    if (is.numeric(x) && !is.null(cor)) {
-      nobs <- x
-      package <- package[!package %in% c("pcdimension", "PCDimension")]
-    } else if (is.matrix(x) || inherits(x, "easycormatrix")) {
-      insight::format_error(
-        "Please input the correlation matrix via the `cor = ...` argument and the number of rows / observations via the first argument."
-      )
-    }
-  } else {
-    nobs <- nrow(x)
+  if (is.data.frame(x)) {
+    n_obs <- nrow(x)
+  } else if (is.numeric(x) && !is.null(correlation_matrix)) {
+    n_obs <- x
+    package <- package[!package %in% c("pcdimension", "PCDimension")]
+  } else if (is.matrix(x) || inherits(x, "easycormatrix")) {
+    insight::format_error(
+      "Please input the correlation matrix via the `correlation_matrix` argument and the number of rows / observations via the first argument." # nolint
+    )
   }
 
   # Get only numeric
-  x <- x[vapply(x, is.numeric, logical(1))]
+  numerics <- vapply(x, is.numeric, TRUE)
+  if (!all(numerics)) {
+    insight::format_warning(paste0(
+      "Some variables are not numeric (",
+      toString(names(x)[!numerics]),
+      "). Dropping them."
+    ))
+  }
+  x <- x[numerics]
 
   # Correlation matrix
-  if (is.null(cor)) {
-    cor <- stats::cor(x, use = "pairwise.complete.obs", ...)
+  if (is.null(correlation_matrix)) {
+    correlation_matrix <- stats::cor(x, use = "pairwise.complete.obs", ...)
   }
-  eigen_values <- eigen(cor)$values
+  eigen_values <- eigen(correlation_matrix)$values
 
   # Smooth matrix if negative eigen values
   if (any(eigen_values < 0)) {
     insight::check_if_installed("psych")
-    cor <- psych::cor.smooth(cor, ...)
-    eigen_values <- eigen(cor)$values
+    correlation_matrix <- psych::cor.smooth(correlation_matrix, ...)
+    eigen_values <- eigen(correlation_matrix)$values
   }
 
   # Initialize dataframe
@@ -173,71 +173,59 @@ n_factors <- function(x,
     if (safe) {
       out <- rbind(
         out,
-        tryCatch(.n_factors_bartlett(eigen_values, model, nobs),
+        tryCatch(
+          .n_factors_bartlett(eigen_values, model, n_obs),
           warning = function(w) data.frame(),
           error = function(e) data.frame()
         )
       )
       out <- rbind(
         out,
-        tryCatch(.n_factors_bentler(eigen_values, model, nobs),
+        tryCatch(
+          .n_factors_bentler(eigen_values, model, n_obs),
           warning = function(w) data.frame(),
           error = function(e) data.frame()
         )
       )
       out <- rbind(
         out,
-        tryCatch(.n_factors_cng(eigen_values, model),
+        tryCatch(
+          .n_factors_cng(eigen_values, model),
           warning = function(w) data.frame(),
           error = function(e) data.frame()
         )
       )
       out <- rbind(
         out,
-        tryCatch(.n_factors_mreg(eigen_values, model),
+        tryCatch(
+          .n_factors_mreg(eigen_values, model),
           warning = function(w) data.frame(),
           error = function(e) data.frame()
         )
       )
       out <- rbind(
         out,
-        tryCatch(.n_factors_scree(eigen_values, model),
+        tryCatch(
+          .n_factors_scree(eigen_values, model),
           warning = function(w) data.frame(),
           error = function(e) data.frame()
         )
       )
       out <- rbind(
         out,
-        tryCatch(.n_factors_sescree(eigen_values, model),
+        tryCatch(
+          .n_factors_sescree(eigen_values, model),
           warning = function(w) data.frame(),
           error = function(e) data.frame()
         )
       )
     } else {
-      out <- rbind(
-        out,
-        .n_factors_bartlett(eigen_values, model, nobs)
-      )
-      out <- rbind(
-        out,
-        .n_factors_bentler(eigen_values, model, nobs)
-      )
-      out <- rbind(
-        out,
-        .n_factors_cng(eigen_values, model)
-      )
-      out <- rbind(
-        out,
-        .n_factors_mreg(eigen_values, model)
-      )
-      out <- rbind(
-        out,
-        .n_factors_scree(eigen_values, model)
-      )
-      out <- rbind(
-        out,
-        .n_factors_sescree(eigen_values, model)
-      )
+      out <- rbind(out, .n_factors_bartlett(eigen_values, model, n_obs))
+      out <- rbind(out, .n_factors_bentler(eigen_values, model, n_obs))
+      out <- rbind(out, .n_factors_cng(eigen_values, model))
+      out <- rbind(out, .n_factors_mreg(eigen_values, model))
+      out <- rbind(out, .n_factors_scree(eigen_values, model))
+      out <- rbind(out, .n_factors_sescree(eigen_values, model))
     }
   }
 
@@ -248,19 +236,16 @@ n_factors <- function(x,
     if (safe) {
       out <- rbind(
         out,
-        tryCatch(.n_factors_ega(x, cor, nobs, eigen_values, type),
-          warning = function(w) data.frame(),
+        tryCatch(
+          .n_factors_ega(x, correlation_matrix, n_obs, eigen_values, type),
+          # warning = function(w) data.frame(),
           error = function(e) data.frame()
         )
       )
     } else {
-      out <- rbind(
-        out,
-        .n_factors_ega(x, cor, nobs, eigen_values, type)
-      )
+      out <- rbind(out, .n_factors_ega(x, correlation_matrix, n_obs, eigen_values, type))
     }
   }
-
 
   # psych -------------------------------------------
   if ("psych" %in% package) {
@@ -269,16 +254,14 @@ n_factors <- function(x,
     if (safe) {
       out <- rbind(
         out,
-        tryCatch(.n_factors_vss(x, cor, nobs, type, rotation, algorithm),
-          warning = function(w) data.frame(),
+        tryCatch(
+          .n_factors_vss(x, correlation_matrix, n_obs, type, rotation, algorithm),
+          # warning = function(w) data.frame(),
           error = function(e) data.frame()
         )
       )
     } else {
-      out <- rbind(
-        out,
-        .n_factors_vss(x, cor, nobs, type, rotation, algorithm)
-      )
+      out <- rbind(out, .n_factors_vss(x, correlation_matrix, n_obs, type, rotation, algorithm))
     }
   }
 
@@ -289,36 +272,32 @@ n_factors <- function(x,
     if (safe) {
       out <- rbind(
         out,
-        tryCatch(.n_factors_fit(x, cor, nobs, type, rotation, algorithm),
+        tryCatch(
+          .n_factors_fit(x, correlation_matrix, n_obs, type, rotation, algorithm),
           warning = function(w) data.frame(),
           error = function(e) data.frame()
         )
       )
     } else {
-      out <- rbind(
-        out,
-        .n_factors_fit(x, cor, nobs, type, rotation, algorithm)
-      )
+      out <- rbind(out, .n_factors_fit(x, correlation_matrix, n_obs, type, rotation, algorithm))
     }
   }
 
-  # fit -------------------------------------------
+  # pcdimension -------------------------------------------
   if ("pcdimension" %in% tolower(package)) {
     insight::check_if_installed("PCDimension")
 
     if (safe) {
       out <- rbind(
         out,
-        tryCatch(.n_factors_PCDimension(x, type),
-                 warning = function(w) data.frame(),
-                 error = function(e) data.frame()
+        tryCatch(
+          .n_factors_PCDimension(x, type),
+          warning = function(w) data.frame(),
+          error = function(e) data.frame()
         )
       )
     } else {
-      out <- rbind(
-        out,
-        .n_factors_PCDimension(x, type)
-      )
+      out <- rbind(out, .n_factors_PCDimension(x, type))
     }
   }
 
@@ -329,7 +308,7 @@ n_factors <- function(x,
   row.names(out) <- NULL # Reset row index
 
   if (!is.null(n_max)) {
-    out <-  out[out$n_Factors <= n_max, ]
+    out <- out[out$n_Factors <= n_max, ]
   }
 
   # Add summary
@@ -338,15 +317,29 @@ n_factors <- function(x,
     n_Methods = as.numeric(by(out, as.factor(out$n_Factors), function(out) n <- nrow(out)))
   )
 
+  # Add cumulative percentage of variance explained
+  fa <- psych::fa(
+    correlation_matrix,
+    nfactors = max(by_factors$n_Factors),
+    n.obs = nrow(x),
+    rotate = "none"
+  )
+  varex <- .get_fa_variance_summary(fa)
+  # Extract number of factors from EFA output (usually MR1, ML1, etc.)
+  varex$n_Factors <- as.numeric(gsub("[^\\d]+", "", varex$Component, perl = TRUE))
+  # Merge (and like that filter out empty methods)
+  by_factors <- merge(by_factors, varex[, c("n_Factors", "Variance_Cumulative")], by = "n_Factors")
+
+  attr(out, "Variance_Explained") <- varex # We add all the variance explained (for plotting)
   attr(out, "summary") <- by_factors
-  attr(out, "n") <- min(as.numeric(as.character(
-    by_factors[by_factors$n_Methods == max(by_factors$n_Methods), c("n_Factors")]
-  )))
+  attr(out, "n") <- min(as.numeric(as.character(by_factors[
+    by_factors$n_Methods == max(by_factors$n_Methods),
+    "n_Factors"
+  ])))
 
   class(out) <- c("n_factors", "see_n_factors", class(out))
   out
 }
-
 
 
 #' @rdname n_factors
@@ -356,7 +349,7 @@ n_components <- function(x,
                          rotation = "varimax",
                          algorithm = "default",
                          package = c("nFactors", "psych"),
-                         cor = NULL,
+                         correlation_matrix = NULL,
                          safe = TRUE,
                          ...) {
   n_factors(
@@ -365,12 +358,11 @@ n_components <- function(x,
     rotation = rotation,
     algorithm = algorithm,
     package = package,
-    cor = cor,
+    correlation_matrix = correlation_matrix,
     safe = safe,
     ...
   )
 }
-
 
 
 #' @export
@@ -384,15 +376,15 @@ print.n_factors <- function(x, ...) {
   # Extract methods
   if ("n_Factors" %in% names(x)) {
     type <- "factor"
-    methods_text <- paste0(as.character(x[x$n_Factors == best_n, "Method"]), collapse = ", ")
+    methods_text <- toString(as.character(x[x$n_Factors == best_n, "Method"]))
   } else {
     type <- "cluster"
-    methods_text <- paste0(as.character(x[x$n_Clusters == best_n, "Method"]), collapse = ", ")
+    methods_text <- toString(as.character(x[x$n_Clusters == best_n, "Method"]))
   }
 
 
   # Text
-  text <- paste0(
+  msg_text <- paste0(
     "The choice of ",
     as.character(best_n),
     ifelse(type == "factor", " dimensions ", " clusters "),
@@ -408,7 +400,7 @@ print.n_factors <- function(x, ...) {
   )
 
   insight::print_color("# Method Agreement Procedure:\n\n", "blue")
-  cat(text)
+  cat(msg_text)
   invisible(x)
 }
 
@@ -453,7 +445,7 @@ print.n_clusters <- print.n_factors
     details = FALSE
   )$nFactors
 
-  data.frame(
+  .data_frame(
     n_Factors = as.numeric(nfac),
     Method = insight::format_capitalize(names(nfac)),
     Family = "Barlett"
@@ -472,7 +464,7 @@ print.n_clusters <- print.n_factors
     details = FALSE
   )$nFactors
 
-  data.frame(
+  .data_frame(
     n_Factors = as.numeric(nfac),
     Method = "Bentler",
     Family = "Bentler"
@@ -489,7 +481,7 @@ print.n_clusters <- print.n_factors
     nfac <- nFactors::nCng(x = eigen_values, cor = TRUE, model = model)$nFactors
   }
 
-  data.frame(
+  .data_frame(
     n_Factors = as.numeric(nfac),
     Method = "CNG",
     Family = "CNG"
@@ -506,7 +498,7 @@ print.n_clusters <- print.n_factors
     nfac <- nFactors::nMreg(x = eigen_values, cor = TRUE, model = model)$nFactors
   }
 
-  data.frame(
+  .data_frame(
     n_Factors = as.numeric(nfac),
     Method = c("beta", "t", "p"),
     Family = "Multiple_regression"
@@ -519,7 +511,7 @@ print.n_clusters <- print.n_factors
 .n_factors_scree <- function(eigen_values = NULL, model = "factors") {
   nfac <- unlist(nFactors::nScree(x = eigen_values, cor = TRUE, model = model)$Components)
 
-  data.frame(
+  .data_frame(
     n_Factors = as.numeric(nfac),
     Method = c("Optimal coordinates", "Acceleration factor", "Parallel analysis", "Kaiser criterion"),
     Family = "Scree"
@@ -531,7 +523,7 @@ print.n_clusters <- print.n_factors
 #' @keywords internal
 .n_factors_sescree <- function(eigen_values = NULL, model = "factors") {
   nfac <- nFactors::nSeScree(x = eigen_values, cor = TRUE, model = model)$nFactors
-  data.frame(
+  .data_frame(
     n_Factors = as.numeric(nfac),
     Method = c("Scree (SE)", "Scree (R2)"),
     Family = "Scree_SE"
@@ -539,26 +531,29 @@ print.n_clusters <- print.n_factors
 }
 
 
-
 # EGAnet ------------------------
-
-#' @keywords internal
 .n_factors_ega <- function(x = NULL,
-                           cor = NULL,
+                           correlation_matrix = NULL,
                            nobs = NULL,
                            eigen_values = NULL,
                            type = "FA") {
-
-
   # Replace with own correlation matrix
   junk <- utils::capture.output(suppressWarnings(suppressMessages(
-    nfac_glasso <- EGAnet::EGA(cor, n = nobs, model = "glasso", plot.EGA = FALSE)$n.dim
+    nfac_glasso <- EGAnet::EGA(
+      correlation_matrix,
+      n = nobs,
+      model = "glasso",
+      plot.EGA = FALSE
+    )$n.dim
   )))
   junk <- utils::capture.output(suppressWarnings(suppressMessages(
-    nfac_TMFG <- EGAnet::EGA(cor, n = nobs, model = "TMFG", plot.EGA = FALSE)$n.dim
+    nfac_TMFG <- .safe(
+      EGAnet::EGA(correlation_matrix, n = nobs, model = "TMFG", plot.EGA = FALSE)$n.dim,
+      NA
+    )
   )))
 
-  data.frame(
+  .data_frame(
     n_Factors = as.numeric(c(nfac_glasso, nfac_TMFG)),
     Method = c("EGA (glasso)", "EGA (TMFG)"),
     Family = "EGA"
@@ -569,8 +564,29 @@ print.n_clusters <- print.n_factors
 # psych ------------------------
 
 #' @keywords internal
+.n_factors_parallel <- function(x = NULL, correlation_matrix = NULL, nobs = NULL, type = "FA") {
+  # Altnerative version of parralel analysis
+  # Not used because already included in nFactors
+
+  if (tolower(type) %in% c("fa", "factor", "efa")) {
+    fa <- "fa"
+  } else {
+    fa <- "pc"
+  }
+
+  insight::check_if_installed("psych")
+  out <- psych::fa.parallel(correlation_matrix, n.obs = nobs, fa = fa, plot = FALSE, fm = "ml")
+
+  .data_frame(
+    n_Factors = as.numeric(stats::na.omit(c(out$nfact, out$ncomp))),
+    Method = "Parallel",
+    Family = "psych"
+  )
+}
+
+#' @keywords internal
 .n_factors_vss <- function(x = NULL,
-                           cor = NULL,
+                           correlation_matrix = NULL,
                            nobs = NULL,
                            type = "FA",
                            rotation = "varimax",
@@ -583,10 +599,10 @@ print.n_clusters <- print.n_factors
     }
   }
 
-
+  insight::check_if_installed("psych")
   # Compute VSS
   vss <- psych::VSS(
-    cor,
+    correlation_matrix,
     n = ncol(x) - 1,
     n.obs = nobs,
     rotate = rotation,
@@ -609,7 +625,7 @@ print.n_clusters <- print.n_factors
   BIC_reg <- ifelse(length(BIC_reg) == 0, NA, BIC_reg)
   BIC_adj <- ifelse(length(BIC_adj) == 0, NA, BIC_adj)
 
-  data.frame(
+  .data_frame(
     n_Factors = as.numeric(c(vss_1, vss_2, velicer_MAP, BIC_reg, BIC_adj)),
     Method = c("VSS complexity 1", "VSS complexity 2", "Velicer's MAP", "BIC", "BIC (adjusted)"),
     Family = c("VSS", "VSS", "Velicers_MAP", "BIC", "BIC")
@@ -617,11 +633,9 @@ print.n_clusters <- print.n_factors
 }
 
 
-
-
 #' @keywords internal
 .n_factors_fit <- function(x = NULL,
-                           cor = NULL,
+                           correlation_matrix = NULL,
                            nobs = NULL,
                            type = "FA",
                            rotation = "varimax",
@@ -635,24 +649,33 @@ print.n_clusters <- print.n_factors
     }
   }
 
+  insight::check_if_installed("psych")
   rez <- data.frame()
-  for (n in 1:(ncol(cor) - 1)) {
+  for (n in 1:(ncol(correlation_matrix) - 1)) {
     if (tolower(type) %in% c("fa", "factor", "efa")) {
-      factors <- tryCatch(suppressWarnings(psych::fa(cor,
-        nfactors = n,
-        n.obs = nobs,
-        rotate = rotation,
-        fm = algorithm
-      )),
-      error = function(e) NA
+      factors <- tryCatch(
+        suppressWarnings(
+          psych::fa(
+            correlation_matrix,
+            nfactors = n,
+            n.obs = nobs,
+            rotate = rotation,
+            fm = algorithm
+          )
+        ),
+        error = function(e) NA
       )
     } else {
-      factors <- tryCatch(suppressWarnings(psych::pca(cor,
-        nfactors = n,
-        n.obs = nobs,
-        rotate = rotation
-      )),
-      error = function(e) NA
+      factors <- tryCatch(
+        suppressWarnings(
+          psych::pca(
+            correlation_matrix,
+            nfactors = n,
+            n.obs = nobs,
+            rotate = rotation
+          )
+        ),
+        error = function(e) NA
       )
     }
 
@@ -668,7 +691,7 @@ print.n_clusters <- print.n_factors
 
     rez <- rbind(
       rez,
-      data.frame(
+      .data_frame(
         n = n,
         Fit = factors$fit.off,
         TLI = tli,
@@ -719,10 +742,10 @@ print.n_clusters <- print.n_factors
     CRMS <- rez[!is.na(rez$CRMS) & rez$CRMS <= target, "n"][1]
   }
   # BIC (this is a penalized method so we can just take the one that minimizes it)
-  BIC <- ifelse(all(is.na(rez$BIC)), NA, rez[!is.na(rez$BIC) & rez$BIC == min(rez$BIC, na.rm = TRUE), "n"])
+  BayIC <- ifelse(all(is.na(rez$BIC)), NA, rez[!is.na(rez$BIC) & rez$BIC == min(rez$BIC, na.rm = TRUE), "n"])
 
-  data.frame(
-    n_Factors = c(fit_off, TLI, RMSEA, RMSR, CRMS, BIC),
+  .data_frame(
+    n_Factors = c(fit_off, TLI, RMSEA, RMSR, CRMS, BayIC),
     Method = c("Fit_off", "TLI", "RMSEA", "RMSR", "CRMS", "BIC"),
     Family = c("Fit", "Fit", "Fit", "Fit", "Fit", "Fit")
   )
@@ -734,7 +757,7 @@ print.n_clusters <- print.n_factors
 .n_factors_PCDimension <- function(x = NULL, type = "PCA") {
   # This package is a strict dependency of PCDimension so if users have the
   # former they should have it
-  insight::check_if_installed("ClassDiscovery")
+  insight::check_if_installed(c("ClassDiscovery", "PCDimension"))
 
   # Only applies to PCA with full data
   if (tolower(type) %in% c("fa", "factor", "efa") || !is.data.frame(x)) {
@@ -762,13 +785,14 @@ print.n_clusters <- print.n_factors
   )
   rez_ag <- PCDimension::compareAgDimMethods(ag, agfuns)
 
-  data.frame(
+  .data_frame(
     n_Factors = as.numeric(c(rez_rnd, rez_bokenstick, rez_ag)),
-    Method = c("Random (lambda)", "Random (F)", "Broken-Stick", "Auer-Gervini (twice)",
-               "Auer-Gervini (spectral)", "Auer-Gervini (kmeans-2)", "AuerGervini (kmeans-3)",
-               "Auer-Gervini (T)", "AuerGervini (CPT)"),
-    Family = "PCDimension",
-    stringsAsFactors = FALSE
+    Method = c(
+      "Random (lambda)", "Random (F)", "Broken-Stick", "Auer-Gervini (twice)",
+      "Auer-Gervini (spectral)", "Auer-Gervini (kmeans-2)", "AuerGervini (kmeans-3)",
+      "Auer-Gervini (T)", "AuerGervini (CPT)"
+    ),
+    Family = "PCDimension"
   )
 }
 
@@ -786,20 +810,20 @@ print.n_clusters <- print.n_factors
   insight::check_if_installed("nFactors")
 
   lambda <- nFactors::eigenComputes(x, cor = cor, model = model, ...)
-  if (length(which(lambda < 0)) > 0) {
+  if (any(lambda < 0)) {
     insight::format_error(
       "These indices are only valid with a principal component solution. So, only positive eigenvalues are permitted."
     )
   }
 
-  minPar <- c(min(lambda) - abs(min(lambda)) + .001, 0.001)
+  minPar <- c(min(lambda) - abs(min(lambda)) + 0.001, 0.001)
   maxPar <- c(max(lambda), stats::lm(lambda ~ I(rev(seq_along(lambda))))$coef[2])
 
 
   n <- N
   significance <- alpha
   min.k <- 3
-  LRT <- data.frame(
+  LRT <- .data_frame(
     q = numeric(length(lambda) - min.k), k = numeric(length(lambda) - min.k),
     LRT = numeric(length(lambda) - min.k), a = numeric(length(lambda) - min.k),
     b = numeric(length(lambda) - min.k),
@@ -830,12 +854,21 @@ print.n_clusters <- print.n_factors
   # LRT     <- LRT[order(LRT[,1],decreasing = TRUE),]
   for (i in 1:(length(lambda) - min.k)) {
     if (i == 1) bentler.n <- bentler.n + as.numeric(LRT$p[i] <= significance)
-    if (i > 1) {
-      if (LRT$p[i - 1] <= 0.05) bentler.n <- bentler.n + as.numeric(LRT$p[i] <= significance)
+    if (i > 1 && LRT$p[i - 1] <= 0.05) {
+      bentler.n <- bentler.n + as.numeric(LRT$p[i] <= significance)
     }
   }
-  if (bentler.n == 0) bentler.n <- length(lambda)
-  if (details == TRUE) details <- LRT else details <- NULL
+
+  if (bentler.n == 0) {
+    bentler.n <- length(lambda)
+  }
+
+  if (isTRUE(details)) {
+    details <- LRT
+  } else {
+    details <- NULL
+  }
+
   res <- list(detail = details, nFactors = bentler.n)
   class(res) <- c("nFactors", "list")
   res

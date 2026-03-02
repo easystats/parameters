@@ -3,8 +3,16 @@ model <- lm(Sepal.Length ~ Species, data = iris)
 
 test_that("p_function ci-levels", {
   out <- p_function(model)
+  expect_equal(
+    out$CI_low,
+    c(
+      4.982759, 0.897132, 1.549132, 4.956774, 0.860384, 1.512384,
+      4.92192, 0.811093, 1.463093, 4.862126, 0.726531, 1.378531
+    ),
+    tolerance = 1e-4
+  )
 
-  expect_equal(dim(out), c(12, 5))
+  expect_identical(dim(out), c(12L, 5L))
 
   expect_equal(
     out$CI,
@@ -32,13 +40,24 @@ test_that("p_function ci-levels", {
     c(0.3, 0.3, 0.3, 0.6, 0.6, 0.6, 0.9, 0.9, 0.9),
     tolerance = 1e-4
   )
+
+  skip_if_not_installed("sandwich")
+  out <- p_function(model, vcov = "HC3")
+  expect_equal(
+    out$CI_low,
+    c(
+      4.989925, 0.901495, 1.548843, 4.971951, 0.869624, 1.511772,
+      4.947844, 0.826875, 1.462047, 4.906485, 0.753538, 1.376742
+    ),
+    tolerance = 1e-4
+  )
 })
 
 
 test_that("p_function keep-drop", {
   out <- p_function(model, keep = "Speciesversicolor")
 
-  expect_equal(dim(out), c(4, 5))
+  expect_identical(dim(out), c(4L, 5L))
 
   expect_equal(
     out$CI,
@@ -46,7 +65,7 @@ test_that("p_function keep-drop", {
     tolerance = 1e-4
   )
 
-  expect_equal(
+  expect_identical(
     out$Parameter,
     c(
       "Speciesversicolor", "Speciesversicolor", "Speciesversicolor",
@@ -60,7 +79,7 @@ test_that("p_function print", {
   out <- p_function(model)
   ref <- capture.output(print(out))
 
-  expect_equal(
+  expect_identical(
     ref,
     c(
       "Consonance Function",

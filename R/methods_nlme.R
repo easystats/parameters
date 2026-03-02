@@ -2,9 +2,8 @@
 
 ############### .lme --------------
 
-#' @rdname model_parameters.merMod
 #' @export
-model_parameters.lme <- model_parameters.merMod
+model_parameters.lme <- model_parameters.coxme
 
 
 #' @export
@@ -15,7 +14,7 @@ ci.lme <- function(x,
                    method = "wald",
                    ...) {
   method <- tolower(method)
-  method <- match.arg(method, choices = c("wald", "normal", "residual", "betwithin", "ml1", "satterthwaite"))
+  method <- match.arg(method, choices = c("wald", "normal", "residual", "betwithin", "ml1"))
 
   if (method %in% c("wald", "residual", "normal")) {
     # `vcov` argument must be computed using the `.ci_generic` function.
@@ -49,10 +48,6 @@ ci.lme <- function(x,
     # betwithin approx
   } else if (method == "betwithin") {
     ci_betwithin(x, ci)
-
-    # Satterthwaite
-  } else if (method == "satterthwaite") {
-    ci_satterthwaite(x, ci)
   }
 }
 
@@ -74,8 +69,8 @@ p_value.lme <- function(model,
     se <- standard_error(model, vcov = vcov, vcov_args = vcov_args, ...)
     tstat <- b$Estimate / se$SE
     # residuals are defined like this in `nlme:::summary.lme`
-    df <- model$fixDF[["X"]]
-    p <- 2 * stats::pt(-abs(tstat), df = df)
+    dof <- model$fixDF[["X"]]
+    p <- 2 * stats::pt(-abs(tstat), df = dof)
     param <- se$Parameter
   }
 
@@ -90,8 +85,6 @@ p_value.lme <- function(model,
 standard_error.lme <- standard_error.default
 
 
-
-
 ############### .gls --------------
 
 
@@ -101,9 +94,3 @@ standard_error.gls <- standard_error.default
 
 #' @export
 p_value.gls <- p_value.default
-
-
-#' @export
-degrees_of_freedom.gls <- function(model, method = NULL, ...) {
-  .degrees_of_freedom_no_dfresid_method(model, method)
-}

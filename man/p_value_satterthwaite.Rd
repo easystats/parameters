@@ -21,7 +21,10 @@ se_satterthwaite(model)
 
 \item{ci}{Confidence Interval (CI) level. Default to \code{0.95} (\verb{95\%}).}
 
-\item{...}{Additional arguments}
+\item{...}{Additional arguments passed down to the underlying functions.
+E.g., arguments like \code{vcov} or \code{vcov_args} can be used to compute confidence
+intervals using a specific variance-covariance matrix for the standard
+errors.}
 
 \item{dof}{Degrees of Freedom.}
 }

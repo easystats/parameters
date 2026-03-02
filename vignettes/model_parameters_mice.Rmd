@@ -23,6 +23,7 @@ knitr::opts_chunk$set(comment = "#>")
 
 if (!requireNamespace("mice", quietly = TRUE) ||
   !requireNamespace("GLMMadaptive", quietly = TRUE) ||
+  !requireNamespace("glmmTMB", quietly = TRUE) ||
   !requireNamespace("lme4", quietly = TRUE)) {
   knitr::opts_chunk$set(eval = FALSE)
 }
@@ -65,7 +66,7 @@ library(lme4)
 library(GLMMadaptive)
 
 data(cbpp)
-cbpp$period[sample(1:nrow(cbpp), size = 10)] <- NA
+cbpp$period[sample(seq_len(nrow(cbpp)), size = 10)] <- NA
 
 imputed_data <- mice(cbpp, printFlag = FALSE)
 ```

@@ -1,4 +1,3 @@
-#' @rdname model_parameters.averaging
 #' @export
 model_parameters.systemfit <- function(model,
                                        ci = 0.95,
@@ -8,7 +7,9 @@ model_parameters.systemfit <- function(model,
                                        standardize = NULL,
                                        exponentiate = FALSE,
                                        p_adjust = NULL,
-                                       summary = FALSE,
+                                       include_info = getOption("parameters_info", FALSE),
+                                       keep = NULL,
+                                       drop = NULL,
                                        verbose = TRUE,
                                        ...) {
   out <- .model_parameters_generic(
@@ -21,7 +22,9 @@ model_parameters.systemfit <- function(model,
     standardize = standardize,
     exponentiate = exponentiate,
     p_adjust = p_adjust,
-    summary = summary,
+    keep_parameters = keep,
+    drop_parameters = drop,
+    include_info = include_info,
     ...
   )
 
@@ -30,11 +33,10 @@ model_parameters.systemfit <- function(model,
 }
 
 
-
 #' @export
 standard_error.systemfit <- function(model, ...) {
   cf <- stats::coef(summary(model))
-  f <- insight::find_formula(model)
+  f <- insight::find_formula(model, verbose = FALSE)
 
   system_names <- names(f)
   parameter_names <- row.names(cf)
@@ -54,11 +56,10 @@ standard_error.systemfit <- function(model, ...) {
 }
 
 
-
 #' @export
 p_value.systemfit <- function(model, ...) {
   cf <- stats::coef(summary(model))
-  f <- insight::find_formula(model)
+  f <- insight::find_formula(model, verbose = FALSE)
 
   system_names <- names(f)
   parameter_names <- row.names(cf)
@@ -76,26 +77,6 @@ p_value.systemfit <- function(model, ...) {
 
   do.call(rbind, out)
 }
-
-
-
-#' @export
-degrees_of_freedom.systemfit <- function(model, ...) {
-  df <- c()
-  s <- summary(model)$eq
-  params <- insight::find_parameters(model)
-  f <- insight::find_formula(model)
-  system_names <- names(f)
-
-  for (i in seq_along(system_names)) {
-    dfs <- rep(s[[i]]$df[2], length(params[[i]]))
-    df_names <- rep(names(params[i]), length(params[[i]]))
-    df <- c(df, stats::setNames(dfs, df_names))
-  }
-
-  df
-}
-
 
 
 #' @export

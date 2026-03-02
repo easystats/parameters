@@ -1,5 +1,3 @@
-
-#' @rdname model_parameters.merMod
 #' @export
 model_parameters.MixMod <- model_parameters.glmmTMB
 
