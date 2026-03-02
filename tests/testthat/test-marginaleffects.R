@@ -52,8 +52,16 @@ test_that("marginaleffects()", {
   expect_named(
     out,
     c(
-      "Parameter", "Comparison", "Coefficient", "SE", "Statistic",
-      "p", "S", "CI", "CI_low", "CI_high"
+      "Parameter",
+      "Comparison",
+      "Coefficient",
+      "SE",
+      "Statistic",
+      "p",
+      "S",
+      "CI",
+      "CI_low",
+      "CI_high"
     )
   )
   mfx <- marginaleffects::avg_slopes(model, variables = "Petal.Length", by = "Species")
@@ -62,8 +70,17 @@ test_that("marginaleffects()", {
   expect_named(
     out,
     c(
-      "Parameter", "Comparison", "Species", "Coefficient", "SE", "Statistic",
-      "p", "S", "CI", "CI_low", "CI_high"
+      "Parameter",
+      "Comparison",
+      "Species",
+      "Coefficient",
+      "SE",
+      "Statistic",
+      "p",
+      "S",
+      "CI",
+      "CI_low",
+      "CI_high"
     )
   )
 })
@@ -74,10 +91,21 @@ test_that("predictions()", {
   p <- marginaleffects::avg_predictions(x, by = "Species")
   out <- model_parameters(p)
   expect_identical(nrow(out), 3L)
-  expect_named(out, c(
-    "Predicted", "Species", "SE", "CI", "CI_low", "CI_high", "S", "Statistic",
-    "df", "p"
-  ))
+  expect_named(
+    out,
+    c(
+      "Predicted",
+      "Species",
+      "SE",
+      "CI",
+      "CI_low",
+      "CI_high",
+      "S",
+      "Statistic",
+      "df",
+      "p"
+    )
+  )
   out <- model_parameters(p, exponentiate = TRUE)
   expect_equal(out$Predicted, c(30.81495, 15.95863, 19.57004), tolerance = 1e-4)
 })
@@ -124,7 +152,8 @@ test_that("hypotheses()", {
 test_that("slopes()", {
   m <- lm(Sepal.Width ~ Species * Petal.Length, data = iris)
 
-  x <- marginaleffects::slopes(m,
+  x <- marginaleffects::slopes(
+    m,
     variables = "Petal.Length",
     newdata = insight::get_datagrid(m, by = "Species")
   )
@@ -132,8 +161,19 @@ test_that("slopes()", {
   expect_named(
     out,
     c(
-      "rowid", "Parameter", "Comparison", "Coefficient", "SE", "Statistic",
-      "p", "S", "CI", "CI_low", "CI_high", "Species", "Petal.Length",
+      "rowid",
+      "Parameter",
+      "Comparison",
+      "Coefficient",
+      "SE",
+      "Statistic",
+      "p",
+      "S",
+      "CI",
+      "CI_low",
+      "CI_high",
+      "Species",
+      "Petal.Length",
       "Predicted"
     )
   )
@@ -160,7 +200,10 @@ test_that("multiple contrasts: Issue #779", {
 test_that("model_parameters defaults to FALSE: Issue #916", {
   data(mtcars)
   mod <- lm(mpg ~ wt, data = mtcars)
-  pred <- marginaleffects::predictions(mod, newdata = marginaleffects::datagrid(wt = c(1, 2)))
+  pred <- marginaleffects::predictions(
+    mod,
+    newdata = marginaleffects::datagrid(wt = c(1, 2))
+  )
   out1 <- model_parameters(pred)
   out2 <- model_parameters(pred, exponentiate = FALSE)
   expect_equal(out1$Predicted, out2$Predicted, tolerance = 1e-4)
@@ -206,7 +249,11 @@ test_that("predictions, bmrs with special response formula", {
   m <- insight::download_model("brms_ipw_1")
   skip_if(is.null(m))
 
-  x <- marginaleffects::avg_predictions(m, variables = "treatment", hypothesis = ~pairwise)
+  x <- marginaleffects::avg_predictions(
+    m,
+    variables = "treatment",
+    hypothesis = ~pairwise
+  )
   out <- model_parameters(x)
   expect_identical(dim(out), c(1L, 10L))
 })
@@ -220,7 +267,12 @@ test_that("modelbased, tidiers work", {
   data(penguins)
   m <- lm(bill_len ~ island * sex + bill_dep + species, data = penguins)
 
-  out <- modelbased::estimate_contrasts(m, "island", by = "sex", comparison = ratio ~ pairwise)
+  out <- modelbased::estimate_contrasts(
+    m,
+    "island",
+    by = "sex",
+    comparison = ratio ~ pairwise
+  )
   expect_named(
     out,
     c("Level1", "Level2", "sex", "Ratio", "SE", "CI_low", "CI_high", "t", "df", "p")
@@ -238,13 +290,27 @@ test_that("modelbased, tidiers work", {
   expect_named(
     params,
     c(
-      "Parameter", "Predicted", "SE", "CI", "CI_low", "CI_high",
-      "S", "Statistic", "df", "p", "sex"
+      "Parameter",
+      "Predicted",
+      "SE",
+      "CI",
+      "CI_low",
+      "CI_high",
+      "S",
+      "Statistic",
+      "df",
+      "p",
+      "sex"
     )
   )
   expect_identical(dim(params), c(6L, 11L))
 
-  out <- modelbased::estimate_contrasts(m, "island", by = "sex", comparison = ratio ~ inequality)
+  out <- modelbased::estimate_contrasts(
+    m,
+    "island",
+    by = "sex",
+    comparison = ratio ~ inequality
+  )
   expect_named(out, c("sex", "Mean_Ratio", "SE", "CI_low", "CI_high", "z", "p"))
   expect_identical(dim(out), c(2L, 7L))
 
@@ -255,7 +321,7 @@ test_that("modelbased, tidiers work", {
     newdata = datagrid,
     hypothesis = ratio ~ pairwise | sex
   )
-  out <- marginaleffects::hypotheses(out, hypothesis = ~I(mean(abs(x))) | sex)
+  out <- marginaleffects::hypotheses(out, hypothesis = ~ I(mean(abs(x))) | sex)
   params <- model_parameters(out)
   expect_named(
     params,
@@ -291,13 +357,61 @@ test_that("predictions, using bayestestR #1063", {
   skip_if(is.null(m))
 
   d <- insight::get_datagrid(m, by = "Days", include_random = TRUE)
-  x <- marginaleffects::avg_predictions(m, newdata = d, by = "Days", allow_new_levels = TRUE)
+  x <- marginaleffects::avg_predictions(
+    m,
+    newdata = d,
+    by = "Days",
+    allow_new_levels = TRUE
+  )
   out <- model_parameters(x)
   expect_named(
     out,
     c(
-      "Median", "CI", "CI_low", "CI_high", "pd", "ROPE_CI", "ROPE_low",
-      "ROPE_high", "ROPE_Percentage", "Days"
+      "Median",
+      "CI",
+      "CI_low",
+      "CI_high",
+      "pd",
+      "ROPE_CI",
+      "ROPE_low",
+      "ROPE_high",
+      "ROPE_Percentage",
+      "Days"
     )
+  )
+})
+
+
+test_that("predictions, don't remove Type column when it's a variable", {
+  skip_on_cran()
+  skip_if_not_installed("MASS")
+
+  data(housing, package = "MASS")
+  m1 <- MASS::polr(Sat ~ Infl + Type + Cont, data = housing, weights = Freq)
+  emm <- marginaleffects::avg_predictions(m1, by = "Type")
+  out <- model_parameters(emm)
+
+  expect_named(
+    out,
+    c(
+      "Predicted",
+      "Type",
+      "SE",
+      "CI",
+      "CI_low",
+      "CI_high",
+      "S",
+      "Statistic",
+      "df",
+      "p",
+      "group"
+    )
+  )
+
+  skip_if_not_installed("modelbased")
+  out <- modelbased::estimate_means(m1, by = "Type")
+  expect_named(
+    out,
+    c("Type", "Response", "Probability", "SE", "CI_low", "CI_high", "t", "df")
   )
 })
