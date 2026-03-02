@@ -18,7 +18,12 @@ model_parameters.marginaleffects <- function(
 
   if (is_bayesian) {
     # Bayesian
-    out <- suppressWarnings(bayestestR::describe_posterior(model, ci = ci, verbose = verbose, ...))
+    out <- suppressWarnings(bayestestR::describe_posterior(
+      model,
+      ci = ci,
+      verbose = verbose,
+      ...
+    ))
   } else {
     # non-Bayesian
     out <- as.data.frame(model)
@@ -123,7 +128,12 @@ model_parameters.predictions <- function(
 
   if (is_bayesian) {
     # Bayesian
-    out <- suppressWarnings(bayestestR::describe_posterior(model, ci = ci, verbose = verbose, ...))
+    out <- suppressWarnings(bayestestR::describe_posterior(
+      model,
+      ci = ci,
+      verbose = verbose,
+      ...
+    ))
   } else {
     # columns we want to keep
     by_cols <- .keep_me_columns(model)
@@ -141,7 +151,11 @@ model_parameters.predictions <- function(
   colnames(out) <- gsub("#####$", "", colnames(out))
 
   # remove and reorder some columns
-  out$rowid <- out$Type <- out$rowid_dedup <- NULL
+  out$rowid <- out$rowid_dedup <- NULL
+  # need to remove "Type", but only if it's not a valid variable name
+  if (!"Type" %in% by_cols) {
+    out$Type <- NULL
+  }
 
   # find at-variables
   at_variables <- insight::compact_character(c(
@@ -151,7 +165,9 @@ model_parameters.predictions <- function(
 
   # find cofficient name - differs for Bayesian models
   coef_name <- intersect(c("Predicted", "Coefficient"), colnames(out))[1]
-  if (!is.null(at_variables) && !is.na(coef_name) && all(at_variables %in% colnames(out))) {
+  if (
+    !is.null(at_variables) && !is.na(coef_name) && all(at_variables %in% colnames(out))
+  ) {
     out <- datawizard::data_relocate(out, select = at_variables, after = coef_name)
   }
 
@@ -235,10 +251,7 @@ model_parameters.predictions <- function(
   )
   # and newdata, if specified
   if (!is.null(marginaleffects::components(model, "call")$newdata)) {
-    by_cols <- union(
-      by_cols,
-      colnames(marginaleffects::components(model, "newdata"))
-    )
+    by_cols <- union(by_cols, colnames(marginaleffects::components(model, "newdata")))
   }
   by_cols
 }
