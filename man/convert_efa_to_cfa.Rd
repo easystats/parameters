@@ -25,9 +25,8 @@ efa_to_cfa(model, ...)
 
 \item{threshold}{A value between 0 and 1 indicates which (absolute) values
 from the loadings should be removed. An integer higher than 1 indicates the
-n strongest loadings to retain. Can also be \code{"max"}, in which case it
-will only display the maximum loading per variable (the most simple
-structure).}
+n strongest loadings to retain. Can also be \code{"max"}, in which case it will
+only display the maximum loading per variable (the most simple structure).}
 
 \item{names}{Vector containing dimension names.}
 
@@ -41,7 +40,7 @@ Enables a conversion between Exploratory Factor Analysis (EFA) and
 Confirmatory Factor Analysis (CFA) \code{lavaan}-ready structure.
 }
 \examples{
-\dontshow{if (require("psych") && require("lavaan")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (require("psych") && require("lavaan")) withAutoprint(\{ # examplesIf}
 \donttest{
 library(parameters)
 data(attitude)

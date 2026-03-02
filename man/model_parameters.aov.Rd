@@ -10,20 +10,21 @@
   df_error = NULL,
   ci = NULL,
   alternative = NULL,
+  p_adjust = NULL,
   test = NULL,
   power = FALSE,
   es_type = NULL,
   keep = NULL,
   drop = NULL,
+  include_intercept = FALSE,
   table_wide = FALSE,
   verbose = TRUE,
   ...
 )
 }
 \arguments{
-\item{model}{Object of class \code{\link[=aov]{aov()}}, \code{\link[=anova]{anova()}},
-\code{aovlist}, \code{Gam}, \code{\link[=manova]{manova()}}, \code{Anova.mlm},
-\code{afex_aov} or \code{maov}.}
+\item{model}{Object of class \code{\link[=aov]{aov()}}, \code{\link[=anova]{anova()}}, \code{aovlist}, \code{Gam},
+\code{\link[=manova]{manova()}}, \code{Anova.mlm}, \code{afex_aov} or \code{maov}.}
 
 \item{type}{Numeric, type of sums of squares. May be 1, 2 or 3. If 2 or 3,
 ANOVA-tables using \code{car::Anova()} will be returned. (Ignored for
@@ -43,6 +44,13 @@ Controls the type of CI returned: \code{"two.sided"} (default, two-sided CI),
 \code{"greater"} or \code{"less"} (one-sided CI). Partial matching is allowed
 (e.g., \code{"g"}, \code{"l"}, \code{"two"}...). See section \emph{One-Sided CIs} in
 the \href{https://easystats.github.io/effectsize/}{effectsize_CIs vignette}.}
+
+\item{p_adjust}{String value, if not \code{NULL}, indicates the method to adjust
+p-values. See \code{\link[stats:p.adjust]{stats::p.adjust()}} for details. Further possible
+adjustment methods are \code{"tukey"}, \code{"scheffe"}, \code{"sidak"}, \code{"sup-t"}, and
+\code{"none"} to explicitly disable adjustment for \code{emmGrid} objects (from
+\strong{emmeans}). \code{"sup-t"} computes simultaneous confidence bands, also called
+sup-t confidence band (Montiel Olea & Plagborg-Møller, 2019).}
 
 \item{test}{String, indicating the type of test for \code{Anova.mlm} to be
 returned. If \code{"multivariate"} (or \code{NULL}), returns the summary of
@@ -77,6 +85,9 @@ frame, which can be different from how they are printed. Inspect the
 names.}
 
 \item{drop}{See \code{keep}.}
+
+\item{include_intercept}{Logical, if \code{TRUE}, includes the intercept
+(\code{(Intercept)}) in the anova table.}
 
 \item{table_wide}{Logical that decides whether the ANOVA table should be in
 wide format, i.e. should the numerator and denominator degrees of freedom
@@ -127,6 +138,7 @@ Parameters from ANOVAs
 \item A \strong{proportion test} returns \emph{p}.
 }
 \item Objects of class \code{anova}, \code{aov}, \code{aovlist} or \code{afex_aov}, depending on \code{type}: \code{"eta"} (default), \code{"omega"} or \code{"epsilon"} -squared, \code{"f"}, or \code{"f2"}.
+\item Objects of class \code{datawizard_crosstab(s)} / \code{datawizard_table(s)} built with \code{\link[datawizard:data_tabulate]{datawizard::data_tabulate()}} - same as Chi-squared tests of independence / goodness-of-fit, respectively.
 \item Other objects are passed to \code{\link[parameters:standardize_parameters]{parameters::standardize_parameters()}}.
 }
 
@@ -142,7 +154,7 @@ covariates are mean-centred and factors are coded with orthogonal contrasts
 \code{contr.helmert}, but \emph{not} by the default \code{contr.treatment}).
 }
 \examples{
-\dontshow{if (requireNamespace("effectsize", quietly = TRUE)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (requireNamespace("effectsize", quietly = TRUE)) withAutoprint(\{ # examplesIf}
 df <- iris
 df$Sepal.Big <- ifelse(df$Sepal.Width >= 3, "Yes", "No")
 
@@ -162,7 +174,7 @@ model_parameters(
 model <- aov(Sepal.Length ~ Sepal.Big + Error(Species), data = df)
 model_parameters(model)
 \dontshow{\}) # examplesIf}
-\dontshow{if (requireNamespace("lme4", quietly = TRUE) && requireNamespace("effectsize", quietly = TRUE)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (requireNamespace("lme4", quietly = TRUE) && requireNamespace("effectsize", quietly = TRUE)) withAutoprint(\{ # examplesIf}
 \donttest{
 df <- iris
 df$Sepal.Big <- ifelse(df$Sepal.Width >= 3, "Yes", "No")

@@ -2,7 +2,6 @@
 % Please edit documentation in R/equivalence_test.R
 \name{equivalence_test.lm}
 \alias{equivalence_test.lm}
-\alias{equivalence_test.ggeffects}
 \title{Equivalence test}
 \usage{
 \method{equivalence_test}{lm}(
@@ -13,15 +12,6 @@
   effects = "fixed",
   vcov = NULL,
   vcov_args = NULL,
-  verbose = TRUE,
-  ...
-)
-
-\method{equivalence_test}{ggeffects}(
-  x,
-  range = "default",
-  rule = "classic",
-  test = "pairwise",
   verbose = TRUE,
   ...
 )
@@ -38,11 +28,15 @@ model's data.}
 \item{rule}{Character, indicating the rules when testing for practical
 equivalence. Can be \code{"bayes"}, \code{"classic"} or \code{"cet"}. See 'Details'.}
 
-\item{effects}{Should parameters for fixed effects (\code{"fixed"}), random
-effects (\code{"random"}), both fixed and random effects (\code{"all"}), or the
-overall (sum of fixed and random) effects (\code{"random_total"}) be returned?
-Only applies to mixed models. May be abbreviated. If the calculation of
-random effects parameters takes too long, you may use \code{effects = "fixed"}.}
+\item{effects}{Should parameters for fixed effects (\code{"fixed"}), random effects
+(\code{"random"}), or both fixed and random effects (\code{"all"}) be returned? By
+default, the variance components for random effects are returned. If
+group-level effects are requested, \code{"grouplevel"} returns the group-level
+random effects (BLUPs), while \code{"random_total"} return the overall (sum of
+fixed and random) effects (similar to what \code{coef()} returns). Using
+\code{"grouplevel"} is equivalent to setting \code{group_level = TRUE}. The \code{effects}
+argument only applies to mixed models. If the calculation of random effects
+parameters takes too long, you may use \code{effects = "fixed"}.}
 
 \item{vcov}{Variance-covariance matrix used to compute uncertainty estimates
 (e.g., for robust standard errors). This argument accepts a covariance
@@ -76,10 +70,6 @@ type for \code{"HC"} equals the default from the \strong{sandwich} package; for 
 \item{verbose}{Toggle warnings and messages.}
 
 \item{...}{Arguments passed to or from other methods.}
-
-\item{test}{Hypothesis test for computing contrasts or pairwise comparisons.
-See \href{https://strengejacke.github.io/ggeffects/reference/test_predictions.html}{\code{?ggeffects::test_predictions}}
-for details.}
 }
 \value{
 A data frame.
@@ -276,7 +266,7 @@ documentation in \code{\link[=p_function]{p_function()}}).
 }
 
 \examples{
-\dontshow{if (requireNamespace("sandwich")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (requireNamespace("sandwich")) withAutoprint(\{ # examplesIf}
 data(qol_cancer)
 model <- lm(QoL ~ time + age + education, data = qol_cancer)
 
@@ -327,7 +317,7 @@ Generation P-Value. Meta-Psychology, 4.
 https://doi.org/10.15626/MP.2018.933
 \item Lakens, D., Scheel, A. M., and Isager, P. M. (2018). Equivalence Testing
 for Psychological Research: A Tutorial. Advances in Methods and Practices
-in Psychological Science, 1(2), 259–269. \doi{10.1177/2515245918770963}
+in Psychological Science, 1(2), 259–269.
 \item Makowski, D., Ben-Shachar, M. S., Chen, S. H. A., and Lüdecke, D. (2019).
 Indices of Effect Existence and Significance in the Bayesian Framework.
 Frontiers in Psychology, 10, 2767. \doi{10.3389/fpsyg.2019.02767}

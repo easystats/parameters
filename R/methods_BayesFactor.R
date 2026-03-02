@@ -182,8 +182,8 @@ model_parameters.BFBayesFactor <- function(model,
 
   # ==== remove Component column if not needed
 
-  if (!is.null(out$Component) && insight::n_unique(out$Component) == 1) out$Component <- NULL
-  if (!is.null(out$Effects) && insight::n_unique(out$Effects) == 1) out$Effects <- NULL
+  if (!is.null(out$Component) && insight::has_single_value(out$Component, remove_na = TRUE)) out$Component <- NULL
+  if (!is.null(out$Effects) && insight::has_single_value(out$Effects, remove_na = TRUE)) out$Effects <- NULL
 
 
   # ==== remove rows and columns with complete `NA`s
@@ -245,7 +245,7 @@ model_parameters.BFBayesFactor <- function(model,
 
 #' @export
 p_value.BFBayesFactor <- function(model, ...) {
-  p <- bayestestR::p_direction(model)
+  p <- bayestestR::p_direction(model, ...)
   .data_frame(
     Parameter = .remove_backticks_from_string(p$Parameter),
     p = sapply(p$pd, bayestestR::convert_pd_to_p, simplify = TRUE)

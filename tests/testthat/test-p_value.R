@@ -21,80 +21,105 @@ test_that("p_value", {
 
   # h-tests
   model <- insight::download_model("htest_1")
+  skip_if(is.null(model))
   expect_equal(p_value(model), 0.04136799, tolerance = 0.01)
 
   model <- insight::download_model("htest_2")
+  skip_if(is.null(model))
   expect_equal(p_value(model), 0.1518983, tolerance = 0.01)
 
   model <- insight::download_model("htest_3")
+  skip_if(is.null(model))
   expect_equal(p_value(model), 0.182921, tolerance = 0.01)
 
   model <- insight::download_model("htest_4")
+  skip_if(is.null(model))
   expect_equal(p_value(model), 0, tolerance = 0.01)
 
   model <- insight::download_model("htest_5")
+  skip_if(is.null(model))
   expect_equal(p_value(model), 0, tolerance = 0.01)
 
   model <- insight::download_model("htest_6")
+  skip_if(is.null(model))
   expect_equal(p_value(model), 0, tolerance = 0.01)
 
   model <- insight::download_model("htest_7")
+  skip_if(is.null(model))
   expect_equal(p_value(model), 0, tolerance = 0.01)
 
   model <- insight::download_model("htest_8")
+  skip_if(is.null(model))
   expect_equal(p_value(model), 0, tolerance = 0.01)
 
   # ANOVAs
   model <- insight::download_model("aov_1")
+  skip_if(is.null(model))
   expect_equal(p_value(model)$p, 0, tolerance = 0.01)
 
   model <- insight::download_model("anova_1")
+  skip_if(is.null(model))
   expect_equal(p_value(model)$p, 0, tolerance = 0.01)
 
   model <- insight::download_model("aovlist_1")
+  skip_if(is.null(model))
   expect_equal(p_value(model)$p, 0, tolerance = 0.01)
 
   model <- insight::download_model("aov_2")
+  skip_if(is.null(model))
   expect_equal(p_value(model)$p[1], 0, tolerance = 0.01)
 
   model <- insight::download_model("anova_2")
+  skip_if(is.null(model))
   expect_equal(p_value(model)$p[1], 0, tolerance = 0.01)
 
   model <- insight::download_model("aovlist_2")
+  skip_if(is.null(model))
   expect_equal(p_value(model)$p[1], 0, tolerance = 0.01)
 
   model <- insight::download_model("aov_3")
+  skip_if(is.null(model))
   expect_equal(p_value(model)$p[1], 0, tolerance = 0.01)
 
   model <- insight::download_model("anova_3")
+  skip_if(is.null(model))
   expect_equal(p_value(model)$p[1], 0, tolerance = 0.01)
 
   model <- insight::download_model("aovlist_3")
+  skip_if(is.null(model))
   expect_equal(p_value(model)$p[1], 0, tolerance = 0.01)
 
   model <- insight::download_model("anova_4")
+  skip_if(is.null(model))
   expect_equal(p_value(model)$p[2], 0, tolerance = 0.01)
 
   # ANOVA lmer
   model <- insight::download_model("anova_lmerMod_0")
+  skip_if(is.null(model))
   expect_identical(p_value(model), NA)
 
   model <- insight::download_model("anova_lmerMod_1")
+  skip_if(is.null(model))
   expect_identical(p_value(model), NA)
 
   model <- insight::download_model("anova_lmerMod_2")
+  skip_if(is.null(model))
   expect_identical(p_value(model), NA)
 
   model <- insight::download_model("anova_lmerMod_3")
+  skip_if(is.null(model))
   expect_identical(p_value(model), NA)
 
   model <- insight::download_model("anova_lmerMod_4")
+  skip_if(is.null(model))
   expect_identical(p_value(model), NA)
 
   model <- insight::download_model("anova_lmerMod_5")
+  skip_if(is.null(model))
   expect_identical(p_value(model), NA)
 
   model <- insight::download_model("anova_lmerMod_6")
+  skip_if(is.null(model))
   expect_equal(p_value(model)$p[2], 0, tolerance = 0.01)
 
 
@@ -105,8 +130,10 @@ test_that("p_value", {
   expect_equal(p_value(model, method = "kr")$p[1], 0.319398, tolerance = 0.01)
 
   model <- insight::download_model("merMod_1")
+  skip_if(is.null(model))
   expect_equal(p_value(model)$p[1], 0.06578, tolerance = 0.01)
 
   model <- insight::download_model("merMod_2")
+  skip_if(is.null(model))
   expect_equal(p_value(model)$p[1], 0.29912, tolerance = 0.01)
 })

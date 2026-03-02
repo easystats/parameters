@@ -1,41 +1,51 @@
-#' Get Scores from Principal Component Analysis (PCA)
+#' Get Scores from Principal Component or Factor Analysis (PCA/FA)
 #'
 #' `get_scores()` takes `n_items` amount of items that load the most
 #' (either by loading cutoff or number) on a component, and then computes their
-#' average.
+#' average. This results in a sum score for each component from the PCA/FA,
+#' which is on the same scale as the original, single items that were used to
+#' compute the PCA/FA.
 #'
-#' @param x An object returned by [principal_components()].
+#' @param x An object returned by [principal_components()] or [factor_analysis()].
 #' @param n_items Number of required (i.e. non-missing) items to build the sum
-#'   score. If `NULL`, the value is chosen to match half of the number of
-#'   columns in a data frame.
+#' score for an observation. If an observation has more missing values than
+#' `n_items` in all items of a (sub) scale, `NA` is returned for that
+#' observation, else, the sum score of all (sub) items is calculated. If `NULL`,
+#' the value is chosen to match half of the number of columns in a data frame,
+#' i.e. no more than 50% missing values are allowed.
 #'
 #' @details
-#' `get_scores()` takes the results from [`principal_components()`] and
-#' extracts the variables for each component found by the PCA. Then, for each
-#' of these "subscales", row means are calculated (which equals adding up the
-#' single items and dividing by the number of items). This results in a sum
-#' score for each component from the PCA, which is on the same scale as the
-#' original, single items that were used to compute the PCA.
+#' `get_scores()` takes the results from [`principal_components()`] or
+#' [`factor_analysis()`] and extracts the variables for each component found by
+#' the PCA/FA. Then, for each of these "subscales", row means are calculated
+#' (which equals adding up the single items and dividing by the number of
+#' items). This results in a sum score for each component from the PCA/FA, which
+#' is on the same scale as the original, single items that were used to compute
+#' the PCA/FA.
 #'
-#' @examples
-#' if (require("psych")) {
-#'   pca <- principal_components(mtcars[, 1:7], n = 2, rotation = "varimax")
-#'
-#'   # PCA extracted two components
-#'   pca
-#'
-#'   # assignment of items to each component
-#'   closest_component(pca)
-#'
-#'   # now we want to have sum scores for each component
-#'   get_scores(pca)
-#'
-#'   # compare to manually computed sum score for 2nd component, which
-#'   # consists of items "hp" and "qsec"
-#'   (mtcars$hp + mtcars$qsec) / 2
-#' }
 #' @return A data frame with subscales, which are average sum scores for all
-#'   items from each component.
+#' items from each component or factor.
+#'
+#' @seealso Functions to carry out a PCA ([`principal_components()`]) or
+#' a FA ([`factor_analysis()`]). [`factor_scores()`] extracts factor scores
+#' from an FA object.
+#'
+#' @examplesIf insight::check_if_installed("psych", quietly = TRUE)
+#' pca <- principal_components(mtcars[, 1:7], n = 2, rotation = "varimax")
+#'
+#' # PCA extracted two components
+#' pca
+#'
+#' # assignment of items to each component
+#' closest_component(pca)
+#'
+#' # now we want to have sum scores for each component
+#' get_scores(pca)
+#'
+#' # compare to manually computed sum score for 2nd component, which
+#' # consists of items "hp" and "qsec"
+#' (mtcars$hp + mtcars$qsec) / 2
+#'
 #' @export
 get_scores <- function(x, n_items = NULL) {
   subscales <- closest_component(x)
@@ -99,11 +109,20 @@ summary.parameters_efa <- function(object, ...) {
     colnames(x)
   )
 
-
   x <- as.data.frame(t(x[, cols]))
   x <- cbind(data.frame(Parameter = row.names(x), stringsAsFactors = FALSE), x)
   names(x) <- c("Parameter", attributes(object)$summary$Component)
   row.names(x) <- NULL
+
+  if (.is_oblique_rotation(attributes(object)$rotation)) {
+    factor_correlations <- attributes(object)$model$Phi
+    if (!is.null(factor_correlations)) {
+      attr(x, "factor_correlations") <- datawizard::rownames_as_column(
+        as.data.frame(factor_correlations),
+        var = "Factor"
+      )
+    }
+  }
 
   if (inherits(object, "parameters_efa")) {
     class(x) <- c("parameters_efa_summary", class(object))
@@ -120,9 +139,8 @@ summary.parameters_pca <- summary.parameters_efa
 
 #' @export
 summary.parameters_omega <- function(object, ...) {
-  table_var <- attributes(object)$summary
-  class(table_var) <- c("parameters_omega_summary", class(table_var))
-  table_var
+  class(object) <- c("parameters_omega_summary", "data.frame")
+  object
 }
 
 
@@ -206,6 +224,9 @@ predict.parameters_pca <- predict.parameters_efa
 
 #' @export
 print.parameters_efa_summary <- function(x, digits = 3, ...) {
+  # we may have factor correlations
+  fc <- attributes(x)$factor_correlations
+
   if ("Parameter" %in% names(x)) {
     x$Parameter <- c(
       "Eigenvalues", "Variance Explained", "Variance Explained (Cumulative)",
@@ -225,6 +246,19 @@ print.parameters_efa_summary <- function(x, digits = 3, ...) {
     format = "text",
     ...
   ))
+
+  if (!is.null(fc)) {
+    cat("\n")
+    cat(insight::export_table(
+      fc,
+      digits = digits,
+      caption = c("# Factor Correlations", "blue"),
+      format = "text",
+      ...
+    ))
+  }
+
+
   invisible(x)
 }
 
@@ -241,55 +275,105 @@ print.parameters_efa <- function(x,
                                  threshold = NULL,
                                  labels = NULL,
                                  ...) {
-  cat(
-    .print_parameters_cfa_efa(
-      x,
-      threshold = threshold,
-      sort = sort,
-      format = "text",
-      digits = digits,
-      labels = labels,
-      ...
-    )
-  )
+  # extract attributes
+  if (is.null(threshold)) {
+    threshold <- attributes(x)$threshold
+  }
+  cat(.print_parameters_cfa_efa(
+    x,
+    threshold = threshold,
+    sort = sort,
+    format = "text",
+    digits = digits,
+    labels = labels,
+    ...
+  ))
   invisible(x)
 }
-
 
 #' @export
 print.parameters_pca <- print.parameters_efa
 
-
 #' @export
-print.parameters_omega <- function(x, ...) {
-  orig_x <- x
-  names(x) <- c("Composite", "Omega (total)", "Omega (hierarchical)", "Omega (group)")
-  cat(insight::export_table(x))
-  invisible(orig_x)
-}
+print.parameters_omega <- print.parameters_efa
 
 
 #' @export
 print.parameters_omega_summary <- function(x, ...) {
-  orig_x <- x
-  names(x) <- c(
-    "Composite", "Total Variance (%)", "Variance due to General Factor (%)",
-    "Variance due to Group Factor (%)"
-  )
-  cat(insight::export_table(x))
-  invisible(orig_x)
+  out <- .print_omega_summary(x)
+  cat(insight::export_table(out$tables, caption = out$captions, format = "text", ...))
+  invisible(x)
 }
 
 
 # print-helper ----------------------
 
 
+.print_omega_summary <- function(x, format = "text") {
+  caption1 <- NULL
+  caption2 <- NULL
+  caption3 <- NULL
+
+  # extract model
+  model <- attributes(x)$model
+  if (!is.null(model)) {
+    stats <- data.frame(
+      Statistic = c("Alpha", "G.6", "Omega (hierarchical)", "Omega (asymptotic H)", "Omega (total)"),
+      Coefficient = c(model$alpha, model$G6, model$omega_h, model$omega.lim, model$omega.tot)
+    )
+    if (format == "text") {
+      caption1 <- c("# Omega Statistics", "blue")
+    } else {
+      caption1 <- "Omega Statistics"
+    }
+  }
+
+  # extract summary tables
+  omega_coefficients <- attributes(x)$omega_coefficients
+  variance_summary <- attributes(x)$summary
+
+  # rename columns
+  if (!is.null(omega_coefficients)) {
+    names(omega_coefficients) <- c(
+      "Composite", "Omega (total)", "Omega (hierarchical)", "Omega (group)"
+    )
+    if (format == "text") {
+      caption2 <- c("# Omega Coefficients", "blue")
+    } else {
+      caption2 <- "Omega Coefficients"
+    }
+  }
+  if (!is.null(variance_summary)) {
+    names(variance_summary) <- c(
+      "Composite", "Total (%)", "General Factor (%)",
+      "Group Factor (%)"
+    )
+    if (format == "text") {
+      caption3 <- c("# Variances", "blue")
+    } else {
+      caption3 <- "Variances"
+    }
+  }
+
+  # list for export
+  out <- insight::compact_list(list(stats, omega_coefficients, variance_summary))
+  captions <- insight::compact_list(list(caption1, caption2, caption3))
+
+  list(tables = out, captions = captions)
+}
+
+
 .print_parameters_cfa_efa <- function(x, threshold, sort, format, digits, labels, ...) {
+  # html engine?
+  engine <- .check_format_backend(...)
+
   # Method
   if (inherits(x, "parameters_pca")) {
     method <- "Principal Component Analysis"
-  } else {
+  } else if (inherits(x, "parameters_efa")) {
     method <- "Factor Analysis"
+  } else {
+    method <- "Omega"
   }
 
   # Rotation
@@ -313,12 +397,12 @@ print.parameters_omega_summary <- function(x, ...) {
 
   # table caption
   if (is.null(rotation_name) || rotation_name == "none") {
-    if (format == "markdown") {
+    if (format %in% c("markdown", "html")) {
       table_caption <- sprintf("Loadings from %s (no rotation)", method)
     } else {
       table_caption <- c(sprintf("# Loadings from %s (no rotation)", method), "blue")
     }
-  } else if (format == "markdown") {
+  } else if (format %in% c("markdown", "html")) {
     table_caption <- sprintf("Rotated loadings from %s (%s-rotation)", method, rotation_name)
   } else {
     table_caption <- c(sprintf("# Rotated loadings from %s (%s-rotation)", method, rotation_name), "blue")
@@ -328,7 +412,7 @@ print.parameters_omega_summary <- function(x, ...) {
   if (is.null(attributes(x)$type)) {
     footer <- NULL
   } else {
-    footer <- c(.text_components_variance(x, sep = ifelse(format == "markdown", "", "\n")), "yellow")
+    footer <- c(.text_components_variance(x, sep = ifelse(format %in% c("markdown", "html"), "", "\n")), "yellow")
   }
 
   # alignment?
@@ -336,6 +420,11 @@ print.parameters_omega_summary <- function(x, ...) {
     alignment <- NULL
   } else {
     alignment <- paste(c("ll", rep("r", ncol(x) - 2)), collapse = "")
+  }
+
+  # set engine for html format
+  if (format == "html" && identical(engine, "tt")) {
+    format <- "tt"
   }
 
   insight::export_table(
@@ -503,11 +592,11 @@ sort.parameters_pca <- sort.parameters_efa
 
 #' @rdname principal_components
 #' @export
-closest_component <- function(pca_results) {
-  if ("closest_component" %in% names(attributes(pca_results))) {
-    attributes(pca_results)$closest_component
+closest_component <- function(x) {
+  if ("closest_component" %in% names(attributes(x))) {
+    attributes(x)$closest_component
   } else {
-    .closest_component(pca_results)
+    .closest_component(x)
   }
 }
 

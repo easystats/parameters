@@ -56,6 +56,14 @@ test_that("model_parameters.glm - binomial", {
   params <- model_parameters(model, component = "conditional", effects = "fixed", verbose = FALSE)
 })
 
+test_that("model_parameters.glm - binomial probit", {
+  set.seed(333)
+  model <- glm(vs ~ wt + cyl, data = mtcars, family = binomial("probit"))
+
+  params <- model_parameters(model, verbose = FALSE)
+  expect_identical(attributes(params)$coefficient_name, "Z-Score")
+})
+
 test_that("model_parameters.glm - Gamma - print", {
   # test printing for prevalence ratios
   clotting <- data.frame(

@@ -121,7 +121,7 @@ model_parameters.bootstrap_model <- bootstrap_parameters.bootstrap_model
   )
 
   # Remove unnecessary columns
-  if ("CI" %in% names(parameters) && insight::n_unique(parameters$CI) == 1) {
+  if ("CI" %in% names(parameters) && insight::has_single_value(parameters$CI, remove_na = TRUE)) {
     parameters$CI <- NULL
   } else if ("CI" %in% names(parameters) && insight::n_unique(parameters$CI) > 1) {
     parameters <- datawizard::reshape_ci(parameters)

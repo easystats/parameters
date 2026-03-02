@@ -39,7 +39,26 @@
 ---
 
     Code
-      print_md(out, engine = "tt")
+      print_md(out)
+    Output
+      
+      
+      |Parameter    |                  m1 |                  m2 |
+      |:------------|:--------------------|:--------------------|
+      |(Intercept)  |27.48 (23.43, 31.53) |27.48 (23.43, 31.53) |
+      |gear (3)     |                0.00 |                0.00 |
+      |gear (4)     | 0.08 (-3.68,  3.83) | 0.08 (-3.68,  3.83) |
+      |gear (5)     | 2.39 (-2.50,  7.29) | 2.39 (-2.50,  7.29) |
+      |am (0)       |                0.00 |                0.00 |
+      |am (1)       | 4.14 ( 0.42,  7.85) | 4.14 ( 0.42,  7.85) |
+      |hp           |-0.06 (-0.09, -0.04) |-0.06 (-0.09, -0.04) |
+      |             |                     |                     |
+      |Observations |                  32 |                  32 |
+
+---
+
+    Code
+      display(out, format = "tt")
     Output
       
       +--------------+----------------------+----------------------+
@@ -49,13 +68,13 @@
       +--------------+----------------------+----------------------+
       | gear (3)     | 0.00                 | 0.00                 |
       +--------------+----------------------+----------------------+
-      | gear (4)     | 0.08 (-3.68, 3.83)   | 0.08 (-3.68, 3.83)   |
+      | gear (4)     | 0.08 (-3.68,  3.83)  | 0.08 (-3.68,  3.83)  |
       +--------------+----------------------+----------------------+
-      | gear (5)     | 2.39 (-2.50, 7.29)   | 2.39 (-2.50, 7.29)   |
+      | gear (5)     | 2.39 (-2.50,  7.29)  | 2.39 (-2.50,  7.29)  |
       +--------------+----------------------+----------------------+
       | am (0)       | 0.00                 | 0.00                 |
       +--------------+----------------------+----------------------+
-      | am (1)       | 4.14 (0.42, 7.85)    | 4.14 (0.42, 7.85)    |
+      | am (1)       | 4.14 ( 0.42,  7.85)  | 4.14 ( 0.42,  7.85)  |
       +--------------+----------------------+----------------------+
       | hp           | -0.06 (-0.09, -0.04) | -0.06 (-0.09, -0.04) |
       +--------------+----------------------+----------------------+
@@ -154,4 +173,73 @@
       
       Uncertainty intervals (equal-tailed) and p-values (two-tailed) computed
         using a Wald t-distribution approximation.
+
+# include_reference, random effects models
+
+    Code
+      print(out)
+    Output
+      # Fixed Effects
+      
+      Parameter          | Odds Ratio |       SE |       95% CI |     z |      p
+      --------------------------------------------------------------------------
+      (Intercept)        |   1.81e-06 | 4.52e-06 | [0.00, 0.00] | -5.29 | < .001
+      flipper len        |       1.07 |     0.01 | [1.04, 1.09] |  5.33 | < .001
+      island [Biscoe]    |       1.00 |          |              |       |       
+      island [Dream]     |       2.84 |     0.93 | [1.49, 5.41] |  3.18 | 0.001 
+      island [Torgersen] |       2.97 |     1.22 | [1.32, 6.65] |  2.64 | 0.008 
+      
+      # Random Effects
+      
+      Parameter            | Coefficient |      95% CI
+      ------------------------------------------------
+      SD (Intercept: year) |    3.05e-05 | [0.00, Inf]
+    Message
+      
+      Uncertainty intervals (equal-tailed) and p-values (two-tailed) computed
+        using a Wald z-distribution approximation.
+
+---
+
+    Code
+      print(out, include_reference = TRUE)
+    Output
+      # Fixed Effects
+      
+      Parameter          | Odds Ratio |       SE |       95% CI |     z |      p
+      --------------------------------------------------------------------------
+      (Intercept)        |   1.81e-06 | 4.52e-06 | [0.00, 0.00] | -5.29 | < .001
+      flipper len        |       1.07 |     0.01 | [1.04, 1.09] |  5.33 | < .001
+      island [Biscoe]    |       1.00 |          |              |       |       
+      island [Dream]     |       2.84 |     0.93 | [1.49, 5.41] |  3.18 | 0.001 
+      island [Torgersen] |       2.97 |     1.22 | [1.32, 6.65] |  2.64 | 0.008 
+      
+      # Random Effects
+      
+      Parameter            | Coefficient |      95% CI
+      ------------------------------------------------
+      SD (Intercept: year) |    3.05e-05 | [0.00, Inf]
+    Message
+      
+      Uncertainty intervals (equal-tailed) and p-values (two-tailed) computed
+        using a Wald z-distribution approximation.
+
+---
+
+    Code
+      print(out)
+    Output
+      # Fixed Effects
+      
+      Parameter          | Odds Ratio |       SE |       95% CI |     z |      p
+      --------------------------------------------------------------------------
+      (Intercept)        |   1.81e-06 | 4.52e-06 | [0.00, 0.00] | -5.29 | < .001
+      flipper len        |       1.07 |     0.01 | [1.04, 1.09] |  5.33 | < .001
+      island [Biscoe]    |       1.00 |          |              |       |       
+      island [Dream]     |       2.84 |     0.93 | [1.49, 5.41] |  3.18 | 0.001 
+      island [Torgersen] |       2.97 |     1.22 | [1.32, 6.65] |  2.64 | 0.008 
+    Message
+      
+      Uncertainty intervals (equal-tailed) and p-values (two-tailed) computed
+        using a Wald z-distribution approximation.
 

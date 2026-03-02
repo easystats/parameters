@@ -55,7 +55,7 @@ Furthermore, for other approximation methods like \code{"kenward"} or
 freedom.
 }
 \examples{
-\dontshow{if (require("lme4", quietly = TRUE)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (require("lme4", quietly = TRUE)) withAutoprint(\{ # examplesIf}
 model <- lm(Sepal.Length ~ Petal.Length * Species, data = iris)
 dof(model)
 

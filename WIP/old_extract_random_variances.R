@@ -45,7 +45,10 @@
                                               ci_method = NULL,
                                               verbose = FALSE,
                                               ...) {
-  component <- match.arg(component, choices = c("all", "conditional", "zero_inflated", "zi", "dispersion"))
+  component <- insight::validate_argument(
+    component,
+    c("all", "conditional", "zero_inflated", "zi", "dispersion")
+  )
 
   out <- suppressWarnings(
     .extract_random_variances_helper(
@@ -235,7 +238,13 @@
   # row bind all random effect variances, if possible
   out <- tryCatch(
     {
-      out_list <- insight::compact_list(list(ran_intercept, ran_slope, ran_corr, ran_slopes_corr, ran_sigma))
+      out_list <- insight::compact_list(list(
+        ran_intercept,
+        ran_slope,
+        ran_corr,
+        ran_slopes_corr,
+        ran_sigma
+      ))
       do.call(rbind, out_list)
     },
     error = function(e) {
@@ -283,7 +292,16 @@
 
   # add confidence intervals?
   if (!is.null(ci) && !all(is.na(ci)) && length(ci) == 1) {
-    out <- .random_sd_ci(model, out, ci_method, ci, corr_param, sigma_param, component, verbose = verbose)
+    out <- .random_sd_ci(
+      model,
+      out,
+      ci_method,
+      ci,
+      corr_param,
+      sigma_param,
+      component,
+      verbose = verbose
+    )
   }
 
   out <- out[c("Parameter", "Level", "Coefficient", "SE", ci_cols, stat_column, "df_error", "p", "Effects", "Group")]
@@ -308,7 +326,13 @@
 
   if (inherits(model, c("merMod", "glmerMod", "lmerMod"))) {
     if (!is.null(ci_method) && ci_method %in% c("profile", "boot")) {
-      var_ci <- as.data.frame(suppressWarnings(stats::confint(model, parm = "theta_", oldNames = FALSE, method = ci_method, level = ci)))
+      var_ci <- as.data.frame(suppressWarnings(stats::confint(
+        model,
+        parm = "theta_",
+        oldNames = FALSE,
+        method = ci_method,
+        level = ci
+      )))
       colnames(var_ci) <- c("CI_low", "CI_high")
 
       rn <- row.names(var_ci)
@@ -466,8 +490,18 @@
     out <- tryCatch(
       {
         var_ci <- rbind(
-          as.data.frame(suppressWarnings(stats::confint(model, parm = "theta_", method = "wald", level = ci))),
-          as.data.frame(suppressWarnings(stats::confint(model, parm = "sigma", method = "wald", level = ci)))
+          as.data.frame(suppressWarnings(stats::confint(
+            model,
+            parm = "theta_",
+            method = "wald",
+            level = ci
+          ))),
+          as.data.frame(suppressWarnings(stats::confint(
+            model,
+            parm = "sigma",
+            method = "wald",
+            level = ci
+          )))
         )
         colnames(var_ci) <- c("CI_low", "CI_high", "not_used")
         var_ci$Component <- "conditional"
@@ -485,8 +519,16 @@
         # add Group
         var_ci$Group <- NA
         if (length(group_factor) > 1) {
-          var_ci$Group[var_ci$Component == "conditional"] <- gsub(paste0("^", group_factor2, "\\.cond\\.(.*)"), "\\1", var_ci$Parameter[var_ci$Component == "conditional"])
-          var_ci$Group[var_ci$Component == "zi"] <- gsub(paste0("^", group_factor2, "\\.zi\\.(.*)"), "\\1", var_ci$Parameter[var_ci$Component == "zi"])
+          var_ci$Group[var_ci$Component == "conditional"] <- gsub(
+            paste0("^", group_factor2, "\\.cond\\.(.*)"),
+            "\\1",
+            var_ci$Parameter[var_ci$Component == "conditional"]
+          )
+          var_ci$Group[var_ci$Component == "zi"] <- gsub(
+            paste0("^", group_factor2, "\\.zi\\.(.*)"),
+            "\\1",
+            var_ci$Parameter[var_ci$Component == "zi"]
+          )
         } else {
           var_ci$Group <- group_factor
           # check if sigma was properly identified
@@ -601,10 +643,10 @@
       },
       error = function(e) {
         if (isTRUE(verbose)) {
-          message(insight::format_message(
+          insight::format_alert(
             "Cannot compute standard errors and confidence intervals for random effects parameters.",
             "Your model may suffer from singularity (see '?lme4::isSingular' and '?performance::check_singularity')."
-          ))
+          )
         }
         out
       }
@@ -621,153 +663,8 @@
 # store essential information about variance components...
 # basically, this function should return lme4::VarCorr(x)
 .get_variance_information <- function(model, model_component = "conditional") {
-  # reason to be installed
-  reason <- "to compute random effect variances for mixed models"
-
-  # installed?
-  insight::check_if_installed("lme4", reason = reason)
-
-  if (inherits(model, "lme")) {
-    insight::check_if_installed("nlme", reason = reason)
-  }
-
-  if (inherits(model, "clmm")) {
-    insight::check_if_installed("ordinal", reason = reason)
-  }
-
-  if (inherits(model, "brmsfit")) {
-    insight::check_if_installed("brms", reason = reason)
-  }
-
-  if (inherits(model, "cpglmm")) {
-    insight::check_if_installed("cplm", reason = reason)
-  }
-
-  if (inherits(model, "rstanarm")) {
-    insight::check_if_installed("rstanarm", reason = reason)
-  }
-
-  # stanreg
-  # ---------------------------
-  if (inherits(model, "stanreg")) {
-    varcorr <- lme4::VarCorr(model)
-
-    # GLMMapdative
-    # ---------------------------
-  } else if (inherits(model, "MixMod")) {
-    vc1 <- vc2 <- NULL
-    re_names <- insight::find_random(model)
-
-    vc_cond <- !startsWith(colnames(model$D), "zi_")
-    if (any(vc_cond)) {
-      vc1 <- model$D[vc_cond, vc_cond, drop = FALSE]
-      attr(vc1, "stddev") <- sqrt(diag(vc1))
-      attr(vc1, "correlation") <- stats::cov2cor(model$D[vc_cond, vc_cond, drop = FALSE])
-    }
-
-    vc_zi <- startsWith(colnames(model$D), "zi_")
-    if (any(vc_zi)) {
-      colnames(model$D) <- gsub("^zi_(.*)", "\\1", colnames(model$D))
-      rownames(model$D) <- colnames(model$D)
-      vc2 <- model$D[vc_zi, vc_zi, drop = FALSE]
-      attr(vc2, "stddev") <- sqrt(diag(vc2))
-      attr(vc2, "correlation") <- stats::cov2cor(model$D[vc_zi, vc_zi, drop = FALSE])
-    }
-
-    model_deviance <- insight::get_deviance(model, verbose = FALSE)
-    residual_df <- insight::get_df(model, type = "residual", verbose = FALSE)
-
-    vc1 <- list(vc1)
-    names(vc1) <- re_names[[1]]
-    attr(vc1, "sc") <- sqrt(abs(model_deviance) / residual_df)
-
-    if (!is.null(vc2)) {
-      vc2 <- list(vc2)
-      names(vc2) <- re_names[[2]]
-      attr(vc2, "sc") <- sqrt(abs(model_deviance) / residual_df)
-    }
-
-    varcorr <- insight::compact_list(list(vc1, vc2))
-    names(varcorr) <- c("cond", "zi")[seq_along(varcorr)]
-
-    # joineRML
-    # ---------------------------
-  } else if (inherits(model, "mjoint")) {
-    re_names <- insight::find_random(model, flatten = TRUE)
-    varcorr <- summary(model)$D
-    attr(varcorr, "stddev") <- sqrt(diag(varcorr))
-    attr(varcorr, "correlation") <- stats::cov2cor(varcorr)
-    varcorr <- list(varcorr)
-    names(varcorr) <- re_names[1]
-    attr(varcorr, "sc") <- model$coef$sigma2[[1]]
-
-    # nlme / glmmPQL
-    # ---------------------------
-  } else if (inherits(model, "lme")) {
-    re_names <- insight::find_random(model, split_nested = TRUE, flatten = TRUE)
-    if (.is_nested_lme(model)) {
-      varcorr <- .get_nested_lme_varcorr(model)
-    } else {
-      varcorr <- list(nlme::getVarCov(model))
-    }
-    names(varcorr) <- re_names
-
-    # ordinal
-    # ---------------------------
-  } else if (inherits(model, "clmm")) {
-    varcorr <- ordinal::VarCorr(model)
-
-    # glmmadmb
-    # ---------------------------
-  } else if (inherits(model, "glmmadmb")) {
-    varcorr <- lme4::VarCorr(model)
-
-    # brms
-    # ---------------------------
-  } else if (inherits(model, "brmsfit")) {
-    varcorr <- lapply(names(lme4::VarCorr(model)), function(i) {
-      element <- lme4::VarCorr(model)[[i]]
-      if (i != "residual__") {
-        if (!is.null(element$cov)) {
-          out <- as.matrix(drop(element$cov[, 1, ]))
-          colnames(out) <- rownames(out) <- gsub("Intercept", "(Intercept)", rownames(element$cov), fixed = TRUE)
-        } else {
-          out <- as.matrix(drop(element$sd[, 1])^2)
-          colnames(out) <- rownames(out) <- gsub("Intercept", "(Intercept)", rownames(element$sd), fixed = TRUE)
-        }
-        attr(out, "sttdev") <- element$sd[, 1]
-      } else {
-        out <- NULL
-      }
-      out
-    })
-    varcorr <- insight::compact_list(varcorr)
-    names(varcorr) <- setdiff(names(lme4::VarCorr(model)), "residual__")
-    attr(varcorr, "sc") <- lme4::VarCorr(model)$residual__$sd[1, 1]
-
-    # cpglmm
-    # ---------------------------
-  } else if (inherits(model, "cpglmm")) {
-    varcorr <- cplm::VarCorr(model)
-
-    # lme4 / glmmTMB
-    # ---------------------------
-  } else {
-    varcorr <- lme4::VarCorr(model)
-  }
-
-
-  # for glmmTMB, tell user that dispersion model is ignored
-
-  if (inherits(model, c("glmmTMB", "MixMod"))) {
-    if (is.null(model_component) || model_component == "conditional") {
-      varcorr <- .collapse_cond(varcorr)
-    } else {
-      varcorr <- .collapse_zi(varcorr)
-    }
-  }
-
-  varcorr
+  varcorr <- insight::get_mixed_info(model, component = model_component, verbose = FALSE)
+  varcorr$vc
 }
 
 

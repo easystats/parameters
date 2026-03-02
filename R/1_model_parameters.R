@@ -30,11 +30,12 @@
 #' - [Zero-inflated and hurdle][model_parameters.zcpglm()]: **cplm**, **mhurdle**,
 #'   **pscl**, ...
 #' - [Other models][model_parameters.glimML()]: **aod**, **bbmle**, **betareg**,
-#'   **emmeans**, **epiR**, **ggeffects**, **glmx**, **ivfixed**, **ivprobit**,
-#'   **JRM**, **lmodel2**, **logitsf**, **marginaleffects**, **margins**, **maxLik**,
+#'   **emmeans**, **epiR**, **glmx**, **ivfixed**, **ivprobit**, **JRM**,
+#'   **lmodel2**, **logitsf**, **marginaleffects**, **margins**, **maxLik**,
 #'   **mediation**, **mfx**, **multcomp**, **mvord**, **plm**, **PMCMRplus**,
 #'   **quantreg**, **selection**, **systemfit**, **tidymodels**, **varEST**,
-#'   **WRS2**, `bfsl`, `deltaMethod`, `fitdistr`, `mjoint`, `mle`, `model.avg`, ...
+#'   **WRS2**, `bfsl`, `deltaMethod`, `fitdistr`, `mjoint`, `mle`, `model.avg`,
+#'   ...
 #'
 #' A full overview can be found here:
 #' https://easystats.github.io/parameters/reference/
@@ -128,7 +129,7 @@
 #'
 #' - **pseudo** (*for 2-level (G)LMMs only*): In this (post-hoc) method, the
 #' response and the predictor are standardized based on the level of prediction
-#' (levels are detected with [performance::check_heterogeneity_bias()]): Predictors
+#' (levels are detected with [performance::check_group_variation()]): Predictors
 #' are standardized based on their SD at level of prediction (see also
 #' [datawizard::demean()]); The outcome (in linear LMMs) is standardized based
 #' on a fitted random-intercept-model, where `sqrt(random-intercept-variance)`
@@ -357,11 +358,15 @@
 #'
 #'   - Lakens, D., Scheel, A. M., and Isager, P. M. (2018). Equivalence Testing
 #'     for Psychological Research: A Tutorial. Advances in Methods and Practices
-#'     in Psychological Science, 1(2), 259–269. \doi{10.1177/2515245918770963}
+#'     in Psychological Science, 1(2), 259–269.
 #'
 #'   - Makowski, D., Ben-Shachar, M. S., Chen, S. H. A., and Lüdecke, D. (2019).
 #'     Indices of Effect Existence and Significance in the Bayesian Framework.
 #'     Frontiers in Psychology, 10, 2767. \doi{10.3389/fpsyg.2019.02767}
+#'
+#'   - Montiel Olea, J. L., and Plagborg-Møller, M. (2019). Simultaneous
+#'     confidence bands: Theory, implementation, and an application to SVARs.
+#'     Journal of Applied Econometrics, 34(1), 1–17. \doi{10.1002/jae.2656}
 #'
 #'   - Neter, J., Wasserman, W., and Kutner, M. H. (1989). Applied linear
 #'     regression models.
@@ -391,14 +396,12 @@ model_parameters <- function(model, ...) {
 
 # DF naming convention --------------------
 
-
 # DF column naming
 # F has df, df_error
 # t has df_error
 # z has df_error = Inf
 # Chisq has df
 # https://github.com/easystats/parameters/issues/455
-
 
 # Options -------------------------------------
 
@@ -411,7 +414,6 @@ model_parameters <- function(model, ...) {
 # getOption("parameters_labels"): use value/variable labels instead pretty names
 # getOption("parameters_interaction"): separator char for interactions
 # getOption("parameters_select"): default for the `select` argument
-
 
 #' @rdname model_parameters
 #' @export
@@ -437,14 +439,17 @@ parameters <- model_parameters
 #'   `"pseudo"`. See 'Details' in [`standardize_parameters()`].
 #'   **Importantly**:
 #'   - The `"refit"` method does *not* standardize categorical predictors (i.e.
-#'   factors), which may be a different behaviour compared to other R packages
-#'   (such as **lm.beta**) or other software packages (like SPSS). to mimic
-#'   such behaviours, either use `standardize="basic"` or standardize the data
-#'   with `datawizard::standardize(force=TRUE)` *before* fitting the model.
+#'     factors), which may be a different behaviour compared to other R packages
+#'     (such as **lm.beta**) or other software packages (like SPSS). to mimic
+#'     such behaviours, either use `standardize="basic"` or standardize the data
+#'     with `datawizard::standardize(force=TRUE)` *before* fitting the model.
+#'   - By default, the response (dependent) variable is also standardized, *if
+#'     applicable*. Set `include_response = FALSE` to avoid standardization of
+#'     the response variable. See details in [`datawizard::standardize.default()`].
 #'   - For mixed models, when using methods other than `"refit"`, only the fixed
-#'   effects will be standardized.
+#'     effects will be standardized.
 #'   - Robust estimation (i.e., `vcov` set to a value other than `NULL`) of
-#'   standardized parameters only works when `standardize="refit"`.
+#'     standardized parameters only works when `standardize="refit"`.
 #' @param exponentiate Logical, indicating whether or not to exponentiate the
 #'   coefficients (and related confidence intervals). This is typical for
 #'   logistic regression, or more generally speaking, for models with log or
@@ -459,11 +464,12 @@ parameters <- model_parameters
 #'   coefficient. The transformed confidence interval more clearly captures this
 #'   uncertainty. For `compare_parameters()`, `exponentiate = "nongaussian"`
 #'   will only exponentiate coefficients from non-Gaussian families.
-#' @param p_adjust Character vector, if not `NULL`, indicates the method to
-#'   adjust p-values. See [`stats::p.adjust()`] for details. Further
-#'   possible adjustment methods are `"tukey"`, `"scheffe"`,
-#'   `"sidak"` and `"none"` to explicitly disable adjustment for
-#'   `emmGrid` objects (from **emmeans**).
+#' @param p_adjust String value, if not `NULL`, indicates the method to adjust
+#'   p-values. See [`stats::p.adjust()`] for details. Further possible
+#'   adjustment methods are `"tukey"`, `"scheffe"`, `"sidak"`, `"sup-t"`, and
+#'   `"none"` to explicitly disable adjustment for `emmGrid` objects (from
+#'   **emmeans**). `"sup-t"` computes simultaneous confidence bands, also called
+#'   sup-t confidence band (Montiel Olea & Plagborg-Møller, 2019).
 #' @param ci_method Method for computing degrees of freedom for
 #'   confidence intervals (CI) and the related p-values. Allowed are following
 #'   options (which vary depending on the model class): `"residual"`,
@@ -569,21 +575,23 @@ parameters <- model_parameters
 #' }
 #' @return A data frame of indices related to the model's parameters.
 #' @export
-model_parameters.default <- function(model,
-                                     ci = 0.95,
-                                     ci_method = NULL,
-                                     bootstrap = FALSE,
-                                     iterations = 1000,
-                                     standardize = NULL,
-                                     exponentiate = FALSE,
-                                     p_adjust = NULL,
-                                     vcov = NULL,
-                                     vcov_args = NULL,
-                                     include_info = getOption("parameters_info", FALSE),
-                                     keep = NULL,
-                                     drop = NULL,
-                                     verbose = TRUE,
-                                     ...) {
+model_parameters.default <- function(
+  model,
+  ci = 0.95,
+  ci_method = NULL,
+  bootstrap = FALSE,
+  iterations = 1000,
+  standardize = NULL,
+  exponentiate = FALSE,
+  p_adjust = NULL,
+  vcov = NULL,
+  vcov_args = NULL,
+  include_info = getOption("parameters_info", FALSE),
+  keep = NULL,
+  drop = NULL,
+  verbose = TRUE,
+  ...
+) {
   # validation check for inputs
   .is_model_valid(model)
 
@@ -633,13 +641,11 @@ model_parameters.default <- function(model,
       attr(out, "error")
     )
   } else if (is.null(out)) {
-    insight::format_error(
-      paste0(
-        "Sorry, `model_parameters()` does not currently work for objects of class `",
-        class(model)[1],
-        "`."
-      )
-    )
+    insight::format_error(paste0(
+      "Sorry, `model_parameters()` does not currently work for objects of class `",
+      class(model)[1],
+      "`."
+    ))
   }
 }
 
@@ -648,24 +654,26 @@ model_parameters.default <- function(model,
 # including a bunch of attributes required for further processing
 # (like printing etc.)
 
-.model_parameters_generic <- function(model,
-                                      ci = 0.95,
-                                      bootstrap = FALSE,
-                                      iterations = 1000,
-                                      merge_by = "Parameter",
-                                      standardize = NULL,
-                                      exponentiate = FALSE,
-                                      effects = "fixed",
-                                      component = "conditional",
-                                      ci_method = NULL,
-                                      p_adjust = NULL,
-                                      include_info = FALSE,
-                                      keep_parameters = NULL,
-                                      drop_parameters = NULL,
-                                      vcov = NULL,
-                                      vcov_args = NULL,
-                                      verbose = TRUE,
-                                      ...) {
+.model_parameters_generic <- function(
+  model,
+  ci = 0.95,
+  bootstrap = FALSE,
+  iterations = 1000,
+  merge_by = "Parameter",
+  standardize = NULL,
+  exponentiate = FALSE,
+  effects = "fixed",
+  component = "conditional",
+  ci_method = NULL,
+  p_adjust = NULL,
+  include_info = FALSE,
+  keep_parameters = NULL,
+  drop_parameters = NULL,
+  vcov = NULL,
+  vcov_args = NULL,
+  verbose = TRUE,
+  ...
+) {
   dots <- list(...)
 
   out <- tryCatch(
@@ -679,12 +687,7 @@ model_parameters.default <- function(model,
           ci_method <- "quantile"
         }
 
-        fun_args <- list(
-          model,
-          iterations = iterations,
-          ci = ci,
-          ci_method = ci_method
-        )
+        fun_args <- list(model, iterations = iterations, ci = ci, ci_method = ci_method)
         fun_args <- c(fun_args, dots)
         params <- do.call("bootstrap_parameters", fun_args)
 
@@ -714,12 +717,10 @@ model_parameters.default <- function(model,
         params <- do.call(".extract_parameters_generic", fun_args)
       }
 
-
       # ==== 2. second step, exponentiate -------
 
       # exponentiate coefficients and SE/CI, if requested
       params <- .exponentiate_parameters(params, model, exponentiate)
-
 
       # ==== 3. third step, add information as attributes -------
 
@@ -757,30 +758,31 @@ model_parameters.default <- function(model,
 
 #################### .glm ----------------------
 
-
 #' @export
-model_parameters.glm <- function(model,
-                                 ci = 0.95,
-                                 ci_method = NULL,
-                                 bootstrap = FALSE,
-                                 iterations = 1000,
-                                 standardize = NULL,
-                                 exponentiate = FALSE,
-                                 p_adjust = NULL,
-                                 vcov = NULL,
-                                 vcov_args = NULL,
-                                 include_info = getOption("parameters_info", FALSE),
-                                 keep = NULL,
-                                 drop = NULL,
-                                 verbose = TRUE,
-                                 ...) {
+model_parameters.glm <- function(
+  model,
+  ci = 0.95,
+  ci_method = NULL,
+  bootstrap = FALSE,
+  iterations = 1000,
+  standardize = NULL,
+  exponentiate = FALSE,
+  p_adjust = NULL,
+  vcov = NULL,
+  vcov_args = NULL,
+  include_info = getOption("parameters_info", FALSE),
+  keep = NULL,
+  drop = NULL,
+  verbose = TRUE,
+  ...
+) {
   dots <- list(...)
 
   # set default
   if (is.null(ci_method)) {
     if (isTRUE(bootstrap)) {
       ci_method <- "quantile"
-    } else if (!is.null(vcov) || !is.null(vcov_args)) {
+    } else if (!is.null(vcov) || !is.null(vcov_args) || inherits(model, "svyolr")) {
       ci_method <- "wald"
     } else {
       ci_method <- "profile"
@@ -796,7 +798,11 @@ model_parameters.glm <- function(model,
   }
 
   # tell user that profiled CIs don't respect vcov-args
-  if (identical(ci_method, "profile") && (!is.null(vcov) || !is.null(vcov_args)) && isTRUE(verbose)) {
+  if (
+    identical(ci_method, "profile") &&
+      (!is.null(vcov) || !is.null(vcov_args)) &&
+      isTRUE(verbose)
+  ) {
     insight::format_alert(
       "When `ci_method=\"profile\"`, `vcov` only modifies standard errors, test-statistic and p-values, but not confidence intervals.", # nolint
       "Use `ci_method=\"wald\"` to return confidence intervals based on robust standard errors."

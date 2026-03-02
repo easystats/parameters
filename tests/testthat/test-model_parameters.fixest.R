@@ -1,4 +1,4 @@
-test_that("model_parameters.fixest", {
+test_that("model_parameters.fixest-1", {
   skip_on_cran()
   skip_if_not_installed("fixest")
   skip_if_not_installed("carData")
@@ -73,7 +73,7 @@ test_that("model_parameters.fixest", {
 })
 
 
-test_that("model_parameters.fixest", {
+test_that("model_parameters.fixest-2", {
   skip_on_cran()
   skip_if_not_installed("fixest")
   skip_if_not_installed("carData")
@@ -110,8 +110,12 @@ test_that("robust standard errors", {
   expect_true(all(p2$p != p3$p))
   expect_true(all(p1$p != p3$p))
 
-  expect_error(standard_error(mod, vcov = "HC3"))
-  expect_error(parameters(mod, vcov = "HC3"))
+  # HC3 works since fixest 0.13.0
+  skip_if_not_installed("fixest", minimum_version = "0.13.0")
+  se4 <- sqrt(diag(vcov(mod, vcov = "HC3")))
+  expect_equal(standard_error(mod, vcov = "HC3")$SE, se4, ignore_attr = TRUE, tolerance = 1e-4)
+  expect_equal(parameters(mod, vcov = "HC3")$SE, se4, ignore_attr = TRUE, tolerance = 1e-4)
+
   expect_error(parameters(mod, vcov = "hetero"), NA)
   expect_error(parameters(mod, vcov = "iid"), NA)
 })

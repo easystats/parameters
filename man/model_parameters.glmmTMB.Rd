@@ -17,7 +17,9 @@
   group_level = FALSE,
   exponentiate = FALSE,
   p_adjust = NULL,
-  wb_component = TRUE,
+  vcov = NULL,
+  vcov_args = NULL,
+  wb_component = FALSE,
   include_info = getOption("parameters_mixed_info", FALSE),
   include_sigma = FALSE,
   keep = NULL,
@@ -70,17 +72,24 @@ factors), which may be a different behaviour compared to other R packages
 (such as \strong{lm.beta}) or other software packages (like SPSS). to mimic
 such behaviours, either use \code{standardize="basic"} or standardize the data
 with \code{datawizard::standardize(force=TRUE)} \emph{before} fitting the model.
+\item By default, the response (dependent) variable is also standardized, \emph{if
+applicable}. Set \code{include_response = FALSE} to avoid standardization of
+the response variable. See details in \code{\link[datawizard:standardize.default]{datawizard::standardize.default()}}.
 \item For mixed models, when using methods other than \code{"refit"}, only the fixed
 effects will be standardized.
 \item Robust estimation (i.e., \code{vcov} set to a value other than \code{NULL}) of
 standardized parameters only works when \code{standardize="refit"}.
 }}
 
-\item{effects}{Should parameters for fixed effects (\code{"fixed"}), random
-effects (\code{"random"}), both fixed and random effects (\code{"all"}), or the
-overall (sum of fixed and random) effects (\code{"random_total"}) be returned?
-Only applies to mixed models. May be abbreviated. If the calculation of
-random effects parameters takes too long, you may use \code{effects = "fixed"}.}
+\item{effects}{Should parameters for fixed effects (\code{"fixed"}), random effects
+(\code{"random"}), or both fixed and random effects (\code{"all"}) be returned? By
+default, the variance components for random effects are returned. If
+group-level effects are requested, \code{"grouplevel"} returns the group-level
+random effects (BLUPs), while \code{"random_total"} return the overall (sum of
+fixed and random) effects (similar to what \code{coef()} returns). Using
+\code{"grouplevel"} is equivalent to setting \code{group_level = TRUE}. The \code{effects}
+argument only applies to mixed models. If the calculation of random effects
+parameters takes too long, you may use \code{effects = "fixed"}.}
 
 \item{component}{Which type of parameters to return, such as parameters for the
 conditional model, the zero-inflation part of the model, the dispersion
@@ -97,10 +106,9 @@ argument - but no auxiliary parameters). For \code{component = "distributional"}
 (and other auxiliary parameters) are returned.}
 
 \item{group_level}{Logical, for multilevel models (i.e. models with random
-effects) and when \code{effects = "all"} or \code{effects = "random"},
-include the parameters for each group level from random effects. If
-\code{group_level = FALSE} (the default), only information on SD and COR
-are shown.}
+effects) and when \code{effects = "random"}, include the parameters for each
+group level from random effects. If \code{group_level = FALSE} (the default),
+only information on SD and COR are shown.}
 
 \item{exponentiate}{Logical, indicating whether or not to exponentiate the
 coefficients (and related confidence intervals). This is typical for
@@ -117,11 +125,41 @@ coefficient. The transformed confidence interval more clearly captures this
 uncertainty. For \code{compare_parameters()}, \code{exponentiate = "nongaussian"}
 will only exponentiate coefficients from non-Gaussian families.}
 
-\item{p_adjust}{Character vector, if not \code{NULL}, indicates the method to
-adjust p-values. See \code{\link[stats:p.adjust]{stats::p.adjust()}} for details. Further
-possible adjustment methods are \code{"tukey"}, \code{"scheffe"},
-\code{"sidak"} and \code{"none"} to explicitly disable adjustment for
-\code{emmGrid} objects (from \strong{emmeans}).}
+\item{p_adjust}{String value, if not \code{NULL}, indicates the method to adjust
+p-values. See \code{\link[stats:p.adjust]{stats::p.adjust()}} for details. Further possible
+adjustment methods are \code{"tukey"}, \code{"scheffe"}, \code{"sidak"}, \code{"sup-t"}, and
+\code{"none"} to explicitly disable adjustment for \code{emmGrid} objects (from
+\strong{emmeans}). \code{"sup-t"} computes simultaneous confidence bands, also called
+sup-t confidence band (Montiel Olea & Plagborg-Møller, 2019).}
+
+\item{vcov}{Variance-covariance matrix used to compute uncertainty estimates
+(e.g., for robust standard errors). This argument accepts a covariance
+matrix, a function which returns a covariance matrix, or a string which
+identifies the function to be used to compute the covariance matrix.
+\itemize{
+\item A covariance matrix
+\item A function which returns a covariance matrix (e.g., \code{stats::vcov()})
+\item A string which indicates the kind of uncertainty estimates to return.
+\itemize{
+\item Heteroskedasticity-consistent: \code{"HC"}, \code{"HC0"}, \code{"HC1"}, \code{"HC2"},
+\code{"HC3"}, \code{"HC4"}, \code{"HC4m"}, \code{"HC5"}. See \code{?sandwich::vcovHC}
+\item Cluster-robust: \code{"CR"}, \code{"CR0"}, \code{"CR1"}, \code{"CR1p"}, \code{"CR1S"},
+\code{"CR2"}, \code{"CR3"}. See \code{?clubSandwich::vcovCR}
+\item Bootstrap: \code{"BS"}, \code{"xy"}, \code{"residual"}, \code{"wild"}, \code{"mammen"},
+\code{"fractional"}, \code{"jackknife"}, \code{"norm"}, \code{"webb"}. See
+\code{?sandwich::vcovBS}
+\item Other \code{sandwich} package functions: \code{"HAC"}, \code{"PC"}, \code{"CL"}, \code{"OPG"},
+\code{"PL"}.
+}
+}}
+
+\item{vcov_args}{List of arguments to be passed to the function identified by
+the \code{vcov} argument. This function is typically supplied by the
+\strong{sandwich} or \strong{clubSandwich} packages. Please refer to their
+documentation (e.g., \code{?sandwich::vcovHAC}) to see the list of available
+arguments. If no estimation type (argument \code{type}) is given, the default
+type for \code{"HC"} equals the default from the \strong{sandwich} package; for type
+\code{"CR"}, the default is set to \code{"CR3"}.}
 
 \item{wb_component}{Logical, if \code{TRUE} and models contains within- and
 between-effects (see \code{datawizard::demean()}), the \code{Component} column
@@ -475,7 +513,7 @@ which is converted into a p-value using \code{\link[bayestestR:pd_to_p]{bayestes
 }
 
 \examples{
-\dontshow{if (require("lme4") && require("glmmTMB")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (require("lme4") && require("glmmTMB")) withAutoprint(\{ # examplesIf}
 library(parameters)
 data(mtcars)
 model <- lme4::lmer(mpg ~ wt + (1 | gear), data = mtcars)

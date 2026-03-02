@@ -14,9 +14,6 @@ bayestestR::equivalence_test
 #' @param ci Confidence Interval (CI) level. Default to `0.95` (`95%`).
 #' @param rule Character, indicating the rules when testing for practical
 #' equivalence. Can be `"bayes"`, `"classic"` or `"cet"`. See 'Details'.
-#' @param test Hypothesis test for computing contrasts or pairwise comparisons.
-#' See [`?ggeffects::test_predictions`](https://strengejacke.github.io/ggeffects/reference/test_predictions.html)
-#' for details.
 #' @param verbose Toggle warnings and messages.
 #' @param ... Arguments passed to or from other methods.
 #' @inheritParams model_parameters.glmmTMB
@@ -190,7 +187,7 @@ bayestestR::equivalence_test
 #'
 #'   - Lakens, D., Scheel, A. M., and Isager, P. M. (2018). Equivalence Testing
 #'     for Psychological Research: A Tutorial. Advances in Methods and Practices
-#'     in Psychological Science, 1(2), 259–269. \doi{10.1177/2515245918770963}
+#'     in Psychological Science, 1(2), 259–269.
 #'
 #'   - Makowski, D., Ben-Shachar, M. S., Chen, S. H. A., and Lüdecke, D. (2019).
 #'     Indices of Effect Existence and Significance in the Bayesian Framework.
@@ -358,6 +355,100 @@ equivalence_test.glmmTMB <- equivalence_test.merMod
 equivalence_test.MixMod <- equivalence_test.merMod
 
 
+# modelbased ------------------------------
+
+#' @export
+equivalence_test.estimate_means <- function(
+  x,
+  range = "default",
+  ci = 0.95,
+  rule = "classic",
+  vcov = NULL,
+  vcov_args = NULL,
+  verbose = TRUE,
+  ...
+) {
+  # ==== define rope range ====
+
+  range <- .check_rope_range(x, range, verbose)
+
+  if (length(ci) > 1) {
+    insight::format_alert("`ci` may only be of length 1. Using first ci-value now.")
+    ci <- ci[1]
+  }
+
+  # ==== check degrees of freedom ====
+
+  dof <- unique(insight::get_df(x))
+  if (length(dof) > 1) {
+    dof <- Inf
+  }
+
+  # ==== requested confidence intervals ====
+
+  conf_int <- as.data.frame(t(x[c("CI_low", "CI_high")]))
+
+  # ==== the "narrower" intervals (1-2*alpha) for CET-rules. ====
+
+  alpha <- 1 - ci
+  insight::check_if_installed("modelbased")
+
+  # we need to call the modelbased function again, so get the call
+  # modify CI and evaluate that call
+  cl <- insight::get_call(x)
+  cl$ci <- ci - alpha
+  x2 <- eval(cl)
+  conf_int2 <- as.data.frame(t(x2[c("CI_low", "CI_high")]))
+
+  # ==== equivalence test for each parameter ====
+
+  l <- Map(
+    function(ci_wide, ci_narrow) {
+      .equivalence_test_numeric(
+        ci = ci,
+        ci_wide,
+        ci_narrow,
+        range_rope = range,
+        rule = rule,
+        dof = dof,
+        verbose = verbose
+      )
+    },
+    conf_int,
+    conf_int2
+  )
+
+  dat <- do.call(rbind, l)
+  params <- insight::get_parameters(x)
+
+  out <- data.frame(
+    Parameter = params$Parameter,
+    CI = ifelse(rule == "bayes", ci, ci - alpha),
+    dat,
+    stringsAsFactors = FALSE
+  )
+
+  # ==== (adjusted) p-values for tests ====
+
+  if (!inherits(x, "estimate_means")) {
+    out$p <- .add_p_to_equitest(x, ci, range, vcov = vcov, vcov_args = vcov_args, ...)
+  }
+
+  attr(out, "rope") <- range
+  attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
+  attr(out, "rule") <- rule
+  class(out) <- c("equivalence_test_lm", "see_equivalence_test_lm", class(out))
+
+  out
+}
+
+#' @export
+equivalence_test.estimate_contrasts <- equivalence_test.estimate_means
+
+#' @export
+equivalence_test.estimate_slopes <- equivalence_test.estimate_means
+
+
 # Special classes -------------------------
 
 #' @export
@@ -405,90 +496,19 @@ equivalence_test.parameters_model <- function(x,
 }
 
 
-#' @rdname equivalence_test.lm
-#' @export
-equivalence_test.ggeffects <- function(x,
-                                       range = "default",
-                                       rule = "classic",
-                                       test = "pairwise",
-                                       verbose = TRUE,
-                                       ...) {
-  insight::check_if_installed("ggeffects")
-
-  # get attributes from ggeffects objects, so we have the original model and terms
-  focal <- attributes(x)$original.terms
-  obj_name <- attributes(x)$model.name
-  ci <- attributes(x)$ci.lvl
-  dof <- attributes(x)$df
-
-  x <- .get_ggeffects_model(x)
-
-  # validation check rope range
-  rule <- match.arg(tolower(rule), choices = c("bayes", "classic", "cet"))
-  range <- .check_rope_range(x, range, verbose)
-
-  out <- ggeffects::test_predictions(
-    x,
-    terms = focal,
-    test = test,
-    equivalence = range,
-    verbose = verbose,
-    ...
-  )
-
-  out <- insight::standardize_names(out)
-
-  # we only have one type of CIs
-  conf_int <- conf_int2 <- as.data.frame(t(out[c("CI_low", "CI_high")]))
-
-  l <- Map(
-    function(ci_wide, ci_narrow) {
-      .equivalence_test_numeric(
-        ci = ci,
-        ci_wide,
-        ci_narrow,
-        range_rope = range,
-        rule = rule,
-        dof = dof,
-        verbose = verbose
-      )
-    }, conf_int, conf_int2
-  )
-
-  # bind to data frame
-  dat <- do.call(rbind, l)
-
-  # remove old CIs, bind results from equivalence test
-  out$CI_low <- out$CI_high <- NULL
-  out$CI <- ci
-  out <- cbind(out, dat)
-
-  # standardize column order
-  cols <- c(
-    "Estimate", "Contrast", "Slope", "Predicted", "CI", "CI_low", "CI_high",
-    "SGPV", "ROPE_low", "ROPE_high", "ROPE_Percentage", "ROPE_Equivalence", "p"
-  )
-
-  # order of shared columns
-  shared_order <- intersect(cols, colnames(out))
-  parameter_columns <- setdiff(colnames(out), shared_order)
-  # add remaining columns, sort
-  out <- out[c(parameter_columns, shared_order)]
-
-  attr(out, "object_name") <- obj_name
-  attr(out, "parameter_columns") <- parameter_columns
-  attr(out, "rule") <- rule
-  attr(out, "rope") <- range
-  class(out) <- c("equivalence_test_lm", "see_equivalence_test_ggeffects", "data.frame")
-  out
-}
-
-
 # helper -------------------
 
 
 #' @keywords internal
 .check_rope_range <- function(x, range, verbose) {
+  # for modelbased-objects, we extract the model to define the rope range
+  if (inherits(x, c("estimate_means", "estimate_contrasts", "estimate_slopes"))) {
+    x <- .safe(insight::get_model(x))
+    # if not successful, return defaults
+    if (is.null(x)) {
+      return(c(-1, 1))
+    }
+  }
   if (all(range == "default")) {
     range <- bayestestR::rope_range(x, verbose = verbose)
     if (is.list(range)) {
@@ -520,7 +540,6 @@ equivalence_test.ggeffects <- function(x,
     insight::format_alert("`ci` may only be of length 1. Using first ci-value now.")
     ci <- ci[1]
   }
-
 
   # ==== check degrees of freedom ====
 
@@ -818,6 +837,11 @@ equivalence_test.ggeffects <- function(x,
     {
       params <- insight::get_parameters(model)
 
+      # remove dispersion components
+      if (!is.null(params$Component)) {
+        params <- params[params$Component != "dispersion", ]
+      }
+
       # degrees of freedom
       dof <- insight::get_df(x = model, type = "wald")
 
@@ -826,6 +850,11 @@ equivalence_test.ggeffects <- function(x,
 
       # se
       se <- standard_error(model, vcov = vcov, vcov_args = vcov_args, ...)
+
+      # remove dispersion components
+      if (!is.null(se$Component)) {
+        se <- se[se$Component != "dispersion", ]
+      }
 
       stats::pt((range[1] - params$mu) / se$SE, df = dof, lower.tail = TRUE) +
         stats::pt((range[2] - params$mu) / se$SE, df = dof, lower.tail = FALSE)
@@ -935,4 +964,74 @@ print.equivalence_test_lm <- function(x,
 plot.equivalence_test_lm <- function(x, ...) {
   insight::check_if_installed("see")
   NextMethod()
+}
+
+
+# helper for print_html / print_md --------------------
+
+.print_equivalence_test_lm <- function(
+  x,
+  digits = 2,
+  ci_brackets = c("(", ")"),
+  zap_small = FALSE,
+  format = "markdown",
+  ...
+) {
+  rule <- attributes(x)$rule
+  rope <- attributes(x)$rope
+
+  if (is.null(rule)) {
+    table_caption <- "Test for Practical Equivalence"
+  } else if (rule == "cet") {
+    table_caption <- "Conditional Equivalence Testing"
+  } else if (rule == "classic") {
+    table_caption <- "TOST-test for Practical Equivalence"
+  } else {
+    table_caption <- "Test for Practical Equivalence"
+  }
+
+  if ("Component" %in% colnames(x)) {
+    x <- x[x$Component %in% c("conditional", "count"), ]
+  }
+
+  formatted_table <- insight::format_table(
+    x,
+    pretty_names = TRUE,
+    digits = digits,
+    ci_width = NULL,
+    ci_brackets = ci_brackets,
+    zap_small = zap_small,
+    ...
+  )
+
+  colnames(formatted_table)[which(colnames(formatted_table) == "Equivalence (ROPE)")] <- "H0"
+  formatted_table$ROPE <- NULL
+
+  # col_order <- c("Parameter", "H0", "% in ROPE", colnames(formatted_table)[grepl(" CI$", colnames(formatted_table))])
+  # col_order <- c(col_order, setdiff(colnames(formatted_table), col_order))
+  # formatted_table <- formatted_table[col_order]
+
+  # replace brackets by parenthesis
+  if (!is.null(ci_brackets) && "Parameter" %in% colnames(formatted_table)) {
+    formatted_table$Parameter <- gsub("[", ci_brackets[1], formatted_table$Parameter, fixed = TRUE)
+    formatted_table$Parameter <- gsub("]", ci_brackets[2], formatted_table$Parameter, fixed = TRUE)
+  }
+
+  if (!is.null(rope)) {
+    names(formatted_table)[names(formatted_table) == "% in ROPE"] <- sprintf(
+      "%% in ROPE (%.*f, %.*f)",
+      digits,
+      rope[1],
+      digits,
+      rope[2]
+    ) # nolint
+  }
+
+  insight::export_table(
+    formatted_table,
+    format = format,
+    caption = table_caption,
+    align = "firstleft",
+    ...
+  )
 }

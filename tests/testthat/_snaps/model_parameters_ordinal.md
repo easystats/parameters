@@ -17,13 +17,13 @@
       
       Parameter  | Estimate |   SE |       95% CI |     z |      p
       ------------------------------------------------------------
-      Stim [Old] |     0.55 | 0.04 | [0.47, 0.63] | 13.64 | < .001
+      Stim [Old] |     1.74 | 0.07 | [1.60, 1.88] | 13.64 | < .001
       
       # Scale Parameters
       
       Parameter  | Estimate |   SE |       95% CI |     z |      p
       ------------------------------------------------------------
-      Stim [Old] |    -0.04 | 0.04 | [0.47, 0.63] | 13.64 | < .001
+      Stim [Old] |     0.96 | 0.04 | [1.60, 1.88] | 13.64 | < .001
     Message
       
       Uncertainty intervals (equal-tailed) and p-values (two-tailed) computed
@@ -48,13 +48,13 @@
       
       Parameter  | Estimate |   SE |       95% CI |     z |      p
       ------------------------------------------------------------
-      Stim [Old] |     0.55 | 0.04 | [0.47, 0.63] | 13.64 | < .001
+      Stim [Old] |     1.74 | 0.07 | [1.60, 1.88] | 13.64 | < .001
       
       # Scale Parameters
       
-      Parameter  | Estimate |   SE |        95% CI |     z |     p
-      ------------------------------------------------------------
-      Stim [Old] |    -0.04 | 0.04 | [-0.12, 0.04] | -1.11 | 0.268
+      Parameter  | Estimate |   SE |       95% CI |     z |     p
+      -----------------------------------------------------------
+      Stim [Old] |     0.96 | 0.04 | [0.89, 1.04] | -1.11 | 0.268
     Message
       
       Uncertainty intervals (equal-tailed) and p-values (two-tailed) computed

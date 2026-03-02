@@ -44,7 +44,7 @@ list with one or more of these options: \code{"p_direction"} (or \code{"pd"}),
 \code{"rope"}, \code{"p_map"}, \code{"p_significance"} (or \code{"ps"}), \code{"p_rope"},
 \code{"equivalence_test"} (or \code{"equitest"}), \code{"bayesfactor"} (or \code{"bf"}) or
 \code{"all"} to compute all tests. For each "test", the corresponding
-\pkg{bayestestR} function is called (e.g. \code{\link[bayestestR:rope]{rope()}} or \code{\link[bayestestR:p_direction]{p_direction()}})
+\strong{bayestestR} function is called (e.g. \code{\link[bayestestR:rope]{rope()}} or \code{\link[bayestestR:p_direction]{p_direction()}})
 and its results included in the summary output.}
 
 \item{rope_range}{ROPE's lower and higher bounds. Should be a vector of two
@@ -92,7 +92,7 @@ the \emph{g} parameters; See the \emph{Bayes Factors for ANOVAs} paper
 }
 }
 \examples{
-\dontshow{if (require("BayesFactor")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (require("BayesFactor")) withAutoprint(\{ # examplesIf}
 \donttest{
 # Bayesian t-test
 model <- BayesFactor::ttestBF(x = rnorm(100, 1, 1))

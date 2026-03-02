@@ -1,4 +1,5 @@
 skip_if_not_installed("tinytable")
+skip_if_not_installed("knitr")
 
 test_that("include_reference, on-the-fly factors", {
   data(mtcars)
@@ -19,7 +20,8 @@ test_that("include_reference, on-the-fly factors", {
   expect_equal(out1$Coefficient, out2$Coefficient, tolerance = 1e-4)
 
   out <- compare_parameters(m1, m2, include_reference = TRUE)
-  expect_snapshot(print_md(out, engine = "tt"))
+  expect_snapshot(print_md(out))
+  expect_snapshot(display(out, format = "tt"))
 })
 
 skip_if(getRversion() < "4.3.3")
@@ -101,5 +103,26 @@ test_that("include_reference, different contrasts", {
     )
   )
   out <- model_parameters(m, include_reference = TRUE)
+  expect_snapshot(print(out))
+})
+
+
+test_that("include_reference, random effects models", {
+  skip_if_not_installed("glmmTMB")
+  skip_if(getRversion() < "4.5")
+  data(penguins, package = "datasets")
+  fit_penguins <- glmmTMB::glmmTMB(
+    sex ~ flipper_len + island + (1 | year),
+    family = binomial(),
+    data = penguins
+  )
+
+  out <- model_parameters(fit_penguins, exponentiate = TRUE, include_reference = TRUE)
+  expect_snapshot(print(out))
+
+  out <- model_parameters(fit_penguins, exponentiate = TRUE)
+  expect_snapshot(print(out, include_reference = TRUE))
+
+  out <- model_parameters(fit_penguins, effects = "fixed", exponentiate = TRUE, include_reference = TRUE)
   expect_snapshot(print(out))
 })

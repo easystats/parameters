@@ -3,7 +3,7 @@
 ############### .lme --------------
 
 #' @export
-model_parameters.lme <- model_parameters.merMod
+model_parameters.lme <- model_parameters.coxme
 
 
 #' @export

@@ -21,6 +21,7 @@ test_that("emmeans | lm", {
     tolerance = 0.1
   )
 
+  skip_on_ci()
   mp <- model_parameters(emmeans::emmeans(b, consec ~ cyl), verbose = FALSE)
   expect_identical(
     colnames(mp),

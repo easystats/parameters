@@ -53,7 +53,7 @@ standard_error.mvord <- function(model, component = c("all", "conditional", "thr
 
   params <- params[c("Parameter", "SE", "Component", "Response")]
 
-  if (insight::n_unique(params$Response) == 1) {
+  if (insight::has_single_value(params$Response, remove_na = TRUE)) {
     params$Response <- NULL
   }
 
@@ -81,7 +81,7 @@ p_value.mvord <- function(model, component = c("all", "conditional", "thresholds
 
   params <- params[c("Parameter", "p", "Component", "Response")]
 
-  if (insight::n_unique(params$Response) == 1) {
+  if (insight::has_single_value(params$Response, remove_na = TRUE)) {
     params$Response <- NULL
   }
 

@@ -1,5 +1,9 @@
 #' @keywords internal
-.extract_parameters_anova <- function(model, test = "multivariate") {
+.extract_parameters_anova <- function(model,
+                                      test = "multivariate",
+                                      p_adjust = NULL,
+                                      include_intercept = FALSE,
+                                      verbose = TRUE) {
   # Processing
   if (inherits(model, "manova")) {
     parameters <- .extract_anova_manova(model)
@@ -17,6 +21,12 @@
     parameters <- .extract_anova_aov_rms(model)
   } else if (inherits(model, "seqanova.svyglm")) {
     parameters <- .extract_anova_aov_svyglm(model)
+  }
+
+  # remove intercept
+  intercepts <- parameters$Parameter %in% c("Intercept", "(Intercept)")
+  if (any(intercepts) && !include_intercept) {
+    parameters <- parameters[!intercepts, ]
   }
 
   # Rename
@@ -78,6 +88,11 @@
     "df_num", "df_error", "Deviance_error", "Mean_Square", "F", "Rao", "p"
   )
   parameters <- parameters[col_order[col_order %in% names(parameters)]]
+
+  # ==== adjust p-values?
+  if (!is.null(p_adjust)) {
+    parameters <- .p_adjust(parameters, p_adjust, model, verbose)
+  }
 
   insight::text_remove_backticks(parameters, verbose = FALSE)
 }

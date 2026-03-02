@@ -1,3 +1,185 @@
+# parameters (devel)
+
+## Changes
+
+* `standardize_parameters()` (and by extension `model_parameters()`) with any of
+  the _post-hoc_ standardization methods no longer standardizes the
+  `"(Intercept)"` parameter - instead setting it to `NA`.
+
+* `standardize_parameters()` with any of the _post-hoc_ standardization methods
+  sets all inferential statistics (z, p, etc...) for the `"(Intercept)"` and any
+  other `NA` parameters to `NA`.
+
+* `model_parameters()` now supports objects from the *lavaan.mi* package.
+
+## Bug fixes
+
+* Fixed issue where wrong (non-robust) standard errors were calculated for
+  `coxph` and `svycoxph` objects.
+
+* Fixed issues with Tukey-p-value adjustment for *emmeans* objects.
+
+* Fixed unintended removal of columns in `model_parameters()` for objects from
+  package *marginaleffects*. This happened, when a variable in a model was named
+  `Type`.
+
+# parameters 0.28.3
+
+* fixed bug in `standardize_info(<fixest>)` that was preventing
+  `standardise_parameters()` from working for `fixest` models.
+
+* `equivalence_test()` gets methods for objects from the *modelbased* package.
+
+* Improved support for objects from package *survey*.
+
+* Added support for package *lcmm*.
+
+* Added `ci_method` options `"kenward-roger"` and `"satterthwaite"` for models
+  from package *glmmTMB*. Consequently, `se_kenward()`, `se_satterthwaite()`,
+  `ci_kenward()`, `ci_satterthwaite()`, `p_value_kenward()` and
+  `p_value_satterthwaite()` can now be used with `glmmTMB` models.
+
+# parameters 0.28.2
+
+## Bug fixes
+
+* Updates tests to resolve issues with the latest version of the *fixest* package.
+
+# parameters 0.28.1
+
+## Changes
+
+* Methods for *glmmTMB* objects (`ci()`, `model_parameters()`, `standard_error()`)
+  now support the `vcov` argument to compute robust standard errors.
+
+* `model_parameters()` for *marginaleffects* objects is now more robust in
+  detecting Bayesian models.
+
+* Modified code base to address changes in the *marginaleffects* package from
+  version 0.29.0 onwards.
+
+## Bug fixes
+
+* Fixed issue with `equivalence_test()` for models of class `glmmTMB` with
+  `beta_family()`.
+
+* `exponentiate = TRUE` in `model_parameters()` did not exponentiate location
+  and scale parameters for models from package *ordinal*.
+
+# parameters 0.28.0
+
+## Breaking Changes
+
+* The experimental `print_table()` function was removed. The aim of this function
+  was to test the implementation of the `tinytable` backend for printing. Now,
+  `tinytable` is fully supported by `insight::export_table()` and thereby also
+  by the various `print()` resp. `display()` methods for model parameters.
+
+## Changes
+
+* All `print_html()` methods get an `engine` argument, to either use the `gt`
+  package or the `tinytable` package for printing HTML tables. Since `tinytable`
+  not only produces HTML tables, but rather different formats depending on the
+  environment, `print_html()` may also generate a markdown table. Thus, the
+  generic `display()` method can be used, too, which has a `format` argument that
+  also supports `"tt"` for `tinytable`.
+
+* Improved support for *coxme* models in `model_parameters()`. Random effects
+  and group level estimates are now returned as well.
+
+## Bug fixes
+
+* Fixed issue with models of class `selection` with multiple outcomes.
+
+# parameters 0.27.0
+
+## Breaking Changes
+
+* The `standardize` argument in `factor_analysis()` now defaults to `FALSE`.
+
+* The `rotation` argument in `factor_analysis()` now defaults to `"oblimin"`,
+  because the former default of `"none"` rarely makes sense in the context of
+  factor analysis. If you want to use no rotation, please set `rotation =
+  "none"`.
+
+* The `cor` argument in `n_factors()` was renamed into `correlation_matrix`. In
+  `factor_analysis()`, the `cor` argument was completely removed to avoid naming
+  collision with the `cor` argument of `psych::fa()`, which now users can pass
+  the `cor` argument to `psych::fa()` when using `factor_analysis()`.
+
+## Changes
+
+* `factor_analysis()` gets a `.matrix` method, including a new argument `n_obs`
+  (which can be a single value or a matrix of pairwise counts), to compute
+  factor analysis for a correlation matrix or covariance matrix.
+
+* New function `factor_scores()` to extract factor scores from EFA (`psych::fa()`
+  or `factor_analysis()`).
+
+* Added and/or improved print-methods for all functions around PCA, FA and Omega.
+
+* Improved efficiency in `model_parameters()` for models from packages *brms*
+  and *rstanarm*.
+
+* `p_adjust` for `model_parameters()` gets a new options, `"sup-t"`, to calculate
+  simultaneous confidence intervals.
+
+## Bug fixes
+
+* `bootstrap_model()` did not work for intercept-only models. This has been fixed.
+
+* Fixed issue with printing labels as pretty names for models from package
+  *pscl*, i.e. `print(model_parameters(model), pretty_names = "labels")` now
+  works as expected.
+
+# parameters 0.26.0
+
+## Changes
+
+* The `effects` argument in `model_parameters()` for classes `merMod`, `glmmTMB`,
+  `brmsfit` and `stanreg` gets an additional `"grouplevel"` option, to return
+  the group-level estimates for random effects.
+
+* `model_parameters()` for Anova-objects gains a `p_adjust` argument, to apply
+  p-adjustment where possible. Furthermore, for models from package *afex*, where
+  p-adjustment was applied during model-fitting, the correct p-values are now
+  returned (before, unadjusted p-values were returned in some cases).
+
+* Revised code-base to address changes in latest *insight* update. Dealing with
+  larger models (many parameters, many posterior samples) from packages *brms*
+  and *rstanarm* is more efficient now. Furthermore, the options for the
+  `effects` argument have a new behaviour. `"all"` only returns fixed effects
+  and random effects variance components, but no longer the group level
+  estimates. Use `effects = "full"` to return all parameters. This change is
+  mainly to be more flexible and gain more efficiency for models with many
+  parameters and / or many posterior draws.
+
+* `model_parameters()` for Anova objects gains an `include_intercept` argument,
+  to include intercepts in the Anova table, where possible.
+
+# parameters 0.25.0
+
+## Changes
+
+* `model_parameters()` for objects from the *marginaleffects* packages now calls
+  `bayestestR::describe_posterior()` to process Bayesian models. This offers
+  more flexibility in summarizing the posterior draws from *marginaleffects*.
+
+* `model_parameters()` now shows a more informative coefficient name for binomial
+  models with probit-link.
+
+* Argument `wb_component` now defaults to `FALSE`.
+
+* Improved support and printing for tests from package *WRS2*.
+
+## Bug fixes
+
+* Fixed printing issue with `model_parameters()` for `htest` objects when
+  printing into markdown or HTML format.
+
+* Fixed printing issue with `model_parameters()` for mixed models when
+  `include_reference = TRUE`.
+
 # parameters 0.24.2
 
 ## Changes

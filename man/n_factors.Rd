@@ -11,7 +11,7 @@ n_factors(
   rotation = "varimax",
   algorithm = "default",
   package = c("nFactors", "psych"),
-  cor = NULL,
+  correlation_matrix = NULL,
   safe = TRUE,
   n_max = NULL,
   ...
@@ -23,7 +23,7 @@ n_components(
   rotation = "varimax",
   algorithm = "default",
   package = c("nFactors", "psych"),
-  cor = NULL,
+  correlation_matrix = NULL,
   safe = TRUE,
   ...
 )
@@ -53,9 +53,9 @@ Axis Factor Analysis, \code{"minres"} for minimum residual (OLS) factoring,
 the default is \code{c("nFactors", "psych")}. You must have the respective
 packages installed for the methods to be used.}
 
-\item{cor}{An optional correlation matrix that can be used (note that the
-data must still be passed as the first argument). If \code{NULL}, will
-compute it by running \code{cor()} on the passed data.}
+\item{correlation_matrix}{An optional correlation matrix that can be used
+(note that the data must still be passed as the first argument). If \code{NULL},
+will compute it by running \code{cor()} on the passed data.}
 
 \item{safe}{If \code{TRUE}, the function will run all the procedures in try
 blocks, and will only return those that work and silently skip the ones
@@ -89,7 +89,7 @@ implemented in the \href{https://easystats.github.io/see/}{\strong{see}-package}
 \code{n_components()} is a convenient short-cut  for \code{n_factors(type = "PCA")}.
 }
 \examples{
-\dontshow{if (require("PCDimension", quietly = TRUE) && require("nFactors", quietly = TRUE) && require("EGAnet", quietly = TRUE) && require("psych", quietly = TRUE)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (require("PCDimension", quietly = TRUE) && require("nFactors", quietly = TRUE) && require("EGAnet", quietly = TRUE) && require("psych", quietly = TRUE)) withAutoprint(\{ # examplesIf}
 library(parameters)
 n_factors(mtcars, type = "PCA")
 

@@ -49,6 +49,9 @@ factors), which may be a different behaviour compared to other R packages
 (such as \strong{lm.beta}) or other software packages (like SPSS). to mimic
 such behaviours, either use \code{standardize="basic"} or standardize the data
 with \code{datawizard::standardize(force=TRUE)} \emph{before} fitting the model.
+\item By default, the response (dependent) variable is also standardized, \emph{if
+applicable}. Set \code{include_response = FALSE} to avoid standardization of
+the response variable. See details in \code{\link[datawizard:standardize.default]{datawizard::standardize.default()}}.
 \item For mixed models, when using methods other than \code{"refit"}, only the fixed
 effects will be standardized.
 \item Robust estimation (i.e., \code{vcov} set to a value other than \code{NULL}) of
@@ -70,11 +73,12 @@ coefficient. The transformed confidence interval more clearly captures this
 uncertainty. For \code{compare_parameters()}, \code{exponentiate = "nongaussian"}
 will only exponentiate coefficients from non-Gaussian families.}
 
-\item{p_adjust}{Character vector, if not \code{NULL}, indicates the method to
-adjust p-values. See \code{\link[stats:p.adjust]{stats::p.adjust()}} for details. Further
-possible adjustment methods are \code{"tukey"}, \code{"scheffe"},
-\code{"sidak"} and \code{"none"} to explicitly disable adjustment for
-\code{emmGrid} objects (from \strong{emmeans}).}
+\item{p_adjust}{String value, if not \code{NULL}, indicates the method to adjust
+p-values. See \code{\link[stats:p.adjust]{stats::p.adjust()}} for details. Further possible
+adjustment methods are \code{"tukey"}, \code{"scheffe"}, \code{"sidak"}, \code{"sup-t"}, and
+\code{"none"} to explicitly disable adjustment for \code{emmGrid} objects (from
+\strong{emmeans}). \code{"sup-t"} computes simultaneous confidence bands, also called
+sup-t confidence band (Montiel Olea & Plagborg-Møller, 2019).}
 
 \item{include_info}{Logical, if \code{TRUE}, prints summary information about the
 model (model formula, number of observations, residual standard deviation
@@ -179,7 +183,7 @@ here.
 }
 
 \examples{
-\dontshow{if (require("pscl")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (require("pscl")) withAutoprint(\{ # examplesIf}
 data("bioChemists", package = "pscl")
 model <- pscl::zeroinfl(
   art ~ fem + mar + kid5 + ment | kid5 + phd,

@@ -7,11 +7,7 @@ lung$ph.ecog <- factor(lung$ph.ecog, labels = c("good", "ok", "limited"))
 m1 <- survival::coxph(survival::Surv(time, status) ~ sex + age + ph.ecog, data = lung)
 
 test_that("ci", {
-  expect_equal(
-    ci(m1)$CI_low,
-    c(-0.87535, -0.00747, 0.01862, 0.45527),
-    tolerance = 1e-4
-  )
+  expect_equal(ci(m1)$CI_low, c(-0.87535, -0.00747, 0.01862, 0.45527), tolerance = 1e-4)
 })
 
 test_that("se", {
@@ -23,11 +19,7 @@ test_that("se", {
 })
 
 test_that("p_value", {
-  expect_equal(
-    p_value(m1)$p,
-    c(0.00118, 0.24713, 0.04005, 8e-05),
-    tolerance = 1e-4
-  )
+  expect_equal(p_value(m1)$p, c(0.00118, 0.24713, 0.04005, 8e-05), tolerance = 1e-4)
 })
 
 test_that("model_parameters", {
@@ -79,3 +71,57 @@ withr::with_package(
     expect_snapshot(print(model_parameters(mod)))
   })
 )
+
+test_that("model_parameters coxph, correct robust SE", {
+  skip_if_not_installed("survey")
+
+  # Importing data
+  d <- survival::pbc
+
+  # Defining randomization
+  d$randomized <- with(d, !is.na(trt) & trt > 0)
+
+  # Defining randomization probability weights
+  d$randprob <- fitted(glm(randomized ~ age * edema, data = d, family = binomial))
+
+  # Generating survey design object
+  d.svy <- survey::svydesign(
+    id = ~1,
+    prob = ~randprob,
+    strata = ~edema,
+    data = subset(d, randomized)
+  )
+
+  # The design-based cox proportional hazards model
+  m <- survey::svycoxph(
+    survival::Surv(time, status > 0) ~ log(bili) + protime + albumin,
+    design = d.svy
+  )
+
+  s <- summary(m)
+  out <- model_parameters(m)
+
+  expect_equal(
+    out$Coefficient,
+    s$coefficients[, "coef"],
+    tolerance = 1e-4,
+    ignore_attr = TRUE
+  )
+
+  expect_equal(
+    out$SE,
+    s$coefficients[, "robust se"],
+    tolerance = 1e-4,
+    ignore_attr = TRUE
+  )
+
+  out <- model_parameters(m, digits = 5, p_digits = 5, exponentiate = TRUE)
+  expect_equal(
+    out$CI_low,
+    s$conf.int[, "lower .95"],
+    tolerance = 1e-4,
+    ignore_attr = TRUE
+  )
+  unloadNamespace("survey")
+  unloadNamespace("survival")
+})

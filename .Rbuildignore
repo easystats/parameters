@@ -20,9 +20,12 @@
 ^vignettes/p.
 ^vignettes/s.
 ^tests/_snaps/.
+^tests/testthat/_snaps/.
 ^cran-comments\.md$
 ^revdep$
 ^CODE_OF_CONDUCT\.md$
 \.code-workspace$
 \.lintr$
 ^CRAN-SUBMISSION$
+^\.github$
+^GEMINI\.md$

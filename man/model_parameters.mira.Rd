@@ -35,11 +35,12 @@ coefficient. The transformed confidence interval more clearly captures this
 uncertainty. For \code{compare_parameters()}, \code{exponentiate = "nongaussian"}
 will only exponentiate coefficients from non-Gaussian families.}
 
-\item{p_adjust}{Character vector, if not \code{NULL}, indicates the method to
-adjust p-values. See \code{\link[stats:p.adjust]{stats::p.adjust()}} for details. Further
-possible adjustment methods are \code{"tukey"}, \code{"scheffe"},
-\code{"sidak"} and \code{"none"} to explicitly disable adjustment for
-\code{emmGrid} objects (from \strong{emmeans}).}
+\item{p_adjust}{String value, if not \code{NULL}, indicates the method to adjust
+p-values. See \code{\link[stats:p.adjust]{stats::p.adjust()}} for details. Further possible
+adjustment methods are \code{"tukey"}, \code{"scheffe"}, \code{"sidak"}, \code{"sup-t"}, and
+\code{"none"} to explicitly disable adjustment for \code{emmGrid} objects (from
+\strong{emmeans}). \code{"sup-t"} computes simultaneous confidence bands, also called
+sup-t confidence band (Montiel Olea & Plagborg-Møller, 2019).}
 
 \item{keep}{Character containing a regular expression pattern that
 describes the parameters that should be included (for \code{keep}) or excluded
@@ -77,7 +78,7 @@ similar to \code{summary(mice::pool())}, i.e. it generates the pooled summary
 of multiple imputed repeated regression analyses.
 }
 \examples{
-\dontshow{if (require("mice", quietly = TRUE) && require("gee", quietly = TRUE)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (require("mice", quietly = TRUE) && require("gee", quietly = TRUE)) withAutoprint(\{ # examplesIf}
 library(parameters)
 data(nhanes2, package = "mice")
 imp <- mice::mice(nhanes2)

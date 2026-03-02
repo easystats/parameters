@@ -99,7 +99,7 @@ bayestestR::p_significance
 #'
 #'   - Lakens, D., Scheel, A. M., and Isager, P. M. (2018). Equivalence Testing
 #'     for Psychological Research: A Tutorial. Advances in Methods and Practices
-#'     in Psychological Science, 1(2), 259–269. \doi{10.1177/2515245918770963}
+#'     in Psychological Science, 1(2), 259–269.
 #'
 #'   - Makowski, D., Ben-Shachar, M. S., Chen, S. H. A., and Lüdecke, D. (2019).
 #'     Indices of Effect Existence and Significance in the Bayesian Framework.
@@ -238,10 +238,10 @@ p_significance.lm <- function(x,
   colnames(posterior) <- out$Parameter
 
   # deal with Effects and Component columns
-  if ("Effects" %in% colnames(out) && insight::n_unique(out$Effects) == 1) {
+  if ("Effects" %in% colnames(out) && insight::has_single_value(out$Effects, remove_na = TRUE)) {
     out$Effects <- NULL
   }
-  if ("Component" %in% colnames(out) && insight::n_unique(out$Component) == 1) {
+  if ("Component" %in% colnames(out) && insight::has_single_value(out$Component, remove_na = TRUE)) {
     out$Component <- NULL
   }
 

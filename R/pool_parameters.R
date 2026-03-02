@@ -63,26 +63,34 @@
 #' pool_parameters(models, ci_method = "residual")$df_error
 #' @return A data frame of indices related to the model's parameters.
 #' @export
-pool_parameters <- function(x,
-                            exponentiate = FALSE,
-                            effects = "fixed",
-                            component = "all",
-                            verbose = TRUE,
-                            ...) {
+pool_parameters <- function(
+  x,
+  exponentiate = FALSE,
+  effects = "fixed",
+  component = "all",
+  verbose = TRUE,
+  ...
+) {
   # check input, save original model -----
 
   original_model <- random_params <- NULL
   obj_name <- insight::safe_deparse_symbol(substitute(x))
 
-  if (all(vapply(x, insight::is_model, TRUE)) && all(vapply(x, insight::is_model_supported, TRUE))) {
+  if (
+    all(vapply(x, insight::is_model, TRUE)) &&
+      all(vapply(x, insight::is_model_supported, TRUE))
+  ) {
     original_model <- x[[1]]
 
     # Add exceptions for models with uncommon components here ---------------
-    exception_model_class <- "polr"
+    exception_model_class <- c("polr", "svyolr")
 
     # exceptions for "component" argument. Eg, MASS::polr has components
     # "alpha" and "beta", and "component" needs to be set to all by default
-    if (identical(component, "conditional") && inherits(original_model, exception_model_class)) {
+    if (
+      identical(component, "conditional") &&
+        inherits(original_model, exception_model_class)
+    ) {
       component <- "all"
     }
 
@@ -105,21 +113,28 @@ pool_parameters <- function(x,
     )
   }
 
-
   # only pool for specific component -----
 
   original_x <- x
-  if ("Component" %in% colnames(x[[1]]) && !insight::is_empty_object(component) && component != "all") {
+  if (
+    "Component" %in%
+      colnames(x[[1]]) &&
+      !insight::is_empty_object(component) &&
+      component != "all"
+  ) {
     x <- lapply(x, function(i) {
       i <- i[i$Component == component, ]
       i$Component <- NULL
       i
     })
     if (verbose) {
-      insight::format_alert(paste0("Pooling applied to the ", component, " model component."))
+      insight::format_alert(paste0(
+        "Pooling applied to the ",
+        component,
+        " model component."
+      ))
     }
   }
-
 
   # preparation ----
 
@@ -127,7 +142,9 @@ pool_parameters <- function(x,
 
   len <- length(x)
   ci <- attributes(original_x[[1]])$ci
-  if (is.null(ci)) ci <- 0.95
+  if (is.null(ci)) {
+    ci <- 0.95
+  }
   parameter_values <- x[[1]]$Parameter
 
   # exceptions ----
@@ -156,7 +173,9 @@ pool_parameters <- function(x,
   # but only for fixed effects. Filter random effects,
   # and save parameter names from fixed effects for later use...
 
-  if (effects == "all" && "Effects" %in% colnames(params) && "random" %in% params$Effects) {
+  if (
+    effects == "all" && "Effects" %in% colnames(params) && "random" %in% params$Effects
+  ) {
     random_params <- params[params$Effects == "random", ]
     params <- params[params$Effects != "random", ]
     parameter_values <- x[[1]]$Parameter[x[[1]]$Effects != "random"]
@@ -182,97 +201,122 @@ pool_parameters <- function(x,
 
   # pool estimates etc. -----
 
-  pooled_params <- do.call(rbind, lapply(estimates, function(i) {
-    # if we split by "component", some of the data frames might be empty
-    # in this case, just skip...
-    if (nrow(i) > 0) {
-      # pooled estimate
-      pooled_estimate <- mean(i$Coefficient)
+  pooled_params <- do.call(
+    rbind,
+    lapply(estimates, function(i) {
+      # if we split by "component", some of the data frames might be empty
+      # in this case, just skip...
+      if (nrow(i) > 0) {
+        # pooled estimate
+        pooled_estimate <- mean(i$Coefficient)
 
-      # special models that have no standard errors (like "htest" objects)
-      if (is.null(i$SE) || all(is.na(i$SE))) {
-        out <- data.frame(
-          Coefficient = pooled_estimate,
-          SE = NA,
-          CI_low = NA,
-          CI_high = NA,
-          Statistic = NA,
-          df_error = NA,
-          p = NA,
-          stringsAsFactors = FALSE
-        )
+        # special models that have no standard errors (like "htest" objects)
+        if (is.null(i$SE) || all(is.na(i$SE))) {
+          out <- data.frame(
+            Coefficient = pooled_estimate,
+            SE = NA,
+            CI_low = NA,
+            CI_high = NA,
+            Statistic = NA,
+            df_error = NA,
+            p = NA,
+            stringsAsFactors = FALSE
+          )
 
-        if (verbose) {
-          insight::format_alert("Model objects had no standard errors. Cannot compute pooled confidence intervals and p-values.")
-        }
-
-        # regular models that have coefficients and standard errors
-      } else {
-        # pooled standard error
-        ubar <- mean(i$SE^2)
-        tmp <- ubar + (1 + 1 / len) * stats::var(i$Coefficient)
-        pooled_se <- sqrt(tmp)
-
-        # pooled degrees of freedom, Barnard-Rubin adjustment for small samples
-        df_column <- grep("(\\bdf\\b|\\bdf_error\\b)", colnames(i), value = TRUE)[1]
-        if (length(df_column)) {
-          pooled_df <- .barnad_rubin(m = nrow(i), b = stats::var(i$Coefficient), t = tmp, dfcom = unique(i[[df_column]]))
-          # validation check length
-          if (length(pooled_df) > 1 && length(pooled_se) == 1) {
-            pooled_df <- round(mean(pooled_df, na.rm = TRUE))
+          if (verbose) {
+            insight::format_alert(
+              "Model objects had no standard errors. Cannot compute pooled confidence intervals and p-values."
+            )
           }
+
+          # regular models that have coefficients and standard errors
         } else {
-          pooled_df <- Inf
+          # pooled standard error
+          ubar <- mean(i$SE^2)
+          tmp <- ubar + (1 + 1 / len) * stats::var(i$Coefficient)
+          pooled_se <- sqrt(tmp)
+
+          # pooled degrees of freedom, Barnard-Rubin adjustment for small samples
+          df_column <- grep("(\\bdf\\b|\\bdf_error\\b)", colnames(i), value = TRUE)[1]
+          if (length(df_column)) {
+            pooled_df <- .barnad_rubin(
+              m = nrow(i),
+              b = stats::var(i$Coefficient),
+              t = tmp,
+              dfcom = unique(i[[df_column]])
+            )
+            # validation check length
+            if (length(pooled_df) > 1 && length(pooled_se) == 1) {
+              pooled_df <- round(mean(pooled_df, na.rm = TRUE))
+            }
+          } else {
+            pooled_df <- Inf
+          }
+
+          # pooled statistic
+          pooled_statistic <- pooled_estimate / pooled_se
+
+          # confidence intervals
+          alpha <- (1 + ci) / 2
+          fac <- suppressWarnings(stats::qt(alpha, df = pooled_df))
+
+          out <- data.frame(
+            Coefficient = pooled_estimate,
+            SE = pooled_se,
+            CI_low = pooled_estimate - pooled_se * fac,
+            CI_high = pooled_estimate + pooled_se * fac,
+            Statistic = pooled_statistic,
+            df_error = pooled_df,
+            p = 2 * stats::pt(abs(pooled_statistic), df = pooled_df, lower.tail = FALSE),
+            stringsAsFactors = FALSE
+          )
         }
-
-        # pooled statistic
-        pooled_statistic <- pooled_estimate / pooled_se
-
-        # confidence intervals
-        alpha <- (1 + ci) / 2
-        fac <- suppressWarnings(stats::qt(alpha, df = pooled_df))
-
-        out <- data.frame(
-          Coefficient = pooled_estimate,
-          SE = pooled_se,
-          CI_low = pooled_estimate - pooled_se * fac,
-          CI_high = pooled_estimate + pooled_se * fac,
-          Statistic = pooled_statistic,
-          df_error = pooled_df,
-          p = 2 * stats::pt(abs(pooled_statistic), df = pooled_df, lower.tail = FALSE),
-          stringsAsFactors = FALSE
-        )
+        out
+      } else {
+        NULL
       }
-      out
-    } else {
-      NULL
-    }
-  }))
-
+    })
+  )
 
   # pool random effect variances -----
 
   pooled_random <- NULL
   if (!is.null(random_params)) {
-    estimates <- split(random_params, factor(random_params$Parameter, levels = unique(random_params$Parameter)))
-    pooled_random <- do.call(rbind, lapply(estimates, function(i) {
-      pooled_estimate <- mean(i$Coefficient, na.rm = TRUE)
-      data.frame(
-        Parameter = unique(i$Parameter),
-        Coefficient = pooled_estimate,
-        Effects = "random",
-        stringsAsFactors = FALSE
-      )
-    }))
+    estimates <- split(
+      random_params,
+      factor(random_params$Parameter, levels = unique(random_params$Parameter))
+    )
+    pooled_random <- do.call(
+      rbind,
+      lapply(estimates, function(i) {
+        pooled_estimate <- mean(i$Coefficient, na.rm = TRUE)
+        data.frame(
+          Parameter = unique(i$Parameter),
+          Coefficient = pooled_estimate,
+          Effects = "random",
+          stringsAsFactors = FALSE
+        )
+      })
+    )
     pooled_params$Effects <- "fixed"
   }
 
   # reorder ------
 
   pooled_params$Parameter <- parameter_values
-  columns <- c("Parameter", "Coefficient", "SE", "CI_low", "CI_high", "Statistic", "df_error", "p", "Effects", "Component")
+  columns <- c(
+    "Parameter",
+    "Coefficient",
+    "SE",
+    "CI_low",
+    "CI_high",
+    "Statistic",
+    "df_error",
+    "p",
+    "Effects",
+    "Component"
+  )
   pooled_params <- pooled_params[intersect(columns, colnames(pooled_params))]
-
 
   # final attributes -----
 
@@ -299,7 +343,6 @@ pool_parameters <- function(x,
   )
   attr(pooled_params, "object_name") <- obj_name
 
-
   # pool sigma ----
 
   sig <- unlist(insight::compact_list(lapply(original_x, function(i) {
@@ -310,14 +353,16 @@ pool_parameters <- function(x,
     attr(pooled_params, "sigma") <- mean(sig, na.rm = TRUE)
   }
 
-
-  class(pooled_params) <- c("parameters_model", "see_parameters_model", class(pooled_params))
+  class(pooled_params) <- c(
+    "parameters_model",
+    "see_parameters_model",
+    class(pooled_params)
+  )
   pooled_params
 }
 
 
 # helper ------
-
 
 .barnad_rubin <- function(m, b, t, dfcom = 999999) {
   # fix for z-statistic
@@ -332,11 +377,21 @@ pool_parameters <- function(x,
 }
 
 
-.add_pooled_params_attributes <- function(pooled_params, model_params, model, ci, exponentiate, verbose = TRUE) {
+.add_pooled_params_attributes <- function(
+  pooled_params,
+  model_params,
+  model,
+  ci,
+  exponentiate,
+  verbose = TRUE
+) {
   info <- insight::model_info(model, verbose = FALSE)
   pretty_names <- attributes(model_params)$pretty_names
   if (length(pretty_names) < nrow(model_params)) {
-    pretty_names <- c(pretty_names, model_params$Parameter[(length(pretty_names) + 1):nrow(model_params)])
+    pretty_names <- c(
+      pretty_names,
+      model_params$Parameter[(length(pretty_names) + 1):nrow(model_params)]
+    )
   }
   attr(pooled_params, "ci") <- ci
   attr(pooled_params, "exponentiate") <- exponentiate

@@ -1,6 +1,6 @@
 # Contributing to parameters
 
-This outlines how to propose a change to **parameters**. 
+This outlines how to propose a change to **parameters**.
 
 ## Fixing typos
 
@@ -9,7 +9,7 @@ Small typos or grammatical errors in documentation may be edited directly using 
 ## Filing an issue
 
 The easiest way to propose a change or new feature is to file an issue. If you've found a
-bug, you may also create an associated issue. If possible, try to illustrate your proposal or the bug with a minimal [reproducible example](https://www.tidyverse.org/help/#reprex).
+bug, you may also create an associated issue. If possible, try to illustrate your proposal or the bug with a minimal reproducible example.
 
 ## Pull requests
 

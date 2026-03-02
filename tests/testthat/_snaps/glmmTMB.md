@@ -7,78 +7,78 @@
       [2] ""                                                                
       [3] "Parameter   | Log-Mean |   SE |         95% CI |      z |      p"
       [4] "----------------------------------------------------------------"
-      [5] "child       |    -1.09 | 0.10 | [-1.28, -0.90] | -11.09 | < .001"
-      [6] "camper [1]  |     0.27 | 0.10 | [ 0.07,  0.47] |   2.70 | 0.007 "
+      [5] "child       |    -1.04 | 0.09 | [-1.22, -0.87] | -11.60 | < .001"
+      [6] "camper [1]  |     0.27 | 0.09 | [ 0.08,  0.45] |   2.83 | 0.005 "
 
 # print-model_parameters glmmTMB digits
 
     Code
       out[-c(5, 14)]
     Output
-       [1] "# Fixed Effects (Count Model)"                                             
-       [2] ""                                                                          
-       [3] "Parameter   | Log-Mean |     SE |               95% CI |        z |      p"
-       [4] "--------------------------------------------------------------------------"
-       [5] "child       |  -1.0875 | 0.0981 | [-1.27967, -0.89528] | -11.0901 | < .001"
-       [6] "camper [1]  |   0.2723 | 0.1009 | [ 0.07461,  0.46999] |   2.6997 | 0.007 "
-       [7] ""                                                                          
-       [8] "# Fixed Effects (Zero-Inflation Component)"                                
-       [9] ""                                                                          
-      [10] "Parameter   | Log-Odds |     SE |              95% CI |       z |     p"   
-      [11] "-----------------------------------------------------------------------"   
-      [12] "(Intercept) |   1.8896 | 0.6642 | [ 0.58780, 3.19147] |  2.8449 | 0.004"   
-      [13] "camper [1]  |  -0.1701 | 0.3869 | [-0.92836, 0.58822] | -0.4396 | 0.660"   
-      [14] ""                                                                          
-      [15] "# Random Effects Variances"                                                
-      [16] ""                                                                          
-      [17] "Parameter                   | Coefficient |              95% CI"           
-      [18] "---------------------------------------------------------------"           
-      [19] "SD (Intercept: persons)     |      3.4056 | [ 1.64567, 7.04777]"           
-      [20] "SD (xb: persons)            |      1.2132 | [ 0.59190, 2.48650]"           
-      [21] "Cor (Intercept~xb: persons) |     -1.0000 | [-1.00000, 1.00000]"           
-      [22] ""                                                                          
-      [23] "# Random Effects (Zero-Inflation Component)"                               
-      [24] ""                                                                          
-      [25] "Parameter                   | Coefficient |              95% CI"           
-      [26] "---------------------------------------------------------------"           
-      [27] "SD (Intercept: persons)     |      2.7358 | [ 1.16329, 6.43414]"           
-      [28] "SD (zg: persons)            |      1.5683 | [ 0.64246, 3.82852]"           
-      [29] "Cor (Intercept~zg: persons) |      1.0000 | [-1.00000, 1.00000]"           
+       [1] "# Fixed Effects (Count Model)"                                                
+       [2] ""                                                                             
+       [3] "Parameter   | Log-Mean |     SE |               95% CI |        z |      p"   
+       [4] "--------------------------------------------------------------------------"   
+       [5] "child       |  -1.0426 | 0.0899 | [-1.21878, -0.86645] | -11.5996 | < .001"   
+       [6] "camper [1]  |   0.2684 | 0.0948 | [ 0.08262,  0.45421] |   2.8315 | 0.005 "   
+       [7] ""                                                                             
+       [8] "# Fixed Effects (Zero-Inflation Component)"                                   
+       [9] ""                                                                             
+      [10] "Parameter   | Log-Odds |     SE |               95% CI |           z |      p"
+      [11] "-----------------------------------------------------------------------------"
+      [12] "(Intercept) |  -4.0420 | 0.2038 | [-4.44154, -3.64250] |    -19.8292 | < .001"
+      [13] "camper [1]  |  -4.8290 | 0.0002 | [-4.82949, -4.82861] | -21474.3719 | < .001"
+      [14] ""                                                                             
+      [15] "# Random Effects Variances"                                                   
+      [16] ""                                                                             
+      [17] "Parameter                   | Coefficient |             95% CI"               
+      [18] "--------------------------------------------------------------"               
+      [19] "SD (Intercept: persons)     |      2.1800 | [1.15990, 4.09711]"               
+      [20] "SD (xb: persons)            |      1.0592 | [0.59457, 1.88686]"               
+      [21] "Cor (Intercept~xb: persons) |     -0.9883 |                   "               
+      [22] ""                                                                             
+      [23] "# Random Effects (Zero-Inflation Component)"                                  
+      [24] ""                                                                             
+      [25] "Parameter                   | Coefficient |               95% CI"             
+      [26] "----------------------------------------------------------------"             
+      [27] "SD (Intercept: persons)     |      5.8635 | [ 3.83067,  8.97520]"             
+      [28] "SD (zg: persons)            |     12.5180 | [10.94956, 14.31115]"             
+      [29] "Cor (Intercept~zg: persons) |      0.9790 |                     "             
 
 ---
 
     Code
       out[-c(5, 14)]
     Output
-       [1] "# Fixed Effects (Count Model)"                                             
-       [2] ""                                                                          
-       [3] "Parameter   | Log-Mean |     SE |               95% CI |        z |      p"
-       [4] "--------------------------------------------------------------------------"
-       [5] "child       |  -1.0875 | 0.0981 | [-1.27967, -0.89528] | -11.0901 | < .001"
-       [6] "camper [1]  |   0.2723 | 0.1009 | [ 0.07461,  0.46999] |   2.6997 | 0.007 "
-       [7] ""                                                                          
-       [8] "# Fixed Effects (Zero-Inflation Component)"                                
-       [9] ""                                                                          
-      [10] "Parameter   | Log-Odds |     SE |              95% CI |       z |     p"   
-      [11] "-----------------------------------------------------------------------"   
-      [12] "(Intercept) |   1.8896 | 0.6642 | [ 0.58780, 3.19147] |  2.8449 | 0.004"   
-      [13] "camper [1]  |  -0.1701 | 0.3869 | [-0.92836, 0.58822] | -0.4396 | 0.660"   
-      [14] ""                                                                          
-      [15] "# Random Effects Variances"                                                
-      [16] ""                                                                          
-      [17] "Parameter                   | Coefficient |              95% CI"           
-      [18] "---------------------------------------------------------------"           
-      [19] "SD (Intercept: persons)     |      3.4056 | [ 1.64567, 7.04777]"           
-      [20] "SD (xb: persons)            |      1.2132 | [ 0.59190, 2.48650]"           
-      [21] "Cor (Intercept~xb: persons) |     -1.0000 | [-1.00000, 1.00000]"           
-      [22] ""                                                                          
-      [23] "# Random Effects (Zero-Inflation Component)"                               
-      [24] ""                                                                          
-      [25] "Parameter                   | Coefficient |              95% CI"           
-      [26] "---------------------------------------------------------------"           
-      [27] "SD (Intercept: persons)     |      2.7358 | [ 1.16329, 6.43414]"           
-      [28] "SD (zg: persons)            |      1.5683 | [ 0.64246, 3.82852]"           
-      [29] "Cor (Intercept~zg: persons) |      1.0000 | [-1.00000, 1.00000]"           
+       [1] "# Fixed Effects (Count Model)"                                                
+       [2] ""                                                                             
+       [3] "Parameter   | Log-Mean |     SE |               95% CI |        z |      p"   
+       [4] "--------------------------------------------------------------------------"   
+       [5] "child       |  -1.0426 | 0.0899 | [-1.21878, -0.86645] | -11.5996 | < .001"   
+       [6] "camper [1]  |   0.2684 | 0.0948 | [ 0.08262,  0.45421] |   2.8315 | 0.005 "   
+       [7] ""                                                                             
+       [8] "# Fixed Effects (Zero-Inflation Component)"                                   
+       [9] ""                                                                             
+      [10] "Parameter   | Log-Odds |     SE |               95% CI |           z |      p"
+      [11] "-----------------------------------------------------------------------------"
+      [12] "(Intercept) |  -4.0420 | 0.2038 | [-4.44154, -3.64250] |    -19.8292 | < .001"
+      [13] "camper [1]  |  -4.8290 | 0.0002 | [-4.82949, -4.82861] | -21474.3719 | < .001"
+      [14] ""                                                                             
+      [15] "# Random Effects Variances"                                                   
+      [16] ""                                                                             
+      [17] "Parameter                   | Coefficient |             95% CI"               
+      [18] "--------------------------------------------------------------"               
+      [19] "SD (Intercept: persons)     |      2.1800 | [1.15990, 4.09711]"               
+      [20] "SD (xb: persons)            |      1.0592 | [0.59457, 1.88686]"               
+      [21] "Cor (Intercept~xb: persons) |     -0.9883 |                   "               
+      [22] ""                                                                             
+      [23] "# Random Effects (Zero-Inflation Component)"                                  
+      [24] ""                                                                             
+      [25] "Parameter                   | Coefficient |               95% CI"             
+      [26] "----------------------------------------------------------------"             
+      [27] "SD (Intercept: persons)     |      5.8635 | [ 3.83067,  8.97520]"             
+      [28] "SD (zg: persons)            |     12.5180 | [10.94956, 14.31115]"             
+      [29] "Cor (Intercept~zg: persons) |      0.9790 |                     "             
 
 # print-model_parameters glmmTMB CI alignment
 
@@ -214,4 +214,41 @@
       Parameter               | Coefficient |       95% CI
       ----------------------------------------------------
       SD (Intercept: persons) |        1.17 | [0.54, 2.57]
+
+# robust SE/VCOV
+
+    Code
+      print(out, table_width = Inf)
+    Output
+      # Fixed Effects (Count Model)
+      
+      Parameter   | Log-Mean |   SE |         95% CI |     z |      p
+      ---------------------------------------------------------------
+      (Intercept) |     1.26 | 0.46 | [ 0.36,  2.17] |  2.74 | 0.006 
+      child       |    -1.14 | 0.30 | [-1.73, -0.55] | -3.80 | < .001
+      camper [1]  |     0.73 | 0.41 | [-0.06,  1.53] |  1.80 | 0.072 
+      
+      # Fixed Effects (Zero-Inflation Component)
+      
+      Parameter   | Log-Odds |   SE |         95% CI |     z |      p
+      ---------------------------------------------------------------
+      (Intercept) |    -0.39 | 0.58 | [-1.52,  0.75] | -0.67 | 0.501 
+      child       |     2.05 | 0.39 | [ 1.30,  2.81] |  5.33 | < .001
+      camper [1]  |    -1.01 | 0.39 | [-1.77, -0.24] | -2.59 | 0.010 
+      
+      # Random Effects Variances
+      
+      Parameter               | Coefficient |       95% CI
+      ----------------------------------------------------
+      SD (Intercept: persons) |        0.93 | [0.46, 1.89]
+      
+      # Random Effects (Zero-Inflation Component)
+      
+      Parameter               | Coefficient |       95% CI
+      ----------------------------------------------------
+      SD (Intercept: persons) |        1.17 | [0.54, 2.57]
+    Message
+      
+      Uncertainty intervals (equal-tailed) and p-values (two-tailed) computed
+        using a Wald z-distribution approximation.
 

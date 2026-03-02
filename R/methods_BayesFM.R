@@ -104,7 +104,7 @@ model_parameters.befa <- function(model,
 
   # Clean
   long_loadings$Parameter <- NULL
-  if ("CI" %in% names(long_loadings) && insight::n_unique(long_loadings$CI) == 1) {
+  if ("CI" %in% names(long_loadings) && insight::has_single_value(long_loadings$CI, remove_na = TRUE)) {
     long_loadings$CI <- NULL
   }
   long_loadings <- long_loadings[long_loadings$Component != 0, ]

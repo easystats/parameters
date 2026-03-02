@@ -27,6 +27,7 @@ test_that("principal_components", {
 test_that("efa-cfa", {
   skip_if_not_installed("psych")
   skip_if_not_installed("lavaan")
+  skip_on_cran()
 
   efa <- psych::fa(attitude, nfactors = 3)
   params <- parameters::model_parameters(efa)

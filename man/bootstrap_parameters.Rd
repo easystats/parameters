@@ -78,7 +78,7 @@ to obtain non-parametric p-values.
 }
 
 \examples{
-\dontshow{if (require("boot", quietly = TRUE) && require("emmeans", quietly = TRUE)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (require("boot", quietly = TRUE) && require("emmeans", quietly = TRUE)) withAutoprint(\{ # examplesIf}
 \donttest{
 set.seed(2)
 model <- lm(Sepal.Length ~ Species * Petal.Width, data = iris)

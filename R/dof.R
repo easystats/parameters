@@ -80,7 +80,8 @@ dof <- degrees_of_freedom
   method <- tolower(method)
 
   # exceptions 1
-  if (inherits(model, c("polr", "glm", "svyglm"))) {
+  if (inherits(model, c("polr", "glm", "svyglm", "svyolr"))) {
+    # fmt: skip
     if (method %in% c(
       "analytical", "any", "fit", "profile", "residual",
       "wald", "nokr", "likelihood", "normal"
@@ -96,11 +97,17 @@ dof <- degrees_of_freedom
 
   # exceptions 2
   if (inherits(model, c("phylolm", "phyloglm"))) {
-    if (method %in% c("analytical", "any", "fit", "residual", "wald", "nokr", "normal", "boot")) {
+    if (
+      method %in%
+        c("analytical", "any", "fit", "residual", "wald", "nokr", "normal", "boot")
+    ) {
       return(TRUE)
     } else {
       if (verbose) {
-        insight::format_alert(sprintf("`%s` must be one of \"wald\", \"normal\" or \"boot\". Using \"wald\" now.", type)) # nolint
+        insight::format_alert(sprintf(
+          "`%s` must be one of \"wald\", \"normal\" or \"boot\". Using \"wald\" now.",
+          type
+        ))
       }
       return(FALSE)
     }
@@ -109,31 +116,52 @@ dof <- degrees_of_freedom
   info <- insight::model_info(model, verbose = FALSE)
   if (!is.null(info) && isFALSE(info$is_mixed) && method == "boot") {
     if (verbose) {
-      insight::format_alert(sprintf("`%s=boot` only works for mixed models of class `merMod`. To bootstrap this model, use `bootstrap=TRUE, ci_method=\"bcai\"`.", type)) # nolint
+      insight::format_alert(sprintf(
+        "`%s=boot` only works for mixed models of class `merMod`. To bootstrap this model, use `bootstrap=TRUE, ci_method=\"bcai\"`.",
+        type
+      ))
     }
     return(TRUE)
   }
 
+  # fmt: skip
   if (is.null(info) || !info$is_mixed) {
-    if (!(method %in% c("analytical", "any", "fit", "betwithin", "nokr", "wald", "ml1", "profile", "boot", "uniroot", "residual", "normal"))) { # nolint
+    if (!(method %in% c(
+      "analytical", "any", "fit", "betwithin", "nokr", "wald", "ml1",
+      "profile", "boot", "uniroot", "residual", "normal"
+    ))) {
       if (verbose) {
-        insight::format_alert(sprintf("`%s` must be one of \"residual\", \"wald\", \"normal\", \"profile\", \"boot\", \"uniroot\", \"betwithin\" or \"ml1\". Using \"wald\" now.", type)) # nolint
+        insight::format_alert(sprintf(
+          "`%s` must be one of \"residual\", \"wald\", \"normal\", \"profile\", \"boot\", \"uniroot\", \"betwithin\" or \"ml1\". Using \"wald\" now.",
+          type
+        ))
       }
       return(FALSE)
     }
     return(TRUE)
   }
 
-  if (!(method %in% c("analytical", "any", "fit", "satterthwaite", "betwithin", "kenward", "kr", "nokr", "wald", "ml1", "profile", "boot", "uniroot", "residual", "normal"))) { # nolint
+  # fmt: skip
+  if (!(method %in% c(
+    "analytical", "any", "fit", "satterthwaite", "betwithin", "kenward",
+    "kr", "nokr", "wald", "ml1", "profile", "boot", "uniroot", "residual",
+    "normal"
+  ))) {
     if (verbose) {
-      insight::format_alert(sprintf("`%s` must be one of \"residual\", \"wald\", \"normal\", \"profile\", \"boot\", \"uniroot\", \"kenward\", \"satterthwaite\", \"betwithin\" or \"ml1\". Using \"wald\" now.", type)) # nolint
+      insight::format_alert(sprintf(
+        "`%s` must be one of \"residual\", \"wald\", \"normal\", \"profile\", \"boot\", \"uniroot\", \"kenward\", \"satterthwaite\", \"betwithin\" or \"ml1\". Using \"wald\" now.",
+        type
+      ))
     }
     return(FALSE)
   }
 
   if (!info$is_linear && method %in% c("satterthwaite", "kenward", "kr")) {
     if (verbose) {
-      insight::format_alert(sprintf("`%s`-degrees of freedoms are only available for linear mixed models.", method))
+      insight::format_alert(sprintf(
+        "`%s`-degrees of freedoms are only available for linear mixed models.",
+        method
+      ))
     }
     return(FALSE)
   }

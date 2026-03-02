@@ -108,13 +108,16 @@
   random_slopes <- insight::find_random_slopes(x)
   params <- NULL
 
+  # extract coefficients - only once, not in the loop
+  model_coefficients <- stats::coef(x, summary = FALSE)
+
   # create full data frame of all random effects retrieved from coef()
   params <- do.call(
     rbind,
     lapply(group_factors, function(i) {
       # we want the posterior distribution from coef(), so we can
       # use bayestestR
-      ranef <- stats::coef(x, summary = FALSE)[[i]]
+      ranef <- model_coefficients[[i]]
       parameter_names <- dimnames(ranef)[[3]]
       out <- lapply(
         parameter_names,
@@ -137,10 +140,7 @@
   )
 
   # select parameters to keep. We want all intercepts, and all random slopes
-  components <- c(
-    "sigma", "mu", "nu", "shape", "beta", "phi", "hu", "ndt", "zoi",
-    "coi", "kappa", "bias", "bs", "zi", "alpha", "xi"
-  )
+  components <- insight::find_auxiliary(x, verbose = FALSE)
   # standard components
   parameters_to_keep <- params$Parameter %in% c("Intercept", random_slopes$random)
   parameters_to_keep <- parameters_to_keep |
@@ -191,6 +191,7 @@
 
 
 # helper ----------------------------------------------------------------------
+
 
 .reshape_group_level_coefficients <- function(x,
                                               params,

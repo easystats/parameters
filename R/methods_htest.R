@@ -178,7 +178,7 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
 
 #' @keywords internal
 .extract_htest_boxpierce <- function(model) {
-  data.frame(
+  out <- data.frame(
     Parameter = model$data.name,
     Chi2 = model$statistic,
     df_error = model$parameter,
@@ -186,6 +186,9 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
     Method = model$method,
     stringsAsFactors = FALSE
   )
+
+  attr(out, "htest_type") <- "boxpiercetest"
+  out
 }
 
 
@@ -232,6 +235,7 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
   )
 
   out <- out[col_order[col_order %in% names(out)]]
+  attr(out, "htest_type") <- "cortest"
   out
 }
 
@@ -283,6 +287,7 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
     out$Method <- model$method
   }
 
+  attr(out, "htest_type") <- "ranktest"
   out
 }
 
@@ -291,7 +296,7 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
 
 #' @keywords internal
 .extract_htest_levenetest <- function(model) {
-  data.frame(
+  out <- data.frame(
     df = model$Df[1],
     df_error = model$Df[2],
     `F` = model$`F value`[1], # nolint
@@ -299,6 +304,9 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
     Method = "Levene's Test for Homogeneity of Variance",
     stringsAsFactors = FALSE
   )
+
+  attr(out, "htest_type") <- "levenetest"
+  out
 }
 
 
@@ -306,7 +314,7 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
 
 #' @keywords internal
 .extract_htest_vartest <- function(model) {
-  data.frame(
+  out <- data.frame(
     Parameter = model$data.name,
     Estimate = model$estimate,
     df = model$parameter[1],
@@ -318,6 +326,9 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
     Method = "F test to compare two variances",
     stringsAsFactors = FALSE
   )
+
+  attr(out, "htest_type") <- "vartest"
+  out
 }
 
 
@@ -433,7 +444,7 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
 
 #' @keywords internal
 .extract_htest_oneway <- function(model) {
-  data.frame(
+  out <- data.frame(
     `F` = model$statistic, # nolint
     df = model$parameter[1],
     df_error = model$parameter[2],
@@ -441,6 +452,9 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
     Method = model$method,
     stringsAsFactors = FALSE
   )
+
+  attr(out, "htest_type") <- "onewaytest"
+  out
 }
 
 
@@ -455,7 +469,7 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
       model$method <- gsub("(Pearson's X\\^2: )(.*)", "Pearson's Chi2 \\(\\2\\)", model$method)
     }
     if (names(model$statistic) == "F") {
-      data.frame(
+      out <- data.frame(
         `F` = model$statistic, # nolint
         df = model$parameter[1],
         df_error = model$parameter[2],
@@ -464,7 +478,7 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
         stringsAsFactors = FALSE
       )
     } else {
-      data.frame(
+      out <- data.frame(
         Chi2 = model$statistic,
         df = model$parameter,
         p = model$p.value,
@@ -473,7 +487,7 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
       )
     }
   } else if (!is.null(model$estimate) && identical(names(model$estimate), "odds ratio")) {
-    data.frame(
+    out <- data.frame(
       `Odds Ratio` = model$estimate,
       # CI = attributes(model$conf.int)$conf.level,
       CI_low = model$conf.int[1],
@@ -484,7 +498,7 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
       check.names = FALSE
     )
   } else {
-    data.frame(
+    out <- data.frame(
       Chi2 = model$statistic,
       df = model$parameter,
       p = model$p.value,
@@ -492,6 +506,9 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
       stringsAsFactors = FALSE
     )
   }
+
+  attr(out, "htest_type") <- "chi2test"
+  out
 }
 
 
@@ -518,6 +535,7 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
   out$Null_value <- model$null.value
   out$p <- model$p.value
   out$Method <- model$method
+  attr(out, "htest_type") <- "proptest"
   out
 }
 
@@ -537,6 +555,7 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
   out$Null_value <- model$null.value
   out$p <- model$p.value
   out$Method <- model$method
+  attr(out, "htest_type") <- "binomtest"
   out
 }
 

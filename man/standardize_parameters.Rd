@@ -119,7 +119,7 @@ As a results, the coefficients for effects of factors are similar to a Glass'
 delta.
 \item \strong{pseudo} (\emph{for 2-level (G)LMMs only}): In this (post-hoc) method, the
 response and the predictor are standardized based on the level of prediction
-(levels are detected with \code{\link[performance:check_heterogeneity_bias]{performance::check_heterogeneity_bias()}}): Predictors
+(levels are detected with \code{\link[performance:check_group_variation]{performance::check_group_variation()}}): Predictors
 are standardized based on their SD at level of prediction (see also
 \code{\link[datawizard:demean]{datawizard::demean()}}); The outcome (in linear LMMs) is standardized based
 on a fitted random-intercept-model, where \code{sqrt(random-intercept-variance)}
@@ -198,18 +198,16 @@ standardize_parameters(model, method = "posthoc")
 standardize_parameters(model, method = "basic", exponentiate = TRUE)
 }
 
-\dontshow{if (require("lme4", quietly = TRUE)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (require("lme4", quietly = TRUE)) withAutoprint(\{ # examplesIf}
 \donttest{
 m <- lme4::lmer(mpg ~ cyl + am + vs + (1 | cyl), mtcars)
 standardize_parameters(m, method = "pseudo", ci_method = "satterthwaite")
 }
 \dontshow{\}) # examplesIf}
-\dontshow{if (require("rstanarm", quietly = TRUE)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (require("rstanarm", quietly = TRUE)) withAutoprint(\{ # examplesIf}
 \donttest{
 model <- rstanarm::stan_glm(rating ~ critical + privileges, data = attitude, refresh = 0)
-standardize_posteriors(model, method = "refit", verbose = FALSE)
-standardize_posteriors(model, method = "posthoc", verbose = FALSE)
-standardize_posteriors(model, method = "smart", verbose = FALSE)
+head(standardize_posteriors(model, method = "refit", verbose = FALSE))
 head(standardize_posteriors(model, method = "basic", verbose = FALSE))
 }
 \dontshow{\}) # examplesIf}

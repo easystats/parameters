@@ -334,7 +334,7 @@ research. *PeerJ*, *5*, e3544. <https://doi.org/10.7717/peerj.3544>
 
 Greenland, S., Rafi, Z., Matthews, R., & Higgs, M. (2022). *To Aid
 Scientific Inference, Emphasize Unconditional Compatibility Descriptions
-of Statistics*. Retrieved from <http://arxiv.org/abs/1909.08583>
+of Statistics*. Retrieved from <https://arxiv.org/abs/1909.08583>
 
 </div>
 
@@ -350,7 +350,6 @@ Lakens, D. (2024). *Improving Your Statistical Inferences*.
 Lakens, D., Scheel, A. M., & Isager, P. M. (2018). Equivalence testing
 for psychological research: A tutorial. *Advances in Methods and
 Practices in Psychological Science*, *1*(2), 259–269.
-<https://doi.org/10.1177/2515245918770963>
 
 </div>
 
@@ -385,7 +384,7 @@ science. *Journal of Statistical Planning and Inference*, *195*,
 Schweder, T., & Hjort, N. L. (2003). Frequentist Analogues of Priors and
 Posteriors. In B. Stigum (Ed.), *Econometrics and the Philosophy of
 Economics: Theory-Data Confrontations in Economics* (pp. 285–217).
-Retrieved from <https://www.duo.uio.no/handle/10852/10425>
+Princeton: Princeton University Press.
 
 </div>
 
