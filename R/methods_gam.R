@@ -1,8 +1,6 @@
 # classes: .gam, .list
 
-
 #################### .gam ------
-
 
 #' @export
 model_parameters.gam <- model_parameters.cgam
@@ -14,10 +12,13 @@ ci.gam <- function(x, ci = 0.95, method = NULL, ...) {
 }
 
 
+#' @inheritParams insight::get_statistic
+#' @rdname standard_error
 #' @export
-standard_error.gam <- function(model, ...) {
-  p.table <- summary(model)$p.table
-  s.table <- summary(model)$s.table
+standard_error.gam <- function(model, re_test = TRUE, ...) {
+  summ <- summary(model, re.test = re_test)
+  p.table <- summ$p.table
+  s.table <- summ$s.table
   d1 <- d2 <- NULL
 
   if (!is.null(p.table)) {
@@ -28,22 +29,21 @@ standard_error.gam <- function(model, ...) {
     )
   }
 
-  if (!is.null(s.table)) {
-    d2 <- .data_frame(
-      Parameter = rownames(s.table),
-      SE = NA,
-      Component = "smooth_terms"
-    )
+  if (!is.null(s.table) && nrow(s.table) > 0) {
+    d2 <- .data_frame(Parameter = rownames(s.table), SE = NA, Component = "smooth_terms")
   }
 
   insight::text_remove_backticks(rbind(d1, d2), verbose = FALSE)
 }
 
 
+#' @inheritParams insight::get_statistic
+#' @rdname p_value
 #' @export
-p_value.gam <- function(model, ...) {
-  p.table <- summary(model)$p.table
-  s.table <- summary(model)$s.table
+p_value.gam <- function(model, re_test = TRUE, ...) {
+  summ <- summary(model, re.test = re_test)
+  p.table <- summ$p.table
+  s.table <- summ$s.table
   d1 <- d2 <- NULL
 
   if (!is.null(p.table)) {
@@ -54,7 +54,7 @@ p_value.gam <- function(model, ...) {
     )
   }
 
-  if (!is.null(s.table)) {
+  if (!is.null(s.table) && nrow(s.table) > 0) {
     d2 <- .data_frame(
       Parameter = rownames(s.table),
       p = as.vector(s.table[, 4]),
@@ -68,7 +68,9 @@ p_value.gam <- function(model, ...) {
 
 #' @export
 simulate_model.gam <- function(model, iterations = 1000, ...) {
-  if (is.null(iterations)) iterations <- 1000
+  if (is.null(iterations)) {
+    iterations <- 1000
+  }
 
   beta <- stats::coef(model)
   varcov <- insight::get_varcov(model, component = "all", ...)
@@ -83,7 +85,6 @@ simulate_model.gam <- function(model, iterations = 1000, ...) {
 
 #################### .list ------
 
-
 #' @export
 model_parameters.list <- function(model, ...) {
   if ("gam" %in% names(model)) {
@@ -94,7 +95,9 @@ model_parameters.list <- function(model, ...) {
     model <- model$pamobject
     model_parameters(model, ...)
   } else {
-    insight::format_error("We don't recognize this object of class `list`. Please raise an issue.")
+    insight::format_error(
+      "We don't recognize this object of class `list`. Please raise an issue."
+    )
   }
 }
 
