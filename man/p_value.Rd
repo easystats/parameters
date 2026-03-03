@@ -83,6 +83,11 @@ type for \code{"HC"} equals the default from the \strong{sandwich} package; for 
 
 \item{adjust}{Character value naming the method used to adjust p-values or
 confidence intervals. See \code{?emmeans::summary.emmGrid} for details.}
+
+\item{re_test}{Logical, if \code{TRUE} (default), tests for random effects terms
+are performed. Only applies to \code{mgcv::gam()} model. For large models these
+tests can be computationally expensive, in which case it is recommended to
+set this argument to \code{FALSE}.}
 }
 \value{
 A data frame with at least two columns: the parameter names and the

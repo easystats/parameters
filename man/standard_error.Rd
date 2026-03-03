@@ -75,6 +75,11 @@ values to calculate the standard error, with the lowest level being the
 value \code{1} (unless the factor has numeric levels, which are converted
 to the corresponding numeric value). By default, \code{NA} is returned for
 factors or character vectors.}
+
+\item{re_test}{Logical, if \code{TRUE} (default), tests for random effects terms
+are performed. Only applies to \code{mgcv::gam()} model. For large models these
+tests can be computationally expensive, in which case it is recommended to
+set this argument to \code{FALSE}.}
 }
 \value{
 A data frame with at least two columns: the parameter names and the

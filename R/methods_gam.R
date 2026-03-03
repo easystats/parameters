@@ -12,7 +12,10 @@ ci.gam <- function(x, ci = 0.95, method = NULL, ...) {
 }
 
 
-#' @inheritParams insight::get_statistic
+#' @param re_test Logical, if `TRUE` (default), tests for random effects terms
+#' are performed. Only applies to `mgcv::gam()` model. For large models these
+#' tests can be computationally expensive, in which case it is recommended to
+#' set this argument to `FALSE`.
 #' @rdname standard_error
 #' @export
 standard_error.gam <- function(model, re_test = TRUE, ...) {
@@ -37,7 +40,7 @@ standard_error.gam <- function(model, re_test = TRUE, ...) {
 }
 
 
-#' @inheritParams insight::get_statistic
+#' @inheritParams standard_error.gam
 #' @rdname p_value
 #' @export
 p_value.gam <- function(model, re_test = TRUE, ...) {
