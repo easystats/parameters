@@ -4,20 +4,22 @@
 #'
 #' @keywords internal
 #' @noRd
-.add_model_parameters_attributes <- function(params,
-                                             model,
-                                             ci,
-                                             exponentiate = FALSE,
-                                             bootstrap = FALSE,
-                                             iterations = 1000,
-                                             ci_method = NULL,
-                                             p_adjust = NULL,
-                                             include_info = FALSE,
-                                             verbose = TRUE,
-                                             group_level = FALSE,
-                                             wb_component = FALSE,
-                                             modelinfo = NULL,
-                                             ...) {
+.add_model_parameters_attributes <- function(
+  params,
+  model,
+  ci,
+  exponentiate = FALSE,
+  bootstrap = FALSE,
+  iterations = 1000,
+  ci_method = NULL,
+  p_adjust = NULL,
+  include_info = FALSE,
+  verbose = TRUE,
+  group_level = FALSE,
+  wb_component = FALSE,
+  modelinfo = NULL,
+  ...
+) {
   # capture additional arguments
   dot.arguments <- list(...)
 
@@ -34,7 +36,11 @@
 
   # for simplicity, we just use the model information from the first formula
   # when we have multivariate response models...
-  if (insight::is_multivariate(model) && !"is_zero_inflated" %in% names(info) && !inherits(model, c("vgam", "vglm"))) {
+  if (
+    insight::is_multivariate(model) &&
+      !"is_zero_inflated" %in% names(info) &&
+      !inherits(model, c("vgam", "vglm"))
+  ) {
     info <- info[[1]]
   }
 
@@ -42,7 +48,11 @@
   if (isFALSE(dot.arguments$pretty_names)) {
     attr(params, "pretty_names") <- params$Parameter
   } else if (is.null(attr(params, "pretty_names", exact = TRUE))) {
-    attr(params, "pretty_names") <- suppressWarnings(format_parameters(model, model_info = info, ...))
+    attr(params, "pretty_names") <- suppressWarnings(format_parameters(
+      model,
+      model_info = info,
+      ...
+    ))
   }
 
   attr(params, "ci") <- ci
@@ -70,8 +80,20 @@
 
   # use tryCatch, these might fail...
   attr(params, "test_statistic") <- .safe(insight::find_statistic(model))
-  attr(params, "log_response") <- .safe(isTRUE(grepl("log", insight::find_transformation(model), fixed = TRUE)))
-  attr(params, "log_predictors") <- .safe(any(grepl("log", unlist(insight::find_terms(model, verbose = FALSE)[c("conditional", "zero_inflated", "instruments")]), fixed = TRUE))) # nolint
+  attr(params, "log_response") <- .safe(isTRUE(grepl(
+    "log",
+    insight::find_transformation(model),
+    fixed = TRUE
+  )))
+  attr(params, "log_predictors") <- .safe(any(grepl(
+    "log",
+    unlist(insight::find_terms(model, verbose = FALSE)[c(
+      "conditional",
+      "zero_inflated",
+      "instruments"
+    )]),
+    fixed = TRUE
+  ))) # nolint
 
   # save if model is multivariate response model
   if (isTRUE(info$is_multivariate)) {
@@ -79,10 +101,13 @@
   }
 
   # if we have a complex random-within-between model, don't show first title element
-  if (isTRUE(wb_component) && !is.null(params$Component) && any(c("within", "between") %in% params$Component)) {
+  if (
+    isTRUE(wb_component) &&
+      !is.null(params$Component) &&
+      any(c("within", "between") %in% params$Component)
+  ) {
     attr(params, "no_caption") <- TRUE
   }
-
 
   # for additional infos, add R2, RMSE
   if (isTRUE(include_info) && requireNamespace("performance", quietly = TRUE)) {
@@ -92,18 +117,31 @@
     attr(params, "rmse") <- rmse
   }
 
-
   # Models for which titles should be removed - here we add exceptions for
   # objects that should not have a table headline like "# Fixed Effects", when
   # there is nothing else than fixed effects (redundant title)
-  if (inherits(model, c(
-    "mediate", "emmGrid", "emm_list", "summary_emm", "lm", "averaging",
-    "glm", "coxph", "bfsl", "deltaMethod", "phylolm", "phyloglm"
-  ))) {
+  if (
+    inherits(
+      model,
+      c(
+        "mediate",
+        "emmGrid",
+        "emm_list",
+        "summary_emm",
+        "lm",
+        "averaging",
+        "glm",
+        "coxph",
+        "bfsl",
+        "deltaMethod",
+        "phylolm",
+        "phyloglm"
+      )
+    )
+  ) {
     attr(params, "no_caption") <- TRUE
     attr(params, "title") <- ""
   }
-
 
   # weighted nobs
   weighted_nobs <- .safe({
@@ -112,11 +150,11 @@
   })
   attr(params, "weighted_nobs") <- weighted_nobs
 
-
   # model formula
-  model_formula <- .safe(insight::safe_deparse(insight::find_formula(model, verbose = FALSE)$conditional)) # nolint
+  model_formula <- .safe(insight::safe_deparse(
+    insight::find_formula(model, verbose = FALSE)$conditional
+  )) # nolint
   attr(params, "model_formula") <- model_formula
-
 
   # column name for coefficients - for emm_list, we can have
   # multiple different names for the parameter column. for other
@@ -136,7 +174,6 @@
     }
   }
 
-
   # special handling for meta analysis. we need additional
   # information about study weights
   if (inherits(model, c("rma", "rma.uni"))) {
@@ -144,7 +181,6 @@
     attr(params, "data") <- rma_data
     attr(params, "study_weights") <- 1 / model$vi
   }
-
 
   # special handling for meta analysis again, but these objects save the
   # inverse weighting information in a different column.
@@ -231,7 +267,8 @@
     return(NULL)
   }
 
-  switch(tolower(ci_method),
+  switch(
+    tolower(ci_method),
     # abbreviations
     eti = ,
     hdi = ,
@@ -261,12 +298,13 @@
     s <- summary(model)
     name <- attributes(s)$estName
     if (!is.null(name)) {
-      coef_col <- switch(name,
-        prob       = "Probability",
+      coef_col <- switch(
+        name,
+        prob = "Probability",
         odds.ratio = "Odds Ratio",
-        emmean     = "Marginal Means",
-        rate       = "Estimated Counts",
-        ratio      = "Ratio",
+        emmean = "Marginal Means",
+        rate = "Estimated Counts",
+        ratio = "Ratio",
         "Coefficient"
       )
     }
@@ -276,7 +314,12 @@
         coef_col <- "Prevalence Ratio"
       } else if (info$is_probit) {
         coef_col <- "Coefficient"
-      } else if ((info$is_binomial && info$is_logit) || info$is_ordinal || info$is_multinomial || info$is_categorical) {
+      } else if (
+        (info$is_binomial && info$is_logit) ||
+          info$is_ordinal ||
+          info$is_multinomial ||
+          info$is_categorical
+      ) {
         coef_col <- "Odds Ratio"
       } else if (info$is_binomial && !info$is_logit) {
         if (info$link_function == "identity") {
@@ -291,7 +334,12 @@
       coef_col <- "Log-Prevalence"
     } else if (info$is_probit) {
       coef_col <- "Z-Score"
-    } else if ((info$is_binomial && info$is_logit) || info$is_ordinal || info$is_multinomial || info$is_categorical) {
+    } else if (
+      (info$is_binomial && info$is_logit) ||
+        info$is_ordinal ||
+        info$is_multinomial ||
+        info$is_categorical
+    ) {
       coef_col <- "Log-Odds"
     } else if (info$is_binomial && !info$is_logit) {
       if (info$link_function == "identity") {
@@ -327,8 +375,11 @@
   }
 
   # check if non-gaussian applies
-  if (!is.null(model) && insight::model_info(model, verbose = FALSE)$is_linear &&
-    identical(exponentiate, "nongaussian")) {
+  if (
+    !is.null(model) &&
+      insight::model_info(model, verbose = FALSE)$is_linear &&
+      identical(exponentiate, "nongaussian")
+  ) {
     return(params)
   }
 
@@ -408,7 +459,15 @@
 
 
 #' @keywords internal
-.add_anova_attributes <- function(params, model, ci, test = NULL, alternative = NULL, p_adjust = NULL, ...) {
+.add_anova_attributes <- function(
+  params,
+  model,
+  ci,
+  test = NULL,
+  alternative = NULL,
+  p_adjust = NULL,
+  ...
+) {
   dot.arguments <- lapply(match.call(expand.dots = FALSE)$`...`, function(x) x) # nolint
 
   attr(params, "ci") <- ci
@@ -482,7 +541,13 @@
 #'
 #' @keywords internal
 #' @noRd
-.check_dots <- function(dots, not_allowed, model_class, function_name = "model_parameters", verbose = TRUE) {
+.check_dots <- function(
+  dots,
+  not_allowed,
+  model_class,
+  function_name = "model_parameters",
+  verbose = TRUE
+) {
   # remove arguments that are NULL
   dots <- insight::compact_list(dots)
 
@@ -494,10 +559,18 @@
   not_allowed <- not_allowed[which(not_allowed %in% names(dots))]
   if (length(not_allowed)) {
     if (verbose) {
-      not_allowed_string <- datawizard::text_concatenate(not_allowed, enclose = "\"")
+      not_allowed_string <- datawizard::text_concatenate(not_allowed)
       insight::format_alert(
-        sprintf("Following arguments are not supported in `%s()` for models of class `%s` and will be ignored: %s", function_name, model_class, not_allowed_string), # nolint
-        sprintf("In case you obtain expected results, please run `%s()` again without specifying the above mentioned arguments.", function_name) # nolint
+        sprintf(
+          "Following arguments are not supported in %s() for models of class %s and will be ignored: %s",
+          sQuote(function_name),
+          sQuote(model_class),
+          dQuote(not_allowed_string)
+        ),
+        sprintf(
+          "In case you obtain expected results, please run %s() again without specifying the above mentioned arguments.",
+          sQuote(function_name)
+        )
       )
     }
     dots[not_allowed] <- NULL
@@ -513,8 +586,12 @@
 
 .is_model_valid <- function(model) {
   if (missing(model) || is.null(model)) {
-    insight::format_error(
-      "You must provide a model-object. Argument `model` cannot be missing or `NULL`."
-    )
+    insight::format_error(paste0(
+      "You must provide a model-object. Argument ",
+      sQuote("model"),
+      " cannot be missing or ",
+      sQuote("NULL"),
+      "."
+    ))
   }
 }
