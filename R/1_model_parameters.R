@@ -634,17 +634,21 @@ model_parameters.default <- function(
   if (length(out) == 1 && isTRUE(is.na(out))) {
     insight::format_error(
       paste0(
-        "Sorry, `model_parameters()` failed with the following error (possible class `",
-        class(model)[1],
-        "` not supported):\n"
+        "Sorry, ",
+        sQuote("model_parameters()"),
+        " failed with the following error (possible class ",
+        sQuote(class(model)[1]),
+        " not supported):\n"
       ),
       attr(out, "error")
     )
   } else if (is.null(out)) {
     insight::format_error(paste0(
-      "Sorry, `model_parameters()` does not currently work for objects of class `",
-      class(model)[1],
-      "`."
+      "Sorry, ",
+      sQuote("model_parameters()"),
+      " does not currently work for objects of class ",
+      sQuote(class(model)[1]),
+      "."
     ))
   }
 }
