@@ -12,6 +12,11 @@
 
 * `model_parameters()` now supports objects from the *lavaan.mi* package.
 
+* Improved performance of `model_parameters()` for large `mgcv::gam()` models
+  that include random effects when using the new `re_test` argument (e.g.,
+  setting `re_test = FALSE` to skip expensive random-effect tests). Default
+  behavior (with `re_test = TRUE`) is unchanged.
+
 ## Bug fixes
 
 * Fixed issue where wrong (non-robust) standard errors were calculated for
