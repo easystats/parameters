@@ -12,6 +12,9 @@
 
 * `model_parameters()` now supports objects from the *lavaan.mi* package.
 
+* Improved performance of `model_parameters()` for large models from package
+  *mgcv* that include random effects.
+
 ## Bug fixes
 
 * Fixed issue where wrong (non-robust) standard errors were calculated for
