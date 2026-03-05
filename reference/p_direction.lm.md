@@ -299,9 +299,9 @@ p_direction(model)
 #> Parameter     |         95% CI |     pd
 #> ---------------------------------------
 #> (Intercept)   | [58.46, 69.28] |   100%
-#> time          | [-1.07,  2.85] | 81.47%
-#> age           | [-0.32,  0.37] | 55.91%
-#> educationmid  | [ 4.43, 13.09] | 99.99%
+#> time          | [-1.07,  2.85] | 81.65%
+#> age           | [-0.32,  0.37] | 55.15%
+#> educationmid  | [ 4.43, 13.09] |   100%
 #> educationhigh | [ 9.33, 19.38] |   100%
 
 # based on heteroscedasticity-robust standard errors
@@ -311,9 +311,9 @@ p_direction(model, vcov = "HC3")
 #> Parameter     |         95% CI |     pd
 #> ---------------------------------------
 #> (Intercept)   | [58.33, 69.41] |   100%
-#> time          | [-1.13,  2.90] | 80.70%
-#> age           | [-0.33,  0.38] | 55.35%
-#> educationmid  | [ 4.21, 13.31] |   100%
+#> time          | [-1.13,  2.90] | 80.39%
+#> age           | [-0.33,  0.38] | 55.32%
+#> educationmid  | [ 4.21, 13.31] | 99.98%
 #> educationhigh | [ 9.37, 19.34] |   100%
 
 result <- p_direction(model)

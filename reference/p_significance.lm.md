@@ -321,9 +321,9 @@ p_significance(model)
 #> Parameter     |         95% CI |     ps
 #> ---------------------------------------
 #> (Intercept)   | [58.46, 69.28] |   100%
-#> time          | [-1.07,  2.85] | 13.59%
+#> time          | [-1.07,  2.85] | 13.46%
 #> age           | [-0.32,  0.37] |  0.00%
-#> educationmid  | [ 4.43, 13.09] | 99.94%
+#> educationmid  | [ 4.43, 13.09] | 99.91%
 #> educationhigh | [ 9.33, 19.38] |   100%
 p_significance(model, threshold = c(-0.5, 1.5))
 #> Practical Significance (threshold: -0.50, 1.50)
@@ -331,9 +331,9 @@ p_significance(model, threshold = c(-0.5, 1.5))
 #> Parameter     |         95% CI |     ps
 #> ---------------------------------------
 #> (Intercept)   | [58.46, 69.28] |   100%
-#> time          | [-1.07,  2.85] | 26.63%
-#> age           | [-0.32,  0.37] |  0.20%
-#> educationmid  | [ 4.43, 13.09] | 99.96%
+#> time          | [-1.07,  2.85] | 27.07%
+#> age           | [-0.32,  0.37] |  0.18%
+#> educationmid  | [ 4.43, 13.09] | 99.94%
 #> educationhigh | [ 9.33, 19.38] |   100%
 
 # based on heteroscedasticity-robust standard errors
@@ -343,9 +343,9 @@ p_significance(model, vcov = "HC3")
 #> Parameter     |         95% CI |     ps
 #> ---------------------------------------
 #> (Intercept)   | [58.33, 69.41] |   100%
-#> time          | [-1.13,  2.90] | 14.25%
+#> time          | [-1.13,  2.90] | 14.15%
 #> age           | [-0.33,  0.38] |  0.00%
-#> educationmid  | [ 4.21, 13.31] | 99.87%
+#> educationmid  | [ 4.21, 13.31] | 99.85%
 #> educationhigh | [ 9.37, 19.34] |   100%
 
 if (require("see", quietly = TRUE)) {

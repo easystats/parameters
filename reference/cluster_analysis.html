@@ -9,7 +9,7 @@ assignment for each observation as vector."><meta property="og:image" content="h
 
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.28.3.6</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.28.3.7</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -242,12 +242,13 @@ for clustering.</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Hierarchical k-means (more robust k-means)</span></span></span>
-<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="http://www.sthda.com/english/rpkgs/factoextra" class="external-link">"factoextra"</a></span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://github.com/kassambara/factoextra" class="external-link">"factoextra"</a></span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span>  <span class="va">rez</span> <span class="op">&lt;-</span> <span class="fu">cluster_analysis</span><span class="op">(</span><span class="va">iris</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>, n <span class="op">=</span> <span class="fl">3</span>, method <span class="op">=</span> <span class="st">"hkmeans"</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="va">rez</span> <span class="co"># Show results</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">rez</span><span class="op">)</span> <span class="co"># Get clusters</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Welcome! Want to learn more? See two factoextra-related books at https://goo.gl/ve3WBa</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Welcome to factoextra!</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Want to learn more? See two factoextra-related books at https://www.datanovia.com/en/product/practical-guide-to-principal-component-methods-in-r/</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   [1] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [38] 1 1 1 1 1 1 1 1 1 1 1 1 1 3 3 3 2 2 2 3 2 2 2 2 2 2 2 2 3 2 2 2 2 3 2 2 2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [75] 2 3 3 3 2 2 2 2 2 2 2 3 3 2 2 2 2 2 2 2 2 2 2 2 2 2 3 2 3 3 3 3 2 3 3 3 3</span>

@@ -133,11 +133,11 @@ pool_parameters(models)
 #> 
 #> Parameter   | Coefficient |   SE |          95% CI | Statistic |    df |      p
 #> -------------------------------------------------------------------------------
-#> (Intercept) |       18.85 | 3.43 | [ 11.43, 26.26] |      5.49 | 13.17 | < .001
-#> age [40-59] |       -6.42 | 2.44 | [-12.69, -0.15] |     -2.63 |  4.98 | 0.046 
-#> age [60-99] |       -7.56 | 2.15 | [-12.37, -2.75] |     -3.52 |  9.56 | 0.006 
-#> hyp [yes]   |        2.48 | 2.11 | [ -2.46,  7.42] |      1.18 |  7.28 | 0.276 
-#> chl         |        0.06 | 0.02 | [  0.01,  0.10] |      2.88 | 12.18 | 0.014 
+#> (Intercept) |       20.47 | 4.00 | [ 11.48, 29.45] |      5.11 |  9.47 | < .001
+#> age [40-59] |       -5.01 | 2.15 | [ -9.90, -0.13] |     -2.33 |  8.73 | 0.045 
+#> age [60-99] |       -6.64 | 2.82 | [-13.55,  0.27] |     -2.36 |  5.96 | 0.057 
+#> hyp [yes]   |        1.70 | 1.79 | [ -2.11,  5.51] |      0.95 | 15.46 | 0.357 
+#> chl         |        0.05 | 0.02 | [ -0.01,  0.10] |      2.02 |  8.44 | 0.077 
 #> 
 #> Uncertainty intervals (equal-tailed) and p-values (two-tailed)
 #>   computed using a Wald distribution approximation.
@@ -145,12 +145,12 @@ pool_parameters(models)
 # should be identical to:
 m <- with(data = imp, exp = lm(bmi ~ age + hyp + chl))
 summary(mice::pool(m))
-#>          term    estimate  std.error statistic        df      p.value
-#> 1 (Intercept) 18.84522178 3.43482599  5.486514 13.174027 9.965023e-05
-#> 2    age40-59 -6.41725702 2.43688726 -2.633383  4.983370 4.649613e-02
-#> 3    age60-99 -7.56286820 2.14598646 -3.524192  9.558746 5.894426e-03
-#> 4      hypyes  2.47727095 2.10584846  1.176377  7.284416 2.764525e-01
-#> 5         chl  0.05611918 0.01949314  2.878919 12.181956 1.367417e-02
+#>          term    estimate  std.error  statistic        df      p.value
+#> 1 (Intercept) 20.46518072 4.00347684  5.1118519  9.474686 0.0005404098
+#> 2    age40-59 -5.01292836 2.15013869 -2.3314442  8.725427 0.0454959747
+#> 3    age60-99 -6.64128625 2.81870219 -2.3561504  5.964267 0.0568326641
+#> 4      hypyes  1.70168835 1.79135973  0.9499423 15.457866 0.3567585835
+#> 5         chl  0.04597687 0.02280179  2.0163715  8.435049 0.0766683330
 
 # For glm, mice used residual df, while `pool_parameters()` uses `Inf`
 nhanes2$hyp <- datawizard::slide(as.numeric(nhanes2$hyp))
@@ -161,11 +161,11 @@ models <- lapply(1:5, function(i) {
 m <- with(data = imp, exp = glm(hyp ~ age + chl, family = binomial))
 # residual df
 summary(mice::pool(m))$df
-#> [1] 19.249674 19.249831 19.249863  4.562049
+#> [1] 19.24999 19.25000 19.25000 13.58351
 # df = Inf
 pool_parameters(models)$df_error
 #> [1] Inf Inf Inf Inf
 # use residual df instead
 pool_parameters(models, ci_method = "residual")$df_error
-#> [1] 19.248074 19.248074 19.248074  4.562049
+#> [1] 19.24807 19.24807 19.24807 13.58351
 ```

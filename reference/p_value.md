@@ -22,6 +22,9 @@ p_value(
 
 # S3 method for class 'emmGrid'
 p_value(model, ci = 0.95, adjust = "none", ...)
+
+# S3 method for class 'gam'
+p_value(model, re_test = TRUE, ...)
 ```
 
 ## Arguments
@@ -120,6 +123,14 @@ p_value(model, ci = 0.95, adjust = "none", ...)
   confidence intervals. See
   [`?emmeans::summary.emmGrid`](https://rvlenth.github.io/emmeans/reference/summary.emmGrid.html)
   for details.
+
+- re_test:
+
+  Logical, if `TRUE` (default), tests for random effects terms are
+  performed. Only applies to
+  [`mgcv::gam()`](https://rdrr.io/pkg/mgcv/man/gam.html) model. For
+  large models these tests can be computationally expensive, in which
+  case it is recommended to set this argument to `FALSE`.
 
 ## Value
 

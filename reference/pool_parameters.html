@@ -13,7 +13,7 @@ model_parameters().'><meta property="og:image" content="https://easystats.github
 
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.28.3.6</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.28.3.7</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -185,11 +185,11 @@ Imputation for Nonresponse in Surveys. New York: John Wiley and Sons.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameter   | Coefficient |   SE |          95% CI | Statistic |    df |      p</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -------------------------------------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) |       18.85 | 3.43 | [ 11.43, 26.26] |      5.49 | 13.17 | &lt; .001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> age [40-59] |       -6.42 | 2.44 | [-12.69, -0.15] |     -2.63 |  4.98 | 0.046 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> age [60-99] |       -7.56 | 2.15 | [-12.37, -2.75] |     -3.52 |  9.56 | 0.006 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> hyp [yes]   |        2.48 | 2.11 | [ -2.46,  7.42] |      1.18 |  7.28 | 0.276 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> chl         |        0.06 | 0.02 | [  0.01,  0.10] |      2.88 | 12.18 | 0.014 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) |       20.47 | 4.00 | [ 11.48, 29.45] |      5.11 |  9.47 | &lt; .001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> age [40-59] |       -5.01 | 2.15 | [ -9.90, -0.13] |     -2.33 |  8.73 | 0.045 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> age [60-99] |       -6.64 | 2.82 | [-13.55,  0.27] |     -2.36 |  5.96 | 0.057 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> hyp [yes]   |        1.70 | 1.79 | [ -2.11,  5.51] |      0.95 | 15.46 | 0.357 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> chl         |        0.05 | 0.02 | [ -0.01,  0.10] |      2.02 |  8.44 | 0.077 </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">Uncertainty intervals (equal-tailed) and p-values (two-tailed)</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">  computed using a Wald distribution approximation.</span></span>
@@ -197,12 +197,12 @@ Imputation for Nonresponse in Surveys. New York: John Wiley and Sons.</p>
 <span class="r-in"><span><span class="co"># should be identical to:</span></span></span>
 <span class="r-in"><span><span class="va">m</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">imp</span>, exp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">bmi</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">hyp</span> <span class="op">+</span> <span class="va">chl</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="fu">mice</span><span class="fu">::</span><span class="fu"><a href="https://amices.org/mice/reference/pool.html" class="external-link">pool</a></span><span class="op">(</span><span class="va">m</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>          term    estimate  std.error statistic        df      p.value</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 (Intercept) 18.84522178 3.43482599  5.486514 13.174027 9.965023e-05</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2    age40-59 -6.41725702 2.43688726 -2.633383  4.983370 4.649613e-02</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3    age60-99 -7.56286820 2.14598646 -3.524192  9.558746 5.894426e-03</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4      hypyes  2.47727095 2.10584846  1.176377  7.284416 2.764525e-01</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5         chl  0.05611918 0.01949314  2.878919 12.181956 1.367417e-02</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          term    estimate  std.error  statistic        df      p.value</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 (Intercept) 20.46518072 4.00347684  5.1118519  9.474686 0.0005404098</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2    age40-59 -5.01292836 2.15013869 -2.3314442  8.725427 0.0454959747</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3    age60-99 -6.64128625 2.81870219 -2.3561504  5.964267 0.0568326641</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4      hypyes  1.70168835 1.79135973  0.9499423 15.457866 0.3567585835</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5         chl  0.04597687 0.02280179  2.0163715  8.435049 0.0766683330</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># For glm, mice used residual df, while `pool_parameters()` uses `Inf`</span></span></span>
 <span class="r-in"><span><span class="va">nhanes2</span><span class="op">$</span><span class="va">hyp</span> <span class="op">&lt;-</span> <span class="fu">datawizard</span><span class="fu">::</span><span class="fu"><a href="https://easystats.github.io/datawizard/reference/slide.html" class="external-link">slide</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">nhanes2</span><span class="op">$</span><span class="va">hyp</span><span class="op">)</span><span class="op">)</span></span></span>
@@ -213,13 +213,13 @@ Imputation for Nonresponse in Surveys. New York: John Wiley and Sons.</p>
 <span class="r-in"><span><span class="va">m</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">imp</span>, exp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/glm.html" class="external-link">glm</a></span><span class="op">(</span><span class="va">hyp</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">chl</span>, family <span class="op">=</span> <span class="va">binomial</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="co"># residual df</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="fu">mice</span><span class="fu">::</span><span class="fu"><a href="https://amices.org/mice/reference/pool.html" class="external-link">pool</a></span><span class="op">(</span><span class="va">m</span><span class="op">)</span><span class="op">)</span><span class="op">$</span><span class="va">df</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 19.249674 19.249831 19.249863  4.562049</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 19.24999 19.25000 19.25000 13.58351</span>
 <span class="r-in"><span><span class="co"># df = Inf</span></span></span>
 <span class="r-in"><span><span class="fu">pool_parameters</span><span class="op">(</span><span class="va">models</span><span class="op">)</span><span class="op">$</span><span class="va">df_error</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] Inf Inf Inf Inf</span>
 <span class="r-in"><span><span class="co"># use residual df instead</span></span></span>
 <span class="r-in"><span><span class="fu">pool_parameters</span><span class="op">(</span><span class="va">models</span>, ci_method <span class="op">=</span> <span class="st">"residual"</span><span class="op">)</span><span class="op">$</span><span class="va">df_error</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 19.248074 19.248074 19.248074  4.562049</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 19.24807 19.24807 19.24807 13.58351</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

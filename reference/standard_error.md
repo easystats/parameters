@@ -21,6 +21,9 @@ standard_error(
 
 # S3 method for class 'factor'
 standard_error(model, force = FALSE, verbose = TRUE, ...)
+
+# S3 method for class 'gam'
+standard_error(model, re_test = TRUE, ...)
 ```
 
 ## Arguments
@@ -104,6 +107,14 @@ standard_error(model, force = FALSE, verbose = TRUE, ...)
   `1` (unless the factor has numeric levels, which are converted to the
   corresponding numeric value). By default, `NA` is returned for factors
   or character vectors.
+
+- re_test:
+
+  Logical, if `TRUE` (default), tests for random effects terms are
+  performed. Only applies to
+  [`mgcv::gam()`](https://rdrr.io/pkg/mgcv/man/gam.html) model. For
+  large models these tests can be computationally expensive, in which
+  case it is recommended to set this argument to `FALSE`.
 
 ## Value
 

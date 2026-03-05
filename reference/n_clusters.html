@@ -29,7 +29,7 @@ the examples below for more details."><meta property="og:image" content="https:/
 
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.28.3.6</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.28.3.7</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -278,12 +278,12 @@ case of bootstrapped frequentist models.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2           2 220.87929</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3           3 138.88836</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 4           4 113.64981</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5           5  90.22782</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6           6  95.25396</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7           7  72.75296</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8           8  64.61603</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9           9  59.48502</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10         10  59.10865</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5           5 104.36667</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6           6  81.67606</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7           7  70.18758</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8           8  70.92405</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9           9  54.69058</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10         10  52.83905</span>
 <span class="r-in"><span><span class="co"># plotting is also possible:</span></span></span>
 <span class="r-in"><span><span class="co"># plot(x)</span></span></span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
@@ -292,7 +292,7 @@ case of bootstrapped frequentist models.</p></dd>
 <span class="r-in"><span><span class="co"># Gap method --------------------</span></span></span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://easystats.github.io/see/" class="external-link">"see"</a></span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">&amp;&amp;</span></span></span>
 <span class="r-in"><span>  <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://svn.r-project.org/R-packages/trunk/cluster/" class="external-link">"cluster"</a></span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">&amp;&amp;</span></span></span>
-<span class="r-in"><span>  <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="http://www.sthda.com/english/rpkgs/factoextra" class="external-link">"factoextra"</a></span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>  <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://github.com/kassambara/factoextra" class="external-link">"factoextra"</a></span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span>  <span class="va">x</span> <span class="op">&lt;-</span> <span class="fu">n_clusters_gap</span><span class="op">(</span><span class="va">iris</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="va">x</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></span>
@@ -303,7 +303,7 @@ case of bootstrapped frequentist models.</p></dd>
 <span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="co">#</span></span></span>
 <span class="r-in"><span><span class="co"># Silhouette method --------------------------</span></span></span>
-<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="http://www.sthda.com/english/rpkgs/factoextra" class="external-link">"factoextra"</a></span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://github.com/kassambara/factoextra" class="external-link">"factoextra"</a></span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span>  <span class="va">x</span> <span class="op">&lt;-</span> <span class="fu">n_clusters_silhouette</span><span class="op">(</span><span class="va">iris</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="va">x</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></span>
@@ -313,14 +313,14 @@ case of bootstrapped frequentist models.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    n_Clusters Silhouette</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1           1  0.0000000</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2           2  0.5817500</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3           3  0.4599482</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3           3  0.4798815</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 4           4  0.4188923</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5           5  0.3536197</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6           6  0.3445645</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7           7  0.3152814</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8           8  0.3462564</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9           9  0.3180890</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10         10  0.3187029</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5           5  0.3544213</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6           6  0.3472774</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7           7  0.3373940</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8           8  0.3329339</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9           9  0.3328536</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10         10  0.3421865</span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 <span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="co">#</span></span></span>

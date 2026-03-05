@@ -9,7 +9,7 @@ parameters."><meta property="og:image" content="https://easystats.github.io/para
 
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.28.3.6</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.28.3.7</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -52,7 +52,7 @@ parameters."><meta property="og:image" content="https://easystats.github.io/para
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Standard Errors</h1>
-      <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/main/R/4_standard_error.R" class="external-link"><code>R/4_standard_error.R</code></a>, <a href="https://github.com/easystats/parameters/blob/main/R/methods_base.R" class="external-link"><code>R/methods_base.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/main/R/4_standard_error.R" class="external-link"><code>R/4_standard_error.R</code></a>, <a href="https://github.com/easystats/parameters/blob/main/R/methods_base.R" class="external-link"><code>R/methods_base.R</code></a>, <a href="https://github.com/easystats/parameters/blob/main/R/methods_gam.R" class="external-link"><code>R/methods_gam.R</code></a></small>
       <div class="d-none name"><code>standard_error.Rd</code></div>
     </div>
 
@@ -77,7 +77,10 @@ parameters.</p>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for class 'factor'</span></span>
-<span><span class="fu">standard_error</span><span class="op">(</span><span class="va">model</span>, force <span class="op">=</span> <span class="cn">FALSE</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">standard_error</span><span class="op">(</span><span class="va">model</span>, force <span class="op">=</span> <span class="cn">FALSE</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for class 'gam'</span></span>
+<span><span class="fu">standard_error</span><span class="op">(</span><span class="va">model</span>, re_test <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -145,6 +148,13 @@ values to calculate the standard error, with the lowest level being the
 value <code>1</code> (unless the factor has numeric levels, which are converted
 to the corresponding numeric value). By default, <code>NA</code> is returned for
 factors or character vectors.</p></dd>
+
+
+<dt id="arg-re-test">re_test<a class="anchor" aria-label="anchor" href="#arg-re-test"></a></dt>
+<dd><p>Logical, if <code>TRUE</code> (default), tests for random effects terms
+are performed. Only applies to <code><a href="https://rdrr.io/pkg/mgcv/man/gam.html" class="external-link">mgcv::gam()</a></code> model. For large models these
+tests can be computationally expensive, in which case it is recommended to
+set this argument to <code>FALSE</code>.</p></dd>
 
 </dl></div>
     <div class="section level2">

@@ -207,7 +207,8 @@ if (require("factoextra", quietly = TRUE)) {
   rez # Show results
   predict(rez) # Get clusters
 }
-#> Welcome! Want to learn more? See two factoextra-related books at https://goo.gl/ve3WBa
+#> Welcome to factoextra!
+#> Want to learn more? See two factoextra-related books at https://www.datanovia.com/en/product/practical-guide-to-principal-component-methods-in-r/
 #>   [1] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
 #>  [38] 1 1 1 1 1 1 1 1 1 1 1 1 1 3 3 3 2 2 2 3 2 2 2 2 2 2 2 2 3 2 2 2 2 3 2 2 2
 #>  [75] 2 3 3 3 2 2 2 2 2 2 2 3 3 2 2 2 2 2 2 2 2 2 2 2 2 2 3 2 3 3 3 3 2 3 3 3 3
