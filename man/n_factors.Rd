@@ -89,17 +89,16 @@ implemented in the \href{https://easystats.github.io/see/}{\strong{see}-package}
 \code{n_components()} is a convenient short-cut  for \code{n_factors(type = "PCA")}.
 }
 \examples{
-\dontshow{if (require("PCDimension", quietly = TRUE) && require("nFactors", quietly = TRUE) && require("EGAnet", quietly = TRUE) && require("psych", quietly = TRUE)) withAutoprint(\{ # examplesIf}
+\dontshow{if (all(insight::check_if_installed(c("PCDimension", "nFactors", "EGAnet", "psych", "see"), quietly = TRUE))) withAutoprint(\{ # examplesIf}
 library(parameters)
 n_factors(mtcars, type = "PCA")
 
 result <- n_factors(mtcars[1:5], type = "FA")
 as.data.frame(result)
 summary(result)
-if (require("see", quietly = TRUE)) {
-  plot(result)
-}
 \donttest{
+plot(result)
+
 # Setting package = 'all' will increase the number of methods (but is slow)
 n_factors(mtcars, type = "PCA", package = "all")
 n_factors(mtcars, type = "FA", algorithm = "mle", package = "all")
