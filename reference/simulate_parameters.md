@@ -132,10 +132,10 @@ simulate_parameters(model)
 #> (Intercept)                   |        3.54 | [ 3.22,  3.85] | < .001
 #> Speciesversicolor             |       -1.16 | [-1.84, -0.46] | < .001
 #> Speciesvirginica              |       -2.25 | [-3.16, -1.34] | < .001
-#> Petal.Width                   |        0.42 | [-0.48,  1.28] | 0.366 
+#> Petal.Width                   |        0.42 | [-0.48,  1.29] | 0.372 
 #> Petal.Length                  |        0.94 | [ 0.79,  1.10] | < .001
-#> Speciesversicolor:Petal.Width |       -0.74 | [-1.75,  0.24] | 0.152 
-#> Speciesvirginica:Petal.Width  |       -0.35 | [-1.30,  0.55] | 0.454 
+#> Speciesversicolor:Petal.Width |       -0.74 | [-1.75,  0.24] | 0.154 
+#> Speciesvirginica:Petal.Width  |       -0.35 | [-1.31,  0.55] | 0.458 
 #> 
 #> Uncertainty intervals (equal-tailed) and p-values (two-tailed)
 #>   computed using a simulated multivariate normal distribution
@@ -156,7 +156,7 @@ if (require("glmmTMB", quietly = TRUE)) {
 #> 
 #> Parameter   | Coefficient |         80% CI |         95% CI |      p
 #> --------------------------------------------------------------------
-#> (Intercept) |        0.80 | [ 0.46,  1.13] | [ 0.26,  1.32] | 0.006 
+#> (Intercept) |        0.80 | [ 0.46,  1.13] | [ 0.26,  1.33] | 0.006 
 #> minedno     |       -1.86 | [-2.25, -1.48] | [-2.44, -1.26] | < .001
 #> 
 #> Uncertainty intervals (equal-tailed) and p-values (two-tailed)

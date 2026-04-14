@@ -235,12 +235,12 @@ lmer(
 #> -3.581 -0.393  0.082  0.507  2.505 
 #> 
 #> Random effects:
-#>  Groups      Name        Variance Std.Dev. Corr 
-#>  ID:hospital (Intercept) 202.49   14.23         
-#>              time         12.54    3.54    -0.72
-#>  hospital    (Intercept)   8.47    2.91         
-#>              time          1.27    1.13    -1.00
-#>  Residual                143.11   11.96         
+#>  Groups      Name        Variance Std.Dev. Corr  
+#>  ID:hospital (Intercept) 202.49   14.23          
+#>              time         12.54    3.54    -0.72 
+#>  hospital    (Intercept)   8.47    2.91          
+#>              time          1.27    1.13    -1.00 
+#>  Residual                143.11   11.96          
 #> Number of obs: 564, groups:  ID:hospital, 188; hospital, 2
 #> 
 #> Fixed effects:

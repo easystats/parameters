@@ -48,9 +48,9 @@ cluster_discrimination(clustering)
 #> # Accuracy of Cluster Group Classification via Linear Discriminant Analysis (LDA)
 #> 
 #>  Group Accuracy
-#>      1  100.00%
-#>      2   82.98%
-#>      3   94.34%
+#>      1   82.98%
+#>      2   94.34%
+#>      3  100.00%
 #> 
 #> Overall accuracy of classification: 92.67%
 #> 

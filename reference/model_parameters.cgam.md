@@ -214,7 +214,7 @@ if (require("mgcv")) {
 #> The following object is masked from ‘package:lme4’:
 #> 
 #>     lmList
-#> This is mgcv 1.9-3. For overview type 'help("mgcv-package")'.
+#> This is mgcv 1.9-4. For overview type '?mgcv'.
 #> 
 #> Attaching package: ‘mgcv’
 #> The following object is masked from ‘package:mclust’:
@@ -223,16 +223,16 @@ if (require("mgcv")) {
 #> Gu & Wahba 4 term additive model
 #> # Fixed Effects 
 #> 
-#> Parameter   | Coefficient |   SE |       95% CI | t(385.00) |      p
+#> Parameter   | Coefficient |   SE |       95% CI | t(385.25) |      p
 #> --------------------------------------------------------------------
-#> (Intercept) |        8.14 | 0.10 | [7.95, 8.33] |     84.09 | < .001
+#> (Intercept) |        8.04 | 0.10 | [7.84, 8.25] |     76.80 | < .001
 #> 
 #> # Smooth Terms 
 #> 
 #> Parameter        |      F |   df |      p
 #> -----------------------------------------
-#> Smooth term (x0) |  12.14 | 2.83 | < .001
-#> Smooth term (x1) | 122.32 | 2.46 | < .001
-#> Smooth term (x2) | 105.67 | 7.70 | < .001
-#> Smooth term (x3) |   0.65 | 1.00 | 0.421 
+#> Smooth term (x0) |   8.50 | 2.65 | < .001
+#> Smooth term (x1) | 101.86 | 2.49 | < .001
+#> Smooth term (x2) |  97.36 | 7.61 | < .001
+#> Smooth term (x3) |   0.57 | 1.00 | 0.451 
 ```

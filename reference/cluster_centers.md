@@ -41,12 +41,12 @@ respective cluster centre.
 k <- kmeans(iris[1:4], 3)
 cluster_centers(iris[1:4], clusters = k$cluster)
 #>   Cluster n_Obs Sum_Squares Sepal.Length Sepal.Width Petal.Length Petal.Width
-#> 1       1    38    23.87947     6.850000    3.073684     5.742105    2.071053
-#> 2       2    50    15.15100     5.006000    3.428000     1.462000    0.246000
-#> 3       3    62    39.82097     5.901613    2.748387     4.393548    1.433871
+#> 1       1    62    39.82097     5.901613    2.748387     4.393548    1.433871
+#> 2       2    38    23.87947     6.850000    3.073684     5.742105    2.071053
+#> 3       3    50    15.15100     5.006000    3.428000     1.462000    0.246000
 cluster_centers(iris[1:4], clusters = k$cluster, fun = median)
 #>   Cluster n_Obs Sum_Squares Sepal.Length Sepal.Width Petal.Length Petal.Width
-#> 1       1    38    23.87947          6.7         3.0         5.65         2.1
-#> 2       2    50    15.15100          5.0         3.4         1.50         0.2
-#> 3       3    62    39.82097          5.9         2.8         4.50         1.4
+#> 1       1    62    39.82097          5.9         2.8         4.50         1.4
+#> 2       2    38    23.87947          6.7         3.0         5.65         2.1
+#> 3       3    50    15.15100          5.0         3.4         1.50         0.2
 ```

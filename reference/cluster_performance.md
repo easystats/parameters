@@ -40,7 +40,7 @@ cluster_performance(model)
 #> 
 #> Sum_Squares_Total | Sum_Squares_Between | Sum_Squares_Within |    R2
 #> --------------------------------------------------------------------
-#> 681.371           |             602.519 |             78.851 | 0.884
+#> 681.371           |             538.617 |            142.754 | 0.790
 
 # hclust
 data <- iris[1:4]
@@ -60,5 +60,5 @@ cluster_performance(params)
 #> 
 #> Sum_Squares_Total | Sum_Squares_Between | Sum_Squares_Within |    R2
 #> --------------------------------------------------------------------
-#> 681.371           |             538.617 |            142.754 | 0.790
+#> 681.371           |             602.519 |             78.851 | 0.884
 ```

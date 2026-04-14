@@ -563,7 +563,7 @@ CRAN release: 2024-02-03
 - The `exponentiate` argument of
   [`model_parameters()`](https://easystats.github.io/parameters/reference/model_parameters.md)
   for
-  [`marginaleffects::predictions()`](https://marginaleffects.com/man/r/predictions.html)
+  [`marginaleffects::predictions()`](https://rdrr.io/pkg/marginaleffects/man/predictions.html)
   now defaults to `FALSE`, in line with all the other
   [`model_parameters()`](https://easystats.github.io/parameters/reference/model_parameters.md)
   methods.

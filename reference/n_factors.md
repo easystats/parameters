@@ -190,6 +190,9 @@ summary(result)
 #> 2         2         5           0.8583921
 #> 3         3         1           0.8661856
 # \donttest{
+plot(result)
+
+
 # Setting package = 'all' will increase the number of methods (but is slow)
 n_factors(mtcars, type = "PCA", package = "all")
 #> # Method Agreement Procedure:

@@ -9,7 +9,7 @@ of estimates."><meta property="og:image" content="https://easystats.github.io/pa
 
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.28.3.7</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.28.3.8</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -172,19 +172,19 @@ here.</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Species</span> <span class="op">*</span> <span class="va">Petal.Width</span> <span class="op">+</span> <span class="va">Petal.Length</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu">simulate_model</span><span class="op">(</span><span class="va">model</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   (Intercept) Speciesversicolor Speciesvirginica Petal.Width Petal.Length</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1    3.390504        -0.5260311       -2.4758805   0.8199033    0.9728208</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2    3.623282        -1.1121182       -2.3569496   0.1283160    0.9507441</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3    3.486585        -1.6481011       -2.3061233   0.5653314    0.9498825</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4    3.728747        -1.5571359       -0.8126597   0.1169709    0.8665544</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5    3.540501        -1.1946322       -2.4926423   0.7001382    0.9061457</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6    3.095856        -0.9117854       -1.8655495   1.3124308    1.0078892</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1    3.715178        -1.4083652        -2.119164   0.4733913    0.8291835</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2    3.557501        -0.9346293        -2.199960   0.5011723    0.9132586</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3    3.193264        -0.9808700        -2.281484   0.5934654    1.0664827</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4    3.260074        -1.4108927        -2.190112   0.7369086    1.0615367</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5    3.797678        -1.1108720        -1.790113  -0.1740471    0.8473906</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6    3.598220        -0.6319452        -1.646516   0.7522226    0.8235530</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Speciesversicolor:Petal.Width Speciesvirginica:Petal.Width</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1                   -1.60159572                   -0.6975208</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2                   -0.65508107                   -0.1181986</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3                   -0.56737132                   -0.4861060</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4                   -0.08255035                   -0.6523850</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5                   -0.82194455                   -0.4302238</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6                   -1.69926524                   -1.4803751</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1                   -0.42090265                   -0.3104572</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2                   -0.93883516                   -0.3984750</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3                   -1.18233756                   -0.7161228</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4                   -1.09005353                   -0.8902099</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5                   -0.09031684                    0.1225236</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6                   -1.15360201                   -0.6926479</span>
 <span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://github.com/glmmTMB/glmmTMB" class="external-link">"glmmTMB"</a></span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span>  <span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/glmmTMB/man/glmmTMB.html" class="external-link">glmmTMB</a></span><span class="op">(</span></span></span>
@@ -197,12 +197,12 @@ here.</p>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu">simulate_model</span><span class="op">(</span><span class="va">model</span>, component <span class="op">=</span> <span class="st">"zero_inflated"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   (Intercept)   minedno</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1   0.9243217 -1.941875</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2   0.3636440 -1.318482</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3   0.6219404 -1.595636</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4   0.9595035 -2.073931</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5   0.6756142 -2.087996</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6   0.6212309 -1.647160</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1   0.6348544 -1.639215</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2   1.1286780 -2.304267</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3   0.7141747 -1.856630</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4   0.8240554 -1.950274</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5   0.9187570 -2.094780</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6   0.6462241 -1.521267</span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
@@ -211,7 +211,7 @@ here.</p>
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by <a href="https://github.com/strengejacke" class="external-link">Daniel Lüdecke</a>, <a href="https://dominiquemakowski.github.io/" class="external-link">Dominique Makowski</a>, <a href="https://home.msbstats.info/" class="external-link">Mattan S. Ben-Shachar</a>, <a href="https://sites.google.com/site/indrajeetspatilmorality/" class="external-link">Indrajeet Patil</a>, Søren Højsgaard, <a href="https://wiernik.org/" class="external-link">Brenton M. Wiernik</a>.</p>
+  <p>Developed by <a href="https://github.com/strengejacke" class="external-link">Daniel Lüdecke</a>, <a href="https://dominiquemakowski.github.io/" class="external-link">Dominique Makowski</a>, <a href="https://home.msbstats.info/" class="external-link">Mattan S. Ben-Shachar</a>, <a href="https://www.indrapatil.com/" class="external-link">Indrajeet Patil</a>, Søren Højsgaard, <a href="https://wiernik.org/" class="external-link">Brenton M. Wiernik</a>.</p>
 </div>
 
 <div class="pkgdown-footer-right">

@@ -63,5 +63,5 @@ if (require("WRS2") && packageVersion("WRS2") >= "1.1.3") {
 #> 
 #> F | df | df (error) |     p | Estimate |       95% CI |                         Effectsize
 #> ------------------------------------------------------------------------------------------
-#> 3 |  2 |          4 | 0.160 |     0.79 | [0.28, 1.54] | Explanatory measure of effect size
+#> 3 |  2 |          4 | 0.160 |     0.79 | [0.36, 1.95] | Explanatory measure of effect size
 ```

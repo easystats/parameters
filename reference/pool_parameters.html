@@ -13,7 +13,7 @@ model_parameters().'><meta property="og:image" content="https://easystats.github
 
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.28.3.7</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.28.3.8</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -183,13 +183,13 @@ Imputation for Nonresponse in Surveys. New York: John Wiley and Sons.</p>
 <span class="r-in"><span><span class="fu">pool_parameters</span><span class="op">(</span><span class="va">models</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># Fixed Effects</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter   | Coefficient |   SE |          95% CI | Statistic |    df |      p</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> -------------------------------------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) |       20.47 | 4.00 | [ 11.48, 29.45] |      5.11 |  9.47 | &lt; .001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> age [40-59] |       -5.01 | 2.15 | [ -9.90, -0.13] |     -2.33 |  8.73 | 0.045 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> age [60-99] |       -6.64 | 2.82 | [-13.55,  0.27] |     -2.36 |  5.96 | 0.057 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> hyp [yes]   |        1.70 | 1.79 | [ -2.11,  5.51] |      0.95 | 15.46 | 0.357 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> chl         |        0.05 | 0.02 | [ -0.01,  0.10] |      2.02 |  8.44 | 0.077 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter   | Coefficient |   SE |          95% CI | Statistic |    df |     p</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ------------------------------------------------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) |       18.88 | 4.88 | [  7.35, 30.41] |      3.87 |  7.02 | 0.006</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> age [40-59] |       -4.30 | 2.05 | [ -8.62,  0.03] |     -2.10 | 16.54 | 0.051</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> age [60-99] |       -6.68 | 2.94 | [-13.70,  0.34] |     -2.27 |  6.70 | 0.059</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> hyp [yes]   |        1.97 | 3.08 | [ -6.24, 10.18] |      0.64 |  4.46 | 0.554</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> chl         |        0.05 | 0.03 | [ -0.01,  0.12] |      1.89 |  6.56 | 0.103</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">Uncertainty intervals (equal-tailed) and p-values (two-tailed)</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">  computed using a Wald distribution approximation.</span></span>
@@ -197,12 +197,12 @@ Imputation for Nonresponse in Surveys. New York: John Wiley and Sons.</p>
 <span class="r-in"><span><span class="co"># should be identical to:</span></span></span>
 <span class="r-in"><span><span class="va">m</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">imp</span>, exp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">bmi</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">hyp</span> <span class="op">+</span> <span class="va">chl</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="fu">mice</span><span class="fu">::</span><span class="fu"><a href="https://amices.org/mice/reference/pool.html" class="external-link">pool</a></span><span class="op">(</span><span class="va">m</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>          term    estimate  std.error  statistic        df      p.value</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 (Intercept) 20.46518072 4.00347684  5.1118519  9.474686 0.0005404098</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2    age40-59 -5.01292836 2.15013869 -2.3314442  8.725427 0.0454959747</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3    age60-99 -6.64128625 2.81870219 -2.3561504  5.964267 0.0568326641</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4      hypyes  1.70168835 1.79135973  0.9499423 15.457866 0.3567585835</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5         chl  0.04597687 0.02280179  2.0163715  8.435049 0.0766683330</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          term    estimate  std.error  statistic        df     p.value</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 (Intercept) 18.88208045 4.87870542  3.8703055  7.021164 0.006093589</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2    age40-59 -4.29521703 2.04598863 -2.0993357 16.537705 0.051463884</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3    age60-99 -6.67747826 2.94206248 -2.2696589  6.699558 0.059164702</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4      hypyes  1.96756449 3.07903334  0.6390202  4.459797 0.554167208</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5         chl  0.05221684 0.02762067  1.8904988  6.556617 0.103435637</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># For glm, mice used residual df, while `pool_parameters()` uses `Inf`</span></span></span>
 <span class="r-in"><span><span class="va">nhanes2</span><span class="op">$</span><span class="va">hyp</span> <span class="op">&lt;-</span> <span class="fu">datawizard</span><span class="fu">::</span><span class="fu"><a href="https://easystats.github.io/datawizard/reference/slide.html" class="external-link">slide</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">nhanes2</span><span class="op">$</span><span class="va">hyp</span><span class="op">)</span><span class="op">)</span></span></span>
@@ -213,13 +213,13 @@ Imputation for Nonresponse in Surveys. New York: John Wiley and Sons.</p>
 <span class="r-in"><span><span class="va">m</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">imp</span>, exp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/glm.html" class="external-link">glm</a></span><span class="op">(</span><span class="va">hyp</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">chl</span>, family <span class="op">=</span> <span class="va">binomial</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="co"># residual df</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="fu">mice</span><span class="fu">::</span><span class="fu"><a href="https://amices.org/mice/reference/pool.html" class="external-link">pool</a></span><span class="op">(</span><span class="va">m</span><span class="op">)</span><span class="op">)</span><span class="op">$</span><span class="va">df</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 19.24999 19.25000 19.25000 13.58351</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 19.249884 19.249878 19.249883  7.524335</span>
 <span class="r-in"><span><span class="co"># df = Inf</span></span></span>
 <span class="r-in"><span><span class="fu">pool_parameters</span><span class="op">(</span><span class="va">models</span><span class="op">)</span><span class="op">$</span><span class="va">df_error</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] Inf Inf Inf Inf</span>
 <span class="r-in"><span><span class="co"># use residual df instead</span></span></span>
 <span class="r-in"><span><span class="fu">pool_parameters</span><span class="op">(</span><span class="va">models</span>, ci_method <span class="op">=</span> <span class="st">"residual"</span><span class="op">)</span><span class="op">$</span><span class="va">df_error</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 19.24807 19.24807 19.24807 13.58351</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 19.248074 19.248074 19.248074  7.524335</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
@@ -227,7 +227,7 @@ Imputation for Nonresponse in Surveys. New York: John Wiley and Sons.</p>
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by <a href="https://github.com/strengejacke" class="external-link">Daniel Lüdecke</a>, <a href="https://dominiquemakowski.github.io/" class="external-link">Dominique Makowski</a>, <a href="https://home.msbstats.info/" class="external-link">Mattan S. Ben-Shachar</a>, <a href="https://sites.google.com/site/indrajeetspatilmorality/" class="external-link">Indrajeet Patil</a>, Søren Højsgaard, <a href="https://wiernik.org/" class="external-link">Brenton M. Wiernik</a>.</p>
+  <p>Developed by <a href="https://github.com/strengejacke" class="external-link">Daniel Lüdecke</a>, <a href="https://dominiquemakowski.github.io/" class="external-link">Dominique Makowski</a>, <a href="https://home.msbstats.info/" class="external-link">Mattan S. Ben-Shachar</a>, <a href="https://www.indrapatil.com/" class="external-link">Indrajeet Patil</a>, Søren Højsgaard, <a href="https://wiernik.org/" class="external-link">Brenton M. Wiernik</a>.</p>
 </div>
 
 <div class="pkgdown-footer-right">
