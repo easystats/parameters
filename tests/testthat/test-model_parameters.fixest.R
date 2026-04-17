@@ -141,6 +141,7 @@ test_that("standard errors, Sun and Abraham", {
 
 skip_if_not_installed("withr")
 skip_if_not_installed("glmmTMB")
+skip_if_not_installed("fixest")
 
 withr::with_options(
   list(parameters_warning_exponentiate = TRUE),
