@@ -28,6 +28,9 @@
   package *marginaleffects*. This happened, when a variable in a model was named
   `Type`.
 
+* Fixed issue in `model_parameters()` for `fisher.test()` with tables larger
+  than 2x2.
+
 # parameters 0.28.3
 
 * fixed bug in `standardize_info(<fixest>)` that was preventing
