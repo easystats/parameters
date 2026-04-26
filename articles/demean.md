@@ -392,7 +392,7 @@ To test whether the within- and between-effects are significantly
 different from each other, we can estimate their contrast using the
 [modelbased](https://easystats.github.io/modelbased/) package. This is
 [described in detail in this
-vignette](https://easystats.github.io/modelbased/articles/practical_context_effect.htm).
+vignette](https://easystats.github.io/modelbased/articles/practical_context_effect.html).
 
 ## A visual example
 
