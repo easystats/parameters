@@ -39,6 +39,7 @@ if (!all(sapply(pkgs, requireNamespace, quietly = TRUE))) {
   knitr::opts_chunk$set(eval = FALSE)
 }
 
+theme_set(see::theme_modern())
 set.seed(333)
 ```
 
@@ -369,7 +370,6 @@ Let's look at the raw data...
 ```{r echo=FALSE}
 ggplot(d, aes(x, y)) +
   geom_point(colour = "#555555", size = 2.5, alpha = 0.5) +
-  see::theme_modern() +
   labs(x = "Typing Speed", y = "Typing Errors", colour = "Type Experience")
 ```
 
@@ -382,7 +382,6 @@ speed.
 ggplot(d, aes(x, y)) +
   geom_point(colour = "#555555", size = 2.5, alpha = 0.5) +
   geom_smooth(method = "lm", se = FALSE, colour = "#555555") +
-  see::theme_modern() +
   labs(x = "Typing Speed", y = "Typing Errors", colour = "Type Experience")
 ```
 
@@ -402,7 +401,6 @@ ggplot(d, aes(x, y)) +
   geom_point(mapping = aes(colour = grp), size = 2.5, alpha = 0.5) +
   geom_smooth(method = "lm", se = FALSE, colour = "#555555") +
   see::scale_color_flat() +
-  see::theme_modern() +
   labs(x = "Typing Speed", y = "Typing Errors", colour = "Type Experience")
 ```
 
@@ -430,7 +428,6 @@ ggplot(d, aes(x, y)) +
   ## geom_smooth(mapping = aes(colour = grp), method = "lm", se = FALSE) +
   geom_point(mapping = aes(colour = grp), size = 2.2, alpha = 0.6) +
   see::scale_color_flat() +
-  see::theme_modern() +
   labs(x = "Typing Speed", y = "Typing Errors", colour = "Type Experience")
 ```
 
@@ -455,7 +452,6 @@ ggplot(d, aes(x, y)) +
   geom_point(mapping = aes(colour = grp), size = 2.2, alpha = 0.6) +
   geom_smooth(mapping = aes(x = x_between, y = y_between), method = "lm", se = FALSE, colour = "#444444") +
   see::scale_color_flat() +
-  see::theme_modern() +
   labs(x = "Typing Speed", y = "Typing Errors", colour = "Type Experience")
 ```
 
@@ -485,7 +481,6 @@ ggplot(d, aes(x, y)) +
   geom_point(mapping = aes(colour = grp), size = 2.2, alpha = 0.6) +
   geom_smooth(mapping = aes(x = x_between, y = y_between), method = "lm", se = FALSE, colour = "#444444") +
   see::scale_color_flat() +
-  see::theme_modern() +
   labs(x = "Typing Speed", y = "Typing Errors", colour = "Type Experience")
 ```
 
