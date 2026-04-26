@@ -320,7 +320,7 @@ Conceptually, when analyzing clustered or longitudinal data, we are looking at t
 
 The difference between these two effects is called the *context effect*. A context effect describes the additional influence that the general environment or baseline trait has on an individual, holding their raw, current state constant. It demonstrates that people with identical current, raw values (such as the exact same momentary income or symptom severity) face different outcomes depending on their baseline or the environment in which they live.
 
-To test whether the within- and between-effects are significantly different from each other, we can estimate their contrast using the `{modelbased}` package. This is [described in detail in this vignette](https://easystats.github.io/modelbased/articles/practical_context_effect.htm).
+To test whether the within- and between-effects are significantly different from each other, we can estimate their contrast using the `{modelbased}` package. This is [described in detail in this vignette](https://easystats.github.io/modelbased/articles/practical_context_effect.html).
 
 # A visual example
 
