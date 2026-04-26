@@ -432,7 +432,33 @@ levels):</p>
 <span><span class="co">#&gt; Observations                          564</span></span></code></pre></div>
 <p><strong>What about imbalanced groups, i.e. large differences in N per
 group?</strong></p>
-<p>See little example after this visual example…</p>
+<p>See little example after the visual example below…</p>
+</div>
+<div class="section level2">
+<h2 id="context-effect---how-the-environment-shapes-the-individual">Context effect - how the environment shapes the individual<a class="anchor" aria-label="anchor" href="#context-effect---how-the-environment-shapes-the-individual"></a>
+</h2>
+<p>Conceptually, when analyzing clustered or longitudinal data, we are
+looking at two distinct levels of influence:</p>
+<ul>
+<li><p><em>Individual level (within-effect):</em> What is the impact of
+an individual’s temporary deviation from their own group mean? This
+captures state-like fluctuations or acute changes.</p></li>
+<li><p><em>Group level (between-effect):</em> What is the impact of the
+group’s general environment or overall average, which affects all
+members equally? This captures trait-like, baseline differences or
+overarching environments.</p></li>
+</ul>
+<p>The difference between these two effects is called the <em>context
+effect</em>. A context effect describes the additional influence that
+the general environment or baseline trait has on an individual, holding
+their raw, current state constant. It demonstrates that people with
+identical current, raw values (such as the exact same momentary income
+or symptom severity) face different outcomes depending on their baseline
+or the environment in which they live.</p>
+<p>To test whether the within- and between-effects are significantly
+different from each other, we can estimate their contrast using the
+<a href="https://easystats.github.io/modelbased/" class="external-link">modelbased</a> package. This is <a href="https://easystats.github.io/modelbased/articles/practical_context_effect.htm" class="external-link">described
+in detail in this vignette</a>.</p>
 </div>
 <div class="section level2">
 <h2 id="a-visual-example">A visual example<a class="anchor" aria-label="anchor" href="#a-visual-example"></a>
