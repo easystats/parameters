@@ -308,7 +308,19 @@ random_parameters(rewb)
 
 **What about imbalanced groups, i.e. large differences in N per group?**
 
-See little example after this visual example...
+See little example after the visual example below...
+
+# Context effect - how the environment shapes the individual
+
+Conceptually, when analyzing clustered or longitudinal data, we are looking at two distinct levels of influence:
+
+- *Individual level (within-effect):* What is the impact of an individual's temporary deviation from their own group mean? This captures state-like fluctuations or acute changes.
+
+- *Group level (between-effect):* What is the impact of the group's general environment or overall average, which affects all members equally? This captures trait-like, baseline differences or overarching environments.
+
+The difference between these two effects is called the *context effect*. A context effect describes the additional influence that the general environment or baseline trait has on an individual, holding their raw, current state constant. It demonstrates that people with identical current, raw values (such as the exact same momentary income or symptom severity) face different outcomes depending on their baseline or the environment in which they live.
+
+To test whether the within- and between-effects are significantly different from each other, we can estimate their contrast using the `{modelbased}` package. This is [described in detail in this vignette](https://easystats.github.io/modelbased/articles/practical_context_effect.htm).
 
 # A visual example
 
