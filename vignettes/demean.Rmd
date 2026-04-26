@@ -413,11 +413,15 @@ and include only the within-effects as well as the group-level indicator.
 
 ```{r fe-model-preds, echo = FALSE}
 fe_model <- lm(y ~ 1 + grp + x, data = d)
-fe_pred <- d |>
-  select(-y) |>
-  reframe(x = range(x), x_within = range(x_within),
-          x_between = x_between[1], .by = grp)
-fe_pred$y <- predict(object = fe_model, newdata = fe_pred)
+sumfun <- function(df) {
+  data.frame(
+    grp = df$grp[1],
+    x = range(df$x),
+    x_within = range(df$x_within),
+    x_between = df$x_between[1])
+}
+fe_pred <- do.call(rbind, lapply(split(d, d$grp), sumfun))
+fe_pred$y <- stats::predict(fe_model, newdata = fe_pred)
 ```
 
 ```{r echo=FALSE}
@@ -469,9 +473,9 @@ Since FE-models can only model within-effects, we now use a mixed model with
 within- and between-effects.
 
 ```{r echo = FALSE}
-m4 <- lmer(y ~ x_between + x_within + (1 | grp), data = d)
+m4 <- lme4::lmer(y ~ x_between + x_within + (1 | grp), data = d)
 ri_pred <- fe_pred ## same setup as FE predictions
-ri_pred$y <- predict(object = m4, newdata = fe_pred)
+ri_pred$y <- stats::predict(object = m4, newdata = fe_pred)
 ```
 
 ```{r echo=FALSE}
