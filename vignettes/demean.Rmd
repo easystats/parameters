@@ -14,7 +14,7 @@ editor_options:
 bibliography: bibliography.bib
 ---
 
-```{r , include=FALSE}
+```{r setup, include=FALSE}
 library(knitr)
 knitr::opts_chunk$set(
   echo = TRUE,
@@ -39,7 +39,7 @@ if (!all(sapply(pkgs, requireNamespace, quietly = TRUE))) {
   knitr::opts_chunk$set(eval = FALSE)
 }
 
-theme_set(see::theme_modern())
+ggplot2::theme_set(see::theme_modern())
 set.seed(333)
 ```
 
@@ -504,6 +504,21 @@ standard errors for the within-effect.
 m5 <- lmer(y ~ x_between + x_within + (1 + x_within | grp), data = d)
 model_parameters(m5)
 ```
+
+```{r crewb-fit, echo = FALSE}
+crewb_pred <- fe_pred ## same setup as FE predictions
+crewb_pred$y <- predict(object = m5, newdata = crewb_pred)
+ggplot(d, aes(x, y)) +
+  geom_line(data = crewb_pred, aes(colour = grp)) +
+  geom_line(data = ri_pred, aes(colour = grp), lty = 2) +
+  geom_point(mapping = aes(colour = grp), size = 2.2, alpha = 0.6) +
+  geom_smooth(mapping = aes(x = x_between, y = y_between), method = "lm", se = FALSE, colour = "#444444") +
+  see::scale_color_flat() +
+  labs(x = "Typing Speed", y = "Typing Errors", colour = "Type Experience")
+```
+
+The within-group regression lines are now *slightly* non-parallel. However, the lines are only ever so slightly different, because (1) the groups as simulated actually have the same within-group slope, and (2) the random-slope model always tries to shrink the individual within-group slopes toward the overall average (within-group) slope. The among-group standard deviation of the slope is `r round(attr(VarCorr(m5)$grp, "stddev")[["x_within"]],2)`, relative to an average within-group slope of `r round(fixef(m5)[["x_within"]],2)`; for reference, the parallel lines from the previous model are shown as dashed lines.
+
 
 # Balanced versus imbalanced groups
 
