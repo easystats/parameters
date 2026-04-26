@@ -411,17 +411,18 @@ ggplot(d, aes(x, y)) +
 A fixed effects regression (FE-regression) would now remove all between-effects
 and include only the within-effects as well as the group-level indicator.
 
-```{r randint-model-preds, echo = FALSE}
-ri_model <- lm(y ~ 1 + grp + x, data = d)
-ri_pred <- d |>
+```{r fe-model-preds, echo = FALSE}
+fe_model <- lm(y ~ 1 + grp + x, data = d)
+fe_pred <- d |>
   select(-y) |>
-  reframe(x = range(x), .by = grp)
-ri_pred$y <- predict(object = ri_model, newdata = ri_pred)
+  reframe(x = range(x), x_within = range(x_within),
+          x_between = x_between[1], .by = grp)
+fe_pred$y <- predict(object = fe_model, newdata = fe_pred)
 ```
 
 ```{r echo=FALSE}
 ggplot(d, aes(x, y)) +
-  geom_line(data = ri_pred, aes(colour = grp)) +
+  geom_line(data = fe_pred, aes(colour = grp)) +
   ## geom_smooth(mapping = aes(colour = grp), method = "lm", se = FALSE) +
   geom_point(mapping = aes(colour = grp), size = 2.2, alpha = 0.6) +
   see::scale_color_flat() +
@@ -467,9 +468,16 @@ model_parameters(m3)
 Since FE-models can only model within-effects, we now use a mixed model with
 within- and between-effects.
 
+```{r echo = FALSE}
+m4 <- lmer(y ~ x_between + x_within + (1 | grp), data = d)
+ri_pred <- fe_pred ## same setup as FE predictions
+ri_pred$y <- predict(object = m4, newdata = fe_pred)
+```
+
 ```{r echo=FALSE}
 ggplot(d, aes(x, y)) +
-  geom_smooth(mapping = aes(colour = grp), method = "lm", se = FALSE) +
+  ## geom_smooth(mapping = aes(colour = grp), method = "lm", se = FALSE) +
+  geom_line(data = ri_pred, aes(colour = grp)) +
   geom_point(mapping = aes(colour = grp), size = 2.2, alpha = 0.6) +
   geom_smooth(mapping = aes(x = x_between, y = y_between), method = "lm", se = FALSE, colour = "#444444") +
   see::scale_color_flat() +
