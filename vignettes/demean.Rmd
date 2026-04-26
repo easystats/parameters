@@ -411,9 +411,18 @@ ggplot(d, aes(x, y)) +
 A fixed effects regression (FE-regression) would now remove all between-effects
 and include only the within-effects as well as the group-level indicator.
 
+```{r randint-model-preds, echo = FALSE}
+ri_model <- lm(y ~ 1 + grp + x, data = d)
+ri_pred <- d |>
+  select(-y) |>
+  reframe(x = range(x), .by = grp)
+ri_pred$y <- predict(object = ri_model, newdata = ri_pred)
+```
+
 ```{r echo=FALSE}
 ggplot(d, aes(x, y)) +
-  geom_smooth(mapping = aes(colour = grp), method = "lm", se = FALSE) +
+  geom_line(data = ri_pred, aes(colour = grp)) +
+  ## geom_smooth(mapping = aes(colour = grp), method = "lm", se = FALSE) +
   geom_point(mapping = aes(colour = grp), size = 2.2, alpha = 0.6) +
   see::scale_color_flat() +
   see::theme_modern() +
