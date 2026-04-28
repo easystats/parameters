@@ -17,6 +17,10 @@
   setting `re_test = FALSE` to skip expensive random-effect tests). Default
   behavior (with `re_test = TRUE`) is unchanged.
 
+* `model_parameters()` for proportions-htests objects no longer hard-codes the
+  estimate for the proportion in the underlying data frame. This is now done
+  in the `format()` method.
+
 ## Bug fixes
 
 * Fixed issue where wrong (non-robust) standard errors were calculated for
