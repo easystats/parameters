@@ -45,7 +45,7 @@ effects”), e.g. self-rated health or income, now have an effect at
 level-1 (“within”-effect) and at higher-level units (level-2, the
 subject-level, which is the “between”-effect) (see also [this
 posting](https://shouldbewriting.netlify.app/posts/2019-10-21-accounting-for-within-and-between-subject-effect/)).
-This inevitably leads to correlating fixed effects and error terms -
+This inevitably leads to correlating fixed effects and error terms —
 which, in turn, results in biased estimates, because both the within-
 *and* between-effect are captured in *one* estimate.
 
@@ -65,7 +65,7 @@ check_group_variation(qol_cancer, select = c("phq4", "education"), by = "ID")
 #> education |   between |
 ```
 
-## Adressing heterogeneity bias: the Fixed Effects Regression (FE) approach
+## Addressing heterogeneity bias: the Fixed Effects Regression (FE) approach
 
 Fixed effects regression models (FE) are a popular approach for panel
 data analysis in particular in econometrics and considered as gold
@@ -162,7 +162,7 @@ multilevel model with varying intercepts (or coefficients) when the
 units and predictors correlate? The answer is yes. And the solution is
 simple.” (Bafumi and Gelman 2006)
 
-## Adressing heterogeneity bias: the Mixed Model approach
+## Addressing heterogeneity bias: the Mixed Model approach
 
 Mixed models include different levels of sources of variability
 (i.e. error terms at each level). Predictors used at level-1 that are
@@ -173,18 +173,17 @@ occasions, and one that represents the difference between occasions,
 within higher-level entities” (Bell and Jones 2015). Hence, the error
 terms will be correlated with the covariate, which violates one of the
 assumptions of mixed models (iid, independent and identically
-distributed error terms) - also known and described above as
+distributed error terms) — also known and described above as
 *heterogeneity bias*.
 
 But how can this issue be addressed outside the FE framework?
 
-There are several ways how to address this using a mixed models
-approach:
+There are several ways to address this using a mixed models approach:
 
 - Correlated group factors and predictors are no problem anyway, because
   [partial
   pooling](https://www.tjmahr.com/plotting-partial-pooling-in-mixed-effects-models/)
-  allows estimates of units o borrow strength from the whole sample and
+  allows estimates of units to borrow strength from the whole sample and
   shrink toward a common mean (Shor et al. (2007)).
 
 - If predictor and group factors correlate, one can remove this
@@ -193,9 +192,9 @@ approach:
 
 - When time-varying predictors are “decomposed” into their time-varying
   and time-invariant components (de-meaning), then mixed models can
-  model **both** within- and between-subject effects (Bell et
-  al. 2019) - this approach is essentially a further development of a
-  long-known recommendation by Mundlak (Mundlak 1978).
+  model **both** within- and between-subject effects (Bell et al. 2019)
+  — this approach is essentially a further development of a long-known
+  recommendation by Mundlak (Mundlak 1978).
 
 For now, we will follow the last recommendation and use the within- and
 between-version of `phq4`.
@@ -239,8 +238,8 @@ on an incorrect model specification (Mundlak 1978). As such, when the
 (mixed) model is properly specified, the estimator of the mixed model is
 identical to the ‘within’ (i.e. FE) estimator.
 
-As a consequence, we cannot only use the above specified mixed model for
-panel data, we can even specify more complex models including
+As a consequence, not only can we use the mixed model specified above
+for panel data, we can even specify more complex models including
 within-effects, between-effects or random effects variation. A mixed
 models approach can model the causes of endogeneity explicitly by
 including the (separated) within- and between-effects of time-varying
@@ -268,8 +267,8 @@ model_parameters(mixed_2, effects = "fixed")
 ```
 
 For more complex models, within-effects will naturally change slightly
-and are no longer identical to simpler FE models. This is no “bias”, but
-rather the result of building more complex models: FE models lack
+and are no longer identical to simpler FE models. This is not “bias”,
+but rather the result of building more complex models: FE models lack
 information of variation in the group-effects or between-subject
 effects. Furthermore, FE models cannot include random slopes, which
 means that fixed effects regressions are neglecting “cross-cluster
@@ -289,9 +288,9 @@ y_(it) = β₀ + β_(1W) (x_(it) - ͞x_(i)) + β_(2B) ͞x_(i) + β₃ z_(i) +
 - x_(it) - ͞x_(i) is the de-meaned predictor, *phq4_within*
 - ͞x_(i) is the group-meaned predictor, *phq4_between*
 - β_(1W) is the coefficient for phq4_within (within-subject)
-- β_(2B) is the coefficient for phq4_between (bewteen-subject)
+- β_(2B) is the coefficient for phq4_between (between-subject)
 - β₃ is the coefficient for time-constant predictors, such as `hospital`
-  or `education` (bewteen-subject)
+  or `education` (between-subject)
 
 In R-code, the model is written down like this:
 
@@ -366,7 +365,7 @@ random_parameters(rewb)
 
 See little example after the visual example below…
 
-## Context effect - how the environment shapes the individual
+## Context effect — how the environment shapes the individual
 
 Conceptually, when analyzing clustered or longitudinal data, we are
 looking at two distinct levels of influence:
@@ -398,14 +397,14 @@ vignette](https://easystats.github.io/modelbased/articles/practical_context_effe
 
 First, we generate some fake data that implies a linear relationship
 between outcome and independent variable. The objective is that the
-amount of typing errors depends on how fast (typing speed) you can type,
+amount of typing errors depends on how fast you can type (typing speed);
 however, the more typing experience you have, the faster you can type.
 Thus, the outcome measure is “amount of typing errors”, while our
 predictor is “typing speed”. Furthermore, we have repeated measurements
 of people with different “typing experience levels”.
 
 The results show that we will have two sources of variation: Overall,
-more experienced typists make less mistakes (group-level pattern). When
+more experienced typists make fewer mistakes (group-level pattern). When
 typing faster, typists make more mistakes (individual-level pattern).
 
 ``` r
@@ -439,14 +438,14 @@ d <- datawizard::demean(d, c("x", "y"), by = "grp")
 
 Let’s look at the raw data…
 
-![](demean_files/figure-html/unnamed-chunk-14-1.png)
+![](demean_files/figure-html/unnamed-chunk-13-1.png)
 
 ### Model 1: Linear relationship between typing errors and typing speed
 
 We can now assume a (linear) relationship between typing errors and
 typing speed.
 
-![](demean_files/figure-html/unnamed-chunk-15-1.png)
+![](demean_files/figure-html/unnamed-chunk-14-1.png)
 
 Looking at the coefficients, we have following model with a coefficient
 of `-1.92`.
@@ -464,7 +463,7 @@ model_parameters(m1)
 However, we have ignored the clustered structure in our data, in this
 example due to repeated measurements.
 
-![](demean_files/figure-html/unnamed-chunk-17-1.png)
+![](demean_files/figure-html/unnamed-chunk-16-1.png)
 
 ### Model 2: Within-subject effect of typing speed
 
@@ -472,7 +471,7 @@ A fixed effects regression (FE-regression) would now remove all
 between-effects and include only the within-effects as well as the
 group-level indicator.
 
-![](demean_files/figure-html/unnamed-chunk-18-1.png)
+![](demean_files/figure-html/unnamed-chunk-17-1.png)
 
 This returns the coefficient of the “within”-effect, which is `1.2`,
 with a standard error of `0.07`. Note that the FE-model does *not* take
@@ -494,7 +493,7 @@ To understand, why the above model 1 (`m1`) returns a biased estimate,
 which is a “weighted average” of the within- and between-effects, let us
 look at the between-effect now.
 
-![](demean_files/figure-html/unnamed-chunk-20-1.png)
+![](demean_files/figure-html/unnamed-chunk-19-1.png)
 
 As we can see, the between-effect is `-2.93`, which is different from
 the `-1.92` estimated in the model `m1`.
@@ -570,6 +569,17 @@ model_parameters(m5)
 #> SD (Residual)                 |        0.90 | 0.07 | [ 0.78,  1.04]
 ```
 
+![](demean_files/figure-html/crewb-fit-1.png)
+
+The within-group regression lines are now *slightly* non-parallel.
+However, the lines are only ever so slightly different, because (1) the
+groups as simulated actually have the same within-group slope, and (2)
+the random-slope model always tries to shrink the individual
+within-group slopes toward the overall average (within-group) slope. The
+among-group standard deviation of the slope is 0.15, relative to an
+average within-group slope of 1.2; for reference, the parallel lines
+from the previous model are shown as dashed lines.
+
 ## Balanced versus imbalanced groups
 
 The “simple” linear slope of the between-effect (and also from the
@@ -579,7 +589,7 @@ the number of observation per group is similar or the same.
 
 Whenever group size is imbalanced, the “simple” linear slope will be
 adjusted. This leads to different estimates for between-effects between
-classical and mixed models regressions due to shrinkage - i.e. for
+classical and mixed models regressions due to shrinkage — i.e. for
 larger variation of group sizes we find stronger regularization of
 estimates.
 
@@ -645,7 +655,7 @@ model_parameters(m2)
 #> SD (Residual)       |        2.98 | 0.21 | [2.60, 3.42]
 ```
 
-## A final note - latent mean centering
+## A final note — latent mean centering
 
 It can be even more complicated. The person-mean is only observed, but
 the true value is not known. Thus, in certain situations, the
