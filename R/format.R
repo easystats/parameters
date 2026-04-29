@@ -3,20 +3,22 @@
 #' @inheritParams print.parameters_model
 #' @rdname print.parameters_model
 #' @export
-format.parameters_model <- function(x,
-                                    pretty_names = TRUE,
-                                    split_components = TRUE,
-                                    select = NULL,
-                                    digits = 2,
-                                    ci_digits = digits,
-                                    p_digits = 3,
-                                    ci_width = NULL,
-                                    ci_brackets = NULL,
-                                    zap_small = FALSE,
-                                    format = NULL,
-                                    groups = NULL,
-                                    include_reference = FALSE,
-                                    ...) {
+format.parameters_model <- function(
+  x,
+  pretty_names = TRUE,
+  split_components = TRUE,
+  select = NULL,
+  digits = 2,
+  ci_digits = digits,
+  p_digits = 3,
+  ci_width = NULL,
+  ci_brackets = NULL,
+  zap_small = FALSE,
+  format = NULL,
+  groups = NULL,
+  include_reference = FALSE,
+  ...
+) {
   # save attributes
   coef_name <- attributes(x)$coefficient_name
   coef_name2 <- attributes(x)$coefficient_name2
@@ -30,11 +32,13 @@ format.parameters_model <- function(x,
 
   # process selection of columns
   style <- NULL
-  if (!is.null(select) &&
-    # glue-like syntax, so we switch to "style" argument here
-    length(select) == 1 &&
-    is.character(select) &&
-    (grepl("{", select, fixed = TRUE) || select %in% .style_shortcuts)) {
+  if (
+    !is.null(select) &&
+      # glue-like syntax, so we switch to "style" argument here
+      length(select) == 1 &&
+      is.character(select) &&
+      (grepl("{", select, fixed = TRUE) || select %in% .style_shortcuts)
+  ) {
     style <- select
     select <- NULL
   }
@@ -45,7 +49,9 @@ format.parameters_model <- function(x,
   }
 
   # rename random effect parameters names for stan models
-  if (isTRUE(random_variances) && any(c("brmsfit", "stanreg", "stanmvreg") %in% m_class)) {
+  if (
+    isTRUE(random_variances) && any(c("brmsfit", "stanreg", "stanmvreg") %in% m_class)
+  ) {
     x <- .format_stan_parameters(x, dist_params)
   }
 
@@ -62,11 +68,24 @@ format.parameters_model <- function(x,
   }
 
   # remove method columns for htest and friends - this should be printed as footer
-  if (!is.null(m_class) &&
-    any(m_class %in% c(
-      "BFBayesFactor", "htest", "rma", "t1way", "yuen",
-      "PMCMR", "osrt", "trendPMCMR", "anova", "afex_aov"
-    ))) {
+  if (
+    !is.null(m_class) &&
+      any(
+        m_class %in%
+          c(
+            "BFBayesFactor",
+            "htest",
+            "rma",
+            "t1way",
+            "yuen",
+            "PMCMR",
+            "osrt",
+            "trendPMCMR",
+            "anova",
+            "afex_aov"
+          )
+      )
+  ) {
     x$Method <- NULL
     x$Alternative <- NULL
   }
@@ -90,12 +109,41 @@ format.parameters_model <- function(x,
   }
 
   # rename columns for t-tests
-  if (!is.null(htest_type) &&
-    htest_type == "ttest" &&
-    !is.null(mean_group_values) &&
-    all(c("Mean_Group1", "Mean_Group2") %in% colnames(x))) {
-    colnames(x)[which(colnames(x) == "Mean_Group1")] <- paste0(x$Group, " = ", mean_group_values[1])
-    colnames(x)[which(colnames(x) == "Mean_Group2")] <- paste0(x$Group, " = ", mean_group_values[2])
+  if (!is.null(htest_type)) {
+    if (
+      htest_type == "ttest" &&
+        !is.null(mean_group_values) &&
+        all(c("Mean_Group1", "Mean_Group2") %in% colnames(x))
+    ) {
+      colnames(x)[which(colnames(x) == "Mean_Group1")] <- paste0(
+        x$Group,
+        " = ",
+        mean_group_values[1]
+      )
+      colnames(x)[which(colnames(x) == "Mean_Group2")] <- paste0(
+        x$Group,
+        " = ",
+        mean_group_values[2]
+      )
+    }
+
+    # format columns for proportions tests
+    if (htest_type == "proptest") {
+      est_cols <- which(startsWith(colnames(x), "Estimate"))
+      if (length(est_cols) > 1) {
+        x$Proportion <- paste(
+          insight::format_value(x[est_cols], as_percent = TRUE),
+          collapse = " / "
+        )
+      } else {
+        x$Proportion <- insight::format_value(x[[est_cols]], as_percent = TRUE)
+      }
+      if (!is.null(x$Difference)) {
+        x$Difference <- insight::format_value(x$Difference, as_percent = TRUE)
+      }
+      x[est_cols] <- NULL
+      x <- x[c("Proportion", setdiff(colnames(x), "Proportion"))]
+    }
   }
 
   # for htests, remove "$" from variable name, since this can make troubles
@@ -168,12 +216,24 @@ format.parameters_model <- function(x,
   }
 
   # remove unique columns
-  if (insight::has_single_value(formatted_table$Component, remove_na = TRUE)) formatted_table$Component <- NULL
-  if (insight::has_single_value(formatted_table$Effects, remove_na = TRUE)) formatted_table$Effects <- NULL
-  if (insight::has_single_value(formatted_table$Group, remove_na = TRUE) && isTRUE(mixed_model)) formatted_table$Group <- NULL
+  if (insight::has_single_value(formatted_table$Component, remove_na = TRUE)) {
+    formatted_table$Component <- NULL
+  }
+  if (insight::has_single_value(formatted_table$Effects, remove_na = TRUE)) {
+    formatted_table$Effects <- NULL
+  }
+  if (
+    insight::has_single_value(formatted_table$Group, remove_na = TRUE) &&
+      isTRUE(mixed_model)
+  ) {
+    formatted_table$Group <- NULL
+  }
 
   # no column with CI-level in output
-  if (!is.null(formatted_table$CI) && insight::has_single_value(formatted_table$CI, remove_na = TRUE)) {
+  if (
+    !is.null(formatted_table$CI) &&
+      insight::has_single_value(formatted_table$CI, remove_na = TRUE)
+  ) {
     formatted_table$CI <- NULL
   }
 
@@ -188,7 +248,10 @@ format.parameters_model <- function(x,
     } else {
       new_colnames <- c("Type", paste0("Value ", seq_len(nrow(formatted_table))))
     }
-    formatted_table <- datawizard::rownames_as_column(as.data.frame(t(formatted_table)), "Type")
+    formatted_table <- datawizard::rownames_as_column(
+      as.data.frame(t(formatted_table)),
+      "Type"
+    )
     colnames(formatted_table) <- new_colnames
   }
 
@@ -209,22 +272,23 @@ format.parameters_coef <- function(x, format = NULL, ...) {
 
 # Compare parameters ----------------------
 
-
 #' @rdname print.compare_parameters
 #' @inheritParams print.parameters_model
 #' @export
-format.compare_parameters <- function(x,
-                                      split_components = TRUE,
-                                      select = NULL,
-                                      digits = 2,
-                                      ci_digits = digits,
-                                      p_digits = 3,
-                                      ci_width = NULL,
-                                      ci_brackets = NULL,
-                                      zap_small = FALSE,
-                                      format = NULL,
-                                      groups = NULL,
-                                      ...) {
+format.compare_parameters <- function(
+  x,
+  split_components = TRUE,
+  select = NULL,
+  digits = 2,
+  ci_digits = digits,
+  p_digits = 3,
+  ci_width = NULL,
+  ci_brackets = NULL,
+  zap_small = FALSE,
+  format = NULL,
+  groups = NULL,
+  ...
+) {
   m_class <- attributes(x)$model_class
   x$Method <- NULL
 
@@ -287,7 +351,9 @@ format.compare_parameters <- function(x,
     # in such cases, we don't need the group-column, but we rather
     # merge it with the parameter column
     ran_pars_rows <- NULL
-    if (length(ran_pars) && length(ran_group_rows) && any(ran_group_rows %in% valid_rows)) {
+    if (
+      length(ran_pars) && length(ran_group_rows) && any(ran_group_rows %in% valid_rows)
+    ) {
       # ran_pars has row indices for *all* models in this function -
       # make sure we have only valid rows for this particular model
       ran_pars_rows <- intersect(valid_rows, intersect(ran_pars, ran_group_rows))
@@ -396,13 +462,21 @@ format.compare_parameters <- function(x,
         return(NULL)
       }
       # remove unique columns
-      if (insight::has_single_value(i$Component, remove_na = TRUE)) i$Component <- NULL
-      if (insight::has_single_value(i$Effects, remove_na = TRUE)) i$Effects <- NULL
+      if (insight::has_single_value(i$Component, remove_na = TRUE)) {
+        i$Component <- NULL
+      }
+      if (insight::has_single_value(i$Effects, remove_na = TRUE)) {
+        i$Effects <- NULL
+      }
       # format table captions for sub tables
       table_caption <- .format_model_component_header(
         x,
-        type = tab, split_column = tab, is_zero_inflated = FALSE,
-        is_ordinal_model = FALSE, is_multivariate = FALSE, ran_pars = FALSE,
+        type = tab,
+        split_column = tab,
+        is_zero_inflated = FALSE,
+        is_ordinal_model = FALSE,
+        is_multivariate = FALSE,
+        ran_pars = FALSE,
         formatted_table = i
       )
       # add as attribute, so table captions are printed
@@ -427,10 +501,18 @@ format.compare_parameters <- function(x,
   } else {
     formatted_table <- out
     # remove unique columns
-    if (insight::has_single_value(formatted_table$Component, remove_na = TRUE)) formatted_table$Component <- NULL
-    if (insight::has_single_value(formatted_table$Effects, remove_na = TRUE)) formatted_table$Effects <- NULL
+    if (insight::has_single_value(formatted_table$Component, remove_na = TRUE)) {
+      formatted_table$Component <- NULL
+    }
+    if (insight::has_single_value(formatted_table$Effects, remove_na = TRUE)) {
+      formatted_table$Effects <- NULL
+    }
     # add line with info about observations
-    formatted_table <- .add_obs_row(formatted_table, parameters_attributes, style = select)
+    formatted_table <- .add_obs_row(
+      formatted_table,
+      parameters_attributes,
+      style = select
+    )
   }
 
   # information about indention / row groups
@@ -443,15 +525,17 @@ format.compare_parameters <- function(x,
 # sem-models ---------------------------------
 
 #' @export
-format.parameters_sem <- function(x,
-                                  digits = 2,
-                                  ci_digits = digits,
-                                  p_digits = 3,
-                                  format = NULL,
-                                  ci_width = NULL,
-                                  ci_brackets = TRUE,
-                                  pretty_names = TRUE,
-                                  ...) {
+format.parameters_sem <- function(
+  x,
+  digits = 2,
+  ci_digits = digits,
+  p_digits = 3,
+  format = NULL,
+  ci_width = NULL,
+  ci_brackets = TRUE,
+  pretty_names = TRUE,
+  ...
+) {
   if (missing(digits)) {
     digits <- .additional_arguments(x, "digits", 2)
   }
@@ -479,14 +563,16 @@ format.parameters_sem <- function(x,
 
 # footer functions ------------------
 
-.format_footer <- function(x,
-                           digits = 3,
-                           verbose = TRUE,
-                           show_sigma = FALSE,
-                           show_formula = FALSE,
-                           show_r2 = FALSE,
-                           show_rmse = FALSE,
-                           format = "text") {
+.format_footer <- function(
+  x,
+  digits = 3,
+  verbose = TRUE,
+  show_sigma = FALSE,
+  show_formula = FALSE,
+  show_r2 = FALSE,
+  show_rmse = FALSE,
+  format = "text"
+) {
   # prepare footer
   footer <- NULL
   type <- tolower(format)
@@ -525,8 +611,13 @@ format.parameters_sem <- function(x,
   }
 
   # footer: p-adjustment
-  if ("p" %in% colnames(x) && isTRUE(verbose) && !is.null(p_adjust) && p_adjust != "none") {
-    footer <- .add_footer_text(footer, text = paste("p-value adjustment method:", format_p_adjust(p_adjust)))
+  if (
+    "p" %in% colnames(x) && isTRUE(verbose) && !is.null(p_adjust) && p_adjust != "none"
+  ) {
+    footer <- .add_footer_text(
+      footer,
+      text = paste("p-value adjustment method:", format_p_adjust(p_adjust))
+    )
   }
 
   # footer: anova test
@@ -536,13 +627,18 @@ format.parameters_sem <- function(x,
 
   # footer: anova type
   if (!is.null(anova_type)) {
-    footer <- .add_footer_text(footer, text = sprintf("Anova Table (Type %s tests)", anova_type))
+    footer <- .add_footer_text(
+      footer,
+      text = sprintf("Anova Table (Type %s tests)", anova_type)
+    )
   }
-
 
   # footer: marginaleffects::comparisons()
   if (!is.null(prediction_type)) {
-    footer <- .add_footer_text(footer, text = sprintf("Prediction type: %s", prediction_type))
+    footer <- .add_footer_text(
+      footer,
+      text = sprintf("Prediction type: %s", prediction_type)
+    )
   }
 
   # footer: htest alternative
@@ -583,11 +679,13 @@ format.parameters_sem <- function(x,
 
 
 # footer: generic values
-.add_footer_values <- function(footer = NULL,
-                               digits = 3,
-                               value = NULL,
-                               text = NULL,
-                               type = "text") {
+.add_footer_values <- function(
+  footer = NULL,
+  digits = 3,
+  value = NULL,
+  text = NULL,
+  type = "text"
+) {
   if (!is.null(value) && !is.null(text)) {
     string <- sprintf("%s: %s", text, insight::format_value(value, digits = digits))
     if (type == "text" || type == "markdown") {
@@ -606,7 +704,13 @@ format.parameters_sem <- function(x,
 
 
 # footer: residual standard deviation
-.add_footer_sigma <- function(footer = NULL, digits = 3, sigma = NULL, residual_df = NULL, type = "text") {
+.add_footer_sigma <- function(
+  footer = NULL,
+  digits = 3,
+  sigma = NULL,
+  residual_df = NULL,
+  type = "text"
+) {
   if (!is.null(sigma)) {
     # format residual df
     if (is.null(residual_df)) {
@@ -623,7 +727,10 @@ format.parameters_sem <- function(x,
       }
       footer <- paste0(footer, sprintf("%sSigma: %.*f%s\n", fill, digits, sigma, res_df))
     } else if (type == "html") {
-      footer <- c(footer, insight::trim_ws(sprintf("Sigma: %.*f%s", digits, sigma, res_df)))
+      footer <- c(
+        footer,
+        insight::trim_ws(sprintf("Sigma: %.*f%s", digits, sigma, res_df))
+      )
     }
   }
   footer
@@ -633,9 +740,12 @@ format.parameters_sem <- function(x,
 # footer: r-squared
 .add_footer_r2 <- function(footer = NULL, digits = 3, r2 = NULL, type = "text") {
   if (!is.null(r2)) {
-    rsq <- .safe(paste(unlist(lapply(r2, function(i) {
-      paste0(attributes(i)$names, ": ", insight::format_value(i, digits = digits))
-    })), collapse = "; "))
+    rsq <- .safe(paste(
+      unlist(lapply(r2, function(i) {
+        paste0(attributes(i)$names, ": ", insight::format_value(i, digits = digits))
+      })),
+      collapse = "; "
+    ))
 
     if (!is.null(rsq)) {
       if (type == "text" || type == "markdown") {
@@ -655,7 +765,12 @@ format.parameters_sem <- function(x,
 
 
 # footer: model formula
-.add_footer_formula <- function(footer = NULL, model_formula = NULL, n_obs = NULL, type = "text") {
+.add_footer_formula <- function(
+  footer = NULL,
+  model_formula = NULL,
+  n_obs = NULL,
+  type = "text"
+) {
   if (!is.null(model_formula)) {
     # format n of observations
     if (is.null(n_obs)) {
@@ -709,13 +824,15 @@ format.parameters_sem <- function(x,
         is_test_statistic_t <- ci_method == "residual" &&
           test_statistic == "z-statistic" &&
           !is.null(residual_df) &&
-          !is.infinite(residual_df) && !is.na(residual_df)
+          !is.infinite(residual_df) &&
+          !is.na(residual_df)
 
         if (is_test_statistic_t) {
           test_statistic <- "t-statistic"
         }
 
-        string_tailed <- switch(ci_method,
+        string_tailed <- switch(
+          ci_method,
           hdi = "highest-density",
           uniroot = ,
           profile = "profile-likelihood",
@@ -724,14 +841,19 @@ format.parameters_sem <- function(x,
 
         # sampling method
         if (isTRUE(bootstrap)) {
-          sampling_method <- ifelse(isTRUE(.unicode_symbols()), "na\u0131ve bootstrap", "naive bootstrap")
+          sampling_method <- ifelse(
+            isTRUE(.unicode_symbols()),
+            "na\u0131ve bootstrap",
+            "naive bootstrap"
+          )
         } else if (isTRUE(simulated)) {
           sampling_method <- "simulated multivariate normal"
         } else {
           sampling_method <- "MCMC"
         }
 
-        string_method <- switch(ci_method,
+        string_method <- switch(
+          ci_method,
           bci = ,
           bcai = "bias-corrected accelerated bootstrap",
           si = ,
@@ -744,14 +866,22 @@ format.parameters_sem <- function(x,
           "Wald"
         )
 
-        if (toupper(ci_method) %in% c("KENWARD", "KR", "KENWARD-ROGER", "KENWARD-ROGERS", "SATTERTHWAITE")) {
-          string_approx <- paste0("with ", format_df_adjust(ci_method, approx_string = "", dof_string = ""), " ")
+        if (
+          toupper(ci_method) %in%
+            c("KENWARD", "KR", "KENWARD-ROGER", "KENWARD-ROGERS", "SATTERTHWAITE")
+        ) {
+          string_approx <- paste0(
+            "with ",
+            format_df_adjust(ci_method, approx_string = "", dof_string = ""),
+            " "
+          )
         } else {
           string_approx <- ""
         }
 
         if (!is.null(test_statistic) && ci_method != "normal" && !isTRUE(bootstrap)) {
-          string_statistic <- switch(tolower(test_statistic),
+          string_statistic <- switch(
+            tolower(test_statistic),
             `t-statistic` = "t",
             `chi-squared statistic` = ,
             `z-statistic` = "z",
@@ -764,11 +894,33 @@ format.parameters_sem <- function(x,
 
         # bootstrapped intervals
         if (isTRUE(bootstrap)) {
-          msg <- paste0("\nUncertainty intervals (", string_tailed, ") are ", string_method, "intervals.")
+          msg <- paste0(
+            "\nUncertainty intervals (",
+            string_tailed,
+            ") are ",
+            string_method,
+            "intervals."
+          )
         } else if (isTRUE(is_bayesian)) {
-          msg <- paste0("\nUncertainty intervals (", string_tailed, ") computed using a ", string_method, "distribution ", string_approx, "approximation.") # nolint
+          msg <- paste0(
+            "\nUncertainty intervals (",
+            string_tailed,
+            ") computed using a ",
+            string_method,
+            "distribution ",
+            string_approx,
+            "approximation."
+          ) # nolint
         } else {
-          msg <- paste0("\nUncertainty intervals (", string_tailed, ") and p-values (two-tailed) computed using a ", string_method, "distribution ", string_approx, "approximation.") # nolint
+          msg <- paste0(
+            "\nUncertainty intervals (",
+            string_tailed,
+            ") and p-values (two-tailed) computed using a ",
+            string_method,
+            "distribution ",
+            string_approx,
+            "approximation."
+          ) # nolint
         }
       }
 
@@ -776,14 +928,23 @@ format.parameters_sem <- function(x,
       # must be glmmTMB
       show_re_msg <- (identical(model_class, "glmmTMB") &&
         # and not Wald-/normalCIs
-        (!string_method %in% c("Wald z-", "Wald normal") || !ci_method %in% c("wald", "normal"))) ||
+        (!string_method %in% c("Wald z-", "Wald normal") ||
+          !ci_method %in% c("wald", "normal"))) ||
         # OR must be merMod
         ((identical(model_class, "lmerMod") || identical(model_class, "glmerMod")) &&
           # and not Wald CIs
           !ci_method %in% c("wald", "normal", "profile", "boot"))
 
-      if (show_re_msg && isTRUE(random_variances) && !is.null(x$Effects) && "random" %in% x$Effects) {
-        msg <- paste(msg, "Uncertainty intervals for random effect variances computed using a Wald z-distribution approximation.") # nolint
+      if (
+        show_re_msg &&
+          isTRUE(random_variances) &&
+          !is.null(x$Effects) &&
+          "random" %in% x$Effects
+      ) {
+        msg <- paste(
+          msg,
+          "Uncertainty intervals for random effect variances computed using a Wald z-distribution approximation."
+        ) # nolint
       }
 
       insight::format_alert(insight::color_text(msg, "yellow"))
@@ -816,7 +977,11 @@ format.parameters_sem <- function(x,
         # don't show warning about complete separation
         spurious_coefficients <- NULL
       }
-    } else if (.is_valid_exponentiate_argument(exponentiate) && isTRUE(.additional_arguments(x, "log_response", FALSE))) { # nolint
+    } else if (
+      .is_valid_exponentiate_argument(exponentiate) &&
+        isTRUE(.additional_arguments(x, "log_response", FALSE))
+    ) {
+      # nolint
       # don't show warning about complete separation
       spurious_coefficients <- NULL
     }
@@ -827,16 +992,24 @@ format.parameters_sem <- function(x,
 
     # remove NA and infinite values from spurios coefficients
     if (!is.null(spurious_coefficients)) {
-      spurious_coefficients <- spurious_coefficients[!is.na(spurious_coefficients) & !is.infinite(spurious_coefficients)] # nolint
+      spurious_coefficients <- spurious_coefficients[
+        !is.na(spurious_coefficients) & !is.infinite(spurious_coefficients)
+      ] # nolint
     }
 
     # check for complete separation coefficients or possible issues with
     # too few data points
     if (!is.null(spurious_coefficients) && length(spurious_coefficients) && logit_model) {
       if (any(spurious_coefficients > 50)) {
-        msg <- c(msg, "Some coefficients are very large, which may indicate issues with complete separation.") # nolint
+        msg <- c(
+          msg,
+          "Some coefficients are very large, which may indicate issues with complete separation."
+        ) # nolint
       } else if (any(spurious_coefficients > 15)) {
-        msg <- c(msg, "Some coefficients seem to be rather large, which may indicate issues with (quasi) complete separation. Consider using bias-corrected or penalized regression models.") # nolint
+        msg <- c(
+          msg,
+          "Some coefficients seem to be rather large, which may indicate issues with (quasi) complete separation. Consider using bias-corrected or penalized regression models."
+        ) # nolint
       }
     }
 

@@ -562,18 +562,21 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
 
 #' @keywords internal
 .extract_htest_prop <- function(model) {
-  out <- data.frame(
-    Proportion = paste(
-      insight::format_value(model$estimate, as_percent = TRUE),
-      collapse = " / "
-    ),
-    stringsAsFactors = FALSE
-  )
+  # we may have multiple estimates. if so, we want to keep each one in an own
+  # column. Examples:
+  # smokers <- c(83, 90, 129, 70)
+  # patients <- c(86, 93, 136, 82)
+  # prop.test(smokers, patients) |> parameters::model_parameters()
+  out <- as.data.frame(do.call(cbind, as.list(model$estimate)))
+  if (ncol(out) > 1) {
+    colnames(out) <- paste("Estimate", seq_len(ncol(out)), sep = "_")
+  } else {
+    colnames(out) <- "Estimate"
+  }
+
+  # if we have exactly two estimates, we may be interested in the difference
   if (length(model$estimate) == 2) {
-    out$Difference <- insight::format_value(
-      abs(model$estimate[1] - model$estimate[2]),
-      as_percent = TRUE
-    )
+    out$Difference <- abs(model$estimate[1] - model$estimate[2])
   }
   if (!is.null(model$conf.int)) {
     out$CI_low <- model$conf.int[1]
