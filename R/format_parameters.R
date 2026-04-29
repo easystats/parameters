@@ -423,6 +423,19 @@ format_parameters.parameters_model <- function(model, ...) {
 # replace pretty names with value labels, when present ---------------
 
 .format_value_labels <- function(params, model = NULL) {
+  # Dummy code, might be useful to fix #1135
+  # # extract data
+  # model_data <- insight::get_data(model, source = "environment", verbose = FALSE)
+  # # find only relevant vatiables
+  # model_vars <- insight::find_variables(model, flatten = TRUE)
+
+  # for (i in model_vars) {
+  #   label <- attr(model_data[[i]], "label", exact = TRUE)
+  #   if (!is.null(label)) {
+  #     pretty_names <- gsub(paste0("\\<", i, "\\>"), label, pretty_names)
+  #   }
+  # }
+
   pretty_labels <- NULL
   if (is.null(model)) {
     model <- .get_object(params)
