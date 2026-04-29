@@ -173,7 +173,7 @@ if (require("metafor", quietly = TRUE)) {
   model_parameters(model)
 }
 #> 
-#> Loading the 'metafor' package (version 4.8-0). For an
+#> Loading the 'metafor' package (version 5.0-1). For an
 #> introduction to the package please type: help(metafor)
 #> 
 #> Attaching package: ‘metafor’
