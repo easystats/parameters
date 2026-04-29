@@ -86,21 +86,21 @@ reduce_parameters(model, method = "cMDS") %>%
 #> ------------------------------------------------------------------------------
 #> (Intercept)                                               |       64.63 | 1.41
 #> raises 0 85/complaints 0 84/learning 0 83/privileges 0 74 |        0.43 | 0.07
-#> advance -0 60                                             |        0.32 | 0.13
+#> advance 0 60                                              |       -0.32 | 0.13
 #> critical -0 65                                            |       -0.24 | 0.15
 #> 
 #> Parameter                                                 |         95% CI
 #> --------------------------------------------------------------------------
 #> (Intercept)                                               | [61.73, 67.53]
 #> raises 0 85/complaints 0 84/learning 0 83/privileges 0 74 | [ 0.28,  0.57]
-#> advance -0 60                                             | [ 0.04,  0.59]
+#> advance 0 60                                              | [-0.59, -0.04]
 #> critical -0 65                                            | [-0.56,  0.07]
 #> 
 #> Parameter                                                 | t(26) |      p
 #> --------------------------------------------------------------------------
 #> (Intercept)                                               | 45.80 | < .001
 #> raises 0 85/complaints 0 84/learning 0 83/privileges 0 74 |  6.14 | < .001
-#> advance -0 60                                             |  2.36 | 0.026 
+#> advance 0 60                                              | -2.36 | 0.026 
 #> critical -0 65                                            | -1.61 | 0.120
 ```
 
