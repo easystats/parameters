@@ -66,6 +66,7 @@ All exported functions must be documented using `roxygen2`-style comments (`#'`)
 *   Make sure R-version requirements are not too strict
 *   **Package Functions:** Always use the `::` operator to call functions from other packages (e.g., `stats::shapiro.test`, `insight::model_info`). Do not use `library()` or `require()` at the top of a file (no full import, only selective import of functions).
 *   **Conditional Checks:** Use `insight::check_if_installed("pkg_name")` to check if a package is available before using it, especially for optional ("Suggests") dependencies.
+*   **Argument validation:** Use `insight::validate_argument()` instead of `match.arg()` to validate correct input of arguments, unless you need `several.ok`. In this case, rely on `match.arg()`.
 
 ## S3 Object System
 
@@ -77,7 +78,11 @@ All exported functions must be documented using `roxygen2`-style comments (`#'`)
 
 *   Use `tryCatch` for operations that might fail. The internal `.safe()` helper is a good example.
 *   Use the `insight` package's functions for user-facing messages:
-    *   `insight::format_error()`
-    *   `insight::format_warning()`
-    *   `insight::format_alert()`
-    *   `insight::print_color()`
+    *   For errors: `insight::format_error()`
+    *   For warnings: `insight::format_warning()`
+    *   For messages: `insight::format_alert()`
+    *   To highlight messages: `insight::print_color()`
+    Note that character vectors are not pasted together, unlike in `message()`,
+    thus you usually want to use something like `paste()` to concatenate the
+    string. Character vectors will add a new paragraph for each string element,
+    not paste them together.
