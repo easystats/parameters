@@ -17,6 +17,10 @@
   setting `re_test = FALSE` to skip expensive random-effect tests). Default
   behavior (with `re_test = TRUE`) is unchanged.
 
+* `model_parameters()` for proportions-htests objects no longer hard-codes the
+  estimate for the proportion in the underlying data frame. This is now done
+  in the `format()` method.
+
 ## Bug fixes
 
 * Fixed issue where wrong (non-robust) standard errors were calculated for
@@ -27,6 +31,9 @@
 * Fixed unintended removal of columns in `model_parameters()` for objects from
   package *marginaleffects*. This happened, when a variable in a model was named
   `Type`.
+
+* Fixed issue in `model_parameters()` for `fisher.test()` with tables larger
+  than 2x2.
 
 # parameters 0.28.3
 

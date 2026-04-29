@@ -45,7 +45,7 @@
 #'   implemented in the [**see**-package](https://easystats.github.io/see/).
 #'   `n_components()` is a convenient short-cut  for `n_factors(type = "PCA")`.
 #'
-#' @examplesIf require("PCDimension", quietly = TRUE) && require("nFactors", quietly = TRUE) && require("EGAnet", quietly = TRUE) && require("psych", quietly = TRUE)
+#' @examplesIf all(insight::check_if_installed(c("PCDimension", "nFactors", "EGAnet", "psych", "see"), quietly = TRUE))
 #' library(parameters)
 #' n_factors(mtcars, type = "PCA")
 #'
@@ -53,6 +53,8 @@
 #' as.data.frame(result)
 #' summary(result)
 #' \donttest{
+#' plot(result)
+#'
 #' # Setting package = 'all' will increase the number of methods (but is slow)
 #' n_factors(mtcars, type = "PCA", package = "all")
 #' n_factors(mtcars, type = "FA", algorithm = "mle", package = "all")
@@ -106,15 +108,17 @@
 #'   matrix of partial correlations. Psychometrika, 41(3), 321-327.
 #'
 #' @export
-n_factors <- function(x,
-                      type = "FA",
-                      rotation = "varimax",
-                      algorithm = "default",
-                      package = c("nFactors", "psych"),
-                      correlation_matrix = NULL,
-                      safe = TRUE,
-                      n_max = NULL,
-                      ...) {
+n_factors <- function(
+  x,
+  type = "FA",
+  rotation = "varimax",
+  algorithm = "default",
+  package = c("nFactors", "psych"),
+  correlation_matrix = NULL,
+  safe = TRUE,
+  n_max = NULL,
+  ...
+) {
   if (all(package == "all")) {
     package <- c("nFactors", "EGAnet", "psych", "fit", "pcdimension")
   }
@@ -261,7 +265,10 @@ n_factors <- function(x,
         )
       )
     } else {
-      out <- rbind(out, .n_factors_vss(x, correlation_matrix, n_obs, type, rotation, algorithm))
+      out <- rbind(
+        out,
+        .n_factors_vss(x, correlation_matrix, n_obs, type, rotation, algorithm)
+      )
     }
   }
 
@@ -279,7 +286,10 @@ n_factors <- function(x,
         )
       )
     } else {
-      out <- rbind(out, .n_factors_fit(x, correlation_matrix, n_obs, type, rotation, algorithm))
+      out <- rbind(
+        out,
+        .n_factors_fit(x, correlation_matrix, n_obs, type, rotation, algorithm)
+      )
     }
   }
 
@@ -314,7 +324,9 @@ n_factors <- function(x,
   # Add summary
   by_factors <- .data_frame(
     n_Factors = as.numeric(unique(out$n_Factors)),
-    n_Methods = as.numeric(by(out, as.factor(out$n_Factors), function(out) n <- nrow(out)))
+    n_Methods = as.numeric(by(out, as.factor(out$n_Factors), function(out) {
+      n <- nrow(out)
+    }))
   )
 
   # Add cumulative percentage of variance explained
@@ -328,7 +340,11 @@ n_factors <- function(x,
   # Extract number of factors from EFA output (usually MR1, ML1, etc.)
   varex$n_Factors <- as.numeric(gsub("[^\\d]+", "", varex$Component, perl = TRUE))
   # Merge (and like that filter out empty methods)
-  by_factors <- merge(by_factors, varex[, c("n_Factors", "Variance_Cumulative")], by = "n_Factors")
+  by_factors <- merge(
+    by_factors,
+    varex[, c("n_Factors", "Variance_Cumulative")],
+    by = "n_Factors"
+  )
 
   attr(out, "Variance_Explained") <- varex # We add all the variance explained (for plotting)
   attr(out, "summary") <- by_factors
@@ -344,14 +360,16 @@ n_factors <- function(x,
 
 #' @rdname n_factors
 #' @export
-n_components <- function(x,
-                         type = "PCA",
-                         rotation = "varimax",
-                         algorithm = "default",
-                         package = c("nFactors", "psych"),
-                         correlation_matrix = NULL,
-                         safe = TRUE,
-                         ...) {
+n_components <- function(
+  x,
+  type = "PCA",
+  rotation = "varimax",
+  algorithm = "default",
+  package = c("nFactors", "psych"),
+  correlation_matrix = NULL,
+  safe = TRUE,
+  ...
+) {
   n_factors(
     x,
     type = type,
@@ -381,7 +399,6 @@ print.n_factors <- function(x, ...) {
     type <- "cluster"
     methods_text <- toString(as.character(x[x$n_Clusters == best_n, "Method"]))
   }
-
 
   # Text
   msg_text <- paste0(
@@ -433,7 +450,6 @@ print.n_clusters <- print.n_factors
 
 # Methods -----------------------------------------------------------------
 
-
 #' Bartlett, Anderson and Lawley Procedures
 #' @keywords internal
 .n_factors_bartlett <- function(eigen_values = NULL, model = "factors", nobs = NULL) {
@@ -464,11 +480,7 @@ print.n_clusters <- print.n_factors
     details = FALSE
   )$nFactors
 
-  .data_frame(
-    n_Factors = as.numeric(nfac),
-    Method = "Bentler",
-    Family = "Bentler"
-  )
+  .data_frame(n_Factors = as.numeric(nfac), Method = "Bentler", Family = "Bentler")
 }
 
 
@@ -481,11 +493,7 @@ print.n_clusters <- print.n_factors
     nfac <- nFactors::nCng(x = eigen_values, cor = TRUE, model = model)$nFactors
   }
 
-  .data_frame(
-    n_Factors = as.numeric(nfac),
-    Method = "CNG",
-    Family = "CNG"
-  )
+  .data_frame(n_Factors = as.numeric(nfac), Method = "CNG", Family = "CNG")
 }
 
 
@@ -513,7 +521,12 @@ print.n_clusters <- print.n_factors
 
   .data_frame(
     n_Factors = as.numeric(nfac),
-    Method = c("Optimal coordinates", "Acceleration factor", "Parallel analysis", "Kaiser criterion"),
+    Method = c(
+      "Optimal coordinates",
+      "Acceleration factor",
+      "Parallel analysis",
+      "Kaiser criterion"
+    ),
     Family = "Scree"
   )
 }
@@ -532,11 +545,13 @@ print.n_clusters <- print.n_factors
 
 
 # EGAnet ------------------------
-.n_factors_ega <- function(x = NULL,
-                           correlation_matrix = NULL,
-                           nobs = NULL,
-                           eigen_values = NULL,
-                           type = "FA") {
+.n_factors_ega <- function(
+  x = NULL,
+  correlation_matrix = NULL,
+  nobs = NULL,
+  eigen_values = NULL,
+  type = "FA"
+) {
   # Replace with own correlation matrix
   junk <- utils::capture.output(suppressWarnings(suppressMessages(
     nfac_glasso <- EGAnet::EGA(
@@ -564,7 +579,12 @@ print.n_clusters <- print.n_factors
 # psych ------------------------
 
 #' @keywords internal
-.n_factors_parallel <- function(x = NULL, correlation_matrix = NULL, nobs = NULL, type = "FA") {
+.n_factors_parallel <- function(
+  x = NULL,
+  correlation_matrix = NULL,
+  nobs = NULL,
+  type = "FA"
+) {
   # Altnerative version of parralel analysis
   # Not used because already included in nFactors
 
@@ -575,7 +595,13 @@ print.n_clusters <- print.n_factors
   }
 
   insight::check_if_installed("psych")
-  out <- psych::fa.parallel(correlation_matrix, n.obs = nobs, fa = fa, plot = FALSE, fm = "ml")
+  out <- psych::fa.parallel(
+    correlation_matrix,
+    n.obs = nobs,
+    fa = fa,
+    plot = FALSE,
+    fm = "ml"
+  )
 
   .data_frame(
     n_Factors = as.numeric(stats::na.omit(c(out$nfact, out$ncomp))),
@@ -585,12 +611,14 @@ print.n_clusters <- print.n_factors
 }
 
 #' @keywords internal
-.n_factors_vss <- function(x = NULL,
-                           correlation_matrix = NULL,
-                           nobs = NULL,
-                           type = "FA",
-                           rotation = "varimax",
-                           algorithm = "default") {
+.n_factors_vss <- function(
+  x = NULL,
+  correlation_matrix = NULL,
+  nobs = NULL,
+  type = "FA",
+  rotation = "varimax",
+  algorithm = "default"
+) {
   if (algorithm == "default") {
     if (tolower(type) %in% c("fa", "factor", "efa")) {
       algorithm <- "minres"
@@ -627,20 +655,28 @@ print.n_clusters <- print.n_factors
 
   .data_frame(
     n_Factors = as.numeric(c(vss_1, vss_2, velicer_MAP, BIC_reg, BIC_adj)),
-    Method = c("VSS complexity 1", "VSS complexity 2", "Velicer's MAP", "BIC", "BIC (adjusted)"),
+    Method = c(
+      "VSS complexity 1",
+      "VSS complexity 2",
+      "Velicer's MAP",
+      "BIC",
+      "BIC (adjusted)"
+    ),
     Family = c("VSS", "VSS", "Velicers_MAP", "BIC", "BIC")
   )
 }
 
 
 #' @keywords internal
-.n_factors_fit <- function(x = NULL,
-                           correlation_matrix = NULL,
-                           nobs = NULL,
-                           type = "FA",
-                           rotation = "varimax",
-                           algorithm = "default",
-                           threshold = 0.1) {
+.n_factors_fit <- function(
+  x = NULL,
+  correlation_matrix = NULL,
+  nobs = NULL,
+  type = "FA",
+  rotation = "varimax",
+  algorithm = "default",
+  threshold = 0.1
+) {
   if (algorithm == "default") {
     if (tolower(type) %in% c("fa", "factor", "efa")) {
       algorithm <- "minres"
@@ -654,27 +690,23 @@ print.n_clusters <- print.n_factors
   for (n in 1:(ncol(correlation_matrix) - 1)) {
     if (tolower(type) %in% c("fa", "factor", "efa")) {
       factors <- tryCatch(
-        suppressWarnings(
-          psych::fa(
-            correlation_matrix,
-            nfactors = n,
-            n.obs = nobs,
-            rotate = rotation,
-            fm = algorithm
-          )
-        ),
+        suppressWarnings(psych::fa(
+          correlation_matrix,
+          nfactors = n,
+          n.obs = nobs,
+          rotate = rotation,
+          fm = algorithm
+        )),
         error = function(e) NA
       )
     } else {
       factors <- tryCatch(
-        suppressWarnings(
-          psych::pca(
-            correlation_matrix,
-            nfactors = n,
-            n.obs = nobs,
-            rotate = rotation
-          )
-        ),
+        suppressWarnings(psych::pca(
+          correlation_matrix,
+          nfactors = n,
+          n.obs = nobs,
+          rotate = rotation
+        )),
         error = function(e) NA
       )
     }
@@ -724,25 +756,32 @@ print.n_clusters <- print.n_factors
   if (all(is.na(rez$RMSEA))) {
     RMSEA <- NA
   } else {
-    target <- min(rez$RMSEA, na.rm = TRUE) + threshold * diff(range(rez$RMSEA, na.rm = TRUE))
+    target <- min(rez$RMSEA, na.rm = TRUE) +
+      threshold * diff(range(rez$RMSEA, na.rm = TRUE))
     RMSEA <- rez[!is.na(rez$RMSEA) & rez$RMSEA <= target, "n"][1]
   }
   # RMSR
   if (all(is.na(rez$RMSR))) {
     RMSR <- NA
   } else {
-    target <- min(rez$RMSR, na.rm = TRUE) + threshold * diff(range(rez$RMSR, na.rm = TRUE))
+    target <- min(rez$RMSR, na.rm = TRUE) +
+      threshold * diff(range(rez$RMSR, na.rm = TRUE))
     RMSR <- rez[!is.na(rez$RMSR) & rez$RMSR <= target, "n"][1]
   }
   # CRMS
   if (all(is.na(rez$CRMS))) {
     CRMS <- NA
   } else {
-    target <- min(rez$CRMS, na.rm = TRUE) + threshold * diff(range(rez$CRMS, na.rm = TRUE))
+    target <- min(rez$CRMS, na.rm = TRUE) +
+      threshold * diff(range(rez$CRMS, na.rm = TRUE))
     CRMS <- rez[!is.na(rez$CRMS) & rez$CRMS <= target, "n"][1]
   }
   # BIC (this is a penalized method so we can just take the one that minimizes it)
-  BayIC <- ifelse(all(is.na(rez$BIC)), NA, rez[!is.na(rez$BIC) & rez$BIC == min(rez$BIC, na.rm = TRUE), "n"])
+  BayIC <- ifelse(
+    all(is.na(rez$BIC)),
+    NA,
+    rez[!is.na(rez$BIC) & rez$BIC == min(rez$BIC, na.rm = TRUE), "n"]
+  )
 
   .data_frame(
     n_Factors = c(fit_off, TLI, RMSEA, RMSR, CRMS, BayIC),
@@ -788,9 +827,15 @@ print.n_clusters <- print.n_factors
   .data_frame(
     n_Factors = as.numeric(c(rez_rnd, rez_bokenstick, rez_ag)),
     Method = c(
-      "Random (lambda)", "Random (F)", "Broken-Stick", "Auer-Gervini (twice)",
-      "Auer-Gervini (spectral)", "Auer-Gervini (kmeans-2)", "AuerGervini (kmeans-3)",
-      "Auer-Gervini (T)", "AuerGervini (CPT)"
+      "Random (lambda)",
+      "Random (F)",
+      "Broken-Stick",
+      "Auer-Gervini (twice)",
+      "Auer-Gervini (spectral)",
+      "Auer-Gervini (kmeans-2)",
+      "AuerGervini (kmeans-3)",
+      "Auer-Gervini (T)",
+      "AuerGervini (CPT)"
     ),
     Family = "PCDimension"
   )
@@ -799,14 +844,16 @@ print.n_clusters <- print.n_factors
 # Re-implementation of nBentler in nFactors ------------------------
 
 #' @keywords internal
-.nBentler <- function(x,
-                      N,
-                      model = model,
-                      log = TRUE,
-                      alpha = 0.05,
-                      cor = TRUE,
-                      details = TRUE,
-                      ...) {
+.nBentler <- function(
+  x,
+  N,
+  model = model,
+  log = TRUE,
+  alpha = 0.05,
+  cor = TRUE,
+  details = TRUE,
+  ...
+) {
   insight::check_if_installed("nFactors")
 
   lambda <- nFactors::eigenComputes(x, cor = cor, model = model, ...)
@@ -819,30 +866,30 @@ print.n_clusters <- print.n_factors
   minPar <- c(min(lambda) - abs(min(lambda)) + 0.001, 0.001)
   maxPar <- c(max(lambda), stats::lm(lambda ~ I(rev(seq_along(lambda))))$coef[2])
 
-
   n <- N
   significance <- alpha
   min.k <- 3
   LRT <- .data_frame(
-    q = numeric(length(lambda) - min.k), k = numeric(length(lambda) - min.k),
-    LRT = numeric(length(lambda) - min.k), a = numeric(length(lambda) - min.k),
+    q = numeric(length(lambda) - min.k),
+    k = numeric(length(lambda) - min.k),
+    LRT = numeric(length(lambda) - min.k),
+    a = numeric(length(lambda) - min.k),
     b = numeric(length(lambda) - min.k),
     p = numeric(length(lambda) - min.k),
     convergence = numeric(length(lambda) - min.k)
   )
   bentler.n <- 0
   for (i in 1:(length(lambda) - min.k)) {
-    temp <-
-      nFactors::bentlerParameters(
-        x = lambda,
-        N = n,
-        nFactors = i,
-        log = log,
-        cor = cor,
-        minPar = minPar,
-        maxPar = maxPar,
-        graphic = FALSE
-      )
+    temp <- nFactors::bentlerParameters(
+      x = lambda,
+      N = n,
+      nFactors = i,
+      log = log,
+      cor = cor,
+      minPar = minPar,
+      maxPar = maxPar,
+      graphic = FALSE
+    )
     LRT[i, 3] <- temp$lrt
     LRT[i, 4] <- ifelse(is.null(temp$coef[1]), NA, temp$coef[1])
     LRT[i, 5] <- ifelse(is.null(temp$coef[2]), NA, temp$coef[2])
@@ -853,7 +900,9 @@ print.n_clusters <- print.n_factors
   }
   # LRT     <- LRT[order(LRT[,1],decreasing = TRUE),]
   for (i in 1:(length(lambda) - min.k)) {
-    if (i == 1) bentler.n <- bentler.n + as.numeric(LRT$p[i] <= significance)
+    if (i == 1) {
+      bentler.n <- bentler.n + as.numeric(LRT$p[i] <= significance)
+    }
     if (i > 1 && LRT$p[i - 1] <= 0.05) {
       bentler.n <- bentler.n + as.numeric(LRT$p[i] <= significance)
     }

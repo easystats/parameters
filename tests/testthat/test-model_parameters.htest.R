@@ -7,8 +7,17 @@ test_that("model_parameters.htest", {
   expect_named(
     params,
     c(
-      "Parameter1", "Parameter2", "r", "CI", "CI_low", "CI_high",
-      "t", "df_error", "p", "Method", "Alternative"
+      "Parameter1",
+      "Parameter2",
+      "r",
+      "CI",
+      "CI_low",
+      "CI_high",
+      "t",
+      "df_error",
+      "p",
+      "Method",
+      "Alternative"
     )
   )
   expect_equal(params$r, -0.852, tolerance = 0.05)
@@ -48,7 +57,10 @@ test_that("model_parameters-chisq-test NULL", {
 
 
 test_that("model_parameters-chisq-test two way table", {
-  mp2 <- suppressWarnings(model_parameters(stats::chisq.test(table(mtcars$am, mtcars$cyl))))
+  mp2 <- suppressWarnings(model_parameters(stats::chisq.test(table(
+    mtcars$am,
+    mtcars$cyl
+  ))))
   expect_equal(mp2$Chi2, 8.740733, tolerance = 1e-3)
   expect_named(mp2, c("Chi2", "df", "p", "Method"))
 })
@@ -68,35 +80,72 @@ test_that("model_parameters-chisq-test works with `svychisq` objects", {
 
 test_that("model_parameters-chisq-test adjusted", {
   expect_message({
-    mp <- model_parameters(stats::chisq.test(table(mtcars$am)), es_type = "phi", ci = 0.95)
+    mp <- model_parameters(
+      stats::chisq.test(table(mtcars$am)),
+      es_type = "phi",
+      ci = 0.95
+    )
   })
   expect_equal(mp$Chi2, 1.125, tolerance = 1e-3)
   expect_named(mp, c("Chi2", "df", "p", "Method"))
 })
 
 test_that("model_parameters-t-test standardized d", {
-  params <- model_parameters(t.test(iris$Sepal.Width, iris$Sepal.Length), es_type = "cohens_d")
+  params <- model_parameters(
+    t.test(iris$Sepal.Width, iris$Sepal.Length),
+    es_type = "cohens_d"
+  )
   expect_equal(params$Cohens_d, -4.210417, tolerance = 0.05)
   expect_equal(params$d_CI_low, -4.655306, tolerance = 0.05)
   expect_named(
     params,
     c(
-      "Parameter1", "Parameter2", "Mean_Parameter1", "Mean_Parameter2",
-      "Difference", "CI", "CI_low", "CI_high", "Cohens_d", "d_CI_low",
-      "d_CI_high", "t", "df_error", "p", "Method", "Alternative"
+      "Parameter1",
+      "Parameter2",
+      "Mean_Parameter1",
+      "Mean_Parameter2",
+      "Difference",
+      "CI",
+      "CI_low",
+      "CI_high",
+      "Cohens_d",
+      "d_CI_low",
+      "d_CI_high",
+      "t",
+      "df_error",
+      "p",
+      "Method",
+      "Alternative"
     )
   )
 })
 
-test_that("model_parameters-t-test standardized d", {
-  mp <- model_parameters(t.test(mtcars$mpg ~ mtcars$vs), es_type = "cohens_d", verbose = FALSE)
+test_that("model_parameters-t-test standardized d-2", {
+  mp <- model_parameters(
+    t.test(mtcars$mpg ~ mtcars$vs),
+    es_type = "cohens_d",
+    verbose = FALSE
+  )
   expect_equal(mp$Cohens_d, -1.696032, tolerance = 1e-3)
   expect_named(
     mp,
     c(
-      "Parameter", "Group", "Mean_Group1", "Mean_Group2", "Difference", "CI",
-      "CI_low", "CI_high", "Cohens_d", "d_CI_low", "d_CI_high", "t", "df_error",
-      "p", "Method", "Alternative"
+      "Parameter",
+      "Group",
+      "Mean_Group1",
+      "Mean_Group2",
+      "Difference",
+      "CI",
+      "CI_low",
+      "CI_high",
+      "Cohens_d",
+      "d_CI_low",
+      "d_CI_high",
+      "t",
+      "df_error",
+      "p",
+      "Method",
+      "Alternative"
     )
   )
 })
@@ -105,7 +154,16 @@ test_that("model_parameters-t-test reports the same unregarding of interface", {
   g1 <- 1:10
   g2 <- 7:20
   df <- data.frame(y = c(g1, g2), x = rep(c(0, 1), c(length(g1), length(g2))))
-  compare_only <- c("Difference", "CI", "CI_low", "CI_high", "t", "df_error", "p", "Method")
+  compare_only <- c(
+    "Difference",
+    "CI",
+    "CI_low",
+    "CI_high",
+    "t",
+    "df_error",
+    "p",
+    "Method"
+  )
   default_ttest <- model_parameters(t.test(x = g1, y = g2))[compare_only]
   formula_ttest <- model_parameters(t.test(y ~ x, df))[compare_only]
   expect_equal(default_ttest, formula_ttest, ignore_attr = TRUE)
@@ -133,4 +191,80 @@ test_that("model_parameters-htests removes $ from parameter and group names", {
   out <- format(model_parameters(t.test(sleep2$extra.1, sleep2$extra.2, paired = TRUE)))
   expect_identical(out$Parameter, "extra.1")
   expect_identical(out$Group, "extra.2")
+})
+
+test_that("model_parameters-htests does not fail for fisher test > 2x3", {
+  data(mtcars)
+  m <- fisher.test(mtcars$cyl, mtcars$gear)
+  out <- model_parameters(m)
+  expect_named(out, c("Chi2", "df", "p", "Method", "Alternative"))
+  expect_true(is.na(out$Chi2))
+  expect_equal(out$p, 8e-05, tolerance = 1e-4)
+})
+
+test_that("model_parameters-htests no hard-coded formatting for proportions tests", {
+  smokers <- c(83, 90, 129, 70)
+  patients <- c(86, 93, 136, 82)
+  out <- model_parameters(prop.test(smokers, patients))
+
+  expect_identical(
+    capture.output(out),
+    c(
+      "4-sample test for equality of proportions without continuity correction",
+      "",
+      "Proportion                        | Chi2(3) |     p",
+      "---------------------------------------------------",
+      "96.51% / 96.77% / 94.85% / 85.37% |   12.60 | 0.006",
+      "",
+      "Alternative hypothesis: two.sided"
+    )
+  )
+  expect_equal(out$Estimate_1, 0.96512, tolerance = 1e-4)
+  expect_named(
+    out,
+    c(
+      "Estimate_1",
+      "Estimate_2",
+      "Estimate_3",
+      "Estimate_4",
+      "Chi2",
+      "df",
+      "p",
+      "Method",
+      "Alternative"
+    )
+  )
+
+  # for penguins data
+  skip_if(getRversion() < "4.5.0")
+  data(penguins, package = "datasets")
+  out <- model_parameters(prop.test(table(penguins$sex)))
+  expect_identical(
+    capture.output(out),
+    c(
+      "1-sample proportions test",
+      "",
+      "Proportion |       95% CI | Chi2(1) | Null_value |     p",
+      "--------------------------------------------------------",
+      "49.55%     | [0.44, 0.55] |    0.01 |       0.50 | 0.913",
+      "",
+      "Alternative hypothesis: true p is not equal to 0.5"
+    )
+  )
+  expect_equal(out$Estimate, 0.4955, tolerance = 1e-3)
+  expect_named(
+    out,
+    c(
+      "Estimate",
+      "CI",
+      "CI_low",
+      "CI_high",
+      "Chi2",
+      "df",
+      "Null_value",
+      "p",
+      "Method",
+      "Alternative"
+    )
+  )
 })

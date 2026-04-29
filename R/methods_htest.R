@@ -40,13 +40,15 @@
 #' @return A data frame of indices related to the model's parameters.
 #'
 #' @export
-model_parameters.htest <- function(model,
-                                   ci = 0.95,
-                                   alternative = NULL,
-                                   bootstrap = FALSE,
-                                   es_type = NULL,
-                                   verbose = TRUE,
-                                   ...) {
+model_parameters.htest <- function(
+  model,
+  ci = 0.95,
+  alternative = NULL,
+  bootstrap = FALSE,
+  es_type = NULL,
+  verbose = TRUE,
+  ...
+) {
   if (bootstrap) {
     insight::format_error("Bootstrapped h-tests are not yet implemented.")
   } else {
@@ -61,7 +63,12 @@ model_parameters.htest <- function(model,
   }
 
   if (!is.null(parameters$Method)) {
-    parameters$Method <- insight::trim_ws(gsub("with continuity correction", "", parameters$Method, fixed = TRUE))
+    parameters$Method <- insight::trim_ws(gsub(
+      "with continuity correction",
+      "",
+      parameters$Method,
+      fixed = TRUE
+    ))
   }
 
   # save alternative
@@ -87,17 +94,15 @@ p_value.htest <- function(model, ...) {
 
 # .pairwise.htest --------------------
 
-
 #' @export
 model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
   m <- model$p.value
-  parameters <-
-    data.frame(
-      Group1 = rep(rownames(m), each = ncol(m)),
-      Group2 = rep(colnames(m), times = nrow(m)),
-      p = as.numeric(t(m)),
-      stringsAsFactors = FALSE
-    )
+  parameters <- data.frame(
+    Group1 = rep(rownames(m), each = ncol(m)),
+    Group2 = rep(colnames(m), times = nrow(m)),
+    p = as.numeric(t(m)),
+    stringsAsFactors = FALSE
+  )
 
   parameters <- stats::na.omit(parameters)
 
@@ -118,12 +123,14 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
 # ==== extract parameters ====
 
 #' @keywords internal
-.extract_parameters_htest <- function(model,
-                                      es_type = NULL,
-                                      ci = 0.95,
-                                      alternative = NULL,
-                                      verbose = TRUE,
-                                      ...) {
+.extract_parameters_htest <- function(
+  model,
+  es_type = NULL,
+  ci = 0.95,
+  alternative = NULL,
+  verbose = TRUE,
+  ...
+) {
   m_info <- insight::model_info(model, verbose = FALSE)
 
   if (!is.null(model$method) && startsWith(model$method, "Box-")) {
@@ -160,7 +167,8 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
     insight::format_error("`model_parameters()` not implemented for such h-tests yet.")
   }
 
-  out <- .add_effectsize_htest(model,
+  out <- .add_effectsize_htest(
+    model,
     out,
     es_type = es_type,
     ci = ci,
@@ -230,8 +238,21 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
 
   # reorder
   col_order <- c(
-    "Parameter1", "Parameter2", "Parameter", "r", "rho", "tau", "CI_low", "CI_high",
-    "t", "z", "S", "df_error", "p", "Method", "method"
+    "Parameter1",
+    "Parameter2",
+    "Parameter",
+    "r",
+    "rho",
+    "tau",
+    "CI_low",
+    "CI_high",
+    "t",
+    "z",
+    "S",
+    "df_error",
+    "p",
+    "Method",
+    "method"
   )
 
   out <- out[col_order[col_order %in% names(out)]]
@@ -246,7 +267,12 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
 .extract_htest_ranktest <- function(model) {
   # survey
   if (grepl("design-based", tolower(model$method), fixed = TRUE)) {
-    data_names <- gsub("~", "", unlist(strsplit(model$data.name, " + ", fixed = TRUE)), fixed = TRUE)
+    data_names <- gsub(
+      "~",
+      "",
+      unlist(strsplit(model$data.name, " + ", fixed = TRUE)),
+      fixed = TRUE
+    )
     out <- data.frame(
       Parameter1 = data_names[1],
       Parameter2 = data_names[2],
@@ -267,18 +293,17 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
         stringsAsFactors = FALSE
       )
     } else {
-      out <- data.frame(
-        Parameter = model$data.name,
-        stringsAsFactors = FALSE
-      )
+      out <- data.frame(Parameter = model$data.name, stringsAsFactors = FALSE)
     }
 
     if (grepl("Wilcoxon", model$method, fixed = TRUE)) {
       out$W <- model$statistic[[1]]
       out$df_error <- model$parameter[[1]]
       out$p <- model$p.value[[1]]
-    } else if (grepl("Kruskal-Wallis", model$method, fixed = TRUE) ||
-      grepl("Friedman", model$method, fixed = TRUE)) {
+    } else if (
+      grepl("Kruskal-Wallis", model$method, fixed = TRUE) ||
+        grepl("Friedman", model$method, fixed = TRUE)
+    ) {
       out$Chi2 <- model$statistic[[1]]
       out$df_error <- model$parameter[[1]]
       out$p <- model$p.value[[1]]
@@ -369,7 +394,12 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
         Method = model$method,
         stringsAsFactors = FALSE
       )
-      attr(out, "mean_group_values") <- gsub("mean in group ", "", names(model$estimate), fixed = TRUE)
+      attr(out, "mean_group_values") <- gsub(
+        "mean in group ",
+        "",
+        names(model$estimate),
+        fixed = TRUE
+      )
     } else if (isTRUE(paired_test)) {
       data_names <- unlist(strsplit(model$data.name, " (and|by) "))
       out <- data.frame(
@@ -416,7 +446,12 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
           Method = model$method,
           stringsAsFactors = FALSE
         )
-        attr(out, "mean_group_values") <- gsub("mean in group ", "", names(model$estimate), fixed = TRUE)
+        attr(out, "mean_group_values") <- gsub(
+          "mean in group ",
+          "",
+          names(model$estimate),
+          fixed = TRUE
+        )
       }
     } else {
       out <- data.frame(
@@ -463,10 +498,16 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
 #' @keywords internal
 .extract_htest_chi2 <- function(model) {
   # survey-chisq-test
-  if ((any("observed" %in% names(model)) && inherits(model$observed, "svytable")) ||
-    any(startsWith(model$data.name, "svychisq"))) {
+  if (
+    (any("observed" %in% names(model)) && inherits(model$observed, "svytable")) ||
+      any(startsWith(model$data.name, "svychisq"))
+  ) {
     if (grepl("Pearson's X", model$method, fixed = TRUE)) {
-      model$method <- gsub("(Pearson's X\\^2: )(.*)", "Pearson's Chi2 \\(\\2\\)", model$method)
+      model$method <- gsub(
+        "(Pearson's X\\^2: )(.*)",
+        "Pearson's Chi2 \\(\\2\\)",
+        model$method
+      )
     }
     if (names(model$statistic) == "F") {
       out <- data.frame(
@@ -498,11 +539,16 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
       check.names = FALSE
     )
   } else {
-    out <- data.frame(
+    # create data as list - we might have NULL for some values, which we want
+    # to fill with NA
+    out <- list(
       Chi2 = model$statistic,
       df = model$parameter,
       p = model$p.value,
-      Method = model$method,
+      Method = model$method
+    )
+    out <- data.frame(
+      lapply(out, function(i) if (is.null(i)) NA else i),
       stringsAsFactors = FALSE
     )
   }
@@ -516,15 +562,21 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
 
 #' @keywords internal
 .extract_htest_prop <- function(model) {
-  out <- data.frame(
-    Proportion = paste(insight::format_value(model$estimate, as_percent = TRUE), collapse = " / "),
-    stringsAsFactors = FALSE
-  )
+  # we may have multiple estimates. if so, we want to keep each one in an own
+  # column. Examples:
+  # smokers <- c(83, 90, 129, 70)
+  # patients <- c(86, 93, 136, 82)
+  # prop.test(smokers, patients) |> parameters::model_parameters()
+  out <- as.data.frame(do.call(cbind, as.list(model$estimate)))
+  if (ncol(out) > 1) {
+    colnames(out) <- paste("Estimate", seq_len(ncol(out)), sep = "_")
+  } else {
+    colnames(out) <- "Estimate"
+  }
+
+  # if we have exactly two estimates, we may be interested in the difference
   if (length(model$estimate) == 2) {
-    out$Difference <- insight::format_value(
-      abs(model$estimate[1] - model$estimate[2]),
-      as_percent = TRUE
-    )
+    out$Difference <- abs(model$estimate[1] - model$estimate[2])
   }
   if (!is.null(model$conf.int)) {
     out$CI_low <- model$conf.int[1]
@@ -562,13 +614,15 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
 
 # ==== effectsizes =====
 
-.add_effectsize_htest <- function(model,
-                                  out,
-                                  es_type = NULL,
-                                  ci = 0.95,
-                                  alternative = NULL,
-                                  verbose = TRUE,
-                                  ...) {
+.add_effectsize_htest <- function(
+  model,
+  out,
+  es_type = NULL,
+  ci = 0.95,
+  alternative = NULL,
+  verbose = TRUE,
+  ...
+) {
   # check if effect sizes are requested
   if (!requireNamespace("effectsize", quietly = TRUE) || is.null(es_type)) {
     return(out)
@@ -596,7 +650,11 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
     error = function(e) {
       if (verbose) {
         msg <- c(
-          paste0("Could not compute effectsize ", effectsize::get_effectsize_label(es_type), "."),
+          paste0(
+            "Could not compute effectsize ",
+            effectsize::get_effectsize_label(es_type),
+            "."
+          ),
           paste0("Possible reason: ", e$message)
         )
         insight::format_alert(msg)
@@ -612,7 +670,8 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
   ## TODO: check if effectsize prefixes are correct @mattansb
 
   # Find prefix for CI-columns
-  prefix <- switch(es_type,
+  prefix <- switch(
+    es_type,
     cohens_g = "Cohens_",
     cramers_v = "Cramers_",
     phi = "phi_",
@@ -637,10 +696,28 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
 
   # reorder
   col_order <- c(
-    "Parameter1", "Parameter2", "Parameter", "F", "Chi2", "Group",
-    "Mean_Parameter1", "Mean_Parameter2", "Mean_Group1", "Mean_Group2", "mu",
-    "Difference", "W", "CI_low", "CI_high", es_columns, "t", "df", "df_error",
-    "p", "Method", "method"
+    "Parameter1",
+    "Parameter2",
+    "Parameter",
+    "F",
+    "Chi2",
+    "Group",
+    "Mean_Parameter1",
+    "Mean_Parameter2",
+    "Mean_Group1",
+    "Mean_Group2",
+    "mu",
+    "Difference",
+    "W",
+    "CI_low",
+    "CI_high",
+    es_columns,
+    "t",
+    "df",
+    "df_error",
+    "p",
+    "Method",
+    "method"
   )
   out <- out[col_order[col_order %in% names(out)]]
   out
@@ -660,12 +737,21 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
     if (is.null(model$null.value)) {
       h1_text <- paste0(h1_text, model$alternative)
     } else if (length(model$null.value) == 1L) {
-      alt.char <- switch(model$alternative,
+      alt.char <- switch(
+        model$alternative,
         two.sided = "not equal to",
         less = "less than",
         greater = "greater than"
       )
-      h1_text <- paste0(h1_text, "true ", names(model$null.value), " is ", alt.char, " ", model$null.value)
+      h1_text <- paste0(
+        h1_text,
+        "true ",
+        names(model$null.value),
+        " is ",
+        alt.char,
+        " ",
+        model$null.value
+      )
     } else {
       h1_text <- paste0(h1_text, model$alternative)
     }
@@ -713,11 +799,7 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
 
 
 #' @keywords internal
-.add_htest_attributes <- function(params,
-                                  model,
-                                  p_adjust = NULL,
-                                  verbose = TRUE,
-                                  ...) {
+.add_htest_attributes <- function(params, model, p_adjust = NULL, verbose = TRUE, ...) {
   dot.arguments <- lapply(match.call(expand.dots = FALSE)[["..."]], function(x) x)
 
   attr(params, "p_adjust") <- p_adjust

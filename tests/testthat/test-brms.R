@@ -29,8 +29,16 @@ test_that("mp, dpars in total effects", {
   expect_named(
     out,
     c(
-      "Group", "Level", "Parameter", "Median", "CI", "CI_low", "CI_high",
-      "pd", "Component", "Effects"
+      "Group",
+      "Level",
+      "Parameter",
+      "Median",
+      "CI",
+      "CI_low",
+      "CI_high",
+      "pd",
+      "Component",
+      "Effects"
     )
   )
 
@@ -40,8 +48,16 @@ test_that("mp, dpars in total effects", {
   expect_named(
     out,
     c(
-      "Parameter", "Component", "Median", "CI", "CI_low", "CI_high",
-      "pd", "Rhat", "ESS", "Group"
+      "Parameter",
+      "Component",
+      "Median",
+      "CI",
+      "CI_low",
+      "CI_high",
+      "pd",
+      "Rhat",
+      "ESS_tail",
+      "Group"
     )
   )
 
@@ -51,8 +67,17 @@ test_that("mp, dpars in total effects", {
   expect_named(
     out,
     c(
-      "Parameter", "Effects", "Component", "Median", "CI", "CI_low",
-      "CI_high", "pd", "Rhat", "ESS", "Group"
+      "Parameter",
+      "Effects",
+      "Component",
+      "Median",
+      "CI",
+      "CI_low",
+      "CI_high",
+      "pd",
+      "Rhat",
+      "ESS_tail",
+      "Group"
     )
   )
 })
