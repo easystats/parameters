@@ -649,7 +649,7 @@ predict(efa, verbose = FALSE)
 # \donttest{
 # Automated number of components
 factor_analysis(mtcars[, 1:4], n = "auto")
-#> Warning: convergence not obtained in GPFoblq. 1000 iterations used.
+#> Warning: Convergence not obtained in GPFoblq. 1000 iterations used.
 #> # Rotated loadings from Factor Analysis (oblimin-rotation)
 #> 
 #> Variable |   MR1 | Complexity | Uniqueness
