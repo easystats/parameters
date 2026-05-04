@@ -251,7 +251,8 @@ learning.
 
 #### Partition the data
 
-The data can be easily split into two sets with the `data_partition()`
+The data can be easily split into two sets with the
+[`data_partition()`](https://easystats.github.io/datawizard/reference/data_partition.html)
 function, through which we will use 70% of the sample as training and
 the rest as test.
 

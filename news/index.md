@@ -1288,14 +1288,17 @@ CRAN release: 2021-10-18
 - Following functions were moved to the new *datawizard* package and are
   now re-exported from *parameters* package:
 
-  - `center()`
+  - [`center()`](https://easystats.github.io/datawizard/reference/center.html)
 
   - `convert_data_to_numeric()`
 
-  - `data_partition()`
+  - [`data_partition()`](https://easystats.github.io/datawizard/reference/data_partition.html)
 
   - [`demean()`](https://easystats.github.io/datawizard/reference/demean.html)
-    (and its aliases `degroup()` and `detrend()`)
+    (and its aliases
+    [`degroup()`](https://easystats.github.io/datawizard/reference/demean.html)
+    and
+    [`detrend()`](https://easystats.github.io/datawizard/reference/demean.html))
 
   - [`kurtosis()`](https://easystats.github.io/datawizard/reference/skewness.html)
 
@@ -1303,7 +1306,7 @@ CRAN release: 2021-10-18
 
   - [`skewness()`](https://easystats.github.io/datawizard/reference/skewness.html)
 
-  - `smoothness()`
+  - [`smoothness()`](https://easystats.github.io/datawizard/reference/smoothness.html)
 
 Note that these functions will be removed in the next release of
 *parameters* package and they are currently being re-exported only as a

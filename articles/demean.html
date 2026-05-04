@@ -100,6 +100,13 @@ data structures, when macro-indicators (or level-2 predictors, or
 higher-level units, or more general: <em>group-level predictors</em>)
 are used as covariates and the model suffers from <strong>heterogeneity
 bias</strong> <span class="citation">(Bell and Jones 2015)</span>.</p>
+<blockquote>
+<p><strong>Note:</strong> Throughout this example, we use
+<code>display(format = "tt")</code> to display table output in markdown
+format, using the <strong>tinytable</strong> package as the backend. See
+<a href="https://easystats.github.io/insight/articles/display.html#displaying-tables-with-display" class="external-link">this
+vignette</a> for more details on output displays.</p>
+</blockquote>
 <div class="section level2">
 <h2 id="sample-data-used-in-this-vignette">Sample data used in this vignette<a class="anchor" aria-label="anchor" href="#sample-data-used-in-this-vignette"></a>
 </h2>
@@ -171,7 +178,8 @@ such, FE avoids estimating a parameter for each higher-level unit.</p>
 <h3 id="computing-the-de-meaned-and-group-meaned-variables">Computing the de-meaned and group-meaned variables<a class="anchor" aria-label="anchor" href="#computing-the-de-meaned-and-group-meaned-variables"></a>
 </h3>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">qol_cancer</span> <span class="op">&lt;-</span> <span class="fu">datawizard</span><span class="fu">::</span><span class="fu"><a href="https://easystats.github.io/datawizard/reference/demean.html" class="external-link">demean</a></span><span class="op">(</span><span class="va">qol_cancer</span>, select <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"phq4"</span>, <span class="st">"QoL"</span><span class="op">)</span>, by <span class="op">=</span> <span class="st">"ID"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://easystats.github.io/datawizard/" class="external-link">datawizard</a></span><span class="op">)</span></span>
+<span><span class="va">qol_cancer</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://easystats.github.io/datawizard/reference/demean.html" class="external-link">demean</a></span><span class="op">(</span><span class="va">qol_cancer</span>, select <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"phq4"</span>, <span class="st">"QoL"</span><span class="op">)</span>, by <span class="op">=</span> <span class="st">"ID"</span><span class="op">)</span></span></code></pre></div>
 <p>Now we have:</p>
 <ul>
 <li><p><code>phq4_between</code>: time-varying variable with the mean of
@@ -195,12 +203,66 @@ indicating the “within-subject” effect)</p></li>
 <span><span class="op">)</span></span>
 <span><span class="co"># we use only the first two rows, because the remaining rows are</span></span>
 <span><span class="co"># the estimates for "ID", which is not of interest here...</span></span>
-<span><span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">fe_model1</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span>, <span class="op">]</span></span>
-<span><span class="co">#&gt; Parameter   | Coefficient |   SE |         95% CI | t(374) |      p</span></span>
-<span><span class="co">#&gt; -------------------------------------------------------------------</span></span>
-<span><span class="co">#&gt; time        |        1.09 | 0.64 | [-0.17,  2.34] |   1.70 | 0.089 </span></span>
-<span><span class="co">#&gt; phq4 within |       -3.66 | 0.41 | [-4.46, -2.86] |  -8.95 | &lt; .001</span></span>
-<span></span>
+<span><span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">fe_model1</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span>, <span class="op">]</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">display</a></span><span class="op">(</span>format <span class="op">=</span> <span class="st">"tt"</span><span class="op">)</span></span></code></pre></div>
+<!-- preamble start -->
+
+    <script src="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.js"></script><script>
+      // Create table-specific functions using external factory
+      const tableFns_5y9p9f3cy8vuib7ty05p = TinyTable.createTableFunctions("tinytable_5y9p9f3cy8vuib7ty05p");
+      // tinytable span after
+      window.addEventListener('load', function () {
+          var cellsToStyle = [
+            // tinytable style arrays after
+          { positions: [ { i: '2', j: 1 }, { i: '2', j: 2 }, { i: '2', j: 3 }, { i: '2', j: 4 }, { i: '2', j: 5 }, { i: '2', j: 6 } ], css_id: 'tinytable_css_b4o4kxnxhsee8fcyl37p',}, 
+          { positions: [ { i: '0', j: 1 }, { i: '0', j: 2 }, { i: '0', j: 3 }, { i: '0', j: 4 }, { i: '0', j: 5 }, { i: '0', j: 6 } ], css_id: 'tinytable_css_nuk5s696syn25xxskl4g',}, 
+          ];
+
+          // Loop over the arrays to style the cells
+          cellsToStyle.forEach(function (group) {
+              group.positions.forEach(function (cell) {
+                  tableFns_5y9p9f3cy8vuib7ty05p.styleCell(cell.i, cell.j, group.css_id);
+              });
+          });
+      });
+    </script><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.css">
+<style>
+    /* tinytable css entries after */
+    #tinytable_5y9p9f3cy8vuib7ty05p td.tinytable_css_b4o4kxnxhsee8fcyl37p, #tinytable_5y9p9f3cy8vuib7ty05p th.tinytable_css_b4o4kxnxhsee8fcyl37p {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%;  }
+    #tinytable_5y9p9f3cy8vuib7ty05p td.tinytable_css_nuk5s696syn25xxskl4g, #tinytable_5y9p9f3cy8vuib7ty05p th.tinytable_css_nuk5s696syn25xxskl4g {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%;  }
+    </style>
+<div class="container">
+      <table class="table tinytable" id="tinytable_5y9p9f3cy8vuib7ty05p" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+<thead><tr>
+<th scope="col" data-row="0" data-col="1">Parameter</th>
+                <th scope="col" data-row="0" data-col="2">Coefficient</th>
+                <th scope="col" data-row="0" data-col="3">SE</th>
+                <th scope="col" data-row="0" data-col="4">95% CI</th>
+                <th scope="col" data-row="0" data-col="5">t(374)</th>
+                <th scope="col" data-row="0" data-col="6">p</th>
+              </tr></thead>
+<tbody>
+<tr>
+<td data-row="1" data-col="1">time</td>
+                  <td data-row="1" data-col="2">1.09</td>
+                  <td data-row="1" data-col="3">0.64</td>
+                  <td data-row="1" data-col="4">(-0.17, 2.34)</td>
+                  <td data-row="1" data-col="5">1.70</td>
+                  <td data-row="1" data-col="6">0.089</td>
+                </tr>
+<tr>
+<td data-row="2" data-col="1">phq4 within</td>
+                  <td data-row="2" data-col="2">-3.66</td>
+                  <td data-row="2" data-col="3">0.41</td>
+                  <td data-row="2" data-col="4">(-4.46, -2.86)</td>
+                  <td data-row="2" data-col="5">-8.95</td>
+                  <td data-row="2" data-col="6">&lt; .001</td>
+                </tr>
+</tbody>
+</table>
+</div>
+<!-- hack to avoid NA insertion in last line -->
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
 <span></span>
 <span><span class="co"># instead of removing the intercept, we could also use the</span></span>
 <span><span class="co"># de-meaned response...</span></span>
@@ -208,25 +270,131 @@ indicating the “within-subject” effect)</p></li>
 <span>  <span class="va">QoL_within</span> <span class="op">~</span> <span class="va">time</span> <span class="op">+</span> <span class="va">phq4_within</span> <span class="op">+</span> <span class="va">ID</span>,</span>
 <span>  data <span class="op">=</span> <span class="va">qol_cancer</span></span>
 <span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">fe_model2</span><span class="op">)</span><span class="op">[</span><span class="fl">2</span><span class="op">:</span><span class="fl">3</span>, <span class="op">]</span></span>
-<span><span class="co">#&gt; Parameter   | Coefficient |   SE |         95% CI | t(374) |      p</span></span>
-<span><span class="co">#&gt; -------------------------------------------------------------------</span></span>
-<span><span class="co">#&gt; time        |        1.09 | 0.64 | [-0.17,  2.34] |   1.70 | 0.089 </span></span>
-<span><span class="co">#&gt; phq4 within |       -3.66 | 0.41 | [-4.46, -2.86] |  -8.95 | &lt; .001</span></span>
-<span></span>
+<span><span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">fe_model2</span><span class="op">)</span><span class="op">[</span><span class="fl">2</span><span class="op">:</span><span class="fl">3</span>, <span class="op">]</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">display</a></span><span class="op">(</span>format <span class="op">=</span> <span class="st">"tt"</span><span class="op">)</span></span></code></pre></div>
+<!-- preamble start -->
+
+    <script src="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.js"></script><script>
+      // Create table-specific functions using external factory
+      const tableFns_8ekkl354istvx52htw4c = TinyTable.createTableFunctions("tinytable_8ekkl354istvx52htw4c");
+      // tinytable span after
+      window.addEventListener('load', function () {
+          var cellsToStyle = [
+            // tinytable style arrays after
+          { positions: [ { i: '2', j: 1 }, { i: '2', j: 2 }, { i: '2', j: 3 }, { i: '2', j: 4 }, { i: '2', j: 5 }, { i: '2', j: 6 } ], css_id: 'tinytable_css_iouwdnfxkwz20xl31t13',}, 
+          { positions: [ { i: '0', j: 1 }, { i: '0', j: 2 }, { i: '0', j: 3 }, { i: '0', j: 4 }, { i: '0', j: 5 }, { i: '0', j: 6 } ], css_id: 'tinytable_css_fszrx5s0h1n4vp4tp928',}, 
+          ];
+
+          // Loop over the arrays to style the cells
+          cellsToStyle.forEach(function (group) {
+              group.positions.forEach(function (cell) {
+                  tableFns_8ekkl354istvx52htw4c.styleCell(cell.i, cell.j, group.css_id);
+              });
+          });
+      });
+    </script><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.css">
+<style>
+    /* tinytable css entries after */
+    #tinytable_8ekkl354istvx52htw4c td.tinytable_css_iouwdnfxkwz20xl31t13, #tinytable_8ekkl354istvx52htw4c th.tinytable_css_iouwdnfxkwz20xl31t13 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%;  }
+    #tinytable_8ekkl354istvx52htw4c td.tinytable_css_fszrx5s0h1n4vp4tp928, #tinytable_8ekkl354istvx52htw4c th.tinytable_css_fszrx5s0h1n4vp4tp928 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%;  }
+    </style>
+<div class="container">
+      <table class="table tinytable" id="tinytable_8ekkl354istvx52htw4c" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+<thead><tr>
+<th scope="col" data-row="0" data-col="1">Parameter</th>
+                <th scope="col" data-row="0" data-col="2">Coefficient</th>
+                <th scope="col" data-row="0" data-col="3">SE</th>
+                <th scope="col" data-row="0" data-col="4">95% CI</th>
+                <th scope="col" data-row="0" data-col="5">t(374)</th>
+                <th scope="col" data-row="0" data-col="6">p</th>
+              </tr></thead>
+<tbody>
+<tr>
+<td data-row="1" data-col="1">time</td>
+                  <td data-row="1" data-col="2">1.09</td>
+                  <td data-row="1" data-col="3">0.64</td>
+                  <td data-row="1" data-col="4">(-0.17, 2.34)</td>
+                  <td data-row="1" data-col="5">1.70</td>
+                  <td data-row="1" data-col="6">0.089</td>
+                </tr>
+<tr>
+<td data-row="2" data-col="1">phq4 within</td>
+                  <td data-row="2" data-col="2">-3.66</td>
+                  <td data-row="2" data-col="3">0.41</td>
+                  <td data-row="2" data-col="4">(-4.46, -2.86)</td>
+                  <td data-row="2" data-col="5">-8.95</td>
+                  <td data-row="2" data-col="6">&lt; .001</td>
+                </tr>
+</tbody>
+</table>
+</div>
+<!-- hack to avoid NA insertion in last line -->
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
 <span><span class="co"># we compare the results with those from the "lfe"-package for panel data</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/r-econometrics/lfe" class="external-link">lfe</a></span><span class="op">)</span></span>
 <span><span class="va">fe_model3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lfe/man/felm.html" class="external-link">felm</a></span><span class="op">(</span></span>
 <span>  <span class="va">QoL</span> <span class="op">~</span> <span class="va">time</span> <span class="op">+</span> <span class="va">phq4</span> <span class="op">|</span> <span class="va">ID</span>,</span>
 <span>  data <span class="op">=</span> <span class="va">qol_cancer</span></span>
 <span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">fe_model3</span><span class="op">)</span></span>
-<span><span class="co">#&gt; # Fixed Effects</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Parameter | Coefficient |   SE |         95% CI | t(374) |      p</span></span>
-<span><span class="co">#&gt; -----------------------------------------------------------------</span></span>
-<span><span class="co">#&gt; time      |        1.09 | 0.64 | [-0.17,  2.34] |   1.70 | 0.089 </span></span>
-<span><span class="co">#&gt; phq4      |       -3.66 | 0.41 | [-4.46, -2.86] |  -8.95 | &lt; .001</span></span></code></pre></div>
+<span><span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">fe_model3</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">display</a></span><span class="op">(</span>format <span class="op">=</span> <span class="st">"tt"</span><span class="op">)</span></span></code></pre></div>
+<!-- preamble start -->
+
+    <script src="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.js"></script><script>
+      // Create table-specific functions using external factory
+      const tableFns_9c3l90wmlevn8021nkwx = TinyTable.createTableFunctions("tinytable_9c3l90wmlevn8021nkwx");
+      // tinytable span after
+      window.addEventListener('load', function () {
+          var cellsToStyle = [
+            // tinytable style arrays after
+          { positions: [ { i: '2', j: 1 }, { i: '2', j: 2 }, { i: '2', j: 3 }, { i: '2', j: 4 }, { i: '2', j: 5 }, { i: '2', j: 6 } ], css_id: 'tinytable_css_owgxjdse3ee8szwh88fn',}, 
+          { positions: [ { i: '0', j: 1 }, { i: '0', j: 2 }, { i: '0', j: 3 }, { i: '0', j: 4 }, { i: '0', j: 5 }, { i: '0', j: 6 } ], css_id: 'tinytable_css_d6014igldjx55np6p3ak',}, 
+          ];
+
+          // Loop over the arrays to style the cells
+          cellsToStyle.forEach(function (group) {
+              group.positions.forEach(function (cell) {
+                  tableFns_9c3l90wmlevn8021nkwx.styleCell(cell.i, cell.j, group.css_id);
+              });
+          });
+      });
+    </script><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.css">
+<style>
+    /* tinytable css entries after */
+    #tinytable_9c3l90wmlevn8021nkwx td.tinytable_css_owgxjdse3ee8szwh88fn, #tinytable_9c3l90wmlevn8021nkwx th.tinytable_css_owgxjdse3ee8szwh88fn {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%;  }
+    #tinytable_9c3l90wmlevn8021nkwx td.tinytable_css_d6014igldjx55np6p3ak, #tinytable_9c3l90wmlevn8021nkwx th.tinytable_css_d6014igldjx55np6p3ak {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%;  }
+    </style>
+<div class="container">
+      <table class="table tinytable" id="tinytable_9c3l90wmlevn8021nkwx" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+<caption>Model Summary</caption>
+        <thead><tr>
+<th scope="col" data-row="0" data-col="1">Parameter</th>
+                <th scope="col" data-row="0" data-col="2">Coefficient</th>
+                <th scope="col" data-row="0" data-col="3">SE</th>
+                <th scope="col" data-row="0" data-col="4">95% CI</th>
+                <th scope="col" data-row="0" data-col="5">t(374)</th>
+                <th scope="col" data-row="0" data-col="6">p</th>
+              </tr></thead>
+<tbody>
+<tr>
+<td data-row="1" data-col="1">time</td>
+                  <td data-row="1" data-col="2">1.09</td>
+                  <td data-row="1" data-col="3">0.64</td>
+                  <td data-row="1" data-col="4">(-0.17, 2.34)</td>
+                  <td data-row="1" data-col="5">1.70</td>
+                  <td data-row="1" data-col="6">0.089</td>
+                </tr>
+<tr>
+<td data-row="2" data-col="1">phq4</td>
+                  <td data-row="2" data-col="2">-3.66</td>
+                  <td data-row="2" data-col="3">0.41</td>
+                  <td data-row="2" data-col="4">(-4.46, -2.86)</td>
+                  <td data-row="2" data-col="5">-8.95</td>
+                  <td data-row="2" data-col="6">&lt; .001</td>
+                </tr>
+</tbody>
+</table>
+</div>
+<!-- hack to avoid NA insertion in last line -->
 <p>As we can see, the <em>within-effect</em> of PHQ-4 is
 <code>-3.66</code>, hence the mean of the change for an average
 individual case in our sample (or, the “net” effect), is
@@ -277,35 +445,186 @@ Mundlak <span class="citation">(Mundlak 1978)</span>.</p></li>
 </ul>
 <p>For now, we will follow the last recommendation and use the within-
 and between-version of <code>phq4</code>.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/lme4/lme4/" class="external-link">lme4</a></span><span class="op">)</span></span>
 <span><span class="va">mixed_1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html" class="external-link">lmer</a></span><span class="op">(</span></span>
 <span>  <span class="va">QoL</span> <span class="op">~</span> <span class="va">time</span> <span class="op">+</span> <span class="va">phq4_within</span> <span class="op">+</span> <span class="va">phq4_between</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">ID</span><span class="op">)</span>,</span>
 <span>  data <span class="op">=</span> <span class="va">qol_cancer</span></span>
 <span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">mixed_1</span><span class="op">)</span></span>
-<span><span class="co">#&gt; # Fixed Effects</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Parameter    | Coefficient |   SE |         95% CI | t(558) |      p</span></span>
-<span><span class="co">#&gt; --------------------------------------------------------------------</span></span>
-<span><span class="co">#&gt; (Intercept)  |       71.53 | 1.56 | [68.48, 74.59] |  45.98 | &lt; .001</span></span>
-<span><span class="co">#&gt; time         |        1.09 | 0.64 | [-0.17,  2.34] |   1.70 | 0.089 </span></span>
-<span><span class="co">#&gt; phq4 within  |       -3.66 | 0.41 | [-4.46, -2.86] |  -8.95 | &lt; .001</span></span>
-<span><span class="co">#&gt; phq4 between |       -6.28 | 0.50 | [-7.27, -5.30] | -12.53 | &lt; .001</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; # Random Effects</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Parameter          | Coefficient |   SE |         95% CI</span></span>
-<span><span class="co">#&gt; --------------------------------------------------------</span></span>
-<span><span class="co">#&gt; SD (Intercept: ID) |        9.88 | 0.80 | [ 8.43, 11.58]</span></span>
-<span><span class="co">#&gt; SD (Residual)      |       12.37 | 0.45 | [11.51, 13.28]</span></span>
-<span></span>
+<span><span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">mixed_1</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">display</a></span><span class="op">(</span>format <span class="op">=</span> <span class="st">"tt"</span>, by <span class="op">=</span> <span class="st">"Component"</span><span class="op">)</span></span></code></pre></div>
+<!-- preamble start -->
+
+    <script src="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.js"></script><script>
+      // Create table-specific functions using external factory
+      const tableFns_oykv9jhksn2ocwmissk2 = TinyTable.createTableFunctions("tinytable_oykv9jhksn2ocwmissk2");
+      // tinytable span after
+      window.addEventListener('load', function () { tableFns_oykv9jhksn2ocwmissk2.spanCell(6, 1, 1, 6) })
+      window.addEventListener('load', function () { tableFns_oykv9jhksn2ocwmissk2.spanCell(1, 1, 1, 6) })
+      window.addEventListener('load', function () {
+          var cellsToStyle = [
+            // tinytable style arrays after
+          { positions: [ { i: '8', j: 2 }, { i: '8', j: 3 }, { i: '8', j: 4 }, { i: '8', j: 5 }, { i: '8', j: 6 } ], css_id: 'tinytable_css_zyb2brr16rdg3a5kzsvs',}, 
+          { positions: [ { i: '8', j: 1 } ], css_id: 'tinytable_css_zinkh4a4cbm56hcag4z5',}, 
+          { positions: [ { i: '2', j: 1 }, { i: '3', j: 1 }, { i: '4', j: 1 }, { i: '5', j: 1 }, { i: '7', j: 1 } ], css_id: 'tinytable_css_e515lf5an0r6ki5nus7b',}, 
+          { positions: [ { i: '0', j: 1 }, { i: '0', j: 2 }, { i: '0', j: 3 }, { i: '0', j: 4 }, { i: '0', j: 5 }, { i: '0', j: 6 } ], css_id: 'tinytable_css_r78rf88lz5d0attgszjl',}, 
+          ];
+
+          // Loop over the arrays to style the cells
+          cellsToStyle.forEach(function (group) {
+              group.positions.forEach(function (cell) {
+                  tableFns_oykv9jhksn2ocwmissk2.styleCell(cell.i, cell.j, group.css_id);
+              });
+          });
+      });
+    </script><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.css">
+<style>
+    /* tinytable css entries after */
+    #tinytable_oykv9jhksn2ocwmissk2 td.tinytable_css_zyb2brr16rdg3a5kzsvs, #tinytable_oykv9jhksn2ocwmissk2 th.tinytable_css_zyb2brr16rdg3a5kzsvs {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%;  }
+    #tinytable_oykv9jhksn2ocwmissk2 td.tinytable_css_zinkh4a4cbm56hcag4z5, #tinytable_oykv9jhksn2ocwmissk2 th.tinytable_css_zinkh4a4cbm56hcag4z5 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; padding-left: 2em }
+    #tinytable_oykv9jhksn2ocwmissk2 td.tinytable_css_e515lf5an0r6ki5nus7b, #tinytable_oykv9jhksn2ocwmissk2 th.tinytable_css_e515lf5an0r6ki5nus7b { padding-left: 2em }
+    #tinytable_oykv9jhksn2ocwmissk2 td.tinytable_css_r78rf88lz5d0attgszjl, #tinytable_oykv9jhksn2ocwmissk2 th.tinytable_css_r78rf88lz5d0attgszjl {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%;  }
+    </style>
+<div class="container">
+      <table class="table tinytable" id="tinytable_oykv9jhksn2ocwmissk2" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+<caption>Model Summary</caption>
+        <thead><tr>
+<th scope="col" data-row="0" data-col="1">Parameter</th>
+                <th scope="col" data-row="0" data-col="2">Coefficient</th>
+                <th scope="col" data-row="0" data-col="3">SE</th>
+                <th scope="col" data-row="0" data-col="4">95% CI</th>
+                <th scope="col" data-row="0" data-col="5">t(558)</th>
+                <th scope="col" data-row="0" data-col="6">p</th>
+              </tr></thead>
+<tbody>
+<tr>
+<td data-row="1" data-col="1">Fixed Effects </td>
+                  <td data-row="1" data-col="2">Fixed Effects </td>
+                  <td data-row="1" data-col="3">Fixed Effects </td>
+                  <td data-row="1" data-col="4">Fixed Effects </td>
+                  <td data-row="1" data-col="5">Fixed Effects </td>
+                  <td data-row="1" data-col="6">Fixed Effects </td>
+                </tr>
+<tr>
+<td data-row="2" data-col="1">(Intercept)</td>
+                  <td data-row="2" data-col="2">71.53</td>
+                  <td data-row="2" data-col="3">1.56</td>
+                  <td data-row="2" data-col="4">(68.48, 74.59)</td>
+                  <td data-row="2" data-col="5">45.98</td>
+                  <td data-row="2" data-col="6">&lt; .001</td>
+                </tr>
+<tr>
+<td data-row="3" data-col="1">time</td>
+                  <td data-row="3" data-col="2">1.09</td>
+                  <td data-row="3" data-col="3">0.64</td>
+                  <td data-row="3" data-col="4">(-0.17, 2.34)</td>
+                  <td data-row="3" data-col="5">1.70</td>
+                  <td data-row="3" data-col="6">0.089</td>
+                </tr>
+<tr>
+<td data-row="4" data-col="1">phq4 within</td>
+                  <td data-row="4" data-col="2">-3.66</td>
+                  <td data-row="4" data-col="3">0.41</td>
+                  <td data-row="4" data-col="4">(-4.46, -2.86)</td>
+                  <td data-row="4" data-col="5">-8.95</td>
+                  <td data-row="4" data-col="6">&lt; .001</td>
+                </tr>
+<tr>
+<td data-row="5" data-col="1">phq4 between</td>
+                  <td data-row="5" data-col="2">-6.28</td>
+                  <td data-row="5" data-col="3">0.50</td>
+                  <td data-row="5" data-col="4">(-7.27, -5.30)</td>
+                  <td data-row="5" data-col="5">-12.53</td>
+                  <td data-row="5" data-col="6">&lt; .001</td>
+                </tr>
+<tr>
+<td data-row="6" data-col="1">Random Effects </td>
+                  <td data-row="6" data-col="2">Random Effects </td>
+                  <td data-row="6" data-col="3">Random Effects </td>
+                  <td data-row="6" data-col="4">Random Effects </td>
+                  <td data-row="6" data-col="5">Random Effects </td>
+                  <td data-row="6" data-col="6">Random Effects </td>
+                </tr>
+<tr>
+<td data-row="7" data-col="1">SD (Intercept: ID)</td>
+                  <td data-row="7" data-col="2">9.88</td>
+                  <td data-row="7" data-col="3">0.80</td>
+                  <td data-row="7" data-col="4">(8.43, 11.58)</td>
+                  <td data-row="7" data-col="5"></td>
+                  <td data-row="7" data-col="6"></td>
+                </tr>
+<tr>
+<td data-row="8" data-col="1">SD (Residual)</td>
+                  <td data-row="8" data-col="2">12.37</td>
+                  <td data-row="8" data-col="3">0.45</td>
+                  <td data-row="8" data-col="4">(11.51, 13.28)</td>
+                  <td data-row="8" data-col="5"></td>
+                  <td data-row="8" data-col="6"></td>
+                </tr>
+</tbody>
+</table>
+</div>
+<!-- hack to avoid NA insertion in last line -->
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
 <span><span class="co"># compare to FE-model</span></span>
-<span><span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">fe_model1</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span>, <span class="op">]</span></span>
-<span><span class="co">#&gt; Parameter   | Coefficient |   SE |         95% CI | t(374) |      p</span></span>
-<span><span class="co">#&gt; -------------------------------------------------------------------</span></span>
-<span><span class="co">#&gt; time        |        1.09 | 0.64 | [-0.17,  2.34] |   1.70 | 0.089 </span></span>
-<span><span class="co">#&gt; phq4 within |       -3.66 | 0.41 | [-4.46, -2.86] |  -8.95 | &lt; .001</span></span></code></pre></div>
+<span><span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">fe_model1</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span>, <span class="op">]</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">display</a></span><span class="op">(</span>format <span class="op">=</span> <span class="st">"tt"</span><span class="op">)</span></span></code></pre></div>
+<!-- preamble start -->
+
+    <script src="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.js"></script><script>
+      // Create table-specific functions using external factory
+      const tableFns_hps0sv58ocxu06fie91l = TinyTable.createTableFunctions("tinytable_hps0sv58ocxu06fie91l");
+      // tinytable span after
+      window.addEventListener('load', function () {
+          var cellsToStyle = [
+            // tinytable style arrays after
+          { positions: [ { i: '2', j: 1 }, { i: '2', j: 2 }, { i: '2', j: 3 }, { i: '2', j: 4 }, { i: '2', j: 5 }, { i: '2', j: 6 } ], css_id: 'tinytable_css_fw3r5wiggnhdgy4bk4xs',}, 
+          { positions: [ { i: '0', j: 1 }, { i: '0', j: 2 }, { i: '0', j: 3 }, { i: '0', j: 4 }, { i: '0', j: 5 }, { i: '0', j: 6 } ], css_id: 'tinytable_css_8w9vaobc5zwhwauktylu',}, 
+          ];
+
+          // Loop over the arrays to style the cells
+          cellsToStyle.forEach(function (group) {
+              group.positions.forEach(function (cell) {
+                  tableFns_hps0sv58ocxu06fie91l.styleCell(cell.i, cell.j, group.css_id);
+              });
+          });
+      });
+    </script><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.css">
+<style>
+    /* tinytable css entries after */
+    #tinytable_hps0sv58ocxu06fie91l td.tinytable_css_fw3r5wiggnhdgy4bk4xs, #tinytable_hps0sv58ocxu06fie91l th.tinytable_css_fw3r5wiggnhdgy4bk4xs {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%;  }
+    #tinytable_hps0sv58ocxu06fie91l td.tinytable_css_8w9vaobc5zwhwauktylu, #tinytable_hps0sv58ocxu06fie91l th.tinytable_css_8w9vaobc5zwhwauktylu {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%;  }
+    </style>
+<div class="container">
+      <table class="table tinytable" id="tinytable_hps0sv58ocxu06fie91l" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+<thead><tr>
+<th scope="col" data-row="0" data-col="1">Parameter</th>
+                <th scope="col" data-row="0" data-col="2">Coefficient</th>
+                <th scope="col" data-row="0" data-col="3">SE</th>
+                <th scope="col" data-row="0" data-col="4">95% CI</th>
+                <th scope="col" data-row="0" data-col="5">t(374)</th>
+                <th scope="col" data-row="0" data-col="6">p</th>
+              </tr></thead>
+<tbody>
+<tr>
+<td data-row="1" data-col="1">time</td>
+                  <td data-row="1" data-col="2">1.09</td>
+                  <td data-row="1" data-col="3">0.64</td>
+                  <td data-row="1" data-col="4">(-0.17, 2.34)</td>
+                  <td data-row="1" data-col="5">1.70</td>
+                  <td data-row="1" data-col="6">0.089</td>
+                </tr>
+<tr>
+<td data-row="2" data-col="1">phq4 within</td>
+                  <td data-row="2" data-col="2">-3.66</td>
+                  <td data-row="2" data-col="3">0.41</td>
+                  <td data-row="2" data-col="4">(-4.46, -2.86)</td>
+                  <td data-row="2" data-col="5">-8.95</td>
+                  <td data-row="2" data-col="6">&lt; .001</td>
+                </tr>
+</tbody>
+</table>
+</div>
+<!-- hack to avoid NA insertion in last line -->
 <p>As we can see, the estimates and standard errors are identical. The
 argument <em>against</em> the use of mixed models, i.e. that using mixed
 models for panel data will yield biased estimates and standard errors,
@@ -318,24 +637,104 @@ within-effects, between-effects or random effects variation. A mixed
 models approach can model the causes of endogeneity explicitly by
 including the (separated) within- and between-effects of time-varying
 fixed effects and including time-constant fixed effects.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mixed_2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html" class="external-link">lmer</a></span><span class="op">(</span></span>
 <span>  <span class="va">QoL</span> <span class="op">~</span> <span class="va">time</span> <span class="op">+</span> <span class="va">phq4_within</span> <span class="op">+</span> <span class="va">phq4_between</span> <span class="op">+</span> <span class="va">education</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">+</span> <span class="va">time</span> <span class="op">|</span> <span class="va">ID</span><span class="op">)</span>,</span>
 <span>  data <span class="op">=</span> <span class="va">qol_cancer</span></span>
 <span><span class="op">)</span></span>
 <span><span class="co"># effects = "fixed" will not display random effects, but split the</span></span>
 <span><span class="co"># fixed effects into its between- and within-effects components.</span></span>
-<span><span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">mixed_2</span>, effects <span class="op">=</span> <span class="st">"fixed"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; # Fixed Effects</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Parameter        | Coefficient |   SE |         95% CI | t(554) |      p</span></span>
-<span><span class="co">#&gt; ------------------------------------------------------------------------</span></span>
-<span><span class="co">#&gt; (Intercept)      |       67.36 | 2.48 | [62.48, 72.23] |  27.15 | &lt; .001</span></span>
-<span><span class="co">#&gt; time             |        1.09 | 0.66 | [-0.21,  2.39] |   1.65 | 0.099 </span></span>
-<span><span class="co">#&gt; phq4 within      |       -3.72 | 0.41 | [-4.52, -2.92] |  -9.10 | &lt; .001</span></span>
-<span><span class="co">#&gt; phq4 between     |       -6.13 | 0.52 | [-7.14, -5.11] | -11.84 | &lt; .001</span></span>
-<span><span class="co">#&gt; education [mid]  |        5.01 | 2.35 | [ 0.40,  9.62] |   2.14 | 0.033 </span></span>
-<span><span class="co">#&gt; education [high] |        5.52 | 2.75 | [ 0.11, 10.93] |   2.00 | 0.046</span></span></code></pre></div>
+<span><span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">mixed_2</span>, effects <span class="op">=</span> <span class="st">"fixed"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">display</a></span><span class="op">(</span>format <span class="op">=</span> <span class="st">"tt"</span><span class="op">)</span></span></code></pre></div>
+<!-- preamble start -->
+
+    <script src="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.js"></script><script>
+      // Create table-specific functions using external factory
+      const tableFns_4ruzykjx4c9d9hk120z9 = TinyTable.createTableFunctions("tinytable_4ruzykjx4c9d9hk120z9");
+      // tinytable span after
+      window.addEventListener('load', function () {
+          var cellsToStyle = [
+            // tinytable style arrays after
+          { positions: [ { i: '6', j: 1 }, { i: '6', j: 2 }, { i: '6', j: 3 }, { i: '6', j: 4 }, { i: '6', j: 5 }, { i: '6', j: 6 } ], css_id: 'tinytable_css_jo2ml454l77pui3hjxl8',}, 
+          { positions: [ { i: '0', j: 1 }, { i: '0', j: 2 }, { i: '0', j: 3 }, { i: '0', j: 4 }, { i: '0', j: 5 }, { i: '0', j: 6 } ], css_id: 'tinytable_css_1jq6g2casxiayzrcqgkf',}, 
+          ];
+
+          // Loop over the arrays to style the cells
+          cellsToStyle.forEach(function (group) {
+              group.positions.forEach(function (cell) {
+                  tableFns_4ruzykjx4c9d9hk120z9.styleCell(cell.i, cell.j, group.css_id);
+              });
+          });
+      });
+    </script><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.css">
+<style>
+    /* tinytable css entries after */
+    #tinytable_4ruzykjx4c9d9hk120z9 td.tinytable_css_jo2ml454l77pui3hjxl8, #tinytable_4ruzykjx4c9d9hk120z9 th.tinytable_css_jo2ml454l77pui3hjxl8 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%;  }
+    #tinytable_4ruzykjx4c9d9hk120z9 td.tinytable_css_1jq6g2casxiayzrcqgkf, #tinytable_4ruzykjx4c9d9hk120z9 th.tinytable_css_1jq6g2casxiayzrcqgkf {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%;  }
+    </style>
+<div class="container">
+      <table class="table tinytable" id="tinytable_4ruzykjx4c9d9hk120z9" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+<caption>Model Summary</caption>
+        <thead><tr>
+<th scope="col" data-row="0" data-col="1">Parameter</th>
+                <th scope="col" data-row="0" data-col="2">Coefficient</th>
+                <th scope="col" data-row="0" data-col="3">SE</th>
+                <th scope="col" data-row="0" data-col="4">95% CI</th>
+                <th scope="col" data-row="0" data-col="5">t(554)</th>
+                <th scope="col" data-row="0" data-col="6">p</th>
+              </tr></thead>
+<tbody>
+<tr>
+<td data-row="1" data-col="1">(Intercept)</td>
+                  <td data-row="1" data-col="2">67.36</td>
+                  <td data-row="1" data-col="3">2.48</td>
+                  <td data-row="1" data-col="4">(62.48, 72.23)</td>
+                  <td data-row="1" data-col="5">27.15</td>
+                  <td data-row="1" data-col="6">&lt; .001</td>
+                </tr>
+<tr>
+<td data-row="2" data-col="1">time</td>
+                  <td data-row="2" data-col="2">1.09</td>
+                  <td data-row="2" data-col="3">0.66</td>
+                  <td data-row="2" data-col="4">(-0.21, 2.39)</td>
+                  <td data-row="2" data-col="5">1.65</td>
+                  <td data-row="2" data-col="6">0.099</td>
+                </tr>
+<tr>
+<td data-row="3" data-col="1">phq4 within</td>
+                  <td data-row="3" data-col="2">-3.72</td>
+                  <td data-row="3" data-col="3">0.41</td>
+                  <td data-row="3" data-col="4">(-4.52, -2.92)</td>
+                  <td data-row="3" data-col="5">-9.10</td>
+                  <td data-row="3" data-col="6">&lt; .001</td>
+                </tr>
+<tr>
+<td data-row="4" data-col="1">phq4 between</td>
+                  <td data-row="4" data-col="2">-6.13</td>
+                  <td data-row="4" data-col="3">0.52</td>
+                  <td data-row="4" data-col="4">(-7.14, -5.11)</td>
+                  <td data-row="4" data-col="5">-11.84</td>
+                  <td data-row="4" data-col="6">&lt; .001</td>
+                </tr>
+<tr>
+<td data-row="5" data-col="1">education (mid)</td>
+                  <td data-row="5" data-col="2">5.01</td>
+                  <td data-row="5" data-col="3">2.35</td>
+                  <td data-row="5" data-col="4">(0.40, 9.62)</td>
+                  <td data-row="5" data-col="5">2.14</td>
+                  <td data-row="5" data-col="6">0.033</td>
+                </tr>
+<tr>
+<td data-row="6" data-col="1">education (high)</td>
+                  <td data-row="6" data-col="2">5.52</td>
+                  <td data-row="6" data-col="3">2.75</td>
+                  <td data-row="6" data-col="4">(0.11, 10.93)</td>
+                  <td data-row="6" data-col="5">2.00</td>
+                  <td data-row="6" data-col="6">0.046</td>
+                </tr>
+</tbody>
+</table>
+</div>
+<!-- hack to avoid NA insertion in last line -->
 <p>For more complex models, within-effects will naturally change
 slightly and are no longer identical to simpler FE models. This is not
 “bias”, but rather the result of building more complex models: FE models
@@ -377,7 +776,7 @@ x<sub>it</sub> - ͞x<sub>i</sub> is the de-meaned predictor,
 </li>
 </ul>
 <p>In R-code, the model is written down like this:</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># We ignore the convergence warnings for now...</span></span>
 <span><span class="va">rewb</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/warning.html" class="external-link">suppressWarnings</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html" class="external-link">lmer</a></span><span class="op">(</span></span>
 <span>  <span class="va">QoL</span> <span class="op">~</span> <span class="va">time</span> <span class="op">+</span> <span class="va">phq4_within</span> <span class="op">+</span> <span class="va">phq4_between</span> <span class="op">+</span> <span class="va">education</span> <span class="op">+</span></span>
@@ -398,23 +797,103 @@ group-meaned, to have a proper “between”-effect <span class="citation">(Gelm
 <p>The benefit of this kind of model is that you have information on
 within-, between- and other time-constant (i.e. between) effects or
 group-level predictors…</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">rewb</span>, effects <span class="op">=</span> <span class="st">"fixed"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; # Fixed Effects</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Parameter        | Coefficient |   SE |         95% CI | t(551) |      p</span></span>
-<span><span class="co">#&gt; ------------------------------------------------------------------------</span></span>
-<span><span class="co">#&gt; (Intercept)      |       67.18 | 2.39 | [62.49, 71.87] |  28.13 | &lt; .001</span></span>
-<span><span class="co">#&gt; time             |        1.18 | 0.60 | [-0.01,  2.37] |   1.95 | 0.051 </span></span>
-<span><span class="co">#&gt; phq4 within      |       -4.50 | 0.58 | [-5.64, -3.36] |  -7.78 | &lt; .001</span></span>
-<span><span class="co">#&gt; phq4 between     |       -6.11 | 0.52 | [-7.13, -5.10] | -11.81 | &lt; .001</span></span>
-<span><span class="co">#&gt; education [mid]  |        4.95 | 2.35 | [ 0.34,  9.56] |   2.11 | 0.035 </span></span>
-<span><span class="co">#&gt; education [high] |        5.62 | 2.76 | [ 0.20, 11.04] |   2.04 | 0.042</span></span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">rewb</span>, effects <span class="op">=</span> <span class="st">"fixed"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">display</a></span><span class="op">(</span>format <span class="op">=</span> <span class="st">"tt"</span><span class="op">)</span></span></code></pre></div>
+<!-- preamble start -->
+
+    <script src="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.js"></script><script>
+      // Create table-specific functions using external factory
+      const tableFns_m8i4k476estky3e4cb8m = TinyTable.createTableFunctions("tinytable_m8i4k476estky3e4cb8m");
+      // tinytable span after
+      window.addEventListener('load', function () {
+          var cellsToStyle = [
+            // tinytable style arrays after
+          { positions: [ { i: '6', j: 1 }, { i: '6', j: 2 }, { i: '6', j: 3 }, { i: '6', j: 4 }, { i: '6', j: 5 }, { i: '6', j: 6 } ], css_id: 'tinytable_css_11b9b7d00dd8y1fvlnaz',}, 
+          { positions: [ { i: '0', j: 1 }, { i: '0', j: 2 }, { i: '0', j: 3 }, { i: '0', j: 4 }, { i: '0', j: 5 }, { i: '0', j: 6 } ], css_id: 'tinytable_css_wj1psp7rkx1ckshyrkup',}, 
+          ];
+
+          // Loop over the arrays to style the cells
+          cellsToStyle.forEach(function (group) {
+              group.positions.forEach(function (cell) {
+                  tableFns_m8i4k476estky3e4cb8m.styleCell(cell.i, cell.j, group.css_id);
+              });
+          });
+      });
+    </script><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.css">
+<style>
+    /* tinytable css entries after */
+    #tinytable_m8i4k476estky3e4cb8m td.tinytable_css_11b9b7d00dd8y1fvlnaz, #tinytable_m8i4k476estky3e4cb8m th.tinytable_css_11b9b7d00dd8y1fvlnaz {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%;  }
+    #tinytable_m8i4k476estky3e4cb8m td.tinytable_css_wj1psp7rkx1ckshyrkup, #tinytable_m8i4k476estky3e4cb8m th.tinytable_css_wj1psp7rkx1ckshyrkup {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%;  }
+    </style>
+<div class="container">
+      <table class="table tinytable" id="tinytable_m8i4k476estky3e4cb8m" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+<caption>Model Summary</caption>
+        <thead><tr>
+<th scope="col" data-row="0" data-col="1">Parameter</th>
+                <th scope="col" data-row="0" data-col="2">Coefficient</th>
+                <th scope="col" data-row="0" data-col="3">SE</th>
+                <th scope="col" data-row="0" data-col="4">95% CI</th>
+                <th scope="col" data-row="0" data-col="5">t(551)</th>
+                <th scope="col" data-row="0" data-col="6">p</th>
+              </tr></thead>
+<tbody>
+<tr>
+<td data-row="1" data-col="1">(Intercept)</td>
+                  <td data-row="1" data-col="2">67.18</td>
+                  <td data-row="1" data-col="3">2.39</td>
+                  <td data-row="1" data-col="4">(62.49, 71.87)</td>
+                  <td data-row="1" data-col="5">28.13</td>
+                  <td data-row="1" data-col="6">&lt; .001</td>
+                </tr>
+<tr>
+<td data-row="2" data-col="1">time</td>
+                  <td data-row="2" data-col="2">1.18</td>
+                  <td data-row="2" data-col="3">0.60</td>
+                  <td data-row="2" data-col="4">(-7.25e-03, 2.37)</td>
+                  <td data-row="2" data-col="5">1.95</td>
+                  <td data-row="2" data-col="6">0.051</td>
+                </tr>
+<tr>
+<td data-row="3" data-col="1">phq4 within</td>
+                  <td data-row="3" data-col="2">-4.50</td>
+                  <td data-row="3" data-col="3">0.58</td>
+                  <td data-row="3" data-col="4">(-5.64, -3.36)</td>
+                  <td data-row="3" data-col="5">-7.78</td>
+                  <td data-row="3" data-col="6">&lt; .001</td>
+                </tr>
+<tr>
+<td data-row="4" data-col="1">phq4 between</td>
+                  <td data-row="4" data-col="2">-6.11</td>
+                  <td data-row="4" data-col="3">0.52</td>
+                  <td data-row="4" data-col="4">(-7.13, -5.10)</td>
+                  <td data-row="4" data-col="5">-11.81</td>
+                  <td data-row="4" data-col="6">&lt; .001</td>
+                </tr>
+<tr>
+<td data-row="5" data-col="1">education (mid)</td>
+                  <td data-row="5" data-col="2">4.95</td>
+                  <td data-row="5" data-col="3">2.35</td>
+                  <td data-row="5" data-col="4">(0.34, 9.56)</td>
+                  <td data-row="5" data-col="5">2.11</td>
+                  <td data-row="5" data-col="6">0.035</td>
+                </tr>
+<tr>
+<td data-row="6" data-col="1">education (high)</td>
+                  <td data-row="6" data-col="2">5.62</td>
+                  <td data-row="6" data-col="3">2.76</td>
+                  <td data-row="6" data-col="4">(0.20, 11.04)</td>
+                  <td data-row="6" data-col="5">2.04</td>
+                  <td data-row="6" data-col="6">0.042</td>
+                </tr>
+</tbody>
+</table>
+</div>
+<!-- hack to avoid NA insertion in last line -->
 <p>… but you can also model the variation of (group) effects across time
 (and probably space), and you can even include more higher-level units
 (e.g. nested design or cross-classified design with more than two
 levels):</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/random_parameters.html">random_parameters</a></span><span class="op">(</span><span class="va">rewb</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # Random Effects</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -474,7 +953,7 @@ of people with different “typing experience levels”.</p>
 more experienced typists make fewer mistakes (group-level pattern). When
 typing faster, typists make more mistakes (individual-level
 pattern).</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://easystats.github.io/see/" class="external-link">see</a></span><span class="op">)</span></span>
 <span></span>
@@ -511,13 +990,66 @@ typing speed.</p>
 <p><img src="demean_files/figure-html/unnamed-chunk-14-1.png" class="r-plt" alt="" width="100%"></p>
 <p>Looking at the coefficients, we have following model with a
 coefficient of <code>-1.92</code>.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">m1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="va">x</span>, data <span class="op">=</span> <span class="va">d</span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">m1</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Parameter   | Coefficient |   SE |         95% CI | t(103) |      p</span></span>
-<span><span class="co">#&gt; -------------------------------------------------------------------</span></span>
-<span><span class="co">#&gt; (Intercept) |       30.20 | 1.42 | [27.39, 33.00] |  21.34 | &lt; .001</span></span>
-<span><span class="co">#&gt; x           |       -1.92 | 0.18 | [-2.27, -1.56] | -10.69 | &lt; .001</span></span></code></pre></div>
+<span><span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">m1</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">display</a></span><span class="op">(</span>format <span class="op">=</span> <span class="st">"tt"</span><span class="op">)</span></span></code></pre></div>
+<!-- preamble start -->
+
+    <script src="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.js"></script><script>
+      // Create table-specific functions using external factory
+      const tableFns_7h8669nmpws9caop6omp = TinyTable.createTableFunctions("tinytable_7h8669nmpws9caop6omp");
+      // tinytable span after
+      window.addEventListener('load', function () {
+          var cellsToStyle = [
+            // tinytable style arrays after
+          { positions: [ { i: '2', j: 1 }, { i: '2', j: 2 }, { i: '2', j: 3 }, { i: '2', j: 4 }, { i: '2', j: 5 }, { i: '2', j: 6 } ], css_id: 'tinytable_css_usgjyow139w4o7okhu56',}, 
+          { positions: [ { i: '0', j: 1 }, { i: '0', j: 2 }, { i: '0', j: 3 }, { i: '0', j: 4 }, { i: '0', j: 5 }, { i: '0', j: 6 } ], css_id: 'tinytable_css_vjn8md5q0pgspqk6pj5t',}, 
+          ];
+
+          // Loop over the arrays to style the cells
+          cellsToStyle.forEach(function (group) {
+              group.positions.forEach(function (cell) {
+                  tableFns_7h8669nmpws9caop6omp.styleCell(cell.i, cell.j, group.css_id);
+              });
+          });
+      });
+    </script><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.css">
+<style>
+    /* tinytable css entries after */
+    #tinytable_7h8669nmpws9caop6omp td.tinytable_css_usgjyow139w4o7okhu56, #tinytable_7h8669nmpws9caop6omp th.tinytable_css_usgjyow139w4o7okhu56 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%;  }
+    #tinytable_7h8669nmpws9caop6omp td.tinytable_css_vjn8md5q0pgspqk6pj5t, #tinytable_7h8669nmpws9caop6omp th.tinytable_css_vjn8md5q0pgspqk6pj5t {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%;  }
+    </style>
+<div class="container">
+      <table class="table tinytable" id="tinytable_7h8669nmpws9caop6omp" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+<thead><tr>
+<th scope="col" data-row="0" data-col="1">Parameter</th>
+                <th scope="col" data-row="0" data-col="2">Coefficient</th>
+                <th scope="col" data-row="0" data-col="3">SE</th>
+                <th scope="col" data-row="0" data-col="4">95% CI</th>
+                <th scope="col" data-row="0" data-col="5">t(103)</th>
+                <th scope="col" data-row="0" data-col="6">p</th>
+              </tr></thead>
+<tbody>
+<tr>
+<td data-row="1" data-col="1">(Intercept)</td>
+                  <td data-row="1" data-col="2">30.20</td>
+                  <td data-row="1" data-col="3">1.42</td>
+                  <td data-row="1" data-col="4">(27.39, 33.00)</td>
+                  <td data-row="1" data-col="5">21.34</td>
+                  <td data-row="1" data-col="6">&lt; .001</td>
+                </tr>
+<tr>
+<td data-row="2" data-col="1">x</td>
+                  <td data-row="2" data-col="2">-1.92</td>
+                  <td data-row="2" data-col="3">0.18</td>
+                  <td data-row="2" data-col="4">(-2.27, -1.56)</td>
+                  <td data-row="2" data-col="5">-10.69</td>
+                  <td data-row="2" data-col="6">&lt; .001</td>
+                </tr>
+</tbody>
+</table>
+</div>
+<!-- hack to avoid NA insertion in last line -->
 <p>However, we have ignored the clustered structure in our data, in this
 example due to repeated measurements.</p>
 <p><img src="demean_files/figure-html/unnamed-chunk-16-1.png" class="r-plt" alt="" width="100%"></p>
@@ -534,12 +1066,56 @@ group-level indicator.</p>
 the FE-model does <em>not</em> take the variation <em>between</em>
 subjects into account, thus resulting in (possibly) biased estimates,
 and biased standard errors.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">m2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="fl">0</span> <span class="op">+</span> <span class="va">x_within</span> <span class="op">+</span> <span class="va">grp</span>, data <span class="op">=</span> <span class="va">d</span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">m2</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span>, <span class="op">]</span></span>
-<span><span class="co">#&gt; Parameter | Coefficient |   SE |       95% CI | t(99) |      p</span></span>
-<span><span class="co">#&gt; --------------------------------------------------------------</span></span>
-<span><span class="co">#&gt; x within  |        1.20 | 0.07 | [1.06, 1.35] | 16.08 | &lt; .001</span></span></code></pre></div>
+<span><span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">m2</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span>, <span class="op">]</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">display</a></span><span class="op">(</span>format <span class="op">=</span> <span class="st">"tt"</span><span class="op">)</span></span></code></pre></div>
+<!-- preamble start -->
+
+    <script src="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.js"></script><script>
+      // Create table-specific functions using external factory
+      const tableFns_zqqym2u1m28tut8zxlrs = TinyTable.createTableFunctions("tinytable_zqqym2u1m28tut8zxlrs");
+      // tinytable span after
+      window.addEventListener('load', function () {
+          var cellsToStyle = [
+            // tinytable style arrays after
+          { positions: [ { i: '1', j: 1 }, { i: '1', j: 2 }, { i: '1', j: 3 }, { i: '1', j: 4 }, { i: '1', j: 5 }, { i: '1', j: 6 } ], css_id: 'tinytable_css_sjt79gha1iccutlt9f4z',}, 
+          { positions: [ { i: '0', j: 1 }, { i: '0', j: 2 }, { i: '0', j: 3 }, { i: '0', j: 4 }, { i: '0', j: 5 }, { i: '0', j: 6 } ], css_id: 'tinytable_css_wibxkgbtyto2hvgvpcjj',}, 
+          ];
+
+          // Loop over the arrays to style the cells
+          cellsToStyle.forEach(function (group) {
+              group.positions.forEach(function (cell) {
+                  tableFns_zqqym2u1m28tut8zxlrs.styleCell(cell.i, cell.j, group.css_id);
+              });
+          });
+      });
+    </script><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.css">
+<style>
+    /* tinytable css entries after */
+    #tinytable_zqqym2u1m28tut8zxlrs td.tinytable_css_sjt79gha1iccutlt9f4z, #tinytable_zqqym2u1m28tut8zxlrs th.tinytable_css_sjt79gha1iccutlt9f4z {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%;  }
+    #tinytable_zqqym2u1m28tut8zxlrs td.tinytable_css_wibxkgbtyto2hvgvpcjj, #tinytable_zqqym2u1m28tut8zxlrs th.tinytable_css_wibxkgbtyto2hvgvpcjj {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%;  }
+    </style>
+<div class="container">
+      <table class="table tinytable" id="tinytable_zqqym2u1m28tut8zxlrs" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+<thead><tr>
+<th scope="col" data-row="0" data-col="1">Parameter</th>
+                <th scope="col" data-row="0" data-col="2">Coefficient</th>
+                <th scope="col" data-row="0" data-col="3">SE</th>
+                <th scope="col" data-row="0" data-col="4">95% CI</th>
+                <th scope="col" data-row="0" data-col="5">t(99)</th>
+                <th scope="col" data-row="0" data-col="6">p</th>
+              </tr></thead>
+<tbody><tr>
+<td data-row="1" data-col="1">x within</td>
+                  <td data-row="1" data-col="2">1.20</td>
+                  <td data-row="1" data-col="3">0.07</td>
+                  <td data-row="1" data-col="4">(1.06, 1.35)</td>
+                  <td data-row="1" data-col="5">16.08</td>
+                  <td data-row="1" data-col="6">&lt; .001</td>
+                </tr></tbody>
+</table>
+</div>
+<!-- hack to avoid NA insertion in last line -->
 </div>
 <div class="section level3">
 <h3 id="model-3-between-subject-effect-of-typing-speed">Model 3: Between-subject effect of typing speed<a class="anchor" aria-label="anchor" href="#model-3-between-subject-effect-of-typing-speed"></a>
@@ -551,13 +1127,66 @@ between-effects, let us look at the between-effect now.</p>
 <p>As we can see, the between-effect is <code>-2.93</code>, which is
 different from the <code>-1.92</code> estimated in the model
 <code>m1</code>.</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">m3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="va">x_between</span>, data <span class="op">=</span> <span class="va">d</span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">m3</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Parameter   | Coefficient |   SE |         95% CI | t(103) |      p</span></span>
-<span><span class="co">#&gt; -------------------------------------------------------------------</span></span>
-<span><span class="co">#&gt; (Intercept) |       37.83 | 0.62 | [36.59, 39.06] |  60.79 | &lt; .001</span></span>
-<span><span class="co">#&gt; x between   |       -2.93 | 0.08 | [-3.09, -2.78] | -36.76 | &lt; .001</span></span></code></pre></div>
+<span><span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">m3</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">display</a></span><span class="op">(</span>format <span class="op">=</span> <span class="st">"tt"</span><span class="op">)</span></span></code></pre></div>
+<!-- preamble start -->
+
+    <script src="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.js"></script><script>
+      // Create table-specific functions using external factory
+      const tableFns_gj8a74s59p8a5vbiqvqt = TinyTable.createTableFunctions("tinytable_gj8a74s59p8a5vbiqvqt");
+      // tinytable span after
+      window.addEventListener('load', function () {
+          var cellsToStyle = [
+            // tinytable style arrays after
+          { positions: [ { i: '2', j: 1 }, { i: '2', j: 2 }, { i: '2', j: 3 }, { i: '2', j: 4 }, { i: '2', j: 5 }, { i: '2', j: 6 } ], css_id: 'tinytable_css_f8at9xjd5h17ak6m79g5',}, 
+          { positions: [ { i: '0', j: 1 }, { i: '0', j: 2 }, { i: '0', j: 3 }, { i: '0', j: 4 }, { i: '0', j: 5 }, { i: '0', j: 6 } ], css_id: 'tinytable_css_3nr25zt9ozo3elnefi7u',}, 
+          ];
+
+          // Loop over the arrays to style the cells
+          cellsToStyle.forEach(function (group) {
+              group.positions.forEach(function (cell) {
+                  tableFns_gj8a74s59p8a5vbiqvqt.styleCell(cell.i, cell.j, group.css_id);
+              });
+          });
+      });
+    </script><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.css">
+<style>
+    /* tinytable css entries after */
+    #tinytable_gj8a74s59p8a5vbiqvqt td.tinytable_css_f8at9xjd5h17ak6m79g5, #tinytable_gj8a74s59p8a5vbiqvqt th.tinytable_css_f8at9xjd5h17ak6m79g5 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%;  }
+    #tinytable_gj8a74s59p8a5vbiqvqt td.tinytable_css_3nr25zt9ozo3elnefi7u, #tinytable_gj8a74s59p8a5vbiqvqt th.tinytable_css_3nr25zt9ozo3elnefi7u {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%;  }
+    </style>
+<div class="container">
+      <table class="table tinytable" id="tinytable_gj8a74s59p8a5vbiqvqt" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+<thead><tr>
+<th scope="col" data-row="0" data-col="1">Parameter</th>
+                <th scope="col" data-row="0" data-col="2">Coefficient</th>
+                <th scope="col" data-row="0" data-col="3">SE</th>
+                <th scope="col" data-row="0" data-col="4">95% CI</th>
+                <th scope="col" data-row="0" data-col="5">t(103)</th>
+                <th scope="col" data-row="0" data-col="6">p</th>
+              </tr></thead>
+<tbody>
+<tr>
+<td data-row="1" data-col="1">(Intercept)</td>
+                  <td data-row="1" data-col="2">37.83</td>
+                  <td data-row="1" data-col="3">0.62</td>
+                  <td data-row="1" data-col="4">(36.59, 39.06)</td>
+                  <td data-row="1" data-col="5">60.79</td>
+                  <td data-row="1" data-col="6">&lt; .001</td>
+                </tr>
+<tr>
+<td data-row="2" data-col="1">x between</td>
+                  <td data-row="2" data-col="2">-2.93</td>
+                  <td data-row="2" data-col="3">0.08</td>
+                  <td data-row="2" data-col="4">(-3.09, -2.78)</td>
+                  <td data-row="2" data-col="5">-36.76</td>
+                  <td data-row="2" data-col="6">&lt; .001</td>
+                </tr>
+</tbody>
+</table>
+</div>
+<!-- hack to avoid NA insertion in last line -->
 </div>
 <div class="section level3">
 <h3 id="model-4-mixed-model-with-within--and-between-subjects">Model 4: Mixed model with within- and between-subjects<a class="anchor" aria-label="anchor" href="#model-4-mixed-model-with-within--and-between-subjects"></a>
@@ -569,23 +1198,113 @@ model with within- and between-effects.</p>
 Furthermore, we get the correct between-effect as well (standard errors
 differ, because the variance in the grouping structure is more
 accurately taken into account).</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">m4</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html" class="external-link">lmer</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="va">x_between</span> <span class="op">+</span> <span class="va">x_within</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">grp</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">d</span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">m4</span><span class="op">)</span></span>
-<span><span class="co">#&gt; # Fixed Effects</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Parameter   | Coefficient |   SE |         95% CI | t(100) |      p</span></span>
-<span><span class="co">#&gt; -------------------------------------------------------------------</span></span>
-<span><span class="co">#&gt; (Intercept) |       37.83 | 0.33 | [37.17, 38.48] | 114.46 | &lt; .001</span></span>
-<span><span class="co">#&gt; x between   |       -2.93 | 0.04 | [-3.02, -2.85] | -69.22 | &lt; .001</span></span>
-<span><span class="co">#&gt; x within    |        1.20 | 0.07 | [ 1.06,  1.35] |  16.22 | &lt; .001</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; # Random Effects</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Parameter           | Coefficient</span></span>
-<span><span class="co">#&gt; ---------------------------------</span></span>
-<span><span class="co">#&gt; SD (Intercept: grp) |        0.00</span></span>
-<span><span class="co">#&gt; SD (Residual)       |        0.92</span></span></code></pre></div>
+<span><span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">m4</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">display</a></span><span class="op">(</span>format <span class="op">=</span> <span class="st">"tt"</span>, by <span class="op">=</span> <span class="st">"Component"</span><span class="op">)</span></span></code></pre></div>
+<!-- preamble start -->
+
+    <script src="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.js"></script><script>
+      // Create table-specific functions using external factory
+      const tableFns_aw2wtx1jdo6yulflswu7 = TinyTable.createTableFunctions("tinytable_aw2wtx1jdo6yulflswu7");
+      // tinytable span after
+      window.addEventListener('load', function () { tableFns_aw2wtx1jdo6yulflswu7.spanCell(5, 1, 1, 6) })
+      window.addEventListener('load', function () { tableFns_aw2wtx1jdo6yulflswu7.spanCell(1, 1, 1, 6) })
+      window.addEventListener('load', function () {
+          var cellsToStyle = [
+            // tinytable style arrays after
+          { positions: [ { i: '7', j: 2 }, { i: '7', j: 3 }, { i: '7', j: 4 }, { i: '7', j: 5 }, { i: '7', j: 6 } ], css_id: 'tinytable_css_9g72dr58wix0rt3pa4zi',}, 
+          { positions: [ { i: '7', j: 1 } ], css_id: 'tinytable_css_f6zboqcj9tb76eimy563',}, 
+          { positions: [ { i: '2', j: 1 }, { i: '3', j: 1 }, { i: '4', j: 1 }, { i: '6', j: 1 } ], css_id: 'tinytable_css_70f1dbp778w21086csjd',}, 
+          { positions: [ { i: '0', j: 1 }, { i: '0', j: 2 }, { i: '0', j: 3 }, { i: '0', j: 4 }, { i: '0', j: 5 }, { i: '0', j: 6 } ], css_id: 'tinytable_css_ntmvgpmpz7ez2wprpgm9',}, 
+          ];
+
+          // Loop over the arrays to style the cells
+          cellsToStyle.forEach(function (group) {
+              group.positions.forEach(function (cell) {
+                  tableFns_aw2wtx1jdo6yulflswu7.styleCell(cell.i, cell.j, group.css_id);
+              });
+          });
+      });
+    </script><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.css">
+<style>
+    /* tinytable css entries after */
+    #tinytable_aw2wtx1jdo6yulflswu7 td.tinytable_css_9g72dr58wix0rt3pa4zi, #tinytable_aw2wtx1jdo6yulflswu7 th.tinytable_css_9g72dr58wix0rt3pa4zi {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%;  }
+    #tinytable_aw2wtx1jdo6yulflswu7 td.tinytable_css_f6zboqcj9tb76eimy563, #tinytable_aw2wtx1jdo6yulflswu7 th.tinytable_css_f6zboqcj9tb76eimy563 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; padding-left: 2em }
+    #tinytable_aw2wtx1jdo6yulflswu7 td.tinytable_css_70f1dbp778w21086csjd, #tinytable_aw2wtx1jdo6yulflswu7 th.tinytable_css_70f1dbp778w21086csjd { padding-left: 2em }
+    #tinytable_aw2wtx1jdo6yulflswu7 td.tinytable_css_ntmvgpmpz7ez2wprpgm9, #tinytable_aw2wtx1jdo6yulflswu7 th.tinytable_css_ntmvgpmpz7ez2wprpgm9 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%;  }
+    </style>
+<div class="container">
+      <table class="table tinytable" id="tinytable_aw2wtx1jdo6yulflswu7" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+<caption>Model Summary</caption>
+        <thead><tr>
+<th scope="col" data-row="0" data-col="1">Parameter</th>
+                <th scope="col" data-row="0" data-col="2">Coefficient</th>
+                <th scope="col" data-row="0" data-col="3">SE</th>
+                <th scope="col" data-row="0" data-col="4">95% CI</th>
+                <th scope="col" data-row="0" data-col="5">t(100)</th>
+                <th scope="col" data-row="0" data-col="6">p</th>
+              </tr></thead>
+<tbody>
+<tr>
+<td data-row="1" data-col="1">Fixed Effects </td>
+                  <td data-row="1" data-col="2">Fixed Effects </td>
+                  <td data-row="1" data-col="3">Fixed Effects </td>
+                  <td data-row="1" data-col="4">Fixed Effects </td>
+                  <td data-row="1" data-col="5">Fixed Effects </td>
+                  <td data-row="1" data-col="6">Fixed Effects </td>
+                </tr>
+<tr>
+<td data-row="2" data-col="1">(Intercept)</td>
+                  <td data-row="2" data-col="2">37.83</td>
+                  <td data-row="2" data-col="3">0.33</td>
+                  <td data-row="2" data-col="4">(37.17, 38.48)</td>
+                  <td data-row="2" data-col="5">114.46</td>
+                  <td data-row="2" data-col="6">&lt; .001</td>
+                </tr>
+<tr>
+<td data-row="3" data-col="1">x between</td>
+                  <td data-row="3" data-col="2">-2.93</td>
+                  <td data-row="3" data-col="3">0.04</td>
+                  <td data-row="3" data-col="4">(-3.02, -2.85)</td>
+                  <td data-row="3" data-col="5">-69.22</td>
+                  <td data-row="3" data-col="6">&lt; .001</td>
+                </tr>
+<tr>
+<td data-row="4" data-col="1">x within</td>
+                  <td data-row="4" data-col="2">1.20</td>
+                  <td data-row="4" data-col="3">0.07</td>
+                  <td data-row="4" data-col="4">(1.06, 1.35)</td>
+                  <td data-row="4" data-col="5">16.22</td>
+                  <td data-row="4" data-col="6">&lt; .001</td>
+                </tr>
+<tr>
+<td data-row="5" data-col="1">Random Effects </td>
+                  <td data-row="5" data-col="2">Random Effects </td>
+                  <td data-row="5" data-col="3">Random Effects </td>
+                  <td data-row="5" data-col="4">Random Effects </td>
+                  <td data-row="5" data-col="5">Random Effects </td>
+                  <td data-row="5" data-col="6">Random Effects </td>
+                </tr>
+<tr>
+<td data-row="6" data-col="1">SD (Intercept: grp)</td>
+                  <td data-row="6" data-col="2">0.00</td>
+                  <td data-row="6" data-col="3"></td>
+                  <td data-row="6" data-col="4"></td>
+                  <td data-row="6" data-col="5"></td>
+                  <td data-row="6" data-col="6"></td>
+                </tr>
+<tr>
+<td data-row="7" data-col="1">SD (Residual)</td>
+                  <td data-row="7" data-col="2">0.92</td>
+                  <td data-row="7" data-col="3"></td>
+                  <td data-row="7" data-col="4"></td>
+                  <td data-row="7" data-col="5"></td>
+                  <td data-row="7" data-col="6"></td>
+                </tr>
+</tbody>
+</table>
+</div>
+<!-- hack to avoid NA insertion in last line -->
 </div>
 <div class="section level3">
 <h3 id="model-5-complex-random-effects-within-between-model">Model 5: Complex Random-Effects Within-Between Model<a class="anchor" aria-label="anchor" href="#model-5-complex-random-effects-within-between-model"></a>
@@ -594,25 +1313,129 @@ accurately taken into account).</p>
 by adding a random slope. This model can be called a complex “REWB”
 (random-effects within-between) model. Due to the variation between
 subjects, we get larger standard errors for the within-effect.</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">m5</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html" class="external-link">lmer</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="va">x_between</span> <span class="op">+</span> <span class="va">x_within</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">+</span> <span class="va">x_within</span> <span class="op">|</span> <span class="va">grp</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">d</span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">m5</span><span class="op">)</span></span>
-<span><span class="co">#&gt; # Fixed Effects</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Parameter   | Coefficient |   SE |         95% CI |  t(98) |      p</span></span>
-<span><span class="co">#&gt; -------------------------------------------------------------------</span></span>
-<span><span class="co">#&gt; (Intercept) |       37.95 | 0.34 | [37.28, 38.63] | 111.15 | &lt; .001</span></span>
-<span><span class="co">#&gt; x between   |       -2.95 | 0.04 | [-3.04, -2.87] | -67.57 | &lt; .001</span></span>
-<span><span class="co">#&gt; x within    |        1.20 | 0.10 | [ 1.01,  1.40] |  12.16 | &lt; .001</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; # Random Effects</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Parameter                     | Coefficient |   SE |         95% CI</span></span>
-<span><span class="co">#&gt; -------------------------------------------------------------------</span></span>
-<span><span class="co">#&gt; SD (Intercept: grp)           |        0.09 | 0.22 | [ 0.00, 14.20]</span></span>
-<span><span class="co">#&gt; SD (x_within: grp)            |        0.15 | 0.12 | [ 0.03,  0.69]</span></span>
-<span><span class="co">#&gt; Cor (Intercept~x_within: grp) |       -1.00 | 2.18 | [-1.00,      ]</span></span>
-<span><span class="co">#&gt; SD (Residual)                 |        0.90 | 0.07 | [ 0.78,  1.04]</span></span></code></pre></div>
+<span><span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">m5</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">display</a></span><span class="op">(</span>format <span class="op">=</span> <span class="st">"tt"</span>, by <span class="op">=</span> <span class="st">"Component"</span><span class="op">)</span></span></code></pre></div>
+<!-- preamble start -->
+
+    <script src="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.js"></script><script>
+      // Create table-specific functions using external factory
+      const tableFns_oz263n32a9sm4nvoa9eu = TinyTable.createTableFunctions("tinytable_oz263n32a9sm4nvoa9eu");
+      // tinytable span after
+      window.addEventListener('load', function () { tableFns_oz263n32a9sm4nvoa9eu.spanCell(5, 1, 1, 6) })
+      window.addEventListener('load', function () { tableFns_oz263n32a9sm4nvoa9eu.spanCell(1, 1, 1, 6) })
+      window.addEventListener('load', function () {
+          var cellsToStyle = [
+            // tinytable style arrays after
+          { positions: [ { i: '9', j: 2 }, { i: '9', j: 3 }, { i: '9', j: 4 }, { i: '9', j: 5 }, { i: '9', j: 6 } ], css_id: 'tinytable_css_whjq98uihrkszjm41hbc',}, 
+          { positions: [ { i: '9', j: 1 } ], css_id: 'tinytable_css_c715mgvd6c7ag6iedpqg',}, 
+          { positions: [ { i: '2', j: 1 }, { i: '3', j: 1 }, { i: '4', j: 1 }, { i: '6', j: 1 }, { i: '7', j: 1 }, { i: '8', j: 1 } ], css_id: 'tinytable_css_oel7sk8xa36awak92yxr',}, 
+          { positions: [ { i: '0', j: 1 }, { i: '0', j: 2 }, { i: '0', j: 3 }, { i: '0', j: 4 }, { i: '0', j: 5 }, { i: '0', j: 6 } ], css_id: 'tinytable_css_9ny97v6gjw991emy158m',}, 
+          ];
+
+          // Loop over the arrays to style the cells
+          cellsToStyle.forEach(function (group) {
+              group.positions.forEach(function (cell) {
+                  tableFns_oz263n32a9sm4nvoa9eu.styleCell(cell.i, cell.j, group.css_id);
+              });
+          });
+      });
+    </script><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.css">
+<style>
+    /* tinytable css entries after */
+    #tinytable_oz263n32a9sm4nvoa9eu td.tinytable_css_whjq98uihrkszjm41hbc, #tinytable_oz263n32a9sm4nvoa9eu th.tinytable_css_whjq98uihrkszjm41hbc {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%;  }
+    #tinytable_oz263n32a9sm4nvoa9eu td.tinytable_css_c715mgvd6c7ag6iedpqg, #tinytable_oz263n32a9sm4nvoa9eu th.tinytable_css_c715mgvd6c7ag6iedpqg {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; padding-left: 2em }
+    #tinytable_oz263n32a9sm4nvoa9eu td.tinytable_css_oel7sk8xa36awak92yxr, #tinytable_oz263n32a9sm4nvoa9eu th.tinytable_css_oel7sk8xa36awak92yxr { padding-left: 2em }
+    #tinytable_oz263n32a9sm4nvoa9eu td.tinytable_css_9ny97v6gjw991emy158m, #tinytable_oz263n32a9sm4nvoa9eu th.tinytable_css_9ny97v6gjw991emy158m {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%;  }
+    </style>
+<div class="container">
+      <table class="table tinytable" id="tinytable_oz263n32a9sm4nvoa9eu" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+<caption>Model Summary</caption>
+        <thead><tr>
+<th scope="col" data-row="0" data-col="1">Parameter</th>
+                <th scope="col" data-row="0" data-col="2">Coefficient</th>
+                <th scope="col" data-row="0" data-col="3">SE</th>
+                <th scope="col" data-row="0" data-col="4">95% CI</th>
+                <th scope="col" data-row="0" data-col="5">t(98)</th>
+                <th scope="col" data-row="0" data-col="6">p</th>
+              </tr></thead>
+<tbody>
+<tr>
+<td data-row="1" data-col="1">Fixed Effects </td>
+                  <td data-row="1" data-col="2">Fixed Effects </td>
+                  <td data-row="1" data-col="3">Fixed Effects </td>
+                  <td data-row="1" data-col="4">Fixed Effects </td>
+                  <td data-row="1" data-col="5">Fixed Effects </td>
+                  <td data-row="1" data-col="6">Fixed Effects </td>
+                </tr>
+<tr>
+<td data-row="2" data-col="1">(Intercept)</td>
+                  <td data-row="2" data-col="2">37.95</td>
+                  <td data-row="2" data-col="3">0.34</td>
+                  <td data-row="2" data-col="4">(37.28, 38.63)</td>
+                  <td data-row="2" data-col="5">111.15</td>
+                  <td data-row="2" data-col="6">&lt; .001</td>
+                </tr>
+<tr>
+<td data-row="3" data-col="1">x between</td>
+                  <td data-row="3" data-col="2">-2.95</td>
+                  <td data-row="3" data-col="3">0.04</td>
+                  <td data-row="3" data-col="4">(-3.04, -2.87)</td>
+                  <td data-row="3" data-col="5">-67.57</td>
+                  <td data-row="3" data-col="6">&lt; .001</td>
+                </tr>
+<tr>
+<td data-row="4" data-col="1">x within</td>
+                  <td data-row="4" data-col="2">1.20</td>
+                  <td data-row="4" data-col="3">0.10</td>
+                  <td data-row="4" data-col="4">(1.01, 1.40)</td>
+                  <td data-row="4" data-col="5">12.16</td>
+                  <td data-row="4" data-col="6">&lt; .001</td>
+                </tr>
+<tr>
+<td data-row="5" data-col="1">Random Effects </td>
+                  <td data-row="5" data-col="2">Random Effects </td>
+                  <td data-row="5" data-col="3">Random Effects </td>
+                  <td data-row="5" data-col="4">Random Effects </td>
+                  <td data-row="5" data-col="5">Random Effects </td>
+                  <td data-row="5" data-col="6">Random Effects </td>
+                </tr>
+<tr>
+<td data-row="6" data-col="1">SD (Intercept: grp)</td>
+                  <td data-row="6" data-col="2">0.09</td>
+                  <td data-row="6" data-col="3">0.22</td>
+                  <td data-row="6" data-col="4">(5.16e-04, 14.20)</td>
+                  <td data-row="6" data-col="5"></td>
+                  <td data-row="6" data-col="6"></td>
+                </tr>
+<tr>
+<td data-row="7" data-col="1">SD (x_within: grp)</td>
+                  <td data-row="7" data-col="2">0.15</td>
+                  <td data-row="7" data-col="3">0.12</td>
+                  <td data-row="7" data-col="4">(0.03, 0.69)</td>
+                  <td data-row="7" data-col="5"></td>
+                  <td data-row="7" data-col="6"></td>
+                </tr>
+<tr>
+<td data-row="8" data-col="1">Cor (Intercept~x_within: grp)</td>
+                  <td data-row="8" data-col="2">-1.00</td>
+                  <td data-row="8" data-col="3">2.18</td>
+                  <td data-row="8" data-col="4">(-1.00, )</td>
+                  <td data-row="8" data-col="5"></td>
+                  <td data-row="8" data-col="6"></td>
+                </tr>
+<tr>
+<td data-row="9" data-col="1">SD (Residual)</td>
+                  <td data-row="9" data-col="2">0.90</td>
+                  <td data-row="9" data-col="3">0.07</td>
+                  <td data-row="9" data-col="4">(0.78, 1.04)</td>
+                  <td data-row="9" data-col="5"></td>
+                  <td data-row="9" data-col="6"></td>
+                </tr>
+</tbody>
+</table>
+</div>
+<!-- hack to avoid NA insertion in last line -->
 <p><img src="demean_files/figure-html/crewb-fit-1.png" class="r-plt" alt="" width="100%"></p>
 <p>The within-group regression lines are now <em>slightly</em>
 non-parallel. However, the lines are only ever so slightly different,
@@ -641,7 +1464,7 @@ observation per random effects group, the between-effect will differ
 from the between-effect calculated by “classical” regression models.
 However, this shrinkage is a desired property of mixed models and
 usually improves the estimates.</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span>
 <span><span class="va">n</span> <span class="op">&lt;-</span> <span class="fl">5</span></span>
 <span><span class="va">b</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1.5</span>, length.out <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span>
@@ -661,39 +1484,176 @@ usually improves the estimates.</p>
 <span><span class="va">d</span><span class="op">$</span><span class="va">grp</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">d</span><span class="op">$</span><span class="va">grp</span> <span class="op">==</span> <span class="fl">10</span><span class="op">)</span>, <span class="fl">9</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">6</span></span>
 <span></span>
 <span><span class="va">d</span> <span class="op">&lt;-</span> <span class="va">d</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">datawizard</span><span class="fu">::</span><span class="fu"><a href="https://easystats.github.io/datawizard/reference/data_group.html" class="external-link">data_group</a></span><span class="op">(</span><span class="va">grp</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">datawizard</span><span class="fu">::</span><span class="fu"><a href="https://easystats.github.io/datawizard/reference/data_modify.html" class="external-link">data_modify</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rev.html" class="external-link">rev</a></span><span class="op">(</span><span class="fl">15</span> <span class="op">-</span> <span class="op">(</span><span class="va">x</span> <span class="op">+</span> <span class="fl">1.5</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">grp</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">datawizard</span><span class="fu">::</span><span class="fu"><a href="https://easystats.github.io/datawizard/reference/data_group.html" class="external-link">data_ungroup</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://easystats.github.io/datawizard/reference/data_group.html" class="external-link">data_group</a></span><span class="op">(</span><span class="va">grp</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://easystats.github.io/datawizard/reference/data_modify.html" class="external-link">data_modify</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rev.html" class="external-link">rev</a></span><span class="op">(</span><span class="fl">15</span> <span class="op">-</span> <span class="op">(</span><span class="va">x</span> <span class="op">+</span> <span class="fl">1.5</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">grp</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://easystats.github.io/datawizard/reference/data_group.html" class="external-link">data_ungroup</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">labs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"very slow"</span>, <span class="st">"slow"</span>, <span class="st">"average"</span>, <span class="st">"fast"</span>, <span class="st">"very fast"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">d</span><span class="op">$</span><span class="va">grp</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rev.html" class="external-link">rev</a></span><span class="op">(</span><span class="va">labs</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">d</span> <span class="op">&lt;-</span> <span class="fu">datawizard</span><span class="fu">::</span><span class="fu"><a href="https://easystats.github.io/datawizard/reference/demean.html" class="external-link">demean</a></span><span class="op">(</span><span class="va">d</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"x"</span>, <span class="st">"y"</span><span class="op">)</span>, by <span class="op">=</span> <span class="st">"grp"</span><span class="op">)</span></span>
+<span><span class="va">d</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://easystats.github.io/datawizard/reference/demean.html" class="external-link">demean</a></span><span class="op">(</span><span class="va">d</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"x"</span>, <span class="st">"y"</span><span class="op">)</span>, by <span class="op">=</span> <span class="st">"grp"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Between-subject effect of typing speed</span></span>
 <span><span class="va">m1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="va">x_between</span>, data <span class="op">=</span> <span class="va">d</span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">m1</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Parameter   | Coefficient |   SE |         95% CI | t(103) |      p</span></span>
-<span><span class="co">#&gt; -------------------------------------------------------------------</span></span>
-<span><span class="co">#&gt; (Intercept) |       38.32 | 1.33 | [35.69, 40.95] |  28.87 | &lt; .001</span></span>
-<span><span class="co">#&gt; x between   |       -2.81 | 0.16 | [-3.13, -2.49] | -17.47 | &lt; .001</span></span>
-<span></span>
+<span><span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">m1</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">display</a></span><span class="op">(</span>format <span class="op">=</span> <span class="st">"tt"</span><span class="op">)</span></span></code></pre></div>
+<!-- preamble start -->
+
+    <script src="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.js"></script><script>
+      // Create table-specific functions using external factory
+      const tableFns_mpvjn8md5q0pgspqk6pj = TinyTable.createTableFunctions("tinytable_mpvjn8md5q0pgspqk6pj");
+      // tinytable span after
+      window.addEventListener('load', function () {
+          var cellsToStyle = [
+            // tinytable style arrays after
+          { positions: [ { i: '2', j: 1 }, { i: '2', j: 2 }, { i: '2', j: 3 }, { i: '2', j: 4 }, { i: '2', j: 5 }, { i: '2', j: 6 } ], css_id: 'tinytable_css_56gr6jhsgw11cn2h1bc5',}, 
+          { positions: [ { i: '0', j: 1 }, { i: '0', j: 2 }, { i: '0', j: 3 }, { i: '0', j: 4 }, { i: '0', j: 5 }, { i: '0', j: 6 } ], css_id: 'tinytable_css_5tusgjyow139w4o7okhu',}, 
+          ];
+
+          // Loop over the arrays to style the cells
+          cellsToStyle.forEach(function (group) {
+              group.positions.forEach(function (cell) {
+                  tableFns_mpvjn8md5q0pgspqk6pj.styleCell(cell.i, cell.j, group.css_id);
+              });
+          });
+      });
+    </script><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.css">
+<style>
+    /* tinytable css entries after */
+    #tinytable_mpvjn8md5q0pgspqk6pj td.tinytable_css_56gr6jhsgw11cn2h1bc5, #tinytable_mpvjn8md5q0pgspqk6pj th.tinytable_css_56gr6jhsgw11cn2h1bc5 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%;  }
+    #tinytable_mpvjn8md5q0pgspqk6pj td.tinytable_css_5tusgjyow139w4o7okhu, #tinytable_mpvjn8md5q0pgspqk6pj th.tinytable_css_5tusgjyow139w4o7okhu {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%;  }
+    </style>
+<div class="container">
+      <table class="table tinytable" id="tinytable_mpvjn8md5q0pgspqk6pj" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+<thead><tr>
+<th scope="col" data-row="0" data-col="1">Parameter</th>
+                <th scope="col" data-row="0" data-col="2">Coefficient</th>
+                <th scope="col" data-row="0" data-col="3">SE</th>
+                <th scope="col" data-row="0" data-col="4">95% CI</th>
+                <th scope="col" data-row="0" data-col="5">t(103)</th>
+                <th scope="col" data-row="0" data-col="6">p</th>
+              </tr></thead>
+<tbody>
+<tr>
+<td data-row="1" data-col="1">(Intercept)</td>
+                  <td data-row="1" data-col="2">38.32</td>
+                  <td data-row="1" data-col="3">1.33</td>
+                  <td data-row="1" data-col="4">(35.69, 40.95)</td>
+                  <td data-row="1" data-col="5">28.87</td>
+                  <td data-row="1" data-col="6">&lt; .001</td>
+                </tr>
+<tr>
+<td data-row="2" data-col="1">x between</td>
+                  <td data-row="2" data-col="2">-2.81</td>
+                  <td data-row="2" data-col="3">0.16</td>
+                  <td data-row="2" data-col="4">(-3.13, -2.49)</td>
+                  <td data-row="2" data-col="5">-17.47</td>
+                  <td data-row="2" data-col="6">&lt; .001</td>
+                </tr>
+</tbody>
+</table>
+</div>
+<!-- hack to avoid NA insertion in last line -->
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
 <span><span class="co"># Between-subject effect of typing speed, accounting for group structure</span></span>
 <span><span class="va">m2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html" class="external-link">lmer</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="va">x_between</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">grp</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">d</span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">m2</span><span class="op">)</span></span>
-<span><span class="co">#&gt; # Fixed Effects</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Parameter   | Coefficient |   SE |         95% CI | t(101) |      p</span></span>
-<span><span class="co">#&gt; -------------------------------------------------------------------</span></span>
-<span><span class="co">#&gt; (Intercept) |       37.02 | 2.73 | [31.59, 42.44] |  13.54 | &lt; .001</span></span>
-<span><span class="co">#&gt; x between   |       -2.71 | 0.35 | [-3.40, -2.02] |  -7.81 | &lt; .001</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; # Random Effects</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Parameter           | Coefficient |   SE |       95% CI</span></span>
-<span><span class="co">#&gt; -------------------------------------------------------</span></span>
-<span><span class="co">#&gt; SD (Intercept: grp) |        1.54 | 0.77 | [0.58, 4.09]</span></span>
-<span><span class="co">#&gt; SD (Residual)       |        2.98 | 0.21 | [2.60, 3.42]</span></span></code></pre></div>
+<span><span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">m2</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">display</a></span><span class="op">(</span>format <span class="op">=</span> <span class="st">"tt"</span>, by <span class="op">=</span> <span class="st">"Component"</span><span class="op">)</span></span></code></pre></div>
+<!-- preamble start -->
+
+    <script src="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.js"></script><script>
+      // Create table-specific functions using external factory
+      const tableFns_rswibxkgbtyto2hvgvpc = TinyTable.createTableFunctions("tinytable_rswibxkgbtyto2hvgvpc");
+      // tinytable span after
+      window.addEventListener('load', function () { tableFns_rswibxkgbtyto2hvgvpc.spanCell(4, 1, 1, 6) })
+      window.addEventListener('load', function () { tableFns_rswibxkgbtyto2hvgvpc.spanCell(1, 1, 1, 6) })
+      window.addEventListener('load', function () {
+          var cellsToStyle = [
+            // tinytable style arrays after
+          { positions: [ { i: '6', j: 2 }, { i: '6', j: 3 }, { i: '6', j: 4 }, { i: '6', j: 5 }, { i: '6', j: 6 } ], css_id: 'tinytable_css_qt3nr25zt9ozo3elnefi',}, 
+          { positions: [ { i: '6', j: 1 } ], css_id: 'tinytable_css_rhgj8a74s59p8a5vbiqv',}, 
+          { positions: [ { i: '2', j: 1 }, { i: '3', j: 1 }, { i: '5', j: 1 } ], css_id: 'tinytable_css_4zwfrbr1b5fei2wwaz9n',}, 
+          { positions: [ { i: '0', j: 1 }, { i: '0', j: 2 }, { i: '0', j: 3 }, { i: '0', j: 4 }, { i: '0', j: 5 }, { i: '0', j: 6 } ], css_id: 'tinytable_css_jjsjt79gha1iccutlt9f',}, 
+          ];
+
+          // Loop over the arrays to style the cells
+          cellsToStyle.forEach(function (group) {
+              group.positions.forEach(function (cell) {
+                  tableFns_rswibxkgbtyto2hvgvpc.styleCell(cell.i, cell.j, group.css_id);
+              });
+          });
+      });
+    </script><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.css">
+<style>
+    /* tinytable css entries after */
+    #tinytable_rswibxkgbtyto2hvgvpc td.tinytable_css_qt3nr25zt9ozo3elnefi, #tinytable_rswibxkgbtyto2hvgvpc th.tinytable_css_qt3nr25zt9ozo3elnefi {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%;  }
+    #tinytable_rswibxkgbtyto2hvgvpc td.tinytable_css_rhgj8a74s59p8a5vbiqv, #tinytable_rswibxkgbtyto2hvgvpc th.tinytable_css_rhgj8a74s59p8a5vbiqv {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; padding-left: 2em }
+    #tinytable_rswibxkgbtyto2hvgvpc td.tinytable_css_4zwfrbr1b5fei2wwaz9n, #tinytable_rswibxkgbtyto2hvgvpc th.tinytable_css_4zwfrbr1b5fei2wwaz9n { padding-left: 2em }
+    #tinytable_rswibxkgbtyto2hvgvpc td.tinytable_css_jjsjt79gha1iccutlt9f, #tinytable_rswibxkgbtyto2hvgvpc th.tinytable_css_jjsjt79gha1iccutlt9f {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%;  }
+    </style>
+<div class="container">
+      <table class="table tinytable" id="tinytable_rswibxkgbtyto2hvgvpc" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+<caption>Model Summary</caption>
+        <thead><tr>
+<th scope="col" data-row="0" data-col="1">Parameter</th>
+                <th scope="col" data-row="0" data-col="2">Coefficient</th>
+                <th scope="col" data-row="0" data-col="3">SE</th>
+                <th scope="col" data-row="0" data-col="4">95% CI</th>
+                <th scope="col" data-row="0" data-col="5">t(101)</th>
+                <th scope="col" data-row="0" data-col="6">p</th>
+              </tr></thead>
+<tbody>
+<tr>
+<td data-row="1" data-col="1">Fixed Effects </td>
+                  <td data-row="1" data-col="2">Fixed Effects </td>
+                  <td data-row="1" data-col="3">Fixed Effects </td>
+                  <td data-row="1" data-col="4">Fixed Effects </td>
+                  <td data-row="1" data-col="5">Fixed Effects </td>
+                  <td data-row="1" data-col="6">Fixed Effects </td>
+                </tr>
+<tr>
+<td data-row="2" data-col="1">(Intercept)</td>
+                  <td data-row="2" data-col="2">37.02</td>
+                  <td data-row="2" data-col="3">2.73</td>
+                  <td data-row="2" data-col="4">(31.59, 42.44)</td>
+                  <td data-row="2" data-col="5">13.54</td>
+                  <td data-row="2" data-col="6">&lt; .001</td>
+                </tr>
+<tr>
+<td data-row="3" data-col="1">x between</td>
+                  <td data-row="3" data-col="2">-2.71</td>
+                  <td data-row="3" data-col="3">0.35</td>
+                  <td data-row="3" data-col="4">(-3.40, -2.02)</td>
+                  <td data-row="3" data-col="5">-7.81</td>
+                  <td data-row="3" data-col="6">&lt; .001</td>
+                </tr>
+<tr>
+<td data-row="4" data-col="1">Random Effects </td>
+                  <td data-row="4" data-col="2">Random Effects </td>
+                  <td data-row="4" data-col="3">Random Effects </td>
+                  <td data-row="4" data-col="4">Random Effects </td>
+                  <td data-row="4" data-col="5">Random Effects </td>
+                  <td data-row="4" data-col="6">Random Effects </td>
+                </tr>
+<tr>
+<td data-row="5" data-col="1">SD (Intercept: grp)</td>
+                  <td data-row="5" data-col="2">1.54</td>
+                  <td data-row="5" data-col="3">0.77</td>
+                  <td data-row="5" data-col="4">(0.58, 4.09)</td>
+                  <td data-row="5" data-col="5"></td>
+                  <td data-row="5" data-col="6"></td>
+                </tr>
+<tr>
+<td data-row="6" data-col="1">SD (Residual)</td>
+                  <td data-row="6" data-col="2">2.98</td>
+                  <td data-row="6" data-col="3">0.21</td>
+                  <td data-row="6" data-col="4">(2.60, 3.42)</td>
+                  <td data-row="6" data-col="5"></td>
+                  <td data-row="6" data-col="6"></td>
+                </tr>
+</tbody>
+</table>
+</div>
+<!-- hack to avoid NA insertion in last line -->
 </div>
 <div class="section level2">
 <h2 id="a-final-note-latent-mean-centering">A final note — latent mean centering<a class="anchor" aria-label="anchor" href="#a-final-note-latent-mean-centering"></a>

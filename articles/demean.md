@@ -10,6 +10,12 @@ higher-level units, or more general: *group-level predictors*) are used
 as covariates and the model suffers from **heterogeneity bias** (Bell
 and Jones 2015).
 
+> **Note:** Throughout this example, we use `display(format = "tt")` to
+> display table output in markdown format, using the **tinytable**
+> package as the backend. See [this
+> vignette](https://easystats.github.io/insight/articles/display.html#displaying-tables-with-display)
+> for more details on output displays.
+
 ## Sample data used in this vignette
 
 ``` r
@@ -85,7 +91,8 @@ for each higher-level unit.
 
 ``` r
 
-qol_cancer <- datawizard::demean(qol_cancer, select = c("phq4", "QoL"), by = "ID")
+library(datawizard)
+qol_cancer <- demean(qol_cancer, select = c("phq4", "QoL"), by = "ID")
 ```
 
 Now we have:
@@ -114,11 +121,16 @@ fe_model1 <- lm(
 )
 # we use only the first two rows, because the remaining rows are
 # the estimates for "ID", which is not of interest here...
-model_parameters(fe_model1)[1:2, ]
-#> Parameter   | Coefficient |   SE |         95% CI | t(374) |      p
-#> -------------------------------------------------------------------
-#> time        |        1.09 | 0.64 | [-0.17,  2.34] |   1.70 | 0.089 
-#> phq4 within |       -3.66 | 0.41 | [-4.46, -2.86] |  -8.95 | < .001
+model_parameters(fe_model1)[1:2, ] |> display(format = "tt")
+```
+
+| Parameter   | Coefficient | SE   | 95% CI         | t(374) | p       |
+|-------------|-------------|------|----------------|--------|---------|
+| time        | 1.09        | 0.64 | (-0.17, 2.34)  | 1.70   | 0.089   |
+| phq4 within | -3.66       | 0.41 | (-4.46, -2.86) | -8.95  | \< .001 |
+
+``` r
+
 
 
 # instead of removing the intercept, we could also use the
@@ -127,11 +139,16 @@ fe_model2 <- lm(
   QoL_within ~ time + phq4_within + ID,
   data = qol_cancer
 )
-model_parameters(fe_model2)[2:3, ]
-#> Parameter   | Coefficient |   SE |         95% CI | t(374) |      p
-#> -------------------------------------------------------------------
-#> time        |        1.09 | 0.64 | [-0.17,  2.34] |   1.70 | 0.089 
-#> phq4 within |       -3.66 | 0.41 | [-4.46, -2.86] |  -8.95 | < .001
+model_parameters(fe_model2)[2:3, ] |> display(format = "tt")
+```
+
+| Parameter   | Coefficient | SE   | 95% CI         | t(374) | p       |
+|-------------|-------------|------|----------------|--------|---------|
+| time        | 1.09        | 0.64 | (-0.17, 2.34)  | 1.70   | 0.089   |
+| phq4 within | -3.66       | 0.41 | (-4.46, -2.86) | -8.95  | \< .001 |
+
+``` r
+
 
 # we compare the results with those from the "lfe"-package for panel data
 library(lfe)
@@ -139,14 +156,17 @@ fe_model3 <- felm(
   QoL ~ time + phq4 | ID,
   data = qol_cancer
 )
-model_parameters(fe_model3)
-#> # Fixed Effects
-#> 
-#> Parameter | Coefficient |   SE |         95% CI | t(374) |      p
-#> -----------------------------------------------------------------
-#> time      |        1.09 | 0.64 | [-0.17,  2.34] |   1.70 | 0.089 
-#> phq4      |       -3.66 | 0.41 | [-4.46, -2.86] |  -8.95 | < .001
+model_parameters(fe_model3) |> display(format = "tt")
 ```
+
+| Parameter | Coefficient | SE   | 95% CI         | t(374) | p       |
+|-----------|-------------|------|----------------|--------|---------|
+| time      | 1.09        | 0.64 | (-0.17, 2.34)  | 1.70   | 0.089   |
+| phq4      | -3.66       | 0.41 | (-4.46, -2.86) | -8.95  | \< .001 |
+
+Model Summary {#tinytable_9c3l90wmlevn8021nkwx .table .tinytable
+style="width: auto; margin-left: auto; margin-right: auto;"
+quarto-disable-processing="true"}
 
 As we can see, the *within-effect* of PHQ-4 is `-3.66`, hence the mean
 of the change for an average individual case in our sample (or, the
@@ -206,30 +226,35 @@ mixed_1 <- lmer(
   QoL ~ time + phq4_within + phq4_between + (1 | ID),
   data = qol_cancer
 )
-model_parameters(mixed_1)
-#> # Fixed Effects
-#> 
-#> Parameter    | Coefficient |   SE |         95% CI | t(558) |      p
-#> --------------------------------------------------------------------
-#> (Intercept)  |       71.53 | 1.56 | [68.48, 74.59] |  45.98 | < .001
-#> time         |        1.09 | 0.64 | [-0.17,  2.34] |   1.70 | 0.089 
-#> phq4 within  |       -3.66 | 0.41 | [-4.46, -2.86] |  -8.95 | < .001
-#> phq4 between |       -6.28 | 0.50 | [-7.27, -5.30] | -12.53 | < .001
-#> 
-#> # Random Effects
-#> 
-#> Parameter          | Coefficient |   SE |         95% CI
-#> --------------------------------------------------------
-#> SD (Intercept: ID) |        9.88 | 0.80 | [ 8.43, 11.58]
-#> SD (Residual)      |       12.37 | 0.45 | [11.51, 13.28]
+model_parameters(mixed_1) |> display(format = "tt", by = "Component")
+```
+
+| Parameter | Coefficient | SE | 95% CI | t(558) | p |
+|----|----|----|----|----|----|
+| Fixed Effects | Fixed Effects | Fixed Effects | Fixed Effects | Fixed Effects | Fixed Effects |
+| (Intercept) | 71.53 | 1.56 | (68.48, 74.59) | 45.98 | \< .001 |
+| time | 1.09 | 0.64 | (-0.17, 2.34) | 1.70 | 0.089 |
+| phq4 within | -3.66 | 0.41 | (-4.46, -2.86) | -8.95 | \< .001 |
+| phq4 between | -6.28 | 0.50 | (-7.27, -5.30) | -12.53 | \< .001 |
+| Random Effects | Random Effects | Random Effects | Random Effects | Random Effects | Random Effects |
+| SD (Intercept: ID) | 9.88 | 0.80 | (8.43, 11.58) |  |  |
+| SD (Residual) | 12.37 | 0.45 | (11.51, 13.28) |  |  |
+
+Model Summary {#tinytable_oykv9jhksn2ocwmissk2 .table .tinytable
+style="width: auto; margin-left: auto; margin-right: auto;"
+quarto-disable-processing="true"}
+
+``` r
+
 
 # compare to FE-model
-model_parameters(fe_model1)[1:2, ]
-#> Parameter   | Coefficient |   SE |         95% CI | t(374) |      p
-#> -------------------------------------------------------------------
-#> time        |        1.09 | 0.64 | [-0.17,  2.34] |   1.70 | 0.089 
-#> phq4 within |       -3.66 | 0.41 | [-4.46, -2.86] |  -8.95 | < .001
+model_parameters(fe_model1)[1:2, ] |> display(format = "tt")
 ```
+
+| Parameter   | Coefficient | SE   | 95% CI         | t(374) | p       |
+|-------------|-------------|------|----------------|--------|---------|
+| time        | 1.09        | 0.64 | (-0.17, 2.34)  | 1.70   | 0.089   |
+| phq4 within | -3.66       | 0.41 | (-4.46, -2.86) | -8.95  | \< .001 |
 
 As we can see, the estimates and standard errors are identical. The
 argument *against* the use of mixed models, i.e. that using mixed models
@@ -253,18 +278,21 @@ mixed_2 <- lmer(
 )
 # effects = "fixed" will not display random effects, but split the
 # fixed effects into its between- and within-effects components.
-model_parameters(mixed_2, effects = "fixed")
-#> # Fixed Effects
-#> 
-#> Parameter        | Coefficient |   SE |         95% CI | t(554) |      p
-#> ------------------------------------------------------------------------
-#> (Intercept)      |       67.36 | 2.48 | [62.48, 72.23] |  27.15 | < .001
-#> time             |        1.09 | 0.66 | [-0.21,  2.39] |   1.65 | 0.099 
-#> phq4 within      |       -3.72 | 0.41 | [-4.52, -2.92] |  -9.10 | < .001
-#> phq4 between     |       -6.13 | 0.52 | [-7.14, -5.11] | -11.84 | < .001
-#> education [mid]  |        5.01 | 2.35 | [ 0.40,  9.62] |   2.14 | 0.033 
-#> education [high] |        5.52 | 2.75 | [ 0.11, 10.93] |   2.00 | 0.046
+model_parameters(mixed_2, effects = "fixed") |> display(format = "tt")
 ```
+
+| Parameter        | Coefficient | SE   | 95% CI         | t(554) | p       |
+|------------------|-------------|------|----------------|--------|---------|
+| (Intercept)      | 67.36       | 2.48 | (62.48, 72.23) | 27.15  | \< .001 |
+| time             | 1.09        | 0.66 | (-0.21, 2.39)  | 1.65   | 0.099   |
+| phq4 within      | -3.72       | 0.41 | (-4.52, -2.92) | -9.10  | \< .001 |
+| phq4 between     | -6.13       | 0.52 | (-7.14, -5.11) | -11.84 | \< .001 |
+| education (mid)  | 5.01        | 2.35 | (0.40, 9.62)   | 2.14   | 0.033   |
+| education (high) | 5.52        | 2.75 | (0.11, 10.93)  | 2.00   | 0.046   |
+
+Model Summary {#tinytable_4ruzykjx4c9d9hk120z9 .table .tinytable
+style="width: auto; margin-left: auto; margin-right: auto;"
+quarto-disable-processing="true"}
 
 For more complex models, within-effects will naturally change slightly
 and are no longer identical to simpler FE models. This is not “bias”,
@@ -324,18 +352,21 @@ group-level predictors…
 
 ``` r
 
-model_parameters(rewb, effects = "fixed")
-#> # Fixed Effects
-#> 
-#> Parameter        | Coefficient |   SE |         95% CI | t(551) |      p
-#> ------------------------------------------------------------------------
-#> (Intercept)      |       67.18 | 2.39 | [62.49, 71.87] |  28.13 | < .001
-#> time             |        1.18 | 0.60 | [-0.01,  2.37] |   1.95 | 0.051 
-#> phq4 within      |       -4.50 | 0.58 | [-5.64, -3.36] |  -7.78 | < .001
-#> phq4 between     |       -6.11 | 0.52 | [-7.13, -5.10] | -11.81 | < .001
-#> education [mid]  |        4.95 | 2.35 | [ 0.34,  9.56] |   2.11 | 0.035 
-#> education [high] |        5.62 | 2.76 | [ 0.20, 11.04] |   2.04 | 0.042
+model_parameters(rewb, effects = "fixed") |> display(format = "tt")
 ```
+
+| Parameter        | Coefficient | SE   | 95% CI            | t(551) | p       |
+|------------------|-------------|------|-------------------|--------|---------|
+| (Intercept)      | 67.18       | 2.39 | (62.49, 71.87)    | 28.13  | \< .001 |
+| time             | 1.18        | 0.60 | (-7.25e-03, 2.37) | 1.95   | 0.051   |
+| phq4 within      | -4.50       | 0.58 | (-5.64, -3.36)    | -7.78  | \< .001 |
+| phq4 between     | -6.11       | 0.52 | (-7.13, -5.10)    | -11.81 | \< .001 |
+| education (mid)  | 4.95        | 2.35 | (0.34, 9.56)      | 2.11   | 0.035   |
+| education (high) | 5.62        | 2.76 | (0.20, 11.04)     | 2.04   | 0.042   |
+
+Model Summary {#tinytable_m8i4k476estky3e4cb8m .table .tinytable
+style="width: auto; margin-left: auto; margin-right: auto;"
+quarto-disable-processing="true"}
 
 … but you can also model the variation of (group) effects across time
 (and probably space), and you can even include more higher-level units
@@ -453,12 +484,13 @@ of `-1.92`.
 ``` r
 
 m1 <- lm(y ~ x, data = d)
-model_parameters(m1)
-#> Parameter   | Coefficient |   SE |         95% CI | t(103) |      p
-#> -------------------------------------------------------------------
-#> (Intercept) |       30.20 | 1.42 | [27.39, 33.00] |  21.34 | < .001
-#> x           |       -1.92 | 0.18 | [-2.27, -1.56] | -10.69 | < .001
+model_parameters(m1) |> display(format = "tt")
 ```
+
+| Parameter   | Coefficient | SE   | 95% CI         | t(103) | p       |
+|-------------|-------------|------|----------------|--------|---------|
+| (Intercept) | 30.20       | 1.42 | (27.39, 33.00) | 21.34  | \< .001 |
+| x           | -1.92       | 0.18 | (-2.27, -1.56) | -10.69 | \< .001 |
 
 However, we have ignored the clustered structure in our data, in this
 example due to repeated measurements.
@@ -481,11 +513,12 @@ the variation *between* subjects into account, thus resulting in
 ``` r
 
 m2 <- lm(y ~ 0 + x_within + grp, data = d)
-model_parameters(m2)[1, ]
-#> Parameter | Coefficient |   SE |       95% CI | t(99) |      p
-#> --------------------------------------------------------------
-#> x within  |        1.20 | 0.07 | [1.06, 1.35] | 16.08 | < .001
+model_parameters(m2)[1, ] |> display(format = "tt")
 ```
+
+| Parameter | Coefficient | SE   | 95% CI       | t(99) | p       |
+|-----------|-------------|------|--------------|-------|---------|
+| x within  | 1.20        | 0.07 | (1.06, 1.35) | 16.08 | \< .001 |
 
 ### Model 3: Between-subject effect of typing speed
 
@@ -501,12 +534,13 @@ the `-1.92` estimated in the model `m1`.
 ``` r
 
 m3 <- lm(y ~ x_between, data = d)
-model_parameters(m3)
-#> Parameter   | Coefficient |   SE |         95% CI | t(103) |      p
-#> -------------------------------------------------------------------
-#> (Intercept) |       37.83 | 0.62 | [36.59, 39.06] |  60.79 | < .001
-#> x between   |       -2.93 | 0.08 | [-3.09, -2.78] | -36.76 | < .001
+model_parameters(m3) |> display(format = "tt")
 ```
+
+| Parameter   | Coefficient | SE   | 95% CI         | t(103) | p       |
+|-------------|-------------|------|----------------|--------|---------|
+| (Intercept) | 37.83       | 0.62 | (36.59, 39.06) | 60.79  | \< .001 |
+| x between   | -2.93       | 0.08 | (-3.09, -2.78) | -36.76 | \< .001 |
 
 ### Model 4: Mixed model with within- and between-subjects
 
@@ -523,22 +557,22 @@ accurately taken into account).
 ``` r
 
 m4 <- lmer(y ~ x_between + x_within + (1 | grp), data = d)
-model_parameters(m4)
-#> # Fixed Effects
-#> 
-#> Parameter   | Coefficient |   SE |         95% CI | t(100) |      p
-#> -------------------------------------------------------------------
-#> (Intercept) |       37.83 | 0.33 | [37.17, 38.48] | 114.46 | < .001
-#> x between   |       -2.93 | 0.04 | [-3.02, -2.85] | -69.22 | < .001
-#> x within    |        1.20 | 0.07 | [ 1.06,  1.35] |  16.22 | < .001
-#> 
-#> # Random Effects
-#> 
-#> Parameter           | Coefficient
-#> ---------------------------------
-#> SD (Intercept: grp) |        0.00
-#> SD (Residual)       |        0.92
+model_parameters(m4) |> display(format = "tt", by = "Component")
 ```
+
+| Parameter | Coefficient | SE | 95% CI | t(100) | p |
+|----|----|----|----|----|----|
+| Fixed Effects | Fixed Effects | Fixed Effects | Fixed Effects | Fixed Effects | Fixed Effects |
+| (Intercept) | 37.83 | 0.33 | (37.17, 38.48) | 114.46 | \< .001 |
+| x between | -2.93 | 0.04 | (-3.02, -2.85) | -69.22 | \< .001 |
+| x within | 1.20 | 0.07 | (1.06, 1.35) | 16.22 | \< .001 |
+| Random Effects | Random Effects | Random Effects | Random Effects | Random Effects | Random Effects |
+| SD (Intercept: grp) | 0.00 |  |  |  |  |
+| SD (Residual) | 0.92 |  |  |  |  |
+
+Model Summary {#tinytable_aw2wtx1jdo6yulflswu7 .table .tinytable
+style="width: auto; margin-left: auto; margin-right: auto;"
+quarto-disable-processing="true"}
 
 ### Model 5: Complex Random-Effects Within-Between Model
 
@@ -550,24 +584,24 @@ subjects, we get larger standard errors for the within-effect.
 ``` r
 
 m5 <- lmer(y ~ x_between + x_within + (1 + x_within | grp), data = d)
-model_parameters(m5)
-#> # Fixed Effects
-#> 
-#> Parameter   | Coefficient |   SE |         95% CI |  t(98) |      p
-#> -------------------------------------------------------------------
-#> (Intercept) |       37.95 | 0.34 | [37.28, 38.63] | 111.15 | < .001
-#> x between   |       -2.95 | 0.04 | [-3.04, -2.87] | -67.57 | < .001
-#> x within    |        1.20 | 0.10 | [ 1.01,  1.40] |  12.16 | < .001
-#> 
-#> # Random Effects
-#> 
-#> Parameter                     | Coefficient |   SE |         95% CI
-#> -------------------------------------------------------------------
-#> SD (Intercept: grp)           |        0.09 | 0.22 | [ 0.00, 14.20]
-#> SD (x_within: grp)            |        0.15 | 0.12 | [ 0.03,  0.69]
-#> Cor (Intercept~x_within: grp) |       -1.00 | 2.18 | [-1.00,      ]
-#> SD (Residual)                 |        0.90 | 0.07 | [ 0.78,  1.04]
+model_parameters(m5) |> display(format = "tt", by = "Component")
 ```
+
+| Parameter | Coefficient | SE | 95% CI | t(98) | p |
+|----|----|----|----|----|----|
+| Fixed Effects | Fixed Effects | Fixed Effects | Fixed Effects | Fixed Effects | Fixed Effects |
+| (Intercept) | 37.95 | 0.34 | (37.28, 38.63) | 111.15 | \< .001 |
+| x between | -2.95 | 0.04 | (-3.04, -2.87) | -67.57 | \< .001 |
+| x within | 1.20 | 0.10 | (1.01, 1.40) | 12.16 | \< .001 |
+| Random Effects | Random Effects | Random Effects | Random Effects | Random Effects | Random Effects |
+| SD (Intercept: grp) | 0.09 | 0.22 | (5.16e-04, 14.20) |  |  |
+| SD (x_within: grp) | 0.15 | 0.12 | (0.03, 0.69) |  |  |
+| Cor (Intercept~x_within: grp) | -1.00 | 2.18 | (-1.00, ) |  |  |
+| SD (Residual) | 0.90 | 0.07 | (0.78, 1.04) |  |  |
+
+Model Summary {#tinytable_oz263n32a9sm4nvoa9eu .table .tinytable
+style="width: auto; margin-left: auto; margin-right: auto;"
+quarto-disable-processing="true"}
 
 ![](demean_files/figure-html/crewb-fit-1.png)
 
@@ -620,40 +654,45 @@ d$grp[sample(which(d$grp == 4), 8)] <- 2
 d$grp[sample(which(d$grp == 10), 9)] <- 6
 
 d <- d |>
-  datawizard::data_group(grp) |>
-  datawizard::data_modify(x = rev(15 - (x + 1.5 * as.numeric(grp)))) |>
-  datawizard::data_ungroup()
+  data_group(grp) |>
+  data_modify(x = rev(15 - (x + 1.5 * as.numeric(grp)))) |>
+  data_ungroup()
 
 labs <- c("very slow", "slow", "average", "fast", "very fast")
 levels(d$grp) <- rev(labs)
 
-d <- datawizard::demean(d, c("x", "y"), by = "grp")
+d <- demean(d, c("x", "y"), by = "grp")
 
 # Between-subject effect of typing speed
 m1 <- lm(y ~ x_between, data = d)
-model_parameters(m1)
-#> Parameter   | Coefficient |   SE |         95% CI | t(103) |      p
-#> -------------------------------------------------------------------
-#> (Intercept) |       38.32 | 1.33 | [35.69, 40.95] |  28.87 | < .001
-#> x between   |       -2.81 | 0.16 | [-3.13, -2.49] | -17.47 | < .001
+model_parameters(m1) |> display(format = "tt")
+```
+
+| Parameter   | Coefficient | SE   | 95% CI         | t(103) | p       |
+|-------------|-------------|------|----------------|--------|---------|
+| (Intercept) | 38.32       | 1.33 | (35.69, 40.95) | 28.87  | \< .001 |
+| x between   | -2.81       | 0.16 | (-3.13, -2.49) | -17.47 | \< .001 |
+
+``` r
+
 
 # Between-subject effect of typing speed, accounting for group structure
 m2 <- lmer(y ~ x_between + (1 | grp), data = d)
-model_parameters(m2)
-#> # Fixed Effects
-#> 
-#> Parameter   | Coefficient |   SE |         95% CI | t(101) |      p
-#> -------------------------------------------------------------------
-#> (Intercept) |       37.02 | 2.73 | [31.59, 42.44] |  13.54 | < .001
-#> x between   |       -2.71 | 0.35 | [-3.40, -2.02] |  -7.81 | < .001
-#> 
-#> # Random Effects
-#> 
-#> Parameter           | Coefficient |   SE |       95% CI
-#> -------------------------------------------------------
-#> SD (Intercept: grp) |        1.54 | 0.77 | [0.58, 4.09]
-#> SD (Residual)       |        2.98 | 0.21 | [2.60, 3.42]
+model_parameters(m2) |> display(format = "tt", by = "Component")
 ```
+
+| Parameter | Coefficient | SE | 95% CI | t(101) | p |
+|----|----|----|----|----|----|
+| Fixed Effects | Fixed Effects | Fixed Effects | Fixed Effects | Fixed Effects | Fixed Effects |
+| (Intercept) | 37.02 | 2.73 | (31.59, 42.44) | 13.54 | \< .001 |
+| x between | -2.71 | 0.35 | (-3.40, -2.02) | -7.81 | \< .001 |
+| Random Effects | Random Effects | Random Effects | Random Effects | Random Effects | Random Effects |
+| SD (Intercept: grp) | 1.54 | 0.77 | (0.58, 4.09) |  |  |
+| SD (Residual) | 2.98 | 0.21 | (2.60, 3.42) |  |  |
+
+Model Summary {#tinytable_rswibxkgbtyto2hvgvpc .table .tinytable
+style="width: auto; margin-left: auto; margin-right: auto;"
+quarto-disable-processing="true"}
 
 ## A final note — latent mean centering
 
