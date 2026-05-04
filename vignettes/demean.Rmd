@@ -143,8 +143,9 @@ fe_model1 <- lm(
 # we use only the first two rows, because the remaining rows are
 # the estimates for "ID", which is not of interest here...
 model_parameters(fe_model1)[1:2, ] |> display(format = "tt")
+```
 
-
+```{r}
 # instead of removing the intercept, we could also use the
 # de-meaned response...
 fe_model2 <- lm(
@@ -152,7 +153,9 @@ fe_model2 <- lm(
   data = qol_cancer
 )
 model_parameters(fe_model2)[2:3, ] |> display(format = "tt")
+```
 
+```{r}
 # we compare the results with those from the "lfe"-package for panel data
 library(lfe)
 fe_model3 <- felm(
@@ -218,7 +221,9 @@ mixed_1 <- lmer(
   data = qol_cancer
 )
 model_parameters(mixed_1) |> display(format = "tt", by = "Component")
+```
 
+```{r}
 # compare to FE-model
 model_parameters(fe_model1)[1:2, ] |> display(format = "tt")
 ```
@@ -573,7 +578,9 @@ d <- demean(d, c("x", "y"), by = "grp")
 # Between-subject effect of typing speed
 m1 <- lm(y ~ x_between, data = d)
 model_parameters(m1) |> display(format = "tt")
+```
 
+```{r}
 # Between-subject effect of typing speed, accounting for group structure
 m2 <- lmer(y ~ x_between + (1 | grp), data = d)
 model_parameters(m2) |> display(format = "tt", by = "Component")

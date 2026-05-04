@@ -242,24 +242,26 @@
 #' print_html(result)
 #' }
 #' @export
-print.parameters_model <- function(x,
-                                   pretty_names = TRUE,
-                                   split_components = TRUE,
-                                   select = NULL,
-                                   caption = NULL,
-                                   footer = NULL,
-                                   digits = 2,
-                                   ci_digits = digits,
-                                   p_digits = 3,
-                                   footer_digits = 3,
-                                   show_sigma = FALSE,
-                                   show_formula = FALSE,
-                                   zap_small = FALSE,
-                                   groups = NULL,
-                                   column_width = NULL,
-                                   ci_brackets = c("[", "]"),
-                                   include_reference = FALSE,
-                                   ...) {
+print.parameters_model <- function(
+  x,
+  pretty_names = TRUE,
+  split_components = TRUE,
+  select = NULL,
+  caption = NULL,
+  footer = NULL,
+  digits = 2,
+  ci_digits = digits,
+  p_digits = 3,
+  footer_digits = 3,
+  show_sigma = FALSE,
+  show_formula = FALSE,
+  zap_small = FALSE,
+  groups = NULL,
+  column_width = NULL,
+  ci_brackets = c("[", "]"),
+  include_reference = FALSE,
+  ...
+) {
   # save original input
   orig_x <- x
 
@@ -267,7 +269,9 @@ print.parameters_model <- function(x,
 
   # check if pretty names should be replaced by value labels
   # (if we have labelled data)
-  if (isTRUE(getOption("parameters_labels", FALSE)) || identical(pretty_names, "labels")) {
+  if (
+    isTRUE(getOption("parameters_labels", FALSE)) || identical(pretty_names, "labels")
+  ) {
     attr(x, "pretty_names") <- attr(x, "pretty_labels", exact = TRUE)
     pretty_names <- TRUE
   }
@@ -313,7 +317,9 @@ print.parameters_model <- function(x,
   )
 
   # if we have multiple components, we can align colum width across components here
-  if (!is.null(column_width) && all(column_width == "fixed") && is.list(formatted_table)) {
+  if (
+    !is.null(column_width) && all(column_width == "fixed") && is.list(formatted_table)
+  ) {
     column_width <- .find_min_colwidth(formatted_table)
   }
 
@@ -362,13 +368,7 @@ print.parameters_model <- function(x,
 #' @rdname print.parameters_model
 #' @export
 summary.parameters_model <- function(object, ...) {
-  print(
-    x = object,
-    select = "minimal",
-    show_sigma = TRUE,
-    show_formula = TRUE,
-    ...
-  )
+  print(x = object, select = "minimal", show_sigma = TRUE, show_formula = TRUE, ...)
 }
 
 #' @export
@@ -394,11 +394,13 @@ print.parameters_random <- function(x, digits = 2, ...) {
 
 # helper --------------------
 
-.print_footer <- function(x,
-                          digits = 3,
-                          show_sigma = FALSE,
-                          show_formula = FALSE,
-                          format = "text") {
+.print_footer <- function(
+  x,
+  digits = 3,
+  show_sigma = FALSE,
+  show_formula = FALSE,
+  format = "text"
+) {
   # get attributes
   model_sigma <- attributes(x)$sigma
   show_summary <- isTRUE(attributes(x)$show_summary)
@@ -431,8 +433,10 @@ print.parameters_random <- function(x, digits = 2, ...) {
 
 .print_caption <- function(x, caption = NULL, format = "text") {
   no_caption <- attributes(x)$no_caption
-  # no table-title for certain model tables, indicated by the no_caption attribute
-  if (isTRUE(no_caption)) {
+  # no table-title for certain model tables, indicated by the no_caption
+  # attribute. we want to remove caption only for text output, because
+  # that would clutter the console. For html, we include the default
+  if (isTRUE(no_caption) && !identical(format, "html")) {
     return(NULL)
   }
 
@@ -489,11 +493,15 @@ print.parameters_random <- function(x, digits = 2, ...) {
 
   # create SD
   random_params$SD <- NA
-  var_components <- random_params$Description %in% c("Within-Group Variance", "Between-Group Variance")
+  var_components <- random_params$Description %in%
+    c("Within-Group Variance", "Between-Group Variance")
   random_params$SD[var_components] <- sqrt(random_params$Value[var_components])
 
   # format values
-  random_params$Value <- format(sprintf("%g", round(random_params$Value, digits = digits)), justify = "right")
+  random_params$Value <- format(
+    sprintf("%g", round(random_params$Value, digits = digits)),
+    justify = "right"
+  )
   random_params$SD[var_components] <- format(
     sprintf("(%g)", round(random_params$SD[var_components], digits = digits)),
     justify = "right"
@@ -505,7 +513,11 @@ print.parameters_random <- function(x, digits = 2, ...) {
   random_params$SD[is.na(random_params$SD)] <- ""
 
   non_empty <- random_params$Term != "" & random_params$Type != "" # nolint
-  random_params$Line[non_empty] <- sprintf("%s (%s)", random_params$Type[non_empty], random_params$Term[non_empty])
+  random_params$Line[non_empty] <- sprintf(
+    "%s (%s)",
+    random_params$Type[non_empty],
+    random_params$Term[non_empty]
+  )
 
   non_empty <- random_params$Term != "" & random_params$Type == "" # nolint
   random_params$Line[non_empty] <- sprintf("%s", random_params$Term[non_empty])
@@ -514,11 +526,17 @@ print.parameters_random <- function(x, digits = 2, ...) {
   random_params$Line <- sprintf("  %s", format(random_params$Line))
   max_len <- max(nchar(random_params$Line)) + 2
 
-  out <- split(random_params, factor(random_params$Description, levels = unique(random_params$Description)))
+  out <- split(
+    random_params,
+    factor(random_params$Description, levels = unique(random_params$Description))
+  )
 
   for (i in out) {
     if ("Within-Group Variance" %in% i$Description) {
-      insight::print_color(format("Within-Group Variance", width = max_len), color = "blue")
+      insight::print_color(
+        format("Within-Group Variance", width = max_len),
+        color = "blue"
+      )
       cat(sprintf("%s %s\n", i$Value, i$SD))
     } else if ("Between-Group Variance" %in% i$Description) {
       insight::print_color("Between-Group Variance\n", "blue")
