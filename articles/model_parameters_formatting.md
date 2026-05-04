@@ -384,8 +384,9 @@ advantage that it will be properly rendered when exporting to PDF.
 model_parameters(model) |> print_html()
 ```
 
-| Parameter                 | Coefficient | SE   | 95% CI         | t(144) | p       |
+| Model Summary             |             |      |                |        |         |
 |---------------------------|-------------|------|----------------|--------|---------|
+| Parameter                 | Coefficient | SE   | 95% CI         | t(144) | p       |
 | (Intercept)               | 3.81        | 0.06 | (3.70, 3.93)   | 65.50  | \< .001 |
 | Sepal Length (1st degree) | 4.06        | 0.47 | (3.14, 4.98)   | 8.70   | \< .001 |
 | Sepal Length (2nd degree) | -1.30       | 0.31 | (-1.92, -0.68) | -4.14  | \< .001 |
@@ -410,8 +411,9 @@ or
 model_parameters(model) |> display(format = "html")
 ```
 
-| Parameter                 | Coefficient | SE   | 95% CI         | t(144) | p       |
+| Model Summary             |             |      |                |        |         |
 |---------------------------|-------------|------|----------------|--------|---------|
+| Parameter                 | Coefficient | SE   | 95% CI         | t(144) | p       |
 | (Intercept)               | 3.81        | 0.06 | (3.70, 3.93)   | 65.50  | \< .001 |
 | Sepal Length (1st degree) | 4.06        | 0.47 | (3.14, 4.98)   | 8.70   | \< .001 |
 | Sepal Length (2nd degree) | -1.30       | 0.31 | (-1.92, -0.68) | -4.14  | \< .001 |

@@ -129,9 +129,11 @@ model_parameters(fe_model1)[1:2, ] |> display(format = "tt")
 | time        | 1.09        | 0.64 | (-0.17, 2.34)  | 1.70   | 0.089   |
 | phq4 within | -3.66       | 0.41 | (-4.46, -2.86) | -8.95  | \< .001 |
 
+Model Summary {#tinytable_5y9p9f3cy8vuib7ty05p .table .tinytable
+style="width: auto; margin-left: auto; margin-right: auto;"
+quarto-disable-processing="true"}
+
 ``` r
-
-
 
 # instead of removing the intercept, we could also use the
 # de-meaned response...
@@ -147,8 +149,11 @@ model_parameters(fe_model2)[2:3, ] |> display(format = "tt")
 | time        | 1.09        | 0.64 | (-0.17, 2.34)  | 1.70   | 0.089   |
 | phq4 within | -3.66       | 0.41 | (-4.46, -2.86) | -8.95  | \< .001 |
 
-``` r
+Model Summary {#tinytable_8ekkl354istvx52htw4c .table .tinytable
+style="width: auto; margin-left: auto; margin-right: auto;"
+quarto-disable-processing="true"}
 
+``` r
 
 # we compare the results with those from the "lfe"-package for panel data
 library(lfe)
@@ -246,7 +251,6 @@ quarto-disable-processing="true"}
 
 ``` r
 
-
 # compare to FE-model
 model_parameters(fe_model1)[1:2, ] |> display(format = "tt")
 ```
@@ -255,6 +259,10 @@ model_parameters(fe_model1)[1:2, ] |> display(format = "tt")
 |-------------|-------------|------|----------------|--------|---------|
 | time        | 1.09        | 0.64 | (-0.17, 2.34)  | 1.70   | 0.089   |
 | phq4 within | -3.66       | 0.41 | (-4.46, -2.86) | -8.95  | \< .001 |
+
+Model Summary {#tinytable_hps0sv58ocxu06fie91l .table .tinytable
+style="width: auto; margin-left: auto; margin-right: auto;"
+quarto-disable-processing="true"}
 
 As we can see, the estimates and standard errors are identical. The
 argument *against* the use of mixed models, i.e. that using mixed models
@@ -469,14 +477,14 @@ d <- datawizard::demean(d, c("x", "y"), by = "grp")
 
 Let’s look at the raw data…
 
-![](demean_files/figure-html/unnamed-chunk-13-1.png)
+![](demean_files/figure-html/unnamed-chunk-16-1.png)
 
 ### Model 1: Linear relationship between typing errors and typing speed
 
 We can now assume a (linear) relationship between typing errors and
 typing speed.
 
-![](demean_files/figure-html/unnamed-chunk-14-1.png)
+![](demean_files/figure-html/unnamed-chunk-17-1.png)
 
 Looking at the coefficients, we have following model with a coefficient
 of `-1.92`.
@@ -492,10 +500,14 @@ model_parameters(m1) |> display(format = "tt")
 | (Intercept) | 30.20       | 1.42 | (27.39, 33.00) | 21.34  | \< .001 |
 | x           | -1.92       | 0.18 | (-2.27, -1.56) | -10.69 | \< .001 |
 
+Model Summary {#tinytable_7h8669nmpws9caop6omp .table .tinytable
+style="width: auto; margin-left: auto; margin-right: auto;"
+quarto-disable-processing="true"}
+
 However, we have ignored the clustered structure in our data, in this
 example due to repeated measurements.
 
-![](demean_files/figure-html/unnamed-chunk-16-1.png)
+![](demean_files/figure-html/unnamed-chunk-19-1.png)
 
 ### Model 2: Within-subject effect of typing speed
 
@@ -503,7 +515,7 @@ A fixed effects regression (FE-regression) would now remove all
 between-effects and include only the within-effects as well as the
 group-level indicator.
 
-![](demean_files/figure-html/unnamed-chunk-17-1.png)
+![](demean_files/figure-html/unnamed-chunk-20-1.png)
 
 This returns the coefficient of the “within”-effect, which is `1.2`,
 with a standard error of `0.07`. Note that the FE-model does *not* take
@@ -520,13 +532,17 @@ model_parameters(m2)[1, ] |> display(format = "tt")
 |-----------|-------------|------|--------------|-------|---------|
 | x within  | 1.20        | 0.07 | (1.06, 1.35) | 16.08 | \< .001 |
 
+Model Summary {#tinytable_zqqym2u1m28tut8zxlrs .table .tinytable
+style="width: auto; margin-left: auto; margin-right: auto;"
+quarto-disable-processing="true"}
+
 ### Model 3: Between-subject effect of typing speed
 
 To understand, why the above model 1 (`m1`) returns a biased estimate,
 which is a “weighted average” of the within- and between-effects, let us
 look at the between-effect now.
 
-![](demean_files/figure-html/unnamed-chunk-19-1.png)
+![](demean_files/figure-html/unnamed-chunk-22-1.png)
 
 As we can see, the between-effect is `-2.93`, which is different from
 the `-1.92` estimated in the model `m1`.
@@ -542,12 +558,16 @@ model_parameters(m3) |> display(format = "tt")
 | (Intercept) | 37.83       | 0.62 | (36.59, 39.06) | 60.79  | \< .001 |
 | x between   | -2.93       | 0.08 | (-3.09, -2.78) | -36.76 | \< .001 |
 
+Model Summary {#tinytable_gj8a74s59p8a5vbiqvqt .table .tinytable
+style="width: auto; margin-left: auto; margin-right: auto;"
+quarto-disable-processing="true"}
+
 ### Model 4: Mixed model with within- and between-subjects
 
 Since FE-models can only model within-effects, we now use a mixed model
 with within- and between-effects.
 
-![](demean_files/figure-html/unnamed-chunk-22-1.png)
+![](demean_files/figure-html/unnamed-chunk-25-1.png)
 
 We see, the estimate for the within-effects is *not* biased.
 Furthermore, we get the correct between-effect as well (standard errors
@@ -673,8 +693,11 @@ model_parameters(m1) |> display(format = "tt")
 | (Intercept) | 38.32       | 1.33 | (35.69, 40.95) | 28.87  | \< .001 |
 | x between   | -2.81       | 0.16 | (-3.13, -2.49) | -17.47 | \< .001 |
 
-``` r
+Model Summary {#tinytable_mpvjn8md5q0pgspqk6pj .table .tinytable
+style="width: auto; margin-left: auto; margin-right: auto;"
+quarto-disable-processing="true"}
 
+``` r
 
 # Between-subject effect of typing speed, accounting for group structure
 m2 <- lmer(y ~ x_between + (1 | grp), data = d)

@@ -29,7 +29,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.28.3.11</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.28.3.12</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -232,7 +232,8 @@ indicating the “within-subject” effect)</p></li>
     </style>
 <div class="container">
       <table class="table tinytable" id="tinytable_5y9p9f3cy8vuib7ty05p" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
-<thead><tr>
+<caption>Model Summary</caption>
+        <thead><tr>
 <th scope="col" data-row="0" data-col="1">Parameter</th>
                 <th scope="col" data-row="0" data-col="2">Coefficient</th>
                 <th scope="col" data-row="0" data-col="3">SE</th>
@@ -262,9 +263,7 @@ indicating the “within-subject” effect)</p></li>
 </div>
 <!-- hack to avoid NA insertion in last line -->
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
-<span></span>
-<span><span class="co"># instead of removing the intercept, we could also use the</span></span>
+<code class="sourceCode R"><span><span class="co"># instead of removing the intercept, we could also use the</span></span>
 <span><span class="co"># de-meaned response...</span></span>
 <span><span class="va">fe_model2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span></span>
 <span>  <span class="va">QoL_within</span> <span class="op">~</span> <span class="va">time</span> <span class="op">+</span> <span class="va">phq4_within</span> <span class="op">+</span> <span class="va">ID</span>,</span>
@@ -299,7 +298,8 @@ indicating the “within-subject” effect)</p></li>
     </style>
 <div class="container">
       <table class="table tinytable" id="tinytable_8ekkl354istvx52htw4c" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
-<thead><tr>
+<caption>Model Summary</caption>
+        <thead><tr>
 <th scope="col" data-row="0" data-col="1">Parameter</th>
                 <th scope="col" data-row="0" data-col="2">Coefficient</th>
                 <th scope="col" data-row="0" data-col="3">SE</th>
@@ -329,8 +329,7 @@ indicating the “within-subject” effect)</p></li>
 </div>
 <!-- hack to avoid NA insertion in last line -->
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
-<span><span class="co"># we compare the results with those from the "lfe"-package for panel data</span></span>
+<code class="sourceCode R"><span><span class="co"># we compare the results with those from the "lfe"-package for panel data</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/r-econometrics/lfe" class="external-link">lfe</a></span><span class="op">)</span></span>
 <span><span class="va">fe_model3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lfe/man/felm.html" class="external-link">felm</a></span><span class="op">(</span></span>
 <span>  <span class="va">QoL</span> <span class="op">~</span> <span class="va">time</span> <span class="op">+</span> <span class="va">phq4</span> <span class="op">|</span> <span class="va">ID</span>,</span>
@@ -565,8 +564,7 @@ and between-version of <code>phq4</code>.</p>
 </div>
 <!-- hack to avoid NA insertion in last line -->
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
-<span><span class="co"># compare to FE-model</span></span>
+<code class="sourceCode R"><span><span class="co"># compare to FE-model</span></span>
 <span><span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">fe_model1</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span>, <span class="op">]</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">display</a></span><span class="op">(</span>format <span class="op">=</span> <span class="st">"tt"</span><span class="op">)</span></span></code></pre></div>
 <!-- preamble start -->
 
@@ -596,7 +594,8 @@ and between-version of <code>phq4</code>.</p>
     </style>
 <div class="container">
       <table class="table tinytable" id="tinytable_hps0sv58ocxu06fie91l" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
-<thead><tr>
+<caption>Model Summary</caption>
+        <thead><tr>
 <th scope="col" data-row="0" data-col="1">Parameter</th>
                 <th scope="col" data-row="0" data-col="2">Coefficient</th>
                 <th scope="col" data-row="0" data-col="3">SE</th>
@@ -980,14 +979,14 @@ pattern).</p>
 <span></span>
 <span><span class="va">d</span> <span class="op">&lt;-</span> <span class="fu">datawizard</span><span class="fu">::</span><span class="fu"><a href="https://easystats.github.io/datawizard/reference/demean.html" class="external-link">demean</a></span><span class="op">(</span><span class="va">d</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"x"</span>, <span class="st">"y"</span><span class="op">)</span>, by <span class="op">=</span> <span class="st">"grp"</span><span class="op">)</span></span></code></pre></div>
 <p>Let’s look at the raw data…</p>
-<p><img src="demean_files/figure-html/unnamed-chunk-13-1.png" class="r-plt" alt="" width="100%"></p>
+<p><img src="demean_files/figure-html/unnamed-chunk-16-1.png" class="r-plt" alt="" width="100%"></p>
 <div class="section level3">
 <h3 id="model-1-linear-relationship-between-typing-errors-and-typing-speed">Model 1: Linear relationship between typing errors and typing
 speed<a class="anchor" aria-label="anchor" href="#model-1-linear-relationship-between-typing-errors-and-typing-speed"></a>
 </h3>
 <p>We can now assume a (linear) relationship between typing errors and
 typing speed.</p>
-<p><img src="demean_files/figure-html/unnamed-chunk-14-1.png" class="r-plt" alt="" width="100%"></p>
+<p><img src="demean_files/figure-html/unnamed-chunk-17-1.png" class="r-plt" alt="" width="100%"></p>
 <p>Looking at the coefficients, we have following model with a
 coefficient of <code>-1.92</code>.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
@@ -1021,7 +1020,8 @@ coefficient of <code>-1.92</code>.</p>
     </style>
 <div class="container">
       <table class="table tinytable" id="tinytable_7h8669nmpws9caop6omp" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
-<thead><tr>
+<caption>Model Summary</caption>
+        <thead><tr>
 <th scope="col" data-row="0" data-col="1">Parameter</th>
                 <th scope="col" data-row="0" data-col="2">Coefficient</th>
                 <th scope="col" data-row="0" data-col="3">SE</th>
@@ -1052,7 +1052,7 @@ coefficient of <code>-1.92</code>.</p>
 <!-- hack to avoid NA insertion in last line -->
 <p>However, we have ignored the clustered structure in our data, in this
 example due to repeated measurements.</p>
-<p><img src="demean_files/figure-html/unnamed-chunk-16-1.png" class="r-plt" alt="" width="100%"></p>
+<p><img src="demean_files/figure-html/unnamed-chunk-19-1.png" class="r-plt" alt="" width="100%"></p>
 </div>
 <div class="section level3">
 <h3 id="model-2-within-subject-effect-of-typing-speed">Model 2: Within-subject effect of typing speed<a class="anchor" aria-label="anchor" href="#model-2-within-subject-effect-of-typing-speed"></a>
@@ -1060,7 +1060,7 @@ example due to repeated measurements.</p>
 <p>A fixed effects regression (FE-regression) would now remove all
 between-effects and include only the within-effects as well as the
 group-level indicator.</p>
-<p><img src="demean_files/figure-html/unnamed-chunk-17-1.png" class="r-plt" alt="" width="100%"></p>
+<p><img src="demean_files/figure-html/unnamed-chunk-20-1.png" class="r-plt" alt="" width="100%"></p>
 <p>This returns the coefficient of the “within”-effect, which is
 <code>1.2</code>, with a standard error of <code>0.07</code>. Note that
 the FE-model does <em>not</em> take the variation <em>between</em>
@@ -1097,7 +1097,8 @@ and biased standard errors.</p>
     </style>
 <div class="container">
       <table class="table tinytable" id="tinytable_zqqym2u1m28tut8zxlrs" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
-<thead><tr>
+<caption>Model Summary</caption>
+        <thead><tr>
 <th scope="col" data-row="0" data-col="1">Parameter</th>
                 <th scope="col" data-row="0" data-col="2">Coefficient</th>
                 <th scope="col" data-row="0" data-col="3">SE</th>
@@ -1123,7 +1124,7 @@ and biased standard errors.</p>
 <p>To understand, why the above model 1 (<code>m1</code>) returns a
 biased estimate, which is a “weighted average” of the within- and
 between-effects, let us look at the between-effect now.</p>
-<p><img src="demean_files/figure-html/unnamed-chunk-19-1.png" class="r-plt" alt="" width="100%"></p>
+<p><img src="demean_files/figure-html/unnamed-chunk-22-1.png" class="r-plt" alt="" width="100%"></p>
 <p>As we can see, the between-effect is <code>-2.93</code>, which is
 different from the <code>-1.92</code> estimated in the model
 <code>m1</code>.</p>
@@ -1158,7 +1159,8 @@ different from the <code>-1.92</code> estimated in the model
     </style>
 <div class="container">
       <table class="table tinytable" id="tinytable_gj8a74s59p8a5vbiqvqt" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
-<thead><tr>
+<caption>Model Summary</caption>
+        <thead><tr>
 <th scope="col" data-row="0" data-col="1">Parameter</th>
                 <th scope="col" data-row="0" data-col="2">Coefficient</th>
                 <th scope="col" data-row="0" data-col="3">SE</th>
@@ -1193,7 +1195,7 @@ different from the <code>-1.92</code> estimated in the model
 </h3>
 <p>Since FE-models can only model within-effects, we now use a mixed
 model with within- and between-effects.</p>
-<p><img src="demean_files/figure-html/unnamed-chunk-22-1.png" class="r-plt" alt="" width="100%"></p>
+<p><img src="demean_files/figure-html/unnamed-chunk-25-1.png" class="r-plt" alt="" width="100%"></p>
 <p>We see, the estimate for the within-effects is <em>not</em> biased.
 Furthermore, we get the correct between-effect as well (standard errors
 differ, because the variance in the grouping structure is more
@@ -1524,7 +1526,8 @@ usually improves the estimates.</p>
     </style>
 <div class="container">
       <table class="table tinytable" id="tinytable_mpvjn8md5q0pgspqk6pj" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
-<thead><tr>
+<caption>Model Summary</caption>
+        <thead><tr>
 <th scope="col" data-row="0" data-col="1">Parameter</th>
                 <th scope="col" data-row="0" data-col="2">Coefficient</th>
                 <th scope="col" data-row="0" data-col="3">SE</th>
@@ -1554,8 +1557,7 @@ usually improves the estimates.</p>
 </div>
 <!-- hack to avoid NA insertion in last line -->
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
-<span><span class="co"># Between-subject effect of typing speed, accounting for group structure</span></span>
+<code class="sourceCode R"><span><span class="co"># Between-subject effect of typing speed, accounting for group structure</span></span>
 <span><span class="va">m2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html" class="external-link">lmer</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="va">x_between</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">grp</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">d</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">m2</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">display</a></span><span class="op">(</span>format <span class="op">=</span> <span class="st">"tt"</span>, by <span class="op">=</span> <span class="st">"Component"</span><span class="op">)</span></span></code></pre></div>
 <!-- preamble start -->

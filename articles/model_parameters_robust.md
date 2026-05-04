@@ -33,7 +33,7 @@ arguments:
 2.  `vcov_args`: list of arguments passed to the *sandwich* or
     *clubSandwich* function used to compute the covariance matrix. See
     for example
-    [`?sandwich::vcovHAC`](https://rdrr.io/pkg/sandwich/man/vcovHAC.html)
+    [`?sandwich::vcovHAC`](https://sandwich.R-Forge.R-project.org/reference/vcovHAC.html)
 
 ## Linear Regression Models
 
@@ -96,10 +96,10 @@ corresponding function with the content of `vcov_args` as arguments.
 
 The specific estimation type can be controlled by passing a `type`
 argument via `vcov_args`. See
-[`?sandwich::vcovCL`](https://rdrr.io/pkg/sandwich/man/vcovCL.html) for
-information about the different types of covariance matrices that this
-function can produce (`HC0` to `HC3`). In the next example, we use a
-clustered covariance matrix estimation with `HC1`-estimation type.
+[`?sandwich::vcovCL`](https://sandwich.R-Forge.R-project.org/reference/vcovCL.html)
+for information about the different types of covariance matrices that
+this function can produce (`HC0` to `HC3`). In the next example, we use
+a clustered covariance matrix estimation with `HC1`-estimation type.
 
 ``` r
 
@@ -145,7 +145,7 @@ unname(sqrt(diag(sandwich::vcovCL(model))))
 Usually, clustered covariance matrix estimation is used when there is a
 cluster-structure in the data. The variable indicating the
 cluster-structure can be defined in
-[`sandwich::vcovCL()`](https://rdrr.io/pkg/sandwich/man/vcovCL.html)
+[`sandwich::vcovCL()`](https://sandwich.R-Forge.R-project.org/reference/vcovCL.html)
 with the `cluster`-argument. In
 [`model_parameters()`](https://easystats.github.io/parameters/reference/model_parameters.md),
 additional arguments that should be passed down to functions from the
