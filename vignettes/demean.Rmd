@@ -32,7 +32,8 @@ pkgs <- c(
   "parameters",
   "performance",
   "lme4",
-  "lfe"
+  "lfe",
+  "tinytable"
 )
 
 if (!all(sapply(pkgs, requireNamespace, quietly = TRUE))) {
@@ -49,6 +50,8 @@ We give recommendations how to analyze multilevel or hierarchical data
 structures, when macro-indicators (or level-2 predictors, or higher-level units,
 or more general: _group-level predictors_) are used as covariates and the model
 suffers from **heterogeneity bias** [@bell_explaining_2015].
+
+> **Note:** Throughout this example, we use `display(format = "tt")` to display table output in markdown format, using the **tinytable** package as the backend. See [this vignette](https://easystats.github.io/insight/articles/display.html#displaying-tables-with-display) for more details on output displays.
 
 # Sample data used in this vignette
 
@@ -110,7 +113,8 @@ and as such, FE avoids estimating a parameter for each higher-level unit.
 ## Computing the de-meaned and group-meaned variables
 
 ```{r}
-qol_cancer <- datawizard::demean(qol_cancer, select = c("phq4", "QoL"), by = "ID")
+library(datawizard)
+qol_cancer <- demean(qol_cancer, select = c("phq4", "QoL"), by = "ID")
 ```
 
 Now we have:
@@ -138,7 +142,7 @@ fe_model1 <- lm(
 )
 # we use only the first two rows, because the remaining rows are
 # the estimates for "ID", which is not of interest here...
-model_parameters(fe_model1)[1:2, ]
+model_parameters(fe_model1)[1:2, ] |> display(format = "tt")
 
 
 # instead of removing the intercept, we could also use the
@@ -147,7 +151,7 @@ fe_model2 <- lm(
   QoL_within ~ time + phq4_within + ID,
   data = qol_cancer
 )
-model_parameters(fe_model2)[2:3, ]
+model_parameters(fe_model2)[2:3, ] |> display(format = "tt")
 
 # we compare the results with those from the "lfe"-package for panel data
 library(lfe)
@@ -155,7 +159,7 @@ fe_model3 <- felm(
   QoL ~ time + phq4 | ID,
   data = qol_cancer
 )
-model_parameters(fe_model3)
+model_parameters(fe_model3) |> display(format = "tt")
 ```
 
 As we can see, the _within-effect_ of PHQ-4 is `-3.66`, hence the mean of the
@@ -213,10 +217,10 @@ mixed_1 <- lmer(
   QoL ~ time + phq4_within + phq4_between + (1 | ID),
   data = qol_cancer
 )
-model_parameters(mixed_1)
+model_parameters(mixed_1) |> display(format = "tt", by = "Component")
 
 # compare to FE-model
-model_parameters(fe_model1)[1:2, ]
+model_parameters(fe_model1)[1:2, ] |> display(format = "tt")
 ```
 
 As we can see, the estimates and standard errors are identical. The argument
@@ -240,7 +244,7 @@ mixed_2 <- lmer(
 )
 # effects = "fixed" will not display random effects, but split the
 # fixed effects into its between- and within-effects components.
-model_parameters(mixed_2, effects = "fixed")
+model_parameters(mixed_2, effects = "fixed") |> display(format = "tt")
 ```
 
 For more complex models, within-effects will naturally change slightly and are
@@ -296,7 +300,7 @@ between- and other time-constant (i.e. between) effects or group-level
 predictors...
 
 ```{r}
-model_parameters(rewb, effects = "fixed")
+model_parameters(rewb, effects = "fixed") |> display(format = "tt")
 ```
 
 ... but you can also model the variation of (group) effects across time (and
@@ -390,7 +394,7 @@ Looking at the coefficients, we have following model with a coefficient of
 
 ```{r}
 m1 <- lm(y ~ x, data = d)
-model_parameters(m1)
+model_parameters(m1) |> display(format = "tt")
 ```
 
 However, we have ignored the clustered structure in our data, in this example
@@ -438,7 +442,7 @@ and biased standard errors.
 
 ```{r}
 m2 <- lm(y ~ 0 + x_within + grp, data = d)
-model_parameters(m2)[1, ]
+model_parameters(m2)[1, ] |> display(format = "tt")
 ```
 
 ## Model 3: Between-subject effect of typing speed
@@ -460,7 +464,7 @@ As we can see, the between-effect is `-2.93`, which is different from the
 
 ```{r}
 m3 <- lm(y ~ x_between, data = d)
-model_parameters(m3)
+model_parameters(m3) |> display(format = "tt")
 ```
 
 ## Model 4: Mixed model with within- and between-subjects
@@ -490,7 +494,7 @@ in the grouping structure is more accurately taken into account).
 
 ```{r}
 m4 <- lmer(y ~ x_between + x_within + (1 | grp), data = d)
-model_parameters(m4)
+model_parameters(m4) |> display(format = "tt", by = "Component")
 ```
 
 ## Model 5: Complex Random-Effects Within-Between Model
@@ -502,7 +506,7 @@ standard errors for the within-effect.
 
 ```{r}
 m5 <- lmer(y ~ x_between + x_within + (1 + x_within | grp), data = d)
-model_parameters(m5)
+model_parameters(m5) |> display(format = "tt", by = "Component")
 ```
 
 ```{r crewb-fit, echo = FALSE}
@@ -557,22 +561,22 @@ d$grp[sample(which(d$grp == 4), 8)] <- 2
 d$grp[sample(which(d$grp == 10), 9)] <- 6
 
 d <- d |>
-  datawizard::data_group(grp) |>
-  datawizard::data_modify(x = rev(15 - (x + 1.5 * as.numeric(grp)))) |>
-  datawizard::data_ungroup()
+  data_group(grp) |>
+  data_modify(x = rev(15 - (x + 1.5 * as.numeric(grp)))) |>
+  data_ungroup()
 
 labs <- c("very slow", "slow", "average", "fast", "very fast")
 levels(d$grp) <- rev(labs)
 
-d <- datawizard::demean(d, c("x", "y"), by = "grp")
+d <- demean(d, c("x", "y"), by = "grp")
 
 # Between-subject effect of typing speed
 m1 <- lm(y ~ x_between, data = d)
-model_parameters(m1)
+model_parameters(m1) |> display(format = "tt")
 
 # Between-subject effect of typing speed, accounting for group structure
 m2 <- lmer(y ~ x_between + (1 | grp), data = d)
-model_parameters(m2)
+model_parameters(m2) |> display(format = "tt", by = "Component")
 ```
 
 # A final note &mdash; latent mean centering
