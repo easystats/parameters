@@ -145,6 +145,9 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
   } else if (m_info$is_ttest) {
     # t-test -----------
     out <- .extract_htest_ttest(model)
+  } else if (m_info$is_ztest) {
+    # z-test -----------
+    out <- .extract_htest_ztest(model)
   } else if (m_info$is_ranktest) {
     # rank-test (kruskal / wilcox / friedman) -----------
     out <- .extract_htest_ranktest(model)
@@ -361,6 +364,11 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
 
 #' @keywords internal
 .extract_htest_ttest <- function(model, standardized_d = NULL, hedges_g = NULL) {
+  # package BSDA names the element "parameters" instead of "parameter", so we
+  # pick the right name here, to avoid partial matching warnings/issues
+  if ("parameters" %in% names(model)) {
+    model$parameter <- model$parameters
+  }
   # survey
   if (grepl("design-based", tolower(model$method), fixed = TRUE)) {
     data_names <- unlist(strsplit(model$data.name, " ~ ", fixed = TRUE))
@@ -471,6 +479,31 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
   }
 
   attr(out, "htest_type") <- "ttest"
+  out
+}
+
+
+# extract htest ztest ----------------------
+
+#' @keywords internal
+.extract_htest_ztest <- function(model, standardized_d = NULL, hedges_g = NULL) {
+  ## TODO: check for one-sample and two-sample tests
+
+  out <- data.frame(
+    Parameter = model$data.name,
+    Mean = model$estimate,
+    mu = model$null.value,
+    Difference = model$estimate - model$null.value,
+    CI_low = model$conf.int[1],
+    CI_high = model$conf.int[2],
+    t = model$statistic,
+    df_error = model$parameter,
+    p = model$p.value,
+    Method = model$method,
+    stringsAsFactors = FALSE
+  )
+
+  attr(out, "htest_type") <- "ztest"
   out
 }
 
