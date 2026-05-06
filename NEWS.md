@@ -21,6 +21,8 @@
   estimate for the proportion in the underlying data frame. This is now done
   in the `format()` method.
 
+* `model_parameters()` now supports htests objects from package *BSDA*.
+
 * Output for other random effects covariance structures than "unstructured" for
   models from package *glmmTMB* has been revised, to provide a more useful output,
   which is also in line with the relevant information returned by `VarCorr()`.
