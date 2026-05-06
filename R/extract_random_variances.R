@@ -240,7 +240,7 @@
         toep = {
           re_cor_slope[to_select][duplicated(re_data$var2[to_select])] <- FALSE
           # we need some tweaking for the label here
-          new_label <- paste(new_label, seq_along(re_cor_slope[to_select][re_cor_slope[to_select]]))
+          new_label <- paste(new_label, seq_along(which(re_cor_slope[to_select])))
         }
       )
       # fix label for cov_structure correlation
