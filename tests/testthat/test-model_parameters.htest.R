@@ -348,15 +348,15 @@ test_that("model_parameters-BSDA", {
   )
   out <- model_parameters(m)
   expect_identical(
-    capture.output(out),
+    capture.output(print(out, table_width = Inf)),
     c(
-      "One-sample z-Test",
+      "Two-sample z-Test",
       "",
-      "Parameter    | Mean | mu | Difference |       95% CI |     z |      p",
-      "---------------------------------------------------------------------",
-      "Summarized x | 7.02 |  2 |       5.02 | [6.72, 7.31] | 33.29 | < .001",
+      "Parameter          | Mean_Parameter1 | Mean_Parameter2 | Difference |       95% CI |     z |     p",
+      "--------------------------------------------------------------------------------------------------",
+      "Summarized x and y |            7.02 |            5.26 |       1.76 | [1.30, 2.21] | -1.05 | 0.293",
       "",
-      "Alternative hypothesis: true mean is not equal to 2"
+      "Alternative hypothesis: true difference in means is not equal to 2"
     )
   )
 })

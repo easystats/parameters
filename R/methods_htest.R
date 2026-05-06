@@ -489,7 +489,7 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
 .extract_htest_ztest <- function(model, standardized_d = NULL, hedges_g = NULL) {
   if (startsWith(tolower(model$method), "two-sample")) {
     out <- data.frame(
-      Parameter = data_names,
+      Parameter = model$data.name,
       Mean_Parameter1 = model$estimate[1],
       Mean_Parameter2 = model$estimate[2],
       Difference = model$estimate[1] - model$estimate[2],
