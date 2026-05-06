@@ -38,9 +38,10 @@ pkgs <- c(
 
 if (!all(sapply(pkgs, requireNamespace, quietly = TRUE))) {
   knitr::opts_chunk$set(eval = FALSE)
+} else {
+  ggplot2::theme_set(see::theme_modern())
 }
 
-ggplot2::theme_set(see::theme_modern())
 set.seed(333)
 ```
 
