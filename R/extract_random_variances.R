@@ -218,10 +218,16 @@
         re_sd_slope[to_select] <- .update_indicator_rows(re_sd_slope[to_select])
         re_cor_intercept[to_select] <- .update_indicator_rows(re_cor_intercept[to_select])
         re_cor_slope[to_select] <- .update_indicator_rows(re_cor_slope[to_select])
+        # fix label for cov_structure correlation
+        re_data[re_cor_slope[to_select], "var1"] <- "AR1 rho"
+        re_data[re_cor_slope[to_select], "var2"] <- ""
       },
       cs = {
         re_cor_intercept[to_select] <- .update_indicator_rows(re_cor_intercept[to_select])
         re_cor_slope[to_select] <- .update_indicator_rows(re_cor_slope[to_select])
+        # fix label for cov_structure correlation
+        re_data[re_cor_slope[to_select], "var1"] <- "Compound Symmetry"
+        re_data[re_cor_slope[to_select], "var2"] <- ""
       },
       toep = ,
       cs =
