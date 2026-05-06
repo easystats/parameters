@@ -528,7 +528,7 @@ parameters <- model_parameters
 #'
 #' @inheritSection model_parameters Confidence intervals and approximation of degrees of freedom
 #'
-#' @examplesIf require("boot", quietly = TRUE) && require("sandwich") && require("clubSandwich") && require("brglm2")
+#' @examplesIf all(insight::check_if_installed(c("boot", "sandwich", "clubSandwich", "brglm2"), quietly = TRUE))
 #' library(parameters)
 #' model <- lm(mpg ~ wt + cyl, data = mtcars)
 #'
