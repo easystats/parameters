@@ -211,15 +211,26 @@
   for (i in seq_along(cov_struc)) {
     # find relevant rows for the related grouping variable
     to_select <- re_data$grp %in% names(cov_struc[i])
+    # first, we want to know the new label
+    new_label <- switch(
+      cov_struc[i],
+      ar1 = "AR1 rho",
+      cs = "Compound Symmetry",
+      exp = "Exponential decay",
+      ou = "OU decay",
+      toep = "Toeplitz Lag"
+    )
     switch(
       cov_struc[i],
-      ar1 = {
+      ar1 = ,
+      ou = ,
+      exp = {
         re_sd_intercept[to_select] <- .update_indicator_rows(re_sd_intercept[to_select])
         re_sd_slope[to_select] <- .update_indicator_rows(re_sd_slope[to_select])
         re_cor_intercept[to_select] <- .update_indicator_rows(re_cor_intercept[to_select])
         re_cor_slope[to_select] <- .update_indicator_rows(re_cor_slope[to_select])
         # fix label for cov_structure correlation
-        re_data[re_cor_slope[to_select], "var1"] <- "AR1 rho"
+        re_data[re_cor_slope[to_select], "var1"] <- new_label
         re_data[re_cor_slope[to_select], "var2"] <- ""
       },
       cs = {
@@ -230,7 +241,6 @@
         re_data[re_cor_slope[to_select], "var2"] <- ""
       },
       toep = ,
-      cs =
     )
   }
 
