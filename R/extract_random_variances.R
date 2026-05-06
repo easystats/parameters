@@ -218,7 +218,8 @@
       cs = "Compound Symmetry",
       exp = "Exponential decay",
       ou = "OU decay",
-      toep = "Toeplitz Lag"
+      toep = "Toeplitz Lag",
+      ""
     )
     switch(
       cov_struc[i],
