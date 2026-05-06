@@ -1,7 +1,7 @@
 Type: Package
 Package: parameters
 Title: Processing of Model Parameters
-Version: 0.28.3.12
+Version: 0.28.3.14
 Authors@R:
     c(person(given = "Daniel",
              family = "Lüdecke",
@@ -92,6 +92,7 @@ Suggests:
     BayesFactor (>= 0.9.12-4.7),
     BayesFM,
     bbmle,
+    BSDA,
     betareg,
     BH,
     biglm,
