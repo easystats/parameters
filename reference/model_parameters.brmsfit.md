@@ -176,7 +176,15 @@ model_parameters(
 - diagnostic:
 
   Diagnostic metrics to compute. Character (vector) or list with one or
-  more of these options: `"ESS"`, `"Rhat"`, `"MCSE"` or `"all"`.
+  more of these options: `"ESS"`, `"ESS_bulk"`, `"Rhat"`, `"MCSE"` or
+  `"all"`. `"ESS"` returns the **tail-ESS** (the minimum of the
+  effective sample sizes for the 5% and 95% quantiles), which is the
+  most relevant diagnostic for assessing the reliability of credible
+  intervals and other tail-based quantities. `"ESS_bulk"` additionally
+  returns the **bulk-ESS** (the effective sample size for the bulk of
+  the posterior, useful for assessing the reliability of central
+  tendency estimates such as the mean or median). `"all"` includes both
+  tail and bulk `"ESS"`, `"Rhat"`, and `"MCSE"`.
 
 - priors:
 

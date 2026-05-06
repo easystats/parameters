@@ -265,6 +265,11 @@ if (require("brglm2", quietly = TRUE)) {
   )
   model_parameters(model)
 }
+#> 
+#> Attaching package: ‘brglm2’
+#> The following object is masked from ‘package:boot’:
+#> 
+#>     aids
 #> # Response level: definitely
 #> 
 #> Parameter       | Log-Odds |   SE |         95% CI |     z |      p

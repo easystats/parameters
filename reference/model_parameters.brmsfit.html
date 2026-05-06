@@ -11,7 +11,7 @@ the output."><meta property="og:image" content="https://easystats.github.io/para
 
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.28.3.14</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.28.3.15</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -217,7 +217,14 @@ case of models) ignored.</p></dd>
 
 <dt id="arg-diagnostic">diagnostic<a class="anchor" aria-label="anchor" href="#arg-diagnostic"></a></dt>
 <dd><p>Diagnostic metrics to compute.  Character (vector) or list
-with one or more of these options: <code>"ESS"</code>, <code>"Rhat"</code>, <code>"MCSE"</code> or <code>"all"</code>.</p></dd>
+with one or more of these options: <code>"ESS"</code>, <code>"ESS_bulk"</code>, <code>"Rhat"</code>, <code>"MCSE"</code>
+or <code>"all"</code>. <code>"ESS"</code> returns the <strong>tail-ESS</strong> (the minimum of the effective
+sample sizes for the 5% and 95% quantiles), which is the most relevant
+diagnostic for assessing the reliability of credible intervals and other
+tail-based quantities. <code>"ESS_bulk"</code> additionally returns the <strong>bulk-ESS</strong>
+(the effective sample size for the bulk of the posterior, useful for
+assessing the reliability of central tendency estimates such as the mean or
+median). <code>"all"</code> includes both tail and bulk <code>"ESS"</code>, <code>"Rhat"</code>, and <code>"MCSE"</code>.</p></dd>
 
 
 <dt id="arg-priors">priors<a class="anchor" aria-label="anchor" href="#arg-priors"></a></dt>
