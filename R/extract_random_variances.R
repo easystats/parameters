@@ -210,7 +210,7 @@
   # is "ar1" or "cs" etc. We only keep all elements for "us".
   for (i in seq_along(cov_struc)) {
     # find relevant rows for the related grouping variable
-    to_select <- re_data$grp %in% names(cov_struc[1])
+    to_select <- re_data$grp %in% names(cov_struc[i])
     switch(
       cov_struc[i],
       ar1 = {
