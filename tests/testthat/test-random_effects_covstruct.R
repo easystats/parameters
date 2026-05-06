@@ -69,11 +69,69 @@ test_that("random effects, glmmTMB, cov-struct CS", {
   dat <- datawizard::data_modify(dat, time_num = as.numeric(time))
 
   m_cs <- glmmTMB::glmmTMB(y ~ 1 + cs(time + 0 | id), data = dat)
-  out <- model_parameters(m_cs, effects = "random", ci_random = 0.95)
+  out <- model_parameters(m_cs, effects = "random", ci_random = 0.95, verbose = FALSE)
+  expect_identical(
+    out$Parameter,
+    c(
+      "SD (time1)",
+      "SD (time2)",
+      "SD (time3)",
+      "SD (time4)",
+      "Cor (Compound Symmetry)",
+      "SD (Observations)"
+    )
+  )
+  # Validated against output from VarCorr()
+  expect_equal(
+    out$Coefficient,
+    c(0.8652, 1.1131, 0.7469, 0.4637, 0.3204, 0),
+    tolerance = 1e-3
+  )
 
   m_cs <- glmmTMB::glmmTMB(y ~ 1 + cs(time + 0 | id) + (1 | id2), data = dat)
-  out <- model_parameters(m_cs, effects = "random", ci_random = 0.95)
+  out <- model_parameters(m_cs, effects = "random", ci_random = 0.95, verbose = FALSE)
+  expect_identical(
+    out$Parameter,
+    c(
+      "SD (Intercept)",
+      "SD (time1)",
+      "SD (time2)",
+      "SD (time3)",
+      "SD (time4)",
+      "Cor (Compound Symmetry)",
+      "SD (Observations)"
+    )
+  )
+  # Validated against output from VarCorr()
+  expect_equal(
+    out$Coefficient,
+    c(0, 0.8652, 1.1131, 0.7469, 0.4637, 0.3204, 0),
+    tolerance = 1e-3
+  )
 
-  m_cs <- glmmTMB::glmmTMB(y ~ 1 + cs(time + 0 | id) + (1 + x | id2), data = dat)
-  out <- model_parameters(m_cs, effects = "random", ci_random = 0.95)
+  m_cs <- suppressWarnings(glmmTMB::glmmTMB(
+    y ~ 1 + cs(time + 0 | id) + (1 + x | id2),
+    data = dat
+  ))
+  out <- model_parameters(m_cs, effects = "random", ci_random = 0.95, verbose = FALSE)
+  expect_identical(
+    out$Parameter,
+    c(
+      "SD (Intercept)",
+      "SD (time1)",
+      "SD (time2)",
+      "SD (time3)",
+      "SD (time4)",
+      "SD (x)",
+      "Cor (Compound Symmetry)",
+      "Cor (Compound Symmetry)",
+      "SD (Observations)"
+    )
+  )
+  # Validated against output from VarCorr()
+  expect_equal(
+    out$Coefficient,
+    c(0.2321, 0.8412, 0.9951, 1.1163, 0.0053, 0.5507, 0.9985, 0.2508, 0),
+    tolerance = 1e-3
+  )
 })
