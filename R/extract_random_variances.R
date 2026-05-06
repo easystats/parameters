@@ -264,6 +264,8 @@
   corrs <- !is.na(out$var2)
   if (any(corrs)) {
     out$Parameter[corrs] <- paste0("Cor (", out$var1[corrs], "~", out$var2[corrs], ")")
+    # fix label for cov_structure correlation
+    out$Parameter[corrs] <- gsub("~)", ")", out$Parameter[corrs], fixed = TRUE)
   }
 
   # rename sigma
