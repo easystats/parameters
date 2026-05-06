@@ -92,7 +92,7 @@ Suggests:
     BayesFactor (>= 0.9.12-4.7),
     BayesFM,
     bbmle,
-    BDSA,
+    BSDA,
     betareg,
     BH,
     biglm,
