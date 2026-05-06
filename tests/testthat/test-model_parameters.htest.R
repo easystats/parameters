@@ -268,3 +268,95 @@ test_that("model_parameters-htests no hard-coded formatting for proportions test
     )
   )
 })
+
+
+test_that("model_parameters-BSDA", {
+  skip_if_not_installed("BSDA")
+
+  # t-test
+  m <- suppressWarnings(BSDA::tsum.test(
+    mean.x = 5.6,
+    s.x = 2.1,
+    n.x = 16,
+    mu = 4.9,
+    alternative = "greater"
+  ))
+  out <- model_parameters(m)
+  expect_identical(
+    capture.output(out),
+    c(
+      "One-sample t-Test",
+      "",
+      "Parameter    | Mean |   mu | Difference |    95% CI | t(15) |     p",
+      "-------------------------------------------------------------------",
+      "Summarized x | 5.60 | 4.90 |       0.70 | [4.68,  ] |  1.33 | 0.101",
+      "",
+      "Alternative hypothesis: true mean is greater than 4.9"
+    )
+  )
+
+  m <- suppressWarnings(BSDA::tsum.test(
+    mean.x = 5.6,
+    s.x = 2.1,
+    n.x = 16,
+    mean.y = 7.3,
+    s.y = 2.4,
+    n.y = 18,
+    mu = 4.9,
+    alternative = "greater"
+  ))
+  out <- model_parameters(m)
+  expect_identical(
+    capture.output(print(out, table_width = Inf)),
+    c(
+      "Welch Modified Two-Sample t-Test",
+      "",
+      "Parameter1   | Parameter2 | Mean_Parameter1 | Mean_Parameter2 | Difference |     95% CI | t(32.00) |      p",
+      "-----------------------------------------------------------------------------------------------------------",
+      "Summarized x |          y |            5.60 |            7.30 |      -1.70 | [-3.01,  ] |    -8.55 | > .999",
+      "",
+      "Alternative hypothesis: true difference in means is greater than 4.9"
+    )
+  )
+
+  # z-test
+  x <- c(7.8, 6.6, 6.5, 7.4, 7.3, 7.0, 6.4, 7.1, 6.7, 7.6, 6.8)
+  y <- c(4.5, 5.4, 6.1, 6.1, 5.4, 5.0, 4.1, 5.5)
+  m <- BSDA::zsum.test(mean(x), sigma.x = 0.5, n.x = 11, mu = 2)
+  out <- model_parameters(m)
+  expect_identical(
+    capture.output(out),
+    c(
+      "One-sample z-Test",
+      "",
+      "Parameter    | Mean | mu | Difference |       95% CI |     z |      p",
+      "---------------------------------------------------------------------",
+      "Summarized x | 7.02 |  2 |       5.02 | [6.72, 7.31] | 33.29 | < .001",
+      "",
+      "Alternative hypothesis: true mean is not equal to 2"
+    )
+  )
+
+  m <- BSDA::zsum.test(
+    mean(x),
+    sigma.x = 0.5,
+    n.x = 11,
+    mean(y),
+    sigma.y = 0.5,
+    n.y = 8,
+    mu = 2
+  )
+  out <- model_parameters(m)
+  expect_identical(
+    capture.output(out),
+    c(
+      "One-sample z-Test",
+      "",
+      "Parameter    | Mean | mu | Difference |       95% CI |     z |      p",
+      "---------------------------------------------------------------------",
+      "Summarized x | 7.02 |  2 |       5.02 | [6.72, 7.31] | 33.29 | < .001",
+      "",
+      "Alternative hypothesis: true mean is not equal to 2"
+    )
+  )
+})

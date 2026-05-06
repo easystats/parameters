@@ -487,21 +487,34 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
 
 #' @keywords internal
 .extract_htest_ztest <- function(model, standardized_d = NULL, hedges_g = NULL) {
-  ## TODO: check for one-sample and two-sample tests
-
-  out <- data.frame(
-    Parameter = model$data.name,
-    Mean = model$estimate,
-    mu = model$null.value,
-    Difference = model$estimate - model$null.value,
-    CI_low = model$conf.int[1],
-    CI_high = model$conf.int[2],
-    z = model$statistic,
-    df_error = model$parameter,
-    p = model$p.value,
-    Method = model$method,
-    stringsAsFactors = FALSE
-  )
+  if (startsWith(tolower(model$method), "two-sample")) {
+    out <- data.frame(
+      Parameter = data_names,
+      Mean_Parameter1 = model$estimate[1],
+      Mean_Parameter2 = model$estimate[2],
+      Difference = model$estimate[1] - model$estimate[2],
+      CI_low = model$conf.int[1],
+      CI_high = model$conf.int[2],
+      z = model$statistic,
+      p = model$p.value,
+      Method = model$method,
+      stringsAsFactors = FALSE
+    )
+    attr(out, "mean_group_values") <- c("x", "y")
+  } else {
+    out <- data.frame(
+      Parameter = model$data.name,
+      Mean = model$estimate,
+      mu = model$null.value,
+      Difference = model$estimate - model$null.value,
+      CI_low = model$conf.int[1],
+      CI_high = model$conf.int[2],
+      z = model$statistic,
+      p = model$p.value,
+      Method = model$method,
+      stringsAsFactors = FALSE
+    )
+  }
 
   attr(out, "htest_type") <- "ztest"
   out
