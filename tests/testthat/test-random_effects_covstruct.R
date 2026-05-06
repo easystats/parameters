@@ -242,6 +242,7 @@ test_that("random effects, glmmTMB, cov-struct toeplitz", {
   expect_identical(
     out$Parameter,
     c(
+      "SD (Intercept)",
       "SD (time1)",
       "SD (time2)",
       "SD (time3)",
@@ -267,10 +268,13 @@ test_that("random effects, glmmTMB, cov-struct toeplitz", {
   expect_identical(
     out$Parameter,
     c(
+      "SD (Intercept)",
       "SD (time1)",
       "SD (time2)",
       "SD (time3)",
       "SD (time4)",
+      "SD (x)",
+      "Cor (Intercept~x)",
       "Cor (Toeplitz Lag 1)",
       "Cor (Toeplitz Lag 2)",
       "Cor (Toeplitz Lag 3)",
