@@ -57,6 +57,64 @@ test_that("random effects, glmmTMB, cov-struct AR1", {
   )
 })
 
+test_that("random effects, glmmTMB, cov-struct OU", {
+  set.seed(123)
+  n_subjects <- 100
+  V <- outer(1:4, 1:4, function(i, j) 0.6^abs(i - j))
+  random_effects <- as.vector(t(chol(V)) %*% matrix(rnorm(n_subjects * 4), 4, n_subjects))
+
+  dat <- data.frame(
+    id = rep(1:n_subjects, each = 4),
+    id2 = rep(1:(n_subjects / 2), each = 8),
+    time = rep(factor(1:4), n_subjects),
+    x = random_effects + rnorm(n_subjects * 4, sd = 0.3),
+    y = random_effects + rnorm(n_subjects * 4, sd = 0.5)
+  )
+  dat <- datawizard::data_modify(
+    dat,
+    time_num = as.numeric(time),
+    pos = glmmTMB::numFactor(time_num)
+  )
+
+  m_ou <- glmmTMB::glmmTMB(y ~ 1 + ou(pos + 0 | id), data = dat)
+  out <- model_parameters(m_ou, effects = "random", ci_random = 0.95, verbose = FALSE)
+  expect_identical(out$Parameter, c("SD (pos(1))", "Cor (OU decay)", "SD (Observations)"))
+  # Validated against output from VarCorr()
+  expect_equal(out$Coefficient, c(0.7932, 0.6443, 0.6433), tolerance = 1e-3)
+
+  m_ou <- glmmTMB::glmmTMB(y ~ 1 + ou(pos + 0 | id) + (1 | id2), data = dat)
+  out <- model_parameters(m_ou, effects = "random", ci_random = 0.95, verbose = FALSE)
+  expect_identical(
+    out$Parameter,
+    c("SD (Intercept)", "SD (pos(1))", "Cor (OU decay)", "SD (Observations)")
+  )
+  # Validated against output from VarCorr()
+  expect_equal(out$Coefficient, c(1e-04, 0.7932, 0.6443, 0.6433), tolerance = 1e-3)
+
+  m_ou <- suppressWarnings(glmmTMB::glmmTMB(
+    y ~ 1 + ou(pos + 0 | id) + (1 + x | id2),
+    data = dat
+  ))
+  out <- model_parameters(m_ou, effects = "random", ci_random = 0.95, verbose = FALSE)
+  expect_identical(
+    out$Parameter,
+    c(
+      "SD (Intercept)",
+      "SD (pos(1))",
+      "SD (x)",
+      "Cor (OU decay)",
+      "Cor (OU decay)",
+      "SD (Observations)"
+    )
+  )
+  # Validated against output from VarCorr()
+  expect_equal(
+    out$Coefficient,
+    c(0.1346, 0.5689, 0.8597, -1, 0, 0.1186),
+    tolerance = 1e-3
+  )
+})
+
 test_that("random effects, glmmTMB, cov-struct CS", {
   set.seed(123)
   dat <- data.frame(
