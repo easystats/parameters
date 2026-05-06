@@ -44,7 +44,7 @@ test_that("random effects, glmmTMB, cov-struct AR1", {
       "SD (Intercept)",
       "SD (time1)",
       "SD (x)",
-      "Cor (AR1 rho)",
+      "Cor (Intercept~x)",
       "Cor (AR1 rho)",
       "SD (Observations)"
     )
@@ -102,7 +102,7 @@ test_that("random effects, glmmTMB, cov-struct OU", {
       "SD (Intercept)",
       "SD (pos(1))",
       "SD (x)",
-      "Cor (OU decay)",
+      "Cor (Intercept~x)",
       "Cor (OU decay)",
       "SD (Observations)"
     )
@@ -146,7 +146,10 @@ test_that("random effects, glmmTMB, cov-struct CS", {
     tolerance = 1e-3
   )
 
-  m_cs <- glmmTMB::glmmTMB(y ~ 1 + cs(time + 0 | id) + (1 | id2), data = dat)
+  m_cs <- suppressWarnings(glmmTMB::glmmTMB(
+    y ~ 1 + cs(time + 0 | id) + (1 | id2),
+    data = dat
+  ))
   out <- model_parameters(m_cs, effects = "random", ci_random = 0.95, verbose = FALSE)
   expect_identical(
     out$Parameter,
@@ -181,7 +184,7 @@ test_that("random effects, glmmTMB, cov-struct CS", {
       "SD (time3)",
       "SD (time4)",
       "SD (x)",
-      "Cor (Compound Symmetry)",
+      "Cor (Intercept~x)",
       "Cor (Compound Symmetry)",
       "SD (Observations)"
     )
@@ -190,6 +193,94 @@ test_that("random effects, glmmTMB, cov-struct CS", {
   expect_equal(
     out$Coefficient,
     c(0.2321, 0.8412, 0.9951, 1.1163, 0.0053, 0.5507, 0.9985, 0.2508, 0),
+    tolerance = 1e-3
+  )
+})
+
+test_that("random effects, glmmTMB, cov-struct toeplitz", {
+  set.seed(123)
+  n_subjects <- 100
+  V <- outer(1:4, 1:4, function(i, j) 0.6^abs(i - j))
+  random_effects <- as.vector(t(chol(V)) %*% matrix(rnorm(n_subjects * 4), 4, n_subjects))
+
+  dat <- data.frame(
+    id = rep(1:n_subjects, each = 4),
+    id2 = rep(1:(n_subjects / 2), each = 8),
+    time = rep(factor(1:4), n_subjects),
+    x = random_effects + rnorm(n_subjects * 4, sd = 0.3),
+    y = random_effects + rnorm(n_subjects * 4, sd = 0.5)
+  )
+  dat <- datawizard::data_modify(dat, time_num = as.numeric(time))
+
+  m_toep <- glmmTMB::glmmTMB(y ~ 1 + toep(time + 0 | id), data = dat)
+  out <- model_parameters(m_toep, effects = "random")
+  expect_identical(
+    out$Parameter,
+    c(
+      "SD (time1)",
+      "SD (time2)",
+      "SD (time3)",
+      "SD (time4)",
+      "Cor (Toeplitz Lag 1)",
+      "Cor (Toeplitz Lag 2)",
+      "Cor (Toeplitz Lag 3)",
+      "SD (Observations)"
+    )
+  )
+  # Validated against output from VarCorr()
+  expect_equal(
+    out$Coefficient,
+    c(1.01122, 0.98438, 1.05246, 1.03458, 0.38933, 0.2383, 0.19787, 0.00266),
+    tolerance = 1e-3
+  )
+
+  m_toep <- suppressWarnings(glmmTMB::glmmTMB(
+    y ~ 1 + toep(time + 0 | id) + (1 | id2),
+    data = dat
+  ))
+  out <- model_parameters(m_toep, effects = "random", verbose = FALSE)
+  expect_identical(
+    out$Parameter,
+    c(
+      "SD (time1)",
+      "SD (time2)",
+      "SD (time3)",
+      "SD (time4)",
+      "Cor (Toeplitz Lag 1)",
+      "Cor (Toeplitz Lag 2)",
+      "Cor (Toeplitz Lag 3)",
+      "SD (Observations)"
+    )
+  )
+  # Validated against output from VarCorr()
+  expect_equal(
+    out$Coefficient,
+    c(0, 1.0112, 0.9844, 1.0525, 1.0346, 0.3893, 0.2383, 0.1979, 0.0041),
+    tolerance = 1e-3
+  )
+
+  m_toep <- suppressWarnings(glmmTMB::glmmTMB(
+    y ~ 1 + toep(time + 0 | id) + (1 + x | id2),
+    data = dat
+  ))
+  out <- model_parameters(m_toep, effects = "random", verbose = FALSE)
+  expect_identical(
+    out$Parameter,
+    c(
+      "SD (time1)",
+      "SD (time2)",
+      "SD (time3)",
+      "SD (time4)",
+      "Cor (Toeplitz Lag 1)",
+      "Cor (Toeplitz Lag 2)",
+      "Cor (Toeplitz Lag 3)",
+      "SD (Observations)"
+    )
+  )
+  # Validated against output from VarCorr()
+  expect_equal(
+    out$Coefficient,
+    c(0.131, 0.5664, 0.5578, 0.5678, 0.6301, 0.8596, -1, 0.0017, -0.0104, -0.0096, 1e-04),
     tolerance = 1e-3
   )
 })
