@@ -346,6 +346,10 @@
       component,
       verbose = verbose
     )
+  } else if (effects == "random") {
+    # no CI requested and we have only random effects variances? then we
+    # can safely remove the ci-columns CI_low and CI_high
+    ci_cols <- NULL
   }
 
   out <- out[c(

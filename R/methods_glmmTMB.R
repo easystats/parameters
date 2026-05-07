@@ -466,14 +466,6 @@ model_parameters.glmmTMB <- function(
         ci_random = ci_random,
         verbose = verbose
       )
-      # no CI requested and we have only random effects variances? then we
-      # can safely remove the ci-columns CI_low and CI_high
-      if (
-        effects == "random" && (isFALSE(ci_random) || all(is.na(params_variance$CI_low)))
-      ) {
-        params_variance$CI_low <- NULL
-        params_variance$CI_high <- NULL
-      }
       # remove redundant dispersion parameter
       if (isTRUE(dispersion_param) && !is.null(params) && !is.null(params$Component)) {
         disp <- which(params$Component == "dispersion")

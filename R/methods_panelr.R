@@ -186,14 +186,6 @@ p_value.wbgee <- p_value.wbm
       ci_random = ci_random,
       verbose = verbose
     )
-    # no CI requested and we have only random effects variances? then we
-    # can safely remove the ci-columns CI_low and CI_high
-    if (
-      effects == "random" && (isFALSE(ci_random) || all(is.na(params_variance$CI_low)))
-    ) {
-      params_variance$CI_low <- NULL
-      params_variance$CI_high <- NULL
-    }
   }
 
   # merge random and fixed effects, if necessary
