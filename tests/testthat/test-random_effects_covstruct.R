@@ -140,7 +140,10 @@ test_that("random effects, lme4, cov-struct AR1", {
     data = dat
   ))
   out <- model_parameters(m_ar1, effects = "random", ci_random = 0.95, verbose = FALSE)
-  expect_named(out, c("Parameter", "Coefficient", "SE", "Effects", "Group", "CI"))
+  expect_named(
+    out,
+    c("Parameter", "Coefficient", "SE", "CI", "CI_low", "CI_high", "Effects", "Group")
+  )
   expect_identical(
     out$Parameter,
     c(
