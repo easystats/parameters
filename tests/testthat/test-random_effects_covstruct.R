@@ -84,6 +84,20 @@ test_that("random effects, glmmTMB, cov-struct AR1", {
     data = dat
   ))
   out <- model_parameters(m_ar1, effects = "random", ci_random = 0.95, verbose = FALSE)
+  expect_named(
+    out,
+    c(
+      "Parameter",
+      "Coefficient",
+      "SE",
+      "CI",
+      "CI_low",
+      "CI_high",
+      "Effects",
+      "Group",
+      "Component"
+    )
+  )
   expect_identical(
     out$Parameter,
     c(
@@ -101,6 +115,8 @@ test_that("random effects, glmmTMB, cov-struct AR1", {
     c(0.3425, 0.0429, 0.9105, 0.9374, 0.2499, 0.1166),
     tolerance = 1e-3
   )
+  out <- model_parameters(m_ar1, effects = "random", ci_random = FALSE, verbose = FALSE)
+  expect_named(out, c("Parameter", "Coefficient", "SE", "Effects", "Group", "Component"))
 })
 
 test_that("random effects, glmmTMB, cov-struct OU", {

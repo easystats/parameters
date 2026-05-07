@@ -1,20 +1,21 @@
 ############# .merMod -----------------
 
-
 #' @export
 model_parameters.merMod <- model_parameters.coxme
 
 # helper ----------------------------------------------------------------------
 
-.add_random_effects_lme4 <- function(model,
-                                     params,
-                                     ci,
-                                     ci_method,
-                                     ci_random,
-                                     effects,
-                                     group_level,
-                                     verbose = TRUE,
-                                     ...) {
+.add_random_effects_lme4 <- function(
+  model,
+  params,
+  ci,
+  ci_method,
+  ci_random,
+  effects,
+  group_level,
+  verbose = TRUE,
+  ...
+) {
   params_random <- params_variance <- NULL
 
   # only proceed if random effects are requested
@@ -31,6 +32,14 @@ model_parameters.merMod <- model_parameters.coxme
         ci_random = ci_random,
         verbose = verbose
       )
+    }
+    # no CI requested and we have only random effects variances? then we
+    # can safely remove the ci-columns CI_low and CI_high
+    if (
+      effects == "random" && (isFALSE(ci_random) || all(is.na(params_variance$CI_low)))
+    ) {
+      params_variance$CI_low <- NULL
+      params_variance$CI_high <- NULL
     }
 
     # merge random and fixed effects, if necessary
@@ -51,18 +60,23 @@ model_parameters.merMod <- model_parameters.coxme
 
 
 #' @export
-ci.merMod <- function(x,
-                      ci = 0.95,
-                      dof = NULL,
-                      method = "wald",
-                      iterations = 500,
-                      ...) {
+ci.merMod <- function(x, ci = 0.95, dof = NULL, method = "wald", iterations = 500, ...) {
   method <- tolower(method)
-  method <- insight::validate_argument(method, c(
-    "wald", "ml1", "betwithin", "kr",
-    "satterthwaite", "kenward", "boot",
-    "profile", "residual", "normal"
-  ))
+  method <- insight::validate_argument(
+    method,
+    c(
+      "wald",
+      "ml1",
+      "betwithin",
+      "kr",
+      "satterthwaite",
+      "kenward",
+      "boot",
+      "profile",
+      "residual",
+      "normal"
+    )
+  )
 
   # bootstrapping
   if (method == "boot") {
@@ -86,12 +100,14 @@ ci.merMod <- function(x,
 
 
 #' @export
-standard_error.merMod <- function(model,
-                                  effects = "fixed",
-                                  method = NULL,
-                                  vcov = NULL,
-                                  vcov_args = NULL,
-                                  ...) {
+standard_error.merMod <- function(
+  model,
+  effects = "fixed",
+  method = NULL,
+  vcov = NULL,
+  vcov_args = NULL,
+  ...
+) {
   dots <- list(...)
   effects <- insight::validate_argument(effects, c("fixed", "random"))
 
@@ -102,17 +118,16 @@ standard_error.merMod <- function(model,
 
   if (is.null(method)) {
     method <- "wald"
-  } else if ((method == "robust" && is.null(vcov)) ||
-    # deprecated argument
-    isTRUE(list(...)[["robust"]])) {
+  } else if (
+    (method == "robust" && is.null(vcov)) ||
+      # deprecated argument
+      isTRUE(list(...)[["robust"]])
+  ) {
     vcov <- "vcovHC"
   }
 
   if (!is.null(vcov) || isTRUE(dots[["robust"]])) {
-    fun_args <- list(model,
-      vcov = vcov,
-      vcov_args = vcov_args
-    )
+    fun_args <- list(model, vcov = vcov, vcov_args = vcov_args)
     fun_args <- c(fun_args, dots)
     out <- do.call("standard_error.default", fun_args)
     return(out)
@@ -148,7 +163,7 @@ standard_error.merMod <- function(model,
     rand.se[[m]] <- array(NA, c(J, K))
 
     for (j in 1:J) {
-      rand.se[[m]][j, ] <- sqrt(diag(as.matrix(vars.m[, , j])))
+      rand.se[[m]][j, ] <- sqrt(diag(as.matrix(vars.m[,, j])))
     }
     dimnames(rand.se[[m]]) <- list(names.full[[1]], names.full[[2]])
   }
@@ -157,7 +172,8 @@ standard_error.merMod <- function(model,
 
 
 se_mixed_default <- function(model) {
-  params <- insight::find_parameters(model,
+  params <- insight::find_parameters(
+    model,
     effects = "fixed",
     component = "conditional",
     flatten = TRUE

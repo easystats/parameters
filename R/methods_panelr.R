@@ -2,22 +2,23 @@
 
 # model parameters -------------------
 
-
 #' @export
-model_parameters.wbm <- function(model,
-                                 ci = 0.95,
-                                 ci_random = NULL,
-                                 bootstrap = FALSE,
-                                 iterations = 1000,
-                                 effects = "all",
-                                 group_level = FALSE,
-                                 exponentiate = FALSE,
-                                 p_adjust = NULL,
-                                 include_sigma = FALSE,
-                                 keep = NULL,
-                                 drop = NULL,
-                                 verbose = TRUE,
-                                 ...) {
+model_parameters.wbm <- function(
+  model,
+  ci = 0.95,
+  ci_random = NULL,
+  bootstrap = FALSE,
+  iterations = 1000,
+  effects = "all",
+  group_level = FALSE,
+  exponentiate = FALSE,
+  p_adjust = NULL,
+  include_sigma = FALSE,
+  keep = NULL,
+  drop = NULL,
+  verbose = TRUE,
+  ...
+) {
   effects <- match.arg(effects, choices = c("fixed", "random", "all"))
 
   params <- .mixed_model_parameters_generic(
@@ -43,7 +44,6 @@ model_parameters.wbm <- function(model,
   attr(params, "object_name") <- insight::safe_deparse_symbol(substitute(model))
   class(params) <- c("parameters_model", "see_parameters_model", "data.frame")
 
-
   params
 }
 
@@ -53,19 +53,21 @@ model_parameters.wbgee <- model_parameters.wbm
 
 
 #' @export
-model_parameters.asym <- function(model,
-                                  ci = 0.95,
-                                  ci_method = NULL,
-                                  bootstrap = FALSE,
-                                  iterations = 1000,
-                                  standardize = NULL,
-                                  exponentiate = FALSE,
-                                  p_adjust = NULL,
-                                  include_info = getOption("parameters_info", FALSE),
-                                  keep = NULL,
-                                  drop = NULL,
-                                  verbose = TRUE,
-                                  ...) {
+model_parameters.asym <- function(
+  model,
+  ci = 0.95,
+  ci_method = NULL,
+  bootstrap = FALSE,
+  iterations = 1000,
+  standardize = NULL,
+  exponentiate = FALSE,
+  p_adjust = NULL,
+  include_info = getOption("parameters_info", FALSE),
+  keep = NULL,
+  drop = NULL,
+  verbose = TRUE,
+  ...
+) {
   params <- model_parameters.default(
     model,
     ci = ci,
@@ -88,15 +90,10 @@ model_parameters.asym <- function(model,
 
 # standard errors -------------------
 
-
 #' @export
 standard_error.wbm <- function(model, ...) {
   s <- summary(model)
-  se <- c(
-    s$within_table[, "S.E."],
-    s$between_table[, "S.E."],
-    s$ints_table[, "S.E."]
-  )
+  se <- c(s$within_table[, "S.E."], s$between_table[, "S.E."], s$ints_table[, "S.E."])
   params <- insight::get_parameters(model, effects = "fixed")
 
   .data_frame(
@@ -113,15 +110,10 @@ standard_error.wbgee <- standard_error.wbm
 
 # p values -------------------
 
-
 #' @export
 p_value.wbm <- function(model, ...) {
   s <- summary(model)
-  p <- c(
-    s$within_table[, "p"],
-    s$between_table[, "p"],
-    s$ints_table[, "p"]
-  )
+  p <- c(s$within_table[, "p"], s$between_table[, "p"], s$ints_table[, "p"])
   params <- insight::get_parameters(model, effects = "fixed")
 
   .data_frame(
@@ -138,24 +130,25 @@ p_value.wbgee <- p_value.wbm
 
 # utils -------------------
 
-
-.mixed_model_parameters_generic <- function(model,
-                                            ci,
-                                            ci_random = NULL,
-                                            bootstrap, # nolint
-                                            iterations, # nolint
-                                            merge_by, # nolint
-                                            standardize, # nolint
-                                            exponentiate, # nolint
-                                            effects, # nolint
-                                            p_adjust, # nolint
-                                            group_level, # nolint
-                                            ci_method, # nolint
-                                            include_sigma = FALSE,
-                                            keep_parameters = NULL,
-                                            drop_parameters = NULL,
-                                            verbose = TRUE,
-                                            ...) {
+.mixed_model_parameters_generic <- function(
+  model,
+  ci,
+  ci_random = NULL,
+  bootstrap, # nolint
+  iterations, # nolint
+  merge_by, # nolint
+  standardize, # nolint
+  exponentiate, # nolint
+  effects, # nolint
+  p_adjust, # nolint
+  group_level, # nolint
+  ci_method, # nolint
+  include_sigma = FALSE,
+  keep_parameters = NULL,
+  drop_parameters = NULL,
+  verbose = TRUE,
+  ...
+) {
   params <- params_random <- params_variance <- att <- NULL
 
   if (effects %in% c("fixed", "all")) {
@@ -185,9 +178,23 @@ p_value.wbgee <- p_value.wbm
   }
 
   if (effects %in% c("random", "all") && isFALSE(group_level)) {
-    params_variance <- .extract_random_variances(model, ci = ci, effects = effects, ci_method = ci_method, ci_random = ci_random, verbose = verbose)
+    params_variance <- .extract_random_variances(
+      model,
+      ci = ci,
+      effects = effects,
+      ci_method = ci_method,
+      ci_random = ci_random,
+      verbose = verbose
+    )
+    # no CI requested and we have only random effects variances? then we
+    # can safely remove the ci-columns CI_low and CI_high
+    if (
+      effects == "random" && (isFALSE(ci_random) || all(is.na(params_variance$CI_low)))
+    ) {
+      params_variance$CI_low <- NULL
+      params_variance$CI_high <- NULL
+    }
   }
-
 
   # merge random and fixed effects, if necessary
   if (!is.null(params) && (!is.null(params_random) || !is.null(params_variance))) {
