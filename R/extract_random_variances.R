@@ -188,7 +188,11 @@
   # extract covariance structures. we now have the names of the covariance
   # structures ("us", "ar1", etc.) as character vector, and the related grouping
   # variables as names of its elements
-  cov_struc <- vapply(varcorr, function(i) gsub("vcmat_", "", class(i)[1]), character(1))
+  cov_struc <- vapply(
+    varcorr,
+    function(i) gsub("vcmat_", "", class(i)[1], fixed = TRUE),
+    character(1)
+  )
 
   # extract parameters from SD and COR separately, for sorting
   re_sd_intercept <- re_data$var1 == "(Intercept)" &
