@@ -55,6 +55,114 @@ test_that("random effects, glmmTMB, cov-struct AR1", {
     c(0.1347, 0.3627, 0.8584, -1, 0.0324, 0.4545),
     tolerance = 1e-3
   )
+
+  m_ar1 <- suppressWarnings(glmmTMB::glmmTMB(
+    y ~ 1 + (1 + x | id2) + ar1(time + 0 | id),
+    data = dat
+  ))
+  out <- model_parameters(m_ar1, effects = "random", ci_random = 0.95, verbose = FALSE)
+  expect_identical(
+    out$Parameter,
+    c(
+      "SD (Intercept)",
+      "SD (x)",
+      "SD (time1)",
+      "Cor (Intercept~x)",
+      "Cor (AR1 rho)",
+      "SD (Observations)"
+    )
+  )
+  # Validated against output from VarCorr()
+  expect_equal(
+    out$Coefficient,
+    c(0.1347, 0.8584, 0.3627, -1, 0.0324, 0.4545),
+    tolerance = 1e-3
+  )
+
+  m_ar1 <- suppressWarnings(glmmTMB::glmmTMB(
+    y ~ 1 + (as.numeric(time) | id) + ar1(time + 0 | id),
+    data = dat
+  ))
+  out <- model_parameters(m_ar1, effects = "random", ci_random = 0.95, verbose = FALSE)
+  expect_named(
+    out,
+    c(
+      "Parameter",
+      "Coefficient",
+      "SE",
+      "CI",
+      "CI_low",
+      "CI_high",
+      "Effects",
+      "Group",
+      "Component"
+    )
+  )
+  expect_identical(
+    out$Parameter,
+    c(
+      "SD (Intercept)",
+      "SD (as.numeric(time))",
+      "SD (time1)",
+      "Cor (Intercept~as.numeric(time))",
+      "Cor (AR1 rho)",
+      "SD (Observations)"
+    )
+  )
+  # Validated against output from VarCorr()
+  expect_equal(
+    out$Coefficient,
+    c(0.3425, 0.0429, 0.9105, 0.9374, 0.2499, 0.1166),
+    tolerance = 1e-3
+  )
+  out <- model_parameters(m_ar1, effects = "random", ci_random = FALSE, verbose = FALSE)
+  expect_named(out, c("Parameter", "Coefficient", "SE", "Effects", "Group", "Component"))
+})
+
+
+test_that("random effects, lme4, cov-struct AR1", {
+  skip_if_not_installed("lme4")
+  set.seed(123)
+  n_subjects <- 100
+  V <- outer(1:4, 1:4, function(i, j) 0.6^abs(i - j))
+  random_effects <- as.vector(t(chol(V)) %*% matrix(rnorm(n_subjects * 4), 4, n_subjects))
+
+  dat <- data.frame(
+    id = rep(1:n_subjects, each = 4),
+    id2 = rep(1:(n_subjects / 2), each = 8),
+    time = rep(factor(1:4), n_subjects),
+    x = random_effects + rnorm(n_subjects * 4, sd = 0.3),
+    y = random_effects + rnorm(n_subjects * 4, sd = 0.5)
+  )
+
+  m_ar1 <- suppressWarnings(lme4::lmer(
+    y ~ 1 + (as.numeric(time) | id) + ar1(time + 0 | id),
+    data = dat
+  ))
+  out <- model_parameters(m_ar1, effects = "random", ci_random = 0.95, verbose = FALSE)
+  expect_named(
+    out,
+    c("Parameter", "Coefficient", "SE", "CI", "CI_low", "CI_high", "Effects", "Group")
+  )
+  expect_identical(
+    out$Parameter,
+    c(
+      "SD (Intercept)",
+      "SD (as.numeric(time))",
+      "SD (time1)",
+      "Cor (Intercept~as.numeric(time))",
+      "Cor (AR1 rho)",
+      "SD (Observations)"
+    )
+  )
+  # Validated against output from VarCorr()
+  expect_equal(
+    out$Coefficient,
+    c(0.3929, 0.0747, 0.9012, 0.1467, 0.242, 0.1319),
+    tolerance = 1e-3
+  )
+  out <- model_parameters(m_ar1, effects = "random", ci_random = FALSE, verbose = FALSE)
+  expect_named(out, c("Parameter", "Coefficient", "SE", "Effects", "Group", "CI"))
 })
 
 test_that("random effects, glmmTMB, cov-struct OU", {

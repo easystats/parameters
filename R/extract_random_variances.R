@@ -188,7 +188,11 @@
   # extract covariance structures. we now have the names of the covariance
   # structures ("us", "ar1", etc.) as character vector, and the related grouping
   # variables as names of its elements
-  cov_struc <- vapply(varcorr, function(i) gsub("vcmat_", "", class(i)[1]), character(1))
+  cov_struc <- vapply(
+    varcorr,
+    function(i) gsub("vcmat_", "", class(i)[1], fixed = TRUE),
+    character(1)
+  )
 
   # extract parameters from SD and COR separately, for sorting
   re_sd_intercept <- re_data$var1 == "(Intercept)" &
@@ -244,8 +248,9 @@
         }
       )
       # fix label for cov_structure correlation
-      re_data[which(re_cor_slope[to_select]), "var1"] <- new_label
-      re_data[which(re_cor_slope[to_select]), "var2"] <- ""
+      idx <- which(re_cor_slope & to_select)
+      re_data[idx, "var1"] <- new_label
+      re_data[idx, "var2"] <- ""
     }
   }
 
@@ -345,6 +350,10 @@
       component,
       verbose = verbose
     )
+  } else if (effects == "random") {
+    # no CI requested and we have only random effects variances? then we
+    # can safely remove the ci-columns CI_low and CI_high
+    ci_cols <- NULL
   }
 
   out <- out[c(
