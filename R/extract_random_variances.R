@@ -244,8 +244,9 @@
         }
       )
       # fix label for cov_structure correlation
-      re_data[which(re_cor_slope & to_select), "var1"] <- new_label
-      re_data[which(re_cor_slope & to_select), "var2"] <- ""
+      idx <- which(re_cor_slope & to_select)
+      re_data[idx, "var1"] <- new_label
+      re_data[idx, "var2"] <- ""
     }
   }
 
