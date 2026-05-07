@@ -55,6 +55,52 @@ test_that("random effects, glmmTMB, cov-struct AR1", {
     c(0.1347, 0.3627, 0.8584, -1, 0.0324, 0.4545),
     tolerance = 1e-3
   )
+
+  m_ar1 <- suppressWarnings(glmmTMB::glmmTMB(
+    y ~ 1 + (1 + x | id2) + ar1(time + 0 | id),
+    data = dat
+  ))
+  out <- model_parameters(m_ar1, effects = "random", ci_random = 0.95, verbose = FALSE)
+  expect_identical(
+    out$Parameter,
+    c(
+      "SD (Intercept)",
+      "SD (x)",
+      "SD (time1)",
+      "Cor (Intercept~x)",
+      "Cor (AR1 rho)",
+      "SD (Observations)"
+    )
+  )
+  # Validated against output from VarCorr()
+  expect_equal(
+    out$Coefficient,
+    c(0.1347, 0.8584, 0.3627, -1, 0.0324, 0.4545),
+    tolerance = 1e-3
+  )
+
+  m_ar1 <- suppressWarnings(glmmTMB::glmmTMB(
+    y ~ 1 + (as.numeric(time) | id) + ar1(time + 0 | id),
+    data = dat
+  ))
+  out <- model_parameters(m_ar1, effects = "random", ci_random = 0.95, verbose = FALSE)
+  expect_identical(
+    out$Parameter,
+    c(
+      "SD (Intercept)",
+      "SD (as.numeric(time))",
+      "SD (time1)",
+      "Cor (Intercept~as.numeric(time))",
+      "Cor (AR1 rho)",
+      "SD (Observations)"
+    )
+  )
+  # Validated against output from VarCorr()
+  expect_equal(
+    out$Coefficient,
+    c(0.3425, 0.0429, 0.9105, 0.9374, 0.2499, 0.1166),
+    tolerance = 1e-3
+  )
 })
 
 test_that("random effects, glmmTMB, cov-struct OU", {
