@@ -128,12 +128,11 @@ standard_error.merMod <- function(
   # kenward approx
   if (method %in% c("kenward", "kr")) {
     out <- se_kenward(model)
-    return(out)
   } else {
     # Classic and Satterthwaite SE
     out <- se_mixed_default(model)
-    return(out)
   }
+  out
 }
 
 
