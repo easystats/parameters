@@ -271,7 +271,9 @@ test_that("model_parameters-htests no hard-coded formatting for proportions test
 
 
 test_that("model_parameters-BSDA", {
+  skip_on_cran()
   skip_if_not_installed("BSDA")
+  skip_if_not_installed("insight", minimum_version = "1.5.1")
 
   # t-test
   m <- suppressWarnings(BSDA::tsum.test(

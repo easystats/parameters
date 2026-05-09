@@ -145,7 +145,8 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
   } else if (m_info$is_ttest) {
     # t-test -----------
     out <- .extract_htest_ttest(model)
-  } else if (m_info$is_ztest) {
+  } else if (isTRUE(m_info$is_ztest)) {
+    # requires insight > 1.5.0
     # z-test -----------
     out <- .extract_htest_ztest(model)
   } else if (m_info$is_ranktest) {
