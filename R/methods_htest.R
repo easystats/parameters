@@ -51,16 +51,16 @@ model_parameters.htest <- function(
 ) {
   if (bootstrap) {
     insight::format_error("Bootstrapped h-tests are not yet implemented.")
-  } else {
-    parameters <- .extract_parameters_htest(
-      model,
-      es_type = es_type,
-      ci = ci,
-      alternative = alternative,
-      verbose = verbose,
-      ...
-    )
   }
+
+  parameters <- .extract_parameters_htest(
+    model,
+    es_type = es_type,
+    ci = ci,
+    alternative = alternative,
+    verbose = verbose,
+    ...
+  )
 
   if (!is.null(parameters$Method)) {
     parameters$Method <- insight::trim_ws(gsub(
