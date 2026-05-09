@@ -642,7 +642,8 @@ model_parameters.default <- function(
       ),
       attr(out, "error")
     )
-  } else if (is.null(out)) {
+  }
+  if (is.null(out)) {
     insight::format_error(paste0(
       "Sorry, ",
       sQuote("model_parameters()"),
