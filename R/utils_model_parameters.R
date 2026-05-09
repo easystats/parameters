@@ -20,6 +20,14 @@
   modelinfo = NULL,
   ...
 ) {
+  # these models only have a single table component, hence, we need no caption
+  # like "fixed effects" or similar.
+  # fmt: skip
+  .models_with_no_caption <- c(
+    "mediate", "emmGrid", "emm_list", "summary_emm", "lm", "averaging",
+    "glm", "coxph", "bfsl", "deltaMethod", "phylolm", "phyloglm"
+  )
+
   # capture additional arguments
   dot.arguments <- list(...)
 
@@ -120,25 +128,7 @@
   # Models for which titles should be removed - here we add exceptions for
   # objects that should not have a table headline like "# Fixed Effects", when
   # there is nothing else than fixed effects (redundant title)
-  if (
-    inherits(
-      model,
-      c(
-        "mediate",
-        "emmGrid",
-        "emm_list",
-        "summary_emm",
-        "lm",
-        "averaging",
-        "glm",
-        "coxph",
-        "bfsl",
-        "deltaMethod",
-        "phylolm",
-        "phyloglm"
-      )
-    )
-  ) {
+  if (inherits(model, .models_with_no_caption)) {
     attr(params, "no_caption") <- TRUE
     attr(params, "title") <- ""
   }
@@ -196,28 +186,14 @@
   }
 
   # now comes all the digits stuff...
-  if ("digits" %in% names(dot.arguments)) {
-    attr(params, "digits") <- dot.arguments[["digits"]]
-  } else {
-    attr(params, "digits") <- 2
-  }
+  defaults <- list(digits = 2, ci_digits = NULL, p_digits = 3, footer_digits = 3)
 
-  if ("ci_digits" %in% names(dot.arguments)) {
-    attr(params, "ci_digits") <- dot.arguments[["ci_digits"]]
-  } else {
-    attr(params, "ci_digits") <- NULL
-  }
-
-  if ("p_digits" %in% names(dot.arguments)) {
-    attr(params, "p_digits") <- dot.arguments[["p_digits"]]
-  } else {
-    attr(params, "p_digits") <- 3
-  }
-
-  if ("footer_digits" %in% names(dot.arguments)) {
-    attr(params, "footer_digits") <- dot.arguments[["footer_digits"]]
-  } else {
-    attr(params, "footer_digits") <- 3
+  for (arg in names(defaults)) {
+    if (arg %in% names(dot.arguments)) {
+      attr(params, arg) <- dot.arguments[[arg]]
+    } else {
+      attr(params, arg) <- defaults[[arg]]
+    }
   }
 
   if ("s_value" %in% names(dot.arguments)) {
@@ -292,8 +268,7 @@
 #' @keywords internal
 #' @noRd
 .find_coefficient_type <- function(info, exponentiate, model = NULL) {
-  # column name for coefficients
-  coef_col <- "Coefficient"
+  # handle emmeans
   if (!is.null(model) && inherits(model, "emmGrid")) {
     s <- summary(model)
     name <- attributes(s)$estName
@@ -308,50 +283,69 @@
         "Coefficient"
       )
     }
-  } else if (!is.null(info) && info$family != "unknown") {
-    if (isTRUE(exponentiate)) {
-      if (info$is_exponential && identical(info$link_function, "log")) {
-        coef_col <- "Prevalence Ratio"
-      } else if (info$is_probit) {
-        coef_col <- "Coefficient"
-      } else if (
-        (info$is_binomial && info$is_logit) ||
-          info$is_ordinal ||
-          info$is_multinomial ||
-          info$is_categorical
-      ) {
-        coef_col <- "Odds Ratio"
-      } else if (info$is_binomial && !info$is_logit) {
-        if (info$link_function == "identity") {
-          coef_col <- "Exp. Risk"
-        } else {
-          coef_col <- "Risk Ratio"
-        }
-      } else if (info$is_count) {
-        coef_col <- "IRR"
-      }
-    } else if (info$is_exponential && identical(info$link_function, "log")) {
-      coef_col <- "Log-Prevalence"
-    } else if (info$is_probit) {
-      coef_col <- "Z-Score"
-    } else if (
-      (info$is_binomial && info$is_logit) ||
-        info$is_ordinal ||
-        info$is_multinomial ||
-        info$is_categorical
-    ) {
-      coef_col <- "Log-Odds"
-    } else if (info$is_binomial && !info$is_logit) {
-      if (info$link_function == "identity") {
-        coef_col <- "Risk"
-      } else {
-        coef_col <- "Log-Risk"
-      }
-    } else if (info$is_count) {
-      coef_col <- "Log-Mean"
-    }
+    return(coef_col)
   }
 
+  # no information about coefficient
+  if (is.null(info) || info$family == "unknown") {
+    return("Coefficient")
+  }
+
+  # find name when argument `exponentiate = TRUE`
+  if (isTRUE(exponentiate)) {
+    return(.name_for_exponentiated(info))
+  }
+
+  .name_for_nonexponentiated(info)
+}
+
+
+.name_for_exponentiated <- function(info, coef_col = "Coefficient") {
+  if (info$is_exponential && identical(info$link_function, "log")) {
+    coef_col <- "Prevalence Ratio"
+  } else if (info$is_probit) {
+    coef_col <- "Coefficient"
+  } else if (
+    (info$is_binomial && info$is_logit) ||
+      info$is_ordinal ||
+      info$is_multinomial ||
+      info$is_categorical
+  ) {
+    coef_col <- "Odds Ratio"
+  } else if (info$is_binomial && !info$is_logit) {
+    if (info$link_function == "identity") {
+      coef_col <- "Exp. Risk"
+    } else {
+      coef_col <- "Risk Ratio"
+    }
+  } else if (info$is_count) {
+    coef_col <- "IRR"
+  }
+  coef_col
+}
+
+
+.name_for_nonexponentiated <- function(info, coef_col = "Coefficient") {
+  if (info$is_exponential && identical(info$link_function, "log")) {
+    coef_col <- "Log-Prevalence"
+  } else if (info$is_probit) {
+    coef_col <- "Z-Score"
+  } else if (
+    (info$is_binomial && info$is_logit) ||
+      info$is_ordinal ||
+      info$is_multinomial ||
+      info$is_categorical
+  ) {
+    coef_col <- "Log-Odds"
+  } else if (info$is_binomial && !info$is_logit) {
+    if (info$link_function == "identity") {
+      coef_col <- "Risk"
+    } else {
+      coef_col <- "Log-Risk"
+    }
+  } else if (info$is_count) {
+    coef_col <- "Log-Mean"
+  }
   coef_col
 }
 
