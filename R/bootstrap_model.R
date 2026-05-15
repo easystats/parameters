@@ -118,6 +118,7 @@ bootstrap_model.default <- function(model,
       sim = type,
       parallel = parallel,
       ncpus = n_cpus,
+      cl = cluster,
       model = model,
       ran.gen = f
     )
@@ -129,6 +130,7 @@ bootstrap_model.default <- function(model,
       sim = type,
       parallel = parallel,
       ncpus = n_cpus,
+      cl = cluster,
       model = model
     )
   }
@@ -223,6 +225,7 @@ bootstrap_model.nestedLogit <- function(model,
                                         type = "ordinary",
                                         parallel = "no",
                                         n_cpus = 1,
+                                        cluster = NULL,
                                         verbose = FALSE,
                                         ...) {
   insight::check_if_installed("boot")
@@ -256,6 +259,7 @@ bootstrap_model.nestedLogit <- function(model,
     sim = type,
     parallel = parallel,
     ncpus = n_cpus,
+    cl = cluster, 
     model = model
   )
 
