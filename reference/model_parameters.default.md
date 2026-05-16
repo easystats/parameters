@@ -417,9 +417,9 @@ model_parameters(model)
 model_parameters(model, bootstrap = TRUE)
 #> Parameter   | Coefficient |         95% CI |      p
 #> ---------------------------------------------------
-#> (Intercept) |       39.58 | [35.51, 43.99] | < .001
-#> wt          |       -3.23 | [-4.94, -2.01] | < .001
-#> cyl         |       -1.46 | [-2.19, -0.73] | 0.002 
+#> (Intercept) |       39.71 | [35.52, 43.95] | < .001
+#> wt          |       -3.24 | [-4.94, -1.96] | < .001
+#> cyl         |       -1.45 | [-2.16, -0.71] | 0.002 
 #> 
 #> Uncertainty intervals (equal-tailed) are naıve bootstrap
 #>   intervals.
@@ -428,7 +428,7 @@ model_parameters(model, bootstrap = TRUE)
 model_parameters(model, standardize = "refit")
 #> Parameter   | Coefficient |   SE |         95% CI |    t(29) |      p
 #> ---------------------------------------------------------------------
-#> (Intercept) |    5.37e-17 | 0.08 | [-0.15,  0.15] | 7.13e-16 | > .999
+#> (Intercept) |    6.14e-17 | 0.08 | [-0.15,  0.15] | 8.15e-16 | > .999
 #> wt          |       -0.52 | 0.12 | [-0.77, -0.27] |    -4.22 | < .001
 #> cyl         |       -0.45 | 0.12 | [-0.70, -0.20] |    -3.64 | 0.001 
 #> 

@@ -29,7 +29,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.29.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.29.0.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -87,7 +87,7 @@
       <img src="../logo.png" class="logo" alt=""><h1>Structural Models (EFA, CFA, SEM, ...)</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/v0.29.0/vignettes/efa_cfa.Rmd" class="external-link"><code>vignettes/efa_cfa.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/main/vignettes/efa_cfa.Rmd" class="external-link"><code>vignettes/efa_cfa.Rmd</code></a></small>
       <div class="d-none name"><code>efa_cfa.Rmd</code></div>
     </div>
 
@@ -173,7 +173,7 @@ the items’ authors theory of personality.</p>
 <span><span class="va">efa</span></span>
 <span><span class="co">#&gt; # Rotated loadings from Factor Analysis (oblimin-rotation)</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Variable |  MR2 |   MR1 |   MR3 |   MR5 |   MR4 | Complexity | Uniqueness</span></span>
+<span><span class="co">#&gt; Variable |  MR5 |   MR3 |   MR1 |   MR4 |   MR2 | Complexity | Uniqueness</span></span>
 <span><span class="co">#&gt; -------------------------------------------------------------------------</span></span>
 <span><span class="co">#&gt; N1       | 0.83 |       |       |       |       |       1.07 |       0.32</span></span>
 <span><span class="co">#&gt; N2       | 0.78 |       |       |       |       |       1.03 |       0.39</span></span>
@@ -201,7 +201,7 @@ the items’ authors theory of personality.</p>
 <span><span class="co">#&gt; O2       |      |       |       |       | -0.47 |       1.68 |       0.73</span></span>
 <span><span class="co">#&gt; O4       |      |       |       |       |  0.36 |       2.65 |       0.75</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; The 5 latent factors (oblimin rotation) accounted for 42.36% of the total variance of the original data (MR2 = 10.31%, MR1 = 8.83%, MR3 = 8.39%, MR5 = 8.29%, MR4 = 6.55%).</span></span></code></pre></div>
+<span><span class="co">#&gt; The 5 latent factors (oblimin rotation) accounted for 42.36% of the total variance of the original data (MR5 = 10.31%, MR3 = 8.83%, MR1 = 8.39%, MR4 = 8.29%, MR2 = 6.55%).</span></span></code></pre></div>
 <p>As we can see, the 25 items nicely spread on the 5 latent factors,
 the famous <strong>big 5</strong>. Based on this model, we can now
 predict back the scores for each individual for these new variables:</p>
@@ -345,20 +345,20 @@ transform into CFA structures.</p>
 <span><span class="co"># Investigate how the models look</span></span>
 <span><span class="va">structure_big5</span></span>
 <span><span class="co">#&gt; # Latent variables</span></span>
-<span><span class="co">#&gt; MR2 =~ N1 + N2 + N3 + N4 + N5 + .row_id</span></span>
-<span><span class="co">#&gt; MR1 =~ E1 + E2 + E3 + E4 + E5</span></span>
-<span><span class="co">#&gt; MR3 =~ C1 + C2 + C3 + C4 + C5</span></span>
-<span><span class="co">#&gt; MR5 =~ A1 + A2 + A3 + A4 + A5</span></span>
+<span><span class="co">#&gt; MR5 =~ N1 + N2 + N3 + N4 + N5 + .row_id</span></span>
+<span><span class="co">#&gt; MR2 =~ E1 + E2 + E3 + E4 + E5</span></span>
+<span><span class="co">#&gt; MR1 =~ C1 + C2 + C3 + C4 + C5</span></span>
+<span><span class="co">#&gt; MR3 =~ A1 + A2 + A3 + A4 + A5</span></span>
 <span><span class="co">#&gt; MR4 =~ O1 + O2 + O3 + O4 + O5</span></span>
 <span></span>
 <span><span class="va">structure_big6</span></span>
 <span><span class="co">#&gt; # Latent variables</span></span>
-<span><span class="co">#&gt; MR2 =~ N1 + N2 + N3 + N5 + .row_id</span></span>
-<span><span class="co">#&gt; MR3 =~ C1 + C2 + C3 + C4 + C5</span></span>
-<span><span class="co">#&gt; MR1 =~ E1 + E2 + E4 + E5 + N4 + O4</span></span>
-<span><span class="co">#&gt; MR5 =~ A1 + A2 + A3 + A4 + A5</span></span>
-<span><span class="co">#&gt; MR4 =~ E3 + O1 + O2 + O3</span></span>
-<span><span class="co">#&gt; MR6 =~ O5</span></span></code></pre></div>
+<span><span class="co">#&gt; MR5 =~ N1 + N2 + N3 + N5 + .row_id</span></span>
+<span><span class="co">#&gt; MR1 =~ C1 + C2 + C3 + C4 + C5</span></span>
+<span><span class="co">#&gt; MR3 =~ E1 + E2 + E4 + E5 + N4 + O4</span></span>
+<span><span class="co">#&gt; MR2 =~ A1 + A2 + A3 + A4 + A5</span></span>
+<span><span class="co">#&gt; MR6 =~ E3 + O1 + O2 + O3</span></span>
+<span><span class="co">#&gt; MR4 =~ O5</span></span></code></pre></div>
 <p>As we can see, a structure is just a string encoding how the
 <strong>manifest variables</strong> (the observed variables) are
 integrated into <strong>latent variables</strong>.</p>

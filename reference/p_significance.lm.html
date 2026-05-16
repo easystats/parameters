@@ -37,7 +37,7 @@ point-null by default, p_significance() compares to a range-null."><meta propert
 
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.29.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.29.0.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -80,7 +80,7 @@ point-null by default, p_significance() compares to a range-null."><meta propert
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Practical Significance (ps)</h1>
-      <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/v0.29.0/R/p_significance.R" class="external-link"><code>R/p_significance.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/main/R/p_significance.R" class="external-link"><code>R/p_significance.R</code></a></small>
       <div class="d-none name"><code>p_significance.lm.Rd</code></div>
     </div>
 
@@ -330,9 +330,9 @@ for functions related to checking effect existence and significance.</p></div>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameter     |         95% CI |     ps</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)   | [58.46, 69.28] |   100%</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> time          | [-1.07,  2.85] | 13.44%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> time          | [-1.07,  2.85] | 13.62%</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> age           | [-0.32,  0.37] |  0.00%</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> educationmid  | [ 4.43, 13.09] | 99.91%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> educationmid  | [ 4.43, 13.09] | 99.95%</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> educationhigh | [ 9.33, 19.38] |   100%</span>
 <span class="r-in"><span><span class="fu"><a href="https://easystats.github.io/bayestestR/reference/p_significance.html" class="external-link">p_significance</a></span><span class="op">(</span><span class="va">model</span>, threshold <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">0.5</span>, <span class="fl">1.5</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Practical Significance (threshold: -0.50, 1.50)</span>
@@ -340,9 +340,9 @@ for functions related to checking effect existence and significance.</p></div>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameter     |         95% CI |     ps</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)   | [58.46, 69.28] |   100%</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> time          | [-1.07,  2.85] | 27.05%</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> age           | [-0.32,  0.37] |  0.18%</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> educationmid  | [ 4.43, 13.09] | 99.94%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> time          | [-1.07,  2.85] | 27.25%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> age           | [-0.32,  0.37] |  0.19%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> educationmid  | [ 4.43, 13.09] | 99.91%</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> educationhigh | [ 9.33, 19.38] |   100%</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># based on heteroscedasticity-robust standard errors</span></span></span>
@@ -352,7 +352,7 @@ for functions related to checking effect existence and significance.</p></div>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameter     |         95% CI |     ps</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)   | [58.33, 69.41] |   100%</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> time          | [-1.13,  2.90] | 14.16%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> time          | [-1.13,  2.90] | 14.02%</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> age           | [-0.33,  0.38] |  0.00%</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> educationmid  | [ 4.21, 13.31] | 99.85%</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> educationhigh | [ 9.37, 19.34] |   100%</span>

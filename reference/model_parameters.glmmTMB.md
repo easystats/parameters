@@ -687,7 +687,7 @@ model_parameters(model, bootstrap = TRUE, iterations = 50, verbose = FALSE)
 #> 
 #> Parameter   | Coefficient |         95% CI |      p
 #> ---------------------------------------------------
-#> (Intercept) |       35.81 | [29.62, 39.26] | < .001
-#> wt          |       -5.02 | [-6.15, -3.48] | < .001
+#> (Intercept) |       36.48 | [31.71, 39.09] | < .001
+#> wt          |       -5.10 | [-6.10, -3.70] | < .001
 # }
 ```

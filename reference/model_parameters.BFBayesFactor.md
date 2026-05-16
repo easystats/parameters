@@ -157,7 +157,7 @@ model_parameters(model)
 #> 
 #> Parameter  | Median |       95% CI |   pd |              Prior |       BF
 #> -------------------------------------------------------------------------
-#> Difference |   0.99 | [0.80, 1.17] | 100% | Cauchy (0 +- 0.71) | 6.14e+15
+#> Difference |   1.09 | [0.89, 1.28] | 100% | Cauchy (0 +- 0.71) | 8.54e+16
 #> 
 #> Uncertainty intervals (equal-tailed) and p-values (two-tailed)
 #>   computed using a MCMC distribution approximation.
@@ -166,11 +166,11 @@ model_parameters(model, es_type = "cohens_d", ci = 0.9)
 #> 
 #> Parameter  | Median |       90% CI | Cohen's d |     d 90% CI |   pd
 #> --------------------------------------------------------------------
-#> Difference |   0.99 | [0.84, 1.15] |      1.08 | [0.87, 1.29] | 100%
+#> Difference |   1.09 | [0.93, 1.25] |      1.14 | [0.91, 1.35] | 100%
 #> 
 #> Parameter  |              Prior |       BF
 #> ------------------------------------------
-#> Difference | Cauchy (0 +- 0.71) | 6.14e+15
+#> Difference | Cauchy (0 +- 0.71) | 8.54e+16
 #> 
 #> Uncertainty intervals (equal-tailed) and p-values (two-tailed)
 #>   computed using a MCMC distribution approximation.

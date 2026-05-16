@@ -246,7 +246,7 @@ model_parameters(efa,
 )
 #> # Rotated loadings from Factor Analysis (oblimin-rotation)
 #> 
-#> Variable   | Label |  MR1 |  MR2 |  MR3 | Complexity | Uniqueness
+#> Variable   | Label |  MR2 |  MR3 |  MR1 | Complexity | Uniqueness
 #> -----------------------------------------------------------------
 #> complaints |     2 | 0.97 |      |      |       1.01 |       0.10
 #> rating     |     1 | 0.90 |      |      |       1.02 |       0.23
@@ -256,7 +256,7 @@ model_parameters(efa,
 #> learning   |     4 |      | 0.54 |      |       2.51 |       0.24
 #> critical   |     6 |      |      | 0.48 |       1.46 |       0.67
 #> 
-#> The 3 latent factors (oblimin rotation) accounted for 66.60% of the total variance of the original data (MR1 = 38.19%, MR2 = 22.69%, MR3 = 5.72%).
+#> The 3 latent factors (oblimin rotation) accounted for 66.60% of the total variance of the original data (MR2 = 38.19%, MR3 = 22.69%, MR1 = 5.73%).
 #> 
 
 

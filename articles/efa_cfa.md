@@ -89,7 +89,7 @@ efa <- psych::fa(data, nfactors = 5) %>%
 efa
 #> # Rotated loadings from Factor Analysis (oblimin-rotation)
 #> 
-#> Variable |  MR2 |   MR1 |   MR3 |   MR5 |   MR4 | Complexity | Uniqueness
+#> Variable |  MR5 |   MR3 |   MR1 |   MR4 |   MR2 | Complexity | Uniqueness
 #> -------------------------------------------------------------------------
 #> N1       | 0.83 |       |       |       |       |       1.07 |       0.32
 #> N2       | 0.78 |       |       |       |       |       1.03 |       0.39
@@ -117,7 +117,7 @@ efa
 #> O2       |      |       |       |       | -0.47 |       1.68 |       0.73
 #> O4       |      |       |       |       |  0.36 |       2.65 |       0.75
 #> 
-#> The 5 latent factors (oblimin rotation) accounted for 42.36% of the total variance of the original data (MR2 = 10.31%, MR1 = 8.83%, MR3 = 8.39%, MR5 = 8.29%, MR4 = 6.55%).
+#> The 5 latent factors (oblimin rotation) accounted for 42.36% of the total variance of the original data (MR5 = 10.31%, MR3 = 8.83%, MR1 = 8.39%, MR4 = 8.29%, MR2 = 6.55%).
 ```
 
 As we can see, the 25 items nicely spread on the 5 latent factors, the
@@ -281,20 +281,20 @@ structure_big6 <- psych::fa(training, nfactors = 6) %>%
 # Investigate how the models look
 structure_big5
 #> # Latent variables
-#> MR2 =~ N1 + N2 + N3 + N4 + N5 + .row_id
-#> MR1 =~ E1 + E2 + E3 + E4 + E5
-#> MR3 =~ C1 + C2 + C3 + C4 + C5
-#> MR5 =~ A1 + A2 + A3 + A4 + A5
+#> MR5 =~ N1 + N2 + N3 + N4 + N5 + .row_id
+#> MR2 =~ E1 + E2 + E3 + E4 + E5
+#> MR1 =~ C1 + C2 + C3 + C4 + C5
+#> MR3 =~ A1 + A2 + A3 + A4 + A5
 #> MR4 =~ O1 + O2 + O3 + O4 + O5
 
 structure_big6
 #> # Latent variables
-#> MR2 =~ N1 + N2 + N3 + N5 + .row_id
-#> MR3 =~ C1 + C2 + C3 + C4 + C5
-#> MR1 =~ E1 + E2 + E4 + E5 + N4 + O4
-#> MR5 =~ A1 + A2 + A3 + A4 + A5
-#> MR4 =~ E3 + O1 + O2 + O3
-#> MR6 =~ O5
+#> MR5 =~ N1 + N2 + N3 + N5 + .row_id
+#> MR1 =~ C1 + C2 + C3 + C4 + C5
+#> MR3 =~ E1 + E2 + E4 + E5 + N4 + O4
+#> MR2 =~ A1 + A2 + A3 + A4 + A5
+#> MR6 =~ E3 + O1 + O2 + O3
+#> MR4 =~ O5
 ```
 
 As we can see, a structure is just a string encoding how the **manifest

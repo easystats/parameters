@@ -131,13 +131,13 @@ models <- lapply(1:5, function(i) {
 pool_parameters(models)
 #> # Fixed Effects
 #> 
-#> Parameter   | Coefficient |   SE |          95% CI | Statistic |    df |     p
-#> ------------------------------------------------------------------------------
-#> (Intercept) |       18.88 | 4.88 | [  7.35, 30.41] |      3.87 |  7.02 | 0.006
-#> age [40-59] |       -4.30 | 2.05 | [ -8.62,  0.03] |     -2.10 | 16.54 | 0.051
-#> age [60-99] |       -6.68 | 2.94 | [-13.70,  0.34] |     -2.27 |  6.70 | 0.059
-#> hyp [yes]   |        1.97 | 3.08 | [ -6.24, 10.18] |      0.64 |  4.46 | 0.554
-#> chl         |        0.05 | 0.03 | [ -0.01,  0.12] |      1.89 |  6.56 | 0.103
+#> Parameter   | Coefficient |   SE |          95% CI | Statistic |    df |      p
+#> -------------------------------------------------------------------------------
+#> (Intercept) |       19.96 | 3.76 | [ 11.95, 27.97] |      5.31 | 15.06 | < .001
+#> age [40-59] |       -4.86 | 2.55 | [-11.19,  1.46] |     -1.90 |  5.72 | 0.108 
+#> age [60-99] |       -7.04 | 2.26 | [-11.99, -2.10] |     -3.12 | 11.39 | 0.009 
+#> hyp [yes]   |        2.28 | 2.07 | [ -2.20,  6.76] |      1.10 | 12.91 | 0.292 
+#> chl         |        0.05 | 0.02 | [ -0.01,  0.10] |      2.07 |  8.45 | 0.070 
 #> 
 #> Uncertainty intervals (equal-tailed) and p-values (two-tailed)
 #>   computed using a Wald distribution approximation.
@@ -145,12 +145,12 @@ pool_parameters(models)
 # should be identical to:
 m <- with(data = imp, exp = lm(bmi ~ age + hyp + chl))
 summary(mice::pool(m))
-#>          term    estimate  std.error  statistic        df     p.value
-#> 1 (Intercept) 18.88208045 4.87870542  3.8703055  7.021164 0.006093589
-#> 2    age40-59 -4.29521703 2.04598863 -2.0993357 16.537705 0.051463884
-#> 3    age60-99 -6.67747826 2.94206248 -2.2696589  6.699558 0.059164702
-#> 4      hypyes  1.96756449 3.07903334  0.6390202  4.459797 0.554167208
-#> 5         chl  0.05221684 0.02762067  1.8904988  6.556617 0.103435637
+#>          term    estimate  std.error statistic        df      p.value
+#> 1 (Intercept) 19.96266999 3.75992725  5.309323 15.055044 0.0000864194
+#> 2    age40-59 -4.86207490 2.55353981 -1.904053  5.717305 0.1079765082
+#> 3    age60-99 -7.04168206 2.25570598 -3.121720 11.387585 0.0093505414
+#> 4      hypyes  2.28037689 2.07344788  1.099799 12.907172 0.2915095255
+#> 5         chl  0.04846359 0.02342499  2.068885  8.451932 0.0704917477
 
 # For glm, mice used residual df, while `pool_parameters()` uses `Inf`
 nhanes2$hyp <- datawizard::slide(as.numeric(nhanes2$hyp))
@@ -161,11 +161,11 @@ models <- lapply(1:5, function(i) {
 m <- with(data = imp, exp = glm(hyp ~ age + chl, family = binomial))
 # residual df
 summary(mice::pool(m))$df
-#> [1] 19.249884 19.249878 19.249883  7.524335
+#> [1] 19.24998 19.25000 19.25000 10.88074
 # df = Inf
 pool_parameters(models)$df_error
 #> [1] Inf Inf Inf Inf
 # use residual df instead
 pool_parameters(models, ci_method = "residual")$df_error
-#> [1] 19.248074 19.248074 19.248074  7.524335
+#> [1] 19.24807 19.24807 19.24807 10.88074
 ```

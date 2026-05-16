@@ -56,8 +56,8 @@ bootstrap_model(
 - cluster:
 
   Optional cluster when `parallel = "snow"`. See
-  [`?lme4::bootMer`](https://rdrr.io/pkg/lme4/man/bootMer.html) for
-  details.
+  [`?lme4::bootMer`](https://rdrr.io/pkg/lme4/man/bootMer.html) or
+  [`?boot::boot`](https://rdrr.io/pkg/boot/man/boot.html) for details.
 
 - verbose:
 
