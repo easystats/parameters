@@ -2,7 +2,7 @@
 
 ## Changes
 
-* `boot_model()` for non-mixed models also gains a `cluster` argument for use
+* `bootstrap_model()` for non-mixed models also gains a `cluster` argument for use
   if `parallel = "snow"`.
 
 # parameters 0.29.0
