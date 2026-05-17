@@ -116,7 +116,10 @@ test_that("random effects, glmmTMB, cov-struct AR1", {
     tolerance = 1e-3
   )
   out <- model_parameters(m_ar1, effects = "random", ci_random = FALSE, verbose = FALSE)
-  expect_named(out, c("Parameter", "Coefficient", "SE", "Effects", "Group", "Component"))
+  expect_named(
+    out,
+    c("Parameter", "Coefficient", "SE", "Effects", "Group", "Component", "CI")
+  )
 })
 
 
