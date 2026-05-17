@@ -613,7 +613,7 @@ format.parameters_sem <- function(
     footer <- paste0(footer, fill, string, "\n")
   } else if (type == "html") {
     # for HTML: remove line breaks
-    clean_string <- insight::trim_ws(gsub("\n", "", string, fixed = TRUE))
+    clean_string <- insight::trim_ws(gsub("\n", " ", string, fixed = TRUE))
     footer <- c(footer, clean_string)
   }
 
@@ -726,6 +726,7 @@ format.parameters_sem <- function(
   model_class <- .additional_arguments(x, "model_class", NULL)
 
   ci_method <- tolower(ci_method)
+  msg <- NULL
 
   # only random effects? no message for fixed effects ci-approximation
   if (!is.null(x$Effects) && all(x$Effects == "random")) {
@@ -854,7 +855,9 @@ format.parameters_sem <- function(
     )
   }
 
-  insight::format_alert(insight::color_text(msg, "yellow"))
+  if (!is.null(msg)) {
+    insight::format_alert(insight::color_text(msg, "yellow"))
+  }
 }
 
 
