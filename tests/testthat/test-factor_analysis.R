@@ -5,11 +5,10 @@ test_that("factor_analysis", {
   skip_if_not_installed("discovr")
   skip_if_not_installed("knitr")
 
-  set.seed(333)
-
   raq_items <- as.data.frame(discovr::raq)
   raq_items$id <- NULL
 
+  set.seed(333)
   out <- factor_analysis(
     raq_items,
     n = 4,
@@ -19,9 +18,16 @@ test_that("factor_analysis", {
     threshold = 0.4,
     standardize = FALSE
   )
-  raq_fa <- psych::fa(r = raq_items, nfactors = 4, scores = "tenBerge", cor = "poly")
+  set.seed(333)
+  raq_fa <- psych::fa(
+    r = raq_items,
+    nfactors = 4,
+    scores = "tenBerge",
+    cor = "poly",
+    rotate = "oblimin"
+  )
 
-  expect_equal(out$MR1, raq_fa$loadings[, "MR4"], tolerance = 1e-3, ignore_attr = TRUE)
+  expect_equal(out$MR1, raq_fa$loadings[, "MR1"], tolerance = 1e-3, ignore_attr = TRUE)
 
   s <- summary(out)
   expect_equal(
