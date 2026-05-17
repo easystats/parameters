@@ -42,6 +42,9 @@ if (!all(sapply(pkgs, requireNamespace, quietly = TRUE))) {
   ggplot2::theme_set(see::theme_modern())
 }
 
+var_corr_1 <- 1
+fixef_1 <- 1
+
 set.seed(333)
 ```
 
@@ -527,7 +530,12 @@ ggplot(d, aes(x, y)) +
   labs(x = "Typing Speed", y = "Typing Errors", colour = "Type Experience")
 ```
 
-The within-group regression lines are now *slightly* non-parallel. However, the lines are only ever so slightly different, because (1) the groups as simulated actually have the same within-group slope, and (2) the random-slope model always tries to shrink the individual within-group slopes toward the overall average (within-group) slope. The among-group standard deviation of the slope is `r round(attr(VarCorr(m5)$grp, "stddev")[["x_within"]],2)`, relative to an average within-group slope of `r round(fixef(m5)[["x_within"]],2)`; for reference, the parallel lines from the previous model are shown as dashed lines.
+```{r inline_values, echo = FALSE}
+var_corr_1 <- round(attr(lme4::VarCorr(m5)$grp, "stddev")[["x_within"]],2)
+fixef_1 <- round(lme4::fixef(m5)[["x_within"]],2)
+```
+
+The within-group regression lines are now *slightly* non-parallel. However, the lines are only ever so slightly different, because (1) the groups as simulated actually have the same within-group slope, and (2) the random-slope model always tries to shrink the individual within-group slopes toward the overall average (within-group) slope. The among-group standard deviation of the slope is `r var_corr_1`, relative to an average within-group slope of `r fixef_1`; for reference, the parallel lines from the previous model are shown as dashed lines.
 
 
 # Balanced versus imbalanced groups

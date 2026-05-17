@@ -5,7 +5,7 @@
     Output
       # (Explained) Variance of Components
       
-      Parameter                       |   MR1 |   MR2
+      Parameter                       |   MR2 |   MR1
       -----------------------------------------------
       Eigenvalues                     | 4.947 | 1.062
       Variance Explained              | 0.638 | 0.220
@@ -14,10 +14,10 @@
       
       # Factor Correlations
       
-      Factor |    MR1 |    MR2
+      Factor |    MR2 |    MR1
       ------------------------
-      MR1    |  1.000 | -0.366
-      MR2    | -0.366 |  1.000
+      MR2    |  1.000 | -0.366
+      MR1    | -0.366 |  1.000
 
 ---
 
@@ -28,7 +28,7 @@
       
       Table: (Explained) Variance of Components
       
-      |Parameter                       |   MR1 |   MR2 |
+      |Parameter                       |   MR2 |   MR1 |
       |:-------------------------------|:-----:|:-----:|
       |Eigenvalues                     | 4.947 | 1.062 |
       |Variance Explained              | 0.638 | 0.220 |
@@ -37,10 +37,10 @@
       
       Table: Factor Correlations
       
-      |Factor |    MR1 |    MR2 |
+      |Factor |    MR2 |    MR1 |
       |:------|:------:|:------:|
-      |MR1    |  1.000 | -0.366 |
-      |MR2    | -0.366 |  1.000 |
+      |MR2    |  1.000 | -0.366 |
+      |MR1    | -0.366 |  1.000 |
 
 # omega
 
