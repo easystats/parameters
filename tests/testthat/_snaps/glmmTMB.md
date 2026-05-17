@@ -98,6 +98,10 @@
       ----------------------------------------------------------------
       SD (Intercept: Session:Participant) |        0.69 | [0.40, 1.19]
       SD (Intercept: Participant)         |        2.39 | [1.25, 4.57]
+    Message
+      
+       Uncertainty intervals for random effect variances computed using a
+        Wald z-distribution approximation.
 
 ---
 
