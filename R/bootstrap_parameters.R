@@ -60,25 +60,36 @@ bootstrap_parameters <- function(model, ...) {
 
 #' @rdname bootstrap_parameters
 #' @export
-bootstrap_parameters.default <- function(model,
-                                         iterations = 1000,
-                                         centrality = "median",
-                                         ci = 0.95,
-                                         ci_method = "quantile",
-                                         test = "p-value",
-                                         ...) {
+bootstrap_parameters.default <- function(
+  model,
+  iterations = 1000,
+  centrality = "median",
+  ci = 0.95,
+  ci_method = "quantile",
+  test = "p-value",
+  ...
+) {
   boot_data <- bootstrap_model(model, iterations = iterations, ...)
-  bootstrap_parameters(boot_data, centrality = centrality, ci = ci, ci_method = ci_method, test = test, ...)
+  bootstrap_parameters(
+    boot_data,
+    centrality = centrality,
+    ci = ci,
+    ci_method = ci_method,
+    test = test,
+    ...
+  )
 }
 
 
 #' @export
-bootstrap_parameters.bootstrap_model <- function(model,
-                                                 centrality = "median",
-                                                 ci = 0.95,
-                                                 ci_method = "quantile",
-                                                 test = "p-value",
-                                                 ...) {
+bootstrap_parameters.bootstrap_model <- function(
+  model,
+  centrality = "median",
+  ci = 0.95,
+  ci_method = "quantile",
+  test = "p-value",
+  ...
+) {
   out <- .summary_bootstrap(
     data = model,
     test = test,
@@ -121,7 +132,11 @@ model_parameters.bootstrap_model <- bootstrap_parameters.bootstrap_model
   )
 
   # Remove unnecessary columns
-  if ("CI" %in% names(parameters) && insight::has_single_value(parameters$CI, remove_na = TRUE)) {
+  if (
+    "CI" %in%
+      names(parameters) &&
+      insight::has_single_value(parameters$CI, remove_na = TRUE)
+  ) {
     parameters$CI <- NULL
   } else if ("CI" %in% names(parameters) && insight::n_unique(parameters$CI) > 1) {
     parameters <- datawizard::reshape_ci(parameters)
@@ -129,7 +144,9 @@ model_parameters.bootstrap_model <- bootstrap_parameters.bootstrap_model
 
   # Coef
   if (length(centrality) == 1) {
-    names(parameters)[names(parameters) == insight::format_capitalize(centrality)] <- "Coefficient"
+    names(parameters)[
+      names(parameters) == insight::format_capitalize(centrality)
+    ] <- "Coefficient"
   }
 
   # p-value
