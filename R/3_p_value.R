@@ -44,17 +44,18 @@ p_value <- function(model, ...) {
 
 # p-Values from Standard Models -----------------------------------------------
 
-
 #' @rdname p_value
 #' @export
-p_value.default <- function(model,
-                            dof = NULL,
-                            method = NULL,
-                            component = "all",
-                            vcov = NULL,
-                            vcov_args = NULL,
-                            verbose = TRUE,
-                            ...) {
+p_value.default <- function(
+  model,
+  dof = NULL,
+  method = NULL,
+  component = "all",
+  vcov = NULL,
+  vcov_args = NULL,
+  verbose = TRUE,
+  ...
+) {
   # check for valid input
   .is_model_valid(model)
 
@@ -113,11 +114,7 @@ p_value.default <- function(model,
     if (inherits(vcov, "data.frame") || "SE" %in% colnames(vcov)) {
       se <- vcov
     } else {
-      fun_args <- list(model,
-        vcov_args = vcov_args,
-        vcov = vcov,
-        verbose = verbose
-      )
+      fun_args <- list(model, vcov_args = vcov_args, vcov = vcov, verbose = verbose)
       fun_args <- c(fun_args, dots)
       se <- do.call("standard_error", fun_args)
     }
@@ -126,6 +123,11 @@ p_value.default <- function(model,
     se <- merge(se, co, sort = FALSE)
     se$Statistic <- se$Estimate / se$SE
     se$p <- 2 * stats::pt(abs(se$Statistic), df = dof, lower.tail = FALSE)
+    # need to filter by component, because we lose this column (information)
+    # here when converting to a vector
+    if (!is.null(component) && component != "all" && "Component" %in% colnames(se)) {
+      se <- se[se$Component == component, ]
+    }
     p <- stats::setNames(se$p, se$Parameter)
   }
 
@@ -163,7 +165,11 @@ p_value.default <- function(model,
   # output
   params <- insight::get_parameters(model, component = component)
   if (length(p) == nrow(params) && "Component" %in% colnames(params)) {
-    .data_frame(Parameter = params$Parameter, p = as.vector(p), Component = params$Component)
+    .data_frame(
+      Parameter = params$Parameter,
+      p = as.vector(p),
+      Component = params$Component
+    )
   } else {
     .data_frame(Parameter = names(p), p = as.vector(p))
   }
@@ -172,9 +178,10 @@ p_value.default <- function(model,
 
 # helper --------------------------------------------------------
 
-
 .get_pval_from_summary <- function(model, cs = NULL) {
-  if (is.null(cs)) cs <- suppressWarnings(stats::coef(summary(model)))
+  if (is.null(cs)) {
+    cs <- suppressWarnings(stats::coef(summary(model)))
+  }
   p <- NULL
 
   if (ncol(cs) >= 4) {
