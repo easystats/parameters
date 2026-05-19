@@ -93,6 +93,12 @@ standard_error.default <- function(
   # this is usually the case for HC (robust) standard errors
   # ------------------------------------------------------------------------
 
+  # make sure we have a "matrix" class
+  if (inherits(vcov, "Matrix") || inherits(vcov, "dpoMatrix")) {
+    insight::check_if_installed("Matrix")
+    vcov <- as.matrix(vcov)
+  }
+
   # vcov: matrix
   if (is.matrix(vcov)) {
     se <- sqrt(diag(vcov))

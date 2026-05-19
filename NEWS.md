@@ -5,6 +5,11 @@
 * `bootstrap_model()` for non-mixed models also gains a `cluster` argument for use
   if `parallel = "snow"`.
 
+## Bug fixes
+
+* The `vcov` argument in `model_parameters()` was ignored when `vcov` was of
+  class `"dpoMatrix"` and did not return `TRUE` to `is.matrix()`.
+
 # parameters 0.29.0
 
 ## Changes

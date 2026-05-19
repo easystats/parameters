@@ -1,20 +1,22 @@
 #' @export
-model_parameters.nestedLogit <- function(model,
-                                         ci = 0.95,
-                                         ci_method = NULL,
-                                         component = "all",
-                                         bootstrap = FALSE,
-                                         iterations = 1000,
-                                         standardize = NULL,
-                                         exponentiate = FALSE,
-                                         p_adjust = NULL,
-                                         vcov = NULL,
-                                         vcov_args = NULL,
-                                         include_info = getOption("parameters_info", FALSE),
-                                         keep = NULL,
-                                         drop = NULL,
-                                         verbose = TRUE,
-                                         ...) {
+model_parameters.nestedLogit <- function(
+  model,
+  ci = 0.95,
+  ci_method = NULL,
+  component = "all",
+  bootstrap = FALSE,
+  iterations = 1000,
+  standardize = NULL,
+  exponentiate = FALSE,
+  p_adjust = NULL,
+  vcov = NULL,
+  vcov_args = NULL,
+  include_info = getOption("parameters_info", FALSE),
+  keep = NULL,
+  drop = NULL,
+  verbose = TRUE,
+  ...
+) {
   dots <- list(...)
 
   # set default
@@ -43,7 +45,11 @@ model_parameters.nestedLogit <- function(model,
   }
 
   # tell user that profiled CIs don't respect vcov-args
-  if (identical(ci_method, "profile") && (!is.null(vcov) || !is.null(vcov_args)) && isTRUE(verbose)) {
+  if (
+    identical(ci_method, "profile") &&
+      (!is.null(vcov) || !is.null(vcov_args)) &&
+      isTRUE(verbose)
+  ) {
     insight::format_alert(
       "When `ci_method=\"profile\"`, `vcov` only modifies standard errors, test-statistic and p-values, but not confidence intervals.", # nolint
       "Use `ci_method=\"wald\"` to return confidence intervals based on robust standard errors."
@@ -76,14 +82,22 @@ model_parameters.nestedLogit <- function(model,
 
 
 #' @export
-standard_error.nestedLogit <- function(model,
-                                       component = "all",
-                                       vcov = NULL,
-                                       vcov_args = NULL,
-                                       verbose = TRUE,
-                                       ...) {
+standard_error.nestedLogit <- function(
+  model,
+  component = "all",
+  vcov = NULL,
+  vcov_args = NULL,
+  verbose = TRUE,
+  ...
+) {
   dots <- list(...)
   se <- NULL
+
+  # make sure we have a "matrix" class
+  if (inherits(vcov, "Matrix") || inherits(vcov, "dpoMatrix")) {
+    insight::check_if_installed("Matrix")
+    vcov <- as.matrix(vcov)
+  }
 
   # vcov: matrix
   if (is.matrix(vcov)) {
@@ -111,19 +125,17 @@ standard_error.nestedLogit <- function(model,
 
   # classical se from summary()
   if (is.null(se)) {
-    se <- as.vector(as.data.frame(do.call(rbind, lapply(model$models, function(i) {
-      stats::coef(summary(i))
-    })))[, "Std. Error"])
+    se <- as.vector(as.data.frame(do.call(
+      rbind,
+      lapply(model$models, function(i) {
+        stats::coef(summary(i))
+      })
+    ))[, "Std. Error"])
   }
 
   # classical se from get_varcov()
   if (is.null(se)) {
-    .vcov <- insight::get_varcov(
-      model,
-      component = component,
-      verbose = verbose,
-      ...
-    )
+    .vcov <- insight::get_varcov(model, component = component, verbose = verbose, ...)
     se <- unlist(lapply(.vcov, function(i) sqrt(diag(i))), use.names = FALSE)
   }
 
@@ -138,18 +150,23 @@ standard_error.nestedLogit <- function(model,
 
 
 #' @export
-p_value.nestedLogit <- function(model,
-                                dof = NULL,
-                                method = NULL,
-                                component = "all",
-                                vcov = NULL,
-                                vcov_args = NULL,
-                                verbose = TRUE,
-                                ...) {
+p_value.nestedLogit <- function(
+  model,
+  dof = NULL,
+  method = NULL,
+  component = "all",
+  vcov = NULL,
+  vcov_args = NULL,
+  verbose = TRUE,
+  ...
+) {
   if (is.null(vcov)) {
-    p <- as.vector(as.data.frame(do.call(rbind, lapply(model$models, function(i) {
-      stats::coef(summary(i))
-    })))[, "Pr(>|z|)"])
+    p <- as.vector(as.data.frame(do.call(
+      rbind,
+      lapply(model$models, function(i) {
+        stats::coef(summary(i))
+      })
+    ))[, "Pr(>|z|)"])
   } else {
     p <- p_value.default(
       model,
@@ -174,15 +191,17 @@ p_value.nestedLogit <- function(model,
 
 
 #' @export
-ci.nestedLogit <- function(x,
-                           ci = 0.95,
-                           dof = NULL,
-                           method = "profile",
-                           component = "all",
-                           vcov = NULL,
-                           vcov_args = NULL,
-                           verbose = TRUE,
-                           ...) {
+ci.nestedLogit <- function(
+  x,
+  ci = 0.95,
+  dof = NULL,
+  method = "profile",
+  component = "all",
+  vcov = NULL,
+  vcov_args = NULL,
+  verbose = TRUE,
+  ...
+) {
   out <- lapply(
     x$models,
     ci,
@@ -204,13 +223,11 @@ ci.nestedLogit <- function(x,
   if (!is.null(component) && !identical(component, "all")) {
     comp <- intersect(names(x$models), component)
     if (!length(comp) && verbose) {
-      insight::format_alert(
-        paste0(
-          "No matching model found. Possible values for `component` are ",
-          toString(paste0("\"", names(x$models), "\"")),
-          "."
-        )
-      )
+      insight::format_alert(paste0(
+        "No matching model found. Possible values for `component` are ",
+        toString(paste0("\"", names(x$models), "\"")),
+        "."
+      ))
     } else {
       out <- out[out$Component %in% component, ]
     }
@@ -224,7 +241,9 @@ ci.nestedLogit <- function(x,
 
 #' @export
 simulate_model.nestedLogit <- function(model, iterations = 1000, ...) {
-  if (is.null(iterations)) iterations <- 1000
+  if (is.null(iterations)) {
+    iterations <- 1000
+  }
 
   params <- insight::get_parameters(model, component = "all", verbose = FALSE)
   varcov <- insight::get_varcov(model, component = "all", verbose = FALSE, ...)
@@ -246,13 +265,15 @@ simulate_model.nestedLogit <- function(model, iterations = 1000, ...) {
 
 
 #' @export
-simulate_parameters.nestedLogit <- function(model,
-                                            iterations = 1000,
-                                            centrality = "median",
-                                            ci = 0.95,
-                                            ci_method = "quantile",
-                                            test = "p-value",
-                                            ...) {
+simulate_parameters.nestedLogit <- function(
+  model,
+  iterations = 1000,
+  centrality = "median",
+  ci = 0.95,
+  ci_method = "quantile",
+  test = "p-value",
+  ...
+) {
   sim_data <- simulate_model(model, iterations = iterations, ...)
 
   out <- lapply(unique(sim_data$Component), function(i) {
