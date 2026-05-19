@@ -93,6 +93,11 @@ standard_error.default <- function(
   # this is usually the case for HC (robust) standard errors
   # ------------------------------------------------------------------------
 
+  # make sure we have a "matrix" class
+  if (inherits(vcov, "dpoMatrix")) {
+    vcov <- as.matrix(vcov)
+  }
+
   # vcov: matrix
   if (is.matrix(vcov)) {
     se <- sqrt(diag(vcov))

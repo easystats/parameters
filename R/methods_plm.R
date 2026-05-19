@@ -1,14 +1,23 @@
 # plm package: .plm, .pgmm, .pggls
 
-
 # plm ---------------------------
 
-
 #' @export
-standard_error.plm <- function(model, vcov = NULL, vcov_args = NULL, verbose = TRUE, ...) {
+standard_error.plm <- function(
+  model,
+  vcov = NULL,
+  vcov_args = NULL,
+  verbose = TRUE,
+  ...
+) {
   dots <- list(...)
   se <- NULL
   se_standard <- stats::coef(summary(model))
+
+  # make sure we have a "matrix" class
+  if (inherits(vcov, "dpoMatrix")) {
+    vcov <- as.matrix(vcov)
+  }
 
   # vcov: matrix
   if (is.matrix(vcov)) {
@@ -37,10 +46,7 @@ standard_error.plm <- function(model, vcov = NULL, vcov_args = NULL, verbose = T
     se <- as.vector(se_standard[, 2])
   }
 
-  .data_frame(
-    Parameter = .remove_backticks_from_string(rownames(se_standard)),
-    SE = se
-  )
+  .data_frame(Parameter = .remove_backticks_from_string(rownames(se_standard)), SE = se)
 }
 
 
@@ -50,31 +56,28 @@ p_value.plm <- p_value.default
 
 # pggls ------------------------
 
-
 #' @export
 p_value.pggls <- function(model, ...) {
   cs <- summary(model)$CoefTable
   p <- cs[, 4]
-  .data_frame(
-    Parameter = .remove_backticks_from_string(rownames(cs)),
-    p = as.vector(p)
-  )
+  .data_frame(Parameter = .remove_backticks_from_string(rownames(cs)), p = as.vector(p))
 }
 
 
 # pgmm --------------------
 
-
 #' @export
-model_parameters.pgmm <- function(model,
-                                  ci = 0.95,
-                                  component = c("conditional", "all"),
-                                  exponentiate = FALSE,
-                                  p_adjust = NULL,
-                                  keep = NULL,
-                                  drop = NULL,
-                                  verbose = TRUE,
-                                  ...) {
+model_parameters.pgmm <- function(
+  model,
+  ci = 0.95,
+  component = c("conditional", "all"),
+  exponentiate = FALSE,
+  p_adjust = NULL,
+  keep = NULL,
+  drop = NULL,
+  verbose = TRUE,
+  ...
+) {
   component <- match.arg(component)
 
   params <- .extract_parameters_generic(
@@ -87,7 +90,6 @@ model_parameters.pgmm <- function(model,
     drop_parameters = drop,
     ...
   )
-
 
   # exponentiate coefficients and SE/CI, if requested
   params <- .exponentiate_parameters(params, model, exponentiate)
@@ -114,15 +116,19 @@ standard_error.pgmm <- function(model, component = c("conditional", "all"), ...)
   params <- insight::get_parameters(model, component = component, ...)
   se <- sqrt(diag(insight::get_varcov(model, component = component, ...)))
 
-  .data_frame(
-    Parameter = params$Parameter,
-    SE = as.vector(se)
-  )
+  .data_frame(Parameter = params$Parameter, SE = as.vector(se))
 }
 
 
 #' @export
-ci.pgmm <- function(x, ci = 0.95, dof = Inf, method = NULL, component = "conditional", ...) {
+ci.pgmm <- function(
+  x,
+  ci = 0.95,
+  dof = Inf,
+  method = NULL,
+  component = "conditional",
+  ...
+) {
   if (is.null(method)) {
     method <- "wald"
   } else {
