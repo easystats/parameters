@@ -94,7 +94,8 @@ standard_error.nestedLogit <- function(
   se <- NULL
 
   # make sure we have a "matrix" class
-  if (inherits(vcov, "dpoMatrix")) {
+  if (inherits(vcov, "Matrix") || inherits(vcov, "dpoMatrix")) {
+    insight::check_if_installed("Matrix")
     vcov <- as.matrix(vcov)
   }
 
