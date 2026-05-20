@@ -1130,5 +1130,24 @@ withr::with_options(list(parameters_exponentiate = FALSE), {
 
     out <- model_parameters(m1, vcov = "HC0")
     expect_snapshot(print(out, table_width = Inf))
+
+    skip_if(packageVersion("insight") <= "1.5.0")
+    skip_if_not_installed("lme4")
+
+    data(sleepstudy, package = "lme4")
+    model <- glmmTMB::glmmTMB(Reaction ~ Days + (1 + Days | Subject), data = sleepstudy)
+    out <- standard_error(model, vcov = "fpc", vcov_args = list(population_size = 500))
+    expect_equal(
+      out$SE,
+      sqrt(diag(insight::get_varcov(
+        model,
+        vcov = "fpc",
+        vcov_args = list(population_size = 500)
+      ))),
+      ignore_attr = TRUE,
+      tolerance = 1e-4
+    )
+    out <- model_parameters(model, vcov = "fpc", vcov_args = list(population_size = 500))
+    expect_snapshot(print(out, table_width = Inf))
   })
 })
