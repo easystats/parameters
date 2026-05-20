@@ -18,12 +18,10 @@ test_that("model_parameters.glmer", {
 test_that("print model_parameters", {
   skip_if_not_installed("withr")
   skip_if_not_installed("merDeriv")
-  withr::local_options(
-    list(
-      parameters_exponentiate = TRUE,
-      parameters_warning_exponentiate = TRUE
-    )
-  )
+  withr::local_options(list(
+    parameters_exponentiate = TRUE,
+    parameters_warning_exponentiate = TRUE
+  ))
   expect_snapshot(params)
 
   suppressMessages({
@@ -79,4 +77,23 @@ test_that("model_parameters.glmer betwithin", {
   params <- model_parameters(model, ci_method = "betwithin", effects = "fixed")
   expect_equal(params$SE, c(0.66539, 0.36178, 0.36223, 0.45528, 0.2379), tolerance = 1e-2)
   expect_equal(params$df, c(821, 821, 821, 821, 9), tolerance = 1e-2)
+})
+
+test_that("robust SE/VCOV, using FPC", {
+  skip_if(packageVersion("insight") <= "1.5.0")
+  data(sleepstudy, package = "lme4")
+  model <- lme4::lmer(Reaction ~ Days + (1 + Days | Subject), data = sleepstudy)
+  out <- standard_error(model, vcov = "fpc", vcov_args = list(population_size = 500))
+  expect_equal(
+    out$SE,
+    sqrt(diag(insight::get_varcov(
+      model,
+      vcov = "fpc",
+      vcov_args = list(population_size = 500)
+    ))),
+    ignore_attr = TRUE,
+    tolerance = 1e-4
+  )
+  out <- model_parameters(model, vcov = "fpc", vcov_args = list(population_size = 500))
+  expect_snapshot(print(out, table_width = Inf))
 })

@@ -10,6 +10,9 @@
 * The `vcov` argument in `model_parameters()` was ignored when `vcov` was of
   class `"dpoMatrix"` and did not return `TRUE` to `is.matrix()`.
 
+* Fixed issue with `vcov` argument in `model_parameters()` for models of class
+  `glmmTMB`.
+
 # parameters 0.29.0
 
 ## Changes
