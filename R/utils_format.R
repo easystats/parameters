@@ -1,11 +1,12 @@
 # output-format helper  -------------------------
 
+# global definitions of coefficient types and names
+
 # The coefficient column in the printed output is renamed, based on the model.
 # But for instance, for random effects, however, which are on a different scale,
 # we want a different name for this column. Since print.parameters_model() splits
 # components into different tables, we change the column name for those "tables"
 # that contain the random effects or zero-inflation parameters
-
 .all_coefficient_types <- c(
   "Odds Ratio",
   "Risk Ratio",
@@ -23,7 +24,6 @@
   "exp(Z-Score)"
 )
 
-
 .all_coefficient_names <- c(
   "Coefficient",
   "Std_Coefficient",
@@ -32,6 +32,10 @@
   "Mean",
   "MAP"
 )
+
+# global definition of valid "style" shortcuts
+.style_shortcuts <- c("ci_p2", "ci", "ci_p", "se", "se_p", "se_p2", "est", "coef")
+.select_shortcuts <- c("minimal", "short")
 
 
 # Converts a style shortcut (like "ci_p") into a glue-compatible string
@@ -71,11 +75,6 @@
   # replace \n for now with default line-separators
   gsub("\n", linesep, style, fixed = TRUE)
 }
-
-
-# global definition of valid "style" shortcuts
-.style_shortcuts <- c("ci_p2", "ci", "ci_p", "se", "se_p", "se_p2", "est", "coef")
-.select_shortcuts <- c("minimal", "short")
 
 
 # Appends a row containing the number of observations at the bottom of the table
