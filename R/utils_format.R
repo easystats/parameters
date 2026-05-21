@@ -38,7 +38,10 @@
 .select_shortcuts <- c("minimal", "short")
 
 
-# Converts a style shortcut (like "ci_p") into a glue-compatible string
+# ------------------------------------------------------------------------
+# Converts a style shortcut (like "ci_p") into a glue-compatible string --
+# ------------------------------------------------------------------------
+
 .convert_to_glue_syntax <- function(style, linesep = NULL) {
   # set default line separator
   if (is.null(linesep)) {
@@ -77,7 +80,10 @@
 }
 
 
+# -----------------------------------------------------------------------------
 # Appends a row containing the number of observations at the bottom of the table
+# -----------------------------------------------------------------------------
+
 .add_obs_row <- function(x, att, style) {
   # Extract standard and weighted observation counts from attributes list
   observations <- unlist(lapply(att, function(i) {
@@ -126,7 +132,10 @@
 
 # other helper ------------------------
 
-# Formats a basic, single-component parameter table
+# -----------------------------------------------------------------------------
+# Formats a basic, single-component parameter table ---------------------------
+# -----------------------------------------------------------------------------
+
 .format_columns_single_component <- function(
   x,
   pretty_names,
@@ -198,7 +207,12 @@
   )
 }
 
-# Modifies parameter names for random effects (e.g., changes "SD (var)" to "SD (var: group)")
+
+# -----------------------------------------------------------------------------
+# Modifies parameter names for random effects (e.g., changes "SD (var)" to "SD
+# (var: group)")
+# -----------------------------------------------------------------------------
+
 .format_ranef_parameters <- function(x) {
   if (!is.null(x$Group) && !is.null(x$Effects)) {
     ran_pars <- which(x$Effects == "random")
@@ -222,7 +236,12 @@
   x
 }
 
-# Retrieves reference levels for factors used in the model and injects an empty row for them
+
+# -----------------------------------------------------------------------------
+# Retrieves reference levels for factors used in the model and injects an empty
+# row for them
+# -----------------------------------------------------------------------------
+
 .add_reference_level <- function(params, model = NULL) {
   if (is.null(model)) {
     # check if we have a model object, if not provided by user
@@ -403,7 +422,10 @@
 }
 
 
+# -----------------------------------------------------------------------------
 # Standardizes specific parameter names from Bayesian models (brms and rstanarm)
+# -----------------------------------------------------------------------------
+
 .format_stan_parameters <- function(out, dist_params = NULL) {
   has_component <- !is.null(out$Component)
 
@@ -486,7 +508,9 @@
 }
 
 
-# helper to format the header / subheader of different model components --------------
+# -----------------------------------------------------------------------------
+# helper to format the header / subheader of different model components -------
+# -----------------------------------------------------------------------------
 
 .format_model_component_header <- function(
   x,
@@ -543,105 +567,13 @@
 
   # If not brms-specific, resolve via long mapping
   if (is.null(component_name)) {
-    component_name <- switch(
-      type,
-      mu = ,
-      fixed = ,
-      fixed. = ,
-      conditional = "Fixed Effects",
-      random. = ,
-      random = "Random Effects",
-      conditional.fixed = .conditional_fixed_text,
-      conditional.random = .conditional_random_text,
-      zero_inflated = "Zero-Inflation",
-      zero_inflated.fixed = "Fixed Effects (Zero-Inflation Component)",
-      zero_inflated.random = "Random Effects (Zero-Inflation Component)",
-      survival = ,
-      survival.fixed = "Survival",
-      dispersion.fixed = ,
-      dispersion = "Dispersion",
-      marginal = "Marginal Effects",
-      emmeans = "Estimated Marginal Means",
-      contrasts = "Contrasts",
-      simplex.fixed = ,
-      simplex = "Monotonic Effects",
-      smooth_sd = "Smooth Terms (SD)",
-      smooth_terms = "Smooth Terms",
-      sigma.fixed = ,
-      sigma = "Sigma",
-      thresholds = "Thresholds",
-      correlation = "Correlation",
-      `SD/Cor` = "SD / Correlation",
-      Loading = "Loading",
-      location = ,
-      location.fixed = "Location Parameters",
-      scale = ,
-      scale.fixed = "Scale Parameters",
-      extra = ,
-      extra.fixed = "Extra Parameters",
-      nu = "Nu",
-      tau = "Tau",
-      meta = "Meta-Parameters",
-      studies = "Studies",
-      within = "Within-Effects",
-      between = "Between-Effects",
-      interactions = "(Cross-Level) Interactions",
-      precision = "Precision",
-      infrequent_purchase = "Infrequent Purchase",
-      auxiliary = "Auxiliary",
-      residual = "Residual",
-      intercept = "Intercept",
-      regression = "Regression",
-      latent = "Latent",
-      time_dummies = "Time Dummies",
-      type
-    )
+    component_name <- .component_header(type)
   }
 
   # Handle exception overrides for complex names
-  if (grepl("^conditional\\.(r|R)andom_variances", component_name)) {
-    component_name <- insight::trim_ws(gsub(
-      "^conditional\\.(r|R)andom_variances(\\.)*",
-      "",
-      component_name
-    ))
-    if (nzchar(component_name, keepNA = TRUE)) {
-      component_name <- paste0("Random Effects Variances: ", component_name)
-    } else {
-      component_name <- "Random Effects Variances"
-    }
-  }
-  if (grepl("^conditional\\.(r|R)andom", component_name)) {
-    component_name <- insight::trim_ws(gsub(
-      "^conditional\\.(r|R)andom(\\.)*",
-      "",
-      component_name
-    ))
-    if (nzchar(component_name, keepNA = TRUE)) {
-      component_name <- paste0("Random Effects (Count Model): ", component_name)
-    } else {
-      component_name <- ifelse(
-        ran_pars,
-        "Random Effects Variances",
-        "Random Effects (Count Model)"
-      )
-    }
-  }
-  if (grepl("^zero_inflated\\.(r|R)andom", component_name)) {
-    component_name <- insight::trim_ws(gsub(
-      "^zero_inflated\\.(r|R)andom(\\.)*",
-      "",
-      component_name
-    ))
-    if (nzchar(component_name, keepNA = TRUE)) {
-      component_name <- paste0(
-        "Random Effects (Zero-Inflation Component): ",
-        component_name
-      )
-    } else {
-      component_name <- "Random Effects (Zero-Inflation Component)"
-    }
-  }
+  component_name <- .re_component_header(component_name, ran_pars)
+  component_name <- .zi_component_header(component_name)
+
   if (startsWith(component_name, "random.")) {
     component_name <- paste0("Random Effects: ", gsub("^random\\.", "", component_name))
   }
@@ -705,6 +637,119 @@
   }
 
   list(name = component_name, subheader1 = s1, subheader2 = s2)
+}
+
+# generate component sub-headers ------
+
+.component_header <- function(type) {
+  switch(
+    type,
+    mu = ,
+    fixed = ,
+    fixed. = ,
+    conditional = "Fixed Effects",
+    random. = ,
+    random = "Random Effects",
+    conditional.fixed = .conditional_fixed_text,
+    conditional.random = .conditional_random_text,
+    zero_inflated = "Zero-Inflation",
+    zero_inflated.fixed = "Fixed Effects (Zero-Inflation Component)",
+    zero_inflated.random = "Random Effects (Zero-Inflation Component)",
+    survival = ,
+    survival.fixed = "Survival",
+    dispersion.fixed = ,
+    dispersion = "Dispersion",
+    marginal = "Marginal Effects",
+    emmeans = "Estimated Marginal Means",
+    contrasts = "Contrasts",
+    simplex.fixed = ,
+    simplex = "Monotonic Effects",
+    smooth_sd = "Smooth Terms (SD)",
+    smooth_terms = "Smooth Terms",
+    sigma.fixed = ,
+    sigma = "Sigma",
+    thresholds = "Thresholds",
+    correlation = "Correlation",
+    `SD/Cor` = "SD / Correlation",
+    Loading = "Loading",
+    location = ,
+    location.fixed = "Location Parameters",
+    scale = ,
+    scale.fixed = "Scale Parameters",
+    extra = ,
+    extra.fixed = "Extra Parameters",
+    nu = "Nu",
+    tau = "Tau",
+    meta = "Meta-Parameters",
+    studies = "Studies",
+    within = "Within-Effects",
+    between = "Between-Effects",
+    interactions = "(Cross-Level) Interactions",
+    precision = "Precision",
+    infrequent_purchase = "Infrequent Purchase",
+    auxiliary = "Auxiliary",
+    residual = "Residual",
+    intercept = "Intercept",
+    regression = "Regression",
+    latent = "Latent",
+    time_dummies = "Time Dummies",
+    type
+  )
+}
+
+# handle component sub-headers expections for random effects ------
+
+.re_component_header <- function(component_name, ran_pars) {
+  if (grepl("^conditional\\.(r|R)andom_variances", component_name)) {
+    component_name <- insight::trim_ws(gsub(
+      "^conditional\\.(r|R)andom_variances(\\.)*",
+      "",
+      component_name
+    ))
+    if (nzchar(component_name, keepNA = TRUE)) {
+      component_name <- paste0("Random Effects Variances: ", component_name)
+    } else {
+      component_name <- "Random Effects Variances"
+    }
+  }
+  if (grepl("^conditional\\.(r|R)andom", component_name)) {
+    component_name <- insight::trim_ws(gsub(
+      "^conditional\\.(r|R)andom(\\.)*",
+      "",
+      component_name
+    ))
+    if (nzchar(component_name, keepNA = TRUE)) {
+      component_name <- paste0("Random Effects (Count Model): ", component_name)
+    } else {
+      component_name <- ifelse(
+        ran_pars,
+        "Random Effects Variances",
+        "Random Effects (Count Model)"
+      )
+    }
+  }
+  component_name
+}
+
+# handle component sub-headers expections for zi effects ------
+
+.zi_component_header <- function(component_name) {
+  if (grepl("^zero_inflated\\.(r|R)andom", component_name)) {
+    component_name <- insight::trim_ws(gsub(
+      "^zero_inflated\\.(r|R)andom(\\.)*",
+      "",
+      component_name
+    ))
+    if (nzchar(component_name, keepNA = TRUE)) {
+      component_name <- paste0(
+        "Random Effects (Zero-Inflation Component): ",
+        component_name
+      )
+    } else {
+      component_name <- "Random Effects (Zero-Inflation Component)"
+    }
+  }
+  component_name
 }
 
 
@@ -821,11 +866,12 @@
 }
 
 
+# -----------------------------------------------------------------------------
 # this function is actually similar to "insight::print_parameters()", but more
 # sophisticated, to ensure nicely outputs even for complicated or complex models,
 # or edge cases...
+# -----------------------------------------------------------------------------
 
-#' @keywords internal
 .format_columns_multiple_components <- function(
   x,
   pretty_names,
@@ -1199,8 +1245,11 @@
 }
 
 
+# -----------------------------------------------------------------------------
 # helper to fix unequal number of columns for list of data frames,
 # when used for HTML printing. Injects `NA` values where missing.
+# -----------------------------------------------------------------------------
+
 .fix_nonmatching_columns <- function(final_table, is_lavaan = FALSE) {
   # fix for lavaan here
   if (is_lavaan) {
