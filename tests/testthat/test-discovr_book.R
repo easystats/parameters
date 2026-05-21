@@ -5,7 +5,7 @@ skip_if_not_installed("discovr")
 test_that("mp, test bf and pd, chapter 8.14", {
   skip_if_not_installed("rstanarm")
   set.seed(123)
-  m <- stan_glm(sales ~ adverts + airplay + image, data = discovr::album_sales)
+  m <- rstanarm::stan_glm(sales ~ adverts + airplay + image, data = discovr::album_sales)
   out <- suppressWarnings(model_parameters(m, test = c("pd", "bf"), null = 0))
 
   expect_identical(
