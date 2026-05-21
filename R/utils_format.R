@@ -702,7 +702,7 @@
   component_name
 }
 
-# handle component sub-headers expections for zi effects ------
+# handle component sub-headers exceptions for zi effects ------
 
 .zi_component_header <- function(component_name) {
   if (grepl("^zero_inflated\\.(r|R)andom", component_name)) {
