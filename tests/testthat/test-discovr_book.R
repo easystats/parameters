@@ -71,7 +71,7 @@ test_that("mp, htests, chapter 9.9", {
   )
 
   # robust t-test based on trimmed means
-  skip_if_not_installed("WSR2")
+  skip_if_not_installed("WRS2")
   cloak_yn <- WRS2::yuen(mischief ~ cloak, data = cloak_tib)
   out <- model_parameters(cloak_yn)
   expect_identical(
