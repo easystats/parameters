@@ -1,43 +1,72 @@
 # output-format helper  -------------------------
 
+# The coefficient column in the printed output is renamed, based on the model.
+# But for instance, for random effects, however, which are on a different scale,
+# we want a different name for this column. Since print.parameters_model() splits
+# components into different tables, we change the column name for those "tables"
+# that contain the random effects or zero-inflation parameters
+
+.all_coefficient_types <- c(
+  "Odds Ratio",
+  "Risk Ratio",
+  "Prevalence Ratio",
+  "IRR",
+  "Log-Odds",
+  "Log-Mean",
+  "Log-Ratio",
+  "Log-Prevalence",
+  "Probability",
+  "Marginal Means",
+  "Estimated Counts",
+  "Ratio",
+  "Z-Score",
+  "exp(Z-Score)"
+)
+
+
+.all_coefficient_names <- c(
+  "Coefficient",
+  "Std_Coefficient",
+  "Estimate",
+  "Median",
+  "Mean",
+  "MAP"
+)
+
+
+# Converts a style shortcut (like "ci_p") into a glue-compatible string
 .convert_to_glue_syntax <- function(style, linesep = NULL) {
-  # set default
+  # set default line separator
   if (is.null(linesep)) {
     linesep <- " "
   }
 
-  # default
+  # Map style shortcuts to specific glue formatting strings
   if (is.null(style)) {
-    style <- paste0("{estimate}", linesep, "({ci})|{p}")
-
-    # style: estimate and CI, p-value in separate column (currently identical to "ci_p2")
-  } else if (style %in% c("minimal", "ci_p2")) {
-    style <- paste0("{estimate}", linesep, "({ci})|{p}")
-
-    # style: estimate and CI, no p
-  } else if (style == "ci") {
-    style <- paste0("{estimate}", linesep, "({ci})")
-
-    # style: estimate, p-stars and CI
-  } else if (style == "ci_p") {
-    style <- paste0("{estimate}{stars}", linesep, "({ci})")
-
-    # style: estimate and SE, no p
-  } else if (style == "se") {
-    style <- paste0("{estimate}", linesep, "({se})")
-
-    # style: estimate, p-stars and SE
-  } else if (style == "se_p") {
-    style <- paste0("{estimate}{stars}", linesep, "({se})")
-
-    # style: estimate and SE, p-value in separate column
-  } else if (style %in% c("short", "se_p2")) {
-    style <- paste0("{estimate}", linesep, "({se})|{p}")
-
-    # style: only estimate
-  } else if (style %in% c("est", "coef")) {
-    style <- "{estimate}"
+    style <- "ci_p2"
   }
+
+  style <- switch(
+    style,
+    # style: estimate and CI, p-value in separate column
+    minimal = ,
+    ci_p2 = paste0("{estimate}", linesep, "({ci})|{p}"),
+    # style: estimate and CI, no p
+    ci = paste0("{estimate}", linesep, "({ci})"),
+    # style: estimate, p-stars and CI
+    ci_p = paste0("{estimate}{stars}", linesep, "({ci})"),
+    # style: estimate and SE, no p
+    se = paste0("{estimate}", linesep, "({se})"),
+    # style: estimate, p-stars and SE
+    se_p = paste0("{estimate}{stars}", linesep, "({se})"),
+    # style: estimate and SE, p-value in separate column
+    short = paste0("{estimate}", linesep, "({se})|{p}"),
+    se_p2 = paste0("{estimate}", linesep, "({se})|{p}"),
+    # style: only estimate
+    est = ,
+    coef = "{estimate}",
+    paste0("{estimate}", linesep, "({ci})|{p}")
+  )
 
   # replace \n for now with default line-separators
   gsub("\n", linesep, style, fixed = TRUE)
@@ -49,7 +78,9 @@
 .select_shortcuts <- c("minimal", "short")
 
 
+# Appends a row containing the number of observations at the bottom of the table
 .add_obs_row <- function(x, att, style) {
+  # Extract standard and weighted observation counts from attributes list
   observations <- unlist(lapply(att, function(i) {
     if (is.null(i$n_obs)) {
       NA
@@ -66,27 +97,29 @@
   }))
 
   # check if model had weights, and if due to missing values n of weighted
-  # observations differs from "raw" observations
+  # observations differs from "raw" observations. If so, alert and use weighted.
   if (!all(is.na(weighted_observations)) && !all(is.na(observations))) {
     if (!isTRUE(all.equal(as.vector(weighted_observations), as.vector(observations)))) {
-      insight::format_alert("Number of weighted observations differs from number of unweighted observations.")
+      insight::format_alert(
+        "Number of weighted observations differs from number of unweighted observations."
+      )
     }
     observations <- weighted_observations
   }
 
   if (!all(is.na(observations))) {
     # add empty row, as separator
-    empty_row <- do.call(data.frame, as.list(rep(NA, ncol(x))))
-    colnames(empty_row) <- colnames(x)
-    x <- rbind(x, empty_row)
-    # add observations
+    x[nrow(x) + 1, ] <- NA
+    x[nrow(x) + 1, ] <- NA # Second empty row, for number of observations
+
+    # Calculate spacing to evenly distribute observation counts across columns
     steps <- (ncol(x) - 1) / length(observations)
-    empty_row[[1]] <- "Observations"
+    x[nrow(x), 1] <- "Observations"
     insert_at <- seq(2, ncol(x), by = steps)
+
     for (i in seq_along(insert_at)) {
-      empty_row[[insert_at[i]]] <- observations[i]
+      x[nrow(x), insert_at[i]] <- observations[i]
     }
-    x <- rbind(x, empty_row)
   }
   x
 }
@@ -94,22 +127,27 @@
 
 # other helper ------------------------
 
-
-.format_columns_single_component <- function(x,
-                                             pretty_names,
-                                             digits = 2,
-                                             ci_digits = digits,
-                                             p_digits = 3,
-                                             ci_width = "auto",
-                                             ci_brackets = TRUE,
-                                             format = NULL,
-                                             coef_name = NULL,
-                                             zap_small = FALSE,
-                                             include_reference = FALSE,
-                                             style = NULL,
-                                             ...) {
+# Formats a basic, single-component parameter table
+.format_columns_single_component <- function(
+  x,
+  pretty_names,
+  digits = 2,
+  ci_digits = digits,
+  p_digits = 3,
+  ci_width = "auto",
+  ci_brackets = TRUE,
+  format = NULL,
+  coef_name = NULL,
+  zap_small = FALSE,
+  include_reference = FALSE,
+  style = NULL,
+  ...
+) {
   # default brackets are parenthesis for HTML / MD
-  if ((is.null(ci_brackets) || isTRUE(ci_brackets)) && (identical(format, "html") || identical(format, "markdown"))) {
+  if (
+    (is.null(ci_brackets) || isTRUE(ci_brackets)) &&
+      (identical(format, "html") || identical(format, "markdown"))
+  ) {
     brackets <- c("(", ")")
   } else if (is.null(ci_brackets) || isTRUE(ci_brackets)) {
     brackets <- c("[", "]")
@@ -117,15 +155,21 @@
     brackets <- ci_brackets
   }
 
-  # fix coefficient column name for random effects
-  if (!is.null(x$Effects) && all(x$Effects == "random") && any(colnames(x) %in% .all_coefficient_types)) {
+  # Standardize the coefficient column name for random effects
+  if (
+    !is.null(x$Effects) &&
+      all(x$Effects == "random") &&
+      any(colnames(x) %in% .all_coefficient_types)
+  ) {
     colnames(x)[colnames(x) %in% .all_coefficient_types] <- "Coefficient"
   }
 
-  # fix coefficient column name for mixed count and zi pars
-  if (!is.null(x$Component) &&
-    sum(c("conditional", "zero_inflated", "dispersion") %in% x$Component) >= 2 &&
-    any(colnames(x) %in% .all_coefficient_types)) {
+  # Standardize the coefficient column name for mixed count and zi pars
+  if (
+    !is.null(x$Component) &&
+      sum(c("conditional", "zero_inflated", "dispersion") %in% x$Component) >= 2 &&
+      any(colnames(x) %in% .all_coefficient_types)
+  ) {
     colnames(x)[colnames(x) %in% .all_coefficient_types] <- "Coefficient"
   }
 
@@ -140,6 +184,7 @@
     x <- .add_reference_level(x)
   }
 
+  # Pass everything down to insight's formatter
   insight::format_table(
     x,
     pretty_names = pretty_names,
@@ -154,7 +199,7 @@
   )
 }
 
-
+# Modifies parameter names for random effects (e.g., changes "SD (var)" to "SD (var: group)")
 .format_ranef_parameters <- function(x) {
   if (!is.null(x$Group) && !is.null(x$Effects)) {
     ran_pars <- which(x$Effects == "random")
@@ -178,7 +223,7 @@
   x
 }
 
-
+# Retrieves reference levels for factors used in the model and injects an empty row for them
 .add_reference_level <- function(params, model = NULL) {
   if (is.null(model)) {
     # check if we have a model object, if not provided by user
@@ -199,14 +244,22 @@
   }
 
   # find factors and factor levels and check if we have any factors in the data
-  factors <- .find_factor_levels(model_data, model, model_call = attributes(params)$model_call)
+  factors <- .find_factor_levels(
+    model_data,
+    model,
+    model_call = attributes(params)$model_call
+  )
   if (!length(factors)) {
     # in case of "on-the-fly" factors, e.g.:
     # m <- lm(mpg ~ cut(wt, c(0, 2.5, 3, 5)), data = mtcars)
     # we need to receive the data from the model frame, in order to find factors
     model_data <- insight::get_data(model, source = "mf", verbose = FALSE)
     if (!is.null(model_data)) {
-      factors <- .find_factor_levels(model_data, model, model_call = attributes(params)$model_call)
+      factors <- .find_factor_levels(
+        model_data,
+        model,
+        model_call = attributes(params)$model_call
+      )
     }
     # if we still didn't find anything, quit...
     if (!length(factors)) {
@@ -217,6 +270,7 @@
   # only sense if there are contrasts that are all zeros, which means that
   # the reference level is not included in the model matrix
   remove_contrasts <- .remove_reference_contrasts(model)
+
   # keep only factors with valid contrasts
   if (!is.null(remove_contrasts) && length(remove_contrasts)) {
     factors <- factors[setdiff(names(factors), remove_contrasts)]
@@ -271,32 +325,49 @@
         fn_clean <- fn
       }
       # create a pretty level for the reference category
-      pretty_level <- paste0(fn_clean, " [", sub(fn, "", reference_level, fixed = TRUE), "]")
+      pretty_level <- paste0(
+        fn_clean,
+        " [",
+        sub(fn, "", reference_level, fixed = TRUE),
+        "]"
+      )
       pretty_level <- gsub("_", " ", pretty_level, fixed = TRUE)
-      # special handling for "cut()"
+
+      # special handling for "cut()" bounds translations
       pattern_cut_right <- "(.*)\\((.*),(.*)\\]\\]$"
       pattern_cut_left <- "(.*)\\[(.*),(.*)\\)\\]$"
       if (all(grepl(pattern_cut_right, pretty_level))) {
         lower_bounds <- gsub(pattern_cut_right, "\\2", pretty_level)
         upper_bounds <- gsub(pattern_cut_right, "\\3", pretty_level)
-        pretty_level <- gsub(pattern_cut_right, paste0("\\1>", as.numeric(lower_bounds), "-", upper_bounds, "]"), pretty_level)
+        pretty_level <- gsub(
+          pattern_cut_right,
+          paste0("\\1>", as.numeric(lower_bounds), "-", upper_bounds, "]"),
+          pretty_level
+        )
       } else if (all(grepl(pattern_cut_left, pretty_level))) {
         lower_bounds <- gsub(pattern_cut_left, "\\2", pretty_level)
         upper_bounds <- gsub(pattern_cut_left, "\\3", pretty_level)
-        pretty_level <- gsub(pattern_cut_left, paste0("\\1", as.numeric(lower_bounds), "-<", upper_bounds, "]"), pretty_level)
+        pretty_level <- gsub(
+          pattern_cut_left,
+          paste0("\\1", as.numeric(lower_bounds), "-<", upper_bounds, "]"),
+          pretty_level
+        )
       }
+
       # insert new pretty level at the correct position in "pretty_names"
       pretty_names <- .insert_element_at(
         pretty_names,
         stats::setNames(pretty_level, reference_level),
         min(found)
       )
+
       # now we need to update the data as well (i.e. the parameters table)
       row_data <- data.frame(
         Parameter = reference_level,
         Coefficient = as.numeric(attributes(params)$exponentiate),
         stringsAsFactors = FALSE
       )
+
       # coefficient name can also be "Odds Ratio" etc., so make sure we
       # have the correct column name in the data row we want to insert
       if (coef_name %in% colnames(out)) {
@@ -312,15 +383,18 @@
     # update pretty_names attribute
     attr(out, "pretty_names") <- pretty_names
     # update pretty_labels attribute - for mixed models, we need to add the random
-    # effects stuff from pretty_labels to pretty_names first, else, matching will
-    # fail
+    # effects stuff from pretty_labels to pretty_names first, else, matching will fail
     pretty_labels <- attributes(out)$pretty_labels
     if (!is.null(pretty_labels)) {
-      re_labels <- startsWith(names(pretty_labels), "SD (") | startsWith(names(pretty_labels), "Cor (")
+      re_labels <- startsWith(names(pretty_labels), "SD (") |
+        startsWith(names(pretty_labels), "Cor (")
       if (any(re_labels)) {
         pretty_names <- c(pretty_names, pretty_labels[re_labels])
       }
-      pretty_names[stats::na.omit(match(names(pretty_labels), names(pretty_names)))] <- pretty_labels
+      pretty_names[stats::na.omit(match(
+        names(pretty_labels),
+        names(pretty_names)
+      ))] <- pretty_labels
       pretty_names <- pretty_names[!re_labels]
     }
     attr(out, "pretty_labels") <- pretty_names
@@ -330,28 +404,18 @@
 }
 
 
-# The coefficient column in the printed output is renamed, based on the model.
-# But for instance, for random effects, however, which are on a different scale,
-# we want a different name for this column. Since print.parameters_model() splits
-# components into different tables, we change the column name for those "tables"
-# that contain the random effects or zero-inflation parameters
-
-.all_coefficient_types <- c(
-  "Odds Ratio", "Risk Ratio", "Prevalence Ratio", "IRR", "Log-Odds",
-  "Log-Mean", "Log-Ratio", "Log-Prevalence", "Probability", "Marginal Means",
-  "Estimated Counts", "Ratio", "Z-Score", "exp(Z-Score)"
-)
-
-
-.all_coefficient_names <- c("Coefficient", "Std_Coefficient", "Estimate", "Median", "Mean", "MAP")
-
-
+# Standardizes specific parameter names from Bayesian models (brms and rstanarm)
 .format_stan_parameters <- function(out, dist_params = NULL) {
   has_component <- !is.null(out$Component)
+
   # brms random intercepts or random slope variances
   ran_sd <- startsWith(out$Parameter, "sd_") & out$Effects == "random"
   if (any(ran_sd)) {
-    out$Parameter[ran_sd] <- gsub("^sd_(.*?)__(.*)", "SD \\(\\2\\)", out$Parameter[ran_sd])
+    out$Parameter[ran_sd] <- gsub(
+      "^sd_(.*?)__(.*)",
+      "SD \\(\\2\\)",
+      out$Parameter[ran_sd]
+    )
     if (has_component && !is.null(dist_params)) {
       for (dp in dist_params) {
         ran_dpars_sd <- ran_sd & out$Component == dp
@@ -366,10 +430,15 @@
       }
     }
   }
+
   # brms random slope-intercepts correlation
   ran_cor <- startsWith(out$Parameter, "cor_") & out$Effects == "random"
   if (any(ran_cor)) {
-    out$Parameter[ran_cor] <- gsub("^cor_(.*?)__(.*)__(.*)", "Cor \\(\\2~\\3\\)", out$Parameter[ran_cor])
+    out$Parameter[ran_cor] <- gsub(
+      "^cor_(.*?)__(.*)__(.*)",
+      "Cor \\(\\2~\\3\\)",
+      out$Parameter[ran_cor]
+    )
     if (has_component && !is.null(dist_params)) {
       for (dp in dist_params) {
         ran_dpars_cor <- ran_cor & out$Component == dp
@@ -384,12 +453,19 @@
       }
     }
   }
+
   # stanreg random effects variances
   ran_sd_cor <- startsWith(out$Parameter, "Sigma[")
   if (any(ran_sd_cor)) {
-    out$Parameter[ran_sd_cor] <- gsub("(Intercept)", "Intercept", out$Parameter[ran_sd_cor], fixed = TRUE)
+    out$Parameter[ran_sd_cor] <- gsub(
+      "(Intercept)",
+      "Intercept",
+      out$Parameter[ran_sd_cor],
+      fixed = TRUE
+    )
     parm1 <- gsub("^Sigma\\[(.*):(.*),(.*)\\]", "\\2", out$Parameter[ran_sd_cor])
     parm2 <- gsub("^Sigma\\[(.*):(.*),(.*)\\]", "\\3", out$Parameter[ran_sd_cor])
+
     # for random intercept or slopes, parm1 and parm2 are identical
     ran_sd <- parm1 == parm2
     ran_cor <- parm1 != parm2
@@ -397,7 +473,13 @@
       out$Parameter[which(ran_sd_cor)[ran_sd]] <- paste0("Sigma (", parm1[ran_sd], ")")
     }
     if (any(ran_cor)) {
-      out$Parameter[which(ran_sd_cor)[ran_cor]] <- paste0("Sigma (", parm1[ran_cor], "~", parm2[ran_cor], ")")
+      out$Parameter[which(ran_sd_cor)[ran_cor]] <- paste0(
+        "Sigma (",
+        parm1[ran_cor],
+        "~",
+        parm2[ran_cor],
+        ")"
+      )
     }
   }
 
@@ -407,14 +489,16 @@
 
 # helper to format the header / subheader of different model components --------------
 
-.format_model_component_header <- function(x,
-                                           type,
-                                           split_column,
-                                           is_zero_inflated,
-                                           is_ordinal_model,
-                                           is_multivariate = FALSE,
-                                           ran_pars, # nolint
-                                           formatted_table = NULL) {
+.format_model_component_header <- function(
+  x,
+  type,
+  split_column,
+  is_zero_inflated,
+  is_ordinal_model,
+  is_multivariate = FALSE,
+  ran_pars,
+  formatted_table = NULL
+) {
   # prepare component names
   .conditional_fixed_text <- if (is_zero_inflated) {
     "Fixed Effects (Count Model)"
@@ -458,8 +542,10 @@
     }
   }
 
+  # If not brms-specific, resolve via long mapping
   if (is.null(component_name)) {
-    component_name <- switch(type,
+    component_name <- switch(
+      type,
       mu = ,
       fixed = ,
       fixed. = ,
@@ -513,9 +599,13 @@
     )
   }
 
-  # handle exceptions
+  # Handle exception overrides for complex names
   if (grepl("^conditional\\.(r|R)andom_variances", component_name)) {
-    component_name <- insight::trim_ws(gsub("^conditional\\.(r|R)andom_variances(\\.)*", "", component_name))
+    component_name <- insight::trim_ws(gsub(
+      "^conditional\\.(r|R)andom_variances(\\.)*",
+      "",
+      component_name
+    ))
     if (nzchar(component_name, keepNA = TRUE)) {
       component_name <- paste0("Random Effects Variances: ", component_name)
     } else {
@@ -523,17 +613,32 @@
     }
   }
   if (grepl("^conditional\\.(r|R)andom", component_name)) {
-    component_name <- insight::trim_ws(gsub("^conditional\\.(r|R)andom(\\.)*", "", component_name))
+    component_name <- insight::trim_ws(gsub(
+      "^conditional\\.(r|R)andom(\\.)*",
+      "",
+      component_name
+    ))
     if (nzchar(component_name, keepNA = TRUE)) {
       component_name <- paste0("Random Effects (Count Model): ", component_name)
     } else {
-      component_name <- ifelse(ran_pars, "Random Effects Variances", "Random Effects (Count Model)")
+      component_name <- ifelse(
+        ran_pars,
+        "Random Effects Variances",
+        "Random Effects (Count Model)"
+      )
     }
   }
   if (grepl("^zero_inflated\\.(r|R)andom", component_name)) {
-    component_name <- insight::trim_ws(gsub("^zero_inflated\\.(r|R)andom(\\.)*", "", component_name))
+    component_name <- insight::trim_ws(gsub(
+      "^zero_inflated\\.(r|R)andom(\\.)*",
+      "",
+      component_name
+    ))
     if (nzchar(component_name, keepNA = TRUE)) {
-      component_name <- paste0("Random Effects (Zero-Inflation Component): ", component_name)
+      component_name <- paste0(
+        "Random Effects (Zero-Inflation Component): ",
+        component_name
+      )
     } else {
       component_name <- "Random Effects (Zero-Inflation Component)"
     }
@@ -548,14 +653,15 @@
   component_name <- gsub("coi", "Conditional-One-Inflation", component_name, fixed = TRUE)
 
   # if we show ZI component only, make sure this appears in header
-  if (!grepl("(Zero-Inflation Component)", component_name, fixed = TRUE) &&
-    !is.null(formatted_table$Component) &&
-    all(formatted_table$Component == "zero_inflated")) {
+  if (
+    !grepl("(Zero-Inflation Component)", component_name, fixed = TRUE) &&
+      !is.null(formatted_table$Component) &&
+      all(formatted_table$Component == "zero_inflated")
+  ) {
     component_name <- paste0(component_name, " (Zero-Inflation Component)")
   }
 
-  # tweaking of sub headers
-
+  # Tweaking of sub headers
   if ("DirichletRegModel" %in% attributes(x)$model_class) {
     if (startsWith(component_name, "conditional.") || split_column == "Response") {
       s1 <- "Response level:"
@@ -564,18 +670,27 @@
       s1 <- component_name
       s2 <- ""
     }
-  } else if (length(split_column) > 1 && "Response" %in% split_column && is_multivariate) {
+  } else if (
+    length(split_column) > 1 && "Response" %in% split_column && is_multivariate
+  ) {
     # This here only applies to brms multivariate response models
     component_name <- gsub("^conditional\\.(.*)", "Response level: \\1", component_name)
-    component_name <- gsub("^sigma\\.(.*)", "Auxilliary parameters, response level: \\1", component_name)
+    component_name <- gsub(
+      "^sigma\\.(.*)",
+      "Auxilliary parameters, response level: \\1",
+      component_name
+    )
     component_name <- gsub("(.*)fixed\\.(.*)", "\\1\\2", component_name)
     component_name <- gsub("(.*)random\\.(.*)", "Random effects, \\1\\2", component_name)
     s1 <- component_name
     s2 <- ""
-  } else if (length(split_column) > 1 ||
-    split_column %in% c("Subgroup", "Type", "Group") ||
-    grepl(tolower(split_column), tolower(component_name), fixed = TRUE) ||
-    component_name %in% c("Within-Effects", "Between-Effects", "(Cross-Level) Interactions")) {
+  } else if (
+    length(split_column) > 1 ||
+      split_column %in% c("Subgroup", "Type", "Group") ||
+      grepl(tolower(split_column), tolower(component_name), fixed = TRUE) ||
+      component_name %in%
+        c("Within-Effects", "Between-Effects", "(Cross-Level) Interactions")
+  ) {
     s1 <- component_name
     s2 <- ""
   } else if (split_column == "Response" && is_ordinal_model) {
@@ -594,28 +709,35 @@
 }
 
 
-# .insert_row <- function(x, newrow, r) {
-#   existingDF[seq(r+1,nrow(existingDF)+1),] <- existingDF[seq(r,nrow(existingDF)),]
-#   existingDF[r,] <- newrow
-#   existingDF
-# }
-
 .prepare_x_for_print <- function(x, select, coef_name, s_value) {
   # minor fix for nested Anovas
   if ("Group" %in% colnames(x) && sum(x$Parameter == "Residuals") > 1) {
     colnames(x)[which(colnames(x) == "Group")] <- "Subgroup"
   }
 
-  # check which columns to be printed
+  # filter data frame for specifically requested columns
   if (!is.null(select)) {
     if (all(select == "minimal")) {
-      select <- c("Parameter", "Coefficient", "Std_Coefficient", "CI", "CI_low", "CI_high", "p")
+      select <- c(
+        "Parameter",
+        "Coefficient",
+        "Std_Coefficient",
+        "CI",
+        "CI_low",
+        "CI_high",
+        "p"
+      )
     } else if (all(select == "short")) {
       select <- c("Parameter", "Coefficient", "Std_Coefficient", "SE", "p")
     } else if (is.numeric(select)) {
       select <- colnames(x)[select]
     }
-    select <- union(select, c("Parameter", "Component", "Effects", "Response", "Subgroup"))
+
+    # Ensure mandatory grouping/identification columns are never dropped
+    select <- union(
+      select,
+      c("Parameter", "Component", "Effects", "Response", "Subgroup")
+    )
     # for emmGrid objects, we save specific parameter names as attribute
     parameter_names <- attributes(x)$parameter_names
     if (!is.null(parameter_names)) {
@@ -625,11 +747,17 @@
     x[to_remove] <- NULL
   }
 
-  # remove columns that have only NA or Inf
-  to_remove <- vapply(colnames(x), function(col) {
-    all(is.na(x[[col]]) | is.infinite(x[[col]])) & !grepl("CI_", col, fixed = TRUE)
-  }, TRUE)
-  if (any(to_remove)) x[to_remove] <- NULL
+  # remove columns that have only NA or Inf (e.g. CI bands that couldn't be calculated)
+  to_remove <- vapply(
+    colnames(x),
+    function(col) {
+      all(is.na(x[[col]]) | is.infinite(x[[col]])) & !grepl("CI_", col, fixed = TRUE)
+    },
+    TRUE
+  )
+  if (any(to_remove)) {
+    x[to_remove] <- NULL
+  }
 
   # For Bayesian models, we need to prettify parameter names here...
   mc <- attributes(x)$model_class
@@ -671,6 +799,8 @@
   if (!is.null(attributes(x)$model_class) && any(attributes(x)$model_class == "mvord")) {
     x$Response <- NULL
   }
+
+  # Accumulate grouping names where there is actual variation (> 1 unique value)
   split_by <- ""
   if ("Component" %in% names(x) && insight::n_unique(x$Component) > 1) {
     split_by <- c(split_by, "Component")
@@ -697,20 +827,22 @@
 # or edge cases...
 
 #' @keywords internal
-.format_columns_multiple_components <- function(x,
-                                                pretty_names,
-                                                split_column = "Component",
-                                                digits = 2,
-                                                ci_digits = digits,
-                                                p_digits = 3,
-                                                coef_column = NULL,
-                                                format = NULL,
-                                                ci_width = "auto",
-                                                ci_brackets = TRUE,
-                                                zap_small = FALSE,
-                                                include_reference = FALSE,
-                                                style = NULL,
-                                                ...) {
+.format_columns_multiple_components <- function(
+  x,
+  pretty_names,
+  split_column = "Component",
+  digits = 2,
+  ci_digits = digits,
+  p_digits = 3,
+  coef_column = NULL,
+  format = NULL,
+  ci_width = "auto",
+  ci_brackets = TRUE,
+  zap_small = FALSE,
+  include_reference = FALSE,
+  style = NULL,
+  ...
+) {
   final_table <- list()
 
   ignore_group <- isTRUE(attributes(x)$ignore_group)
@@ -721,13 +853,16 @@
   parameter_column <- "Parameter"
 
   # default brackets are parenthesis for HTML / MD
-  if ((is.null(ci_brackets) || isTRUE(ci_brackets)) && (identical(format, "html") || identical(format, "markdown"))) {
+  if (
+    (is.null(ci_brackets) || isTRUE(ci_brackets)) &&
+      (identical(format, "html") || identical(format, "markdown"))
+  ) {
     ci_brackets <- c("(", ")")
   } else if (is.null(ci_brackets) || isTRUE(ci_brackets)) {
     ci_brackets <- c("[", "]")
   }
 
-  # check ordinal / multivariate
+  # Extract model flags
   is_ordinal_model <- isTRUE(attributes(x)$ordinal_model)
   is_multivariate <- isTRUE(attributes(x)$multivariate_response)
 
@@ -739,27 +874,46 @@
   coef_name2 <- attributes(x)$coefficient_name2
 
   # make sure we have correct order of levels from split-factor
-  if (!is.null(attributes(x)$model_class) && all(attributes(x)$model_class == "mediate")) {
-    x$Component <- factor(x$Component, levels = c("control", "treated", "average", "Total Effect"))
+  if (
+    !is.null(attributes(x)$model_class) && all(attributes(x)$model_class == "mediate")
+  ) {
+    x$Component <- factor(
+      x$Component,
+      levels = c("control", "treated", "average", "Total Effect")
+    )
     x$Parameter <- insight::trim_ws(gsub("(.*)\\((.*)\\)$", "\\1", x$Parameter))
   } else {
     x[split_column] <- lapply(x[split_column], function(i) {
-      if (!is.factor(i)) i <- factor(i, levels = unique(i))
+      if (!is.factor(i)) {
+        i <- factor(i, levels = unique(i))
+      }
       i
     })
   }
 
-  # fix column output
-  if (inherits(attributes(x)[["model"]], c("lavaan", "blavaan")) && "Label" %in% colnames(x)) {
-    x$From <- ifelse(!nzchar(as.character(x$Label), keepNA = TRUE) | x$Label == x$To, x$From, paste0(x$From, " (", x$Label, ")")) # nolint
+  # fix column output for lavaan/SEM outputs
+  if (
+    inherits(attributes(x)[["model"]], c("lavaan", "blavaan")) && "Label" %in% colnames(x)
+  ) {
+    x$From <- ifelse(
+      !nzchar(as.character(x$Label), keepNA = TRUE) | x$Label == x$To,
+      x$From,
+      paste0(x$From, " (", x$Label, ")")
+    )
     x$Label <- NULL
   }
 
-  if (inherits(attributes(x)[["model"]], c("lavaan", "blavaan")) && !"Parameter" %in% colnames(x)) {
+  if (
+    inherits(attributes(x)[["model"]], c("lavaan", "blavaan")) &&
+      !"Parameter" %in% colnames(x)
+  ) {
     parameter_column <- colnames(x)[1]
   }
 
-  if (inherits(attributes(x)[["model"]], c("lavaan", "blavaan")) && "Defined" %in% x$Component) {
+  if (
+    inherits(attributes(x)[["model"]], c("lavaan", "blavaan")) &&
+      "Defined" %in% x$Component
+  ) {
     x$From[x$Component == "Defined"] <- ""
     x$Operator[x$Component == "Defined"] <- ""
     x$To <- ifelse(x$Component == "Defined", paste0("(", x$To, ")"), x$To)
@@ -779,31 +933,36 @@
   # validation check - only preserve tables with any data in data frames
   tables <- tables[vapply(tables, nrow, numeric(1)) > 0]
 
-
   # fix table names for random effects, when we only have random
   # effects. in such cases, the wrong header (fixed effects) is chosen
   # to prevent this, we "fake" the name of the splitted components by
   # prefixing them with "random."
-
-  if (!is.null(x$Effects) && all(x$Effects == "random") && !all(startsWith(names(tables), "random."))) {
+  if (
+    !is.null(x$Effects) &&
+      all(x$Effects == "random") &&
+      !all(startsWith(names(tables), "random."))
+  ) {
     wrong_names <- !startsWith(names(tables), "random.")
     names(tables)[wrong_names] <- paste0("random.", names(tables)[wrong_names])
   }
 
   # fixest_multi models can have a special structure, with multiple responses
   # and multiple rhs of formulas. We fix headers here
-
   if (is_fixest_multi && length(split_column) > 1) {
     old_names <- unique(paste0(x$Response, ".", x$Group))
     new_names <- unique(paste0(x$Response, " ~ ", x$Group))
     names(tables) <- new_names[match(names(tables), old_names)]
   }
 
+  # pre-allocate list
+  final_table <- vector("list", length(tables))
 
+  # Iterate over all components/tables split from the original object
   for (type in names(tables)) {
     # do we have emmeans emlist? and contrasts?
     model_class <- attributes(tables[[type]])$model_class
-    em_list_coef_name <- (!is.null(model_class) && "emm_list" %in% model_class &&
+    em_list_coef_name <- (!is.null(model_class) &&
+      "emm_list" %in% model_class &&
       "contrasts" %in% tables[[type]]$Component)
 
     # Don't print Component column
@@ -823,7 +982,6 @@
       names(tables[[type]])[names(tables[[type]]) == "t"] <- "F"
     }
 
-
     if ("z / Chi2" %in% names(tables[[type]])) {
       if (type == "smooth_terms") {
         names(tables[[type]])[names(tables[[type]]) == "z / Chi2"] <- "Chi2"
@@ -834,19 +992,24 @@
     }
 
     # Don't print se and ci if all are missing
-    if (all(is.na(tables[[type]]$SE))) tables[[type]]$SE <- NULL
+    if (all(is.na(tables[[type]]$SE))) {
+      tables[[type]]$SE <- NULL
+    }
     if (all(is.na(tables[[type]]$CI_low)) && all(is.na(tables[[type]]$CI_high))) {
       tables[[type]]$CI_low <- NULL
       tables[[type]]$CI_high <- NULL
     }
-    # if (all(is.na(tables[[type]]$CI_low))) tables[[type]]$CI_low <- NULL
-    # if (all(is.na(tables[[type]]$CI_high))) tables[[type]]$CI_high <- NULL
 
     # Don't print if empty col
-    tables[[type]][vapply(colnames(tables[[type]]), function(x) {
-      column <- tables[[type]][[x]]
-      (!any(nzchar(as.character(column), keepNA = TRUE)) | all(is.na(column))) && !grepl("_CI_(high|low)$", x)
-    }, logical(1))] <- NULL
+    tables[[type]][vapply(
+      colnames(tables[[type]]),
+      function(x) {
+        column <- tables[[type]][[x]]
+        (!any(nzchar(as.character(column), keepNA = TRUE)) | all(is.na(column))) &&
+          !grepl("_CI_(high|low)$", x)
+      },
+      logical(1)
+    )] <- NULL
 
     attr(tables[[type]], "digits") <- digits
     attr(tables[[type]], "ci_digits") <- ci_digits
@@ -855,36 +1018,54 @@
     # random pars with level? combine into parameter column
     if (all(c("Parameter", "Level") %in% colnames(tables[[type]]))) {
       tables[[type]]$Parameter <- paste0(
-        tables[[type]]$Parameter, " ", ci_brackets[1],
-        tables[[type]]$Level, ci_brackets[2]
+        tables[[type]]$Parameter,
+        " ",
+        ci_brackets[1],
+        tables[[type]]$Level,
+        ci_brackets[2]
       )
       tables[[type]]$Level <- NULL
     }
 
     # rename columns for emmeans contrast part
     if (em_list_coef_name && !is.null(coef_column)) {
-      colnames(tables[[type]])[which(colnames(tables[[type]]) == coef_column)] <- coef_name2
+      colnames(tables[[type]])[which(
+        colnames(tables[[type]]) == coef_column
+      )] <- coef_name2
     }
 
     # rename columns for zero-inflation part
     if (startsWith(type, "zero") && !is.null(zi_coef_name) && !is.null(coef_column)) {
-      colnames(tables[[type]])[which(colnames(tables[[type]]) == coef_column)] <- zi_coef_name
-      colnames(tables[[type]])[which(colnames(tables[[type]]) == paste0("Std_", coef_column))] <- paste0("Std_", zi_coef_name) # nolint
+      colnames(tables[[type]])[which(
+        colnames(tables[[type]]) == coef_column
+      )] <- zi_coef_name
+      colnames(tables[[type]])[which(
+        colnames(tables[[type]]) == paste0("Std_", coef_column)
+      )] <- paste0("Std_", zi_coef_name)
     }
 
     # rename columns for correlation, location or scale part
     if (type %in% c("correlation", "scale", "location") && !is.null(coef_column)) {
-      colnames(tables[[type]])[which(colnames(tables[[type]]) == coef_column)] <- "Estimate"
+      colnames(tables[[type]])[which(
+        colnames(tables[[type]]) == coef_column
+      )] <- "Estimate"
     }
 
     # rename columns for dispersion part
     if (startsWith(type, "dispersion") && !is.null(coef_column)) {
-      colnames(tables[[type]])[which(colnames(tables[[type]]) == coef_column)] <- "Coefficient"
+      colnames(tables[[type]])[which(
+        colnames(tables[[type]]) == coef_column
+      )] <- "Coefficient"
     }
 
     # rename columns for random part
-    if (grepl("random", type, fixed = TRUE) && any(colnames(tables[[type]]) %in% .all_coefficient_types)) {
-      colnames(tables[[type]])[colnames(tables[[type]]) %in% .all_coefficient_types] <- "Coefficient"
+    if (
+      grepl("random", type, fixed = TRUE) &&
+        any(colnames(tables[[type]]) %in% .all_coefficient_types)
+    ) {
+      colnames(tables[[type]])[
+        colnames(tables[[type]]) %in% .all_coefficient_types
+      ] <- "Coefficient"
     }
 
     if (grepl("random", type, fixed = TRUE) && isTRUE(ran_pars)) {
@@ -896,20 +1077,40 @@
       tables[[type]] <- .add_reference_level(tables[[type]])
     }
 
+    # Format numeric properties utilizing insight
     formatted_table <- insight::format_table(
       tables[[type]],
-      digits = digits, ci_digits = ci_digits,
-      p_digits = p_digits, pretty_names = pretty_names, ci_width = ci_width,
-      ci_brackets = ci_brackets, zap_small = zap_small, select = style, ...
+      digits = digits,
+      ci_digits = ci_digits,
+      p_digits = p_digits,
+      pretty_names = pretty_names,
+      ci_width = ci_width,
+      ci_brackets = ci_brackets,
+      zap_small = zap_small,
+      select = style,
+      ...
     )
+
+    # Establish titles and contexts for each subtable
     component_header <- .format_model_component_header(
-      x, type, split_column, is_zero_inflated, is_ordinal_model,
-      is_multivariate, ran_pars, formatted_table
+      x,
+      type,
+      split_column,
+      is_zero_inflated,
+      is_ordinal_model,
+      is_multivariate,
+      ran_pars,
+      formatted_table
     )
 
     # exceptions for random effects
     if (insight::has_single_value(formatted_table$Group, remove_na = TRUE)) {
-      component_header$subheader1 <- paste0(component_header$subheader1, " (", formatted_table$Group, ")")
+      component_header$subheader1 <- paste0(
+        component_header$subheader1,
+        " (",
+        formatted_table$Group,
+        ")"
+      )
       formatted_table$Group <- NULL
     }
 
@@ -919,28 +1120,50 @@
     }
 
     # no column with CI-level in output
-    if (!is.null(formatted_table$CI) && insight::has_single_value(formatted_table$CI, remove_na = TRUE)) {
+    if (
+      !is.null(formatted_table$CI) &&
+        insight::has_single_value(formatted_table$CI, remove_na = TRUE)
+    ) {
       formatted_table$CI <- NULL
     }
 
+    # Setup the visual caption depending on format target
     table_caption <- NULL
-    if (is.null(format) || format %in% c("markdown", "text")) {
+    if (is.null(format) || format == "text") {
       # Print
       if (component_header$name != "rewb-contextual") {
         table_caption <- c(
-          sprintf("# %s %s", component_header$subheader1, tolower(component_header$subheader2)),
+          sprintf(
+            "# %s %s",
+            component_header$subheader1,
+            tolower(component_header$subheader2)
+          ),
           "blue"
         )
       }
     } else if (format %in% c("markdown", "html")) {
       # Print
       if (component_header$name != "rewb-contextual") {
-        table_caption <- sprintf("%s %s", component_header$subheader1, tolower(component_header$subheader2))
+        table_caption <- sprintf(
+          "%s %s",
+          component_header$subheader1,
+          tolower(component_header$subheader2)
+        )
       }
       # replace brackets by parenthesis
       if (!is.null(parameter_column) && parameter_column %in% colnames(formatted_table)) {
-        formatted_table[[parameter_column]] <- gsub("[", ci_brackets[1], formatted_table[[parameter_column]], fixed = TRUE) # nolint
-        formatted_table[[parameter_column]] <- gsub("]", ci_brackets[2], formatted_table[[parameter_column]], fixed = TRUE) # nolint
+        formatted_table[[parameter_column]] <- gsub(
+          "[",
+          ci_brackets[1],
+          formatted_table[[parameter_column]],
+          fixed = TRUE
+        )
+        formatted_table[[parameter_column]] <- gsub(
+          "]",
+          ci_brackets[2],
+          formatted_table[[parameter_column]],
+          fixed = TRUE
+        )
       }
     }
 
@@ -951,11 +1174,18 @@
     }
 
     # remove unique columns
-    if (insight::has_single_value(formatted_table$Effects, remove_na = TRUE)) formatted_table$Effects <- NULL
-    if (insight::has_single_value(formatted_table$Group, remove_na = TRUE)) formatted_table$Group <- NULL
+    if (insight::has_single_value(formatted_table$Effects, remove_na = TRUE)) {
+      formatted_table$Effects <- NULL
+    }
+    if (insight::has_single_value(formatted_table$Group, remove_na = TRUE)) {
+      formatted_table$Group <- NULL
+    }
 
-    final_table <- c(final_table, list(formatted_table))
+    final_table[[type]] <- formatted_table
   }
+
+  # compact list
+  final_table <- insight::compact_list(final_table)
 
   if (identical(format, "html")) {
     # fix non-equal length of columns
@@ -971,13 +1201,16 @@
 
 
 # helper to fix unequal number of columns for list of data frames,
-# when used for HTML printing
-
+# when used for HTML printing. Injects `NA` values where missing.
 .fix_nonmatching_columns <- function(final_table, is_lavaan = FALSE) {
   # fix for lavaan here
   if (is_lavaan) {
     for (i in seq_along(final_table)) {
-      if (!is.null(final_table[[i]]$Link) && !is.null(final_table[[i]]$To) && all(is.na(final_table[[i]]$Link))) {
+      if (
+        !is.null(final_table[[i]]$Link) &&
+          !is.null(final_table[[i]]$To) &&
+          all(is.na(final_table[[i]]$Link))
+      ) {
         final_table[[i]]$Link <- final_table[[i]]$To
         final_table[[i]]$To <- NA
       }
@@ -999,7 +1232,10 @@
       if (length(missing_columns)) {
         a <- attributes(final_table[[i]])
         final_table[[i]][missing_columns] <- NA
-        final_table[[i]] <- final_table[[i]][match(all_columns, colnames(final_table[[i]]))]
+        final_table[[i]] <- final_table[[i]][match(
+          all_columns,
+          colnames(final_table[[i]])
+        )]
         attributes(final_table[[i]]) <- utils::modifyList(a, attributes(final_table[[i]]))
       }
     }
