@@ -567,7 +567,11 @@
 
   # If not brms-specific, resolve via long mapping
   if (is.null(component_name)) {
-    component_name <- .component_header(type)
+    component_name <- .component_header(
+      type,
+      .conditional_fixed_text,
+      .conditional_random_text
+    )
   }
 
   # Handle exception overrides for complex names
@@ -641,7 +645,7 @@
 
 # generate component sub-headers ------
 
-.component_header <- function(type) {
+.component_header <- function(type, .conditional_fixed_text, .conditional_random_text) {
   switch(
     type,
     mu = ,
