@@ -59,7 +59,7 @@ standardize_info(model, two_sd = TRUE)
 \dontshow{\}) # examplesIf}
 }
 \seealso{
-Other standardize: 
-\code{\link{standardize_parameters}()}
+Other standardize:
+\code{\link[=standardize_parameters]{standardize_parameters()}}
 }
 \concept{standardize}
