@@ -608,7 +608,7 @@
     component_name <- gsub("^conditional\\.(.*)", "Response level: \\1", component_name)
     component_name <- gsub(
       "^sigma\\.(.*)",
-      "Auxilliary parameters, response level: \\1",
+      "Auxiliary parameters, response level: \\1",
       component_name
     )
     component_name <- gsub("(.*)fixed\\.(.*)", "\\1\\2", component_name)
@@ -998,9 +998,6 @@
     new_names <- unique(paste0(x$Response, " ~ ", x$Group))
     names(tables) <- new_names[match(names(tables), old_names)]
   }
-
-  # pre-allocate list
-  final_table <- vector("list", length(tables))
 
   # Iterate over all components/tables split from the original object
   for (type in names(tables)) {
