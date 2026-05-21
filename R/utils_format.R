@@ -668,7 +668,7 @@
   )
 }
 
-# handle component sub-headers expections for random effects ------
+# handle component sub-headers exceptions for random effects ------
 
 .re_component_header <- function(component_name, ran_pars) {
   if (grepl("^conditional\\.(r|R)andom_variances", component_name)) {
