@@ -343,12 +343,8 @@
         fn_clean <- fn
       }
       # create a pretty level for the reference category
-      pretty_level <- paste0(
-        fn_clean,
-        " [",
-        sub(fn, "", reference_level, fixed = TRUE),
-        "]"
-      )
+      # fmt: skip
+      pretty_level <- paste0(fn_clean, " [", sub(fn, "", reference_level, fixed = TRUE), "]")
       pretty_level <- gsub("_", " ", pretty_level, fixed = TRUE)
 
       # special handling for "cut()" bounds translations
@@ -403,16 +399,13 @@
     # update pretty_labels attribute - for mixed models, we need to add the random
     # effects stuff from pretty_labels to pretty_names first, else, matching will fail
     pretty_labels <- attributes(out)$pretty_labels
+    # fmt: skip
     if (!is.null(pretty_labels)) {
-      re_labels <- startsWith(names(pretty_labels), "SD (") |
-        startsWith(names(pretty_labels), "Cor (")
+      re_labels <- startsWith(names(pretty_labels), "SD (") | startsWith(names(pretty_labels), "Cor (")
       if (any(re_labels)) {
         pretty_names <- c(pretty_names, pretty_labels[re_labels])
       }
-      pretty_names[stats::na.omit(match(
-        names(pretty_labels),
-        names(pretty_names)
-      ))] <- pretty_labels
+      pretty_names[stats::na.omit(match(names(pretty_labels), names(pretty_names)))] <- pretty_labels
       pretty_names <- pretty_names[!re_labels]
     }
     attr(out, "pretty_labels") <- pretty_names
@@ -431,22 +424,14 @@
 
   # brms random intercepts or random slope variances
   ran_sd <- startsWith(out$Parameter, "sd_") & out$Effects == "random"
+  # fmt: skip
   if (any(ran_sd)) {
-    out$Parameter[ran_sd] <- gsub(
-      "^sd_(.*?)__(.*)",
-      "SD \\(\\2\\)",
-      out$Parameter[ran_sd]
-    )
+    out$Parameter[ran_sd] <- gsub("^sd_(.*?)__(.*)", "SD \\(\\2\\)", out$Parameter[ran_sd])
     if (has_component && !is.null(dist_params)) {
       for (dp in dist_params) {
         ran_dpars_sd <- ran_sd & out$Component == dp
         if (any(ran_dpars_sd)) {
-          out$Parameter[ran_dpars_sd] <- gsub(
-            paste0(dp, "_"),
-            "",
-            out$Parameter[ran_dpars_sd],
-            fixed = TRUE
-          )
+          out$Parameter[ran_dpars_sd] <- gsub(paste0(dp, "_"), "", out$Parameter[ran_dpars_sd], fixed = TRUE)
         }
       }
     }
@@ -454,22 +439,14 @@
 
   # brms random slope-intercepts correlation
   ran_cor <- startsWith(out$Parameter, "cor_") & out$Effects == "random"
+  # fmt: skip
   if (any(ran_cor)) {
-    out$Parameter[ran_cor] <- gsub(
-      "^cor_(.*?)__(.*)__(.*)",
-      "Cor \\(\\2~\\3\\)",
-      out$Parameter[ran_cor]
-    )
+    out$Parameter[ran_cor] <- gsub("^cor_(.*?)__(.*)__(.*)", "Cor \\(\\2~\\3\\)", out$Parameter[ran_cor])
     if (has_component && !is.null(dist_params)) {
       for (dp in dist_params) {
         ran_dpars_cor <- ran_cor & out$Component == dp
         if (any(ran_dpars_cor)) {
-          out$Parameter[ran_dpars_cor] <- gsub(
-            paste0(dp, "_"),
-            "",
-            out$Parameter[ran_dpars_cor],
-            fixed = TRUE
-          )
+          out$Parameter[ran_dpars_cor] <- gsub(paste0(dp, "_"), "", out$Parameter[ran_dpars_cor], fixed = TRUE)
         }
       }
     }
@@ -477,13 +454,9 @@
 
   # stanreg random effects variances
   ran_sd_cor <- startsWith(out$Parameter, "Sigma[")
+  # fmt: skip
   if (any(ran_sd_cor)) {
-    out$Parameter[ran_sd_cor] <- gsub(
-      "(Intercept)",
-      "Intercept",
-      out$Parameter[ran_sd_cor],
-      fixed = TRUE
-    )
+    out$Parameter[ran_sd_cor] <- gsub("(Intercept)", "Intercept", out$Parameter[ran_sd_cor], fixed = TRUE)
     parm1 <- gsub("^Sigma\\[(.*):(.*),(.*)\\]", "\\2", out$Parameter[ran_sd_cor])
     parm2 <- gsub("^Sigma\\[(.*):(.*),(.*)\\]", "\\3", out$Parameter[ran_sd_cor])
 
@@ -494,13 +467,7 @@
       out$Parameter[which(ran_sd_cor)[ran_sd]] <- paste0("Sigma (", parm1[ran_sd], ")")
     }
     if (any(ran_cor)) {
-      out$Parameter[which(ran_sd_cor)[ran_cor]] <- paste0(
-        "Sigma (",
-        parm1[ran_cor],
-        "~",
-        parm2[ran_cor],
-        ")"
-      )
+      out$Parameter[which(ran_sd_cor)[ran_cor]] <- paste0("Sigma (", parm1[ran_cor], "~", parm2[ran_cor], ")")
     }
   }
 
@@ -1074,44 +1041,37 @@
     }
 
     # rename columns for emmeans contrast part
+    # fmt: skip
     if (em_list_coef_name && !is.null(coef_column)) {
-      colnames(tables[[type]])[which(
-        colnames(tables[[type]]) == coef_column
-      )] <- coef_name2
+      colnames(tables[[type]])[which(colnames(tables[[type]]) == coef_column)] <- coef_name2
     }
 
     # rename columns for zero-inflation part
+    # fmt: skip
     if (startsWith(type, "zero") && !is.null(zi_coef_name) && !is.null(coef_column)) {
-      colnames(tables[[type]])[which(
-        colnames(tables[[type]]) == coef_column
-      )] <- zi_coef_name
-      colnames(tables[[type]])[which(
-        colnames(tables[[type]]) == paste0("Std_", coef_column)
-      )] <- paste0("Std_", zi_coef_name)
+      colnames(tables[[type]])[which(colnames(tables[[type]]) == coef_column)] <- zi_coef_name
+      colnames(tables[[type]])[which(colnames(tables[[type]]) == paste0("Std_", coef_column))] <- paste0("Std_", zi_coef_name)
     }
 
     # rename columns for correlation, location or scale part
+    # fmt: skip
     if (type %in% c("correlation", "scale", "location") && !is.null(coef_column)) {
-      colnames(tables[[type]])[which(
-        colnames(tables[[type]]) == coef_column
-      )] <- "Estimate"
+      colnames(tables[[type]])[which(colnames(tables[[type]]) == coef_column)] <- "Estimate"
     }
 
     # rename columns for dispersion part
+    # fmt: skip
     if (startsWith(type, "dispersion") && !is.null(coef_column)) {
-      colnames(tables[[type]])[which(
-        colnames(tables[[type]]) == coef_column
-      )] <- "Coefficient"
+      colnames(tables[[type]])[which(colnames(tables[[type]]) == coef_column)] <- "Coefficient"
     }
 
     # rename columns for random part
+    # fmt: skip
     if (
       grepl("random", type, fixed = TRUE) &&
         any(colnames(tables[[type]]) %in% .all_coefficient_types)
     ) {
-      colnames(tables[[type]])[
-        colnames(tables[[type]]) %in% .all_coefficient_types
-      ] <- "Coefficient"
+      colnames(tables[[type]])[colnames(tables[[type]]) %in% .all_coefficient_types] <- "Coefficient"
     }
 
     if (grepl("random", type, fixed = TRUE) && isTRUE(ran_pars)) {
@@ -1197,19 +1157,10 @@
         )
       }
       # replace brackets by parenthesis
+      # fmt: skip
       if (!is.null(parameter_column) && parameter_column %in% colnames(formatted_table)) {
-        formatted_table[[parameter_column]] <- gsub(
-          "[",
-          ci_brackets[1],
-          formatted_table[[parameter_column]],
-          fixed = TRUE
-        )
-        formatted_table[[parameter_column]] <- gsub(
-          "]",
-          ci_brackets[2],
-          formatted_table[[parameter_column]],
-          fixed = TRUE
-        )
+        formatted_table[[parameter_column]] <- gsub("[", ci_brackets[1], formatted_table[[parameter_column]], fixed = TRUE)
+        formatted_table[[parameter_column]] <- gsub("]", ci_brackets[2], formatted_table[[parameter_column]], fixed = TRUE)
       }
     }
 
