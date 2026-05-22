@@ -549,14 +549,23 @@ model <- suppressWarnings(stan_glm(
   data = iris, iter = 500, refresh = 0
 ))
 model_parameters(model)
-#> Parameter                      | Median |         95% CI |     pd |  Rhat | ESS |                 Prior
-#> -------------------------------------------------------------------------------------------------------
-#> (Intercept)                    |   4.14 | [ 3.47,  4.87] |   100% | 1.002 | 253 | Normal (5.84 +- 2.07)
-#> Petal.Length                   |   0.59 | [ 0.10,  1.04] | 99.60% | 1.003 | 238 | Normal (0.00 +- 1.17)
-#> Speciesversicolor              |  -1.68 | [-2.72, -0.56] | 99.90% | 0.999 | 380 | Normal (0.00 +- 4.38)
-#> Speciesvirginica               |  -3.01 | [-4.17, -1.89] |   100% | 1.003 | 309 | Normal (0.00 +- 4.38)
-#> Petal.Length:Speciesversicolor |   0.23 | [-0.30,  0.74] | 79.90% | 1.000 | 245 | Normal (0.00 +- 1.02)
-#> Petal.Length:Speciesvirginica  |   0.39 | [-0.09,  0.90] | 93.10% | 1.004 | 224 | Normal (0.00 +- 0.78)
+#> Parameter                      | Median |         95% CI |     pd |  Rhat
+#> -------------------------------------------------------------------------
+#> (Intercept)                    |   4.14 | [ 3.47,  4.87] |   100% | 1.002
+#> Petal.Length                   |   0.59 | [ 0.10,  1.04] | 99.60% | 1.003
+#> Speciesversicolor              |  -1.68 | [-2.72, -0.56] | 99.90% | 0.999
+#> Speciesvirginica               |  -3.01 | [-4.17, -1.89] |   100% | 1.003
+#> Petal.Length:Speciesversicolor |   0.23 | [-0.30,  0.74] | 79.90% | 1.000
+#> Petal.Length:Speciesvirginica  |   0.39 | [-0.09,  0.90] | 93.10% | 1.004
+#> 
+#> Parameter                      | ESS (tail) |                 Prior
+#> -------------------------------------------------------------------
+#> (Intercept)                    |        345 | Normal (5.84 +- 2.07)
+#> Petal.Length                   |        366 | Normal (0.00 +- 1.17)
+#> Speciesversicolor              |        491 | Normal (0.00 +- 4.38)
+#> Speciesvirginica               |        543 | Normal (0.00 +- 4.38)
+#> Petal.Length:Speciesversicolor |        319 | Normal (0.00 +- 1.02)
+#> Petal.Length:Speciesvirginica  |        330 | Normal (0.00 +- 0.78)
 #> 
 #> Uncertainty intervals (equal-tailed) computed using a MCMC
 #>   distribution approximation.

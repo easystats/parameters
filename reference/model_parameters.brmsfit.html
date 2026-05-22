@@ -11,7 +11,7 @@ the output."><meta property="og:image" content="https://easystats.github.io/para
 
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.29.0.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.29.0.4</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -486,14 +486,23 @@ standardized naming scheme.</p></div>
 <span class="r-in"><span>  data <span class="op">=</span> <span class="va">iris</span>, iter <span class="op">=</span> <span class="fl">500</span>, refresh <span class="op">=</span> <span class="fl">0</span></span></span>
 <span class="r-in"><span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter                      | Median |         95% CI |     pd |  Rhat | ESS |                 Prior</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> -------------------------------------------------------------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)                    |   4.14 | [ 3.47,  4.87] |   100% | 1.002 | 253 | Normal (5.84 +- 2.07)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Petal.Length                   |   0.59 | [ 0.10,  1.04] | 99.60% | 1.003 | 238 | Normal (0.00 +- 1.17)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Speciesversicolor              |  -1.68 | [-2.72, -0.56] | 99.90% | 0.999 | 380 | Normal (0.00 +- 4.38)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Speciesvirginica               |  -3.01 | [-4.17, -1.89] |   100% | 1.003 | 309 | Normal (0.00 +- 4.38)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Petal.Length:Speciesversicolor |   0.23 | [-0.30,  0.74] | 79.90% | 1.000 | 245 | Normal (0.00 +- 1.02)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Petal.Length:Speciesvirginica  |   0.39 | [-0.09,  0.90] | 93.10% | 1.004 | 224 | Normal (0.00 +- 0.78)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter                      | Median |         95% CI |     pd |  Rhat</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> -------------------------------------------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)                    |   4.14 | [ 3.47,  4.87] |   100% | 1.002</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Petal.Length                   |   0.59 | [ 0.10,  1.04] | 99.60% | 1.003</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Speciesversicolor              |  -1.68 | [-2.72, -0.56] | 99.90% | 0.999</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Speciesvirginica               |  -3.01 | [-4.17, -1.89] |   100% | 1.003</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Petal.Length:Speciesversicolor |   0.23 | [-0.30,  0.74] | 79.90% | 1.000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Petal.Length:Speciesvirginica  |   0.39 | [-0.09,  0.90] | 93.10% | 1.004</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter                      | ESS (tail) |                 Prior</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> -------------------------------------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)                    |        345 | Normal (5.84 +- 2.07)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Petal.Length                   |        366 | Normal (0.00 +- 1.17)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Speciesversicolor              |        491 | Normal (0.00 +- 4.38)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Speciesvirginica               |        543 | Normal (0.00 +- 4.38)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Petal.Length:Speciesversicolor |        319 | Normal (0.00 +- 1.02)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Petal.Length:Speciesvirginica  |        330 | Normal (0.00 +- 0.78)</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">Uncertainty intervals (equal-tailed) computed using a MCMC</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">  distribution approximation.</span></span>
