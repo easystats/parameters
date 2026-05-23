@@ -64,26 +64,28 @@
 #' }
 #' @return A data frame of indices related to the model's parameters.
 #' @export
-model_parameters.brmsfit <- function(model,
-                                     centrality = "median",
-                                     dispersion = FALSE,
-                                     ci = 0.95,
-                                     ci_method = "eti",
-                                     test = "pd",
-                                     rope_range = "default",
-                                     rope_ci = 0.95,
-                                     bf_prior = NULL,
-                                     diagnostic = c("ESS", "Rhat"),
-                                     priors = FALSE,
-                                     effects = "fixed",
-                                     component = "all",
-                                     exponentiate = FALSE,
-                                     standardize = NULL,
-                                     group_level = FALSE,
-                                     keep = NULL,
-                                     drop = NULL,
-                                     verbose = TRUE,
-                                     ...) {
+model_parameters.brmsfit <- function(
+  model,
+  centrality = "median",
+  dispersion = FALSE,
+  ci = 0.95,
+  ci_method = "eti",
+  test = "pd",
+  rope_range = "default",
+  rope_ci = 0.95,
+  bf_prior = NULL,
+  diagnostic = c("ESS", "Rhat"),
+  priors = FALSE,
+  effects = "fixed",
+  component = "all",
+  exponentiate = FALSE,
+  standardize = NULL,
+  group_level = FALSE,
+  keep = NULL,
+  drop = NULL,
+  verbose = TRUE,
+  ...
+) {
   modelinfo <- insight::model_info(model, verbose = FALSE)
 
   # Bayesian meta analysis
@@ -178,22 +180,24 @@ model_parameters.brmsfit <- function(model,
 
 # brms meta analysis -------
 
-.model_parameters_brms_meta <- function(model,
-                                        centrality = "median",
-                                        dispersion = FALSE,
-                                        ci = 0.95,
-                                        ci_method = "eti",
-                                        test = "pd",
-                                        rope_range = "default",
-                                        rope_ci = 0.95,
-                                        diagnostic = c("ESS", "Rhat"),
-                                        priors = FALSE,
-                                        exponentiate = FALSE,
-                                        standardize = NULL,
-                                        keep_parameters = NULL,
-                                        drop_parameters = NULL,
-                                        verbose = TRUE,
-                                        ...) {
+.model_parameters_brms_meta <- function(
+  model,
+  centrality = "median",
+  dispersion = FALSE,
+  ci = 0.95,
+  ci_method = "eti",
+  test = "pd",
+  rope_range = "default",
+  rope_ci = 0.95,
+  diagnostic = c("ESS", "Rhat"),
+  priors = FALSE,
+  exponentiate = FALSE,
+  standardize = NULL,
+  keep_parameters = NULL,
+  drop_parameters = NULL,
+  verbose = TRUE,
+  ...
+) {
   # parameters
   smd <- insight::get_parameters(model, effects = "fixed", component = "conditional")
   studies <- insight::get_parameters(model, effects = "random", parameters = "^(?!sd_)")
@@ -235,7 +239,13 @@ model_parameters.brmsfit <- function(model,
   params$Weight <- 1 / c(insight::get_response(model)[[2]], NA)
 
   # merge description with diagnostic
-  params <- merge(params, params_diagnostics, by = "Parameter", all.x = TRUE, sort = FALSE)
+  params <- merge(
+    params,
+    params_diagnostics,
+    by = "Parameter",
+    all.x = TRUE,
+    sort = FALSE
+  )
 
   # Renaming
   re_name <- insight::find_random(model, flatten = TRUE)
@@ -246,14 +256,17 @@ model_parameters.brmsfit <- function(model,
   # remove "Intercept"
   study_names <- insight::trim_ws(gsub(",Intercept", "", study_names, fixed = TRUE))
 
-  cleaned_parameters <- c(study_names, "Overall", "tau")
-
   # components
   params$Component <- "Studies"
   params_tau$Component <- "tau"
 
   # merge with tau
   params <- merge(params, params_tau, all = TRUE, sort = FALSE)
+
+  cleaned_parameters <- stats::setNames(
+    c("Overall", study_names, "tau"),
+    params$Parameter
+  )
 
   # reorder columns
   ci_column <- which(colnames(params) == "CI_high")
@@ -263,7 +276,8 @@ model_parameters.brmsfit <- function(model,
 
   # filter parameters, if requested
   if (!is.null(keep_parameters) || !is.null(drop_parameters)) {
-    params <- .filter_parameters(params,
+    params <- .filter_parameters(
+      params,
       keep = keep_parameters,
       drop = drop_parameters,
       verbose = verbose
@@ -282,16 +296,17 @@ model_parameters.brmsfit <- function(model,
   attr(params, "study_weights") <- params$Weight
   attr(params, "data") <- cbind(studies, smd, tau)
 
-  class(params) <- unique(c("parameters_brms_meta", "see_parameters_brms_meta", class(params)))
+  class(params) <- unique(c(
+    "parameters_brms_meta",
+    "see_parameters_brms_meta",
+    class(params)
+  ))
   params
 }
 
 
 #' @export
-standard_error.brmsfit <- function(model,
-                                   effects = "fixed",
-                                   component = "all",
-                                   ...) {
+standard_error.brmsfit <- function(model, effects = "fixed", component = "all", ...) {
   params <- insight::get_parameters(model, effects = effects, component = component, ...)
 
   .data_frame(

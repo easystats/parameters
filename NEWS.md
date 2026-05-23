@@ -13,6 +13,8 @@
 * Fixed issue with `vcov` argument in `model_parameters()` for models of class
   `glmmTMB`.
 
+* Fixed issue with printing study names in brms-meta-analysis models.
+
 # parameters 0.29.0
 
 ## Changes

@@ -81,3 +81,35 @@ test_that("mp, dpars in total effects", {
     )
   )
 })
+
+
+test_that("mp, studies in meta analysis correctly printed", {
+  m <- suppressWarnings(insight::download_model("brms_meta_1"))
+  skip_if(is.null(m))
+  out <- model_parameters(m)
+  expect_identical(
+    attributes(out)$cleaned_parameters,
+    c(
+      b_Intercept = "Overall",
+      `r_Author[Call.et.al.,Intercept]` = "Call et al",
+      `r_Author[Cavanagh.et.al.,Intercept]` = "Cavanagh et al",
+      `r_Author[DanitzOrsillo,Intercept]` = "DanitzOrsillo",
+      `r_Author[de.Vibe.et.al.,Intercept]` = "de Vibe et al",
+      `r_Author[Frazier.et.al.,Intercept]` = "Frazier et al",
+      `r_Author[Frogeli.et.al.,Intercept]` = "Frogeli et al",
+      `r_Author[Gallego.et.al.,Intercept]` = "Gallego et al",
+      `r_Author[Hazlett-Stevens.&.Oren,Intercept]` = "Hazlett-Stevens & Oren",
+      `r_Author[Hintz.et.al.,Intercept]` = "Hintz et al",
+      `r_Author[Kang.et.al.,Intercept]` = "Kang et al",
+      `r_Author[Kuhlmann.et.al.,Intercept]` = "Kuhlmann et al",
+      `r_Author[Lever.Taylor.et.al.,Intercept]` = "Lever Taylor et al",
+      `r_Author[Phang.et.al.,Intercept]` = "Phang et al",
+      `r_Author[Rasanen.et.al.,Intercept]` = "Rasanen et al",
+      `r_Author[Ratanasiripong,Intercept]` = "Ratanasiripong",
+      `r_Author[Shapiro.et.al.,Intercept]` = "Shapiro et al",
+      `r_Author[SongLindquist,Intercept]` = "SongLindquist",
+      `r_Author[Warnecke.et.al.,Intercept]` = "Warnecke et al",
+      sd_Author__Intercept = "tau"
+    )
+  )
+})
