@@ -528,7 +528,7 @@ parameters <- model_parameters
 #'
 #' @inheritSection model_parameters Confidence intervals and approximation of degrees of freedom
 #'
-#' @examplesIf all(insight::check_if_installed(c("boot", "sandwich", "clubSandwich", "brglm2"), quietly = TRUE))
+#' @examplesIf all(insight::check_if_installed(c("boot", "sandwich", "clubSandwich"), quietly = TRUE))
 #' library(parameters)
 #' model <- lm(mpg ~ wt + cyl, data = mtcars)
 #'
@@ -563,15 +563,6 @@ parameters <- model_parameters
 #'
 #' # show odds ratio / exponentiated coefficients
 #' model_parameters(model, exponentiate = TRUE)
-#'
-#' # bias-corrected logistic regression with penalized maximum likelihood
-#' model <- glm(
-#'   vs ~ wt + cyl,
-#'   data = mtcars,
-#'   family = "binomial",
-#'   method = "brglmFit"
-#' )
-#' model_parameters(model)
 #' }
 #' @return A data frame of indices related to the model's parameters.
 #' @export

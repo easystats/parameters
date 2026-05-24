@@ -1,3 +1,4 @@
+skip_on_cran()
 skip_if_not_installed("survival")
 
 lung <- subset(survival::lung, subset = ph.ecog %in% 0:2)
