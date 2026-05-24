@@ -40,7 +40,7 @@
 ## Citation
 
 Source:
-[`inst/CITATION`](https://github.com/easystats/parameters/blob/main/inst/CITATION)
+[`inst/CITATION`](https://github.com/easystats/parameters/blob/v0.29.1/inst/CITATION)
 
 Lüdecke D, Ben-Shachar M, Patil I, Makowski D (2020). “Extracting,
 Computing and Exploring the Parameters of Statistical Models using R.”
