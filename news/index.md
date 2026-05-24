@@ -1,5 +1,28 @@
 # Changelog
 
+## parameters 0.29.1
+
+### Changes
+
+- [`bootstrap_model()`](https://easystats.github.io/parameters/reference/bootstrap_model.md)
+  for non-mixed models also gains a `cluster` argument for use if
+  `parallel = "snow"`.
+
+### Bug fixes
+
+- The `vcov` argument in
+  [`model_parameters()`](https://easystats.github.io/parameters/reference/model_parameters.md)
+  was ignored when `vcov` was of class `"dpoMatrix"` and did not return
+  `TRUE` to [`is.matrix()`](https://rdrr.io/r/base/matrix.html).
+
+- Fixed issue with `vcov` argument in
+  [`model_parameters()`](https://easystats.github.io/parameters/reference/model_parameters.md)
+  for models of class `glmmTMB`.
+
+- Fixed issue with printing study names in brms-meta-analysis models.
+
+- Fixed failing example in CRAN checks.
+
 ## parameters 0.29.0
 
 CRAN release: 2026-05-09

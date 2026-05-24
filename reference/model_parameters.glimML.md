@@ -256,8 +256,8 @@ to rename columns into a consistent, standardized naming scheme.
 ``` r
 library(parameters)
 if (require("brglm2", quietly = TRUE)) {
-  data("stemcell")
-  model <- bracl(
+  data("stemcell", package = "brglm2")
+  model <- brglm2::bracl(
     research ~ as.numeric(religion) + gender,
     weights = frequency,
     data = stemcell,
