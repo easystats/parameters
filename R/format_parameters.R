@@ -448,7 +448,9 @@ format_parameters.parameters_model <- function(model, ...) {
       # the environment data only has the original column (e.g., kid5), but the
       # model frame has the converted factor column (e.g., factor(kid5)). We need
       # to add those on-the-fly factor columns to the environment data so that
-      # we can look up their labels correctly and avoid size mismatches.
+      # we can look up their labels correctly. Only do this when the original
+      # variable has a label, to avoid overwriting format_parameters formatting
+      # for unlabelled on-the-fly factors (which already produce "var [level]").
       if (!is.null(mf_frame) && !is.null(mf)) {
         otf_cols <- colnames(mf_frame)[
           grepl("(as\\.factor|factor|as\\.character)", colnames(mf_frame), fixed = FALSE)
@@ -456,9 +458,14 @@ format_parameters.parameters_model <- function(model, ...) {
         for (fc in otf_cols) {
           orig_name <- gsub("(as\\.factor|factor|as\\.character)\\((.*)\\)", "\\2", fc)
           if (orig_name %in% colnames(mf) && !fc %in% colnames(mf)) {
-            mf[[fc]] <- mf_frame[[fc]]
-            # copy variable label from original column in environment data
-            attr(mf[[fc]], "label") <- attr(mf[[orig_name]], "label", exact = TRUE)
+            # only add the on-the-fly factor column when the original variable
+            # has a variable label; otherwise format_parameters already handles
+            # the display correctly (e.g., "as.factor(am)1" → "am [1]")
+            orig_label <- attr(mf[[orig_name]], "label", exact = TRUE)
+            if (!is.null(orig_label)) {
+              mf[[fc]] <- mf_frame[[fc]]
+              attr(mf[[fc]], "label") <- orig_label
+            }
           }
         }
       }
