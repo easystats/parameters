@@ -119,5 +119,52 @@ withr::with_options(
       p <- parameters::parameters(mod, pretty_names = "labels")
       expect_true("SD (Intercept)" %in% attr(p, "pretty_labels"))
     })
+
+    test_that("Issue #1142: character variable in model doesn't break other labels", {
+      dat <- mtcars
+      dat$gear <- as.character(dat$gear)
+      attr(dat$hp, "label") <- "Horsepower"
+      attr(dat$gear, "label") <- "Number of forward gears"
+
+      # Including a character variable should not make hp's label disappear
+      mod <- lm(mpg ~ hp + gear, data = dat)
+      mp <- model_parameters(mod)
+      known <- c(
+        "(Intercept)", "Horsepower",
+        "Number of forward gears [3]",
+        "Number of forward gears [4]",
+        "Number of forward gears [5]"
+      )
+      expect_equal(attr(mp, "pretty_labels"), known, ignore_attr = TRUE)
+    })
+
+    test_that("Issue #1135: on-the-fly factor with labelled data, no NA in interaction labels", {
+      dat <- mtcars
+      attr(dat$am, "label") <- "Transmission"
+      attr(dat$cyl, "label") <- "Cylinders"
+
+      # factor() on-the-fly conversion in formula
+      mod <- lm(mpg ~ am * factor(cyl), data = dat)
+      mp <- model_parameters(mod)
+      labels <- attr(mp, "pretty_labels")
+
+      # No NA should appear in interaction labels
+      expect_false(any(grepl("\\bNA\\b", labels, ignore.case = FALSE)))
+      # The am label should be used
+      expect_true(any(grepl("Transmission", labels)))
+      # Cylinders label should appear in the factor levels
+      expect_true(any(grepl("Cylinders", labels)))
+    })
+
+    test_that("Issue #1130: include_reference works for pscl zeroinfl models", {
+      skip_if_not_installed("pscl")
+      dat <- pscl::bioChemists
+      mod <- pscl::zeroinfl(art ~ fem + mar, data = dat)
+      out <- model_parameters(mod, include_reference = TRUE)
+      # Reference levels should be present in the count component
+      expect_true(any(grepl("\\[Men\\]", out$Parameter)))
+      expect_true(any(grepl("\\[Single\\]", out$Parameter)))
+    })
   }
 )
+

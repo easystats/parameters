@@ -423,19 +423,6 @@ format_parameters.parameters_model <- function(model, ...) {
 # replace pretty names with value labels, when present ---------------
 
 .format_value_labels <- function(params, model = NULL) {
-  # Dummy code, might be useful to fix #1135
-  # # extract data
-  # model_data <- insight::get_data(model, source = "environment", verbose = FALSE)
-  # # find only relevant vatiables
-  # model_vars <- insight::find_variables(model, flatten = TRUE)
-
-  # for (i in model_vars) {
-  #   label <- attr(model_data[[i]], "label", exact = TRUE)
-  #   if (!is.null(label)) {
-  #     pretty_names <- gsub(paste0("\\<", i, "\\>"), label, pretty_names)
-  #   }
-  # }
-
   pretty_labels <- NULL
   if (is.null(model)) {
     model <- .get_object(params)
@@ -445,30 +432,58 @@ format_parameters.parameters_model <- function(model, ...) {
   if (!is.null(model) && insight::is_regression_model(model) && !is.data.frame(model)) {
     # get data, but exclude response - we have no need for that label
     mf <- insight::get_data(model, source = "mf", verbose = FALSE)
-    # sanity check - any labels?
+    # save model frame for detecting on-the-fly factor conversions later
+    mf_frame <- mf
+    # sanity check - any labels (value labels)?
     has_labels <- vapply(
       mf,
       function(i) !is.null(attr(i, "labels", exact = TRUE)),
       logical(1)
     )
-    # if we don't have labels, we try to get data from environment
+    # if we don't have value labels, we try to get data from environment
+    # (which may preserve variable labels set via the labelled package)
     if (!any(has_labels)) {
       mf <- insight::get_data(model, source = "environment", verbose = FALSE)
+      # for on-the-fly factor conversions in the formula (e.g., factor(kid5)),
+      # the environment data only has the original column (e.g., kid5), but the
+      # model frame has the converted factor column (e.g., factor(kid5)). We need
+      # to add those on-the-fly factor columns to the environment data so that
+      # we can look up their labels correctly and avoid size mismatches.
+      if (!is.null(mf_frame) && !is.null(mf)) {
+        otf_cols <- colnames(mf_frame)[
+          grepl("(as\\.factor|factor|as\\.character)", colnames(mf_frame), fixed = FALSE)
+        ]
+        for (fc in otf_cols) {
+          orig_name <- gsub("(as\\.factor|factor|as\\.character)\\((.*)\\)", "\\2", fc)
+          if (orig_name %in% colnames(mf) && !fc %in% colnames(mf)) {
+            mf[[fc]] <- mf_frame[[fc]]
+            # copy variable label from original column in environment data
+            attr(mf[[fc]], "label") <- attr(mf[[orig_name]], "label", exact = TRUE)
+          }
+        }
+      }
     }
     resp <- insight::find_response(model, combine = FALSE)
     mf <- mf[, setdiff(colnames(mf), resp), drop = FALSE]
 
-    # return variable labels, and for factors, add labels for each level
+    # return variable labels, and for factors/characters, add labels for each level.
+    # character variables must be handled like factors (creating one entry per unique
+    # value), otherwise the lengths of lbs and preds will differ and setNames() fails,
+    # causing ALL labels to be lost (fix for issue #1142).
     lbs <- lapply(colnames(mf), function(i) {
       vec <- mf[[i]]
-      if (is.factor(vec)) {
+      if (is.factor(vec) || is.character(vec)) {
         variable_label <- attr(vec, "label", exact = TRUE)
         value_labels <- names(attr(vec, "labels", exact = TRUE))
         if (is.null(variable_label)) {
           variable_label <- i
         }
         if (is.null(value_labels)) {
-          value_labels <- levels(vec)
+          if (is.character(vec)) {
+            value_labels <- levels(as.factor(vec))
+          } else {
+            value_labels <- levels(vec)
+          }
         }
         out <- paste0(variable_label, " [", value_labels, "]")
       } else {
@@ -520,10 +535,15 @@ format_parameters.parameters_model <- function(model, ...) {
         for (i in names(interactions)) {
           # extract single coefficient names from interaction term
           out <- unlist(strsplit(i, ":", fixed = TRUE))
-          # combine labels
+          # combine labels; fall back to pretty_names when a component has no
+          # label entry (e.g. for on-the-fly factor conversions like factor(kid5))
           labs <- c(
             labs,
-            paste(sapply(out, function(l) pretty_labels[l]), collapse = " * ")
+            paste(sapply(out, function(l) {
+              lbl <- pretty_labels[l]
+              if (is.na(lbl)) lbl <- pn[l]
+              lbl
+            }), collapse = " * ")
           )
         }
         # add interaction terms to labels string
