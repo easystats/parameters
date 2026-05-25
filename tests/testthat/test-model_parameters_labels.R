@@ -161,8 +161,8 @@ withr::with_options(
       dat <- pscl::bioChemists
       mod <- pscl::zeroinfl(art ~ fem + mar, data = dat)
       out <- model_parameters(mod, include_reference = TRUE)
-      # Reference levels should be present (4 extra rows: fem and mar reference for each component)
-      # Original model has 6 params; with reference levels should have 10
+      # Reference levels should be present (4 extra rows: fem and mar reference
+      # for each of the 2 components = 4), so 6 original + 4 reference = 10
       expect_equal(nrow(out), 10L)
       # Reference level rows appear in both conditional and zero_inflated components
       expect_true(any(grepl("[Men]", attr(out, "pretty_names"), fixed = TRUE)))

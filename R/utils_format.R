@@ -225,7 +225,10 @@
   # for zeroinfl/hurdle models (e.g., pscl package), parameter names have
   # "count_" and "zero_" prefixes (e.g., "count_femWomen", "zero_femWomen").
   # We need to create prefixed versions of the factor levels so that they
-  # can be matched against the parameter names in pretty_names.
+  # can be matched against the parameter names in pretty_names. For these
+  # models all fixed-effect parameters carry a prefix, so we replace the
+  # unprefixed factors entirely — unprefixed names would never match and
+  # only produce spurious no-op lookups.
   if (!is.null(model) && inherits(model, c("zeroinfl", "hurdle"))) {
     factors_prefixed <- list()
     for (fn in names(factors)) {
