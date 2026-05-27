@@ -7,6 +7,17 @@
 
 ## Bug fixes
 
+* Fixed issue where including a character variable in a model caused all other
+  variable labels to be silently dropped from `model_parameters()` output
+  (#1142).
+
+* Fixed issue where on-the-fly factor conversions in the model formula (e.g.,
+  `factor(cyl)`) produced `NA` in interaction labels when variable labels were
+  set (#1135).
+
+* Fixed issue where `include_reference = TRUE` had no effect for
+  `pscl::zeroinfl()` and `pscl::hurdle()` models (#1130).
+
 * The `vcov` argument in `model_parameters()` was ignored when `vcov` was of
   class `"dpoMatrix"` and did not return `TRUE` to `is.matrix()`.
 
