@@ -1,4 +1,4 @@
-# parameters (devel)
+# parameters 0.29.1
 
 ## Changes
 
@@ -14,6 +14,8 @@
   `glmmTMB`.
 
 * Fixed issue with printing study names in brms-meta-analysis models.
+
+* Fixed failing example in CRAN checks.
 
 # parameters 0.29.0
 

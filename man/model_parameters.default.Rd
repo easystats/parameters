@@ -337,7 +337,7 @@ which is converted into a p-value using \code{\link[bayestestR:pd_to_p]{bayestes
 }
 
 \examples{
-\dontshow{if (all(insight::check_if_installed(c("boot", "sandwich", "clubSandwich", "brglm2"), quietly = TRUE))) withAutoprint(\{ # examplesIf}
+\dontshow{if (all(insight::check_if_installed(c("boot", "sandwich", "clubSandwich"), quietly = TRUE))) withAutoprint(\{ # examplesIf}
 library(parameters)
 model <- lm(mpg ~ wt + cyl, data = mtcars)
 
@@ -372,15 +372,6 @@ model_parameters(model)
 
 # show odds ratio / exponentiated coefficients
 model_parameters(model, exponentiate = TRUE)
-
-# bias-corrected logistic regression with penalized maximum likelihood
-model <- glm(
-  vs ~ wt + cyl,
-  data = mtcars,
-  family = "binomial",
-  method = "brglmFit"
-)
-model_parameters(model)
 }
 \dontshow{\}) # examplesIf}
 }
