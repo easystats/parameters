@@ -452,9 +452,10 @@ format_parameters.parameters_model <- function(model, ...) {
       # variable has a label, to avoid overwriting format_parameters formatting
       # for unlabelled on-the-fly factors (which already produce "var [level]").
       if (!is.null(mf_frame) && !is.null(mf)) {
-        otf_cols <- colnames(mf_frame)[
-          grepl("(as\\.factor|factor|as\\.character)", colnames(mf_frame))
-        ]
+        otf_cols <- colnames(mf_frame)[grepl(
+          "(as\\.factor|factor|as\\.character)",
+          colnames(mf_frame)
+        )]
         for (fc in otf_cols) {
           orig_name <- gsub("(as\\.factor|factor|as\\.character)\\((.*)\\)", "\\2", fc)
           if (orig_name %in% colnames(mf) && !fc %in% colnames(mf)) {
@@ -546,11 +547,20 @@ format_parameters.parameters_model <- function(model, ...) {
           # label entry (e.g. for on-the-fly factor conversions like factor(kid5))
           labs <- c(
             labs,
-            paste(vapply(out, function(l) {
-              lbl <- pretty_labels[l]
-              if (is.na(lbl)) lbl <- pn[l]
-              lbl
-            }, character(1)), collapse = " * ")
+            paste(
+              vapply(
+                out,
+                function(l) {
+                  lbl <- pretty_labels[l]
+                  if (is.na(lbl)) {
+                    lbl <- pn[l]
+                  }
+                  lbl
+                },
+                character(1)
+              ),
+              collapse = " * "
+            )
           )
         }
         # add interaction terms to labels string
