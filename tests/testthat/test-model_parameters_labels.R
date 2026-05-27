@@ -129,9 +129,9 @@ withr::with_options(
       # Including a character variable should not make hp's label disappear
       mod <- lm(mpg ~ hp + gear, data = dat)
       mp <- model_parameters(mod)
+      # gear3 is the reference level and does not appear as a model parameter
       known <- c(
         "(Intercept)", "Horsepower",
-        "Number of forward gears [3]",
         "Number of forward gears [4]",
         "Number of forward gears [5]"
       )

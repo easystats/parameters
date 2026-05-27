@@ -432,8 +432,6 @@ format_parameters.parameters_model <- function(model, ...) {
   if (!is.null(model) && insight::is_regression_model(model) && !is.data.frame(model)) {
     # get data, but exclude response - we have no need for that label
     mf <- insight::get_data(model, source = "mf", verbose = FALSE)
-    # save model frame for detecting on-the-fly factor conversions later
-    mf_frame <- mf
     # sanity check - any labels (value labels)?
     has_labels <- vapply(
       mf,
@@ -444,28 +442,35 @@ format_parameters.parameters_model <- function(model, ...) {
     # (which may preserve variable labels set via the labelled package)
     if (!any(has_labels)) {
       mf <- insight::get_data(model, source = "environment", verbose = FALSE)
-      # for on-the-fly factor conversions in the formula (e.g., factor(kid5)),
-      # the environment data only has the original column (e.g., kid5), but the
-      # model frame has the converted factor column (e.g., factor(kid5)). We need
-      # to add those on-the-fly factor columns to the environment data so that
-      # we can look up their labels correctly. Only do this when the original
-      # variable has a label, to avoid overwriting format_parameters formatting
-      # for unlabelled on-the-fly factors (which already produce "var [level]").
-      if (!is.null(mf_frame) && !is.null(mf)) {
-        otf_cols <- colnames(mf_frame)[grepl(
-          "(as\\.factor|factor|as\\.character)",
-          colnames(mf_frame)
-        )]
-        for (fc in otf_cols) {
-          orig_name <- gsub("(as\\.factor|factor|as\\.character)\\((.*)\\)", "\\2", fc)
-          if (orig_name %in% colnames(mf) && !fc %in% colnames(mf)) {
-            # only add the on-the-fly factor column when the original variable
-            # has a variable label; otherwise format_parameters already handles
-            # the display correctly (e.g., "as.factor(am)1" → "am [1]")
-            orig_label <- attr(mf[[orig_name]], "label", exact = TRUE)
-            if (!is.null(orig_label)) {
-              mf[[fc]] <- mf_frame[[fc]]
-              attr(mf[[fc]], "label") <- orig_label
+      # for on-the-fly factor conversions in the formula (e.g., factor(cyl)),
+      # insight::get_data() returns the original column (e.g., "cyl"), not the
+      # expression column (e.g., "factor(cyl)"). Use insight::find_terms() to
+      # detect such conversions and manually add converted columns, mirroring
+      # the approach in .find_factor_levels(). Only add when the original
+      # variable has a variable label, to preserve format_parameters formatting
+      # for unlabelled on-the-fly factors (e.g., "as.factor(am)1" → "am [1]").
+      if (!is.null(mf)) {
+        model_terms <- .safe(insight::find_terms(model, verbose = FALSE))
+        if (!is.null(model_terms[["conditional"]])) {
+          factor_terms <- grep(
+            "(as\\.factor|factor|as\\.character)",
+            model_terms[["conditional"]],
+            value = TRUE
+          )
+          cleaned_terms <- gsub(
+            "(as\\.factor|factor|as\\.character)\\((.*)\\)",
+            "\\2",
+            factor_terms
+          )
+          for (k in seq_along(factor_terms)) {
+            ft <- factor_terms[k]    # e.g. "factor(cyl)"
+            orig <- cleaned_terms[k] # e.g. "cyl"
+            if (orig %in% colnames(mf) && !ft %in% colnames(mf)) {
+              orig_label <- attr(mf[[orig]], "label", exact = TRUE)
+              if (!is.null(orig_label)) {
+                mf[[ft]] <- as.factor(mf[[orig]])
+                attr(mf[[ft]], "label") <- orig_label
+              }
             }
           }
         }
