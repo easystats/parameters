@@ -2,6 +2,8 @@
 
 ## parameters 0.29.1
 
+CRAN release: 2026-05-24
+
 ### Changes
 
 - [`bootstrap_model()`](https://easystats.github.io/parameters/reference/bootstrap_model.md)
