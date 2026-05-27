@@ -222,6 +222,23 @@
     factors <- factors[setdiff(names(factors), remove_contrasts)]
   }
 
+  # for zeroinfl/hurdle models (e.g., pscl package), parameter names have
+  # "count_" and "zero_" prefixes (e.g., "count_femWomen", "zero_femWomen").
+  # We need to create prefixed versions of the factor levels so that they
+  # can be matched against the parameter names in pretty_names. For these
+  # models all fixed-effect parameters carry a prefix, so we replace the
+  # unprefixed factors entirely — unprefixed names would never match and
+  # only produce spurious no-op lookups.
+  if (!is.null(model) && inherits(model, c("zeroinfl", "hurdle"))) {
+    factors_prefixed <- list()
+    for (fn in names(factors)) {
+      for (prefix in c("count_", "zero_")) {
+        factors_prefixed[[paste0(prefix, fn)]] <- paste0(prefix, factors[[fn]])
+      }
+    }
+    factors <- factors_prefixed
+  }
+
   # we need some more information about prettified labels etc.
   pretty_names <- attributes(params)$pretty_names
   coef_name <- attributes(params)$coefficient_name
@@ -270,6 +287,8 @@
       } else {
         fn_clean <- fn
       }
+      # strip zeroinfl/hurdle component prefixes ("count_", "zero_") for display
+      fn_clean <- gsub("^(count_|zero_)", "", fn_clean)
       # create a pretty level for the reference category
       pretty_level <- paste0(fn_clean, " [", sub(fn, "", reference_level, fixed = TRUE), "]")
       pretty_level <- gsub("_", " ", pretty_level, fixed = TRUE)
@@ -305,6 +324,12 @@
         colnames(row_data)[2] <- zi_coef_name
       }
       out <- .insert_row_at(out, row_data, min(found))
+      # for zeroinfl/hurdle models, .insert_row_at sets Component from data[1],
+      # which is "conditional". Fix so the inserted reference row inherits the
+      # Component from the adjacent non-reference row (e.g., "zero_inflated").
+      if ("Component" %in% colnames(out) && nrow(out) > min(found)) {
+        out$Component[min(found)] <- out$Component[min(found) + 1]
+      }
     }
   }
 
