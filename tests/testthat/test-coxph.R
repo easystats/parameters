@@ -9,7 +9,7 @@ withr::with_package(
     m <- survival::coxph(
       survival::Surv(time, status) ~ rx +
         survival::frailty.gaussian(litter, df = 13, sparse = FALSE),
-      rats,
+      survival::rats,
       subset = (sex == 'f')
     )
     out <- model_parameters(m, digits = 4)
