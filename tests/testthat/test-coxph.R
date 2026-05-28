@@ -1,6 +1,23 @@
 skip_on_cran()
 skip_if_not_installed("survival")
 
+test_that("model_parameters.coxph, SE correct for frailty", {
+  data(cancer, package = "survival")
+  m <- survival::coxph(
+    survival::Surv(time, status) ~ rx +
+      survival::frailty.gaussian(litter, df = 13, sparse = FALSE),
+    rats,
+    subset = (sex == 'f')
+  )
+  out <- model_parameters(m, digits = 4)
+  expect_equal(
+    out$SE,
+    unname(summary(m)$coef[, "se(coef)"]),
+    tolerance = 1e-4,
+    ignore_attr = TRUE
+  )
+})
+
 lung <- subset(survival::lung, subset = ph.ecog %in% 0:2)
 lung$sex <- factor(lung$sex, labels = c("male", "female"))
 lung$ph.ecog <- factor(lung$ph.ecog, labels = c("good", "ok", "limited"))

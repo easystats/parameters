@@ -74,6 +74,8 @@ standard_error.coxph <- function(model, method = NULL, ...) {
   cs <- stats::coef(s)
   if (isTRUE(s$used.robust)) {
     se <- cs[, 4]
+  } else if ("se(coef)" %in% colnames(cs)) {
+    se <- cs[, "se(coef)"]
   } else {
     se <- cs[, 3]
   }
