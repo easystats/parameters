@@ -40,10 +40,10 @@ data(mtcars)
 out <- factor_analysis(mtcars[, 1:7], n = 2)
 head(factor_scores(out))
 #>                           MR2        MR1
-#> Mazda RX4         -0.47283411 -0.7310473
-#> Mazda RX4 Wag     -0.38011190 -0.4342608
-#> Datsun 710        -0.99251660  0.4087644
-#> Hornet 4 Drive     0.07181114  0.9131821
-#> Hornet Sportabout  0.72282034 -0.3946499
-#> Valiant            0.21348647  1.3394226
+#> Mazda RX4         -0.47283517 -0.7310481
+#> Mazda RX4 Wag     -0.38011257 -0.4342613
+#> Datsun 710        -0.99251655  0.4087635
+#> Hornet 4 Drive     0.07181224  0.9131825
+#> Hornet Sportabout  0.72282019 -0.3946493
+#> Valiant            0.21348813  1.3394233
 ```

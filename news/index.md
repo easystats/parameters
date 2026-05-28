@@ -12,6 +12,22 @@ CRAN release: 2026-05-24
 
 ### Bug fixes
 
+- Fixed issue where including a character variable in a model caused all
+  other variable labels to be silently dropped from
+  [`model_parameters()`](https://easystats.github.io/parameters/reference/model_parameters.md)
+  output
+  ([\#1142](https://github.com/easystats/parameters/issues/1142)).
+
+- Fixed issue where on-the-fly factor conversions in the model formula
+  (e.g., `factor(cyl)`) produced `NA` in interaction labels when
+  variable labels were set
+  ([\#1135](https://github.com/easystats/parameters/issues/1135)).
+
+- Fixed issue where `include_reference = TRUE` had no effect for
+  [`pscl::zeroinfl()`](https://rdrr.io/pkg/pscl/man/zeroinfl.html) and
+  [`pscl::hurdle()`](https://rdrr.io/pkg/pscl/man/hurdle.html) models
+  ([\#1130](https://github.com/easystats/parameters/issues/1130)).
+
 - The `vcov` argument in
   [`model_parameters()`](https://easystats.github.io/parameters/reference/model_parameters.md)
   was ignored when `vcov` was of class `"dpoMatrix"` and did not return

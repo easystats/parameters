@@ -549,27 +549,6 @@ closest_component(pca)
 # Factor Analysis (FA) ------------------------
 
 factor_analysis(mtcars[, 1:7], n = "all", threshold = 0.2, rotation = "Promax")
-#> Warning: Convergence not obtained in GPForth. 1000 iterations used.
-#> Warning: Convergence not obtained in GPForth. 1000 iterations used.
-#> Warning: Convergence not obtained in GPForth. 1000 iterations used.
-#> Warning: Convergence not obtained in GPForth. 1000 iterations used.
-#> Warning: Convergence not obtained in GPForth. 1000 iterations used.
-#> Warning: Convergence not obtained in GPForth. 1000 iterations used.
-#> Warning: Convergence not obtained in GPForth. 1000 iterations used.
-#> Warning: Convergence not obtained in GPForth. 1000 iterations used.
-#> Warning: Convergence not obtained in GPForth. 1000 iterations used.
-#> Warning: Convergence not obtained in GPForth. 1000 iterations used.
-#> Warning: Convergence not obtained in GPForth. 1000 iterations used.
-#> Warning: Convergence not obtained in GPForth. 1000 iterations used.
-#> Warning: Convergence not obtained in GPForth. 1000 iterations used.
-#> Warning: Convergence not obtained in GPForth. 1000 iterations used.
-#> Warning: Convergence not obtained in GPForth. 1000 iterations used.
-#> Warning: Convergence not obtained in GPForth. 1000 iterations used.
-#> Warning: Convergence not obtained in GPForth. 1000 iterations used.
-#> Warning: Convergence not obtained in GPForth. 1000 iterations used.
-#> Warning: Convergence not obtained in GPForth. 1000 iterations used.
-#> Warning: Convergence not obtained in GPForth. 1000 iterations used.
-#> Warning: Convergence not obtained in GPForth. 1000 iterations used.
 #> # Rotated loadings from Factor Analysis (Promax-rotation)
 #> 
 #> Variable |   MR4 |   MR6 |   MR5 |  MR1 |  MR2 | MR3 | Complexity | Uniqueness
