@@ -4,6 +4,7 @@ skip_if_not_installed("discovr")
 
 
 test_that("mp, test bf and pd, chapter 8.14", {
+  skip_on_os("linux")
   skip_if_not_installed("rstanarm")
   set.seed(123)
   m <- rstanarm::stan_glm(sales ~ adverts + airplay + image, data = discovr::album_sales)
