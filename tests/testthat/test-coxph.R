@@ -1,5 +1,26 @@
 skip_on_cran()
 skip_if_not_installed("survival")
+skip_if_not_installed("withr")
+
+withr::with_package(
+  "survival",
+  test_that("model_parameters.coxph, SE correct for frailty", {
+    data(cancer, package = "survival")
+    m <- survival::coxph(
+      survival::Surv(time, status) ~ rx +
+        survival::frailty.gaussian(litter, df = 13, sparse = FALSE),
+      survival::rats,
+      subset = (sex == 'f')
+    )
+    out <- model_parameters(m, digits = 4)
+    expect_equal(
+      out$SE,
+      unname(summary(m)$coef[, "se(coef)"]),
+      tolerance = 1e-4,
+      ignore_attr = TRUE
+    )
+  })
+)
 
 lung <- subset(survival::lung, subset = ph.ecog %in% 0:2)
 lung$sex <- factor(lung$sex, labels = c("male", "female"))
@@ -57,8 +78,6 @@ test_that("model_parameters", {
 })
 
 
-skip_if_not_installed("withr")
-
 withr::with_package(
   "survival",
   test_that("model_parameters coxph-panel", {
@@ -67,7 +86,7 @@ withr::with_package(
     mod <- survival::coxph(
       survival::Surv(time, status) ~ ph.ecog + tt(age),
       data = lung,
-      tt = function(x, t, ...) pspline(x + t / 365.25)
+      tt = function(x, t, ...) survival::pspline(x + t / 365.25)
     )
     expect_snapshot(print(model_parameters(mod)))
   })
