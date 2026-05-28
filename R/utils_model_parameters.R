@@ -68,7 +68,7 @@
   attr(params, "df_method") <- .format_ci_method_name(ci_method)
   attr(params, "verbose") <- verbose
   attr(params, "exponentiate") <- exponentiate
-  attr(params, "ordinal_model") <- isTRUE(info$is_ordinal) | isTRUE(info$is_multinomial)
+  attr(params, "ordinal_model") <- isTRUE(info$is_ordinal) || isTRUE(info$is_multinomial)
   attr(params, "linear_model") <- isTRUE(info$is_linear)
   attr(params, "mixed_model") <- isTRUE(info$is_mixed)
   attr(params, "n_obs") <- info$n_obs
@@ -101,7 +101,7 @@
       "instruments"
     )]),
     fixed = TRUE
-  ))) # nolint
+  )))
 
   # save if model is multivariate response model
   if (isTRUE(info$is_multivariate)) {
@@ -227,7 +227,9 @@
   }
 
   # add parameters with value and variable
-  attr(params, "pretty_labels") <- .format_value_labels(params, model)
+  if (!isFALSE(dot.arguments$pretty_names)) {
+    attr(params, "pretty_labels") <- .format_value_labels(params, model)
+  }
 
   row.names(params) <- NULL
   params

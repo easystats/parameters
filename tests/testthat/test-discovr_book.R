@@ -2,7 +2,9 @@ skip_on_os("mac")
 skip_on_cran()
 skip_if_not_installed("discovr")
 
+
 test_that("mp, test bf and pd, chapter 8.14", {
+  skip_on_os("linux")
   skip_if_not_installed("rstanarm")
   set.seed(123)
   m <- rstanarm::stan_glm(sales ~ adverts + airplay + image, data = discovr::album_sales)
@@ -20,6 +22,7 @@ test_that("mp, test bf and pd, chapter 8.14", {
     )
   )
 })
+
 
 test_that("mp, htests, chapter 9.9", {
   # fmt: skip
@@ -69,7 +72,7 @@ test_that("mp, htests, chapter 9.9", {
   )
 
   # robust t-test based on trimmed means
-  skip_if_not_installed("WSR2")
+  skip_if_not_installed("WRS2")
   cloak_yn <- WRS2::yuen(mischief ~ cloak, data = cloak_tib)
   out <- model_parameters(cloak_yn)
   expect_identical(
@@ -80,6 +83,62 @@ test_that("mp, htests, chapter 9.9", {
       "t(12.26) |     p | Difference | Difference 95% CI | Estimate |                         Effectsize",
       "-------------------------------------------------------------------------------------------------",
       "1.48     | 0.165 |         -1 |     [-2.47, 0.47] |     0.40 | Explanatory measure of effect size"
+    )
+  )
+})
+
+
+test_that("mp, htests, chapter 10.4", {
+  skip_if_not_installed("lavaan")
+  infidelity_tib <- discovr::lambert_2012
+  infidelity_mod <- 'phys_inf ~ c*ln_porn + b*commit
+                     commit ~ a*ln_porn
+
+                     indirect_effect := a*b
+                     total_effect := c + (a*b)'
+  infidelity_fit <- lavaan::sem(
+    infidelity_mod,
+    data = infidelity_tib,
+    missing = "FIML",
+    estimator = "MLR"
+  )
+  out <- model_parameters(infidelity_fit)
+  expect_identical(
+    capture.output(print(out, table_width = Inf)),
+    c(
+      "# Regression",
+      "",
+      "Link                   | Coefficient |   SE |         95% CI |     z |      p",
+      "-----------------------------------------------------------------------------",
+      "phys_inf ~ ln_porn (c) |        0.46 | 0.25 | [-0.02,  0.94] |  1.87 | 0.061 ",
+      "phys_inf ~ commit (b)  |       -0.27 | 0.07 | [-0.41, -0.13] | -3.81 | < .001",
+      "commit ~ ln_porn (a)   |       -0.47 | 0.23 | [-0.92, -0.02] | -2.06 | 0.040 ",
+      "",
+      "# Defined",
+      "",
+      "To                | Coefficient |   SE |        95% CI |    z |     p",
+      "---------------------------------------------------------------------",
+      "(indirect_effect) |        0.13 | 0.07 | [-0.01, 0.26] | 1.88 | 0.061",
+      "(total_effect)    |        0.59 | 0.24 | [ 0.11, 1.06] | 2.41 | 0.016"
+    )
+  )
+  expect_identical(
+    as.character(display(out, table_width = Inf)),
+    c(
+      "Table: Regression",
+      "",
+      "|Link                   | Coefficient |   SE |         95% CI |     z |      p |",
+      "|:----------------------|:-----------:|:----:|:--------------:|:-----:|:------:|",
+      "|phys_inf ~ ln_porn (c) |        0.46 | 0.25 |  (-0.02, 0.94) |  1.87 | 0.061  |",
+      "|phys_inf ~ commit (b)  |       -0.27 | 0.07 | (-0.41, -0.13) | -3.81 | < .001 |",
+      "|commit ~ ln_porn (a)   |       -0.47 | 0.23 | (-0.92, -0.02) | -2.06 | 0.040  |",
+      "",
+      "Table: Defined",
+      "",
+      "|To                | Coefficient |   SE |            95% CI |    z |     p |",
+      "|:-----------------|:-----------:|:----:|:-----------------:|:----:|:-----:|",
+      "|(indirect_effect) |        0.13 | 0.07 | (-5.70e-03, 0.26) | 1.88 | 0.061 |",
+      "|(total_effect)    |        0.59 | 0.24 |      (0.11, 1.06) | 2.41 | 0.016 |"
     )
   )
 })
