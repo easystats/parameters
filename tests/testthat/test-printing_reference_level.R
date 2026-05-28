@@ -5,51 +5,75 @@ test_that("print in pipe", {
   expect_identical(
     out$Parameter,
     c(
-      "(Intercept)", "Petal.Length", "Speciessetosa", "Speciesversicolor",
+      "(Intercept)",
+      "Petal.Length",
+      "Speciessetosa",
+      "Speciesversicolor",
       "Speciesvirginica"
     )
   )
-  expect_equal(out$Coefficient, c(3.68353, 0.90456, 0, -1.60097, -2.11767), tolerance = 1e-4)
+  expect_equal(
+    out$Coefficient,
+    c(3.68353, 0.90456, 0, -1.60097, -2.11767),
+    tolerance = 1e-4
+  )
   out <- model_parameters(model, include_reference = TRUE, pretty_names = FALSE)
   expect_identical(
     out$Parameter,
     c(
-      "(Intercept)", "Petal.Length", "Speciessetosa", "Speciesversicolor",
+      "(Intercept)",
+      "Petal.Length",
+      "Speciessetosa",
+      "Speciesversicolor",
       "Speciesvirginica"
     )
   )
-  expect_equal(out$Coefficient, c(3.68353, 0.90456, 0, -1.60097, -2.11767), tolerance = 1e-4)
+  expect_equal(
+    out$Coefficient,
+    c(3.68353, 0.90456, 0, -1.60097, -2.11767),
+    tolerance = 1e-4
+  )
 })
 
 # skip_if(getRversion() < "4.0.0")
+# skip_if_not_installed("withr")
 
-# test_that("simple reference level", {
-#   data(PlantGrowth)
-#   d <<- PlantGrowth
-#   m <- lm(weight ~ group, data = d)
-#   mp <- model_parameters(m)
-#   expect_snapshot(print(mp, include_reference = TRUE))
+# there seem to be scoping issues with these tests...
 
-#   data(mtcars)
-#   d <<- mtcars
-#   d$cyl <- as.factor(d$cyl)
-#   d$am <- as.factor(d$am)
-#   m <- lm(mpg ~ hp + cyl + gear + am, data = d)
-#   mp <- model_parameters(m)
-#   expect_snapshot(print(mp, include_reference = TRUE))
+# withr::with_environment(
+#   new.env(),
+#   test_that("simple reference level", {
+#     skip_on_cran()
+#     data(PlantGrowth)
+#     d <- PlantGrowth
+#     m <- lm(weight ~ group, data = d)
+#     mp <- model_parameters(m)
+#     expect_snapshot(print(mp, include_reference = TRUE))
 
-#   data(iris)
-#   d <<- iris
-#   m <- lm(Sepal.Length ~ Sepal.Width * Species, data = d)
-#   mp <- model_parameters(m)
-#   expect_snapshot(print(mp, include_reference = TRUE))
+#     data(mtcars)
+#     d <- mtcars
+#     d$cyl <- as.factor(d$cyl)
+#     d$am <- as.factor(d$am)
+#     m <- lm(mpg ~ hp + cyl + gear + am, data = d)
+#     mp <- model_parameters(m)
+#     expect_snapshot(print(mp, include_reference = TRUE))
 
-#   data(mtcars)
-#   d <<- mtcars
-#   d$gear <- as.factor(d$gear)
-#   m <- glm(vs ~ wt + gear, data = d, family = "binomial")
-#   expect_snapshot(print(model_parameters(m, exponentiate = TRUE, drop = "(Intercept)"), include_reference = TRUE))
-# })
+#     data(iris)
+#     d <- iris
+#     m <- lm(Sepal.Length ~ Sepal.Width * Species, data = d)
+#     mp <- model_parameters(m)
+#     expect_snapshot(print(mp, include_reference = TRUE))
+
+#     data(mtcars)
+#     d <- mtcars
+#     d$gear <- as.factor(d$gear)
+#     m <- glm(vs ~ wt + gear, data = d, family = "binomial")
+#     expect_snapshot(print(
+#       model_parameters(m, exponentiate = TRUE, drop = "(Intercept)"),
+#       include_reference = TRUE
+#     ))
+#   })
+# )
 
 # test_that("reference for models with multiple components", {
 #   skip_on_cran()
