@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.29.1.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.29.1.3</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -62,10 +62,7 @@
 </ul></div>
 <div class="section level3">
 <h3 id="bug-fixes-0-29-1">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-29-1"></a></h3>
-<ul><li><p>Fixed issue where including a character variable in a model caused all other variable labels to be silently dropped from <code><a href="../reference/model_parameters.html">model_parameters()</a></code> output (<a href="https://github.com/easystats/parameters/issues/1142" class="external-link">#1142</a>).</p></li>
-<li><p>Fixed issue where on-the-fly factor conversions in the model formula (e.g., <code>factor(cyl)</code>) produced <code>NA</code> in interaction labels when variable labels were set (<a href="https://github.com/easystats/parameters/issues/1135" class="external-link">#1135</a>).</p></li>
-<li><p>Fixed issue where <code>include_reference = TRUE</code> had no effect for <code><a href="https://rdrr.io/pkg/pscl/man/zeroinfl.html" class="external-link">pscl::zeroinfl()</a></code> and <code><a href="https://rdrr.io/pkg/pscl/man/hurdle.html" class="external-link">pscl::hurdle()</a></code> models (<a href="https://github.com/easystats/parameters/issues/1130" class="external-link">#1130</a>).</p></li>
-<li><p>The <code>vcov</code> argument in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> was ignored when <code>vcov</code> was of class <code>"dpoMatrix"</code> and did not return <code>TRUE</code> to <code><a href="https://rdrr.io/r/base/matrix.html" class="external-link">is.matrix()</a></code>.</p></li>
+<ul><li><p>The <code>vcov</code> argument in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> was ignored when <code>vcov</code> was of class <code>"dpoMatrix"</code> and did not return <code>TRUE</code> to <code><a href="https://rdrr.io/r/base/matrix.html" class="external-link">is.matrix()</a></code>.</p></li>
 <li><p>Fixed issue with <code>vcov</code> argument in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for models of class <code>glmmTMB</code>.</p></li>
 <li><p>Fixed issue with printing study names in brms-meta-analysis models.</p></li>
 <li><p>Fixed failing example in CRAN checks.</p></li>
