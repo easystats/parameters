@@ -1,14 +1,16 @@
 #' @export
-model_parameters.mjoint <- function(model,
-                                    ci = 0.95,
-                                    effects = "fixed",
-                                    component = "all",
-                                    exponentiate = FALSE,
-                                    p_adjust = NULL,
-                                    keep = NULL,
-                                    drop = NULL,
-                                    verbose = TRUE,
-                                    ...) {
+model_parameters.mjoint <- function(
+  model,
+  ci = 0.95,
+  effects = "fixed",
+  component = "all",
+  exponentiate = FALSE,
+  p_adjust = NULL,
+  keep = NULL,
+  drop = NULL,
+  verbose = TRUE,
+  ...
+) {
   effects <- insight::validate_argument(effects, c("fixed", "random", "all"))
   component <- insight::validate_argument(component, c("all", "conditional", "survival"))
 
@@ -44,7 +46,6 @@ model_parameters.mjoint <- function(model,
     )
     params_variance$Component <- "conditional"
   }
-
 
   # merge random and fixed effects, if necessary
   if (!is.null(params) && !is.null(params_variance)) {
@@ -121,7 +122,11 @@ ci.mjoint <- function(x, ci = 0.95, ...) {
 
 
 #' @export
-standard_error.mjoint <- function(model, component = c("all", "conditional", "survival"), ...) {
+standard_error.mjoint <- function(
+  model,
+  component = c("all", "conditional", "survival"),
+  ...
+) {
   component <- match.arg(component)
   s <- summary(model)
 

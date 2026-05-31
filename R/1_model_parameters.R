@@ -528,7 +528,7 @@ parameters <- model_parameters
 #'
 #' @inheritSection model_parameters Confidence intervals and approximation of degrees of freedom
 #'
-#' @examplesIf require("boot", quietly = TRUE) && require("sandwich") && require("clubSandwich") && require("brglm2")
+#' @examplesIf all(insight::check_if_installed(c("boot", "sandwich", "clubSandwich"), quietly = TRUE))
 #' library(parameters)
 #' model <- lm(mpg ~ wt + cyl, data = mtcars)
 #'
@@ -563,15 +563,6 @@ parameters <- model_parameters
 #'
 #' # show odds ratio / exponentiated coefficients
 #' model_parameters(model, exponentiate = TRUE)
-#'
-#' # bias-corrected logistic regression with penalized maximum likelihood
-#' model <- glm(
-#'   vs ~ wt + cyl,
-#'   data = mtcars,
-#'   family = "binomial",
-#'   method = "brglmFit"
-#' )
-#' model_parameters(model)
 #' }
 #' @return A data frame of indices related to the model's parameters.
 #' @export
@@ -634,17 +625,22 @@ model_parameters.default <- function(
   if (length(out) == 1 && isTRUE(is.na(out))) {
     insight::format_error(
       paste0(
-        "Sorry, `model_parameters()` failed with the following error (possible class `",
-        class(model)[1],
-        "` not supported):\n"
+        "Sorry, ",
+        sQuote("model_parameters()"),
+        " failed with the following error (possible class ",
+        sQuote(class(model)[1]),
+        " not supported):\n"
       ),
       attr(out, "error")
     )
-  } else if (is.null(out)) {
+  }
+  if (is.null(out)) {
     insight::format_error(paste0(
-      "Sorry, `model_parameters()` does not currently work for objects of class `",
-      class(model)[1],
-      "`."
+      "Sorry, ",
+      sQuote("model_parameters()"),
+      " does not currently work for objects of class ",
+      sQuote(class(model)[1]),
+      "."
     ))
   }
 }

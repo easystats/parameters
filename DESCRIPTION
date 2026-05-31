@@ -1,7 +1,7 @@
 Type: Package
 Package: parameters
 Title: Processing of Model Parameters
-Version: 0.28.3.5
+Version: 0.29.1.3
 Authors@R:
     c(person(given = "Daniel",
              family = "Lüdecke",
@@ -79,8 +79,8 @@ Depends:
     R (>= 3.6)
 Imports:
     bayestestR (>= 0.17.0),
-    datawizard (>= 1.3.0),
-    insight (>= 1.4.6),
+    datawizard (>= 1.3.1),
+    insight (>= 1.5.0),
     graphics,
     methods,
     stats,
@@ -92,6 +92,7 @@ Suggests:
     BayesFactor (>= 0.9.12-4.7),
     BayesFM,
     bbmle,
+    BSDA,
     betareg,
     BH,
     biglm,
@@ -226,10 +227,10 @@ VignetteBuilder:
     knitr
 Encoding: UTF-8
 Language: en-US
-RoxygenNote: 7.3.3
 Roxygen: list(markdown = TRUE)
 Config/testthat/edition: 3
-Config/testthat/parallel: true
+Config/testthat/parallel: false
 Config/Needs/website: easystats/easystatstemplate
 Config/Needs/check: stan-dev/cmdstanr
 Config/rcmdcheck/ignore-inconsequential-notes: true
+Config/roxygen2/version: 8.0.0

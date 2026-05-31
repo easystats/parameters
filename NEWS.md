@@ -1,5 +1,42 @@
 # parameters (devel)
 
+## Bug fixes
+
+* Fixed issues with extracting wrong standard errors for model with frailty
+  terms in `survival::coxph()`.
+
+* Fixed issue where including a character variable in a model caused all other
+  variable labels to be silently dropped from `model_parameters()` output
+  (#1142).
+
+* Fixed issue where on-the-fly factor conversions in the model formula (e.g.,
+  `factor(cyl)`) produced `NA` in interaction labels when variable labels were
+  set (#1135).
+
+* Fixed issue where `include_reference = TRUE` had no effect for
+  `pscl::zeroinfl()` and `pscl::hurdle()` models (#1130).
+
+# parameters 0.29.1
+
+## Changes
+
+* `bootstrap_model()` for non-mixed models also gains a `cluster` argument for use
+  if `parallel = "snow"`.
+
+## Bug fixes
+
+* The `vcov` argument in `model_parameters()` was ignored when `vcov` was of
+  class `"dpoMatrix"` and did not return `TRUE` to `is.matrix()`.
+
+* Fixed issue with `vcov` argument in `model_parameters()` for models of class
+  `glmmTMB`.
+
+* Fixed issue with printing study names in brms-meta-analysis models.
+
+* Fixed failing example in CRAN checks.
+
+# parameters 0.29.0
+
 ## Changes
 
 * `standardize_parameters()` (and by extension `model_parameters()`) with any of
@@ -12,6 +49,21 @@
 
 * `model_parameters()` now supports objects from the *lavaan.mi* package.
 
+* Improved performance of `model_parameters()` for large `mgcv::gam()` models
+  that include random effects when using the new `re_test` argument (e.g.,
+  setting `re_test = FALSE` to skip expensive random-effect tests). Default
+  behavior (with `re_test = TRUE`) is unchanged.
+
+* `model_parameters()` for proportions-htests objects no longer hard-codes the
+  estimate for the proportion in the underlying data frame. This is now done
+  in the `format()` method.
+
+* `model_parameters()` now supports htests objects from package *BSDA*.
+
+* Output for other random effects covariance structures than "unstructured" for
+  models from package *glmmTMB* has been revised, to provide a more useful output,
+  which is also in line with the relevant information returned by `VarCorr()`.
+
 ## Bug fixes
 
 * Fixed issue where wrong (non-robust) standard errors were calculated for
@@ -22,6 +74,9 @@
 * Fixed unintended removal of columns in `model_parameters()` for objects from
   package *marginaleffects*. This happened, when a variable in a model was named
   `Type`.
+
+* Fixed issue in `model_parameters()` for `fisher.test()` with tables larger
+  than 2x2.
 
 # parameters 0.28.3
 

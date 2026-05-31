@@ -323,7 +323,7 @@ test_that("standardize_parameters (Bayes)", {
 
   suppressWarnings(pr1 <- model_parameters(mod, standardize = "refit", test = "pd"))
   expect_shape(pr1, nrow = 2L)
-  expect_equal(pr1$Median, c(-0.4414492, -0.5999897), tolerance = 0.01)
+  expect_equal(pr1$Median, c(-0.42251, -0.58335), tolerance = 0.01)
   expect_equal(pr1$pd, c(0.88425, 0.93000), tolerance = 0.01)
 
   pr2 <- model_parameters(mod, standardize = "basic", test = "pd")

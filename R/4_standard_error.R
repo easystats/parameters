@@ -52,7 +52,7 @@
 #'   standard errors. Depending on the model, may also include columns for model
 #'   components etc.
 #'
-#' @examplesIf require("sandwich") && require("clubSandwich")
+#' @examplesIf all(insight::check_if_installed(c("sandwich", "clubSandwich"), quietly = TRUE))
 #' model <- lm(Petal.Length ~ Sepal.Length * Species, data = iris)
 #' standard_error(model)
 #'
@@ -74,13 +74,15 @@ standard_error <- function(model, ...) {
 
 #' @rdname standard_error
 #' @export
-standard_error.default <- function(model,
-                                   effects = "fixed",
-                                   component = "all",
-                                   vcov = NULL,
-                                   vcov_args = NULL,
-                                   verbose = TRUE,
-                                   ...) {
+standard_error.default <- function(
+  model,
+  effects = "fixed",
+  component = "all",
+  vcov = NULL,
+  vcov_args = NULL,
+  verbose = TRUE,
+  ...
+) {
   # check for valid input
   .is_model_valid(model)
 
@@ -90,6 +92,12 @@ standard_error.default <- function(model,
   # if a vcov is provided, we calculate standard errors based on that matrix
   # this is usually the case for HC (robust) standard errors
   # ------------------------------------------------------------------------
+
+  # make sure we have a "matrix" class
+  if (inherits(vcov, "Matrix") || inherits(vcov, "dpoMatrix")) {
+    insight::check_if_installed("Matrix")
+    vcov <- as.matrix(vcov)
+  }
 
   # vcov: matrix
   if (is.matrix(vcov)) {
@@ -149,7 +157,11 @@ standard_error.default <- function(model,
   } else {
     params <- insight::get_parameters(model, component = component)
     if (length(se) == nrow(params) && "Component" %in% colnames(params)) {
-      se <- .data_frame(Parameter = params$Parameter, SE = as.vector(se), Component = params$Component)
+      se <- .data_frame(
+        Parameter = params$Parameter,
+        SE = as.vector(se),
+        Component = params$Component
+      )
     } else {
       se <- .data_frame(Parameter = names(se), SE = as.vector(se))
     }
@@ -160,7 +172,6 @@ standard_error.default <- function(model,
 
 
 # helper -----------------------------------------------------------------
-
 
 .get_se_from_summary <- function(model, component = NULL) {
   cs <- .safe(suppressWarnings(stats::coef(summary(model))))
@@ -191,9 +202,12 @@ standard_error.default <- function(model,
 
 .check_vcov_args <- function(robust, ...) {
   dots <- list(...)
-  isTRUE(isTRUE(robust) || isTRUE(dots$robust) || ("vcov" %in% names(dots) && !is.null(dots[["vcov"]])))
+  isTRUE(
+    isTRUE(robust) ||
+      isTRUE(dots$robust) ||
+      ("vcov" %in% names(dots) && !is.null(dots[["vcov"]]))
+  )
 }
-
 
 # .ranef_se <- function(x) {
 # insight::check_if_installed("lme4")
