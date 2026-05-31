@@ -16,6 +16,9 @@
 * Fixed issue where `include_reference = TRUE` had no effect for
   `pscl::zeroinfl()` and `pscl::hurdle()` models (#1130).
 
+* Fixed issue with calculation of standard errors in `model_parameters()` when
+  `vcov` was a function that errored when unsupported arguments were passed.
+
 # parameters 0.29.1
 
 ## Changes
