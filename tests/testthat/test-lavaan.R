@@ -82,4 +82,22 @@ test_that("simulate_model and equivalence_test work for lavaan", {
     equivalence_test(m, iterations = 10, verbose = FALSE),
     "equivalence_test"
   )
+
+  set.seed(123)
+  out <- equivalence_test(m, range = c(-0.2, 0.2))
+  expect_identical(
+    capture.output(out),
+    c(
+      "# Test for Practical Equivalence",
+      "",
+      "  ROPE: [-0.20 0.20]",
+      "",
+      "Parameter |        H0 | inside ROPE |      95% HDI",
+      "--------------------------------------------------",
+      "y~x       | Undecided |     23.05 % | [0.09, 0.42]",
+      "y~~y      |  Rejected |      0.00 % | [0.43, 0.76]",
+      "",
+      ""
+    )
+  )
 })
