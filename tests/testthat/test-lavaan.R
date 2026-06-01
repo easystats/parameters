@@ -78,5 +78,8 @@ test_that("simulate_model and equivalence_test work for lavaan", {
   m <- lavaan::sem(model, data = data)
 
   expect_s3_class(simulate_model(m, iterations = 10), "parameters_simulate_model")
-  expect_s3_class(equivalence_test(m, iterations = 10), "equivalence_test_lm")
+  expect_s3_class(
+    equivalence_test(m, iterations = 10, verbose = FALSE),
+    "equivalence_test"
+  )
 })
