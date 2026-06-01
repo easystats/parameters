@@ -462,7 +462,17 @@ equivalence_test.lavaan <- function(
   ...
 ) {
   insight::check_if_installed("lavaan")
-  equivalence_test(simulate_model(x), range = range, ci = ci, verbose = verbose, ...)
+
+  # save object name, this will be lost in call to `simulate_model()`
+  # (substitute(model) inside simulate_model.lavaan evaluates to "x")
+  obj_name <- insight::safe_deparse_symbol(substitute(x))
+
+  # run simulations
+  sims <- simulate_model(x, ...)
+
+  # add back original object name, required for default ROPE range calculation
+  attr(sims, "object_name") <- obj_name
+  equivalence_test(sims, range = range, ci = ci, verbose = verbose, ...)
 }
 
 

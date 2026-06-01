@@ -61,3 +61,22 @@ test_that("standardized no CI", {
   p <- parameters(mod, standardize = "all", ci = NULL)
   expect_s3_class(p, "parameters_sem")
 })
+
+test_that("simulate_model and equivalence_test work for lavaan", {
+  skip_if_not_installed("lavaan")
+  skip_if_not_installed("insight", minimum_version = "1.5.1.3")
+
+  # Create simple example data
+  set.seed(123)
+  n <- 100
+  x <- rnorm(n)
+  y <- 0.3 * x + rnorm(n, 0, 0.8) # Small effect: β = 0.3
+  data <- data.frame(x = x, y = y)
+
+  # Fit simple lavaan model
+  model <- 'y ~ x'
+  m <- lavaan::sem(model, data = data)
+
+  expect_s3_class(simulate_model(m, iterations = 10), "parameters_simulate_model")
+  expect_s3_class(equivalence_test(m, iterations = 10), "equivalence_test_lm")
+})
