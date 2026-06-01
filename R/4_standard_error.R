@@ -106,8 +106,8 @@ standard_error.default <- function(
 
   # vcov: function which returns a matrix
   if (is.function(vcov)) {
-    fun_args <- c(list(model), vcov_args, dots)
-    se <- .safe(sqrt(diag(do.call("vcov", fun_args))))
+    fun_args <- c(list(model), vcov_args)
+    se <- .safe(sqrt(diag(do.call(vcov, fun_args))))
   }
 
   # vcov: character

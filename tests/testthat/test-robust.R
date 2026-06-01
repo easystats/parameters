@@ -20,6 +20,29 @@ test_that("robust-se lm", {
   expect_equal(se1$SE, se2, tolerance = 1e-4, ignore_attr = TRUE)
 })
 
+test_that("robust-se, using vcov-fun, lm", {
+  data(AirPassengers)
+  d <- data.frame(
+    t.index = as.integer(factor(time(AirPassengers))) - 1,
+    t.year = floor(time(AirPassengers)),
+    t.month = factor(cycle(AirPassengers), labels = month.name),
+    n.total = as.vector(AirPassengers)
+  )
+  d <- within(d, {
+    tx <- t.index >= 100
+    t.tx <- cumsum(tx)
+    t.tx <- ifelse(tx == TRUE, yes = t.tx - 1, no = 0)
+  })
+  mod.i <- lm(n.total ~ t.index + tx + t.tx, data = d)
+  out <- model_parameters(mod.i, vcov = sandwich::NeweyWest, vcov_args = list(lag = 3))
+  expect_equal(
+    out$SE,
+    sqrt(diag(sandwich::NeweyWest(mod.i, lag = 3))),
+    tolerance = 1e-4,
+    ignore_attr = TRUE
+  )
+})
+
 test_that("robust-se polr", {
   skip_if_not_installed("MASS")
   data(housing, package = "MASS")
