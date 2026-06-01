@@ -233,15 +233,17 @@ bayestestR::equivalence_test
 #'   plot(result)
 #' }
 #' @export
-equivalence_test.lm <- function(x,
-                                range = "default",
-                                ci = 0.95,
-                                rule = "classic",
-                                effects = "fixed",
-                                vcov = NULL,
-                                vcov_args = NULL,
-                                verbose = TRUE,
-                                ...) {
+equivalence_test.lm <- function(
+  x,
+  range = "default",
+  ci = 0.95,
+  rule = "classic",
+  effects = "fixed",
+  vcov = NULL,
+  vcov_args = NULL,
+  verbose = TRUE,
+  ...
+) {
   rule <- insight::validate_argument(tolower(rule), c("bayes", "classic", "cet"))
   out <- .equivalence_test_frequentist(
     x,
@@ -303,20 +305,21 @@ equivalence_test.rma <- equivalence_test.lm
 # mixed models, also random effects ----------------------
 
 #' @export
-equivalence_test.merMod <- function(x,
-                                    range = "default",
-                                    ci = 0.95,
-                                    rule = "classic",
-                                    effects = "fixed",
-                                    vcov = NULL,
-                                    vcov_args = NULL,
-                                    verbose = TRUE,
-                                    ...) {
+equivalence_test.merMod <- function(
+  x,
+  range = "default",
+  ci = 0.95,
+  rule = "classic",
+  effects = "fixed",
+  vcov = NULL,
+  vcov_args = NULL,
+  verbose = TRUE,
+  ...
+) {
   # ==== argument matching ====
 
   rule <- insight::validate_argument(tolower(rule), c("bayes", "classic", "cet"))
   effects <- insight::validate_argument(effects, c("fixed", "random"))
-
 
   # ==== equivalent testing for fixed or random effects ====
 
@@ -334,7 +337,6 @@ equivalence_test.merMod <- function(x,
   } else {
     out <- .equivalence_test_frequentist_random(x, range, ci, rule, verbose, ...)
   }
-
 
   # ==== result ====
 
@@ -452,11 +454,26 @@ equivalence_test.estimate_slopes <- equivalence_test.estimate_means
 # Special classes -------------------------
 
 #' @export
-equivalence_test.parameters_simulate_model <- function(x,
-                                                       range = "default",
-                                                       ci = 0.95,
-                                                       verbose = TRUE,
-                                                       ...) {
+equivalence_test.lavaan <- function(
+  x,
+  range = "default",
+  ci = 0.95,
+  verbose = TRUE,
+  ...
+) {
+  insight::check_if_installed("lavaan")
+  equivalence_test(simulate_model(x), range = range, ci = ci, verbose = verbose, ...)
+}
+
+
+#' @export
+equivalence_test.parameters_simulate_model <- function(
+  x,
+  range = "default",
+  ci = 0.95,
+  verbose = TRUE,
+  ...
+) {
   # ==== retrieve model, to define rope range for simulated model parameters ====
 
   model <- .get_object(x)
@@ -469,35 +486,46 @@ equivalence_test.parameters_simulate_model <- function(x,
     )
   }
 
-
   # ==== classical equivalent testing for data frames ====
 
-  out <- equivalence_test(as.data.frame(x), range = range, ci = ci, verbose = verbose, ...)
+  out <- equivalence_test(
+    as.data.frame(x),
+    range = range,
+    ci = ci,
+    verbose = verbose,
+    ...
+  )
 
   if (is.null(attr(out, "pretty_names", exact = TRUE))) {
     attr(out, "pretty_names") <- format_parameters(x)
   }
   attr(out, "object_name") <- attr(x, "object_name")
   attr(out, "data") <- x
-  class(out) <- unique(c("equivalence_test", "see_equivalence_test", "equivalence_test_simulate_model", class(out)))
+  class(out) <- unique(c(
+    "equivalence_test",
+    "see_equivalence_test",
+    "equivalence_test_simulate_model",
+    class(out)
+  ))
   out
 }
 
 
 #' @export
-equivalence_test.parameters_model <- function(x,
-                                              range = "default",
-                                              ci = 0.95,
-                                              rule = "classic",
-                                              verbose = TRUE,
-                                              ...) {
+equivalence_test.parameters_model <- function(
+  x,
+  range = "default",
+  ci = 0.95,
+  rule = "classic",
+  verbose = TRUE,
+  ...
+) {
   model <- .get_object(x)
   equivalence_test(x = model, range = range, ci = ci, rule = rule, verbose = verbose, ...)
 }
 
 
 # helper -------------------
-
 
 #' @keywords internal
 .check_rope_range <- function(x, range, verbose) {
@@ -524,14 +552,16 @@ equivalence_test.parameters_model <- function(x,
 
 
 #' @keywords internal
-.equivalence_test_frequentist <- function(x,
-                                          range = "default",
-                                          ci = 0.95,
-                                          rule = "classic",
-                                          vcov = NULL,
-                                          vcov_args = NULL,
-                                          verbose = TRUE,
-                                          ...) {
+.equivalence_test_frequentist <- function(
+  x,
+  range = "default",
+  ci = 0.95,
+  rule = "classic",
+  vcov = NULL,
+  vcov_args = NULL,
+  verbose = TRUE,
+  ...
+) {
   # ==== define rope range ====
 
   range <- .check_rope_range(x, range, verbose)
@@ -558,13 +588,11 @@ equivalence_test.parameters_model <- function(x,
   params <- conf_int <- .ci_generic(x, ci = ci, vcov = vcov, vcov_args = vcov_args, ...)
   conf_int <- as.data.frame(t(conf_int[, c("CI_low", "CI_high")]))
 
-
   # ==== the "narrower" intervals (1-2*alpha) for CET-rules. ====
 
   alpha <- 1 - ci
   conf_int2 <- .ci_generic(x, ci = (ci - alpha), vcov = vcov, vcov_args = vcov_args, ...)
   conf_int2 <- as.data.frame(t(conf_int2[, c("CI_low", "CI_high")]))
-
 
   # ==== equivalence test for each parameter ====
 
@@ -579,11 +607,15 @@ equivalence_test.parameters_model <- function(x,
         dof = dof,
         verbose = verbose
       )
-    }, conf_int, conf_int2
+    },
+    conf_int,
+    conf_int2
   )
 
   dat <- do.call(rbind, l)
-  if ("Component" %in% colnames(params)) dat$Component <- params$Component
+  if ("Component" %in% colnames(params)) {
+    dat$Component <- params$Component
+  }
 
   out <- data.frame(
     Parameter = params$Parameter,
@@ -591,7 +623,6 @@ equivalence_test.parameters_model <- function(x,
     dat,
     stringsAsFactors = FALSE
   )
-
 
   # ==== (adjusted) p-values for tests ====
 
@@ -603,12 +634,14 @@ equivalence_test.parameters_model <- function(x,
 
 
 #' @keywords internal
-.equivalence_test_frequentist_random <- function(x,
-                                                 range = "default",
-                                                 ci = 0.95,
-                                                 rule = "classic",
-                                                 verbose = TRUE,
-                                                 ...) {
+.equivalence_test_frequentist_random <- function(
+  x,
+  range = "default",
+  ci = 0.95,
+  rule = "classic",
+  verbose = TRUE,
+  ...
+) {
   if (all(range == "default")) {
     range <- bayestestR::rope_range(x, verbose = verbose)
   } else if (!all(is.numeric(range)) || length(range) != 2) {
@@ -624,7 +657,12 @@ equivalence_test.parameters_model <- function(x,
     ci <- ci[1]
   }
 
-  params <- insight::get_parameters(x, effects = "random", component = "conditional", verbose = FALSE)
+  params <- insight::get_parameters(
+    x,
+    effects = "random",
+    component = "conditional",
+    verbose = FALSE
+  )
   se <- standard_error(x, effects = "random", component = "conditional")
 
   alpha <- (1 + ci) / 2
@@ -633,45 +671,49 @@ equivalence_test.parameters_model <- function(x,
   alpha_narrow <- (1 + ci - (1 - ci)) / 2
   fac_narrow <- stats::qnorm(alpha_narrow)
 
+  out <- do.call(
+    rbind,
+    lapply(names(params), function(np) {
+      est <- params[[np]][, "(Intercept)"]
+      std_err <- se[[np]][, "(Intercept)"]
 
-  out <- do.call(rbind, lapply(names(params), function(np) {
-    est <- params[[np]][, "(Intercept)"]
-    std_err <- se[[np]][, "(Intercept)"]
+      d <- data.frame(
+        Parameter = rownames(params[[np]]),
+        Estimate = est,
+        CI = ifelse(rule == "bayes", ci, ci - (1 - ci)),
+        Group = np,
+        stringsAsFactors = FALSE
+      )
 
-    d <- data.frame(
-      Parameter = rownames(params[[np]]),
-      Estimate = est,
-      CI = ifelse(rule == "bayes", ci, ci - (1 - ci)),
-      Group = np,
-      stringsAsFactors = FALSE
-    )
+      conf_int <- as.data.frame(t(data.frame(
+        CI_low = est - std_err * fac,
+        CI_high = est + std_err * fac
+      )))
 
-    conf_int <- as.data.frame(t(data.frame(
-      CI_low = est - std_err * fac,
-      CI_high = est + std_err * fac
-    )))
+      conf_int2 <- as.data.frame(t(data.frame(
+        CI_low = est - std_err * fac_narrow,
+        CI_high = est + std_err * fac_narrow
+      )))
 
-    conf_int2 <- as.data.frame(t(data.frame(
-      CI_low = est - std_err * fac_narrow,
-      CI_high = est + std_err * fac_narrow
-    )))
+      l <- Map(
+        function(ci_wide, ci_narrow) {
+          .equivalence_test_numeric(
+            ci = ci,
+            ci_wide,
+            ci_narrow,
+            range_rope = range,
+            rule = rule,
+            verbose = verbose
+          )
+        },
+        conf_int,
+        conf_int2
+      )
 
-    l <- Map(
-      function(ci_wide, ci_narrow) {
-        .equivalence_test_numeric(
-          ci = ci,
-          ci_wide,
-          ci_narrow,
-          range_rope = range,
-          rule = rule,
-          verbose = verbose
-        )
-      }, conf_int, conf_int2
-    )
-
-    dat <- do.call(rbind, l)
-    cbind(d, dat)
-  }))
+      dat <- do.call(rbind, l)
+      cbind(d, dat)
+    })
+  )
 
   attr(out, "rope") <- range
   out
@@ -679,13 +721,15 @@ equivalence_test.parameters_model <- function(x,
 
 
 #' @keywords internal
-.equivalence_test_numeric <- function(ci = 0.95,
-                                      ci_wide,
-                                      ci_narrow,
-                                      range_rope,
-                                      rule,
-                                      dof = Inf,
-                                      verbose) {
+.equivalence_test_numeric <- function(
+  ci = 0.95,
+  ci_wide,
+  ci_narrow,
+  range_rope,
+  rule,
+  dof = Inf,
+  verbose
+) {
   final_ci <- NULL
 
   # ==== HDI+ROPE decision rule, by Kruschke ====
@@ -701,7 +745,6 @@ equivalence_test.parameters_model <- function(x,
     }
   }
 
-
   # ==== Lakens' rule ====
 
   if (rule == "classic") {
@@ -716,7 +759,6 @@ equivalence_test.parameters_model <- function(x,
       decision <- "Rejected"
     }
   }
-
 
   # ==== CET rule ====
 
@@ -796,7 +838,12 @@ equivalence_test.parameters_model <- function(x,
 }
 
 
-.generate_posterior_from_ci <- function(ci = 0.95, ci_range, dof = Inf, precision = 10000) {
+.generate_posterior_from_ci <- function(
+  ci = 0.95,
+  ci_range,
+  dof = Inf,
+  precision = 10000
+) {
   # this function creates an approximate normal distribution that covers the
   # CI-range, i.e. we "simulate" a posterior distribution from a frequentist CI
 
@@ -817,10 +864,14 @@ equivalence_test.parameters_model <- function(x,
   sd_dist <- diff_ci / diff(c(-1 * z_value, z_value))
   # generate normal-distribution if we don't have t-distribution, or if
   # we don't have necessary packages installed
-  if (is.infinite(dof) || !insight::check_if_installed("distributional", quietly = TRUE)) {
+  if (
+    is.infinite(dof) || !insight::check_if_installed("distributional", quietly = TRUE)
+  ) {
     # tell user to install "distributional"
     if (!is.infinite(dof)) {
-      insight::format_alert("For models with only few degrees of freedom, install the {distributional} package to increase accuracy of `p_direction()`, `p_significance()` and `equivalence_test()`.") # nolint
+      insight::format_alert(
+        "For models with only few degrees of freedom, install the {distributional} package to increase accuracy of `p_direction()`, `p_significance()` and `equivalence_test()`."
+      ) # nolint
     }
     # we now know all parameters (mean and sd) to simulate a normal distribution
     bayestestR::distribution_normal(n = precision, mean = mean_dist, sd = sd_dist)
@@ -868,19 +919,23 @@ equivalence_test.parameters_model <- function(x,
 
 # methods ----------------
 
-
 #' @export
-format.equivalence_test_lm <- function(x,
-                                       digits = 2,
-                                       ci_digits = digits,
-                                       p_digits = 3,
-                                       ci_width = NULL,
-                                       ci_brackets = NULL,
-                                       format = "text",
-                                       zap_small = FALSE,
-                                       ...) {
+format.equivalence_test_lm <- function(
+  x,
+  digits = 2,
+  ci_digits = digits,
+  p_digits = 3,
+  ci_width = NULL,
+  ci_brackets = NULL,
+  format = "text",
+  zap_small = FALSE,
+  ...
+) {
   # default brackets are parenthesis for HTML / MD
-  if ((is.null(ci_brackets) || isTRUE(ci_brackets)) && (identical(format, "html") || identical(format, "markdown"))) {
+  if (
+    (is.null(ci_brackets) || isTRUE(ci_brackets)) &&
+      (identical(format, "html") || identical(format, "markdown"))
+  ) {
     ci_brackets <- c("(", ")")
   } else if (is.null(ci_brackets) || isTRUE(ci_brackets)) {
     ci_brackets <- c("[", "]")
@@ -912,13 +967,15 @@ format.equivalence_test_lm <- function(x,
 
 
 #' @export
-print.equivalence_test_lm <- function(x,
-                                      digits = 2,
-                                      ci_digits = digits,
-                                      p_digits = 3,
-                                      ci_brackets = NULL,
-                                      zap_small = FALSE,
-                                      ...) {
+print.equivalence_test_lm <- function(
+  x,
+  digits = 2,
+  ci_digits = digits,
+  p_digits = 3,
+  ci_brackets = NULL,
+  zap_small = FALSE,
+  ...
+) {
   orig_x <- x
 
   rule <- attributes(x)$rule
@@ -936,7 +993,8 @@ print.equivalence_test_lm <- function(x,
   cat(sprintf("  ROPE: [%.*f %.*f]\n\n", digits, .rope[1], digits, .rope[2]))
 
   # formatting
-  x <- format(x,
+  x <- format(
+    x,
     digits = digits,
     ci_digits = ci_digits,
     p_digits = p_digits,
@@ -1004,7 +1062,9 @@ plot.equivalence_test_lm <- function(x, ...) {
     ...
   )
 
-  colnames(formatted_table)[which(colnames(formatted_table) == "Equivalence (ROPE)")] <- "H0"
+  colnames(formatted_table)[which(
+    colnames(formatted_table) == "Equivalence (ROPE)"
+  )] <- "H0"
   formatted_table$ROPE <- NULL
 
   # col_order <- c("Parameter", "H0", "% in ROPE", colnames(formatted_table)[grepl(" CI$", colnames(formatted_table))])
@@ -1013,8 +1073,18 @@ plot.equivalence_test_lm <- function(x, ...) {
 
   # replace brackets by parenthesis
   if (!is.null(ci_brackets) && "Parameter" %in% colnames(formatted_table)) {
-    formatted_table$Parameter <- gsub("[", ci_brackets[1], formatted_table$Parameter, fixed = TRUE)
-    formatted_table$Parameter <- gsub("]", ci_brackets[2], formatted_table$Parameter, fixed = TRUE)
+    formatted_table$Parameter <- gsub(
+      "[",
+      ci_brackets[1],
+      formatted_table$Parameter,
+      fixed = TRUE
+    )
+    formatted_table$Parameter <- gsub(
+      "]",
+      ci_brackets[2],
+      formatted_table$Parameter,
+      fixed = TRUE
+    )
   }
 
   if (!is.null(rope)) {
