@@ -64,7 +64,13 @@ simulate_model.default <- function(model, iterations = 1000, component = "all", 
   # check for valid input
   .is_model_valid(model)
 
-  out <- .simulate_model(model, iterations, component = "conditional", effects = "fixed", ...)
+  out <- .simulate_model(
+    model,
+    iterations,
+    component = "conditional",
+    effects = "fixed",
+    ...
+  )
 
   class(out) <- c("parameters_simulate_model", class(out))
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(model))
@@ -222,18 +228,42 @@ simulate_model.brmultinom <- simulate_model.default
 #' @export
 simulate_model.bracl <- simulate_model.default
 
+#' @export
+simulate_model.lavaan <- function(model, iterations = 1000, ...) {
+  insight::check_if_installed("lavaan")
+  if (is.null(iterations)) {
+    iterations <- 1000
+  }
+
+  beta_mu <- lavaan::coef(model)
+  varcov <- insight::get_varcov(model, ...)
+  out <- as.data.frame(.mvrnorm(n = iterations, mu = beta_mu, Sigma = varcov))
+
+  class(out) <- c("parameters_simulate_model", class(out))
+  attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(model))
+  out
+}
+
 
 # helper -----------------------------------------
 
+.simulate_model <- function(
+  model,
+  iterations,
+  component = "conditional",
+  effects = "fixed",
+  ...
+) {
+  if (is.null(iterations)) {
+    iterations <- 1000
+  }
 
-.simulate_model <- function(model,
-                            iterations,
-                            component = "conditional",
-                            effects = "fixed",
-                            ...) {
-  if (is.null(iterations)) iterations <- 1000
-
-  params <- insight::get_parameters(model, effects = effects, component = component, verbose = FALSE)
+  params <- insight::get_parameters(
+    model,
+    effects = effects,
+    component = component,
+    verbose = FALSE
+  )
   beta_mu <- stats::setNames(params$Estimate, params$Parameter) # Transform to named vector
 
   # "..." allow specification of vcov-args (#784)
@@ -268,7 +298,8 @@ simulate_model.bracl <- simulate_model.default
     insight::format_error("`Sigma` is not positive definite.")
   }
 
-  X <- drop(mu) + eS$vectors %*% diag(sqrt(pmax(ev, 0)), p) %*% t(matrix(stats::rnorm(p * n), n))
+  X <- drop(mu) +
+    eS$vectors %*% diag(sqrt(pmax(ev, 0)), p) %*% t(matrix(stats::rnorm(p * n), n))
   nm <- names(mu)
 
   dn <- dimnames(Sigma)

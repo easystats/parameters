@@ -41,11 +41,7 @@ test_that("equivalence_test, robust", {
     out$ROPE_Equivalence,
     c("Rejected", "Undecided", "Accepted", "Undecided")
   )
-  expect_equal(
-    out$SGPV,
-    c(0, 0.8726, 0.9739, 0.6741),
-    tolerance = 1e-3
-  )
+  expect_equal(out$SGPV, c(0, 0.8726, 0.9739, 0.6741), tolerance = 1e-3)
 })
 
 test_that("equivalence_test, unequal rope-range", {
@@ -115,36 +111,21 @@ test_that("equivalence_test, unequal rope-range, plots", {
   data(iris)
   m <- lm(Sepal.Length ~ Species, data = iris)
   rez <- equivalence_test(m, range = c(-Inf, 0.1))
-  vdiffr::expect_doppelganger(
-    "Equivalence-Test 1",
-    plot(rez)
-  )
+  vdiffr::expect_doppelganger("Equivalence-Test 1", plot(rez))
 
   rez <- equivalence_test(m, range = c(-99, 0.1))
-  vdiffr::expect_doppelganger(
-    "Equivalence-Test 2",
-    plot(rez)
-  )
+  vdiffr::expect_doppelganger("Equivalence-Test 2", plot(rez))
 
   data(mtcars)
   mtcars[c("gear", "cyl")] <- lapply(mtcars[c("gear", "cyl")], as.factor)
   m <- lm(mpg ~ hp + gear + cyl, data = mtcars)
 
   rez <- equivalence_test(m, range = c(-Inf, 0.5))
-  vdiffr::expect_doppelganger(
-    "Equivalence-Test 3",
-    plot(rez)
-  )
+  vdiffr::expect_doppelganger("Equivalence-Test 3", plot(rez))
 
   rez <- equivalence_test(m, range = c(-0.5, 0.5))
-  vdiffr::expect_doppelganger(
-    "Equivalence-Test 4",
-    plot(rez)
-  )
+  vdiffr::expect_doppelganger("Equivalence-Test 4", plot(rez))
 
   rez <- equivalence_test(m, range = c(-2, 2))
-  vdiffr::expect_doppelganger(
-    "Equivalence-Test 5",
-    plot(rez)
-  )
+  vdiffr::expect_doppelganger("Equivalence-Test 5", plot(rez))
 })

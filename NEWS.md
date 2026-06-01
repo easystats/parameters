@@ -1,5 +1,10 @@
 # parameters (devel)
 
+## Changes
+
+* `simulate_model()`, `simulate_parameters()` and `equivalence_test()` now work
+  for `lavaan` objects.
+
 ## Bug fixes
 
 * Fixed issues with extracting wrong standard errors for model with frailty
