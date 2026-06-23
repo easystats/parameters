@@ -13,7 +13,7 @@ available to access / display other information (see the 'Details' section)."><m
 
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.29.1.5</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.29.1.6</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -490,7 +490,7 @@ statistics (6th ed.). Boston: Pearson Education.</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span> qsec     |       | -0.98 |       1.00 |       0.06 | 0.61</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> hp       |       |  0.61 |       1.97 |       0.10 | 0.90</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">The 2 principal components (oblimin rotation) accounted for 89.18% of the total variance of the original data (PC1 = 63.90%, PC2 = 25.28%).</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">The 2 principal components (oblimin rotation) accounted for 89.18% of the total variance of the original data (PC1 = 63.90%, PC2 = 25.29%).</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span><span class="fu">principal_components</span><span class="op">(</span><span class="va">mtcars</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">7</span><span class="op">]</span>, n <span class="op">=</span> <span class="fl">2</span>, threshold <span class="op">=</span> <span class="fl">2</span>, sort <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># Loadings from Principal Component Analysis (no rotation)</span></span>
@@ -577,17 +577,17 @@ statistics (6th ed.). Boston: Pearson Education.</p></li>
 <span class="r-in"><span><span class="fu">factor_analysis</span><span class="op">(</span><span class="va">mtcars</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">7</span><span class="op">]</span>, n <span class="op">=</span> <span class="st">"all"</span>, threshold <span class="op">=</span> <span class="fl">0.2</span>, rotation <span class="op">=</span> <span class="st">"Promax"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># Rotated loadings from Factor Analysis (Promax-rotation)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Variable |   MR4 |   MR6 |   MR5 |  MR1 |  MR2 | MR3 | Complexity | Uniqueness</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Variable |   MR4 |   MR1 |   MR2 |  MR3 |  MR5 | MR6 | Complexity | Uniqueness</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ------------------------------------------------------------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> mpg      | -0.64 |       |       |      | 0.31 |     |       1.77 |       0.08</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> cyl      |  0.32 | -0.33 | -0.47 |      |      |     |       2.82 |       0.01</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> disp     |  0.69 |       |       |      |      |     |       1.45 |       0.03</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> cyl      |  0.32 | -0.33 | -0.47 |      |      |     |       2.80 |       0.01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> disp     |  0.69 |       |       |      |      |     |       1.47 |       0.03</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> hp       |       | -0.43 |       | 0.47 |      |     |       2.19 |       0.12</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> drat     |       |       |  0.86 |      |      |     |       1.15 |       0.24</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> wt       |  1.19 |  0.21 |       |      |      |     |       1.09 |   5.00e-03</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> qsec     |       |  1.03 |       |      |      |     |       1.04 |       0.14</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">The 6 latent factors (Promax rotation) accounted for 90.99% of the total variance of the original data (MR4 = 40.59%, MR6 = 23.59%, MR5 = 18.39%, MR1 = 6.00%, MR2 = 1.72%, MR3 = 0.71%).</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">The 6 latent factors (Promax rotation) accounted for 90.99% of the total variance of the original data (MR4 = 40.54%, MR1 = 23.62%, MR2 = 18.38%, MR3 = 5.99%, MR5 = 1.72%, MR6 = 0.73%).</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span><span class="fu">factor_analysis</span><span class="op">(</span><span class="va">mtcars</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">7</span><span class="op">]</span>, n <span class="op">=</span> <span class="fl">2</span>, threshold <span class="op">=</span> <span class="st">"max"</span>, sort <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># Rotated loadings from Factor Analysis (oblimin-rotation)</span></span>
@@ -624,7 +624,7 @@ statistics (6th ed.). Boston: Pearson Education.</p></li>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">efa</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># (Explained) Variance of Components</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter                       |   MR2 |   MR1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter                       |   MR1 |   MR2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -----------------------------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Eigenvalues                     | 3.908 | 0.398</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Variance Explained              | 0.531 | 0.331</span>
@@ -633,69 +633,48 @@ statistics (6th ed.). Boston: Pearson Education.</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># Factor Correlations</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Factor |    MR2 |    MR1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Factor |    MR1 |    MR2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> MR2    |  1.000 | -0.647</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> MR1    | -0.647 |  1.000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> MR1    |  1.000 | -0.647</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> MR2    | -0.647 |  1.000</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">efa</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           MR2         MR1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1   0.2845535 -0.54283719</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2   0.2845535 -0.54283719</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3   0.9024155 -0.77335855</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4  -0.3183872 -0.57047226</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5  -0.9461594  0.39041399</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6  -0.4955626 -0.68126540</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7  -0.8538316  1.43513524</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8   0.6806507 -1.24169027</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9   0.8412621 -0.73810258</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10  0.2449179 -0.35370533</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11  0.1907016 -0.36178696</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12 -0.8034781  0.44546174</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13 -0.7686247  0.45065707</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14 -0.8499492  0.43853462</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15 -1.5827123  0.79656481</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16 -1.4851863  0.95143361</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 17 -1.1160594  1.21381461</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 18  1.3609677 -1.12140746</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 19  1.5876691 -1.31015748</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 20  1.4944472 -1.12239916</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 21  0.7696662 -0.72564901</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 22 -1.1894567 -0.02829884</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 23 -1.0026040 -0.01404741</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 24 -0.6533541  1.45113643</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 25 -1.0723887  0.39243348</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 26  1.1625854 -1.15083168</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 27  1.2175257 -0.75984889</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 28  1.2704323 -0.42859437</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 29 -0.2969748  1.77640483</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 30  0.3866767  0.42813882</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 31 -0.2138091  2.82274212</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 32  0.9695133 -0.52558134</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           MR1         MR2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1   0.2845506 -0.54283605</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2   0.2845506 -0.54283605</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3   0.9024140 -0.77336544</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4  -0.3183935 -0.57046047</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5  -0.9461612  0.39042588</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6  -0.4955707 -0.68124934</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7  -0.8538245  1.43513395</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8   0.6806442 -1.24168816</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9   0.8412605 -0.73810881</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10  0.2449164 -0.35370560</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11  0.1906997 -0.36178621</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12 -0.8034787  0.44547057</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13 -0.7686251  0.45066525</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14 -0.8499501  0.43854432</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15 -1.5827142  0.79658310</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16 -1.4851863  0.95144851</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17 -1.1160555  1.21382028</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18  1.3609658 -1.12141835</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19  1.5876668 -1.31017016</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20  1.4944459 -1.12241232</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21  0.7696644 -0.72565416</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 22 -1.1894632 -0.02827814</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 23 -1.0026094 -0.01403007</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 24 -0.6533458  1.45113153</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 25 -1.0723912  0.39244751</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 26  1.1625821 -1.15083884</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 27  1.2175259 -0.75986133</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 28  1.2704355 -0.42861139</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 29 -0.2969620  1.77639022</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 30  0.3866822  0.42812744</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 31 -0.2137874  2.82271447</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 32  0.9695142 -0.52559213</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="co"># Automated number of components</span></span></span>
 <span class="r-in"><span><span class="fu">factor_analysis</span><span class="op">(</span><span class="va">mtcars</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>, n <span class="op">=</span> <span class="st">"auto"</span><span class="op">)</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Convergence not obtained in GPFoblq. 1000 iterations used.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Convergence not obtained in GPFoblq. 1000 iterations used.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Convergence not obtained in GPFoblq. 1000 iterations used.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Convergence not obtained in GPFoblq. 1000 iterations used.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Convergence not obtained in GPFoblq. 1000 iterations used.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Convergence not obtained in GPFoblq. 1000 iterations used.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Convergence not obtained in GPFoblq. 1000 iterations used.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Convergence not obtained in GPFoblq. 1000 iterations used.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Convergence not obtained in GPFoblq. 1000 iterations used.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Convergence not obtained in GPFoblq. 1000 iterations used.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Convergence not obtained in GPFoblq. 1000 iterations used.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Convergence not obtained in GPFoblq. 1000 iterations used.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Convergence not obtained in GPFoblq. 1000 iterations used.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Convergence not obtained in GPFoblq. 1000 iterations used.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Convergence not obtained in GPFoblq. 1000 iterations used.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Convergence not obtained in GPFoblq. 1000 iterations used.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Convergence not obtained in GPFoblq. 1000 iterations used.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Convergence not obtained in GPFoblq. 1000 iterations used.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Convergence not obtained in GPFoblq. 1000 iterations used.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Convergence not obtained in GPFoblq. 1000 iterations used.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Convergence not obtained in GPFoblq. 1000 iterations used.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># Rotated loadings from Factor Analysis (oblimin-rotation)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Variable |   MR1 | Complexity | Uniqueness</span>

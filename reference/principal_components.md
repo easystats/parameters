@@ -464,7 +464,7 @@ principal_components(mtcars[, 1:7],
 #> qsec     |       | -0.98 |       1.00 |       0.06 | 0.61
 #> hp       |       |  0.61 |       1.97 |       0.10 | 0.90
 #> 
-#> The 2 principal components (oblimin rotation) accounted for 89.18% of the total variance of the original data (PC1 = 63.90%, PC2 = 25.28%).
+#> The 2 principal components (oblimin rotation) accounted for 89.18% of the total variance of the original data (PC1 = 63.90%, PC2 = 25.29%).
 #> 
 principal_components(mtcars[, 1:7], n = 2, threshold = 2, sort = TRUE)
 #> # Loadings from Principal Component Analysis (no rotation)
@@ -551,17 +551,17 @@ closest_component(pca)
 factor_analysis(mtcars[, 1:7], n = "all", threshold = 0.2, rotation = "Promax")
 #> # Rotated loadings from Factor Analysis (Promax-rotation)
 #> 
-#> Variable |   MR4 |   MR6 |   MR5 |  MR1 |  MR2 | MR3 | Complexity | Uniqueness
+#> Variable |   MR4 |   MR1 |   MR2 |  MR3 |  MR5 | MR6 | Complexity | Uniqueness
 #> ------------------------------------------------------------------------------
 #> mpg      | -0.64 |       |       |      | 0.31 |     |       1.77 |       0.08
-#> cyl      |  0.32 | -0.33 | -0.47 |      |      |     |       2.82 |       0.01
-#> disp     |  0.69 |       |       |      |      |     |       1.45 |       0.03
+#> cyl      |  0.32 | -0.33 | -0.47 |      |      |     |       2.80 |       0.01
+#> disp     |  0.69 |       |       |      |      |     |       1.47 |       0.03
 #> hp       |       | -0.43 |       | 0.47 |      |     |       2.19 |       0.12
 #> drat     |       |       |  0.86 |      |      |     |       1.15 |       0.24
 #> wt       |  1.19 |  0.21 |       |      |      |     |       1.09 |   5.00e-03
 #> qsec     |       |  1.03 |       |      |      |     |       1.04 |       0.14
 #> 
-#> The 6 latent factors (Promax rotation) accounted for 90.99% of the total variance of the original data (MR4 = 40.59%, MR6 = 23.59%, MR5 = 18.39%, MR1 = 6.00%, MR2 = 1.72%, MR3 = 0.71%).
+#> The 6 latent factors (Promax rotation) accounted for 90.99% of the total variance of the original data (MR4 = 40.54%, MR1 = 23.62%, MR2 = 18.38%, MR3 = 5.99%, MR5 = 1.72%, MR6 = 0.73%).
 #> 
 factor_analysis(mtcars[, 1:7], n = 2, threshold = "max", sort = TRUE)
 #> # Rotated loadings from Factor Analysis (oblimin-rotation)
@@ -598,7 +598,7 @@ efa <- factor_analysis(mtcars[, 1:5], n = 2)
 summary(efa)
 #> # (Explained) Variance of Components
 #> 
-#> Parameter                       |   MR2 |   MR1
+#> Parameter                       |   MR1 |   MR2
 #> -----------------------------------------------
 #> Eigenvalues                     | 3.908 | 0.398
 #> Variance Explained              | 0.531 | 0.331
@@ -607,69 +607,48 @@ summary(efa)
 #> 
 #> # Factor Correlations
 #> 
-#> Factor |    MR2 |    MR1
+#> Factor |    MR1 |    MR2
 #> ------------------------
-#> MR2    |  1.000 | -0.647
-#> MR1    | -0.647 |  1.000
+#> MR1    |  1.000 | -0.647
+#> MR2    | -0.647 |  1.000
 predict(efa, verbose = FALSE)
-#>           MR2         MR1
-#> 1   0.2845535 -0.54283719
-#> 2   0.2845535 -0.54283719
-#> 3   0.9024155 -0.77335855
-#> 4  -0.3183872 -0.57047226
-#> 5  -0.9461594  0.39041399
-#> 6  -0.4955626 -0.68126540
-#> 7  -0.8538316  1.43513524
-#> 8   0.6806507 -1.24169027
-#> 9   0.8412621 -0.73810258
-#> 10  0.2449179 -0.35370533
-#> 11  0.1907016 -0.36178696
-#> 12 -0.8034781  0.44546174
-#> 13 -0.7686247  0.45065707
-#> 14 -0.8499492  0.43853462
-#> 15 -1.5827123  0.79656481
-#> 16 -1.4851863  0.95143361
-#> 17 -1.1160594  1.21381461
-#> 18  1.3609677 -1.12140746
-#> 19  1.5876691 -1.31015748
-#> 20  1.4944472 -1.12239916
-#> 21  0.7696662 -0.72564901
-#> 22 -1.1894567 -0.02829884
-#> 23 -1.0026040 -0.01404741
-#> 24 -0.6533541  1.45113643
-#> 25 -1.0723887  0.39243348
-#> 26  1.1625854 -1.15083168
-#> 27  1.2175257 -0.75984889
-#> 28  1.2704323 -0.42859437
-#> 29 -0.2969748  1.77640483
-#> 30  0.3866767  0.42813882
-#> 31 -0.2138091  2.82274212
-#> 32  0.9695133 -0.52558134
+#>           MR1         MR2
+#> 1   0.2845506 -0.54283605
+#> 2   0.2845506 -0.54283605
+#> 3   0.9024140 -0.77336544
+#> 4  -0.3183935 -0.57046047
+#> 5  -0.9461612  0.39042588
+#> 6  -0.4955707 -0.68124934
+#> 7  -0.8538245  1.43513395
+#> 8   0.6806442 -1.24168816
+#> 9   0.8412605 -0.73810881
+#> 10  0.2449164 -0.35370560
+#> 11  0.1906997 -0.36178621
+#> 12 -0.8034787  0.44547057
+#> 13 -0.7686251  0.45066525
+#> 14 -0.8499501  0.43854432
+#> 15 -1.5827142  0.79658310
+#> 16 -1.4851863  0.95144851
+#> 17 -1.1160555  1.21382028
+#> 18  1.3609658 -1.12141835
+#> 19  1.5876668 -1.31017016
+#> 20  1.4944459 -1.12241232
+#> 21  0.7696644 -0.72565416
+#> 22 -1.1894632 -0.02827814
+#> 23 -1.0026094 -0.01403007
+#> 24 -0.6533458  1.45113153
+#> 25 -1.0723912  0.39244751
+#> 26  1.1625821 -1.15083884
+#> 27  1.2175259 -0.75986133
+#> 28  1.2704355 -0.42861139
+#> 29 -0.2969620  1.77639022
+#> 30  0.3866822  0.42812744
+#> 31 -0.2137874  2.82271447
+#> 32  0.9695142 -0.52559213
 
 # \donttest{
 # Automated number of components
 factor_analysis(mtcars[, 1:4], n = "auto")
-#> Warning: Convergence not obtained in GPFoblq. 1000 iterations used.
-#> Warning: Convergence not obtained in GPFoblq. 1000 iterations used.
-#> Warning: Convergence not obtained in GPFoblq. 1000 iterations used.
-#> Warning: Convergence not obtained in GPFoblq. 1000 iterations used.
-#> Warning: Convergence not obtained in GPFoblq. 1000 iterations used.
-#> Warning: Convergence not obtained in GPFoblq. 1000 iterations used.
-#> Warning: Convergence not obtained in GPFoblq. 1000 iterations used.
-#> Warning: Convergence not obtained in GPFoblq. 1000 iterations used.
-#> Warning: Convergence not obtained in GPFoblq. 1000 iterations used.
-#> Warning: Convergence not obtained in GPFoblq. 1000 iterations used.
-#> Warning: Convergence not obtained in GPFoblq. 1000 iterations used.
-#> Warning: Convergence not obtained in GPFoblq. 1000 iterations used.
-#> Warning: Convergence not obtained in GPFoblq. 1000 iterations used.
-#> Warning: Convergence not obtained in GPFoblq. 1000 iterations used.
-#> Warning: Convergence not obtained in GPFoblq. 1000 iterations used.
-#> Warning: Convergence not obtained in GPFoblq. 1000 iterations used.
-#> Warning: Convergence not obtained in GPFoblq. 1000 iterations used.
-#> Warning: Convergence not obtained in GPFoblq. 1000 iterations used.
-#> Warning: Convergence not obtained in GPFoblq. 1000 iterations used.
-#> Warning: Convergence not obtained in GPFoblq. 1000 iterations used.
-#> Warning: Convergence not obtained in GPFoblq. 1000 iterations used.
 #> # Rotated loadings from Factor Analysis (oblimin-rotation)
 #> 
 #> Variable |   MR1 | Complexity | Uniqueness

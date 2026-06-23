@@ -246,7 +246,7 @@ model_parameters(efa,
 )
 #> # Rotated loadings from Factor Analysis (oblimin-rotation)
 #> 
-#> Variable   | Label |  MR2 |  MR3 |  MR1 | Complexity | Uniqueness
+#> Variable   | Label |  MR2 |  MR1 |  MR3 | Complexity | Uniqueness
 #> -----------------------------------------------------------------
 #> complaints |     2 | 0.97 |      |      |       1.01 |       0.10
 #> rating     |     1 | 0.90 |      |      |       1.02 |       0.23
@@ -256,7 +256,7 @@ model_parameters(efa,
 #> learning   |     4 |      | 0.54 |      |       2.51 |       0.24
 #> critical   |     6 |      |      | 0.48 |       1.46 |       0.67
 #> 
-#> The 3 latent factors (oblimin rotation) accounted for 66.60% of the total variance of the original data (MR2 = 38.19%, MR3 = 22.69%, MR1 = 5.73%).
+#> The 3 latent factors (oblimin rotation) accounted for 66.60% of the total variance of the original data (MR2 = 38.19%, MR1 = 22.69%, MR3 = 5.73%).
 #> 
 
 
@@ -277,7 +277,7 @@ params
 #> wt       |     0.43 | -0.79 |    -0.04 |      0.31 | 0.91 | 0.09 |     0.20 |       1.87
 #> qsec-    |     0.81 |  0.19 |     0.50 |      0.06 | 0.95 | 0.05 |     0.70 |       1.81
 #> vs-      |     0.74 | -0.27 |     0.38 |      0.05 | 0.77 | 0.23 |     0.71 |       1.81
-#> am-      | 8.38e-03 | -0.89 |    -0.15 | -9.51e-03 | 0.81 | 0.19 | 8.63e-05 |       1.06
+#> am-      | 8.34e-03 | -0.89 |    -0.15 | -9.52e-03 | 0.81 | 0.19 | 8.55e-05 |       1.06
 #> gear     |     0.03 |  0.87 | 9.01e-03 |      0.32 | 0.87 | 0.13 | 9.03e-04 |       1.27
 #> carb     |     0.68 |  0.06 |     0.10 |      0.63 | 0.87 | 0.13 |     0.53 |       2.06
 summary(params)
@@ -304,10 +304,10 @@ summary(params)
 #> 
 #> Composite | Total (%) | General Factor (%) | Group Factor (%)
 #> -------------------------------------------------------------
-#> g         |     97.28 |              56.64 |            26.42
-#> F1*       |     90.12 |              31.07 |            59.05
-#> F2*       |     91.37 |              69.32 |            22.04
-#> F3*       |     87.36 |              59.65 |            27.71
+#> g         |     97.28 |              56.64 |            26.43
+#> F1*       |     90.12 |              31.06 |            59.05
+#> F2*       |     91.37 |              69.33 |            22.04
+#> F3*       |     87.36 |              59.64 |            27.72
 # }
 
 

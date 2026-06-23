@@ -29,7 +29,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.29.1.5</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.29.1.6</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -345,20 +345,20 @@ transform into CFA structures.</p>
 <span><span class="co"># Investigate how the models look</span></span>
 <span><span class="va">structure_big5</span></span>
 <span><span class="co">#&gt; # Latent variables</span></span>
-<span><span class="co">#&gt; MR5 =~ N1 + N2 + N3 + N4 + N5 + .row_id</span></span>
+<span><span class="co">#&gt; MR4 =~ N1 + N2 + N3 + N4 + N5 + .row_id</span></span>
 <span><span class="co">#&gt; MR2 =~ E1 + E2 + E3 + E4 + E5</span></span>
-<span><span class="co">#&gt; MR1 =~ C1 + C2 + C3 + C4 + C5</span></span>
-<span><span class="co">#&gt; MR3 =~ A1 + A2 + A3 + A4 + A5</span></span>
-<span><span class="co">#&gt; MR4 =~ O1 + O2 + O3 + O4 + O5</span></span>
+<span><span class="co">#&gt; MR3 =~ C1 + C2 + C3 + C4 + C5</span></span>
+<span><span class="co">#&gt; MR1 =~ A1 + A2 + A3 + A4 + A5</span></span>
+<span><span class="co">#&gt; MR5 =~ O1 + O2 + O3 + O4 + O5</span></span>
 <span></span>
 <span><span class="va">structure_big6</span></span>
 <span><span class="co">#&gt; # Latent variables</span></span>
-<span><span class="co">#&gt; MR5 =~ N1 + N2 + N3 + N5 + .row_id</span></span>
-<span><span class="co">#&gt; MR1 =~ C1 + C2 + C3 + C4 + C5</span></span>
-<span><span class="co">#&gt; MR3 =~ E1 + E2 + E4 + E5 + N4 + O4</span></span>
-<span><span class="co">#&gt; MR2 =~ A1 + A2 + A3 + A4 + A5</span></span>
-<span><span class="co">#&gt; MR6 =~ E3 + O1 + O2 + O3</span></span>
-<span><span class="co">#&gt; MR4 =~ O5</span></span></code></pre></div>
+<span><span class="co">#&gt; MR2 =~ N1 + N2 + N3 + N5 + .row_id</span></span>
+<span><span class="co">#&gt; MR3 =~ C1 + C2 + C3 + C4 + C5</span></span>
+<span><span class="co">#&gt; MR1 =~ E1 + E2 + E4 + E5 + N4 + O4</span></span>
+<span><span class="co">#&gt; MR5 =~ A1 + A2 + A3 + A4 + A5</span></span>
+<span><span class="co">#&gt; MR4 =~ E3 + O1 + O2 + O3</span></span>
+<span><span class="co">#&gt; MR6 =~ O5</span></span></code></pre></div>
 <p>As we can see, a structure is just a string encoding how the
 <strong>manifest variables</strong> (the observed variables) are
 integrated into <strong>latent variables</strong>.</p>

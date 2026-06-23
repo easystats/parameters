@@ -50,7 +50,7 @@ if (require("psych")) {
   loadings
   reshape_loadings(loadings)
 }
-#> Variable   |   MR2 |   MR1 |   MR3 | Complexity | Uniqueness
+#> Variable   |   MR1 |   MR2 |   MR3 | Complexity | Uniqueness
 #> ------------------------------------------------------------
 #> rating     |  0.90 | -0.07 | -0.05 |       1.02 |       0.23
 #> complaints |  0.97 | -0.06 |  0.04 |       1.01 |       0.10

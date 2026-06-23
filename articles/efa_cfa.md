@@ -281,20 +281,20 @@ structure_big6 <- psych::fa(training, nfactors = 6) %>%
 # Investigate how the models look
 structure_big5
 #> # Latent variables
-#> MR5 =~ N1 + N2 + N3 + N4 + N5 + .row_id
+#> MR4 =~ N1 + N2 + N3 + N4 + N5 + .row_id
 #> MR2 =~ E1 + E2 + E3 + E4 + E5
-#> MR1 =~ C1 + C2 + C3 + C4 + C5
-#> MR3 =~ A1 + A2 + A3 + A4 + A5
-#> MR4 =~ O1 + O2 + O3 + O4 + O5
+#> MR3 =~ C1 + C2 + C3 + C4 + C5
+#> MR1 =~ A1 + A2 + A3 + A4 + A5
+#> MR5 =~ O1 + O2 + O3 + O4 + O5
 
 structure_big6
 #> # Latent variables
-#> MR5 =~ N1 + N2 + N3 + N5 + .row_id
-#> MR1 =~ C1 + C2 + C3 + C4 + C5
-#> MR3 =~ E1 + E2 + E4 + E5 + N4 + O4
-#> MR2 =~ A1 + A2 + A3 + A4 + A5
-#> MR6 =~ E3 + O1 + O2 + O3
-#> MR4 =~ O5
+#> MR2 =~ N1 + N2 + N3 + N5 + .row_id
+#> MR3 =~ C1 + C2 + C3 + C4 + C5
+#> MR1 =~ E1 + E2 + E4 + E5 + N4 + O4
+#> MR5 =~ A1 + A2 + A3 + A4 + A5
+#> MR4 =~ E3 + O1 + O2 + O3
+#> MR6 =~ O5
 ```
 
 As we can see, a structure is just a string encoding how the **manifest

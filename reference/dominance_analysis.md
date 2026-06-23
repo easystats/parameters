@@ -101,27 +101,27 @@ of the following elements:
 
   `Parameter`
 
-  :   Parameter names.
+  : Parameter names.
 
   `General_Dominance`
 
-  :   Vector of general dominance statistics. The R2 ascribed to
-      variables in the `all` argument are also reported here though they
-      are not general dominance statistics.
+  : Vector of general dominance statistics. The R2 ascribed to variables
+    in the `all` argument are also reported here though they are not
+    general dominance statistics.
 
   `Percent`
 
-  :   Vector of general dominance statistics normalized to sum to 1.
+  : Vector of general dominance statistics normalized to sum to 1.
 
   `Ranks`
 
-  :   Vector of ranks applied to the general dominance statistics.
+  : Vector of ranks applied to the general dominance statistics.
 
   `Subset`
 
-  :   Names of the subset to which the parameter belongs in the
-      dominance analysis. Each other `data.frame` returned will refer to
-      these subset names.
+  : Names of the subset to which the parameter belongs in the dominance
+    analysis. Each other `data.frame` returned will refer to these
+    subset names.
 
 - `Conditional`:
 
