@@ -490,6 +490,7 @@ format.parameters_sem <- function(
   ci_width = NULL,
   ci_brackets = TRUE,
   pretty_names = TRUE,
+  select = NULL,
   ...
 ) {
   # Fallbacks based on object attributes

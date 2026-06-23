@@ -24,6 +24,8 @@
 * Fixed issue with calculation of standard errors in `model_parameters()` when
   `vcov` was a function that errored when unsupported arguments were passed.
 
+* Fixed issue in `print_html()` for `model_parameters()` with *lavaan* objects.
+
 # parameters 0.29.1
 
 ## Changes
