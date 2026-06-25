@@ -72,7 +72,7 @@
     # style: only estimate
     est = ,
     coef = "{estimate}",
-    paste0("{estimate}", linesep, "({ci})|{p}")
+    style
   )
 
   # replace \n for now with default line-separators
