@@ -40,43 +40,43 @@ rez <- model_parameters(model)
 rez
 #> # Clustering Solution
 #> 
-#> The 3 clusters accounted for 79.05% of the total variance of the original data.
+#> The 3 clusters accounted for 88.43% of the total variance of the original data.
 #> 
 #> Cluster | n_Obs | Sum_Squares | Sepal.Length | Sepal.Width | Petal.Length | Petal.Width
 #> ---------------------------------------------------------------------------------------
-#> 1       |    21 |       17.67 |         4.74 |        2.90 |         1.79 |        0.35
-#> 2       |    33 |        6.43 |         5.18 |        3.62 |         1.47 |        0.27
-#> 3       |    96 |      118.65 |         6.31 |        2.90 |         4.97 |        1.70
+#> 1       |    38 |       23.88 |         6.85 |        3.07 |         5.74 |        2.07
+#> 2       |    62 |       39.82 |         5.90 |        2.75 |         4.39 |        1.43
+#> 3       |    50 |       15.15 |         5.01 |        3.43 |         1.46 |        0.25
 
 # Get clusters
 predict(rez)
-#>   [1] 2 1 1 1 2 2 2 2 1 1 2 2 1 1 2 2 2 2 2 2 2 2 2 2 1 1 2 2 2 1 1 2 2 2 1 2 2
-#>  [38] 2 1 2 2 1 1 2 2 1 2 1 2 2 3 3 3 3 3 3 3 1 3 3 1 3 3 3 3 3 3 3 3 3 3 3 3 3
-#>  [75] 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 1 3 3 3 3 1 3 3 3 3 3 3 3 3 3 3 3 3
-#> [112] 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3
-#> [149] 3 3
+#>   [1] 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3
+#>  [38] 3 3 3 3 3 3 3 3 3 3 3 3 3 2 2 1 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2
+#>  [75] 2 2 2 1 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 1 2 1 1 1 1 2 1 1 1 1
+#> [112] 1 1 2 2 1 1 1 1 2 1 2 1 2 1 1 2 2 1 1 1 1 1 2 1 1 1 1 2 1 1 1 2 1 1 1 2 1
+#> [149] 1 2
 
 # Clusters centers in long form
 attributes(rez)$means
-#>    Cluster n_Obs Sum_Squares     Variable      Mean
-#> 1        1    21   17.669524 Sepal.Length 4.7380952
-#> 2        1    21   17.669524  Sepal.Width 2.9047619
-#> 3        1    21   17.669524 Petal.Length 1.7904762
-#> 4        1    21   17.669524  Petal.Width 0.3523810
-#> 5        2    33    6.432121 Sepal.Length 5.1757576
-#> 6        2    33    6.432121  Sepal.Width 3.6242424
-#> 7        2    33    6.432121 Petal.Length 1.4727273
-#> 8        2    33    6.432121  Petal.Width 0.2727273
-#> 9        3    96  118.651875 Sepal.Length 6.3145833
-#> 10       3    96  118.651875  Sepal.Width 2.8958333
-#> 11       3    96  118.651875 Petal.Length 4.9739583
-#> 12       3    96  118.651875  Petal.Width 1.7031250
+#>    Cluster n_Obs Sum_Squares     Variable     Mean
+#> 1        1    38    23.87947 Sepal.Length 6.850000
+#> 2        1    38    23.87947  Sepal.Width 3.073684
+#> 3        1    38    23.87947 Petal.Length 5.742105
+#> 4        1    38    23.87947  Petal.Width 2.071053
+#> 5        2    62    39.82097 Sepal.Length 5.901613
+#> 6        2    62    39.82097  Sepal.Width 2.748387
+#> 7        2    62    39.82097 Petal.Length 4.393548
+#> 8        2    62    39.82097  Petal.Width 1.433871
+#> 9        3    50    15.15100 Sepal.Length 5.006000
+#> 10       3    50    15.15100  Sepal.Width 3.428000
+#> 11       3    50    15.15100 Petal.Length 1.462000
+#> 12       3    50    15.15100  Petal.Width 0.246000
 
 # Between and Total Sum of Squares
 attributes(rez)$Sum_Squares_Total
 #> [1] 681.3706
 attributes(rez)$Sum_Squares_Between
-#> [1] 538.6171
+#> [1] 602.5192
 
 #
 # Hierarchical clustering (hclust) ---------------------------

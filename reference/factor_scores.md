@@ -39,11 +39,11 @@ element from the object and converts it into a data frame.
 data(mtcars)
 out <- factor_analysis(mtcars[, 1:7], n = 2)
 head(factor_scores(out))
-#>                           MR2        MR1
-#> Mazda RX4         -0.47283656 -0.7310433
-#> Mazda RX4 Wag     -0.38011346 -0.4342578
-#> Datsun 710        -0.99251648  0.4087690
-#> Hornet 4 Drive     0.07181369  0.9131799
-#> Hornet Sportabout  0.72281999 -0.3946531
-#> Valiant            0.21349031  1.3394188
+#>                           MR1        MR2
+#> Mazda RX4         -0.47283644 -0.7310436
+#> Mazda RX4 Wag     -0.38011338 -0.4342580
+#> Datsun 710        -0.99251649  0.4087686
+#> Hornet 4 Drive     0.07181356  0.9131800
+#> Hornet Sportabout  0.72282001 -0.3946528
+#> Valiant            0.21349011  1.3394191
 ```

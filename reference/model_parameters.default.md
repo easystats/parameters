@@ -417,9 +417,9 @@ model_parameters(model)
 model_parameters(model, bootstrap = TRUE)
 #> Parameter   | Coefficient |         95% CI |      p
 #> ---------------------------------------------------
-#> (Intercept) |       39.72 | [35.62, 44.03] | < .001
-#> wt          |       -3.25 | [-5.13, -1.97] | < .001
-#> cyl         |       -1.46 | [-2.17, -0.69] | < .001
+#> (Intercept) |       39.71 | [35.52, 43.95] | < .001
+#> wt          |       -3.24 | [-4.94, -1.96] | < .001
+#> cyl         |       -1.45 | [-2.16, -0.71] | 0.002 
 #> 
 #> Uncertainty intervals (equal-tailed) are naıve bootstrap
 #>   intervals.
