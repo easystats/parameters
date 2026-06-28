@@ -2,29 +2,31 @@
 
 #' @rdname print.parameters_model
 #' @export
-print_html.parameters_model <- function(x,
-                                        pretty_names = TRUE,
-                                        split_components = TRUE,
-                                        select = NULL,
-                                        caption = NULL,
-                                        subtitle = NULL,
-                                        footer = NULL,
-                                        align = NULL,
-                                        digits = 2,
-                                        ci_digits = digits,
-                                        p_digits = 3,
-                                        footer_digits = 3,
-                                        ci_brackets = c("(", ")"),
-                                        show_sigma = FALSE,
-                                        show_formula = FALSE,
-                                        zap_small = FALSE,
-                                        groups = NULL,
-                                        font_size = "100%",
-                                        line_padding = 4,
-                                        column_labels = NULL,
-                                        include_reference = FALSE,
-                                        verbose = TRUE,
-                                        ...) {
+print_html.parameters_model <- function(
+  x,
+  pretty_names = TRUE,
+  split_components = TRUE,
+  select = NULL,
+  caption = NULL,
+  subtitle = NULL,
+  footer = NULL,
+  align = NULL,
+  digits = 2,
+  ci_digits = digits,
+  p_digits = 3,
+  footer_digits = 3,
+  ci_brackets = c("(", ")"),
+  show_sigma = FALSE,
+  show_formula = FALSE,
+  zap_small = FALSE,
+  groups = NULL,
+  font_size = "100%",
+  line_padding = 4,
+  column_labels = NULL,
+  include_reference = FALSE,
+  verbose = TRUE,
+  ...
+) {
   # which engine?
   engine <- .check_format_backend(...)
 
@@ -66,7 +68,9 @@ print_html.parameters_model <- function(x,
 
   # check if pretty names should be replaced by value labels
   # (if we have labelled data)
-  if (isTRUE(getOption("parameters_labels", FALSE)) || identical(pretty_names, "labels")) {
+  if (
+    isTRUE(getOption("parameters_labels", FALSE)) || identical(pretty_names, "labels")
+  ) {
     attr(x, "pretty_names") <- attr(x, "pretty_labels", exact = TRUE)
     pretty_names <- TRUE
   }
@@ -99,8 +103,18 @@ print_html.parameters_model <- function(x,
 
   # replace brackets by parenthesis
   if (!is.null(ci_brackets) && "Parameter" %in% colnames(formatted_table)) {
-    formatted_table$Parameter <- gsub("[", ci_brackets[1], formatted_table$Parameter, fixed = TRUE)
-    formatted_table$Parameter <- gsub("]", ci_brackets[2], formatted_table$Parameter, fixed = TRUE)
+    formatted_table$Parameter <- gsub(
+      "[",
+      ci_brackets[1],
+      formatted_table$Parameter,
+      fixed = TRUE
+    )
+    formatted_table$Parameter <- gsub(
+      "]",
+      ci_brackets[2],
+      formatted_table$Parameter,
+      fixed = TRUE
+    )
   }
 
   # footer
@@ -152,21 +166,23 @@ print_html.parameters_sem <- print_html.parameters_model
 
 #' @rdname print.compare_parameters
 #' @export
-print_html.compare_parameters <- function(x,
-                                          caption = NULL,
-                                          subtitle = NULL,
-                                          footer = NULL,
-                                          digits = 2,
-                                          ci_digits = digits,
-                                          p_digits = 3,
-                                          zap_small = FALSE,
-                                          groups = NULL,
-                                          select = NULL,
-                                          ci_brackets = c("(", ")"),
-                                          font_size = "100%",
-                                          line_padding = 4,
-                                          column_labels = NULL,
-                                          ...) {
+print_html.compare_parameters <- function(
+  x,
+  caption = NULL,
+  subtitle = NULL,
+  footer = NULL,
+  digits = 2,
+  ci_digits = digits,
+  p_digits = 3,
+  zap_small = FALSE,
+  groups = NULL,
+  select = NULL,
+  ci_brackets = c("(", ")"),
+  font_size = "100%",
+  line_padding = 4,
+  column_labels = NULL,
+  ...
+) {
   # check if user supplied digits attributes
   if (missing(digits)) {
     digits <- .additional_arguments(x, "digits", digits)
@@ -211,8 +227,18 @@ print_html.compare_parameters <- function(x,
 
   # replace brackets by parenthesis
   if (!is.null(ci_brackets) && "Parameter" %in% colnames(formatted_table)) {
-    formatted_table$Parameter <- gsub("[", ci_brackets[1], formatted_table$Parameter, fixed = TRUE)
-    formatted_table$Parameter <- gsub("]", ci_brackets[2], formatted_table$Parameter, fixed = TRUE)
+    formatted_table$Parameter <- gsub(
+      "[",
+      ci_brackets[1],
+      formatted_table$Parameter,
+      fixed = TRUE
+    )
+    formatted_table$Parameter <- gsub(
+      "]",
+      ci_brackets[2],
+      formatted_table$Parameter,
+      fixed = TRUE
+    )
   }
 
   # setup grouping for tt-backend --------------------------------------------
@@ -282,15 +308,15 @@ print_html.compare_parameters <- function(x,
 
 # PCA / EFA / CFA ----------------------------
 
-
 #' @rdname principal_components
 #' @export
-print_html.parameters_efa <- function(x,
-                                      digits = 2,
-                                      sort = FALSE,
-                                      threshold = NULL,
-                                      labels = NULL,
-                                      ...) {
+print_html.parameters_efa <- function(
+  x,
+  digits = 2,
+  threshold = NULL,
+  labels = NULL,
+  ...
+) {
   # extract attributes
   if (is.null(threshold)) {
     threshold <- attributes(x)$threshold
@@ -298,7 +324,6 @@ print_html.parameters_efa <- function(x,
   .print_parameters_cfa_efa(
     x,
     threshold = threshold,
-    sort = sort,
     format = "html",
     digits = digits,
     labels = labels,
@@ -318,9 +343,20 @@ print_html.parameters_efa_summary <- function(x, digits = 3, ...) {
   table_caption <- "(Explained) Variance of Components"
 
   if ("Parameter" %in% names(x)) {
-    x$Parameter <- c("Eigenvalues", "Variance Explained", "Variance Explained (Cumulative)", "Variance Explained (Proportion)") # nolint
+    x$Parameter <- c(
+      "Eigenvalues",
+      "Variance Explained",
+      "Variance Explained (Cumulative)",
+      "Variance Explained (Proportion)"
+    ) # nolint
   } else if ("Component" %in% names(x)) {
-    names(x) <- c("Component", "Eigenvalues", "Variance Explained", "Variance Explained (Cumulative)", "Variance Explained (Proportion)") # nolint
+    names(x) <- c(
+      "Component",
+      "Eigenvalues",
+      "Variance Explained",
+      "Variance Explained (Cumulative)",
+      "Variance Explained (Proportion)"
+    ) # nolint
   }
 
   # we may have factor correlations
@@ -372,34 +408,31 @@ print_html.equivalence_test_lm <- function(
 
 #' @rdname p_function
 #' @export
-print_html.parameters_p_function <- function(x,
-                                             digits = 2,
-                                             ci_width = "auto",
-                                             ci_brackets = c("(", ")"),
-                                             pretty_names = TRUE,
-                                             ...) {
-  .print_p_function(
-    x,
-    digits,
-    ci_width,
-    ci_brackets,
-    pretty_names,
-    format = "html",
-    ...
-  )
+print_html.parameters_p_function <- function(
+  x,
+  digits = 2,
+  ci_width = "auto",
+  ci_brackets = c("(", ")"),
+  pretty_names = TRUE,
+  ...
+) {
+  .print_p_function(x, digits, ci_width, ci_brackets, pretty_names, format = "html", ...)
 }
 
 
 # helper ------------------
 
-.add_gt_options <- function(out,
-                            style,
-                            font_size = "100%",
-                            line_padding = 4,
-                            column_names = NULL,
-                            user_labels = NULL) {
+.add_gt_options <- function(
+  out,
+  style,
+  font_size = "100%",
+  line_padding = 4,
+  column_names = NULL,
+  user_labels = NULL
+) {
   insight::check_if_installed("gt")
-  out <- gt::tab_options(out,
+  out <- gt::tab_options(
+    out,
     table.font.size = font_size,
     data_row.padding = gt::px(line_padding)
   )
@@ -448,15 +481,8 @@ print_html.parameters_p_function <- function(x,
   # add a border to the first column.
   out <- gt::tab_style(
     out,
-    style = gt::cell_borders(
-      sides = "right",
-      style = "solid",
-      color = "#d3d3d3"
-    ),
-    locations = gt::cells_body(
-      columns = pcol_name,
-      rows = 1:last_row
-    )
+    style = gt::cell_borders(sides = "right", style = "solid", color = "#d3d3d3"),
+    locations = gt::cells_body(columns = pcol_name, rows = 1:last_row)
   )
   out
 }
