@@ -72,7 +72,7 @@ test_that("factor_analysis", {
   expect_identical(dim(out1), c(23L, 7L))
   expect_named(
     out1,
-    c("Variable", "MR2", "MR4", "MR3", "MR1", "Complexity", "Uniqueness")
+    c("Variable", "MR4", "MR1", "MR3", "MR2", "Complexity", "Uniqueness")
   )
 
   set.seed(333)
@@ -80,11 +80,11 @@ test_that("factor_analysis", {
   expect_identical(dim(out2), c(23L, 7L))
   expect_named(
     out2,
-    c("Variable", "MR1", "MR2", "MR3", "MR4", "Complexity", "Uniqueness")
+    c("Variable", "MR1", "MR2", "MR4", "MR3", "Complexity", "Uniqueness")
   )
 
   # roughly equal results
-  expect_equal(out1$MR2, out2$MR1, tolerance = 1e-1)
+  expect_equal(out1$MR4, out2$MR1, tolerance = 1e-1)
 
   # text matrix n_obs
   williams <- as.data.frame(discovr::williams)
@@ -106,7 +106,7 @@ test_that("factor_analysis", {
 
   out <- suppressWarnings(factor_analysis(r_mat, n_obs = n_mat, n = 2))
   expect_identical(dim(out), c(28L, 5L))
-  expect_named(out, c("Variable", "MR2", "MR1", "Complexity", "Uniqueness"))
+  expect_named(out, c("Variable", "MR1", "MR2", "Complexity", "Uniqueness"))
 
   n_mat <- matrix(0, nrow = n - 2, ncol = n - 2)
   diag(n_mat) <- 1

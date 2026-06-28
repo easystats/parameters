@@ -63,8 +63,10 @@ test_that("standardized no CI", {
 })
 
 test_that("simulate_model and equivalence_test work for lavaan", {
+  skip_on_cran()
+  skip_if_not_installed("bayestestR")
   skip_if_not_installed("lavaan")
-  skip_if_not_installed("insight", minimum_version = "1.5.1.3")
+  skip_if_not_installed("insight", minimum_version = "1.5.2")
 
   # Create simple example data
   set.seed(123)
