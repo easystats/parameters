@@ -493,7 +493,7 @@ format.parameters_pca <- function(x, labels = NULL, threshold = NULL, ...) {
     x <- .filter_loadings(x, threshold = threshold)
   }
 
-  x
+  as.data.frame(x)
 }
 
 #' @export

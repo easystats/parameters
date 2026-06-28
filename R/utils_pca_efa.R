@@ -416,7 +416,7 @@ print.parameters_omega_summary <- function(x, ...) {
   rotation_name <- attr(x, "rotation", exact = TRUE)
 
   # formatting
-  x <- format(x, labels, threshold, ...)
+  out <- format(x, labels, threshold, ...)
 
   # table caption
   if (is.null(rotation_name) || rotation_name == "none") {
@@ -464,7 +464,7 @@ print.parameters_omega_summary <- function(x, ...) {
   }
 
   insight::export_table(
-    x,
+    out,
     digits = digits,
     format = format,
     caption = table_caption,
