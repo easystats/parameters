@@ -98,7 +98,7 @@ n <- n_clusters(data, package = c("easystats", "NbClust", "mclust"))
 n
 #> # Method Agreement Procedure:
 #> 
-#> The choice of 2 clusters is supported by 15 (51.72%) methods out of 29 (Elbow, Silhouette, Gap_Maechler2012, Gap_Dudoit2002, Ch, DB, Duda, Pseudot2, Beale, Ratkowsky, PtBiserial, Mcclain, Dunn, SDindex, Mixture (VVV)).
+#> The choice of 2 clusters is supported by 14 (48.28%) methods out of 29 (Elbow, Gap_Maechler2012, Gap_Dudoit2002, Ch, DB, Duda, Pseudot2, Beale, Ratkowsky, PtBiserial, Mcclain, Dunn, SDindex, Mixture (VVV)).
 plot(n)
 ```
 
