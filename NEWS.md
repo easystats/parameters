@@ -5,6 +5,9 @@
 * `simulate_model()`, `simulate_parameters()` and `equivalence_test()` now work
   for `lavaan` objects.
 
+* Added `format()` method for objects returned by `factor_analysis()` and
+  `principal_components()`.
+
 ## Bug fixes
 
 * Fixed issues with extracting wrong standard errors for model with frailty

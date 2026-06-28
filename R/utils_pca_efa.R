@@ -79,7 +79,6 @@ get_scores <- function(x, n_items = NULL) {
 
 # model parameters -----------------------------------------------------------------
 
-
 #' @export
 model_parameters.parameters_efa <- function(model, ...) {
   x <- attributes(model)$summary
@@ -98,7 +97,6 @@ model_parameters.parameters_pca <- model_parameters.parameters_efa
 
 
 # summary -----------------------------------------------------------------
-
 
 #' @export
 summary.parameters_efa <- function(object, ...) {
@@ -146,15 +144,16 @@ summary.parameters_omega <- function(object, ...) {
 
 # predict -----------------------------------------------------------------
 
-
 #' @rdname principal_components
 #' @export
-predict.parameters_efa <- function(object,
-                                   newdata = NULL,
-                                   names = NULL,
-                                   keep_na = TRUE,
-                                   verbose = TRUE,
-                                   ...) {
+predict.parameters_efa <- function(
+  object,
+  newdata = NULL,
+  names = NULL,
+  keep_na = TRUE,
+  verbose = TRUE,
+  ...
+) {
   attri <- attributes(object)
 
   # handle if no data is provided
@@ -179,13 +178,29 @@ predict.parameters_efa <- function(object,
     # https://github.com/erichson/spca/issues/7
     newdata <- newdata[names(attri$model$center)]
     if (attri$standardize) {
-      newdata <- sweep(newdata, MARGIN = 2, STATS = attri$model$center, FUN = "-", check.margin = TRUE)
-      newdata <- sweep(newdata, MARGIN = 2, STATS = attri$model$scale, FUN = "/", check.margin = TRUE)
+      newdata <- sweep(
+        newdata,
+        MARGIN = 2,
+        STATS = attri$model$center,
+        FUN = "-",
+        check.margin = TRUE
+      )
+      newdata <- sweep(
+        newdata,
+        MARGIN = 2,
+        STATS = attri$model$scale,
+        FUN = "/",
+        check.margin = TRUE
+      )
     }
     out <- as.matrix(newdata) %*% as.matrix(attri$model$loadings)
     out <- stats::setNames(as.data.frame(out), paste0("Component", seq_len(ncol(out))))
   } else if (inherits(attri$model, c("psych", "fa", "principal"))) {
-    out <- as.data.frame(stats::predict(attri$model, data = newdata[rownames(attri$model$weights)], ...))
+    out <- as.data.frame(stats::predict(
+      attri$model,
+      data = newdata[rownames(attri$model$weights)],
+      ...
+    ))
   } else {
     out <- as.data.frame(stats::predict(attri$model, newdata = newdata, ...))
   }
@@ -221,7 +236,6 @@ predict.parameters_pca <- predict.parameters_efa
 
 # print -------------------------------------------------------------------
 
-
 #' @export
 print.parameters_efa_summary <- function(x, digits = 3, ...) {
   # we may have factor correlations
@@ -229,13 +243,18 @@ print.parameters_efa_summary <- function(x, digits = 3, ...) {
 
   if ("Parameter" %in% names(x)) {
     x$Parameter <- c(
-      "Eigenvalues", "Variance Explained", "Variance Explained (Cumulative)",
+      "Eigenvalues",
+      "Variance Explained",
+      "Variance Explained (Cumulative)",
       "Variance Explained (Proportion)"
     )
   } else if ("Component" %in% names(x)) {
     names(x) <- c(
-      "Component", "Eigenvalues", "Variance Explained",
-      "Variance Explained (Cumulative)", "Variance Explained (Proportion)"
+      "Component",
+      "Eigenvalues",
+      "Variance Explained",
+      "Variance Explained (Cumulative)",
+      "Variance Explained (Proportion)"
     )
   }
 
@@ -258,7 +277,6 @@ print.parameters_efa_summary <- function(x, digits = 3, ...) {
     ))
   }
 
-
   invisible(x)
 }
 
@@ -269,12 +287,7 @@ print.parameters_pca_summary <- print.parameters_efa_summary
 
 #' @rdname principal_components
 #' @export
-print.parameters_efa <- function(x,
-                                 digits = 2,
-                                 sort = FALSE,
-                                 threshold = NULL,
-                                 labels = NULL,
-                                 ...) {
+print.parameters_efa <- function(x, digits = 2, threshold = NULL, labels = NULL, ...) {
   # extract attributes
   if (is.null(threshold)) {
     threshold <- attributes(x)$threshold
@@ -282,7 +295,6 @@ print.parameters_efa <- function(x,
   cat(.print_parameters_cfa_efa(
     x,
     threshold = threshold,
-    sort = sort,
     format = "text",
     digits = digits,
     labels = labels,
@@ -308,7 +320,6 @@ print.parameters_omega_summary <- function(x, ...) {
 
 # print-helper ----------------------
 
-
 .print_omega_summary <- function(x, format = "text") {
   caption1 <- NULL
   caption2 <- NULL
@@ -318,8 +329,20 @@ print.parameters_omega_summary <- function(x, ...) {
   model <- attributes(x)$model
   if (!is.null(model)) {
     stats <- data.frame(
-      Statistic = c("Alpha", "G.6", "Omega (hierarchical)", "Omega (asymptotic H)", "Omega (total)"),
-      Coefficient = c(model$alpha, model$G6, model$omega_h, model$omega.lim, model$omega.tot)
+      Statistic = c(
+        "Alpha",
+        "G.6",
+        "Omega (hierarchical)",
+        "Omega (asymptotic H)",
+        "Omega (total)"
+      ),
+      Coefficient = c(
+        model$alpha,
+        model$G6,
+        model$omega_h,
+        model$omega.lim,
+        model$omega.tot
+      )
     )
     if (format == "text") {
       caption1 <- c("# Omega Statistics", "blue")
@@ -335,7 +358,10 @@ print.parameters_omega_summary <- function(x, ...) {
   # rename columns
   if (!is.null(omega_coefficients)) {
     names(omega_coefficients) <- c(
-      "Composite", "Omega (total)", "Omega (hierarchical)", "Omega (group)"
+      "Composite",
+      "Omega (total)",
+      "Omega (hierarchical)",
+      "Omega (group)"
     )
     if (format == "text") {
       caption2 <- c("# Omega Coefficients", "blue")
@@ -345,7 +371,9 @@ print.parameters_omega_summary <- function(x, ...) {
   }
   if (!is.null(variance_summary)) {
     names(variance_summary) <- c(
-      "Composite", "Total (%)", "General Factor (%)",
+      "Composite",
+      "Total (%)",
+      "General Factor (%)",
       "Group Factor (%)"
     )
     if (format == "text") {
@@ -363,7 +391,7 @@ print.parameters_omega_summary <- function(x, ...) {
 }
 
 
-.print_parameters_cfa_efa <- function(x, threshold, sort, format, digits, labels, ...) {
+.print_parameters_cfa_efa <- function(x, threshold, format, digits, labels, ...) {
   # html engine?
   engine <- .check_format_backend(...)
 
@@ -379,15 +407,10 @@ print.parameters_omega_summary <- function(x, ...) {
   # Rotation
   rotation_name <- attr(x, "rotation", exact = TRUE)
 
-  # Labels
+  # formatting
   if (!is.null(labels)) {
     x$Label <- labels
     x <- x[c("Variable", "Label", names(x)[!names(x) %in% c("Variable", "Label")])]
-  }
-
-  # Sorting
-  if (isTRUE(sort)) {
-    x <- .sort_loadings(x)
   }
 
   # Replace by NA all cells below threshold
@@ -403,16 +426,29 @@ print.parameters_omega_summary <- function(x, ...) {
       table_caption <- c(sprintf("# Loadings from %s (no rotation)", method), "blue")
     }
   } else if (format %in% c("markdown", "html")) {
-    table_caption <- sprintf("Rotated loadings from %s (%s-rotation)", method, rotation_name)
+    table_caption <- sprintf(
+      "Rotated loadings from %s (%s-rotation)",
+      method,
+      rotation_name
+    )
   } else {
-    table_caption <- c(sprintf("# Rotated loadings from %s (%s-rotation)", method, rotation_name), "blue")
+    table_caption <- c(
+      sprintf("# Rotated loadings from %s (%s-rotation)", method, rotation_name),
+      "blue"
+    )
   }
 
   # footer
   if (is.null(attributes(x)$type)) {
     footer <- NULL
   } else {
-    footer <- c(.text_components_variance(x, sep = ifelse(format %in% c("markdown", "html"), "", "\n")), "yellow")
+    footer <- c(
+      .text_components_variance(
+        x,
+        sep = ifelse(format %in% c("markdown", "html"), "", "\n")
+      ),
+      "yellow"
+    )
   }
 
   # alignment?
@@ -471,7 +507,6 @@ print.parameters_omega_summary <- function(x, ...) {
     text_variance <- paste0(text_variance, " (", attributes(x)$rotation, " rotation)")
   }
 
-
   text_variance <- paste0(
     text_variance,
     " accounted for ",
@@ -485,7 +520,8 @@ print.parameters_omega_summary <- function(x, ...) {
     text_variance <- paste0(
       text_variance,
       " (",
-      paste0(cluster_summary$Component,
+      paste0(
+        cluster_summary$Component,
         " = ",
         sprintf("%.2f", cluster_summary$Variance * 100),
         "%",
@@ -560,13 +596,11 @@ sort.parameters_pca <- sort.parameters_efa
 
 # Filter --------------------------------------------------------------------
 
-
 #' @keywords internal
 .filter_loadings <- function(loadings, threshold = 0.2, loadings_columns = NULL) {
   if (is.null(loadings_columns)) {
     loadings_columns <- attributes(loadings)$loadings_columns
   }
-
 
   if (threshold == "max" || threshold >= 1) {
     if (threshold == "max") {
@@ -576,7 +610,10 @@ sort.parameters_pca <- sort.parameters_efa
       }
     } else {
       for (col in loadings_columns) {
-        loadings[utils::tail(order(abs(loadings[, col]), decreasing = TRUE), -round(threshold)), col] <- NA
+        loadings[
+          utils::tail(order(abs(loadings[, col]), decreasing = TRUE), -round(threshold)),
+          col
+        ] <- NA
       }
     }
   } else {
@@ -588,7 +625,6 @@ sort.parameters_pca <- sort.parameters_efa
 
 
 # closest_component -------------------------------------------------------
-
 
 #' @rdname principal_components
 #' @export
@@ -602,9 +638,15 @@ closest_component <- function(x) {
 
 
 .closest_component <- function(loadings, loadings_columns = NULL, variable_names = NULL) {
-  if (is.matrix(loadings)) loadings <- as.data.frame(loadings)
-  if (is.null(loadings_columns)) loadings_columns <- seq_len(ncol(loadings))
-  if (is.null(variable_names)) variable_names <- row.names(loadings)
+  if (is.matrix(loadings)) {
+    loadings <- as.data.frame(loadings)
+  }
+  if (is.null(loadings_columns)) {
+    loadings_columns <- seq_len(ncol(loadings))
+  }
+  if (is.null(variable_names)) {
+    variable_names <- row.names(loadings)
+  }
   component_columns <- apply(loadings[loadings_columns], 1, function(i) which.max(abs(i)))
   stats::setNames(component_columns, variable_names)
 }

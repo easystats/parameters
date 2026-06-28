@@ -478,6 +478,30 @@ format.compare_parameters <- function(
   formatted_table
 }
 
+# PCA/FA-models ---------------------------------
+
+#' @export
+format.parameters_pca <- function(x, labels = NULL, threshold = NULL, ...) {
+  # Labels
+  if (!is.null(labels)) {
+    x$Label <- labels
+    x <- x[c("Variable", "Label", names(x)[!names(x) %in% c("Variable", "Label")])]
+  }
+
+  # Replace by NA all cells below threshold
+  if (!is.null(threshold)) {
+    x <- .filter_loadings(x, threshold = threshold)
+  }
+
+  as.data.frame(x)
+}
+
+#' @export
+format.parameters_efa <- format.parameters_pca
+
+#' @export
+format.parameters_omega <- format.parameters_pca
+
 # sem-models ---------------------------------
 
 #' @export
