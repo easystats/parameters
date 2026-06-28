@@ -234,4 +234,3 @@ Config/Needs/website: easystats/easystatstemplate
 Config/Needs/check: stan-dev/cmdstanr
 Config/rcmdcheck/ignore-inconsequential-notes: true
 Config/roxygen2/version: 8.0.0
-Remotes: easystats/insight
