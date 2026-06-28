@@ -287,14 +287,7 @@ print.parameters_pca_summary <- print.parameters_efa_summary
 
 #' @rdname principal_components
 #' @export
-print.parameters_efa <- function(
-  x,
-  digits = 2,
-  sort = FALSE,
-  threshold = NULL,
-  labels = NULL,
-  ...
-) {
+print.parameters_efa <- function(x, digits = 2, threshold = NULL, labels = NULL, ...) {
   # extract attributes
   if (is.null(threshold)) {
     threshold <- attributes(x)$threshold
@@ -302,7 +295,6 @@ print.parameters_efa <- function(
   cat(.print_parameters_cfa_efa(
     x,
     threshold = threshold,
-    sort = sort,
     format = "text",
     digits = digits,
     labels = labels,
@@ -399,7 +391,7 @@ print.parameters_omega_summary <- function(x, ...) {
 }
 
 
-.print_parameters_cfa_efa <- function(x, threshold, sort, format, digits, labels, ...) {
+.print_parameters_cfa_efa <- function(x, threshold, format, digits, labels, ...) {
   # html engine?
   engine <- .check_format_backend(...)
 
@@ -416,7 +408,15 @@ print.parameters_omega_summary <- function(x, ...) {
   rotation_name <- attr(x, "rotation", exact = TRUE)
 
   # formatting
-  out <- format(x, labels, threshold, ...)
+  if (!is.null(labels)) {
+    x$Label <- labels
+    x <- x[c("Variable", "Label", names(x)[!names(x) %in% c("Variable", "Label")])]
+  }
+
+  # Replace by NA all cells below threshold
+  if (!is.null(threshold)) {
+    x <- .filter_loadings(x, threshold = threshold)
+  }
 
   # table caption
   if (is.null(rotation_name) || rotation_name == "none") {
@@ -464,7 +464,7 @@ print.parameters_omega_summary <- function(x, ...) {
   }
 
   insight::export_table(
-    out,
+    x,
     digits = digits,
     format = format,
     caption = table_caption,
