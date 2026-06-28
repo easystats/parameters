@@ -28,7 +28,11 @@ test_that("factor_analysis", {
   )
 
   expect_equal(out$MR1, raq_fa$loadings[, "MR1"], tolerance = 1e-3, ignore_attr = TRUE)
+
+  # format returns a data frame only
   expect_identical(class(format(out)), "data.frame")
+  # format removes thresholds
+  expect_equal(sum(is.na(format(out, threshold = 0.3)$MR4)), 15)
 
   s <- summary(out)
   expect_equal(
