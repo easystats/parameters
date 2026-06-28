@@ -28,6 +28,7 @@ test_that("factor_analysis", {
   )
 
   expect_equal(out$MR1, raq_fa$loadings[, "MR1"], tolerance = 1e-3, ignore_attr = TRUE)
+  expect_identical(class(format(out)), "data.frame")
 
   s <- summary(out)
   expect_equal(
