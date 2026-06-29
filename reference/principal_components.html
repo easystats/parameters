@@ -56,7 +56,7 @@ available to access / display other information (see the 'Details' section)."><m
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Principal Component Analysis (PCA) and Factor Analysis (FA)</h1>
-      <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/main/R/factor_analysis.R" class="external-link"><code>R/factor_analysis.R</code></a>, <a href="https://github.com/easystats/parameters/blob/main/R/principal_components.R" class="external-link"><code>R/principal_components.R</code></a>, <a href="https://github.com/easystats/parameters/blob/main/R/print_html.R" class="external-link"><code>R/print_html.R</code></a>, and 1 more</small>
+      <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/v0.29.2/R/factor_analysis.R" class="external-link"><code>R/factor_analysis.R</code></a>, <a href="https://github.com/easystats/parameters/blob/v0.29.2/R/principal_components.R" class="external-link"><code>R/principal_components.R</code></a>, <a href="https://github.com/easystats/parameters/blob/v0.29.2/R/print_html.R" class="external-link"><code>R/print_html.R</code></a>, and 1 more</small>
       <div class="d-none name"><code>principal_components.Rd</code></div>
     </div>
 
@@ -414,10 +414,10 @@ statistics (6th ed.). Boston: Pearson Education.</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Variable |   PC1 | Complexity</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -----------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mpg      | -0.93 |       1.00</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> cyl      |  0.96 |       1.00</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> disp     |  0.95 |       1.00</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> hp       |  0.91 |       1.00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mpg      | -0.93 |          1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> cyl      |  0.96 |          1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> disp     |  0.95 |          1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> hp       |  0.91 |          1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">The unique principal component accounted for 87.55% of the total variance of the original data.</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -436,10 +436,10 @@ statistics (6th ed.). Boston: Pearson Education.</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Variable | Label                 |   PC1 | Complexity</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -----------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mpg      | Miles/(US) gallon     | -0.93 |       1.00</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> cyl      | Number of cylinders   |  0.96 |       1.00</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> disp     | Displacement (cu.in.) |  0.95 |       1.00</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> hp       | Gross horsepower      |  0.91 |       1.00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mpg      | Miles/(US) gallon     | -0.93 |          1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> cyl      | Number of cylinders   |  0.96 |          1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> disp     | Displacement (cu.in.) |  0.95 |          1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> hp       | Gross horsepower      |  0.91 |          1</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Sparse PCA</span></span></span>
 <span class="r-in"><span><span class="fu">principal_components</span><span class="op">(</span><span class="va">mtcars</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">7</span><span class="op">]</span>, n <span class="op">=</span> <span class="fl">4</span>, sparse <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
