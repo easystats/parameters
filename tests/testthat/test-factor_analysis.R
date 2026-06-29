@@ -117,7 +117,7 @@ test_that("factor_analysis", {
 
   out <- suppressWarnings(factor_analysis(r_mat, n_obs = n_mat, n = 2))
   expect_identical(dim(out), c(28L, 5L))
-  expect_named(out, c("Variable", "MR2", "MR1", "Complexity", "Uniqueness"))
+  expect_named(out, c("Variable", "MR1", "MR2", "Complexity", "Uniqueness"))
 
   n_mat <- matrix(0, nrow = n - 2, ncol = n - 2)
   diag(n_mat) <- 1
