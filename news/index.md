@@ -1,5 +1,56 @@
 # Changelog
 
+## parameters 0.29.2
+
+CRAN release: 2026-06-28
+
+### Changes
+
+- [`simulate_model()`](https://easystats.github.io/parameters/reference/simulate_model.md),
+  [`simulate_parameters()`](https://easystats.github.io/parameters/reference/simulate_parameters.md)
+  and
+  [`equivalence_test()`](https://easystats.github.io/bayestestR/reference/equivalence_test.html)
+  now work for `lavaan` objects.
+
+- Added [`format()`](https://rdrr.io/r/base/format.html) method for
+  objects returned by
+  [`factor_analysis()`](https://easystats.github.io/parameters/reference/principal_components.md)
+  and
+  [`principal_components()`](https://easystats.github.io/parameters/reference/principal_components.md).
+
+### Bug fixes
+
+- Fixed issues with extracting wrong standard errors for model with
+  frailty terms in
+  [`survival::coxph()`](https://rdrr.io/pkg/survival/man/coxph.html).
+
+- Fixed issue where including a character variable in a model caused all
+  other variable labels to be silently dropped from
+  [`model_parameters()`](https://easystats.github.io/parameters/reference/model_parameters.md)
+  output
+  ([\#1142](https://github.com/easystats/parameters/issues/1142)).
+
+- Fixed issue where on-the-fly factor conversions in the model formula
+  (e.g., `factor(cyl)`) produced `NA` in interaction labels when
+  variable labels were set
+  ([\#1135](https://github.com/easystats/parameters/issues/1135)).
+
+- Fixed issue where `include_reference = TRUE` had no effect for
+  [`pscl::zeroinfl()`](https://rdrr.io/pkg/pscl/man/zeroinfl.html) and
+  [`pscl::hurdle()`](https://rdrr.io/pkg/pscl/man/hurdle.html) models
+  ([\#1130](https://github.com/easystats/parameters/issues/1130)).
+
+- Fixed issue with calculation of standard errors in
+  [`model_parameters()`](https://easystats.github.io/parameters/reference/model_parameters.md)
+  when `vcov` was a function that errored when unsupported arguments
+  were passed.
+
+- Fixed issue in
+  [`print_html()`](https://easystats.github.io/insight/reference/display.html)
+  for
+  [`model_parameters()`](https://easystats.github.io/parameters/reference/model_parameters.md)
+  with *lavaan* objects.
+
 ## parameters 0.29.1
 
 CRAN release: 2026-05-24
