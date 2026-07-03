@@ -242,6 +242,11 @@ format_parameters.parameters_model <- function(model, ...) {
     name <- .format_factor(name = name, variable = variable, brackets = brackets)
   }
 
+  # Logical
+  if (type == "logical") {
+    name <- .format_logical(name = name, brackets = brackets)
+  }
+
   # Polynomials
   if (type %in% c("poly", "poly_raw")) {
     name <- .format_poly(
@@ -395,6 +400,12 @@ format_parameters.parameters_model <- function(model, ...) {
 
 
 #' @keywords internal
+.format_logical <- function(name, brackets = c("[", "]")) {
+  paste0(sub("TRUE$", "", name), " ", brackets[1], "TRUE", brackets[2])
+}
+
+
+#' @keywords internal
 .format_log <- function(name, variable, type, brackets = c("[", "]")) {
   paste0(variable, " ", brackets[1], gsub("(.*)\\((.*)\\)", "\\1", name), brackets[2])
 }
@@ -463,7 +474,7 @@ format_parameters.parameters_model <- function(model, ...) {
             factor_terms
           )
           for (k in seq_along(factor_terms)) {
-            ft <- factor_terms[k]    # e.g. "factor(cyl)"
+            ft <- factor_terms[k] # e.g. "factor(cyl)"
             orig <- cleaned_terms[k] # e.g. "cyl"
             if (orig %in% colnames(mf) && !ft %in% colnames(mf)) {
               orig_label <- attr(mf[[orig]], "label", exact = TRUE)

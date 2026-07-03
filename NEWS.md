@@ -1,3 +1,10 @@
+# parameters (devel)
+
+## Changes
+
+* Logical variables are now properly formatted when pretty value labels are
+  printed.
+
 # parameters 0.29.2
 
 ## Changes
