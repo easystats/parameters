@@ -215,6 +215,10 @@ parameters_type <- function(model, ...) {
   } else if (cleaned_name %in% reference$numeric) {
     return(c("numeric", "Association", name, name, NA, NA))
 
+    # Logicals
+  } else if (cleaned_name %in% reference$logical) {
+    return(c("logical", "Difference", name, cleaned_name, "TRUE", NA))
+
     # Ordered factors
   } else if (is.ordered(data[[cleaned_ordered_name]])) {
     fac <- reference$levels_parent[match(cleaned_name, reference$levels)]
@@ -426,6 +430,9 @@ parameters_type <- function(model, ...) {
   }
   out$levels <- out$levels[!is.na(out$levels)]
   out$levels_parent <- out$levels_parent[!is.na(out$levels_parent)]
+
+  # Logical
+  out$logical <- names(data[vapply(data, is.logical, TRUE)])
 
   out
 }
