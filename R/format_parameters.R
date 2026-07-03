@@ -401,7 +401,7 @@ format_parameters.parameters_model <- function(model, ...) {
 
 #' @keywords internal
 .format_logical <- function(name, brackets = c("[", "]")) {
-  paste0(name, " ", brackets[1], "TRUE", brackets[2])
+  paste0(sub("TRUE$", "", name), " ", brackets[1], "TRUE", brackets[2])
 }
 
 

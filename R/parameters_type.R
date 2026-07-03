@@ -216,7 +216,8 @@ parameters_type <- function(model, ...) {
     return(c("numeric", "Association", name, name, NA, NA))
 
     # Logicals
-  } else if (cleaned_name %in% reference$logical) {
+  } else if (sub("TRUE$", "", cleaned_name) %in% reference$logical) {
+    cleaned_name <- sub("TRUE$", "", cleaned_name)
     return(c("logical", "Difference", name, cleaned_name, "TRUE", NA))
 
     # Ordered factors
@@ -331,7 +332,7 @@ parameters_type <- function(model, ...) {
   .check_for_numerics <- function(x) {
     is.numeric(x) && !isTRUE(attributes(x)$factor)
   }
-  out$numeric <- names(data[vapply(data, .check_for_numerics, TRUE)])
+  out$numeric <- names(data)[vapply(data, .check_for_numerics, TRUE)]
 
   # get contrast coding
   contrast_coding <- .safe(model$contrasts)
@@ -372,12 +373,12 @@ parameters_type <- function(model, ...) {
   }
 
   # Ordered factors
-  out$ordered <- names(data[vapply(data, is.ordered, TRUE)])
+  out$ordered <- names(data)[vapply(data, is.ordered, TRUE)]
 
   # Factors
-  out$factor <- names(data[
+  out$factor <- names(data)[
     vapply(data, is.factor, TRUE) | vapply(data, is.character, TRUE)
-  ])
+  ]
 
   out$levels <- NA
   out$levels_parent <- NA
@@ -432,7 +433,7 @@ parameters_type <- function(model, ...) {
   out$levels_parent <- out$levels_parent[!is.na(out$levels_parent)]
 
   # Logical
-  out$logical <- names(data[vapply(data, is.logical, TRUE)])
+  out$logical <- names(data)[vapply(data, is.logical, TRUE)]
 
   out
 }

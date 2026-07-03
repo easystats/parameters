@@ -47,9 +47,6 @@
     }
   }
 
-  # for logicals
-  x <- gsub("TRUE$", "", x)
-
   gsub("`", "", x, fixed = TRUE)
 }
 
