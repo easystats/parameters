@@ -32,7 +32,7 @@ test_that("parameters_type works with logicals", {
       Parameter = c("(Intercept)", "amTRUE", "cyl6", "cyl8", "disp"),
       Type = c("intercept", "logical", "factor", "factor", "numeric"),
       Link = c("Mean", "Difference", "Difference", "Difference", "Association"),
-      Term = c("(Intercept)", "am", "cyl6", "cyl8", "disp"),
+      Term = c("(Intercept)", "amTRUE", "cyl6", "cyl8", "disp"),
       Variable = c(NA, "am", "cyl", "cyl", "disp"),
       Level = c(NA, "TRUE", "6", "8", NA),
       Secondary_Parameter = c(
