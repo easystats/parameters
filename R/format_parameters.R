@@ -440,7 +440,7 @@ format_parameters.parameters_model <- function(model, ...) {
   }
 
   # validation check
-  if (!is.null(model) && insight::is_regression_model(model) && !is.data.frame(model)) {
+  if (.is_valid_model_input(model)) {
     # get data, but exclude response - we have no need for that label
     mf <- insight::get_data(model, source = "mf", verbose = FALSE)
     # sanity check - any labels (value labels)?
@@ -600,6 +600,13 @@ format_parameters.parameters_model <- function(model, ...) {
 
 
 # helper -------------------
+
+.is_valid_model_input <- function(model) {
+  !is.null(model) &&
+    ((insight::is_regression_model(model) && !is.data.frame(model)) ||
+      inherits(model, c("predictions", "comparisons", "slopes")))
+}
+
 
 .unicode_symbols <- function() {
   # symbols only work on windows from R 4.2 and higher
