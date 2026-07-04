@@ -79,7 +79,7 @@ format_parameters.parameters_model <- function(model, ...) {
   # save some time, if model info is passed as argument
   dot_args <- list(...)
   if (is.null(dot_args$model_info)) {
-    info <- insight::model_info(model, verbose = FALSE)
+    info <- .safe(insight::model_info(model, verbose = FALSE))
   } else {
     info <- dot_args$model_info
   }
