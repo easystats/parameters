@@ -63,7 +63,8 @@ tinyplot.parameters_model <- function(x, flip = TRUE, zero = TRUE, sort = FALSE,
     dots[reserved] <- NULL
     insight::format_alert(paste0(
       "Following arguments are set by this method and were ignored: ",
-      toString(paste0("`", reserved, "`")), "."
+      toString(paste0("`", reserved, "`")),
+      "."
     ))
   }
 
@@ -77,7 +78,7 @@ tinyplot.parameters_model <- function(x, flip = TRUE, zero = TRUE, sort = FALSE,
     keep <- intersect(c("conditional", "count"), unique(out$Component))
     if (length(keep)) {
       out <- out[out$Component == keep[1], , drop = FALSE]
-      insight::format_alert("Only the conditional component is plotted.")
+      insight::format_alert(paste0("Only the ", keep[1], " component is plotted."))
     }
   }
 
@@ -86,7 +87,8 @@ tinyplot.parameters_model <- function(x, flip = TRUE, zero = TRUE, sort = FALSE,
   if (length(missing_columns)) {
     insight::format_error(paste0(
       "Cannot plot this object. The following columns are missing: ",
-      toString(missing_columns), "."
+      toString(missing_columns),
+      "."
     ))
   }
   if (all(is.na(out$Coefficient)) || all(is.na(out$CI_low)) || all(is.na(out$CI_high))) {
@@ -109,13 +111,14 @@ tinyplot.parameters_model <- function(x, flip = TRUE, zero = TRUE, sort = FALSE,
     out$Parameter <- make.unique(out$Parameter, sep = " ")
   }
 
-  # for interval types, tinyplot places categories in row order, with the
-  # first row at the bottom of a flipped plot. sort rows if requested, and
-  # reverse the categorical axis so the first row appears on top.
+  # for interval types, tinyplot places categories in row order. sort rows if
+  # requested. when flipped, the first row lands at the bottom, so reverse the
+  # categorical axis to put the first parameter on top (only meaningful when
+  # flipped; a vertical plot keeps model order left to right).
   if (isTRUE(sort)) {
     out <- out[order(out$Coefficient, decreasing = TRUE), , drop = FALSE]
   }
-  if (is.null(dots$xlim)) {
+  if (isTRUE(flip) && is.null(dots$xlim)) {
     dots$xlim <- "rev"
   }
   out$Parameter <- factor(out$Parameter, levels = unique(out$Parameter))
