@@ -2,6 +2,9 @@
 
 ## Changes
 
+* New `tinyplot()` method for `parameters_model` objects, which draws
+  a forest plot of the coefficients using the `tinyplot` package (#1110).
+
 * Logical variables are now properly formatted when pretty value labels are
   printed.
 
