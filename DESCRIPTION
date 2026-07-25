@@ -62,7 +62,12 @@ Authors@R:
              family = "Luchman",
              role = "ctb",
              email = "jluchman@gmail.com",
-             comment = c(ORCID = "0000-0002-8886-9717")))
+             comment = c(ORCID = "0000-0002-8886-9717")),
+      person(given = "Miura",
+             family = "Meng",
+             role = "ctb",
+             email = "meng10@upenn.edu",
+             comment = c(ORCID = "0009-0004-1522-1997")))
 Maintainer: Daniel Lüdecke <officialeasystats@gmail.com>
 Description: Utilities for processing the parameters of various
     statistical models. Beyond computing p values, CIs, and other indices
