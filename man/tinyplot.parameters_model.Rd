@@ -4,7 +4,18 @@
 \alias{tinyplot.parameters_model}
 \title{Forest plot of model parameters using \code{tinyplot}}
 \usage{
-\method{tinyplot}{parameters_model}(x, flip = TRUE, zero = TRUE, sort = FALSE, ...)
+\method{tinyplot}{parameters_model}(
+  x,
+  flip = TRUE,
+  zero = TRUE,
+  sort = FALSE,
+  size_title = NULL,
+  size_axis_title = NULL,
+  size_axis_text = NULL,
+  size_point = NULL,
+  size_line = NULL,
+  ...
+)
 }
 \arguments{
 \item{x}{An object returned by \code{\link[=model_parameters]{model_parameters()}}.}
@@ -18,6 +29,17 @@ axis is extended to include that value.}
 
 \item{sort}{Logical, if \code{TRUE}, coefficients are sorted by size, largest
 on top. If \code{FALSE} (default), parameters appear in model order.}
+
+\item{size_title, size_axis_title, size_axis_text}{Numeric, set the size of
+plot title, axis title or axis labels. If not \code{NULL}, \code{par()} is called
+temporarily to set \code{cex.main}, \code{cex.axis} and \code{cex.lab}. The original values
+are restored afterwards. The default size is \code{1}. Larger values increase text
+sizes and vice versa.}
+
+\item{size_point, size_line}{Size of points and lines in the plot. Default is
+\code{1}. Larger values increase point/line sizes and vice versa. If argument
+\code{cex} is used, \code{size_point} will be ignored. Same for argument \code{lwd}, which
+overrides \code{size_line}.}
 
 \item{...}{Other arguments passed to \code{\link[tinyplot:tinyplot]{tinyplot::tinyplot()}}, e.g. \code{theme}
 or \code{palette}. User-supplied \code{xlim}, \code{ylim} or \code{ylab} override the defaults

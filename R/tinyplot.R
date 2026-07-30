@@ -20,6 +20,8 @@
 #' set by this method. The `type`, `data`, `ymin` and `ymax` arguments are
 #' fixed by this method and will be ignored.
 #'
+#' @inheritParams modelbased::tinyplot.estimate_means
+#'
 #' @details Random effects parameters are dropped from the plot, and for
 #' models with a zero-inflation component, only the conditional (count)
 #' component is shown. A message is printed in these cases.
@@ -51,7 +53,18 @@
 #' plt(result)
 #' }
 #' @exportS3Method tinyplot::tinyplot
-tinyplot.parameters_model <- function(x, flip = TRUE, zero = TRUE, sort = FALSE, ...) {
+tinyplot.parameters_model <- function(
+  x,
+  flip = TRUE,
+  zero = TRUE,
+  sort = FALSE,
+  size_title = NULL,
+  size_axis_title = NULL,
+  size_axis_text = NULL,
+  size_point = NULL,
+  size_line = NULL,
+  ...
+) {
   insight::check_if_installed("tinyplot", minimum_version = "0.7.0")
 
   out <- as.data.frame(x)
@@ -151,6 +164,32 @@ tinyplot.parameters_model <- function(x, flip = TRUE, zero = TRUE, sort = FALSE,
     ),
     dots
   )
+
+  # geom sizes -------------------------------
+
+  if (is.null(dots$cex) && !is.null(size_point)) {
+    plot_args$cex <- size_point
+  }
+
+  if (is.null(dots$lwd) && !is.null(size_line)) {
+    plot_args$lwd <- size_line
+  }
+
+  # set text sizes --------------------------------
+
+  text_sizes <- insight::compact_list(list(
+    cex.axis = size_axis_text,
+    cex.main = size_title,
+    cex.lab = size_axis_title
+  ))
+
+  if (!is.null(text_sizes) && length(text_sizes)) {
+    old_pars <- graphics::par(text_sizes)
+    on.exit(graphics::par(old_pars), add = TRUE)
+  }
+
+  # plotting --------------------------------------
+
   do.call(tinyplot::tinyplot, plot_args)
 
   if (isTRUE(zero)) {
