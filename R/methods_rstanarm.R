@@ -68,6 +68,7 @@ model_parameters.stanreg <- function(model,
     exponentiate,
     ci_method = ci_method,
     group_level = group_level,
+    effects = effects,
     verbose = verbose,
     ...
   )

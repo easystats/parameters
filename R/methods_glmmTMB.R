@@ -353,6 +353,7 @@ model_parameters.glmmTMB <- function(
     p_adjust = p_adjust,
     verbose = verbose,
     group_level = group_level,
+    effects = effects,
     include_info = include_info,
     wb_component = wb_component,
     modelinfo = modelinfo,

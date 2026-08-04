@@ -731,6 +731,7 @@ model_parameters.default <- function(
         ci_method = ci_method,
         p_adjust = p_adjust,
         include_info = include_info,
+        effects = effects,
         verbose = verbose,
         ...
       )

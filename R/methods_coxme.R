@@ -188,6 +188,7 @@ model_parameters.coxme <- function(
     verbose = verbose,
     include_info = include_info,
     group_level = group_level,
+    effects = effects,
     wb_component = wb_component,
     ...
   )

@@ -442,8 +442,13 @@ print.parameters_random <- function(x, digits = 2, ...) {
 
   title_attribute <- attributes(x)$title[1]
 
-  # check effects and component parts
-  if (!is.null(x$Effects) && all(x$Effects == "random")) {
+  # check effects and component parts. the Effects column may already have
+  # been removed when it carried a single unique value, so group-level
+  # estimates are additionally detected from the saved "effects" argument
+  if (
+    (!is.null(x$Effects) && all(x$Effects == "random")) ||
+      identical(attributes(x)$effects, "grouplevel")
+  ) {
     eff_name <- "Random"
   } else {
     eff_name <- "Fixed"
