@@ -163,6 +163,7 @@ model_parameters.brmsfit <- function(
       exponentiate,
       ci_method = ci_method,
       group_level = group_level,
+      effects = effects,
       modelinfo = modelinfo,
       verbose = verbose,
       ...

@@ -18,6 +18,7 @@
   group_level = FALSE,
   wb_component = FALSE,
   modelinfo = NULL,
+  effects = NULL,
   ...
 ) {
   # these models only have a single table component, hence, we need no caption
@@ -79,6 +80,13 @@
   attr(params, "robust_vcov") <- "vcov" %in% names(list(...))
   attr(params, "ignore_group") <- isFALSE(group_level)
   attr(params, "ran_pars") <- isFALSE(group_level)
+  # some methods resolve the "grouplevel" alias into effects = "random" plus
+  # group_level = TRUE early on; undo that here so the attribute always
+  # records what the user asked for
+  if (isTRUE(group_level) && identical(effects, "random")) {
+    effects <- "grouplevel"
+  }
+  attr(params, "effects") <- effects
   attr(params, "show_summary") <- isTRUE(include_info)
   attr(params, "log_link") <- isTRUE(grepl("log", info$link_function, fixed = TRUE))
   attr(params, "logit_link") <- isTRUE(identical(info$link_function, "logit"))

@@ -977,10 +977,12 @@
   # fix table names for random effects, when we only have random
   # effects. in such cases, the wrong header (fixed effects) is chosen
   # to prevent this, we "fake" the name of the splitted components by
-  # prefixing them with "random."
+  # prefixing them with "random." - the Effects column may already have
+  # been removed when it carried a single unique value, so group-level
+  # estimates are additionally detected from the saved "effects" argument
   if (
-    !is.null(x$Effects) &&
-      all(x$Effects == "random") &&
+    ((!is.null(x$Effects) && all(x$Effects == "random")) ||
+      identical(attributes(x)$effects, "grouplevel")) &&
       !all(startsWith(names(tables), "random."))
   ) {
     wrong_names <- !startsWith(names(tables), "random.")
