@@ -16,6 +16,7 @@ reference:
       - sort_parameters
       - standardize_parameters
       - standardize_info
+      - tinyplot.parameters_model
 
   - title: "Documentation of Specific Class Objects"
     contents:
