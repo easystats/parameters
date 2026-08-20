@@ -190,6 +190,7 @@ model_parameters.coxme <- function(
     group_level = group_level,
     effects = effects,
     wb_component = wb_component,
+    vcov = vcov,
     ...
   )
 
