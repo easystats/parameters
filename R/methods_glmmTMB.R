@@ -357,6 +357,7 @@ model_parameters.glmmTMB <- function(
     include_info = include_info,
     wb_component = wb_component,
     modelinfo = modelinfo,
+    vcov = vcov,
     ...
   )
 
