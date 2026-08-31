@@ -13,17 +13,15 @@ for `mira`-objects is comparable to the
 *mice*, but only focuses on the final summary of parameters and does not
 include the diagnostic statistic per estimate.
 
-``` r
-
-library(mice)
-library(parameters)
-
-data("nhanes2")
-imp <- mice(nhanes2, printFlag = FALSE)
-fit <- with(data = imp, exp = lm(bmi ~ age + hyp + chl))
-
-model_parameters(fit)
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`mice`](https://github.com/amices/mice)`)`\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`parameters`](https://easystats.github.io/parameters/)`)`\
+\
+[`data`](https://rdrr.io/r/utils/data.html)`(``"nhanes2"``)`\
+`imp`` ``<-`` `[`mice`](https://amices.org/mice/reference/mice.html)`(``nhanes2``, printFlag ``=`` ``FALSE``)`\
+`fit`` ``<-`` `[`with`](https://rdrr.io/r/base/with.html)`(``data ``=`` ``imp``, exp ``=`` `[`lm`](https://rdrr.io/r/stats/lm.html)`(``bmi`` ``~`` ``age`` ``+`` ``hyp`` ``+`` ``chl``)``)`\
+\
+[`model_parameters`](https://easystats.github.io/parameters/reference/model_parameters.md)`(``fit``)`
 
     #> # Fixed Effects
     #> 
@@ -46,30 +44,26 @@ the predictors. Then we impute the data, using
 [`mice()`](https://amices.org/mice/reference/mice.html) from package
 *mice*.
 
-``` r
-
-library(lme4)
-library(GLMMadaptive)
-
-data(cbpp)
-cbpp$period[sample(seq_len(nrow(cbpp)), size = 10)] <- NA
-
-imputed_data <- mice(cbpp, printFlag = FALSE)
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`lme4`](https://github.com/lme4/lme4/)`)`\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`GLMMadaptive`](https://drizopoulos.github.io/GLMMadaptive/)`)`\
+\
+[`data`](https://rdrr.io/r/utils/data.html)`(``cbpp``)`\
+`cbpp``$``period``[`[`sample`](https://rdrr.io/r/base/sample.html)`(`[`seq_len`](https://rdrr.io/r/base/seq.html)`(`[`nrow`](https://rdrr.io/r/base/nrow.html)`(``cbpp``)``)``, size ``=`` ``10``)``]`` ``<-`` ``NA`\
+\
+`imputed_data`` ``<-`` `[`mice`](https://amices.org/mice/reference/mice.html)`(``cbpp``, printFlag ``=`` ``FALSE``)`
 
 Using `with` to compute multiple regression analyses for each imputed
 dataset fails.
 
-``` r
-
-fit <- with(data = imputed_data, expr = GLMMadaptive::mixed_model(
-  cbind(incidence, size - incidence) ~ period,
-  random = ~ 1 | herd,
-  family = binomial
-))
-# > Error in as.data.frame(data) :
-# >   argument "data" is missing, with no default
-```
+\
+`fit`` ``<-`` `[`with`](https://rdrr.io/r/base/with.html)`(``data ``=`` ``imputed_data``, expr ``=`` ``GLMMadaptive``::`[`mixed_model`](https://drizopoulos.github.io/GLMMadaptive/reference/mixed_model.html)`(`\
+`  `[`cbind`](https://amices.org/mice/reference/cbind.html)`(``incidence``, ``size`` ``-`` ``incidence``)`` ``~`` ``period``,`\
+`  random ``=`` ``~`` ``1`` ``|`` ``herd``,`\
+`  family ``=`` ``binomial`\
+`)``)`\
+`# > Error in as.data.frame(data) :`\
+`# >   argument "data" is missing, with no default`
 
 However, we can use a workaround by using
 [`pool_parameters()`](https://easystats.github.io/parameters/reference/pool_parameters.md),
@@ -93,18 +87,16 @@ The steps would be:
 3.  Pass the list to
     [`pool_parameters()`](https://easystats.github.io/parameters/reference/pool_parameters.md).
 
-``` r
-
-models <- lapply(1:imputed_data$m, function(i) {
-  mixed_model(
-    cbind(incidence, size - incidence) ~ period,
-    random = ~ 1 | herd,
-    data = complete(imputed_data, action = i),
-    family = binomial
-  )
-})
-pool_parameters(models)
-```
+\
+`models`` ``<-`` `[`lapply`](https://rdrr.io/r/base/lapply.html)`(``1``:``imputed_data``$``m``, ``function``(``i``)`` ``{`\
+`  `[`mixed_model`](https://drizopoulos.github.io/GLMMadaptive/reference/mixed_model.html)`(`\
+`    `[`cbind`](https://amices.org/mice/reference/cbind.html)`(``incidence``, ``size`` ``-`` ``incidence``)`` ``~`` ``period``,`\
+`    random ``=`` ``~`` ``1`` ``|`` ``herd``,`\
+`    data ``=`` `[`complete`](https://tidyr.tidyverse.org/reference/complete.html)`(``imputed_data``, action ``=`` ``i``)``,`\
+`    family ``=`` ``binomial`\
+`  ``)`\
+`}``)`\
+[`pool_parameters`](https://easystats.github.io/parameters/reference/pool_parameters.md)`(``models``)`
 
     #> # Fixed Effects
     #> 
@@ -120,18 +112,16 @@ For comparison and to show that the results from `mice:pool()` and
 are identical, we take an example that also works with the *mice*
 package:
 
-``` r
-
-library(mice)
-library(parameters)
-
-data("nhanes2")
-imp <- mice(nhanes2, printFlag = FALSE)
-
-# approach when model is supported by "mice"
-fit <- with(data = imp, exp = lm(bmi ~ age + hyp + chl))
-summary(pool(fit))
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`mice`](https://github.com/amices/mice)`)`\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`parameters`](https://easystats.github.io/parameters/)`)`\
+\
+[`data`](https://rdrr.io/r/utils/data.html)`(``"nhanes2"``)`\
+`imp`` ``<-`` `[`mice`](https://amices.org/mice/reference/mice.html)`(``nhanes2``, printFlag ``=`` ``FALSE``)`\
+\
+`# approach when model is supported by "mice"`\
+`fit`` ``<-`` `[`with`](https://rdrr.io/r/base/with.html)`(``data ``=`` ``imp``, exp ``=`` `[`lm`](https://rdrr.io/r/stats/lm.html)`(``bmi`` ``~`` ``age`` ``+`` ``hyp`` ``+`` ``chl``)``)`\
+[`summary`](https://rdrr.io/r/base/summary.html)`(`[`pool`](https://amices.org/mice/reference/pool.html)`(``fit``)``)`
 
     #>          term estimate std.error statistic df p.value
     #> 1 (Intercept)   19.667     3.373       5.8 11 0.00013
@@ -140,14 +130,12 @@ summary(pool(fit))
     #> 4      hypyes    2.713     1.829       1.5 11 0.16544
     #> 5         chl    0.051     0.017       2.9 12 0.01290
 
-``` r
-
-# approach when model is *not* supported by "mice"
-models <- lapply(1:5, function(i) {
-  lm(bmi ~ age + hyp + chl, data = complete(imp, action = i))
-})
-pool_parameters(models)
-```
+\
+`# approach when model is *not* supported by "mice"`\
+`models`` ``<-`` `[`lapply`](https://rdrr.io/r/base/lapply.html)`(``1``:``5``, ``function``(``i``)`` ``{`\
+`  `[`lm`](https://rdrr.io/r/stats/lm.html)`(``bmi`` ``~`` ``age`` ``+`` ``hyp`` ``+`` ``chl``, data ``=`` `[`complete`](https://tidyr.tidyverse.org/reference/complete.html)`(``imp``, action ``=`` ``i``)``)`\
+`}``)`\
+[`pool_parameters`](https://easystats.github.io/parameters/reference/pool_parameters.md)`(``models``)`
 
     #> # Fixed Effects
     #> 
@@ -164,15 +152,13 @@ pool_parameters(models)
 It is also possible to compute summaries of pooled objects of class
 `mipo`.
 
-``` r
-
-data("nhanes2")
-imp <- mice(nhanes2, printFlag = FALSE)
-fit <- with(data = imp, exp = lm(bmi ~ age + hyp + chl))
-pooled <- pool(fit)
-
-model_parameters(pooled)
-```
+\
+[`data`](https://rdrr.io/r/utils/data.html)`(``"nhanes2"``)`\
+`imp`` ``<-`` `[`mice`](https://amices.org/mice/reference/mice.html)`(``nhanes2``, printFlag ``=`` ``FALSE``)`\
+`fit`` ``<-`` `[`with`](https://rdrr.io/r/base/with.html)`(``data ``=`` ``imp``, exp ``=`` `[`lm`](https://rdrr.io/r/stats/lm.html)`(``bmi`` ``~`` ``age`` ``+`` ``hyp`` ``+`` ``chl``)``)`\
+`pooled`` ``<-`` `[`pool`](https://amices.org/mice/reference/pool.html)`(``fit``)`\
+\
+[`model_parameters`](https://easystats.github.io/parameters/reference/model_parameters.md)`(``pooled``)`
 
     #> # Fixed Effects
     #> 

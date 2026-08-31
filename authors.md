@@ -37,6 +37,8 @@
 - **Joseph Luchman**. Contributor.
   [](https://orcid.org/0000-0002-8886-9717)
 
+- **Miura Meng**. Contributor. [](https://orcid.org/0009-0004-1522-1997)
+
 ## Citation
 
 Source:
@@ -47,13 +49,13 @@ Computing and Exploring the Parameters of Statistical Models using R.”
 *Journal of Open Source Software*, **5**(53), 2445.
 [doi:10.21105/joss.02445](https://doi.org/10.21105/joss.02445).
 
-    @Article{,
-      title = {Extracting, Computing and Exploring the Parameters of Statistical Models using {R}.},
-      volume = {5},
-      doi = {10.21105/joss.02445},
-      number = {53},
-      journal = {Journal of Open Source Software},
-      author = {Daniel Lüdecke and Mattan S. Ben-Shachar and Indrajeet Patil and Dominique Makowski},
-      year = {2020},
-      pages = {2445},
-    }
+@Article{,\
+  title = {Extracting, Computing and Exploring the Parameters of Statistical Models using {R}.},\
+  volume = {5},\
+  doi = {10.21105/joss.02445},\
+  number = {53},\
+  journal = {Journal of Open Source Software},\
+  author = {Daniel Lüdecke and Mattan S. Ben-Shachar and Indrajeet Patil and Dominique Makowski},\
+  year = {2020},\
+  pages = {2445},\
+}

@@ -18,11 +18,9 @@ and Jones 2015).
 
 ## Sample data used in this vignette
 
-``` r
-
-library(parameters)
-data("qol_cancer")
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`parameters`](https://easystats.github.io/parameters/)`)`\
+[`data`](https://rdrr.io/r/utils/data.html)`(``"qol_cancer"``)`
 
 - Variables:
 
@@ -59,17 +57,15 @@ You can check if your model may suffer from heterogeneity bias using the
 [`check_group_variation()`](https://easystats.github.io/performance/reference/check_group_variation.html)
 function:
 
-``` r
-
-library(performance)
-check_group_variation(qol_cancer, select = c("phq4", "education"), by = "ID")
-#> Check ID variation
-#> 
-#> Variable  | Variation | Design
-#> ------------------------------
-#> phq4      |      both |       
-#> education |   between |
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`performance`](https://easystats.github.io/performance/)`)`\
+[`check_group_variation`](https://easystats.github.io/performance/reference/check_group_variation.html)`(``qol_cancer``, select ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"phq4"``, ``"education"``)``, by ``=`` ``"ID"``)`\
+`#> Check ID variation`\
+`#> `\
+`#> Variable  | Variation | Design |     r`\
+`#> --------------------------------------`\
+`#> phq4      |      both |        |  .812`\
+`#> education |   between |        | 1.000`
 
 ## Addressing heterogeneity bias: the Fixed Effects Regression (FE) approach
 
@@ -89,11 +85,9 @@ for each higher-level unit.
 
 ### Computing the de-meaned and group-meaned variables
 
-``` r
-
-library(datawizard)
-qol_cancer <- demean(qol_cancer, select = c("phq4", "QoL"), by = "ID")
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`datawizard`](https://easystats.github.io/datawizard/)`)`\
+`qol_cancer`` ``<-`` `[`demean`](https://easystats.github.io/datawizard/reference/demean.html)`(``qol_cancer``, select ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"phq4"``, ``"QoL"``)``, by ``=`` ``"ID"``)`
 
 Now we have:
 
@@ -113,63 +107,57 @@ A FE model is a classical linear model, where
 - time-varying predictors are de-meaned (“person-mean centered”,
   indicating the “within-subject” effect)
 
-``` r
-
-fe_model1 <- lm(
-  QoL ~ 0 + time + phq4_within + ID,
-  data = qol_cancer
-)
-# we use only the first two rows, because the remaining rows are
-# the estimates for "ID", which is not of interest here...
-model_parameters(fe_model1)[1:2, ] |> display(format = "tt")
-```
+\
+`fe_model1`` ``<-`` `[`lm`](https://rdrr.io/r/stats/lm.html)`(`\
+`  ``QoL`` ``~`` ``0`` ``+`` ``time`` ``+`` ``phq4_within`` ``+`` ``ID``,`\
+`  data ``=`` ``qol_cancer`\
+`)`\
+`# we use only the first two rows, because the remaining rows are`\
+`# the estimates for "ID", which is not of interest here...`\
+[`model_parameters`](https://easystats.github.io/parameters/reference/model_parameters.md)`(``fe_model1``)``[``1``:``2``, ``]`` ``|>`` `[`display`](https://easystats.github.io/insight/reference/display.html)`(``format ``=`` ``"tt"``)`
 
 | Parameter   | Coefficient | SE   | 95% CI         | t(374) | p       |
 |-------------|-------------|------|----------------|--------|---------|
 | time        | 1.09        | 0.64 | (-0.17, 2.34)  | 1.70   | 0.089   |
 | phq4 within | -3.66       | 0.41 | (-4.46, -2.86) | -8.95  | \< .001 |
 
-Model Summary {#tinytable_5y9p9f3cy8vuib7ty05p .table .tinytable
+Model Summary {#tinytable_jhdwsqdz4f3br7pg31yt .table .tinytable
 style="width: auto; margin-left: auto; margin-right: auto;"
 quarto-disable-processing="true"}
 
-``` r
-
-# instead of removing the intercept, we could also use the
-# de-meaned response...
-fe_model2 <- lm(
-  QoL_within ~ time + phq4_within + ID,
-  data = qol_cancer
-)
-model_parameters(fe_model2)[2:3, ] |> display(format = "tt")
-```
+\
+`# instead of removing the intercept, we could also use the`\
+`# de-meaned response...`\
+`fe_model2`` ``<-`` `[`lm`](https://rdrr.io/r/stats/lm.html)`(`\
+`  ``QoL_within`` ``~`` ``time`` ``+`` ``phq4_within`` ``+`` ``ID``,`\
+`  data ``=`` ``qol_cancer`\
+`)`\
+[`model_parameters`](https://easystats.github.io/parameters/reference/model_parameters.md)`(``fe_model2``)``[``2``:``3``, ``]`` ``|>`` `[`display`](https://easystats.github.io/insight/reference/display.html)`(``format ``=`` ``"tt"``)`
 
 | Parameter   | Coefficient | SE   | 95% CI         | t(374) | p       |
 |-------------|-------------|------|----------------|--------|---------|
 | time        | 1.09        | 0.64 | (-0.17, 2.34)  | 1.70   | 0.089   |
 | phq4 within | -3.66       | 0.41 | (-4.46, -2.86) | -8.95  | \< .001 |
 
-Model Summary {#tinytable_8ekkl354istvx52htw4c .table .tinytable
+Model Summary {#tinytable_fmf7l6gcz6m7ln4lz0bh .table .tinytable
 style="width: auto; margin-left: auto; margin-right: auto;"
 quarto-disable-processing="true"}
 
-``` r
-
-# we compare the results with those from the "lfe"-package for panel data
-library(lfe)
-fe_model3 <- felm(
-  QoL ~ time + phq4 | ID,
-  data = qol_cancer
-)
-model_parameters(fe_model3) |> display(format = "tt")
-```
+\
+`# we compare the results with those from the "lfe"-package for panel data`\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`lfe`](https://github.com/r-econometrics/lfe)`)`\
+`fe_model3`` ``<-`` `[`felm`](https://rdrr.io/pkg/lfe/man/felm.html)`(`\
+`  ``QoL`` ``~`` ``time`` ``+`` ``phq4`` ``|`` ``ID``,`\
+`  data ``=`` ``qol_cancer`\
+`)`\
+[`model_parameters`](https://easystats.github.io/parameters/reference/model_parameters.md)`(``fe_model3``)`` ``|>`` `[`display`](https://easystats.github.io/insight/reference/display.html)`(``format ``=`` ``"tt"``)`
 
 | Parameter | Coefficient | SE   | 95% CI         | t(374) | p       |
 |-----------|-------------|------|----------------|--------|---------|
 | time      | 1.09        | 0.64 | (-0.17, 2.34)  | 1.70   | 0.089   |
 | phq4      | -3.66       | 0.41 | (-4.46, -2.86) | -8.95  | \< .001 |
 
-Model Summary {#tinytable_9c3l90wmlevn8021nkwx .table .tinytable
+Model Summary {#tinytable_ifxdfzlfusz9zwo3fvhj .table .tinytable
 style="width: auto; margin-left: auto; margin-right: auto;"
 quarto-disable-processing="true"}
 
@@ -224,15 +212,13 @@ There are several ways to address this using a mixed models approach:
 For now, we will follow the last recommendation and use the within- and
 between-version of `phq4`.
 
-``` r
-
-library(lme4)
-mixed_1 <- lmer(
-  QoL ~ time + phq4_within + phq4_between + (1 | ID),
-  data = qol_cancer
-)
-model_parameters(mixed_1) |> display(format = "tt", by = "Component")
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`lme4`](https://github.com/lme4/lme4/)`)`\
+`mixed_1`` ``<-`` `[`lmer`](https://rdrr.io/pkg/lme4/man/lmer.html)`(`\
+`  ``QoL`` ``~`` ``time`` ``+`` ``phq4_within`` ``+`` ``phq4_between`` ``+`` ``(``1`` ``|`` ``ID``)``,`\
+`  data ``=`` ``qol_cancer`\
+`)`\
+[`model_parameters`](https://easystats.github.io/parameters/reference/model_parameters.md)`(``mixed_1``)`` ``|>`` `[`display`](https://easystats.github.io/insight/reference/display.html)`(``format ``=`` ``"tt"``, by ``=`` ``"Component"``)`
 
 | Parameter | Coefficient | SE | 95% CI | t(558) | p |
 |----|----|----|----|----|----|
@@ -245,22 +231,20 @@ model_parameters(mixed_1) |> display(format = "tt", by = "Component")
 | SD (Intercept: ID) | 9.88 | 0.80 | (8.43, 11.58) |  |  |
 | SD (Residual) | 12.37 | 0.45 | (11.51, 13.28) |  |  |
 
-Model Summary {#tinytable_oykv9jhksn2ocwmissk2 .table .tinytable
+Model Summary {#tinytable_5cp59iwmf0lxjvf248w9 .table .tinytable
 style="width: auto; margin-left: auto; margin-right: auto;"
 quarto-disable-processing="true"}
 
-``` r
-
-# compare to FE-model
-model_parameters(fe_model1)[1:2, ] |> display(format = "tt")
-```
+\
+`# compare to FE-model`\
+[`model_parameters`](https://easystats.github.io/parameters/reference/model_parameters.md)`(``fe_model1``)``[``1``:``2``, ``]`` ``|>`` `[`display`](https://easystats.github.io/insight/reference/display.html)`(``format ``=`` ``"tt"``)`
 
 | Parameter   | Coefficient | SE   | 95% CI         | t(374) | p       |
 |-------------|-------------|------|----------------|--------|---------|
 | time        | 1.09        | 0.64 | (-0.17, 2.34)  | 1.70   | 0.089   |
 | phq4 within | -3.66       | 0.41 | (-4.46, -2.86) | -8.95  | \< .001 |
 
-Model Summary {#tinytable_hps0sv58ocxu06fie91l .table .tinytable
+Model Summary {#tinytable_jvu8qwgohov84ibm6sg8 .table .tinytable
 style="width: auto; margin-left: auto; margin-right: auto;"
 quarto-disable-processing="true"}
 
@@ -278,16 +262,14 @@ models approach can model the causes of endogeneity explicitly by
 including the (separated) within- and between-effects of time-varying
 fixed effects and including time-constant fixed effects.
 
-``` r
-
-mixed_2 <- lmer(
-  QoL ~ time + phq4_within + phq4_between + education + (1 + time | ID),
-  data = qol_cancer
-)
-# effects = "fixed" will not display random effects, but split the
-# fixed effects into its between- and within-effects components.
-model_parameters(mixed_2, effects = "fixed") |> display(format = "tt")
-```
+\
+`mixed_2`` ``<-`` `[`lmer`](https://rdrr.io/pkg/lme4/man/lmer.html)`(`\
+`  ``QoL`` ``~`` ``time`` ``+`` ``phq4_within`` ``+`` ``phq4_between`` ``+`` ``education`` ``+`` ``(``1`` ``+`` ``time`` ``|`` ``ID``)``,`\
+`  data ``=`` ``qol_cancer`\
+`)`\
+`# effects = "fixed" will not display random effects, but split the`\
+`# fixed effects into its between- and within-effects components.`\
+[`model_parameters`](https://easystats.github.io/parameters/reference/model_parameters.md)`(``mixed_2``, effects ``=`` ``"fixed"``)`` ``|>`` `[`display`](https://easystats.github.io/insight/reference/display.html)`(``format ``=`` ``"tt"``)`
 
 | Parameter        | Coefficient | SE   | 95% CI         | t(554) | p       |
 |------------------|-------------|------|----------------|--------|---------|
@@ -298,7 +280,7 @@ model_parameters(mixed_2, effects = "fixed") |> display(format = "tt")
 | education (mid)  | 5.01        | 2.35 | (0.40, 9.62)   | 2.14   | 0.033   |
 | education (high) | 5.52        | 2.75 | (0.11, 10.93)  | 2.00   | 0.046   |
 
-Model Summary {#tinytable_4ruzykjx4c9d9hk120z9 .table .tinytable
+Model Summary {#tinytable_vja3wy4adt7djw4np86i .table .tinytable
 style="width: auto; margin-left: auto; margin-right: auto;"
 quarto-disable-processing="true"}
 
@@ -330,15 +312,13 @@ y_(it) = β₀ + β_(1W) (x_(it) - ͞x_(i)) + β_(2B) ͞x_(i) + β₃ z_(i) +
 
 In R-code, the model is written down like this:
 
-``` r
-
-# We ignore the convergence warnings for now...
-rewb <- suppressWarnings(lmer(
-  QoL ~ time + phq4_within + phq4_between + education +
-    (1 + time | ID) + (1 + phq4_within | ID),
-  data = qol_cancer
-))
-```
+\
+`# We ignore the convergence warnings for now...`\
+`rewb`` ``<-`` `[`suppressWarnings`](https://rdrr.io/r/base/warning.html)`(`[`lmer`](https://rdrr.io/pkg/lme4/man/lmer.html)`(`\
+`  ``QoL`` ``~`` ``time`` ``+`` ``phq4_within`` ``+`` ``phq4_between`` ``+`` ``education`` ``+`\
+`    ``(``1`` ``+`` ``time`` ``|`` ``ID``)`` ``+`` ``(``1`` ``+`` ``phq4_within`` ``|`` ``ID``)``,`\
+`  data ``=`` ``qol_cancer`\
+`)``)`
 
 **What about time-constant predictors?**
 
@@ -358,10 +338,8 @@ The benefit of this kind of model is that you have information on
 within-, between- and other time-constant (i.e. between) effects or
 group-level predictors…
 
-``` r
-
-model_parameters(rewb, effects = "fixed") |> display(format = "tt")
-```
+\
+[`model_parameters`](https://easystats.github.io/parameters/reference/model_parameters.md)`(``rewb``, effects ``=`` ``"fixed"``)`` ``|>`` `[`display`](https://easystats.github.io/insight/reference/display.html)`(``format ``=`` ``"tt"``)`
 
 | Parameter        | Coefficient | SE   | 95% CI            | t(551) | p       |
 |------------------|-------------|------|-------------------|--------|---------|
@@ -372,7 +350,7 @@ model_parameters(rewb, effects = "fixed") |> display(format = "tt")
 | education (mid)  | 4.95        | 2.35 | (0.34, 9.56)      | 2.11   | 0.035   |
 | education (high) | 5.62        | 2.76 | (0.20, 11.04)     | 2.04   | 0.042   |
 
-Model Summary {#tinytable_m8i4k476estky3e4cb8m .table .tinytable
+Model Summary {#tinytable_xtk70td9ungrrjfobgcu .table .tinytable
 style="width: auto; margin-left: auto; margin-right: auto;"
 quarto-disable-processing="true"}
 
@@ -381,24 +359,22 @@ quarto-disable-processing="true"}
 (e.g. nested design or cross-classified design with more than two
 levels):
 
-``` r
-
-random_parameters(rewb)
-#> # Random Effects
-#> 
-#> Within-Group Variance              119.51 (10.93)
-#> Between-Group Variance
-#>   Random Intercept (ID)            111.26 (10.55)
-#>   Random Intercept (ID.1)           21.86  (4.68)
-#>   Random Slope (ID.time)             0.46  (0.68)
-#>   Random Slope (ID.1.phq4_within)   14.37  (3.79)
-#> Correlations
-#>   ID.time                              -1
-#>   ID.phq4_within                     0.48
-#> N (groups per factor)
-#>   ID                                  188
-#> Observations                          564
-```
+\
+[`random_parameters`](https://easystats.github.io/parameters/reference/random_parameters.md)`(``rewb``)`\
+`#> # Random Effects`\
+`#> `\
+`#> Within-Group Variance              119.51 (10.93)`\
+`#> Between-Group Variance`\
+`#>   Random Intercept (ID)            111.26 (10.55)`\
+`#>   Random Intercept (ID.1)           21.86  (4.68)`\
+`#>   Random Slope (ID.time)             0.46  (0.68)`\
+`#>   Random Slope (ID.1.phq4_within)   14.37  (3.79)`\
+`#> Correlations`\
+`#>   ID.time                              -1`\
+`#>   ID.phq4_within                     0.48`\
+`#> N (groups per factor)`\
+`#>   ID                                  188`\
+`#> Observations                          564`
 
 **What about imbalanced groups, i.e. large differences in N per group?**
 
@@ -446,34 +422,32 @@ The results show that we will have two sources of variation: Overall,
 more experienced typists make fewer mistakes (group-level pattern). When
 typing faster, typists make more mistakes (individual-level pattern).
 
-``` r
-
-library(ggplot2)
-library(see)
-
-set.seed(123)
-n <- 5
-b <- seq(1, 1.5, length.out = 5)
-x <- seq(2, 2 * n, 2)
-
-d <- do.call(rbind, lapply(1:n, function(i) {
-  data.frame(
-    x = seq(1, n, by = 0.2),
-    y = 2 * x[i] + b[i] * seq(1, n, by = 0.2) + rnorm(21),
-    grp = as.factor(2 * i)
-  )
-}))
-
-d <- d |>
-  datawizard::data_group(grp) |>
-  datawizard::data_modify(x = rev(15 - (x + 1.5 * as.numeric(grp)))) |>
-  datawizard::data_ungroup()
-
-labs <- c("very slow", "slow", "average", "fast", "very fast")
-levels(d$grp) <- rev(labs)
-
-d <- datawizard::demean(d, c("x", "y"), by = "grp")
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`ggplot2`](https://ggplot2.tidyverse.org)`)`\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`see`](https://easystats.github.io/see/)`)`\
+\
+[`set.seed`](https://rdrr.io/r/base/Random.html)`(``123``)`\
+`n`` ``<-`` ``5`\
+`b`` ``<-`` `[`seq`](https://rdrr.io/r/base/seq.html)`(``1``, ``1.5``, length.out ``=`` ``5``)`\
+`x`` ``<-`` `[`seq`](https://rdrr.io/r/base/seq.html)`(``2``, ``2`` ``*`` ``n``, ``2``)`\
+\
+`d`` ``<-`` `[`do.call`](https://rdrr.io/r/base/do.call.html)`(``rbind``, `[`lapply`](https://rdrr.io/r/base/lapply.html)`(``1``:``n``, ``function``(``i``)`` ``{`\
+`  `[`data.frame`](https://rdrr.io/r/base/data.frame.html)`(`\
+`    x ``=`` `[`seq`](https://rdrr.io/r/base/seq.html)`(``1``, ``n``, by ``=`` ``0.2``)``,`\
+`    y ``=`` ``2`` ``*`` ``x``[``i``]`` ``+`` ``b``[``i``]`` ``*`` `[`seq`](https://rdrr.io/r/base/seq.html)`(``1``, ``n``, by ``=`` ``0.2``)`` ``+`` `[`rnorm`](https://rdrr.io/r/stats/Normal.html)`(``21``)``,`\
+`    grp ``=`` `[`as.factor`](https://rdrr.io/r/base/factor.html)`(``2`` ``*`` ``i``)`\
+`  ``)`\
+`}``)``)`\
+\
+`d`` ``<-`` ``d`` ``|>`\
+`  ``datawizard``::`[`data_group`](https://easystats.github.io/datawizard/reference/data_group.html)`(``grp``)`` ``|>`\
+`  ``datawizard``::`[`data_modify`](https://easystats.github.io/datawizard/reference/data_modify.html)`(``x ``=`` `[`rev`](https://rdrr.io/r/base/rev.html)`(``15`` ``-`` ``(``x`` ``+`` ``1.5`` ``*`` `[`as.numeric`](https://rdrr.io/r/base/numeric.html)`(``grp``)``)``)``)`` ``|>`\
+`  ``datawizard``::`[`data_ungroup`](https://easystats.github.io/datawizard/reference/data_group.html)`(``)`\
+\
+`labs`` ``<-`` `[`c`](https://rdrr.io/r/base/c.html)`(``"very slow"``, ``"slow"``, ``"average"``, ``"fast"``, ``"very fast"``)`\
+[`levels`](https://rdrr.io/r/base/levels.html)`(``d``$``grp``)`` ``<-`` `[`rev`](https://rdrr.io/r/base/rev.html)`(``labs``)`\
+\
+`d`` ``<-`` ``datawizard``::`[`demean`](https://easystats.github.io/datawizard/reference/demean.html)`(``d``, `[`c`](https://rdrr.io/r/base/c.html)`(``"x"``, ``"y"``)``, by ``=`` ``"grp"``)`
 
 Let’s look at the raw data…
 
@@ -489,18 +463,16 @@ typing speed.
 Looking at the coefficients, we have following model with a coefficient
 of `-1.92`.
 
-``` r
-
-m1 <- lm(y ~ x, data = d)
-model_parameters(m1) |> display(format = "tt")
-```
+\
+`m1`` ``<-`` `[`lm`](https://rdrr.io/r/stats/lm.html)`(``y`` ``~`` ``x``, data ``=`` ``d``)`\
+[`model_parameters`](https://easystats.github.io/parameters/reference/model_parameters.md)`(``m1``)`` ``|>`` `[`display`](https://easystats.github.io/insight/reference/display.html)`(``format ``=`` ``"tt"``)`
 
 | Parameter   | Coefficient | SE   | 95% CI         | t(103) | p       |
 |-------------|-------------|------|----------------|--------|---------|
 | (Intercept) | 30.20       | 1.42 | (27.39, 33.00) | 21.34  | \< .001 |
 | x           | -1.92       | 0.18 | (-2.27, -1.56) | -10.69 | \< .001 |
 
-Model Summary {#tinytable_7h8669nmpws9caop6omp .table .tinytable
+Model Summary {#tinytable_1azcqhauy9gbgxw3k1s6 .table .tinytable
 style="width: auto; margin-left: auto; margin-right: auto;"
 quarto-disable-processing="true"}
 
@@ -522,17 +494,15 @@ with a standard error of `0.07`. Note that the FE-model does *not* take
 the variation *between* subjects into account, thus resulting in
 (possibly) biased estimates, and biased standard errors.
 
-``` r
-
-m2 <- lm(y ~ 0 + x_within + grp, data = d)
-model_parameters(m2)[1, ] |> display(format = "tt")
-```
+\
+`m2`` ``<-`` `[`lm`](https://rdrr.io/r/stats/lm.html)`(``y`` ``~`` ``0`` ``+`` ``x_within`` ``+`` ``grp``, data ``=`` ``d``)`\
+[`model_parameters`](https://easystats.github.io/parameters/reference/model_parameters.md)`(``m2``)``[``1``, ``]`` ``|>`` `[`display`](https://easystats.github.io/insight/reference/display.html)`(``format ``=`` ``"tt"``)`
 
 | Parameter | Coefficient | SE   | 95% CI       | t(99) | p       |
 |-----------|-------------|------|--------------|-------|---------|
 | x within  | 1.20        | 0.07 | (1.06, 1.35) | 16.08 | \< .001 |
 
-Model Summary {#tinytable_zqqym2u1m28tut8zxlrs .table .tinytable
+Model Summary {#tinytable_v25ogohdj5w3bki7cbo8 .table .tinytable
 style="width: auto; margin-left: auto; margin-right: auto;"
 quarto-disable-processing="true"}
 
@@ -547,18 +517,16 @@ look at the between-effect now.
 As we can see, the between-effect is `-2.93`, which is different from
 the `-1.92` estimated in the model `m1`.
 
-``` r
-
-m3 <- lm(y ~ x_between, data = d)
-model_parameters(m3) |> display(format = "tt")
-```
+\
+`m3`` ``<-`` `[`lm`](https://rdrr.io/r/stats/lm.html)`(``y`` ``~`` ``x_between``, data ``=`` ``d``)`\
+[`model_parameters`](https://easystats.github.io/parameters/reference/model_parameters.md)`(``m3``)`` ``|>`` `[`display`](https://easystats.github.io/insight/reference/display.html)`(``format ``=`` ``"tt"``)`
 
 | Parameter   | Coefficient | SE   | 95% CI         | t(103) | p       |
 |-------------|-------------|------|----------------|--------|---------|
 | (Intercept) | 37.83       | 0.62 | (36.59, 39.06) | 60.79  | \< .001 |
 | x between   | -2.93       | 0.08 | (-3.09, -2.78) | -36.76 | \< .001 |
 
-Model Summary {#tinytable_gj8a74s59p8a5vbiqvqt .table .tinytable
+Model Summary {#tinytable_9sbxdtnkpwkmvwc75ezl .table .tinytable
 style="width: auto; margin-left: auto; margin-right: auto;"
 quarto-disable-processing="true"}
 
@@ -574,11 +542,9 @@ Furthermore, we get the correct between-effect as well (standard errors
 differ, because the variance in the grouping structure is more
 accurately taken into account).
 
-``` r
-
-m4 <- lmer(y ~ x_between + x_within + (1 | grp), data = d)
-model_parameters(m4) |> display(format = "tt", by = "Component")
-```
+\
+`m4`` ``<-`` `[`lmer`](https://rdrr.io/pkg/lme4/man/lmer.html)`(``y`` ``~`` ``x_between`` ``+`` ``x_within`` ``+`` ``(``1`` ``|`` ``grp``)``, data ``=`` ``d``)`\
+[`model_parameters`](https://easystats.github.io/parameters/reference/model_parameters.md)`(``m4``)`` ``|>`` `[`display`](https://easystats.github.io/insight/reference/display.html)`(``format ``=`` ``"tt"``, by ``=`` ``"Component"``)`
 
 | Parameter | Coefficient | SE | 95% CI | t(100) | p |
 |----|----|----|----|----|----|
@@ -590,7 +556,7 @@ model_parameters(m4) |> display(format = "tt", by = "Component")
 | SD (Intercept: grp) | 0.00 |  |  |  |  |
 | SD (Residual) | 0.92 |  |  |  |  |
 
-Model Summary {#tinytable_aw2wtx1jdo6yulflswu7 .table .tinytable
+Model Summary {#tinytable_dr79qdqq8lpnptpd6tw1 .table .tinytable
 style="width: auto; margin-left: auto; margin-right: auto;"
 quarto-disable-processing="true"}
 
@@ -601,11 +567,9 @@ adding a random slope. This model can be called a complex “REWB”
 (random-effects within-between) model. Due to the variation between
 subjects, we get larger standard errors for the within-effect.
 
-``` r
-
-m5 <- lmer(y ~ x_between + x_within + (1 + x_within | grp), data = d)
-model_parameters(m5) |> display(format = "tt", by = "Component")
-```
+\
+`m5`` ``<-`` `[`lmer`](https://rdrr.io/pkg/lme4/man/lmer.html)`(``y`` ``~`` ``x_between`` ``+`` ``x_within`` ``+`` ``(``1`` ``+`` ``x_within`` ``|`` ``grp``)``, data ``=`` ``d``)`\
+[`model_parameters`](https://easystats.github.io/parameters/reference/model_parameters.md)`(``m5``)`` ``|>`` `[`display`](https://easystats.github.io/insight/reference/display.html)`(``format ``=`` ``"tt"``, by ``=`` ``"Component"``)`
 
 | Parameter | Coefficient | SE | 95% CI | t(98) | p |
 |----|----|----|----|----|----|
@@ -619,7 +583,7 @@ model_parameters(m5) |> display(format = "tt", by = "Component")
 | Cor (Intercept~x_within: grp) | -1.00 | 2.18 | (-1.00, ) |  |  |
 | SD (Residual) | 0.90 | 0.07 | (0.78, 1.04) |  |  |
 
-Model Summary {#tinytable_oz263n32a9sm4nvoa9eu .table .tinytable
+Model Summary {#tinytable_e3pqjkc882fcwnjo6l00 .table .tinytable
 style="width: auto; margin-left: auto; margin-right: auto;"
 quarto-disable-processing="true"}
 
@@ -653,56 +617,52 @@ between-effect calculated by “classical” regression models. However,
 this shrinkage is a desired property of mixed models and usually
 improves the estimates.
 
-``` r
-
-set.seed(123)
-n <- 5
-b <- seq(1, 1.5, length.out = 5)
-x <- seq(2, 2 * n, 2)
-
-d <- do.call(rbind, lapply(1:n, function(i) {
-  data.frame(
-    x = seq(1, n, by = 0.2),
-    y = 2 * x[i] + b[i] * seq(1, n, by = 0.2) + rnorm(21),
-    grp = as.factor(2 * i)
-  )
-}))
-
-# create imbalanced groups
-d$grp[sample(which(d$grp == 8), 10)] <- 6
-d$grp[sample(which(d$grp == 4), 8)] <- 2
-d$grp[sample(which(d$grp == 10), 9)] <- 6
-
-d <- d |>
-  data_group(grp) |>
-  data_modify(x = rev(15 - (x + 1.5 * as.numeric(grp)))) |>
-  data_ungroup()
-
-labs <- c("very slow", "slow", "average", "fast", "very fast")
-levels(d$grp) <- rev(labs)
-
-d <- demean(d, c("x", "y"), by = "grp")
-
-# Between-subject effect of typing speed
-m1 <- lm(y ~ x_between, data = d)
-model_parameters(m1) |> display(format = "tt")
-```
+\
+[`set.seed`](https://rdrr.io/r/base/Random.html)`(``123``)`\
+`n`` ``<-`` ``5`\
+`b`` ``<-`` `[`seq`](https://rdrr.io/r/base/seq.html)`(``1``, ``1.5``, length.out ``=`` ``5``)`\
+`x`` ``<-`` `[`seq`](https://rdrr.io/r/base/seq.html)`(``2``, ``2`` ``*`` ``n``, ``2``)`\
+\
+`d`` ``<-`` `[`do.call`](https://rdrr.io/r/base/do.call.html)`(``rbind``, `[`lapply`](https://rdrr.io/r/base/lapply.html)`(``1``:``n``, ``function``(``i``)`` ``{`\
+`  `[`data.frame`](https://rdrr.io/r/base/data.frame.html)`(`\
+`    x ``=`` `[`seq`](https://rdrr.io/r/base/seq.html)`(``1``, ``n``, by ``=`` ``0.2``)``,`\
+`    y ``=`` ``2`` ``*`` ``x``[``i``]`` ``+`` ``b``[``i``]`` ``*`` `[`seq`](https://rdrr.io/r/base/seq.html)`(``1``, ``n``, by ``=`` ``0.2``)`` ``+`` `[`rnorm`](https://rdrr.io/r/stats/Normal.html)`(``21``)``,`\
+`    grp ``=`` `[`as.factor`](https://rdrr.io/r/base/factor.html)`(``2`` ``*`` ``i``)`\
+`  ``)`\
+`}``)``)`\
+\
+`# create imbalanced groups`\
+`d``$``grp``[`[`sample`](https://rdrr.io/r/base/sample.html)`(`[`which`](https://rdrr.io/r/base/which.html)`(``d``$``grp`` ``==`` ``8``)``, ``10``)``]`` ``<-`` ``6`\
+`d``$``grp``[`[`sample`](https://rdrr.io/r/base/sample.html)`(`[`which`](https://rdrr.io/r/base/which.html)`(``d``$``grp`` ``==`` ``4``)``, ``8``)``]`` ``<-`` ``2`\
+`d``$``grp``[`[`sample`](https://rdrr.io/r/base/sample.html)`(`[`which`](https://rdrr.io/r/base/which.html)`(``d``$``grp`` ``==`` ``10``)``, ``9``)``]`` ``<-`` ``6`\
+\
+`d`` ``<-`` ``d`` ``|>`\
+`  `[`data_group`](https://easystats.github.io/datawizard/reference/data_group.html)`(``grp``)`` ``|>`\
+`  `[`data_modify`](https://easystats.github.io/datawizard/reference/data_modify.html)`(``x ``=`` `[`rev`](https://rdrr.io/r/base/rev.html)`(``15`` ``-`` ``(``x`` ``+`` ``1.5`` ``*`` `[`as.numeric`](https://rdrr.io/r/base/numeric.html)`(``grp``)``)``)``)`` ``|>`\
+`  `[`data_ungroup`](https://easystats.github.io/datawizard/reference/data_group.html)`(``)`\
+\
+`labs`` ``<-`` `[`c`](https://rdrr.io/r/base/c.html)`(``"very slow"``, ``"slow"``, ``"average"``, ``"fast"``, ``"very fast"``)`\
+[`levels`](https://rdrr.io/r/base/levels.html)`(``d``$``grp``)`` ``<-`` `[`rev`](https://rdrr.io/r/base/rev.html)`(``labs``)`\
+\
+`d`` ``<-`` `[`demean`](https://easystats.github.io/datawizard/reference/demean.html)`(``d``, `[`c`](https://rdrr.io/r/base/c.html)`(``"x"``, ``"y"``)``, by ``=`` ``"grp"``)`\
+\
+`# Between-subject effect of typing speed`\
+`m1`` ``<-`` `[`lm`](https://rdrr.io/r/stats/lm.html)`(``y`` ``~`` ``x_between``, data ``=`` ``d``)`\
+[`model_parameters`](https://easystats.github.io/parameters/reference/model_parameters.md)`(``m1``)`` ``|>`` `[`display`](https://easystats.github.io/insight/reference/display.html)`(``format ``=`` ``"tt"``)`
 
 | Parameter   | Coefficient | SE   | 95% CI         | t(103) | p       |
 |-------------|-------------|------|----------------|--------|---------|
 | (Intercept) | 38.32       | 1.33 | (35.69, 40.95) | 28.87  | \< .001 |
 | x between   | -2.81       | 0.16 | (-3.13, -2.49) | -17.47 | \< .001 |
 
-Model Summary {#tinytable_mpvjn8md5q0pgspqk6pj .table .tinytable
+Model Summary {#tinytable_w5r4oe4y03awegf44e7o .table .tinytable
 style="width: auto; margin-left: auto; margin-right: auto;"
 quarto-disable-processing="true"}
 
-``` r
-
-# Between-subject effect of typing speed, accounting for group structure
-m2 <- lmer(y ~ x_between + (1 | grp), data = d)
-model_parameters(m2) |> display(format = "tt", by = "Component")
-```
+\
+`# Between-subject effect of typing speed, accounting for group structure`\
+`m2`` ``<-`` `[`lmer`](https://rdrr.io/pkg/lme4/man/lmer.html)`(``y`` ``~`` ``x_between`` ``+`` ``(``1`` ``|`` ``grp``)``, data ``=`` ``d``)`\
+[`model_parameters`](https://easystats.github.io/parameters/reference/model_parameters.md)`(``m2``)`` ``|>`` `[`display`](https://easystats.github.io/insight/reference/display.html)`(``format ``=`` ``"tt"``, by ``=`` ``"Component"``)`
 
 | Parameter | Coefficient | SE | 95% CI | t(101) | p |
 |----|----|----|----|----|----|
@@ -713,7 +673,7 @@ model_parameters(m2) |> display(format = "tt", by = "Component")
 | SD (Intercept: grp) | 1.54 | 0.77 | (0.58, 4.09) |  |  |
 | SD (Residual) | 2.98 | 0.21 | (2.60, 3.42) |  |  |
 
-Model Summary {#tinytable_rswibxkgbtyto2hvgvpc .table .tinytable
+Model Summary {#tinytable_5ibr9dgwajbqia5zecgx .table .tinytable
 style="width: auto; margin-left: auto; margin-right: auto;"
 quarto-disable-processing="true"}
 

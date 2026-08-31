@@ -5,28 +5,41 @@
 - [`compare_parameters()`](https://easystats.github.io/parameters/reference/compare_parameters.md)
   [`compare_models()`](https://easystats.github.io/parameters/reference/compare_parameters.md)
   : Compare model parameters of multiple models
+
 - [`dominance_analysis()`](https://easystats.github.io/parameters/reference/dominance_analysis.md)
   : Dominance Analysis
+
 - [`model_parameters()`](https://easystats.github.io/parameters/reference/model_parameters.md)
   [`parameters()`](https://easystats.github.io/parameters/reference/model_parameters.md)
   : Model Parameters
+
 - [`pool_parameters()`](https://easystats.github.io/parameters/reference/pool_parameters.md)
   : Pool Model Parameters
+
 - [`random_parameters()`](https://easystats.github.io/parameters/reference/random_parameters.md)
   : Summary information from random effects
+
 - [`format(`*`<parameters_model>`*`)`](https://easystats.github.io/parameters/reference/print.parameters_model.md)
   [`print(`*`<parameters_model>`*`)`](https://easystats.github.io/parameters/reference/print.parameters_model.md)
   [`summary(`*`<parameters_model>`*`)`](https://easystats.github.io/parameters/reference/print.parameters_model.md)
   [`print_html(`*`<parameters_model>`*`)`](https://easystats.github.io/parameters/reference/print.parameters_model.md)
   [`print_md(`*`<parameters_model>`*`)`](https://easystats.github.io/parameters/reference/print.parameters_model.md)
   : Print model parameters
+
 - [`sort_parameters()`](https://easystats.github.io/parameters/reference/sort_parameters.md)
   : Sort parameters by coefficient values
+
 - [`standardize_parameters()`](https://easystats.github.io/parameters/reference/standardize_parameters.md)
   [`standardize_posteriors()`](https://easystats.github.io/parameters/reference/standardize_parameters.md)
   : Parameters standardization
+
 - [`standardize_info()`](https://easystats.github.io/parameters/reference/standardize_info.md)
   : Get Standardization Information
+
+- [`tinyplot(`*`<parameters_model>`*`)`](https://easystats.github.io/parameters/reference/tinyplot.parameters_model.md)
+  :
+
+  Forest plot of model parameters using `tinyplot`
 
 ## Documentation of Specific Class Objects
 

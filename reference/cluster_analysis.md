@@ -42,7 +42,7 @@ cluster_analysis(
   Method for computing the cluster analysis. Can be `"kmeans"` (default;
   k-means using [`kmeans()`](https://rdrr.io/r/stats/kmeans.html)),
   `"hkmeans"` (hierarchical k-means using
-  [`factoextra::hkmeans()`](https://rdrr.io/pkg/factoextra/man/hkmeans.html)),
+  [`factoextra::hkmeans()`](https://rpkgs.datanovia.com/factoextra/reference/hkmeans.html)),
   `pam` (K-Medoids using
   [`cluster::pam()`](https://rdrr.io/pkg/cluster/man/pam.html)), `pamk`
   (K-Medoids that finds out the number of clusters), `"hclust"`
@@ -80,7 +80,8 @@ cluster_analysis(
   such as `"kmeans"`, this argument will be ignored). Must be one of
   `"euclidean"`, `"maximum"`, `"manhattan"`, `"canberra"`, `"binary"` or
   `"minkowski"`. See
-  [`dist()`](https://rdrr.io/pkg/factoextra/man/dist.html) and
+  [`dist()`](https://rpkgs.datanovia.com/factoextra/reference/dist.html)
+  and
   [`pvclust::pvclust()`](https://rdrr.io/pkg/pvclust/man/pvclust.html)
   for more information.
 
@@ -208,7 +209,7 @@ if (require("factoextra", quietly = TRUE)) {
   predict(rez) # Get clusters
 }
 #> Welcome to factoextra!
-#> Want to learn more? See two factoextra-related books at https://www.datanovia.com/en/product/practical-guide-to-principal-component-methods-in-r/
+#> Want to learn more? See two factoextra-related books at https://www.datanovia.com/library/principal-component-methods
 #>   [1] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
 #>  [38] 1 1 1 1 1 1 1 1 1 1 1 1 1 3 3 3 2 2 2 3 2 2 2 2 2 2 2 2 3 2 2 2 2 3 2 2 2
 #>  [75] 2 3 3 3 2 2 2 2 2 2 2 3 3 2 2 2 2 2 2 2 2 2 2 2 2 2 3 2 3 3 3 3 2 3 3 3 3
@@ -293,7 +294,7 @@ if (require("mclust", quietly = TRUE)) {
   rez # Show results
   predict(rez) # Get clusters
 }
-#> Package 'mclust' version 6.1.2
+#> Package 'mclust' version 6.1.3
 #> Type 'citation("mclust")' for citing this R package in publications.
 #>   [1] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
 #>  [38] 1 1 1 1 1 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2

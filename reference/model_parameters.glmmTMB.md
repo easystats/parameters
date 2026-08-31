@@ -193,7 +193,7 @@ model_parameters(
 
     - Heteroskedasticity-consistent: `"HC"`, `"HC0"`, `"HC1"`, `"HC2"`,
       `"HC3"`, `"HC4"`, `"HC4m"`, `"HC5"`. See
-      [`?sandwich::vcovHC`](https://sandwich.R-Forge.R-project.org/reference/vcovHC.html)
+      [`?sandwich::vcovHC`](https://zeileis.codeberg.page/sandwich/reference/vcovHC.html)
 
     - Cluster-robust: `"CR"`, `"CR0"`, `"CR1"`, `"CR1p"`, `"CR1S"`,
       `"CR2"`, `"CR3"`. See
@@ -201,7 +201,7 @@ model_parameters(
 
     - Bootstrap: `"BS"`, `"xy"`, `"residual"`, `"wild"`, `"mammen"`,
       `"fractional"`, `"jackknife"`, `"norm"`, `"webb"`. See
-      [`?sandwich::vcovBS`](https://sandwich.R-Forge.R-project.org/reference/vcovBS.html)
+      [`?sandwich::vcovBS`](https://zeileis.codeberg.page/sandwich/reference/vcovBS.html)
 
     - Other `sandwich` package functions: `"HAC"`, `"PC"`, `"CL"`,
       `"OPG"`, `"PL"`.
@@ -212,7 +212,7 @@ model_parameters(
   `vcov` argument. This function is typically supplied by the
   **sandwich** or **clubSandwich** packages. Please refer to their
   documentation (e.g.,
-  [`?sandwich::vcovHAC`](https://sandwich.R-Forge.R-project.org/reference/vcovHAC.html))
+  [`?sandwich::vcovHAC`](https://zeileis.codeberg.page/sandwich/reference/vcovHAC.html))
   to see the list of available arguments. If no estimation type
   (argument `type`) is given, the default type for `"HC"` equals the
   default from the **sandwich** package; for type `"CR"`, the default is
@@ -687,7 +687,7 @@ model_parameters(model, bootstrap = TRUE, iterations = 50, verbose = FALSE)
 #> 
 #> Parameter   | Coefficient |         95% CI |      p
 #> ---------------------------------------------------
-#> (Intercept) |       36.48 | [31.71, 39.09] | < .001
-#> wt          |       -5.10 | [-6.10, -3.70] | < .001
+#> (Intercept) |       35.70 | [31.68, 39.36] | < .001
+#> wt          |       -4.98 | [-5.94, -3.94] | < .001
 # }
 ```

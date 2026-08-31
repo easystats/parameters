@@ -25,15 +25,13 @@ explicitly documented and detailed.
 
 #### Standardized Associations
 
-``` r
-
-library(parameters)
-library(effectsize)
-
-m <- lm(rating ~ complaints, data = attitude)
-
-standardize_parameters(m)
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`parameters`](https://easystats.github.io/parameters/)`)`\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`effectsize`](https://easystats.github.io/effectsize/)`)`\
+\
+`m`` ``<-`` `[`lm`](https://rdrr.io/r/stats/lm.html)`(``rating`` ``~`` ``complaints``, data ``=`` ``attitude``)`\
+\
+[`standardize_parameters`](https://easystats.github.io/parameters/reference/standardize_parameters.md)`(``m``)`
 
     > # Standardization method: refit
     > 
@@ -45,10 +43,8 @@ standardize_parameters(m)
 Standardizing the coefficient of this *simple* linear regression gives a
 value of
 
-``` r
-
-round(standardize_parameters(m)[2, 2], 2)
-```
+\
+[`round`](https://rdrr.io/r/base/Round.html)`(`[`standardize_parameters`](https://easystats.github.io/parameters/reference/standardize_parameters.md)`(``m``)``[``2``, ``2``]``, ``2``)`
 
     > [1] 0.83
 
@@ -56,11 +52,9 @@ But did you know that for a simple regression this is actually the
 **same as a correlation**? Thus, you can eventually apply some
 (*in*)famous interpretation guidelines (e.g., Cohen’s rules of thumb).
 
-``` r
-
-library(correlation)
-correlation(attitude, select = c("rating", "complaints"))
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`correlation`](https://easystats.github.io/correlation/)`)`\
+[`correlation`](https://easystats.github.io/correlation/reference/correlation.html)`(``attitude``, select ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"rating"``, ``"complaints"``)``)`
 
     > # Correlation Matrix (pearson-method)
     > 
@@ -78,14 +72,12 @@ entered and differences between a given level and a reference level? You
 might have heard that it is similar to a **Cohen’s *d***. Well, let’s
 see.
 
-``` r
-
-# Select portion of data containing the two levels of interest
-mtcars$am <- factor(mtcars$am, labels = c("Manual", "Automatic"))
-
-m <- lm(mpg ~ am, data = mtcars)
-standardize_parameters(m)
-```
+\
+`# Select portion of data containing the two levels of interest`\
+`mtcars``$``am`` ``<-`` `[`factor`](https://rdrr.io/r/base/factor.html)`(``mtcars``$``am``, labels ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"Manual"``, ``"Automatic"``)``)`\
+\
+`m`` ``<-`` `[`lm`](https://rdrr.io/r/stats/lm.html)`(``mpg`` ``~`` ``am``, data ``=`` ``mtcars``)`\
+[`standardize_parameters`](https://easystats.github.io/parameters/reference/standardize_parameters.md)`(``m``)`
 
     > # Standardization method: refit
     > 
@@ -100,11 +92,9 @@ is of 1.20 standard deviation of `mpg` (because the response variable
 was standardized, right?). Let’s compute the **Cohen’s *d*** between
 these two levels:
 
-``` r
-
-library(effectsize)
-cohens_d(mpg ~ am, data = mtcars)
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`effectsize`](https://easystats.github.io/effectsize/)`)`\
+[`cohens_d`](https://easystats.github.io/effectsize/reference/cohens_d.html)`(``mpg`` ``~`` ``am``, data ``=`` ``mtcars``)`
 
     > Cohen's d |         95% CI
     > --------------------------
@@ -130,10 +120,8 @@ of *each of the groups* (here assumed to be equal).
 In this simple model, the pooled SD is the residual SD, so we can also
 estimate Cohen’s *d* as:
 
-``` r
-
-coef(m)[2] / sigma(m)
-```
+\
+[`coef`](https://rdrr.io/r/stats/coef.html)`(``m``)``[``2``]`` ``/`` `[`sigma`](https://rdrr.io/r/stats/sigma.html)`(``m``)`
 
     > amAutomatic 
     >         1.5
@@ -142,20 +130,16 @@ And we can also get an approximation of Cohen’s *d* by converting the
 t-statistic from the regression model via
 [`t_to_d()`](https://easystats.github.io/effectsize/reference/t_to_r.html):
 
-``` r
-
-model_parameters(m)
-```
+\
+[`model_parameters`](https://easystats.github.io/parameters/reference/model_parameters.md)`(``m``)`
 
     > Parameter      | Coefficient |   SE |         95% CI | t(30) |      p
     > ---------------------------------------------------------------------
     > (Intercept)    |       17.15 | 1.12 | [14.85, 19.44] | 15.25 | < .001
     > am [Automatic] |        7.24 | 1.76 | [ 3.64, 10.85] |  4.11 | < .001
 
-``` r
-
-t_to_d(4.11, df_error = 30)
-```
+\
+[`t_to_d`](https://easystats.github.io/effectsize/reference/t_to_r.html)`(``4.11``, df_error ``=`` ``30``)`
 
     > d    |       95% CI
     > -------------------
@@ -166,12 +150,10 @@ in detail below) when standardizing parameters will give you indices
 equivalent to **Glass’ *delta***, which is a standardized difference
 expressed in terms of SD of the reference group.
 
-``` r
-
-m <- lm(mpg ~ am, data = mtcars)
-
-standardize_parameters(m, method = "smart")
-```
+\
+`m`` ``<-`` `[`lm`](https://rdrr.io/r/stats/lm.html)`(``mpg`` ``~`` ``am``, data ``=`` ``mtcars``)`\
+\
+[`standardize_parameters`](https://easystats.github.io/parameters/reference/standardize_parameters.md)`(``m``, method ``=`` ``"smart"``)`
 
     > # Standardization method: smart
     > 
@@ -180,10 +162,8 @@ standardize_parameters(m, method = "smart")
     > (Intercept)    |       0.00 | [0.00, 0.00]
     > am [Automatic] |       1.17 | [0.59, 1.76]
 
-``` r
-
-glass_delta(mpg ~ am, data = mtcars)
-```
+\
+[`glass_delta`](https://easystats.github.io/effectsize/reference/cohens_d.html)`(``mpg`` ``~`` ``am``, data ``=`` ``mtcars``)`
 
     > Glass' delta (adj.) |         95% CI
     > ------------------------------------
@@ -220,11 +200,9 @@ somewhat alike to **partial correlations**. Let’s first start by
 computing the partial correlation between numeric predictors and the
 outcome.
 
-``` r
-
-data("hardlyworking", package = "effectsize")
-head(hardlyworking)
-```
+\
+[`data`](https://rdrr.io/r/utils/data.html)`(``"hardlyworking"``, package ``=`` ``"effectsize"``)`\
+[`head`](https://rdrr.io/r/utils/head.html)`(``hardlyworking``)`
 
     >   salary xtra_hours n_comps age seniority is_senior
     > 1  19745        4.2       1  32         3     FALSE
@@ -234,15 +212,13 @@ head(hardlyworking)
     > 5  27342       11.3       0  33         4     FALSE
     > 6  25657        3.6       2  30         5      TRUE
 
-``` r
-
-correlation(
-  hardlyworking,
-  select = "salary",
-  select2 = c("xtra_hours", "n_comps", "age", "seniority"),
-  partial = TRUE # get partial correlations
-)
-```
+\
+[`correlation`](https://easystats.github.io/correlation/reference/correlation.html)`(`\
+`  ``hardlyworking``,`\
+`  select ``=`` ``"salary"``,`\
+`  select2 ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"xtra_hours"``, ``"n_comps"``, ``"age"``, ``"seniority"``)``,`\
+`  partial ``=`` ``TRUE`` ``# get partial correlations`\
+`)`
 
     > # Correlation Matrix (pearson-method)
     > 
@@ -258,14 +234,12 @@ correlation(
 
 Let’s compare these to the standardized slopes:
 
-``` r
-
-mod <- lm(salary ~ xtra_hours + n_comps + age + seniority,
-  data = hardlyworking
-)
-
-standardize_parameters(mod)
-```
+\
+`mod`` ``<-`` `[`lm`](https://rdrr.io/r/stats/lm.html)`(``salary`` ``~`` ``xtra_hours`` ``+`` ``n_comps`` ``+`` ``age`` ``+`` ``seniority``,`\
+`  data ``=`` ``hardlyworking`\
+`)`\
+\
+[`standardize_parameters`](https://easystats.github.io/parameters/reference/standardize_parameters.md)`(``mod``)`
 
     > # Standardization method: refit
     > 
@@ -286,12 +260,10 @@ partial correlations from our model, in another way: by converting the
 *t*-statistics (and their degrees of freedom, *df*) into a partial
 correlation coefficient *r*.
 
-``` r
-
-params <- model_parameters(mod)
-
-t_to_r(params$t[-1], df_error = params$df_error[-1])
-```
+\
+`params`` ``<-`` `[`model_parameters`](https://easystats.github.io/parameters/reference/model_parameters.md)`(``mod``)`\
+\
+[`t_to_r`](https://easystats.github.io/effectsize/reference/t_to_r.html)`(``params``$``t``[``-``1``]``, df_error ``=`` ``params``$``df_error``[``-``1``]``)`
 
     > r    |       95% CI
     > -------------------
@@ -308,18 +280,16 @@ So these “*r*” effect sizes can also be used.
 
 Let’s convert `age` into a 3-level factor:
 
-``` r
-
-hardlyworking$age_g <- cut(hardlyworking$age,
-  breaks = c(25, 30, 35, 45)
-)
-
-mod <- lm(salary ~ xtra_hours + n_comps + age_g + seniority,
-  data = hardlyworking
-)
-
-model_parameters(mod)
-```
+\
+`hardlyworking``$``age_g`` ``<-`` `[`cut`](https://rdrr.io/r/base/cut.html)`(``hardlyworking``$``age``,`\
+`  breaks ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``25``, ``30``, ``35``, ``45``)`\
+`)`\
+\
+`mod`` ``<-`` `[`lm`](https://rdrr.io/r/stats/lm.html)`(``salary`` ``~`` ``xtra_hours`` ``+`` ``n_comps`` ``+`` ``age_g`` ``+`` ``seniority``,`\
+`  data ``=`` ``hardlyworking`\
+`)`\
+\
+[`model_parameters`](https://easystats.github.io/parameters/reference/model_parameters.md)`(``mod``)`
 
     > Parameter      | Coefficient |     SE |              95% CI | t(494) |      p
     > -----------------------------------------------------------------------------
@@ -347,10 +317,8 @@ complex mixed models). This method is particularly recommended for
 models that include interactions or transformations (e.g.,
 exponentiation, log, polynomial or spline terms).
 
-``` r
-
-standardize_parameters(mod, method = "refit")
-```
+\
+[`standardize_parameters`](https://easystats.github.io/parameters/reference/standardize_parameters.md)`(``mod``, method ``=`` ``"refit"``)`
 
     > # Standardization method: refit
     > 
@@ -368,10 +336,8 @@ standardize_parameters(mod, method = "refit")
 *i.e.*, based on the **median** and **MAD** instead of the **mean** and
 **SD**:
 
-``` r
-
-standardize_parameters(mod, method = "refit", robust = TRUE)
-```
+\
+[`standardize_parameters`](https://easystats.github.io/parameters/reference/standardize_parameters.md)`(``mod``, method ``=`` ``"refit"``, robust ``=`` ``TRUE``)`
 
     > # Standardization method: refit
     > 
@@ -392,10 +358,8 @@ those of numeric variables. To address this, we can set `two_sd = TRUE`,
 thereby scaling parameters on 2 SDs (or MADs) of the predictors (Gelman
 2008).
 
-``` r
-
-standardize_parameters(mod, method = "refit", two_sd = TRUE)
-```
+\
+[`standardize_parameters`](https://easystats.github.io/parameters/reference/standardize_parameters.md)`(``mod``, method ``=`` ``"refit"``, two_sd ``=`` ``TRUE``)`
 
     > # Standardization method: refit
     > 
@@ -414,11 +378,9 @@ standardize_parameters(mod, method = "refit", two_sd = TRUE)
 model, without summarizing it, which can then be used as the original
 model would:
 
-``` r
-
-mod_z <- standardize(mod, two_sd = FALSE, robust = FALSE)
-mod_z
-```
+\
+`mod_z`` ``<-`` `[`standardize`](https://easystats.github.io/datawizard/reference/standardize.html)`(``mod``, two_sd ``=`` ``FALSE``, robust ``=`` ``FALSE``)`\
+`mod_z`
 
     > 
     > Call:
@@ -431,10 +393,8 @@ mod_z
     >    seniority  
     >       0.0821
 
-``` r
-
-model_parameters(mod_z)
-```
+\
+[`model_parameters`](https://easystats.github.io/parameters/reference/model_parameters.md)`(``mod_z``)`
 
     > Parameter      | Coefficient |   SE |        95% CI | t(494) |      p
     > ---------------------------------------------------------------------
@@ -469,10 +429,8 @@ variable). Whereas in posthoc-standardization, this coefficient
 corresponds to something different (because the 0 has different meanings
 in standardized and non-standardized data).
 
-``` r
-
-standardize_parameters(mod, method = "posthoc")
-```
+\
+[`standardize_parameters`](https://easystats.github.io/parameters/reference/standardize_parameters.md)`(``mod``, method ``=`` ``"posthoc"``)`
 
     > # Standardization method: posthoc
     > 
@@ -497,10 +455,8 @@ corresponding to B vs. A will be scaled by the variance of the response
 at the intercept only. As a results, the coefficients for effects of
 factors are similar to a Glass’ *delta*.
 
-``` r
-
-standardize_parameters(mod, method = "smart")
-```
+\
+[`standardize_parameters`](https://easystats.github.io/parameters/reference/standardize_parameters.md)`(``mod``, method ``=`` ``"smart"``)`
 
     > # Standardization method: smart
     > 
@@ -526,10 +482,8 @@ software packages (also
 [`lm.beta::lm.beta()`](https://rdrr.io/pkg/lm.beta/man/lm.beta.html)),
 and, such as can be used for reproducibility and replication purposes.
 
-``` r
-
-standardize_parameters(mod, method = "basic")
-```
+\
+[`standardize_parameters`](https://easystats.github.io/parameters/reference/standardize_parameters.md)`(``mod``, method ``=`` ``"basic"``)`
 
     > # Standardization method: basic
     > 
@@ -556,12 +510,10 @@ variance *between* groups. The resulting standardized coefficient are
 also called *pseudo*-standardized coefficients.\[^Note that like method
 `"basic"`, these are based on the model matrix.\]
 
-``` r
-
-m <- lme4::lmer(Reaction ~ Days + (Days | Subject), data = lme4::sleepstudy)
-
-standardize_parameters(m, method = "pseudo", ci_method = "satterthwaite")
-```
+\
+`m`` ``<-`` ``lme4``::`[`lmer`](https://rdrr.io/pkg/lme4/man/lmer.html)`(``Reaction`` ``~`` ``Days`` ``+`` ``(``Days`` ``|`` ``Subject``)``, data ``=`` ``lme4``::`[`sleepstudy`](https://rdrr.io/pkg/lme4/man/sleepstudy.html)`)`\
+\
+[`standardize_parameters`](https://easystats.github.io/parameters/reference/standardize_parameters.md)`(``m``, method ``=`` ``"pseudo"``, ci_method ``=`` ``"satterthwaite"``)`
 
     > # Standardization method: pseudo
     > 
@@ -570,11 +522,9 @@ standardize_parameters(m, method = "pseudo", ci_method = "satterthwaite")
     > (Intercept) |       0.00 | [0.00, 0.00]
     > Days        |       0.68 | [0.47, 0.89]
 
-``` r
-
-# compare to:
-standardize_parameters(m, method = "basic", ci_method = "satterthwaite")
-```
+\
+`# compare to:`\
+[`standardize_parameters`](https://easystats.github.io/parameters/reference/standardize_parameters.md)`(``m``, method ``=`` ``"basic"``, ci_method ``=`` ``"satterthwaite"``)`
 
     > # Standardization method: basic
     > 
@@ -601,15 +551,13 @@ Luckily,
 are smart enough to know when GLMs are passed so as to only standardize
 according to the predictors:
 
-``` r
-
-mod_b <- glm(am ~ mpg + factor(cyl),
-  data = mtcars,
-  family = binomial()
-)
-
-standardize_parameters(mod_b, method = "refit", two_sd = TRUE)
-```
+\
+`mod_b`` ``<-`` `[`glm`](https://rdrr.io/r/stats/glm.html)`(``am`` ``~`` ``mpg`` ``+`` `[`factor`](https://rdrr.io/r/base/factor.html)`(``cyl``)``,`\
+`  data ``=`` ``mtcars``,`\
+`  family ``=`` `[`binomial`](https://rdrr.io/r/stats/family.html)`(``)`\
+`)`\
+\
+[`standardize_parameters`](https://easystats.github.io/parameters/reference/standardize_parameters.md)`(``mod_b``, method ``=`` ``"refit"``, two_sd ``=`` ``TRUE``)`
 
     > # Standardization method: refit
     > 
@@ -623,30 +571,24 @@ standardize_parameters(mod_b, method = "refit", two_sd = TRUE)
     > - Scaled by two SDs from the mean.
     > - Response is unstandardized.
 
-``` r
-
-# standardize_parameters(mod_b, method = "posthoc", two_sd = TRUE)
-# standardize_parameters(mod_b, method = "basic")
-```
+\
+`# standardize_parameters(mod_b, method = "posthoc", two_sd = TRUE)`\
+`# standardize_parameters(mod_b, method = "basic")`
 
 These can then be converted to OR (with
 [`exp()`](https://rdrr.io/r/base/Log.html)) and discussed as the
 “*change in Odds as a function of a change in one SD of x*”.
 
-``` r
-
-std <- standardize_parameters(mod_b, method = "refit", two_sd = TRUE)
-exp(std$Std_Coefficient)
-```
+\
+`std`` ``<-`` `[`standardize_parameters`](https://easystats.github.io/parameters/reference/standardize_parameters.md)`(``mod_b``, method ``=`` ``"refit"``, two_sd ``=`` ``TRUE``)`\
+[`exp`](https://rdrr.io/r/base/Log.html)`(``std``$``Std_Coefficient``)`
 
     > [1]  0.4 86.4  2.1  2.0
 
 Or we can directly ask for the coefficients to be exponentiated:
 
-``` r
-
-standardize_parameters(mod_b, method = "refit", two_sd = TRUE, exponentiate = TRUE)
-```
+\
+[`standardize_parameters`](https://easystats.github.io/parameters/reference/standardize_parameters.md)`(``mod_b``, method ``=`` ``"refit"``, two_sd ``=`` ``TRUE``, exponentiate ``=`` ``TRUE``)`
 
     > # Standardization method: refit
     > 

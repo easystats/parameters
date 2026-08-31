@@ -9,7 +9,7 @@ assignment for each observation as vector."><meta property="og:image" content="h
 
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.29.2.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.29.2.6</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -98,7 +98,7 @@ like <code>dbscan</code>, <code>hdbscan</code>, <code>mixture</code>, <code>pvcl
 <dt id="arg-method">method<a class="anchor" aria-label="anchor" href="#arg-method"></a></dt>
 <dd><p>Method for computing the cluster analysis. Can be <code>"kmeans"</code>
 (default; k-means using <code><a href="https://rdrr.io/r/stats/kmeans.html" class="external-link">kmeans()</a></code>), <code>"hkmeans"</code> (hierarchical k-means
-using <code><a href="https://rdrr.io/pkg/factoextra/man/hkmeans.html" class="external-link">factoextra::hkmeans()</a></code>), <code>pam</code> (K-Medoids using <code><a href="https://rdrr.io/pkg/cluster/man/pam.html" class="external-link">cluster::pam()</a></code>),
+using <code><a href="https://rpkgs.datanovia.com/factoextra/reference/hkmeans.html" class="external-link">factoextra::hkmeans()</a></code>), <code>pam</code> (K-Medoids using <code><a href="https://rdrr.io/pkg/cluster/man/pam.html" class="external-link">cluster::pam()</a></code>),
 <code>pamk</code> (K-Medoids that finds out the number of clusters), <code>"hclust"</code>
 (hierarchical clustering using <code><a href="https://rdrr.io/r/stats/hclust.html" class="external-link">hclust()</a></code> or <code><a href="https://rdrr.io/pkg/pvclust/man/pvclust.html" class="external-link">pvclust::pvclust()</a></code>),
 <code>dbscan</code> (DBSCAN using <code><a href="https://rdrr.io/pkg/dbscan/man/dbscan.html" class="external-link">dbscan::dbscan()</a></code>), <code>hdbscan</code> (Hierarchical DBSCAN
@@ -127,7 +127,7 @@ determine the number of clusters need numeric input only.</p></dd>
 distances (e.g., when <code>method = "hclust"</code> for hierarchical clustering. For
 other methods, such as <code>"kmeans"</code>, this argument will be ignored). Must be
 one of <code>"euclidean"</code>, <code>"maximum"</code>, <code>"manhattan"</code>, <code>"canberra"</code>, <code>"binary"</code>
-or <code>"minkowski"</code>. See <code><a href="https://rdrr.io/pkg/factoextra/man/dist.html" class="external-link">dist()</a></code> and <code><a href="https://rdrr.io/pkg/pvclust/man/pvclust.html" class="external-link">pvclust::pvclust()</a></code> for more
+or <code>"minkowski"</code>. See <code><a href="https://rpkgs.datanovia.com/factoextra/reference/dist.html" class="external-link">dist()</a></code> and <code><a href="https://rdrr.io/pkg/pvclust/man/pvclust.html" class="external-link">pvclust::pvclust()</a></code> for more
 information.</p></dd>
 
 
@@ -248,7 +248,7 @@ for clustering.</p></li>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">rez</span><span class="op">)</span> <span class="co"># Get clusters</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Welcome to factoextra!</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Want to learn more? See two factoextra-related books at https://www.datanovia.com/en/product/practical-guide-to-principal-component-methods-in-r/</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Want to learn more? See two factoextra-related books at https://www.datanovia.com/library/principal-component-methods</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   [1] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [38] 1 1 1 1 1 1 1 1 1 1 1 1 1 3 3 3 2 2 2 3 2 2 2 2 2 2 2 2 3 2 2 2 2 3 2 2 2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [75] 2 3 3 3 2 2 2 2 2 2 2 3 3 2 2 2 2 2 2 2 2 2 2 2 2 2 3 2 3 3 3 3 2 3 3 3 3</span>
@@ -333,7 +333,7 @@ for clustering.</p></li>
 <span class="r-in"><span>  <span class="va">rez</span> <span class="co"># Show results</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">rez</span><span class="op">)</span> <span class="co"># Get clusters</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Package 'mclust' version 6.1.2</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Package 'mclust' version 6.1.3</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Type 'citation("mclust")' for citing this R package in publications.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   [1] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [38] 1 1 1 1 1 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2</span>
@@ -351,7 +351,7 @@ for clustering.</p></li>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.9000.</p>
 </div>
 
     </footer></div>

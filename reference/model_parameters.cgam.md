@@ -223,16 +223,16 @@ if (require("mgcv")) {
 #> Gu & Wahba 4 term additive model
 #> # Fixed Effects 
 #> 
-#> Parameter   | Coefficient |   SE |       95% CI | t(383.70) |      p
+#> Parameter   | Coefficient |   SE |       95% CI | t(380.64) |      p
 #> --------------------------------------------------------------------
-#> (Intercept) |        8.07 | 0.10 | [7.87, 8.27] |     79.31 | < .001
+#> (Intercept) |        7.96 | 0.10 | [7.76, 8.16] |     78.45 | < .001
 #> 
 #> # Smooth Terms 
 #> 
 #> Parameter        |     F |   df |      p
 #> ----------------------------------------
-#> Smooth term (x0) | 12.13 | 2.89 | < .001
-#> Smooth term (x1) | 82.94 | 3.43 | < .001
-#> Smooth term (x2) | 93.51 | 7.98 | < .001
-#> Smooth term (x3) |  0.02 | 1.00 | 0.898 
+#> Smooth term (x0) | 14.35 | 3.16 | < .001
+#> Smooth term (x1) | 50.68 | 5.46 | < .001
+#> Smooth term (x2) | 77.70 | 8.26 | < .001
+#> Smooth term (x3) |  1.03 | 1.48 | 0.458 
 ```

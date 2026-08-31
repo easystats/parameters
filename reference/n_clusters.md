@@ -153,7 +153,7 @@ n_clusters_hclust(
 
   Other arguments passed to other functions. `clustering_function` is
   used by
-  [`fviz_nbclust()`](https://rdrr.io/pkg/factoextra/man/fviz_nbclust.html)
+  [`fviz_nbclust()`](https://rpkgs.datanovia.com/factoextra/reference/fviz_nbclust.html)
   and can be `kmeans`,
   [`cluster::pam`](https://rdrr.io/pkg/cluster/man/pam.html),
   [`cluster::clara`](https://rdrr.io/pkg/cluster/man/clara.html),
@@ -169,8 +169,8 @@ n_clusters_hclust(
 - distance_method:
 
   The distance method (passed to
-  [`dist()`](https://rdrr.io/pkg/factoextra/man/dist.html)). Used by
-  algorithms relying on the distance matrix, such as `hclust` or
+  [`dist()`](https://rpkgs.datanovia.com/factoextra/reference/dist.html)).
+  Used by algorithms relying on the distance matrix, such as `hclust` or
   `dbscan`.
 
 - hclust_method:
