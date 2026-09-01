@@ -121,7 +121,7 @@ A FE model is a classical linear model, where
 | time        | 1.09        | 0.64 | (-0.17, 2.34)  | 1.70   | 0.089   |
 | phq4 within | -3.66       | 0.41 | (-4.46, -2.86) | -8.95  | \< .001 |
 
-Model Summary {#tinytable_jhdwsqdz4f3br7pg31yt .table .tinytable
+Model Summary {#tinytable_yr66hbb5xjlk1v3gkki1 .table .tinytable
 style="width: auto; margin-left: auto; margin-right: auto;"
 quarto-disable-processing="true"}
 
@@ -139,7 +139,7 @@ quarto-disable-processing="true"}
 | time        | 1.09        | 0.64 | (-0.17, 2.34)  | 1.70   | 0.089   |
 | phq4 within | -3.66       | 0.41 | (-4.46, -2.86) | -8.95  | \< .001 |
 
-Model Summary {#tinytable_fmf7l6gcz6m7ln4lz0bh .table .tinytable
+Model Summary {#tinytable_qca38uschq3b47uh5ikc .table .tinytable
 style="width: auto; margin-left: auto; margin-right: auto;"
 quarto-disable-processing="true"}
 
@@ -157,7 +157,7 @@ quarto-disable-processing="true"}
 | time      | 1.09        | 0.64 | (-0.17, 2.34)  | 1.70   | 0.089   |
 | phq4      | -3.66       | 0.41 | (-4.46, -2.86) | -8.95  | \< .001 |
 
-Model Summary {#tinytable_ifxdfzlfusz9zwo3fvhj .table .tinytable
+Model Summary {#tinytable_5ohzeaxp7gnpvs20fmr4 .table .tinytable
 style="width: auto; margin-left: auto; margin-right: auto;"
 quarto-disable-processing="true"}
 
@@ -231,7 +231,7 @@ between-version of `phq4`.
 | SD (Intercept: ID) | 9.88 | 0.80 | (8.43, 11.58) |  |  |
 | SD (Residual) | 12.37 | 0.45 | (11.51, 13.28) |  |  |
 
-Model Summary {#tinytable_5cp59iwmf0lxjvf248w9 .table .tinytable
+Model Summary {#tinytable_4vd12goi6gjsmvkbfoa2 .table .tinytable
 style="width: auto; margin-left: auto; margin-right: auto;"
 quarto-disable-processing="true"}
 
@@ -244,7 +244,7 @@ quarto-disable-processing="true"}
 | time        | 1.09        | 0.64 | (-0.17, 2.34)  | 1.70   | 0.089   |
 | phq4 within | -3.66       | 0.41 | (-4.46, -2.86) | -8.95  | \< .001 |
 
-Model Summary {#tinytable_jvu8qwgohov84ibm6sg8 .table .tinytable
+Model Summary {#tinytable_ijxl22stc3bj7nf8dh7m .table .tinytable
 style="width: auto; margin-left: auto; margin-right: auto;"
 quarto-disable-processing="true"}
 
@@ -280,7 +280,7 @@ fixed effects and including time-constant fixed effects.
 | education (mid)  | 5.01        | 2.35 | (0.40, 9.62)   | 2.14   | 0.033   |
 | education (high) | 5.52        | 2.75 | (0.11, 10.93)  | 2.00   | 0.046   |
 
-Model Summary {#tinytable_vja3wy4adt7djw4np86i .table .tinytable
+Model Summary {#tinytable_wxa5wshcd6ccioh2elss .table .tinytable
 style="width: auto; margin-left: auto; margin-right: auto;"
 quarto-disable-processing="true"}
 
@@ -350,7 +350,7 @@ group-level predictors…
 | education (mid)  | 4.95        | 2.35 | (0.34, 9.56)      | 2.11   | 0.035   |
 | education (high) | 5.62        | 2.76 | (0.20, 11.04)     | 2.04   | 0.042   |
 
-Model Summary {#tinytable_xtk70td9ungrrjfobgcu .table .tinytable
+Model Summary {#tinytable_njc2h6xlctfra4l1oje4 .table .tinytable
 style="width: auto; margin-left: auto; margin-right: auto;"
 quarto-disable-processing="true"}
 
@@ -472,7 +472,7 @@ of `-1.92`.
 | (Intercept) | 30.20       | 1.42 | (27.39, 33.00) | 21.34  | \< .001 |
 | x           | -1.92       | 0.18 | (-2.27, -1.56) | -10.69 | \< .001 |
 
-Model Summary {#tinytable_1azcqhauy9gbgxw3k1s6 .table .tinytable
+Model Summary {#tinytable_8jm6dpqaiz4tcrc8mn01 .table .tinytable
 style="width: auto; margin-left: auto; margin-right: auto;"
 quarto-disable-processing="true"}
 
@@ -502,7 +502,7 @@ the variation *between* subjects into account, thus resulting in
 |-----------|-------------|------|--------------|-------|---------|
 | x within  | 1.20        | 0.07 | (1.06, 1.35) | 16.08 | \< .001 |
 
-Model Summary {#tinytable_v25ogohdj5w3bki7cbo8 .table .tinytable
+Model Summary {#tinytable_szwv1367rdcl4kp44qcb .table .tinytable
 style="width: auto; margin-left: auto; margin-right: auto;"
 quarto-disable-processing="true"}
 
@@ -526,7 +526,7 @@ the `-1.92` estimated in the model `m1`.
 | (Intercept) | 37.83       | 0.62 | (36.59, 39.06) | 60.79  | \< .001 |
 | x between   | -2.93       | 0.08 | (-3.09, -2.78) | -36.76 | \< .001 |
 
-Model Summary {#tinytable_9sbxdtnkpwkmvwc75ezl .table .tinytable
+Model Summary {#tinytable_3zacs7b1p4b94o5dgqwd .table .tinytable
 style="width: auto; margin-left: auto; margin-right: auto;"
 quarto-disable-processing="true"}
 
@@ -556,7 +556,7 @@ accurately taken into account).
 | SD (Intercept: grp) | 0.00 |  |  |  |  |
 | SD (Residual) | 0.92 |  |  |  |  |
 
-Model Summary {#tinytable_dr79qdqq8lpnptpd6tw1 .table .tinytable
+Model Summary {#tinytable_oos6imvxw9nunv7ozmeb .table .tinytable
 style="width: auto; margin-left: auto; margin-right: auto;"
 quarto-disable-processing="true"}
 
@@ -583,7 +583,7 @@ subjects, we get larger standard errors for the within-effect.
 | Cor (Intercept~x_within: grp) | -1.00 | 2.18 | (-1.00, ) |  |  |
 | SD (Residual) | 0.90 | 0.07 | (0.78, 1.04) |  |  |
 
-Model Summary {#tinytable_e3pqjkc882fcwnjo6l00 .table .tinytable
+Model Summary {#tinytable_g3100kenlv7soal1ya4i .table .tinytable
 style="width: auto; margin-left: auto; margin-right: auto;"
 quarto-disable-processing="true"}
 
@@ -655,7 +655,7 @@ improves the estimates.
 | (Intercept) | 38.32       | 1.33 | (35.69, 40.95) | 28.87  | \< .001 |
 | x between   | -2.81       | 0.16 | (-3.13, -2.49) | -17.47 | \< .001 |
 
-Model Summary {#tinytable_w5r4oe4y03awegf44e7o .table .tinytable
+Model Summary {#tinytable_x7v92nm6l6n5twt0revv .table .tinytable
 style="width: auto; margin-left: auto; margin-right: auto;"
 quarto-disable-processing="true"}
 
@@ -673,7 +673,7 @@ quarto-disable-processing="true"}
 | SD (Intercept: grp) | 1.54 | 0.77 | (0.58, 4.09) |  |  |
 | SD (Residual) | 2.98 | 0.21 | (2.60, 3.42) |  |  |
 
-Model Summary {#tinytable_5ibr9dgwajbqia5zecgx .table .tinytable
+Model Summary {#tinytable_0om11b8j3r0lc052q269 .table .tinytable
 style="width: auto; margin-left: auto; margin-right: auto;"
 quarto-disable-processing="true"}
 
