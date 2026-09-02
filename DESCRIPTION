@@ -1,7 +1,7 @@
 Type: Package
 Package: parameters
 Title: Processing of Model Parameters
-Version: 0.29.2.5
+Version: 0.29.2.6
 Authors@R:
     c(person(given = "Daniel",
              family = "Lüdecke",
@@ -85,7 +85,7 @@ Depends:
 Imports:
     bayestestR (>= 0.18.1),
     datawizard (>= 1.3.1),
-    insight (>= 1.5.2),
+    insight (>= 1.5.3),
     graphics,
     methods,
     stats,
