@@ -1,5 +1,27 @@
 # Changelog
 
+## parameters 0.29.3
+
+### Changes
+
+- New
+  [`tinyplot()`](https://grantmcdermott.com/tinyplot/man/tinyplot.html)
+  method for `parameters_model` objects, which draws a forest plot of
+  the coefficients using the `tinyplot` package
+  ([\#1110](https://github.com/easystats/parameters/issues/1110)).
+
+- Logical variables are now properly formatted when pretty value labels
+  are printed.
+
+### Bug fixes
+
+- The `effects` argument is now saved as an attribute of the returned
+  parameters table, and printing uses it to recognize group-level
+  estimates as random effects. Previously, when `effects = "grouplevel"`
+  produced a single-valued `Effects` column that was removed before
+  formatting, the estimates were printed under fixed-effects headers
+  ([\#1098](https://github.com/easystats/parameters/issues/1098)).
+
 ## parameters 0.29.2
 
 CRAN release: 2026-06-28
