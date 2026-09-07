@@ -617,6 +617,27 @@ standard_error.glmmTMB <- function(
     return(se_kenward(model, component = "conditional"))
   }
 
+  # ordinal family: the thresholds are not part of the summary coefficient
+  # table, and their standard errors require the delta method (glmmTMB
+  # estimates them on an internal softmax scale) - use insight's covariance
+  # matrix, which is on the threshold scale and aligned with the parameters
+  if (identical(insight::get_family(model)$family, "ordinal")) {
+    params <- insight::find_parameters(
+      model,
+      effects = "fixed",
+      component = "conditional",
+      flatten = TRUE
+    )
+    vc <- insight::get_varcov(model, component = "conditional", verbose = FALSE)
+    se_vec <- sqrt(diag(vc))
+    se <- .data_frame(
+      Parameter = params,
+      SE = unname(se_vec[params]),
+      Component = "conditional"
+    )
+    return(.filter_component(se, component))
+  }
+
   cs <- suppressWarnings(insight::compact_list(stats::coef(summary(model))))
   x <- lapply(names(cs), function(i) {
     .data_frame(
