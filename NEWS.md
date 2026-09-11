@@ -7,7 +7,7 @@
   family, because the thresholds are not part of the summary coefficient table.
   Standard errors are now taken from `insight::get_varcov()`, which returns
   them on the threshold scale via the delta method (requires *insight*
-  >= 1.5.3.2 and *glmmTMB* >= 1.1.15).
+  >= 1.5.4.1 and *glmmTMB* >= 1.1.15).
 
 # parameters 0.29.3
 

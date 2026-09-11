@@ -1,6 +1,6 @@
 skip_on_cran()
 skip_if_not_installed("glmmTMB", minimum_version = "1.1.15")
-skip_if_not_installed("insight", minimum_version = "1.5.3.2")
+skip_if_not_installed("insight", minimum_version = "1.5.4.1")
 skip_if_not_installed("ordinal")
 skip_if_not_installed("withr")
 
