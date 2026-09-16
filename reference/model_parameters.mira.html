@@ -9,7 +9,7 @@ class mipo."><meta property="og:image" content="https://easystats.github.io/para
 
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.29.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.29.3.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -52,7 +52,7 @@ class mipo."><meta property="og:image" content="https://easystats.github.io/para
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Parameters from multiply imputed repeated analyses</h1>
-      <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/v0.29.3/R/methods_mice.R" class="external-link"><code>R/methods_mice.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/main/R/methods_mice.R" class="external-link"><code>R/methods_mice.R</code></a></small>
       <div class="d-none name"><code>model_parameters.mira.Rd</code></div>
     </div>
 
@@ -159,7 +159,7 @@ of multiple imputed repeated regression analyses.</p>
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://easystats.github.io/parameters/">parameters</a></span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">nhanes2</span>, package <span class="op">=</span> <span class="st">"mice"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">imp</span> <span class="op">&lt;-</span> <span class="fu">mice</span><span class="fu">::</span><span class="fu"><a href="https://amices.org/mice/reference/mice.html" class="external-link">mice</a></span><span class="op">(</span><span class="va">nhanes2</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">imp</span> <span class="op">&lt;-</span> <span class="fu">mice</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/mice/man/mice.html" class="external-link">mice</a></span><span class="op">(</span><span class="va">nhanes2</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  iter imp variable</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   1   1  bmi  hyp  chl</span>
@@ -206,7 +206,7 @@ of multiple imputed repeated regression analyses.</p>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">warpbreaks</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">1234</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">warpbreaks</span><span class="op">$</span><span class="va">tension</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">warpbreaks</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">10</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="cn">NA</span></span></span>
-<span class="r-in"><span><span class="va">imp</span> <span class="op">&lt;-</span> <span class="fu">mice</span><span class="fu">::</span><span class="fu"><a href="https://amices.org/mice/reference/mice.html" class="external-link">mice</a></span><span class="op">(</span><span class="va">warpbreaks</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">imp</span> <span class="op">&lt;-</span> <span class="fu">mice</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/mice/man/mice.html" class="external-link">mice</a></span><span class="op">(</span><span class="va">warpbreaks</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  iter imp variable</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   1   1  tension</span>
@@ -284,7 +284,7 @@ of multiple imputed repeated regression analyses.</p>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># and it works with pooled results</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"nhanes2"</span>, package <span class="op">=</span> <span class="st">"mice"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">imp</span> <span class="op">&lt;-</span> <span class="fu">mice</span><span class="fu">::</span><span class="fu"><a href="https://amices.org/mice/reference/mice.html" class="external-link">mice</a></span><span class="op">(</span><span class="va">nhanes2</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">imp</span> <span class="op">&lt;-</span> <span class="fu">mice</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/mice/man/mice.html" class="external-link">mice</a></span><span class="op">(</span><span class="va">nhanes2</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  iter imp variable</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   1   1  bmi  hyp  chl</span>
@@ -313,7 +313,7 @@ of multiple imputed repeated regression analyses.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   5   4  bmi  hyp  chl</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   5   5  bmi  hyp  chl</span>
 <span class="r-in"><span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">imp</span>, exp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">bmi</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">hyp</span> <span class="op">+</span> <span class="va">chl</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">pooled</span> <span class="op">&lt;-</span> <span class="fu">mice</span><span class="fu">::</span><span class="fu"><a href="https://amices.org/mice/reference/pool.html" class="external-link">pool</a></span><span class="op">(</span><span class="va">fit</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">pooled</span> <span class="op">&lt;-</span> <span class="fu">mice</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/mice/man/pool.html" class="external-link">pool</a></span><span class="op">(</span><span class="va">fit</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">pooled</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># Fixed Effects</span></span>

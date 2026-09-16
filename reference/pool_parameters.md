@@ -1,10 +1,9 @@
 # Pool Model Parameters
 
 This function "pools" (i.e. combines) model parameters in a similar
-fashion as
-[`mice::pool()`](https://amices.org/mice/reference/pool.html). However,
-this function pools parameters from `parameters_model` objects, as
-returned by
+fashion as [`mice::pool()`](https://rdrr.io/pkg/mice/man/pool.html).
+However, this function pools parameters from `parameters_model` objects,
+as returned by
 [`model_parameters()`](https://easystats.github.io/parameters/reference/model_parameters.md).
 
 ## Usage

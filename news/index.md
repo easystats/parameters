@@ -2,6 +2,8 @@
 
 ## parameters 0.29.3
 
+CRAN release: 2026-09-02
+
 ### Changes
 
 - New
@@ -791,7 +793,7 @@ CRAN release: 2023-11-02
 - Fixed issues for
   [`nnet::multinom()`](https://rdrr.io/pkg/nnet/man/multinom.html) with
   wide-format response variables (using
-  [`cbind()`](https://amices.org/mice/reference/cbind.html)).
+  [`cbind()`](https://rdrr.io/pkg/mice/man/cbind.html)).
 
 - Minor fixes for
   [`print_html()`](https://easystats.github.io/insight/reference/display.html)

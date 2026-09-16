@@ -9,16 +9,16 @@ imputed datasets. It computes pooled summaries of multiple imputed
 repeated regression analyses, i.e. of objects of class `mira`. Thus,
 [`model_parameters()`](https://easystats.github.io/parameters/reference/model_parameters.md)
 for `mira`-objects is comparable to the
-[`pool()`](https://amices.org/mice/reference/pool.html)-function from
-*mice*, but only focuses on the final summary of parameters and does not
-include the diagnostic statistic per estimate.
+[`pool()`](https://rdrr.io/pkg/mice/man/pool.html)-function from *mice*,
+but only focuses on the final summary of parameters and does not include
+the diagnostic statistic per estimate.
 
 \
 [`library`](https://rdrr.io/r/base/library.html)`(`[`mice`](https://github.com/amices/mice)`)`\
 [`library`](https://rdrr.io/r/base/library.html)`(`[`parameters`](https://easystats.github.io/parameters/)`)`\
 \
 [`data`](https://rdrr.io/r/utils/data.html)`(``"nhanes2"``)`\
-`imp`` ``<-`` `[`mice`](https://amices.org/mice/reference/mice.html)`(``nhanes2``, printFlag ``=`` ``FALSE``)`\
+`imp`` ``<-`` `[`mice`](https://rdrr.io/pkg/mice/man/mice.html)`(``nhanes2``, printFlag ``=`` ``FALSE``)`\
 `fit`` ``<-`` `[`with`](https://rdrr.io/r/base/with.html)`(``data ``=`` ``imp``, exp ``=`` `[`lm`](https://rdrr.io/r/stats/lm.html)`(``bmi`` ``~`` ``age`` ``+`` ``hyp`` ``+`` ``chl``)``)`\
 \
 [`model_parameters`](https://easystats.github.io/parameters/reference/model_parameters.md)`(``fit``)`
@@ -41,8 +41,7 @@ models. We give an example for the *GLMMadaptive* package here.
 First, we generate a dataset with missing values. We take the data
 `cbpp` from *lme4* and randomly assign some missing values into one of
 the predictors. Then we impute the data, using
-[`mice()`](https://amices.org/mice/reference/mice.html) from package
-*mice*.
+[`mice()`](https://rdrr.io/pkg/mice/man/mice.html) from package *mice*.
 
 \
 [`library`](https://rdrr.io/r/base/library.html)`(`[`lme4`](https://github.com/lme4/lme4/)`)`\
@@ -51,14 +50,14 @@ the predictors. Then we impute the data, using
 [`data`](https://rdrr.io/r/utils/data.html)`(``cbpp``)`\
 `cbpp``$``period``[`[`sample`](https://rdrr.io/r/base/sample.html)`(`[`seq_len`](https://rdrr.io/r/base/seq.html)`(`[`nrow`](https://rdrr.io/r/base/nrow.html)`(``cbpp``)``)``, size ``=`` ``10``)``]`` ``<-`` ``NA`\
 \
-`imputed_data`` ``<-`` `[`mice`](https://amices.org/mice/reference/mice.html)`(``cbpp``, printFlag ``=`` ``FALSE``)`
+`imputed_data`` ``<-`` `[`mice`](https://rdrr.io/pkg/mice/man/mice.html)`(``cbpp``, printFlag ``=`` ``FALSE``)`
 
 Using `with` to compute multiple regression analyses for each imputed
 dataset fails.
 
 \
 `fit`` ``<-`` `[`with`](https://rdrr.io/r/base/with.html)`(``data ``=`` ``imputed_data``, expr ``=`` ``GLMMadaptive``::`[`mixed_model`](https://drizopoulos.github.io/GLMMadaptive/reference/mixed_model.html)`(`\
-`  `[`cbind`](https://amices.org/mice/reference/cbind.html)`(``incidence``, ``size`` ``-`` ``incidence``)`` ``~`` ``period``,`\
+`  `[`cbind`](https://rdrr.io/pkg/mice/man/cbind.html)`(``incidence``, ``size`` ``-`` ``incidence``)`` ``~`` ``period``,`\
 `  random ``=`` ``~`` ``1`` ``|`` ``herd``,`\
 `  family ``=`` ``binomial`\
 `)``)`\
@@ -69,8 +68,8 @@ However, we can use a workaround by using
 [`pool_parameters()`](https://easystats.github.io/parameters/reference/pool_parameters.md),
 which works on a list of model objects. So whenever a model-object is
 not yet supported by
-[`mice::with()`](https://amices.org/mice/reference/with.mids.html), you
-can instead fit multiple models to the imputed datasets and pool all
+[`mice::with()`](https://rdrr.io/pkg/mice/man/with.mids.html), you can
+instead fit multiple models to the imputed datasets and pool all
 parameters with
 [`pool_parameters()`](https://easystats.github.io/parameters/reference/pool_parameters.md):
 
@@ -90,7 +89,7 @@ The steps would be:
 \
 `models`` ``<-`` `[`lapply`](https://rdrr.io/r/base/lapply.html)`(``1``:``imputed_data``$``m``, ``function``(``i``)`` ``{`\
 `  `[`mixed_model`](https://drizopoulos.github.io/GLMMadaptive/reference/mixed_model.html)`(`\
-`    `[`cbind`](https://amices.org/mice/reference/cbind.html)`(``incidence``, ``size`` ``-`` ``incidence``)`` ``~`` ``period``,`\
+`    `[`cbind`](https://rdrr.io/pkg/mice/man/cbind.html)`(``incidence``, ``size`` ``-`` ``incidence``)`` ``~`` ``period``,`\
 `    random ``=`` ``~`` ``1`` ``|`` ``herd``,`\
 `    data ``=`` `[`complete`](https://tidyr.tidyverse.org/reference/complete.html)`(``imputed_data``, action ``=`` ``i``)``,`\
 `    family ``=`` ``binomial`\
@@ -117,11 +116,11 @@ package:
 [`library`](https://rdrr.io/r/base/library.html)`(`[`parameters`](https://easystats.github.io/parameters/)`)`\
 \
 [`data`](https://rdrr.io/r/utils/data.html)`(``"nhanes2"``)`\
-`imp`` ``<-`` `[`mice`](https://amices.org/mice/reference/mice.html)`(``nhanes2``, printFlag ``=`` ``FALSE``)`\
+`imp`` ``<-`` `[`mice`](https://rdrr.io/pkg/mice/man/mice.html)`(``nhanes2``, printFlag ``=`` ``FALSE``)`\
 \
 `# approach when model is supported by "mice"`\
 `fit`` ``<-`` `[`with`](https://rdrr.io/r/base/with.html)`(``data ``=`` ``imp``, exp ``=`` `[`lm`](https://rdrr.io/r/stats/lm.html)`(``bmi`` ``~`` ``age`` ``+`` ``hyp`` ``+`` ``chl``)``)`\
-[`summary`](https://rdrr.io/r/base/summary.html)`(`[`pool`](https://amices.org/mice/reference/pool.html)`(``fit``)``)`
+[`summary`](https://rdrr.io/r/base/summary.html)`(`[`pool`](https://rdrr.io/pkg/mice/man/pool.html)`(``fit``)``)`
 
     #>          term estimate std.error statistic df p.value
     #> 1 (Intercept)   19.667     3.373       5.8 11 0.00013
@@ -154,9 +153,9 @@ It is also possible to compute summaries of pooled objects of class
 
 \
 [`data`](https://rdrr.io/r/utils/data.html)`(``"nhanes2"``)`\
-`imp`` ``<-`` `[`mice`](https://amices.org/mice/reference/mice.html)`(``nhanes2``, printFlag ``=`` ``FALSE``)`\
+`imp`` ``<-`` `[`mice`](https://rdrr.io/pkg/mice/man/mice.html)`(``nhanes2``, printFlag ``=`` ``FALSE``)`\
 `fit`` ``<-`` `[`with`](https://rdrr.io/r/base/with.html)`(``data ``=`` ``imp``, exp ``=`` `[`lm`](https://rdrr.io/r/stats/lm.html)`(``bmi`` ``~`` ``age`` ``+`` ``hyp`` ``+`` ``chl``)``)`\
-`pooled`` ``<-`` `[`pool`](https://amices.org/mice/reference/pool.html)`(``fit``)`\
+`pooled`` ``<-`` `[`pool`](https://rdrr.io/pkg/mice/man/pool.html)`(``fit``)`\
 \
 [`model_parameters`](https://easystats.github.io/parameters/reference/model_parameters.md)`(``pooled``)`
 

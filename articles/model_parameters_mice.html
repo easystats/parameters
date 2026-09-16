@@ -29,7 +29,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.29.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.29.3.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -87,7 +87,7 @@
       <img src="../logo.png" class="logo" alt=""><h1>Model Parameters for Multiply Imputed Repeated Analyses</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/v0.29.3/vignettes/model_parameters_mice.Rmd" class="external-link"><code>vignettes/model_parameters_mice.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/main/vignettes/model_parameters_mice.Rmd" class="external-link"><code>vignettes/model_parameters_mice.Rmd</code></a></small>
       <div class="d-none name"><code>model_parameters_mice.Rmd</code></div>
     </div>
 
@@ -102,7 +102,7 @@ summaries regression models used with multiple imputed datasets. It
 computes pooled summaries of multiple imputed repeated regression
 analyses, i.e. of objects of class <code>mira</code>. Thus,
 <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for <code>mira</code>-objects is
-comparable to the <code><a href="https://amices.org/mice/reference/pool.html" class="external-link">pool()</a></code>-function from <em>mice</em>, but
+comparable to the <code><a href="https://rdrr.io/pkg/mice/man/pool.html" class="external-link">pool()</a></code>-function from <em>mice</em>, but
 only focuses on the final summary of parameters and does not include the
 diagnostic statistic per estimate.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
@@ -110,7 +110,7 @@ diagnostic statistic per estimate.</p>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://easystats.github.io/parameters/">parameters</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"nhanes2"</span><span class="op">)</span></span>
-<span><span class="va">imp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://amices.org/mice/reference/mice.html" class="external-link">mice</a></span><span class="op">(</span><span class="va">nhanes2</span>, printFlag <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="va">imp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/mice/man/mice.html" class="external-link">mice</a></span><span class="op">(</span><span class="va">nhanes2</span>, printFlag <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">imp</span>, exp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">bmi</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">hyp</span> <span class="op">+</span> <span class="va">chl</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">fit</span><span class="op">)</span></span></code></pre></div>
@@ -131,7 +131,7 @@ imputed data for such models. We give an example for the
 <p>First, we generate a dataset with missing values. We take the data
 <code>cbpp</code> from <em>lme4</em> and randomly assign some missing
 values into one of the predictors. Then we impute the data, using
-<code><a href="https://amices.org/mice/reference/mice.html" class="external-link">mice()</a></code> from package <em>mice</em>.</p>
+<code><a href="https://rdrr.io/pkg/mice/man/mice.html" class="external-link">mice()</a></code> from package <em>mice</em>.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/lme4/lme4/" class="external-link">lme4</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://drizopoulos.github.io/GLMMadaptive/" class="external-link">GLMMadaptive</a></span><span class="op">)</span></span>
@@ -139,12 +139,12 @@ values into one of the predictors. Then we impute the data, using
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">cbpp</span><span class="op">)</span></span>
 <span><span class="va">cbpp</span><span class="op">$</span><span class="va">period</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">cbpp</span><span class="op">)</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">10</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="cn">NA</span></span>
 <span></span>
-<span><span class="va">imputed_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://amices.org/mice/reference/mice.html" class="external-link">mice</a></span><span class="op">(</span><span class="va">cbpp</span>, printFlag <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">imputed_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/mice/man/mice.html" class="external-link">mice</a></span><span class="op">(</span><span class="va">cbpp</span>, printFlag <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 <p>Using <code>with</code> to compute multiple regression analyses for
 each imputed dataset fails.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">imputed_data</span>, expr <span class="op">=</span> <span class="fu">GLMMadaptive</span><span class="fu">::</span><span class="fu"><a href="https://drizopoulos.github.io/GLMMadaptive/reference/mixed_model.html" class="external-link">mixed_model</a></span><span class="op">(</span></span>
-<span>  <span class="fu"><a href="https://amices.org/mice/reference/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">incidence</span>, <span class="va">size</span> <span class="op">-</span> <span class="va">incidence</span><span class="op">)</span> <span class="op">~</span> <span class="va">period</span>,</span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/mice/man/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">incidence</span>, <span class="va">size</span> <span class="op">-</span> <span class="va">incidence</span><span class="op">)</span> <span class="op">~</span> <span class="va">period</span>,</span>
 <span>  random <span class="op">=</span> <span class="op">~</span> <span class="fl">1</span> <span class="op">|</span> <span class="va">herd</span>,</span>
 <span>  family <span class="op">=</span> <span class="va">binomial</span></span>
 <span><span class="op">)</span><span class="op">)</span></span>
@@ -153,7 +153,7 @@ each imputed dataset fails.</p>
 <p>However, we can use a workaround by using
 <code><a href="../reference/pool_parameters.html">pool_parameters()</a></code>, which works on a list of model objects.
 So whenever a model-object is not yet supported by
-<code><a href="https://amices.org/mice/reference/with.mids.html" class="external-link">mice::with()</a></code>, you can instead fit multiple models to the
+<code><a href="https://rdrr.io/pkg/mice/man/with.mids.html" class="external-link">mice::with()</a></code>, you can instead fit multiple models to the
 imputed datasets and pool all parameters with
 <code><a href="../reference/pool_parameters.html">pool_parameters()</a></code>:</p>
 <p>The steps would be:</p>
@@ -168,7 +168,7 @@ get the imputed datasets, or by accessing the datasets directly from the
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">models</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="va">imputed_data</span><span class="op">$</span><span class="va">m</span>, <span class="kw">function</span><span class="op">(</span><span class="va">i</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu"><a href="https://drizopoulos.github.io/GLMMadaptive/reference/mixed_model.html" class="external-link">mixed_model</a></span><span class="op">(</span></span>
-<span>    <span class="fu"><a href="https://amices.org/mice/reference/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">incidence</span>, <span class="va">size</span> <span class="op">-</span> <span class="va">incidence</span><span class="op">)</span> <span class="op">~</span> <span class="va">period</span>,</span>
+<span>    <span class="fu"><a href="https://rdrr.io/pkg/mice/man/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">incidence</span>, <span class="va">size</span> <span class="op">-</span> <span class="va">incidence</span><span class="op">)</span> <span class="op">~</span> <span class="va">period</span>,</span>
 <span>    random <span class="op">=</span> <span class="op">~</span> <span class="fl">1</span> <span class="op">|</span> <span class="va">herd</span>,</span>
 <span>    data <span class="op">=</span> <span class="fu"><a href="https://tidyr.tidyverse.org/reference/complete.html" class="external-link">complete</a></span><span class="op">(</span><span class="va">imputed_data</span>, action <span class="op">=</span> <span class="va">i</span><span class="op">)</span>,</span>
 <span>    family <span class="op">=</span> <span class="va">binomial</span></span>
@@ -192,11 +192,11 @@ package:</p>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://easystats.github.io/parameters/">parameters</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"nhanes2"</span><span class="op">)</span></span>
-<span><span class="va">imp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://amices.org/mice/reference/mice.html" class="external-link">mice</a></span><span class="op">(</span><span class="va">nhanes2</span>, printFlag <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="va">imp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/mice/man/mice.html" class="external-link">mice</a></span><span class="op">(</span><span class="va">nhanes2</span>, printFlag <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># approach when model is supported by "mice"</span></span>
 <span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">imp</span>, exp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">bmi</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">hyp</span> <span class="op">+</span> <span class="va">chl</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="fu"><a href="https://amices.org/mice/reference/pool.html" class="external-link">pool</a></span><span class="op">(</span><span class="va">fit</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/mice/man/pool.html" class="external-link">pool</a></span><span class="op">(</span><span class="va">fit</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">#&gt;          term estimate std.error statistic df p.value</span></span>
 <span><span class="co">#&gt; 1 (Intercept)   19.667     3.373       5.8 11 0.00013</span></span>
 <span><span class="co">#&gt; 2    age40-59   -5.705     1.711      -3.3 14 0.00475</span></span>
@@ -226,9 +226,9 @@ package:</p>
 <code>mipo</code>.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"nhanes2"</span><span class="op">)</span></span>
-<span><span class="va">imp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://amices.org/mice/reference/mice.html" class="external-link">mice</a></span><span class="op">(</span><span class="va">nhanes2</span>, printFlag <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="va">imp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/mice/man/mice.html" class="external-link">mice</a></span><span class="op">(</span><span class="va">nhanes2</span>, printFlag <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">imp</span>, exp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">bmi</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">hyp</span> <span class="op">+</span> <span class="va">chl</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">pooled</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://amices.org/mice/reference/pool.html" class="external-link">pool</a></span><span class="op">(</span><span class="va">fit</span><span class="op">)</span></span>
+<span><span class="va">pooled</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/mice/man/pool.html" class="external-link">pool</a></span><span class="op">(</span><span class="va">fit</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">pooled</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">#&gt; # Fixed Effects</span></span>

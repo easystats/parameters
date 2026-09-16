@@ -29,7 +29,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.29.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.29.3.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -87,7 +87,7 @@
       <img src="../logo.png" class="logo" alt=""><h1>Summary of Model Parameters</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/v0.29.3/vignettes/model_parameters.Rmd" class="external-link"><code>vignettes/model_parameters.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/main/vignettes/model_parameters.Rmd" class="external-link"><code>vignettes/model_parameters.Rmd</code></a></small>
       <div class="d-none name"><code>model_parameters.Rmd</code></div>
     </div>
 
@@ -375,7 +375,7 @@ models and Bayesian models.</p>
 <span><span class="va">d2</span> <span class="op">&lt;-</span> <span class="fu">sim1</span><span class="op">(</span>mu <span class="op">=</span> <span class="fl">200</span>, residsd <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span>
 <span><span class="va">d1</span><span class="op">$</span><span class="va">sd</span> <span class="op">&lt;-</span> <span class="st">"ten"</span></span>
 <span><span class="va">d2</span><span class="op">$</span><span class="va">sd</span> <span class="op">&lt;-</span> <span class="st">"five"</span></span>
-<span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://amices.org/mice/reference/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">d1</span>, <span class="va">d2</span><span class="op">)</span></span>
+<span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/mice/man/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">d1</span>, <span class="va">d2</span><span class="op">)</span></span>
 <span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/glmmTMB/man/glmmTMB.html" class="external-link">glmmTMB</a></span><span class="op">(</span><span class="va">x</span> <span class="op">~</span> <span class="va">sd</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">t</span><span class="op">)</span>, dispformula <span class="op">=</span> <span class="op">~</span><span class="va">sd</span>, data <span class="op">=</span> <span class="va">dat</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/model_parameters.html">parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span>
@@ -397,7 +397,7 @@ models and Bayesian models.</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Parameter         | Coefficient</span></span>
 <span><span class="co">#&gt; -------------------------------</span></span>
-<span><span class="co">#&gt; SD (Intercept: t) |    4.60e-04</span></span>
+<span><span class="co">#&gt; SD (Intercept: t) |    4.61e-04</span></span>
 <span><span class="co">#&gt; SD (Residual)     |</span></span></code></pre></div>
 </div>
 <div class="section level3">
@@ -441,13 +441,10 @@ arguments.</p>
 <span><span class="co">#&gt; Running /opt/R/4.6.1/lib/R/bin/R CMD SHLIB foo.c</span></span>
 <span><span class="co">#&gt; using C compiler: ‘gcc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0’</span></span>
 <span><span class="co">#&gt; gcc -std=gnu2x -I"/opt/R/4.6.1/lib/R/include" -DNDEBUG   -I"/home/runner/work/_temp/Library/Rcpp/include/"  -I"/home/runner/work/_temp/Library/RcppEigen/include/"  -I"/home/runner/work/_temp/Library/RcppEigen/include/unsupported"  -I"/home/runner/work/_temp/Library/BH/include" -I"/home/runner/work/_temp/Library/StanHeaders/include/src/"  -I"/home/runner/work/_temp/Library/StanHeaders/include/"  -I"/home/runner/work/_temp/Library/RcppParallel/include/" -DRCPP_PARALLEL_USE_TBB=1 -DTBB_INTERFACE_NEW -I/home/runner/work/_temp/Library/RcppParallel/include -I"/home/runner/work/_temp/Library/rstan/include" -DEIGEN_NO_DEBUG  -DBOOST_DISABLE_ASSERTS  -DBOOST_PENDING_INTEGER_LOG2_HPP  -DSTAN_THREADS  -DUSE_STANC3 -DSTRICT_R_HEADERS  -DBOOST_PHOENIX_NO_VARIADIC_EXPRESSION  -D_HAS_AUTO_PTR_ETC=0  -include '/home/runner/work/_temp/Library/StanHeaders/include/stan/math/prim/fun/Eigen.hpp'  -D_REENTRANT -DRCPP_PARALLEL_USE_TBB=1   -I/usr/local/include    -fpic  -g -O2  -c foo.c -o foo.o</span></span>
-<span><span class="co">#&gt; In file included from /home/runner/work/_temp/Library/RcppEigen/include/Eigen/Core:19,</span></span>
-<span><span class="co">#&gt;                  from /home/runner/work/_temp/Library/RcppEigen/include/Eigen/Dense:1,</span></span>
-<span><span class="co">#&gt;                  from /home/runner/work/_temp/Library/StanHeaders/include/stan/math/prim/fun/Eigen.hpp:22,</span></span>
-<span><span class="co">#&gt;                  from &lt;command-line&gt;:</span></span>
-<span><span class="co">#&gt; /home/runner/work/_temp/Library/RcppEigen/include/Eigen/src/Core/util/Macros.h:679:10: fatal error: cmath: No such file or directory</span></span>
-<span><span class="co">#&gt;   679 | #include &lt;cmath&gt;</span></span>
-<span><span class="co">#&gt;       |          ^~~~~~~</span></span>
+<span><span class="co">#&gt; In file included from &lt;command-line&gt;:</span></span>
+<span><span class="co">#&gt; /home/runner/work/_temp/Library/StanHeaders/include/stan/math/prim/fun/Eigen.hpp:3:10: fatal error: stdexcept: No such file or directory</span></span>
+<span><span class="co">#&gt;     3 | #include &lt;stdexcept&gt;</span></span>
+<span><span class="co">#&gt;       |          ^~~~~~~~~~~</span></span>
 <span><span class="co">#&gt; compilation terminated.</span></span>
 <span><span class="co">#&gt; make: *** [/opt/R/4.6.1/lib/R/etc/Makeconf:190: foo.o] Error 1</span></span>
 <span></span>
@@ -456,40 +453,40 @@ arguments.</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Parameter   | Median |         95% CI |     pd |  Rhat | ESS (tail)</span></span>
 <span><span class="co">#&gt; -------------------------------------------------------------------</span></span>
-<span><span class="co">#&gt; (Intercept) |  -0.85 | [-1.68,  0.24] | 96.30% | 1.054 |         62</span></span>
-<span><span class="co">#&gt; persons     |   0.85 | [ 0.49,  1.12] |   100% | 1.072 |         71</span></span>
-<span><span class="co">#&gt; child       |  -1.15 | [-1.34, -0.97] |   100% | 1.059 |       1623</span></span>
-<span><span class="co">#&gt; camper1     |   0.74 | [ 0.55,  0.97] |   100% | 1.054 |         38</span></span>
+<span><span class="co">#&gt; (Intercept) |  -0.85 | [-1.59, -0.26] | 99.50% | 1.005 |        162</span></span>
+<span><span class="co">#&gt; persons     |   0.85 | [ 0.64,  1.11] |   100% | 1.046 |        108</span></span>
+<span><span class="co">#&gt; child       |  -1.15 | [-1.33, -0.97] |   100% | 1.005 |       1898</span></span>
+<span><span class="co">#&gt; camper1     |   0.73 | [ 0.56,  0.91] |   100% | 1.009 |       2154</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/model_parameters.html">parameters</a></span><span class="op">(</span><span class="va">model</span>, effects <span class="op">=</span> <span class="st">"all"</span>, component <span class="op">=</span> <span class="st">"all"</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # Fixed Effects</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Parameter   | Median |         95% CI |     pd |  Rhat | ESS (tail)</span></span>
 <span><span class="co">#&gt; -------------------------------------------------------------------</span></span>
-<span><span class="co">#&gt; (Intercept) |  -0.85 | [-1.68,  0.24] | 96.30% | 1.054 |         62</span></span>
-<span><span class="co">#&gt; persons     |   0.85 | [ 0.49,  1.12] |   100% | 1.072 |         71</span></span>
-<span><span class="co">#&gt; child       |  -1.15 | [-1.34, -0.97] |   100% | 1.059 |       1623</span></span>
-<span><span class="co">#&gt; camper1     |   0.74 | [ 0.55,  0.97] |   100% | 1.054 |         38</span></span>
+<span><span class="co">#&gt; (Intercept) |  -0.85 | [-1.59, -0.26] | 99.50% | 1.005 |        162</span></span>
+<span><span class="co">#&gt; persons     |   0.85 | [ 0.64,  1.11] |   100% | 1.046 |        108</span></span>
+<span><span class="co">#&gt; child       |  -1.15 | [-1.33, -0.97] |   100% | 1.005 |       1898</span></span>
+<span><span class="co">#&gt; camper1     |   0.73 | [ 0.56,  0.91] |   100% | 1.009 |       2154</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; # Zero-Inflation Parameters</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Parameter   | Median |         95% CI |     pd |  Rhat | ESS (tail)</span></span>
 <span><span class="co">#&gt; -------------------------------------------------------------------</span></span>
-<span><span class="co">#&gt; (Intercept) |  -0.71 | [-2.11,  0.74] | 84.92% | 1.007 |       1532</span></span>
-<span><span class="co">#&gt; child       |   1.89 | [ 1.26,  2.48] |   100% | 1.030 |        862</span></span>
-<span><span class="co">#&gt; camper1     |  -0.78 | [-1.52, -0.10] | 98.40% | 1.031 |       1050</span></span>
+<span><span class="co">#&gt; (Intercept) |  -0.65 | [-2.18,  0.80] | 86.48% | 1.005 |       1627</span></span>
+<span><span class="co">#&gt; child       |   1.89 | [ 1.27,  2.55] |   100% | 1.000 |       2440</span></span>
+<span><span class="co">#&gt; camper1     |  -0.79 | [-1.54, -0.13] | 98.83% | 1.006 |       1489</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; # Random Effects Variances</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Parameter               | Median |       95% CI |   pd |  Rhat | ESS (tail)</span></span>
 <span><span class="co">#&gt; ---------------------------------------------------------------------------</span></span>
-<span><span class="co">#&gt; SD (Intercept: persons) |   0.15 | [0.01, 0.90] | 100% | 1.088 |         43</span></span>
+<span><span class="co">#&gt; SD (Intercept: persons) |   0.12 | [0.01, 0.92] | 100% | 1.060 |         37</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; # Zero-Inflation Random Effects</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Parameter                  | Median |       95% CI |   pd |  Rhat | ESS (tail)</span></span>
 <span><span class="co">#&gt; ------------------------------------------------------------------------------</span></span>
-<span><span class="co">#&gt; SD (zi_Intercept: persons) |   1.25 | [0.52, 3.46] | 100% | 1.020 |       1093</span></span></code></pre></div>
+<span><span class="co">#&gt; SD (zi_Intercept: persons) |   1.30 | [0.56, 3.80] | 100% | 1.003 |        484</span></span></code></pre></div>
 <p>To include information about the random effect parameters (group
 levels), set <code>group_level = TRUE</code>:</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
@@ -504,16 +501,16 @@ levels), set <code>group_level = TRUE</code>:</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Parameter   | Median |         95% CI |     pd |  Rhat | ESS (tail)</span></span>
 <span><span class="co">#&gt; -------------------------------------------------------------------</span></span>
-<span><span class="co">#&gt; (Intercept) |  -0.85 | [-1.68,  0.24] | 96.30% | 1.054 |         62</span></span>
-<span><span class="co">#&gt; persons     |   0.85 | [ 0.49,  1.12] |   100% | 1.072 |         71</span></span>
-<span><span class="co">#&gt; child       |  -1.15 | [-1.34, -0.97] |   100% | 1.059 |       1623</span></span>
-<span><span class="co">#&gt; camper1     |   0.74 | [ 0.55,  0.97] |   100% | 1.054 |         38</span></span>
+<span><span class="co">#&gt; (Intercept) |  -0.85 | [-1.59, -0.26] | 99.50% | 1.005 |        162</span></span>
+<span><span class="co">#&gt; persons     |   0.85 | [ 0.64,  1.11] |   100% | 1.046 |        108</span></span>
+<span><span class="co">#&gt; child       |  -1.15 | [-1.33, -0.97] |   100% | 1.005 |       1898</span></span>
+<span><span class="co">#&gt; camper1     |   0.73 | [ 0.56,  0.91] |   100% | 1.009 |       2154</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; # Random Effects: persons</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Parameter   | Median |       95% CI |   pd |  Rhat | ESS (tail)</span></span>
 <span><span class="co">#&gt; ---------------------------------------------------------------</span></span>
-<span><span class="co">#&gt; (Intercept) |   0.15 | [0.01, 0.90] | 100% | 1.088 |         43</span></span></code></pre></div>
+<span><span class="co">#&gt; (Intercept) |   0.12 | [0.01, 0.92] | 100% | 1.060 |         37</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
