@@ -27,10 +27,10 @@ These objects are imported from other packages. Follow the links
 below to see their documentation.
 
 \describe{
-  \item{bayestestR}{\code{\link[bayestestR]{ci}}, \code{\link[bayestestR]{equivalence_test}}, \code{\link[bayestestR]{p_direction}}, \code{\link[bayestestR]{p_significance}}}
+  \item{bayestestR}{\code{\link[bayestestR:ci]{ci()}}, \code{\link[bayestestR:equivalence_test]{equivalence_test()}}, \code{\link[bayestestR:p_direction]{p_direction()}}, \code{\link[bayestestR:p_significance]{p_significance()}}}
 
-  \item{datawizard}{\code{\link[datawizard]{demean}}, \code{\link[datawizard]{describe_distribution}}, \code{\link[datawizard:skewness]{kurtosis}}, \code{\link[datawizard]{rescale_weights}}, \code{\link[datawizard]{skewness}}, \code{\link[datawizard]{visualisation_recipe}}}
+  \item{datawizard}{\code{\link[datawizard:demean]{demean()}}, \code{\link[datawizard:describe_distribution]{describe_distribution()}}, \code{\link[datawizard:kurtosis]{kurtosis()}}, \code{\link[datawizard:rescale_weights]{rescale_weights()}}, \code{\link[datawizard:skewness]{skewness()}}, \code{\link[datawizard:visualisation_recipe]{visualisation_recipe()}}}
 
-  \item{insight}{\code{\link[insight]{display}}, \code{\link[insight]{n_parameters}}, \code{\link[insight:display]{print_html}}, \code{\link[insight:display]{print_md}}, \code{\link[insight]{standardize_names}}, \code{\link[insight:is_model_supported]{supported_models}}}
+  \item{insight}{\code{\link[insight:display]{display()}}, \code{\link[insight:n_parameters]{n_parameters()}}, \code{\link[insight:print_html]{print_html()}}, \code{\link[insight:print_md]{print_md()}}, \code{\link[insight:standardize_names]{standardize_names()}}, \code{\link[insight:supported_models]{supported_models()}}}
 }}
 

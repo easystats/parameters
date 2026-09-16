@@ -7,14 +7,16 @@ factor_analysis <- function(x, ...) {
 
 #' @rdname principal_components
 #' @export
-factor_analysis.data.frame <- function(x,
-                                       n = "auto",
-                                       rotation = "oblimin",
-                                       factor_method = "minres",
-                                       sort = FALSE,
-                                       threshold = NULL,
-                                       standardize = FALSE,
-                                       ...) {
+factor_analysis.data.frame <- function(
+  x,
+  n = "auto",
+  rotation = "oblimin",
+  factor_method = "minres",
+  sort = FALSE,
+  threshold = NULL,
+  standardize = FALSE,
+  ...
+) {
   insight::check_if_installed("psych")
 
   # Standardize
@@ -23,16 +25,17 @@ factor_analysis.data.frame <- function(x,
   }
 
   # N factors
-  n <- .get_n_factors(
-    x,
-    n = n,
-    type = "FA",
-    rotation = rotation
-  )
+  n <- .get_n_factors(x, n = n, type = "FA", rotation = rotation)
 
   # FA
   out <- model_parameters(
-    psych::fa(x, nfactors = n, rotate = rotation, fm = factor_method, ...),
+    suppressWarnings(psych::fa(
+      x,
+      nfactors = n,
+      rotate = rotation,
+      fm = factor_method,
+      ...
+    )),
     threshold = threshold,
     sort = sort,
     ...
@@ -45,15 +48,17 @@ factor_analysis.data.frame <- function(x,
 
 #' @rdname principal_components
 #' @export
-factor_analysis.matrix <- function(x,
-                                   n = "auto",
-                                   rotation = "oblimin",
-                                   factor_method = "minres",
-                                   n_obs = NULL,
-                                   sort = FALSE,
-                                   threshold = NULL,
-                                   standardize = FALSE,
-                                   ...) {
+factor_analysis.matrix <- function(
+  x,
+  n = "auto",
+  rotation = "oblimin",
+  factor_method = "minres",
+  n_obs = NULL,
+  sort = FALSE,
+  threshold = NULL,
+  standardize = FALSE,
+  ...
+) {
   # check if we have a square matrix. in this case, we assume that
   # the user wants to do a factor analysis on the correlation matrix
   if ((dim(x)[1] == dim(x)[2]) && is.null(n_obs)) {
@@ -94,5 +99,7 @@ factor_analysis.matrix <- function(x,
 
 
 .is_oblique_rotation <- function(rotation) {
-  !is.null(rotation) && tolower(rotation) %in% c("promax", "oblimin", "simplimax", "bentlerQ", "geominQ", "biquartimin", "cluster") # nolint
+  !is.null(rotation) &&
+    tolower(rotation) %in%
+      c("promax", "oblimin", "simplimax", "bentlerQ", "geominQ", "biquartimin", "cluster") # nolint
 }

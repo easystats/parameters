@@ -57,7 +57,7 @@
     component = component,
     verbose = FALSE
   )
-  statistic <- insight::get_statistic(model, component = component)
+  statistic <- insight::get_statistic(model, component = component, ...)
 
   # check if all estimates are non-NA
   parameters <- .check_rank_deficiency(model, parameters)

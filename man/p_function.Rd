@@ -357,7 +357,7 @@ the observed data with the model used to compute it (\emph{Greenland et al. 2016
 can be considered as \emph{epistemic probability} - "not necessarily of the
 hypothesis being true, but of it \emph{possibly} being true" (\emph{Schweder 2018}).
 Hence, the interpretation of \emph{p}-values might be guided using
-\code{\link[bayestestR:pd_to_p]{bayestestR::p_to_pd()}}.
+\code{\link[bayestestR:p_to_pd]{bayestestR::p_to_pd()}}.
 }
 
 \subsection{Probability or compatibility?}{

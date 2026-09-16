@@ -36,7 +36,7 @@ other models, see argument \code{sim} in \code{?boot::boot} (defaults to
 \item{n_cpus}{Number of processes to be used in parallel operation.}
 
 \item{cluster}{Optional cluster when \code{parallel = "snow"}. See \code{?lme4::bootMer}
-for details.}
+or \code{?boot::boot} for details.}
 
 \item{verbose}{Toggle warnings and messages.}
 }

@@ -1,12 +1,14 @@
 #' @export
-model_parameters.svy2lme <- function(model,
-                                     ci = 0.95,
-                                     effects = "all",
-                                     include_sigma = FALSE,
-                                     keep = NULL,
-                                     drop = NULL,
-                                     verbose = TRUE,
-                                     ...) {
+model_parameters.svy2lme <- function(
+  model,
+  ci = 0.95,
+  effects = "all",
+  include_sigma = FALSE,
+  keep = NULL,
+  drop = NULL,
+  verbose = TRUE,
+  ...
+) {
   dots <- list(...)
   # which component to return?
   effects <- match.arg(effects, choices = c("fixed", "random", "all"))
@@ -38,11 +40,7 @@ model_parameters.svy2lme <- function(model,
   att <- attributes(params)
 
   if (effects %in% c("random", "all")) {
-    params_variance <- .extract_random_variances(
-      model,
-      ci = ci,
-      effects = effects
-    )
+    params_variance <- .extract_random_variances(model, ci = ci, effects = effects)
   }
 
   # merge random and fixed effects, if necessary
@@ -100,8 +98,5 @@ standard_error.svy2lme <- function(model, ...) {
 p_value.svy2lme <- function(model, ...) {
   stat <- insight::get_statistic(model)
   p <- 2 * stats::pnorm(abs(stat$Statistic), lower.tail = FALSE)
-  .data_frame(
-    Parameter = stat$Parameter,
-    p = as.vector(p)
-  )
+  .data_frame(Parameter = stat$Parameter, p = as.vector(p))
 }

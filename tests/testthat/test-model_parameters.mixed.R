@@ -1,6 +1,7 @@
 skip_if_not_installed("lme4")
 skip_on_cran()
 
+data(mtcars)
 m1 <- lme4::lmer(wt ~ cyl + (1 | gear), data = mtcars)
 m2 <- lme4::glmer(vs ~ cyl + (1 | gear), data = mtcars, family = "binomial")
 m3 <- lme4::lmer(wt ~ cyl + mpg + (1 | gear), data = mtcars)
@@ -21,10 +22,23 @@ test_that("model_parameters.mixed", {
   expect_identical(c(nrow(params), ncol(params)), c(2L, 10L))
   expect_equal(params$CI_high, c(1.68181, 0.56083), tolerance = 1e-3)
 
-  params <- model_parameters(m1, ci = c(0.8, 0.9), ci_method = "normal", effects = "fixed")
+  params <- model_parameters(
+    m1,
+    ci = c(0.8, 0.9),
+    ci_method = "normal",
+    effects = "fixed"
+  )
   expect_identical(c(nrow(params), ncol(params)), c(2L, 11L))
-  expect_equal(params$CI_high_0.8, c(1.29595665381331, 0.502185700948862), tolerance = 1e-3)
-  expect_equal(params$CI_high_0.9, c(1.47875781798108, 0.529969433080186), tolerance = 1e-3)
+  expect_equal(
+    params$CI_high_0.8,
+    c(1.29595665381331, 0.502185700948862),
+    tolerance = 1e-3
+  )
+  expect_equal(
+    params$CI_high_0.9,
+    c(1.47875781798108, 0.529969433080186),
+    tolerance = 1e-3
+  )
 
   params <- model_parameters(m1, ci_method = "normal", effects = "fixed")
   lme4_ci <- na.omit(as.data.frame(confint(m1, method = "Wald")))
@@ -47,10 +61,21 @@ test_that("model_parameters.mixed", {
   params <- model_parameters(model, effects = "fixed")
   cs <- coef(summary(model))
   expect_identical(c(nrow(params), ncol(params)), c(3L, 10L))
-  expect_named(params, c(
-    "Parameter", "Coefficient", "SE", "CI", "CI_low", "CI_high",
-    "z", "df_error", "p", "Effects"
-  ))
+  expect_named(
+    params,
+    c(
+      "Parameter",
+      "Coefficient",
+      "SE",
+      "CI",
+      "CI_low",
+      "CI_high",
+      "z",
+      "df_error",
+      "p",
+      "Effects"
+    )
+  )
   expect_identical(params$Parameter, rownames(cs))
 })
 
@@ -72,7 +97,10 @@ test_that("model_parameters.mixed bootstrap", {
 test_that("model_parameters.mixed-random", {
   params <- model_parameters(m1, effects = "random", group_level = TRUE)
   expect_identical(c(nrow(params), ncol(params)), c(3L, 9L))
-  expect_identical(as.vector(params$Parameter), c("(Intercept)", "(Intercept)", "(Intercept)"))
+  expect_identical(
+    as.vector(params$Parameter),
+    c("(Intercept)", "(Intercept)", "(Intercept)")
+  )
   expect_identical(as.vector(params$Level), c("3", "4", "5"))
   expect_equal(params$Coefficient, c(0.1692, 0.0566, -0.2259), tolerance = 1e-2)
 })
@@ -80,7 +108,10 @@ test_that("model_parameters.mixed-random", {
 test_that("model_parameters.mixed-random, grouplevel", {
   params <- model_parameters(m1, effects = "grouplevel")
   expect_identical(c(nrow(params), ncol(params)), c(3L, 9L))
-  expect_identical(as.vector(params$Parameter), c("(Intercept)", "(Intercept)", "(Intercept)"))
+  expect_identical(
+    as.vector(params$Parameter),
+    c("(Intercept)", "(Intercept)", "(Intercept)")
+  )
   expect_identical(as.vector(params$Level), c("3", "4", "5"))
   expect_equal(params$Coefficient, c(0.1692, 0.0566, -0.2259), tolerance = 1e-2)
 })
@@ -88,10 +119,7 @@ test_that("model_parameters.mixed-random, grouplevel", {
 test_that("model_parameters.mixed-ran_pars", {
   params <- model_parameters(m1, effects = "random")
   expect_identical(c(nrow(params), ncol(params)), c(2L, 8L))
-  expect_identical(
-    as.vector(params$Parameter),
-    c("SD (Intercept)", "SD (Observations)")
-  )
+  expect_identical(as.vector(params$Parameter), c("SD (Intercept)", "SD (Observations)"))
   expect_equal(params$Coefficient, c(0.27049, 0.59385), tolerance = 1e-2)
 })
 
@@ -102,7 +130,11 @@ test_that("model_parameters.mixed-all", {
     as.vector(params$Parameter),
     c("(Intercept)", "cyl", "SD (Intercept)", "SD (Observations)")
   )
-  expect_equal(params$Coefficient, c(0.65112, 0.40418, 0.27049, 0.59385), tolerance = 1e-2)
+  expect_equal(
+    params$Coefficient,
+    c(0.65112, 0.40418, 0.27049, 0.59385),
+    tolerance = 1e-2
+  )
 })
 
 test_that("model_parameters.mixed-all_pars", {
@@ -122,19 +154,16 @@ test_that("model_parameters.mixed-all_pars", {
 
 
 data("qol_cancer")
-qol_cancer <- cbind(
-  qol_cancer,
-  demean(qol_cancer, select = c("phq4", "QoL"), by = "ID")
-)
-model <- lme4::lmer(
-  QoL ~ time + phq4_within + phq4_between + (1 | ID),
-  data = qol_cancer
-)
+qol_cancer <- cbind(qol_cancer, demean(qol_cancer, select = c("phq4", "QoL"), by = "ID"))
+model <- lme4::lmer(QoL ~ time + phq4_within + phq4_between + (1 | ID), data = qol_cancer)
 
 test_that("model_parameters.mixed", {
   mp <- model_parameters(model, effects = "fixed", wb_component = TRUE)
   mp2 <- model_parameters(model, effects = "fixed", wb_component = FALSE)
-  expect_identical(mp$Component, c("rewb-contextual", "rewb-contextual", "within", "between"))
+  expect_identical(
+    mp$Component,
+    c("rewb-contextual", "rewb-contextual", "within", "between")
+  )
   expect_null(mp2$Component)
 })
 
@@ -149,6 +178,31 @@ test_that("print-model_parameters-2", {
   expect_snapshot(model_parameters(m1, effects = "all", wb_component = TRUE))
   expect_snapshot(model_parameters(m1, effects = "all", wb_component = FALSE))
 
-  expect_snapshot(model_parameters(m1, effects = "fixed", include_info = TRUE, wb_component = TRUE))
-  expect_snapshot(model_parameters(m1, effects = "fixed", include_info = TRUE, wb_component = FALSE))
+  expect_snapshot(model_parameters(
+    m1,
+    effects = "fixed",
+    include_info = TRUE,
+    wb_component = TRUE
+  ))
+  expect_snapshot(model_parameters(
+    m1,
+    effects = "fixed",
+    include_info = TRUE,
+    wb_component = FALSE
+  ))
+})
+
+
+test_that("model_parameters.mixed-vcov-dpoMatrix", {
+  skip_if_not_installed("Matrix")
+  V <- new(
+    "dpoMatrix",
+    Dim = c(2L, 2L),
+    Dimnames = list(c("(Intercept)", "cyl"), c("(Intercept)", "cyl")),
+    x = c(0.624032495462007, 0, -0.0754659378026634, 0.0248470215836204),
+    uplo = "U",
+    factors = list()
+  )
+  params <- model_parameters(m1, vcov = V)
+  expect_equal(params$SE, c(0.79, 0.1576, 0.2404, 0.0794), tolerance = 1e-2)
 })

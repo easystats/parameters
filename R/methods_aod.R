@@ -1,8 +1,6 @@
 # classes: .glimML
 
-
 ## TODO add ci_method later?
-
 
 #################### .glimML ------
 
@@ -30,8 +28,8 @@
 #' @examples
 #' library(parameters)
 #' if (require("brglm2", quietly = TRUE)) {
-#'   data("stemcell")
-#'   model <- bracl(
+#'   data("stemcell", package = "brglm2")
+#'   model <- brglm2::bracl(
 #'     research ~ as.numeric(religion) + gender,
 #'     weights = frequency,
 #'     data = stemcell,
@@ -41,19 +39,21 @@
 #' }
 #' @return A data frame of indices related to the model's parameters.
 #' @export
-model_parameters.glimML <- function(model,
-                                    ci = 0.95,
-                                    bootstrap = FALSE,
-                                    iterations = 1000,
-                                    component = "conditional",
-                                    standardize = NULL,
-                                    exponentiate = FALSE,
-                                    p_adjust = NULL,
-                                    include_info = getOption("parameters_info", FALSE),
-                                    keep = NULL,
-                                    drop = NULL,
-                                    verbose = TRUE,
-                                    ...) {
+model_parameters.glimML <- function(
+  model,
+  ci = 0.95,
+  bootstrap = FALSE,
+  iterations = 1000,
+  component = "conditional",
+  standardize = NULL,
+  exponentiate = FALSE,
+  p_adjust = NULL,
+  include_info = getOption("parameters_info", FALSE),
+  keep = NULL,
+  drop = NULL,
+  verbose = TRUE,
+  ...
+) {
   component <- insight::validate_argument(
     component,
     c("conditional", "random", "dispersion", "all")
@@ -98,10 +98,7 @@ standard_error.glimML <- function(model, ...) {
   s <- methods::slot(aod::summary(model), "Coef")
   se <- s[, 2]
 
-  .data_frame(
-    Parameter = .remove_backticks_from_string(rownames(s)),
-    SE = as.vector(se)
-  )
+  .data_frame(Parameter = .remove_backticks_from_string(rownames(s)), SE = as.vector(se))
 }
 
 
@@ -112,8 +109,5 @@ p_value.glimML <- function(model, ...) {
   s <- methods::slot(aod::summary(model), "Coef")
   p <- s[, 4]
 
-  .data_frame(
-    Parameter = .remove_backticks_from_string(rownames(s)),
-    p = as.vector(p)
-  )
+  .data_frame(Parameter = .remove_backticks_from_string(rownames(s)), p = as.vector(p))
 }

@@ -252,3 +252,28 @@
       Uncertainty intervals (equal-tailed) and p-values (two-tailed) computed
         using a Wald z-distribution approximation.
 
+---
+
+    Code
+      print(out, table_width = Inf)
+    Output
+      # Fixed Effects
+      
+      Parameter   | Coefficient |   SE |           95% CI |     z |      p
+      --------------------------------------------------------------------
+      (Intercept) |      251.40 | 6.28 | [239.09, 263.72] | 40.02 | < .001
+      Days        |       10.47 | 1.45 | [  7.63,  13.31] |  7.23 | < .001
+      
+      # Random Effects
+      
+      Parameter                     | Coefficient |         95% CI
+      ------------------------------------------------------------
+      SD (Intercept: Subject)       |       23.78 | [15.02, 37.66]
+      SD (Days: Subject)            |        5.72 | [ 3.81,  8.59]
+      Cor (Intercept~Days: Subject) |        0.08 | [-0.49,  0.59]
+      SD (Residual)                 |       25.59 | [22.80, 28.72]
+    Message
+      
+      Uncertainty intervals (equal-tailed) and p-values (two-tailed) computed
+        using a Wald z-distribution approximation.
+

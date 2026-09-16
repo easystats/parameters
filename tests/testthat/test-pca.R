@@ -37,7 +37,7 @@ test_that("principal_components, n", {
 })
 
 
-test_that("principal_components", {
+test_that("principal_components, 2", {
   x <- principal_components(mtcars[, 1:7])
 
   expect_equal(
@@ -83,9 +83,16 @@ test_that("predict model_parameters fa", {
   d <- na.omit(psych::bfi[, 1:25])
   model <- psych::fa(d, nfactors = 5)
   mp <- model_parameters(model, sort = TRUE, threshold = "max")
-  pr <- suppressMessages(
-    predict(mp, names = c("Neuroticism", "Conscientiousness", "Extraversion", "Agreeableness", "Opennness"))
-  )
+  pr <- suppressMessages(predict(
+    mp,
+    names = c(
+      "Neuroticism",
+      "Conscientiousness",
+      "Extraversion",
+      "Agreeableness",
+      "Opennness"
+    )
+  ))
   out <- head(pr, 5)
   expect_equal(
     out$Neuroticism,

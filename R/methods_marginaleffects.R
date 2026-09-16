@@ -134,6 +134,7 @@ model_parameters.predictions <- function(
       verbose = verbose,
       ...
     ))
+    by_cols <- NULL
   } else {
     # columns we want to keep
     by_cols <- .keep_me_columns(model)
@@ -153,7 +154,7 @@ model_parameters.predictions <- function(
   # remove and reorder some columns
   out$rowid <- out$rowid_dedup <- NULL
   # need to remove "Type", but only if it's not a valid variable name
-  if (!"Type" %in% by_cols) {
+  if (!is.null(by_cols) && !"Type" %in% by_cols) {
     out$Type <- NULL
   }
 

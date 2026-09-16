@@ -12,7 +12,7 @@
 #' @param parallel The type of parallel operation to be used (if any).
 #' @param n_cpus Number of processes to be used in parallel operation.
 #' @param cluster Optional cluster when `parallel = "snow"`. See `?lme4::bootMer`
-#' for details.
+#' or `?boot::boot` for details.
 #' @param ... Arguments passed to or from other methods.
 #' @inheritParams p_value
 #'
@@ -50,23 +50,23 @@
 #' print(model_parameters(est))
 #' }
 #' @export
-bootstrap_model <- function(model,
-                            iterations = 1000,
-                            ...) {
+bootstrap_model <- function(model, iterations = 1000, ...) {
   UseMethod("bootstrap_model")
 }
 
 
 #' @rdname bootstrap_model
 #' @export
-bootstrap_model.default <- function(model,
-                                    iterations = 1000,
-                                    type = "ordinary",
-                                    parallel = "no",
-                                    n_cpus = 1,
-                                    cluster = NULL,
-                                    verbose = FALSE,
-                                    ...) {
+bootstrap_model.default <- function(
+  model,
+  iterations = 1000,
+  type = "ordinary",
+  parallel = "no",
+  n_cpus = 1,
+  cluster = NULL,
+  verbose = FALSE,
+  ...
+) {
   # check for valid input
   .is_model_valid(model)
 
@@ -118,6 +118,7 @@ bootstrap_model.default <- function(model,
       sim = type,
       parallel = parallel,
       ncpus = n_cpus,
+      cl = cluster,
       model = model,
       ran.gen = f
     )
@@ -129,6 +130,7 @@ bootstrap_model.default <- function(model,
       sim = type,
       parallel = parallel,
       ncpus = n_cpus,
+      cl = cluster,
       model = model
     )
   }
@@ -145,14 +147,16 @@ bootstrap_model.default <- function(model,
 
 
 #' @export
-bootstrap_model.merMod <- function(model,
-                                   iterations = 1000,
-                                   type = "parametric",
-                                   parallel = "no",
-                                   n_cpus = 1,
-                                   cluster = NULL,
-                                   verbose = FALSE,
-                                   ...) {
+bootstrap_model.merMod <- function(
+  model,
+  iterations = 1000,
+  type = "parametric",
+  parallel = "no",
+  n_cpus = 1,
+  cluster = NULL,
+  verbose = FALSE,
+  ...
+) {
   insight::check_if_installed("lme4")
 
   type <- insight::validate_argument(type, c("parametric", "semiparametric"))
@@ -163,7 +167,11 @@ bootstrap_model.merMod <- function(model,
     n_params <- insight::n_parameters(model)
 
     # for glmmTMB, remove dispersion paramters, if any
-    if (inherits(model, "glmmTMB") && "Component" %in% names(params) && "dispersion" %in% params$Component) {
+    if (
+      inherits(model, "glmmTMB") &&
+        "Component" %in% names(params) &&
+        "dispersion" %in% params$Component
+    ) {
       # find number of dispersion parameters
       n_disp <- sum(params$Component == "dispersion")
       # remove dispersion parameters
@@ -218,13 +226,16 @@ bootstrap_model.glmmTMB <- bootstrap_model.merMod
 
 
 #' @export
-bootstrap_model.nestedLogit <- function(model,
-                                        iterations = 1000,
-                                        type = "ordinary",
-                                        parallel = "no",
-                                        n_cpus = 1,
-                                        verbose = FALSE,
-                                        ...) {
+bootstrap_model.nestedLogit <- function(
+  model,
+  iterations = 1000,
+  type = "ordinary",
+  parallel = "no",
+  n_cpus = 1,
+  cluster = NULL,
+  verbose = FALSE,
+  ...
+) {
   insight::check_if_installed("boot")
 
   type <- insight::validate_argument(
@@ -256,6 +267,7 @@ bootstrap_model.nestedLogit <- function(model,
     sim = type,
     parallel = parallel,
     ncpus = n_cpus,
+    cl = cluster,
     model = model
   )
 

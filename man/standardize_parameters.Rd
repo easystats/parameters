@@ -231,8 +231,8 @@ What We Can Do About It. European Sociological Review (2010) 26:67–82.
 \seealso{
 See also \href{https://easystats.github.io/parameters/articles/standardize_parameters_effsize.html}{package vignette}.
 
-Other standardize: 
-\code{\link{standardize_info}()}
+Other standardize:
+\code{\link[=standardize_info]{standardize_info()}}
 }
 \concept{effect size indices}
 \concept{standardize}

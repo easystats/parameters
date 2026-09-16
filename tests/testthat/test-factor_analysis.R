@@ -5,11 +5,10 @@ test_that("factor_analysis", {
   skip_if_not_installed("discovr")
   skip_if_not_installed("knitr")
 
-  set.seed(333)
-
   raq_items <- as.data.frame(discovr::raq)
   raq_items$id <- NULL
 
+  set.seed(333)
   out <- factor_analysis(
     raq_items,
     n = 4,
@@ -19,14 +18,21 @@ test_that("factor_analysis", {
     threshold = 0.4,
     standardize = FALSE
   )
-  raq_fa <- psych::fa(r = raq_items, nfactors = 4, scores = "tenBerge", cor = "poly")
-
-  expect_equal(
-    out$MR1,
-    raq_fa$loadings[, "MR1"],
-    tolerance = 1e-3,
-    ignore_attr = TRUE
+  set.seed(333)
+  raq_fa <- psych::fa(
+    r = raq_items,
+    nfactors = 4,
+    scores = "tenBerge",
+    cor = "poly",
+    rotate = "oblimin"
   )
+
+  expect_equal(out$MR1, raq_fa$loadings[, "MR1"], tolerance = 1e-3, ignore_attr = TRUE)
+
+  # format returns a data frame only
+  expect_identical(class(format(out)), "data.frame")
+  # format removes thresholds
+  expect_equal(sum(is.na(format(out, threshold = 0.3)$MR4)), 15)
 
   s <- summary(out)
   expect_equal(
@@ -37,6 +43,7 @@ test_that("factor_analysis", {
   )
 
   # include factor correlations
+  data(mtcars)
   out <- factor_analysis(
     mtcars[, 1:7],
     n = 2,
@@ -65,13 +72,15 @@ test_that("factor_analysis", {
     regex = "You provided a square matrix"
   )
 
+  set.seed(333)
   out1 <- factor_analysis(raq_poly_mtx, n = 4, n_obs = 2571)
   expect_identical(dim(out1), c(23L, 7L))
   expect_named(
     out1,
-    c("Variable", "MR1", "MR2", "MR4", "MR3", "Complexity", "Uniqueness")
+    c("Variable", "MR4", "MR1", "MR3", "MR2", "Complexity", "Uniqueness")
   )
 
+  set.seed(333)
   out2 <- factor_analysis(as.matrix(raq_items), n = 4)
   expect_identical(dim(out2), c(23L, 7L))
   expect_named(
@@ -79,8 +88,14 @@ test_that("factor_analysis", {
     c("Variable", "MR1", "MR2", "MR4", "MR3", "Complexity", "Uniqueness")
   )
 
+  out3 <- factor_analysis(as.matrix(raq_items), n = 4, sort = FALSE)
+  expect_named(
+    out3,
+    c("Variable", "MR2", "MR1", "MR3", "MR4", "Complexity", "Uniqueness")
+  )
+
   # roughly equal results
-  expect_equal(out1$MR1, out2$MR1, tolerance = 1e-1)
+  expect_equal(out1$MR4, out2$MR1, tolerance = 1e-1)
 
   # text matrix n_obs
   williams <- as.data.frame(discovr::williams)
@@ -102,10 +117,7 @@ test_that("factor_analysis", {
 
   out <- suppressWarnings(factor_analysis(r_mat, n_obs = n_mat, n = 2))
   expect_identical(dim(out), c(28L, 5L))
-  expect_named(
-    out,
-    c("Variable", "MR1", "MR2", "Complexity", "Uniqueness")
-  )
+  expect_named(out, c("Variable", "MR2", "MR1", "Complexity", "Uniqueness"))
 
   n_mat <- matrix(0, nrow = n - 2, ncol = n - 2)
   diag(n_mat) <- 1

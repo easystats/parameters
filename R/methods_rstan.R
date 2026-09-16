@@ -55,6 +55,7 @@ model_parameters.stanfit <- function(model,
     ci,
     exponentiate,
     ci_method = ci_method,
+    effects = effects,
     verbose = verbose,
     ...
   )

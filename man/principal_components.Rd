@@ -55,7 +55,7 @@ rotated_data(x, verbose = TRUE)
   ...
 )
 
-\method{print_html}{parameters_efa}(x, digits = 2, sort = FALSE, threshold = NULL, labels = NULL, ...)
+\method{print_html}{parameters_efa}(x, digits = 2, threshold = NULL, labels = NULL, ...)
 
 \method{predict}{parameters_efa}(
   object,
@@ -66,7 +66,7 @@ rotated_data(x, verbose = TRUE)
   ...
 )
 
-\method{print}{parameters_efa}(x, digits = 2, sort = FALSE, threshold = NULL, labels = NULL, ...)
+\method{print}{parameters_efa}(x, digits = 2, threshold = NULL, labels = NULL, ...)
 
 \method{sort}{parameters_efa}(x, ...)
 
@@ -173,8 +173,8 @@ available to access / display other information (see the 'Details' section).
 number of dimensions to retain.
 \item \code{\link[performance:check_factorstructure]{performance::check_factorstructure()}} checks the suitability of the
 data for factor analysis using the sphericity (see
-\code{\link[performance:check_factorstructure]{performance::check_sphericity_bartlett()}}) and the KMO (see
-\code{\link[performance:check_factorstructure]{performance::check_kmo()}}) measure.
+\code{\link[performance:check_sphericity_bartlett]{performance::check_sphericity_bartlett()}}) and the KMO (see
+\code{\link[performance:check_kmo]{performance::check_kmo()}}) measure.
 \item \code{\link[performance:check_itemscale]{performance::check_itemscale()}} computes various measures of internal
 consistencies applied to the (sub)scales (i.e., components) extracted from
 the PCA.

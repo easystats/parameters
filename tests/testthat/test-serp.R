@@ -1,3 +1,4 @@
+skip_on_cran()
 skip_if_not_installed("serp")
 skip_if_not_installed("withr")
 
@@ -9,8 +10,11 @@ withr::with_options(
     m1 <- serp::serp(
       rating ~ temp * contact,
       slope = "penalize",
-      link = "logit", reverse = TRUE, tuneMethod = "user",
-      lambda = 5, data = ordinal::wine
+      link = "logit",
+      reverse = TRUE,
+      tuneMethod = "user",
+      lambda = 5,
+      data = ordinal::wine
     )
     mp <- model_parameters(m1, verbose = FALSE)
     expect_snapshot(suppressMessages(print(mp)))
