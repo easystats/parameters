@@ -732,6 +732,7 @@ model_parameters.default <- function(
         p_adjust = p_adjust,
         include_info = include_info,
         effects = effects,
+        vcov = vcov,
         verbose = verbose,
         ...
       )
