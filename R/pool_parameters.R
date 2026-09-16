@@ -145,6 +145,16 @@ pool_parameters <- function(
   if (is.null(ci)) {
     ci <- 0.95
   }
+
+  if (
+    identical(attributes(x[[1]])$effects, "grouplevel") && "Group" %in% colnames(x[[1]])
+  ) {
+    x[] <- lapply(x, function(i) {
+      i$Parameter <- paste(i$Parameter, i$Group)
+      i
+    })
+  }
+
   parameter_values <- x[[1]]$Parameter
 
   # exceptions ----
