@@ -77,7 +77,7 @@
   attr(params, "bootstrap") <- bootstrap
   attr(params, "iterations") <- iterations
   attr(params, "p_adjust") <- p_adjust
-  attr(params, "robust_vcov") <- "vcov" %in% names(dot.arguments)
+  attr(params, "robust_vcov") <- !is.null(dot.arguments$vcov)
   attr(params, "robust_vcov_type") <- dot.arguments$vcov
   attr(params, "ignore_group") <- isFALSE(group_level)
   attr(params, "ran_pars") <- isFALSE(group_level)
