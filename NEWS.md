@@ -1,5 +1,10 @@
 # parameters (devel)
 
+## Changes
+
+* `model_parameters()` now saves information about the type of HC-vcov
+  calculation as attribute.
+
 ## Bug fixes
 
 * `standard_error()` and hence `model_parameters()` returned wrong (recycled)
