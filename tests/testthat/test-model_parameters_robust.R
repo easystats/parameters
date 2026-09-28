@@ -190,6 +190,6 @@ test_that("model_parameters, vcov-type saved as attribute", {
   model <- lm(dist ~ speed, data = cars)
   mp <- model_parameters(model, vcov = "HC3")
 
-  expect_true(attributes(mp)["robust_vcov"])
-  expect_identical(attributes(mp)["robust_vcov_type"], "HC3")
+  expect_true(attr(mp, "robust_vcov"))
+  expect_identical(attr(mp, "robust_vcov_type"), "HC3")
 })
