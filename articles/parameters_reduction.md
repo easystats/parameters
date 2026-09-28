@@ -209,7 +209,7 @@ leading to discrepancies in the results.
 Finally, refit the model:
 
 \
-`df`` ``<-`` `[`cbind`](https://rdrr.io/pkg/mice/man/cbind.html)`(``attitude``, `[`predict`](https://rdrr.io/r/stats/predict.html)`(``pca``)``)`\
+`df`` ``<-`` `[`cbind`](https://amices.org/mice/reference/cbind.html)`(``attitude``, `[`predict`](https://rdrr.io/r/stats/predict.html)`(``pca``)``)`\
 \
 [`update`](https://rdrr.io/r/stats/update.html)`(``model``, ``rating`` ``~`` ``PC1``, data ``=`` ``df``)`` ``%>%`\
 `  `[`model_parameters`](https://easystats.github.io/parameters/reference/model_parameters.md)`(``)`

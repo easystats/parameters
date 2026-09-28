@@ -287,7 +287,7 @@ of models and packages, including mixed models and Bayesian models.
 `d2`` ``<-`` ``sim1``(``mu ``=`` ``200``, residsd ``=`` ``5``)`\
 `d1``$``sd`` ``<-`` ``"ten"`\
 `d2``$``sd`` ``<-`` ``"five"`\
-`dat`` ``<-`` `[`rbind`](https://rdrr.io/pkg/mice/man/cbind.html)`(``d1``, ``d2``)`\
+`dat`` ``<-`` `[`rbind`](https://amices.org/mice/reference/cbind.html)`(``d1``, ``d2``)`\
 `model`` ``<-`` `[`glmmTMB`](https://rdrr.io/pkg/glmmTMB/man/glmmTMB.html)`(``x`` ``~`` ``sd`` ``+`` ``(``1`` ``|`` ``t``)``, dispformula ``=`` ``~``sd``, data ``=`` ``dat``)`\
 \
 [`parameters`](https://easystats.github.io/parameters/reference/model_parameters.md)`(``model``)`\
