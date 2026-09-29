@@ -311,7 +311,7 @@ the last two columns.
 | Speciesvirginica       |  -0.99   |   0.29    |   -3.48   | \< .001 | (-1.55, -0.43) |
 | Petlen(3,7\]           |  -0.14   |   0.28    |   -0.48   |   0.630 |  (-0.69, 0.42) |
 
-My Table {.table style="width:100%;"}
+My Table {.table style="width:99%;"}
 
 [`print_md()`](https://easystats.github.io/insight/reference/display.html)
 is a convenient wrapper around
