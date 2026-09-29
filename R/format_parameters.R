@@ -593,7 +593,9 @@ format_parameters.parameters_model <- function(model, ...) {
   # missing labels return original parameter name (e.g., variance components in mixed models)
   out <- stats::setNames(params$Parameter, params$Parameter)
   pretty_labels <- pretty_labels[names(pretty_labels) %in% params$Parameter]
-  out[match(names(pretty_labels), params$Parameter)] <- pretty_labels
+  label_idx <- match(params$Parameter, names(pretty_labels))
+  has_label <- !is.na(label_idx)
+  out[has_label] <- pretty_labels[label_idx[has_label]]
 
   out
 }

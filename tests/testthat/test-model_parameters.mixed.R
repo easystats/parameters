@@ -116,6 +116,23 @@ test_that("model_parameters.mixed-random, grouplevel", {
   expect_equal(params$Coefficient, c(0.1692, 0.0566, -0.2259), tolerance = 1e-2)
 })
 
+test_that("model_parameters.mixed-random, grouplevel factor labels", {
+  dat <- transform(
+    lme4::sleepstudy,
+    treatment = factor(ifelse(Days > 4, "1", "0"))
+  )
+  model <- lme4::lmer(
+    Reaction ~ treatment + (1 + treatment | Subject),
+    data = dat
+  )
+  params <- model_parameters(model, effects = "grouplevel")
+  pretty_labels <- attr(params, "pretty_labels")
+  treatment_labels <- pretty_labels[grepl("^treatment", names(pretty_labels))]
+
+  expect_length(treatment_labels, length(unique(dat$Subject)))
+  expect_identical(treatment_labels, rep("treatment [1]", length(treatment_labels)))
+})
+
 test_that("model_parameters.mixed-ran_pars", {
   params <- model_parameters(m1, effects = "random")
   expect_identical(c(nrow(params), ncol(params)), c(2L, 8L))
