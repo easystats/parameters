@@ -1,3 +1,19 @@
+# parameters (devel)
+
+## Changes
+
+* `model_parameters()` now saves information about the type of HC-vcov
+  calculation as attribute.
+
+## Bug fixes
+
+* `standard_error()` and hence `model_parameters()` returned wrong (recycled)
+  standard errors for models of class `glmmTMB` fitted with the new `ordinal()`
+  family, because the thresholds are not part of the summary coefficient table.
+  Standard errors are now taken from `insight::get_varcov()`, which returns
+  them on the threshold scale via the delta method (requires *insight* > 1.5.4
+  and *glmmTMB* >= 1.1.15).
+
 # parameters 0.29.3
 
 ## Changes
