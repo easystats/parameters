@@ -7,8 +7,8 @@
 
 ## Bug fixes
 
-* `estimate_grouplevel()` now formats categorical random-slope labels
-  consistently across all grouping levels.
+* `model_parameters(..., effects = "grouplevel")` now formats categorical
+  random-slope labels consistently across all grouping levels.
 
 * `standard_error()` and hence `model_parameters()` returned wrong (recycled)
   standard errors for models of class `glmmTMB` fitted with the new `ordinal()`
