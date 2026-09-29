@@ -7,6 +7,9 @@
 
 ## Bug fixes
 
+* `estimate_grouplevel()` now formats categorical random-slope labels
+  consistently across all grouping levels.
+
 * `standard_error()` and hence `model_parameters()` returned wrong (recycled)
   standard errors for models of class `glmmTMB` fitted with the new `ordinal()`
   family, because the thresholds are not part of the summary coefficient table.
