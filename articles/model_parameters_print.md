@@ -225,13 +225,13 @@ table header. However, you can also return a single table:
 `#> spp [DF]             |       -0.11 | 0.24 | [-0.59,  0.36] | -0.46 | 0.642  |   fixed |   conditional`\
 `#> mined [no]           |        1.43 | 0.37 | [ 0.71,  2.15] |  3.90 | < .001 |   fixed |   conditional`\
 `#> (Intercept)          |        0.91 | 0.63 | [-0.32,  2.14] |  1.45 | 0.147  |   fixed | zero_inflated`\
-`#> sppPR                |        1.16 | 1.33 | [-1.45,  3.78] |  0.87 | 0.384  |   fixed | zero_inflated`\
-`#> sppDM                |       -0.94 | 0.80 | [-2.51,  0.63] | -1.17 | 0.241  |   fixed | zero_inflated`\
-`#> sppEC-A              |        1.04 | 0.71 | [-0.36,  2.44] |  1.46 | 0.144  |   fixed | zero_inflated`\
-`#> sppEC-L              |       -0.56 | 0.73 | [-1.99,  0.86] | -0.77 | 0.439  |   fixed | zero_inflated`\
-`#> sppDES-L             |       -0.89 | 0.75 | [-2.37,  0.58] | -1.19 | 0.236  |   fixed | zero_inflated`\
-`#> sppDF                |       -2.54 | 2.18 | [-6.82,  1.74] | -1.16 | 0.244  |   fixed | zero_inflated`\
-`#> minedno              |       -2.56 | 0.60 | [-3.75, -1.38] | -4.24 | < .001 |   fixed | zero_inflated`\
+`#> spp [PR]             |        1.16 | 1.33 | [-1.45,  3.78] |  0.87 | 0.384  |   fixed | zero_inflated`\
+`#> spp [DM]             |       -0.94 | 0.80 | [-2.51,  0.63] | -1.17 | 0.241  |   fixed | zero_inflated`\
+`#> spp [EC-A]           |        1.04 | 0.71 | [-0.36,  2.44] |  1.46 | 0.144  |   fixed | zero_inflated`\
+`#> spp [EC-L]           |       -0.56 | 0.73 | [-1.99,  0.86] | -0.77 | 0.439  |   fixed | zero_inflated`\
+`#> spp [DES-L]          |       -0.89 | 0.75 | [-2.37,  0.58] | -1.19 | 0.236  |   fixed | zero_inflated`\
+`#> spp [DF]             |       -2.54 | 2.18 | [-6.82,  1.74] | -1.16 | 0.244  |   fixed | zero_inflated`\
+`#> mined [no]           |       -2.56 | 0.60 | [-3.75, -1.38] | -4.24 | < .001 |   fixed | zero_inflated`\
 `#> (Intercept)          |        1.51 |      | [ 0.93,  2.46] |       |        |   fixed |    dispersion`\
 `#> SD (Intercept: site) |        0.38 |      | [ 0.17,  0.87] |       |        |  random |   conditional`
 

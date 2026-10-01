@@ -414,10 +414,10 @@ statistics (6th ed.). Boston: Pearson Education.</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Variable |   PC1 | Complexity</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -----------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mpg      | -0.93 |          1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> cyl      |  0.96 |          1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> disp     |  0.95 |          1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> hp       |  0.91 |          1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mpg      | -0.93 |       1.00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> cyl      |  0.96 |       1.00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> disp     |  0.95 |       1.00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> hp       |  0.91 |       1.00</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">The unique principal component accounted for 87.55% of the total variance of the original data.</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -436,10 +436,10 @@ statistics (6th ed.). Boston: Pearson Education.</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Variable | Label                 |   PC1 | Complexity</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -----------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mpg      | Miles/(US) gallon     | -0.93 |          1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> cyl      | Number of cylinders   |  0.96 |          1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> disp     | Displacement (cu.in.) |  0.95 |          1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> hp       | Gross horsepower      |  0.91 |          1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mpg      | Miles/(US) gallon     | -0.93 |       1.00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> cyl      | Number of cylinders   |  0.96 |       1.00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> disp     | Displacement (cu.in.) |  0.95 |       1.00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> hp       | Gross horsepower      |  0.91 |       1.00</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Sparse PCA</span></span></span>
 <span class="r-in"><span><span class="fu">principal_components</span><span class="op">(</span><span class="va">mtcars</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">7</span><span class="op">]</span>, n <span class="op">=</span> <span class="fl">4</span>, sparse <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
@@ -480,7 +480,7 @@ statistics (6th ed.). Boston: Pearson Education.</p></li>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># Rotated loadings from Principal Component Analysis (oblimin-rotation)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Variable |   PC1 |   PC2 | Complexity | Uniqueness |  MSA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Variable |   TC1 |   TC2 | Complexity | Uniqueness |  MSA</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------------------------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> wt       |  0.98 |       |       1.03 |       0.10 | 0.77</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> drat     | -0.95 |       |       1.19 |       0.21 | 0.85</span>
@@ -490,7 +490,7 @@ statistics (6th ed.). Boston: Pearson Education.</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span> qsec     |       | -0.98 |       1.00 |       0.06 | 0.61</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> hp       |       |  0.61 |       1.97 |       0.10 | 0.90</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">The 2 principal components (oblimin rotation) accounted for 89.18% of the total variance of the original data (PC1 = 63.90%, PC2 = 25.29%).</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">The 2 principal components (oblimin rotation) accounted for 89.18% of the total variance of the original data (TC1 = 63.90%, TC2 = 25.29%).</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span><span class="fu">principal_components</span><span class="op">(</span><span class="va">mtcars</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">7</span><span class="op">]</span>, n <span class="op">=</span> <span class="fl">2</span>, threshold <span class="op">=</span> <span class="fl">2</span>, sort <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># Loadings from Principal Component Analysis (no rotation)</span></span>

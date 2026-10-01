@@ -485,7 +485,7 @@ print(mp, split_components = FALSE)
 #> spp [DF]             |        0.12 | 0.15 | [-0.17,  0.40] |  0.78 | 0.435 
 #> mined [no]           |        1.27 | 0.27 | [ 0.74,  1.80] |  4.72 | < .001
 #> (Intercept)          |        0.79 | 0.27 | [ 0.26,  1.32] |  2.90 | 0.004 
-#> minedno              |       -1.84 | 0.31 | [-2.46, -1.23] | -5.87 | < .001
+#> mined [no]           |       -1.84 | 0.31 | [-2.46, -1.23] | -5.87 | < .001
 #> SD (Intercept: site) |        0.33 |      | [ 0.18,  0.63] |       |       
 #> 
 #> Parameter            | Effects |     Component
@@ -499,7 +499,7 @@ print(mp, split_components = FALSE)
 #> spp [DF]             |   fixed |   conditional
 #> mined [no]           |   fixed |   conditional
 #> (Intercept)          |   fixed | zero_inflated
-#> minedno              |   fixed | zero_inflated
+#> mined [no]           |   fixed | zero_inflated
 #> SD (Intercept: site) |  random |   conditional
 #> 
 #> Uncertainty intervals (equal-tailed) and p-values (two-tailed)

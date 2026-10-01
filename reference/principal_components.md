@@ -388,10 +388,10 @@ principal_components(mtcars[, 1:4], n = "auto")
 #> 
 #> Variable |   PC1 | Complexity
 #> -----------------------------
-#> mpg      | -0.93 |          1
-#> cyl      |  0.96 |          1
-#> disp     |  0.95 |          1
-#> hp       |  0.91 |          1
+#> mpg      | -0.93 |       1.00
+#> cyl      |  0.96 |       1.00
+#> disp     |  0.95 |       1.00
+#> hp       |  0.91 |       1.00
 #> 
 #> The unique principal component accounted for 87.55% of the total variance of the original data.
 #> 
@@ -410,10 +410,10 @@ print(
 #> 
 #> Variable | Label                 |   PC1 | Complexity
 #> -----------------------------------------------------
-#> mpg      | Miles/(US) gallon     | -0.93 |          1
-#> cyl      | Number of cylinders   |  0.96 |          1
-#> disp     | Displacement (cu.in.) |  0.95 |          1
-#> hp       | Gross horsepower      |  0.91 |          1
+#> mpg      | Miles/(US) gallon     | -0.93 |       1.00
+#> cyl      | Number of cylinders   |  0.96 |       1.00
+#> disp     | Displacement (cu.in.) |  0.95 |       1.00
+#> hp       | Gross horsepower      |  0.91 |       1.00
 
 # Sparse PCA
 principal_components(mtcars[, 1:7], n = 4, sparse = TRUE)
@@ -454,7 +454,7 @@ principal_components(mtcars[, 1:7],
 )
 #> # Rotated loadings from Principal Component Analysis (oblimin-rotation)
 #> 
-#> Variable |   PC1 |   PC2 | Complexity | Uniqueness |  MSA
+#> Variable |   TC1 |   TC2 | Complexity | Uniqueness |  MSA
 #> ---------------------------------------------------------
 #> wt       |  0.98 |       |       1.03 |       0.10 | 0.77
 #> drat     | -0.95 |       |       1.19 |       0.21 | 0.85
@@ -464,7 +464,7 @@ principal_components(mtcars[, 1:7],
 #> qsec     |       | -0.98 |       1.00 |       0.06 | 0.61
 #> hp       |       |  0.61 |       1.97 |       0.10 | 0.90
 #> 
-#> The 2 principal components (oblimin rotation) accounted for 89.18% of the total variance of the original data (PC1 = 63.90%, PC2 = 25.29%).
+#> The 2 principal components (oblimin rotation) accounted for 89.18% of the total variance of the original data (TC1 = 63.90%, TC2 = 25.29%).
 #> 
 principal_components(mtcars[, 1:7], n = 2, threshold = 2, sort = TRUE)
 #> # Loadings from Principal Component Analysis (no rotation)
