@@ -565,7 +565,14 @@
   if (length(not_allowed)) {
     if (verbose) {
       not_allowed_string <- datawizard::text_concatenate(not_allowed)
-      insight::format_alert(
+      # silently dropping a requested vcov changes the inference the user
+      # asked for, so this deserves a warning rather than a message
+      if (any(c("vcov", "vcov_args") %in% not_allowed)) {
+        alert_fun <- insight::format_warning
+      } else {
+        alert_fun <- insight::format_alert
+      }
+      alert_fun(
         sprintf(
           "Following arguments are not supported in %s() for models of class %s and will be ignored: %s",
           sQuote(function_name),
@@ -584,6 +591,30 @@
     }
   }
   dots
+}
+
+
+# Many `standard_error()` methods accept `...` but never use `vcov`. Returns
+# `TRUE` if the method for this model can use `vcov`, and warns otherwise.
+.check_vcov_supported <- function(model, vcov, verbose = TRUE) {
+  if (is.null(vcov)) {
+    return(TRUE)
+  }
+  ns <- asNamespace("parameters")
+  method <- NULL
+  for (cl in c(class(model), "default")) {
+    method <- utils::getS3method("standard_error", cl, optional = TRUE, envir = ns)
+    if (!is.null(method)) break
+  }
+  supported <- "vcov" %in% names(formals(method)) ||
+    any(c("standard_error.default", ".check_vcov_args") %in% all.names(body(method)))
+  if (!supported && isTRUE(verbose)) {
+    insight::format_warning(sprintf(
+      "The `vcov` argument is not supported for models of class %s and will be ignored.",
+      sQuote(class(model)[1])
+    ))
+  }
+  supported
 }
 
 
