@@ -5,6 +5,10 @@
 * `model_parameters()` now saves information about the type of HC-vcov
   calculation as attribute.
 
+* `model_parameters()` now raises a warning instead of a message when the
+  `vocv` is supplied to calculate sandwich standard errors, but not supported
+  by the model class.
+
 ## Bug fixes
 
 * `model_parameters(..., effects = "grouplevel")` now formats categorical

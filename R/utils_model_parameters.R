@@ -602,12 +602,16 @@
   }
   ns <- asNamespace("parameters")
   method <- NULL
+
   for (cl in c(class(model), "default")) {
     method <- utils::getS3method("standard_error", cl, optional = TRUE, envir = ns)
     if (!is.null(method)) break
   }
-  supported <- "vcov" %in% names(formals(method)) ||
+
+  supported <- "vcov" %in%
+    names(formals(method)) ||
     any(c("standard_error.default", ".check_vcov_args") %in% all.names(body(method)))
+
   if (!supported && isTRUE(verbose)) {
     insight::format_warning(sprintf(
       "The `vcov` argument is not supported for models of class %s and will be ignored.",
