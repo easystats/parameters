@@ -605,6 +605,17 @@
   if (is.null(vcov)) {
     return(TRUE)
   }
+
+  # some model classes already compute robust SE, which we will return here
+  if (inherits(model, "gee")) {
+    if (verbose) {
+      insight::format_warning(
+        "Models of class `gee` only return one type of robust standard errors and the `vcov` type is ignored."
+      )
+    }
+    return(TRUE)
+  }
+
   ns <- asNamespace("parameters")
   method <- NULL
 
