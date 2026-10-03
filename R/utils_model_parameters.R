@@ -64,6 +64,11 @@
     ))
   }
 
+  # update vcov, if not supported, so we don't save wrong attribute
+  if (!.check_vcov_supported(model, dot.arguments$vcov, verbose = FALSE)) {
+    dot.arguments$vcov <- dot.arguments$vcov_args <- NULL
+  }
+
   attr(params, "ci") <- ci
   attr(params, "ci_method") <- .format_ci_method_name(ci_method)
   attr(params, "df_method") <- .format_ci_method_name(ci_method)
