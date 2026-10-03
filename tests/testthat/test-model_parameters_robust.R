@@ -172,17 +172,20 @@ test_that("model_parameters, normal-2", {
 })
 
 test_that("ci_ml1, robust", {
-  skip("TODO: this one actually is not correct.")
-  skip_if_not(packageVersion("parameters") < "0.16.9.9")
   skip_if_not_installed("lme4")
   model <- lme4::lmer(Petal.Length ~ Sepal.Length + (1 | Species), data = iris)
-  params <- ci_ml1(model, vcov = "CR", vcov_args = list(cluster = iris$Species))
+  params <- ci_ml1(
+    model,
+    vcov = "CR",
+    vcov_args = list(cluster = iris$Species, type = "CR1")
+  )
   robust_se <- unname(sqrt(diag(clubSandwich::vcovCR(
     model,
     type = "CR1",
     cluster = iris$Species
   ))))
-  upper_ci <- fixef(model) + qt(0.975, dof_ml1(model)) * robust_se
+  upper_ci <- lme4::fixef(model) + qt(0.975, dof_ml1(model)) * robust_se
+  expect_equal(upper_ci, params$CI_high, tolerance = 1e-4, ignore_attr = TRUE)
 })
 
 test_that("model_parameters, vcov-type saved as attribute", {
