@@ -1,8 +1,6 @@
 # package metafor
 
-
 ####### .rma -----------------
-
 
 #' Parameters from Meta-Analysis
 #'
@@ -50,30 +48,24 @@
 #'
 #' @return A data frame of indices related to the model's parameters.
 #' @export
-model_parameters.rma <- function(model,
-                                 ci = 0.95,
-                                 bootstrap = FALSE,
-                                 iterations = 1000,
-                                 standardize = NULL,
-                                 exponentiate = FALSE,
-                                 include_studies = TRUE,
-                                 keep = NULL,
-                                 drop = NULL,
-                                 verbose = TRUE,
-                                 ...) {
+model_parameters.rma <- function(
+  model,
+  ci = 0.95,
+  bootstrap = FALSE,
+  iterations = 1000,
+  standardize = NULL,
+  exponentiate = FALSE,
+  include_studies = TRUE,
+  keep = NULL,
+  drop = NULL,
+  verbose = TRUE,
+  ...
+) {
   # handle ci-level that was defined in function call...
   ci_level <- parse(text = insight::safe_deparse(model$call))[[1]]$level
   if (!is.null(ci_level) && missing(ci)) {
     ci <- ci_level / 100
   }
-
-  # validation check, warn if unsupported argument is used.
-  .check_dots(
-    dots = list(...),
-    not_allowed = c("vcov", "vcov_args"),
-    class(model)[1],
-    verbose = verbose
-  )
 
   meta_analysis_overall <- .model_parameters_generic(
     model = model,
@@ -142,7 +134,9 @@ model_parameters.rma <- function(model,
 
   # subgroup analyses?
   if (!is.null(subgroups)) {
-    meta_analysis_studies$Subgroup <- insight::get_data(model, verbose = FALSE)[[group_variable]]
+    meta_analysis_studies$Subgroup <- insight::get_data(model, verbose = FALSE)[[
+      group_variable
+    ]]
   }
 
   original_attributes <- attributes(meta_analysis_overall)
@@ -179,10 +173,7 @@ model_parameters.rma <- function(model,
 #' @export
 p_value.rma <- function(model, ...) {
   params <- insight::get_parameters(model)
-  .data_frame(
-    Parameter = .remove_backticks_from_string(params$Parameter),
-    p = model$pval
-  )
+  .data_frame(Parameter = .remove_backticks_from_string(params$Parameter), p = model$pval)
 }
 
 
