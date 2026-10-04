@@ -57,7 +57,7 @@ withr::with_options(list(parameters_interaction = "*", easystats_table_width = I
       )
     )
     expect_identical(
-      capture.output(print(out, split_component = FALSE)),
+      capture.output(print(out, split_component = FALSE, table_width = Inf)),
       c(
         "# Fixed Effects",
         "",
@@ -72,13 +72,13 @@ withr::with_options(list(parameters_interaction = "*", easystats_table_width = I
         "spp [DF]             |        0.89 | 0.22 | [0.55,  1.44] | -0.46 | 0.642  |   fixed |   conditional",
         "mined [no]           |        4.18 | 1.53 | [2.04,  8.57] |  3.90 | < .001 |   fixed |   conditional",
         "(Intercept)          |        2.48 | 1.56 | [0.73,  8.51] |  1.45 | 0.147  |   fixed | zero_inflated",
-        "sppPR                |        3.19 | 4.26 | [0.23, 43.70] |  0.87 | 0.384  |   fixed | zero_inflated",
-        "sppDM                |        0.39 | 0.31 | [0.08,  1.88] | -1.17 | 0.241  |   fixed | zero_inflated",
-        "sppEC-A              |        2.84 | 2.02 | [0.70, 11.49] |  1.46 | 0.144  |   fixed | zero_inflated",
-        "sppEC-L              |        0.57 | 0.41 | [0.14,  2.37] | -0.77 | 0.439  |   fixed | zero_inflated",
-        "sppDES-L             |        0.41 | 0.31 | [0.09,  1.79] | -1.19 | 0.236  |   fixed | zero_inflated",
-        "sppDF                |        0.08 | 0.17 | [0.00,  5.68] | -1.16 | 0.244  |   fixed | zero_inflated",
-        "minedno              |        0.08 | 0.05 | [0.02,  0.25] | -4.24 | < .001 |   fixed | zero_inflated",
+        "spp [PR]             |        3.19 | 4.26 | [0.23, 43.70] |  0.87 | 0.384  |   fixed | zero_inflated",
+        "spp [DM]             |        0.39 | 0.31 | [0.08,  1.88] | -1.17 | 0.241  |   fixed | zero_inflated",
+        "spp [EC-A]           |        2.84 | 2.02 | [0.70, 11.49] |  1.46 | 0.144  |   fixed | zero_inflated",
+        "spp [EC-L]           |        0.57 | 0.41 | [0.14,  2.37] | -0.77 | 0.439  |   fixed | zero_inflated",
+        "spp [DES-L]          |        0.41 | 0.31 | [0.09,  1.79] | -1.19 | 0.236  |   fixed | zero_inflated",
+        "spp [DF]             |        0.08 | 0.17 | [0.00,  5.68] | -1.16 | 0.244  |   fixed | zero_inflated",
+        "mined [no]           |        0.08 | 0.05 | [0.02,  0.25] | -4.24 | < .001 |   fixed | zero_inflated",
         "(Intercept)          |        1.51 |      | [0.93,  2.46] |       |        |   fixed |    dispersion",
         "SD (Intercept: site) |        0.38 |      | [0.17,  0.87] |       |        |  random |   conditional"
       )

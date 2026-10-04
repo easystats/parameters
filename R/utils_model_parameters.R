@@ -64,6 +64,11 @@
     ))
   }
 
+  # update vcov, if not supported, so we don't save wrong attribute
+  if (!.check_vcov_supported(model, dot.arguments$vcov, verbose = FALSE)) {
+    dot.arguments$vcov <- dot.arguments$vcov_args <- NULL
+  }
+
   attr(params, "ci") <- ci
   attr(params, "ci_method") <- .format_ci_method_name(ci_method)
   attr(params, "df_method") <- .format_ci_method_name(ci_method)
@@ -565,7 +570,14 @@
   if (length(not_allowed)) {
     if (verbose) {
       not_allowed_string <- datawizard::text_concatenate(not_allowed)
-      insight::format_alert(
+      # silently dropping a requested vcov changes the inference the user
+      # asked for, so this deserves a warning rather than a message
+      if (any(c("vcov", "vcov_args") %in% not_allowed)) {
+        alert_fun <- insight::format_warning
+      } else {
+        alert_fun <- insight::format_alert
+      }
+      alert_fun(
         sprintf(
           "Following arguments are not supported in %s() for models of class %s and will be ignored: %s",
           sQuote(function_name),
@@ -584,6 +596,45 @@
     }
   }
   dots
+}
+
+
+# Many `standard_error()` methods accept `...` but never use `vcov`. Returns
+# `TRUE` if the method for this model can use `vcov`, and warns otherwise.
+.check_vcov_supported <- function(model, vcov, verbose = TRUE) {
+  if (is.null(vcov)) {
+    return(TRUE)
+  }
+
+  # some model classes already compute robust SE, which we will return here
+  if (inherits(model, "gee")) {
+    if (verbose) {
+      insight::format_warning(
+        "Models of class `gee` only return one type of robust standard errors and the `vcov` type is ignored."
+      )
+    }
+    return(TRUE)
+  }
+
+  ns <- asNamespace("parameters")
+  method <- NULL
+
+  for (cl in c(class(model), "default")) {
+    method <- utils::getS3method("standard_error", cl, optional = TRUE, envir = ns)
+    if (!is.null(method)) break
+  }
+
+  supported <- "vcov" %in%
+    names(formals(method)) ||
+    any(c("standard_error.default", ".check_vcov_args") %in% all.names(body(method)))
+
+  if (!supported && isTRUE(verbose)) {
+    insight::format_warning(sprintf(
+      "The `vcov` argument is not supported for models of class %s and will be ignored.",
+      sQuote(class(model)[1])
+    ))
+  }
+  supported
 }
 
 
