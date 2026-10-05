@@ -24,3 +24,27 @@ test_that("print() with caption = '' removes component captions", {
   expect_false(any(startsWith(out, "# Fixed Effects")))
   expect_false(any(startsWith(out, "# Random Effects")))
 })
+
+test_that("caption = '' removes component captions of within-between models", {
+  skip_if_not_installed("glmmTMB")
+  data(qol_cancer, package = "parameters")
+  d <- cbind(
+    qol_cancer,
+    datawizard::demean(qol_cancer, select = "phq4", by = "ID")
+  )
+  m2 <- suppressWarnings(glmmTMB::glmmTMB(
+    QoL ~ time + phq4_within + phq4_between + (1 + phq4_within | ID),
+    data = d
+  ))
+  mp2 <- model_parameters(m2, wb_component = TRUE)
+
+  out <- utils::capture.output(print(mp2))
+  expect_true(any(startsWith(out, "# within")))
+  out <- utils::capture.output(print(mp2, caption = ""))
+  expect_false(any(startsWith(out, "#")))
+
+  out <- print_md(mp2)
+  expect_true(any(startsWith(out, "Table:")))
+  out <- print_md(mp2, caption = "")
+  expect_false(any(startsWith(out, "Table:")))
+})
