@@ -388,10 +388,10 @@ principal_components(mtcars[, 1:4], n = "auto")
 #> 
 #> Variable |   PC1 | Complexity
 #> -----------------------------
-#> mpg      | -0.93 |       1.00
-#> cyl      |  0.96 |       1.00
-#> disp     |  0.95 |       1.00
-#> hp       |  0.91 |       1.00
+#> mpg      | -0.93 |          1
+#> cyl      |  0.96 |          1
+#> disp     |  0.95 |          1
+#> hp       |  0.91 |          1
 #> 
 #> The unique principal component accounted for 87.55% of the total variance of the original data.
 #> 
@@ -410,10 +410,10 @@ print(
 #> 
 #> Variable | Label                 |   PC1 | Complexity
 #> -----------------------------------------------------
-#> mpg      | Miles/(US) gallon     | -0.93 |       1.00
-#> cyl      | Number of cylinders   |  0.96 |       1.00
-#> disp     | Displacement (cu.in.) |  0.95 |       1.00
-#> hp       | Gross horsepower      |  0.91 |       1.00
+#> mpg      | Miles/(US) gallon     | -0.93 |          1
+#> cyl      | Number of cylinders   |  0.96 |          1
+#> disp     | Displacement (cu.in.) |  0.95 |          1
+#> hp       | Gross horsepower      |  0.91 |          1
 
 # Sparse PCA
 principal_components(mtcars[, 1:7], n = 4, sparse = TRUE)
