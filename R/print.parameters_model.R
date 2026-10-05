@@ -477,9 +477,11 @@ print.parameters_random <- function(x, digits = 2, ...) {
   } else if (!is.null(caption) && caption != "") {
     table_caption <- caption
 
-    # no table-title if caption is empty string
+    # no table-title if caption is empty string. we return "" instead of NULL,
+    # because export_table() (insight >= 1.5.4.10) then also removes captions
+    # of sub-tables that are stored as attributes
   } else if (!is.null(caption) && caption == "") {
-    table_caption <- NULL
+    table_caption <- ""
 
     # default title for sub-components of models
   } else if (identical(format, "text")) {
