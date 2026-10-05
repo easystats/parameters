@@ -11,6 +11,10 @@
 
 ## Bug fixes
 
+* With *insight* 1.5.4.10 or later, `caption = ""` in `print()` and
+  `print_md()` now removes the "Fixed Effects" and "Random Effects" captions
+  of mixed models (easystats/insight#930).
+
 * `model_parameters(..., effects = "grouplevel")` now formats categorical
   random-slope labels consistently across all grouping levels.
 
