@@ -65,6 +65,12 @@ model_parameters.blavaan <- function(
   }
   if (!is.null(standardize)) {
     if (isTRUE(standardize) || isTRUE(standardize %in% c("all", "std.all"))) {
+      if (isTRUE(test == "all")) {
+        insight::format_error(
+          "`test = \"all\"` is not supported when standardizing;",
+          "Please specify the tests you want to perform using the `test` argument."
+        )
+      }
       posterior <- .blavaan_standardized_draws(model)
       test <- .remove_scale_dependent_tests(test, verbose)
     } else if (verbose) {

@@ -99,6 +99,25 @@ test_that("model_parameters, blavaan, unsupported standardize values", {
 })
 
 
+test_that("model_parameters, blavaan, standardized, tests and verbose", {
+  expect_error(
+    model_parameters(m_single, standardize = TRUE, test = "all"),
+    regexp = "is not supported when standardizing",
+    fixed = TRUE
+  )
+  expect_warning(
+    {
+      out <- model_parameters(m_single, standardize = TRUE, test = c("pd", "rope"))
+    },
+    regexp = "Scale-dependent inferential statistics",
+    fixed = TRUE
+  )
+  expect_false(any(c("ROPE_Percentage", "ROPE_low") %in% colnames(out)))
+  expect_true("pd" %in% colnames(out))
+  expect_silent(model_parameters(m_single, standardize = "basic", verbose = FALSE))
+})
+
+
 test_that("model_parameters, blavaan, multiple groups with equal loadings", {
   # see https://github.com/easystats/parameters/issues/735
   out <- model_parameters(m_groups)
