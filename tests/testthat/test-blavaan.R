@@ -2,6 +2,7 @@ skip_on_cran()
 skip_if_not_installed("blavaan")
 skip_if_not_installed("lavaan")
 skip_if_not_installed("insight", minimum_version = "1.5.4.17")
+skip_if_not_installed("withr")
 
 data(HolzingerSwineford1939, package = "lavaan")
 model <- "visual =~ x1 + x2 + x3"
@@ -40,6 +41,7 @@ test_that("model_parameters, blavaan, standardized", {
       out <- model_parameters(m, standardize = s)
       expect_s3_class(out, "parameters_sem")
       expect_setequal(out$Parameter, std_names)
+      expect_false(any(c("ESS", "Rhat") %in% colnames(out)))
 
       # medians are the medians of the standardized draws
       expected <- apply(std_draws[, match(out$Parameter, std_names)], 2, stats::median)
