@@ -158,7 +158,7 @@ format_parameters.parameters_model <- function(model, ...) {
         pattern <- "(:(?![0-9]+$))"
         components <- unlist(strsplit(name, pattern, perl = TRUE), use.names = FALSE)
       } else {
-        components <- unlist(strsplit(name, ":", fixed = TRUE), use.names = FALSE)
+        components <- .split_interaction(name)
       }
       is_nested <- types$Type[i] == "nested"
       is_simple <- types$Type[i] == "simple"
@@ -558,12 +558,12 @@ format_parameters.parameters_model <- function(model, ...) {
         )
       }
       # check if we have any interactions, and if so, create combined labels
-      interactions <- pn[grepl(":", names(pn), fixed = TRUE)]
+      interactions <- pn[lengths(lapply(names(pn), .split_interaction)) > 1]
       if (length(interactions)) {
         labs <- NULL
         for (i in names(interactions)) {
           # extract single coefficient names from interaction term
-          out <- unlist(strsplit(i, ":", fixed = TRUE))
+          out <- .split_interaction(i)
           # combine labels; fall back to pretty_names when a component has no
           # label entry (e.g. for on-the-fly factor conversions like factor(kid5))
           labs <- c(

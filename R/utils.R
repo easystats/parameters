@@ -70,6 +70,30 @@
 }
 
 
+# Split a parameter name into interaction components at ":", but not at colons
+# inside function calls, e.g. "lag(log(emp), 1:2)1" (#502). A colon counts as
+# inside a call when a ")" to its right closes a "(" to its left; unbalanced
+# brackets such as in cut()-levels "grp(15,20]" do not protect a colon.
+.split_interaction <- function(x) {
+  if (is.na(x) || !grepl(":", x, fixed = TRUE)) {
+    return(x)
+  }
+  chars <- strsplit(x, "", fixed = TRUE)[[1]]
+  depth <- cumsum((chars == "(") - (chars == ")"))
+  colons <- which(chars == ":")
+  inside_call <- vapply(
+    colons,
+    function(i) depth[i] > 0 && min(depth[i:length(depth)]) < depth[i],
+    logical(1)
+  )
+  split_at <- colons[!inside_call]
+  if (!length(split_at)) {
+    return(x)
+  }
+  substring(x, c(1, split_at + 1), c(split_at - 1, nchar(x)))
+}
+
+
 # Execute a function but store warnings (https://stackoverflow.com/a/4947528/4198688)
 #' @keywords internal
 .catch_warnings <- function(expr) {
