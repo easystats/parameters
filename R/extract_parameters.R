@@ -802,39 +802,8 @@
   }
 
   # No scale-dependent inferential statistics
-  if (
-    !is.null(standardize) &&
-      any(
-        c(
-          "bf",
-          "bayesfactor",
-          "bayes_factor",
-          "rope",
-          "p_rope",
-          "equivalence_test",
-          "equitest"
-        ) %in%
-          test
-      )
-  ) {
-    test <- setdiff(
-      test,
-      c(
-        "bf",
-        "bayesfactor",
-        "bayes_factor",
-        "rope",
-        "p_rope",
-        "equivalence_test",
-        "equitest"
-      )
-    )
-    if (verbose) {
-      insight::format_warning(
-        "Scale-dependent inferential statistics (such as `rope` and `bayes_factor`) are not meaningful for standardized parameters",
-        "These have been removed from the output."
-      )
-    }
+  if (!is.null(standardize)) {
+    test <- .remove_scale_dependent_tests(test, verbose)
   }
 
   # no ROPE for multi-response models
@@ -946,6 +915,30 @@
   attr(parameters, "is_bayesian") <- TRUE
 
   parameters
+}
+
+
+#' @keywords internal
+.remove_scale_dependent_tests <- function(test, verbose = TRUE) {
+  scale_dependent <- c(
+    "bf",
+    "bayesfactor",
+    "bayes_factor",
+    "rope",
+    "p_rope",
+    "equivalence_test",
+    "equitest"
+  )
+  if (any(scale_dependent %in% test)) {
+    test <- setdiff(test, scale_dependent)
+    if (verbose) {
+      insight::format_warning(
+        "Scale-dependent inferential statistics (such as `rope` and `bayes_factor`) are not meaningful for standardized parameters",
+        "These have been removed from the output."
+      )
+    }
+  }
+  test
 }
 
 
