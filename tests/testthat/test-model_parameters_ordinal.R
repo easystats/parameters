@@ -92,6 +92,24 @@ test_that("model_parameters.clm2", {
   expect_snapshot(print(mp))
 })
 
+test_that("print() and print_md() keep component captions of ordinal models", {
+  mp <- model_parameters(m1)
+
+  out <- utils::capture.output(print(mp))
+  expect_true(all(
+    c("# Intercept", "# Location Parameters", "# Scale Parameters") %in% out
+  ))
+
+  out <- print_md(mp)
+  expect_true(all(
+    c("Table: Intercept", "Table: Location Parameters", "Table: Scale Parameters") %in%
+      out
+  ))
+
+  out <- print_md(mp, caption = "")
+  expect_false(any(startsWith(out, "Table:")))
+})
+
 test_that("model_parameters.clmm, exponentiate works w/o component column", {
   data(wine, package = "ordinal")
   mox <- ordinal::clmm(rating ~ temp + contact + (1 | judge), data = wine)

@@ -468,7 +468,10 @@ print.parameters_random <- function(x, digits = 2, ...) {
   if (identical(format, "html") && is.null(caption)) {
     table_caption <- "Model Summary"
   } else if (isTRUE(attributes(x)$ordinal_model)) {
-    table_caption <- ""
+    # no default title for ordinal models. we must not return "" for
+    # caption = NULL, because export_table() then also removes the captions
+    # of the model components
+    table_caption <- caption
 
     # caption is NULL, set default title, using title-attribute
   } else if (!is.null(title_attribute) && is.null(caption)) {

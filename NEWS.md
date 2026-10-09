@@ -11,6 +11,9 @@
 
 ## Bug fixes
 
+* `print()` and `print_md()` again show the component captions (for example
+  "Intercept" and "Location Parameters") of ordinal and multinomial models.
+
 * With *insight* 1.5.4.10 or later, `caption = ""` in `print()` and
   `print_md()` now removes the "Fixed Effects" and "Random Effects" captions
   of mixed models (easystats/insight#930).
