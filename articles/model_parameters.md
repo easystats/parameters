@@ -463,13 +463,13 @@ We will avoid displaying a graph while carrying out factor analysis:
 `#> `\
 `#> Variable     | Dim.1 |    Dim.2 |    Dim.3 | Complexity`\
 `#> -------------------------------------------------------`\
-`#> Sepal.Length |  0.75 |     0.07 |     0.10 |       1.05`\
-`#> Sepal.Width  |  0.23 |     0.51 |     0.23 |       1.86`\
-`#> Petal.Length |  0.98 | 1.32e-03 | 1.99e-03 |       1.00`\
-`#> Petal.Width  |  0.94 |     0.01 | 2.82e-05 |       1.00`\
+`#> Sepal.Length |  0.75 |     0.07 |     0.10 |       1.06`\
+`#> Sepal.Width  |  0.23 |     0.51 |     0.21 |       1.80`\
+`#> Petal.Length |  0.98 | 1.32e-03 | 5.95e-04 |       1.00`\
+`#> Petal.Width  |  0.94 |     0.01 | 1.36e-03 |       1.00`\
 `#> Species      |  0.96 |     0.75 |     0.26 |       2.05`\
 `#> `\
-`#> The 3 latent factors accounted for 96.73% of the total variance of the original data (Dim.1 = 64.50%, Dim.2 = 22.37%, Dim.3 = 9.86%).`
+`#> The 3 latent factors accounted for 96.60% of the total variance of the original data (Dim.1 = 64.50%, Dim.2 = 22.37%, Dim.3 = 9.73%).`
 
 ### Confirmatory Factor Analysis (CFA) and Structural Equation Models (SEM)
 

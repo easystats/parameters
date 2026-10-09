@@ -395,7 +395,7 @@ Likelihood-based inference is based on comparing the likelihood for the
 maximum-likelihood estimate to the the likelihood for models with one or
 more parameter values changed (e.g., set to zero or a range of
 alternative values). Likelihood ratios for the maximum-likelihood and
-alternative models are compared to a \\\chi\\-squared distribution to
+alternative models are compared to a \\(\chi\\)-squared distribution to
 compute CIs and p-values.
 
 `"profile"`
