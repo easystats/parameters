@@ -28,6 +28,11 @@
   them on the threshold scale via the delta method (requires *insight* > 1.5.4
   and *glmmTMB* >= 1.1.15).
 
+* `format_parameters()` and `model_parameters()` now keep the names of terms
+  with a colon inside a function call, such as `lag(log(emp), 1:2)` in *plm*
+  models. Before, the colon split these terms like interactions. A term like
+  `lag(log(x))` is also no longer formatted as a log-transformed term (#502).
+
 # parameters 0.29.3
 
 ## Changes
