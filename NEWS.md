@@ -11,6 +11,10 @@
 
 ## Bug fixes
 
+* `model_parameters(..., bootstrap = TRUE)` no longer fails for `clmm` models
+  from *ordinal*. Like other mixed models, it now returns only the fixed
+  effects and says so in a message (#1056).
+
 * With *insight* 1.5.4.10 or later, `caption = ""` in `print()` and
   `print_md()` now removes the "Fixed Effects" and "Random Effects" captions
   of mixed models (easystats/insight#930).

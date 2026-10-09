@@ -102,3 +102,18 @@ test_that("model_parameters.clmm, exponentiate works w/o component column", {
   expect_identical(attributes(out1)$coefficient_name, "Log-Odds")
   expect_identical(attributes(out2)$coefficient_name, "Odds Ratio")
 })
+
+test_that("model_parameters.clmm, bootstrap returns fixed effects", {
+  data(wine, package = "ordinal")
+  mox <- ordinal::clmm(rating ~ temp + contact + (1 | judge), data = wine)
+  set.seed(123)
+  expect_message(
+    out <- model_parameters(mox, bootstrap = TRUE, iterations = 20),
+    "Bootstrapping only returns fixed effects"
+  )
+  expect_identical(
+    out$Parameter,
+    c("1|2", "2|3", "3|4", "4|5", "tempwarm", "contactyes")
+  )
+  expect_identical(unique(out$Effects), "fixed")
+})
