@@ -437,12 +437,10 @@ print.parameters_random <- function(x, digits = 2, ...) {
   # attribute. we want to remove caption only for text output, because
   # that would clutter the console. For html, we include the default
   if (isTRUE(no_caption) && !identical(format, "html")) {
-    # with caption = "", return "" so that export_table() also removes
-    # captions of sub-tables that are stored as attributes
-    if (identical(caption, "")) {
-      return("")
-    }
-    return(NULL)
+    # a user-supplied caption is always used. with caption = "", return "" so
+    # that export_table() also removes captions of sub-tables that are stored
+    # as attributes
+    return(caption)
   }
 
   title_attribute <- attributes(x)$title[1]

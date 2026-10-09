@@ -11,6 +11,9 @@
 
 ## Bug fixes
 
+* `print()` and `print_md()` now show a user-supplied `caption` for models
+  that have no default caption, such as models fitted with `lm()` (#749).
+
 * `print()` and `print_md()` again show the component captions (for example
   "Intercept" and "Location Parameters") of ordinal and multinomial models.
 
