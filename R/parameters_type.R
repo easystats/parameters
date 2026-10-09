@@ -169,27 +169,28 @@ parameters_type <- function(model, ...) {
 .parameters_type <- function(name, data, reference) {
   # Split, ignoring colons inside function calls
   var <- .split_interaction(name)
-  if (length(var) > 1) {
-    if (length(var) > 2) {
-      var <- c(utils::tail(var, 1), paste0(utils::head(var, -1), collapse = ":"))
-    } else {
-      var <- rev(var)
-    }
 
-    # Check if any is factor
-    types <- unlist(lapply(
-      var,
-      function(x, data, reference) .parameters_type_basic(x, data, reference)[1],
-      data = data,
-      reference = reference
-    ))
-    link <- ifelse(any("factor" %in% types), "Difference", "Association")
-    # Get type
-    main <- .parameters_type_basic(var[1], data, reference)
-    return(c("interaction", link, main[3], main[4], main[5], var[2]))
-  } else {
-    .parameters_type_basic(name, data, reference)
+  if (length(var) <= 1) {
+    return(.parameters_type_basic(name, data, reference))
   }
+
+  if (length(var) > 2) {
+    var <- c(utils::tail(var, 1), paste0(utils::head(var, -1), collapse = ":"))
+  } else {
+    var <- rev(var)
+  }
+
+  # Check if any is factor
+  types <- unlist(lapply(
+    var,
+    function(x, data, reference) .parameters_type_basic(x, data, reference)[1],
+    data = data,
+    reference = reference
+  ))
+  link <- ifelse(any("factor" %in% types), "Difference", "Association")
+  # Get type
+  main <- .parameters_type_basic(var[1], data, reference)
+  c("interaction", link, main[3], main[4], main[5], var[2])
 }
 
 
