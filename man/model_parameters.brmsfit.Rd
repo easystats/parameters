@@ -235,8 +235,8 @@ For models from \strong{blavaan}, \code{standardize} can be \code{TRUE}, \code{"
 \code{"std.all"}. The returned parameters then summarize the standardized
 posterior draws (see \code{\link[blavaan:standardizedPosterior]{blavaan::standardizedPosterior()}}), without the
 \code{ESS} and \code{Rhat} columns. This requires package \strong{insight} version 1.5.4.17
-or higher. Other values of \code{standardize} give a warning and return
-unstandardized parameters.
+or higher. Other values of \code{standardize} (except \code{FALSE} or \code{NULL}) return
+unstandardized parameters, with a warning when \code{verbose = TRUE}.
 
 There is also a
 \href{https://easystats.github.io/see/articles/parameters.html}{\code{plot()}-method}

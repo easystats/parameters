@@ -57,7 +57,8 @@ model_parameters.blavaan <- function(
   ...
 ) {
   # standardized parameters are summarized from the standardized draws. The
-  # post-hoc methods of `standardize_parameters()` do not work for SEM.
+  # methods of `standardize_parameters()`, including "refit", do not work for
+  # SEM.
   posterior <- model
   if (isFALSE(standardize)) {
     standardize <- NULL

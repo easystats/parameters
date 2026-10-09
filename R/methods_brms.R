@@ -49,8 +49,8 @@
 #' `"std.all"`. The returned parameters then summarize the standardized
 #' posterior draws (see [`blavaan::standardizedPosterior()`]), without the
 #' `ESS` and `Rhat` columns. This requires package **insight** version 1.5.4.17
-#' or higher. Other values of `standardize` give a warning and return
-#' unstandardized parameters.
+#' or higher. Other values of `standardize` (except `FALSE` or `NULL`) return
+#' unstandardized parameters, with a warning when `verbose = TRUE`.
 #'
 #' There is also a
 #' [`plot()`-method](https://easystats.github.io/see/articles/parameters.html)

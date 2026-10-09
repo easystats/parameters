@@ -11,10 +11,12 @@
 
 ## Bug fixes
 
-* `model_parameters()` for models from *blavaan* no longer fails with
-  `standardize = TRUE`, `"all"` or `"std.all"`. With *insight* 1.5.4.17 or
-  later, it now summarizes the standardized posterior draws. Other values of
-  `standardize` give a warning and return unstandardized parameters (#735).
+* `model_parameters()` for models from *blavaan* now works with
+  `standardize = TRUE`, `"all"` or `"std.all"` and summarizes the standardized
+  posterior draws. This requires *insight* 1.5.4.17 or later. Older versions
+  give an error that asks you to update. Other values of `standardize` (except
+  `FALSE` or `NULL`) return unstandardized parameters. With `verbose = TRUE`,
+  they also give a warning.
 
 * `model_parameters(..., bootstrap = TRUE)` no longer fails for `clmm` models
   from *ordinal*. Like other mixed models, it now returns only the fixed
