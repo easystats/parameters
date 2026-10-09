@@ -399,19 +399,22 @@ withr::with_options(
 
     test_that("format_parameters, colon inside function arguments", {
       # e.g. plm::pgmm() terms like lag(log(emp), 1:2)
-      f <- function(x, k) sapply(k, function(i) x^i)
-      model <- lm(mpg ~ f(log(hp), 1:2) + log(wt) * am, data = mtcars)
+      f <- function(x, k) outer(x, k, "^")
+      model <- lm(mpg ~ f(log(hp), 1:2) * vs + log(wt) * am, data = mtcars)
 
       types <- parameters_type(model)
       lag_terms <- c("f(log(hp), 1:2)1", "f(log(hp), 1:2)2")
       expect_identical(types$Type[types$Parameter %in% lag_terms], c("unknown", "unknown"))
       expect_identical(types$Type[types$Parameter == "log(wt):am"], "interaction")
+      expect_identical(types$Type[types$Parameter == "f(log(hp), 1:2)1:vs"], "interaction")
 
       fp <- format_parameters(model)
       expect_identical(fp[["f(log(hp), 1:2)1"]], "f(log(hp), 1:2)1")
       expect_identical(fp[["f(log(hp), 1:2)2"]], "f(log(hp), 1:2)2")
       expect_identical(fp[["log(wt)"]], "wt [log]")
       expect_identical(fp[["log(wt):am"]], "wt [log] * am")
+      # inner colon kept, outer colon formatted as interaction
+      expect_identical(fp[["f(log(hp), 1:2)1:vs"]], "f(log(hp), 1:2)1 * vs")
     })
   }
 )
