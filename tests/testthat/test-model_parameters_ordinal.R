@@ -105,7 +105,12 @@ test_that("print() and print_md() keep component captions of ordinal models", {
     c("Table: Intercept", "Table: Location Parameters", "Table: Scale Parameters") %in%
       out
   ))
+})
 
+test_that("print_md() removes component captions of ordinal models with caption = ''", {
+  # insight 1.5.4.10 is needed to remove captions stored as attributes
+  skip_if_not_installed("insight", minimum_version = "1.5.4.10")
+  mp <- model_parameters(m1)
   out <- print_md(mp, caption = "")
   expect_false(any(startsWith(out, "Table:")))
 })
