@@ -28,10 +28,7 @@ test_that("print() with caption = '' removes component captions", {
 test_that("caption = '' removes component captions of within-between models", {
   skip_if_not_installed("glmmTMB")
   data(qol_cancer, package = "parameters")
-  d <- cbind(
-    qol_cancer,
-    datawizard::demean(qol_cancer, select = "phq4", by = "ID")
-  )
+  d <- cbind(qol_cancer, datawizard::demean(qol_cancer, select = "phq4", by = "ID"))
   m2 <- suppressWarnings(glmmTMB::glmmTMB(
     QoL ~ time + phq4_within + phq4_between + (1 + phq4_within | ID),
     data = d
@@ -47,4 +44,18 @@ test_that("caption = '' removes component captions of within-between models", {
   expect_true(any(startsWith(out, "Table:")))
   out <- print_md(mp2, caption = "")
   expect_false(any(startsWith(out, "Table:")))
+})
+
+test_that("user-supplied caption is printed for models without default caption", {
+  mp3 <- model_parameters(lm(mpg ~ wt, data = mtcars))
+
+  out <- print_md(mp3)
+  expect_false(any(startsWith(out, "Table:")))
+  out <- print_md(mp3, caption = "My caption")
+  expect_true("Table: My caption" %in% out)
+
+  out <- utils::capture.output(print(mp3))
+  expect_false(any(grepl("My caption", out, fixed = TRUE)))
+  out <- utils::capture.output(print(mp3, caption = "My caption"))
+  expect_true(any(grepl("My caption", out, fixed = TRUE)))
 })
