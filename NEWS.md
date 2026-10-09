@@ -11,6 +11,8 @@
 
 ## Bug fixes
 
+* `model_parameters()` no longer fails for models fitted with `stats::arima()`.
+
 * `print()` and `print_md()` now show a user-supplied `caption` for models
   that have no default caption, such as models fitted with `lm()` (#749).
 

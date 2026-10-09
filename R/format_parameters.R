@@ -487,6 +487,11 @@ format_parameters.parameters_model <- function(model, ...) {
         }
       }
     }
+    # for some models (e.g., Arima), the data is a time series, not a data
+    # frame. There are no labels then, so we keep the default pretty names
+    if (!is.data.frame(mf)) {
+      mf <- data.frame()
+    }
     resp <- insight::find_response(model, combine = FALSE)
     mf <- mf[, setdiff(colnames(mf), resp), drop = FALSE]
 
