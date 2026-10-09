@@ -45,6 +45,13 @@
 #' `priors` refer to the *original* `model`. If `model` is a data frame,
 #' arguments `diagnostic`, `bf_prior` and `priors` are ignored.
 #'
+#' For models from **blavaan**, `standardize` can be `TRUE`, `"all"` or
+#' `"std.all"`. The returned parameters then summarize the standardized
+#' posterior draws (see [`blavaan::standardizedPosterior()`]), without the
+#' `ESS` and `Rhat` columns. This requires package **insight** version 1.5.4.17
+#' or higher. Other values of `standardize` give a warning and return
+#' unstandardized parameters.
+#'
 #' There is also a
 #' [`plot()`-method](https://easystats.github.io/see/articles/parameters.html)
 #' implemented in the [**see**-package](https://easystats.github.io/see/).
