@@ -38,7 +38,7 @@ test_that("model_parameters", {
 
 # check vcov args
 test_that("model_parameters", {
-  expect_message({
+  expect_warning({
     out <- model_parameters(m1, vcov = "vcovHAC")
   })
   expect_equal(out$SE, unname(coef(summary(m1))[, 2]), tolerance = 1e-3)

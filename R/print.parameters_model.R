@@ -437,7 +437,10 @@ print.parameters_random <- function(x, digits = 2, ...) {
   # attribute. we want to remove caption only for text output, because
   # that would clutter the console. For html, we include the default
   if (isTRUE(no_caption) && !identical(format, "html")) {
-    return(NULL)
+    # a user-supplied caption is always used. with caption = "", return "" so
+    # that export_table() also removes captions of sub-tables that are stored
+    # as attributes
+    return(caption)
   }
 
   title_attribute <- attributes(x)$title[1]
@@ -463,7 +466,10 @@ print.parameters_random <- function(x, digits = 2, ...) {
   if (identical(format, "html") && is.null(caption)) {
     table_caption <- "Model Summary"
   } else if (isTRUE(attributes(x)$ordinal_model)) {
-    table_caption <- ""
+    # no default title for ordinal models. we must not return "" for
+    # caption = NULL, because export_table() then also removes the captions
+    # of the model components
+    table_caption <- caption
 
     # caption is NULL, set default title, using title-attribute
   } else if (!is.null(title_attribute) && is.null(caption)) {
@@ -477,9 +483,11 @@ print.parameters_random <- function(x, digits = 2, ...) {
   } else if (!is.null(caption) && caption != "") {
     table_caption <- caption
 
-    # no table-title if caption is empty string
+    # no table-title if caption is empty string. we return "" instead of NULL,
+    # because export_table() (insight >= 1.5.4.10) then also removes captions
+    # of sub-tables that are stored as attributes
   } else if (!is.null(caption) && caption == "") {
-    table_caption <- NULL
+    table_caption <- ""
 
     # default title for sub-components of models
   } else if (identical(format, "text")) {

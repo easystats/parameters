@@ -855,12 +855,12 @@ withr::with_options(list(parameters_exponentiate = FALSE), {
         camper1 = "camper [1]",
         `(Intercept)` = "(Intercept)",
         child = "child",
-        camper1 = "camper1", # nolint
+        camper1 = "camper [1]",
         `SD (Intercept)` = "SD (Intercept)",
         `SD (xb)` = "SD (xb)",
         `Cor (Intercept~xb)` = "Cor (Intercept~xb)",
         `SD (Intercept)` = "SD (Intercept)",
-        `SD (zg)` = "SD (zg)", # nolint
+        `SD (zg)` = "SD (zg)",
         `Cor (Intercept~zg)` = "Cor (Intercept~zg)"
       )
     )

@@ -92,6 +92,29 @@ test_that("model_parameters.clm2", {
   expect_snapshot(print(mp))
 })
 
+test_that("print() and print_md() keep component captions of ordinal models", {
+  mp <- model_parameters(m1)
+
+  out <- utils::capture.output(print(mp))
+  expect_true(all(
+    c("# Intercept", "# Location Parameters", "# Scale Parameters") %in% out
+  ))
+
+  out <- print_md(mp)
+  expect_true(all(
+    c("Table: Intercept", "Table: Location Parameters", "Table: Scale Parameters") %in%
+      out
+  ))
+})
+
+test_that("print_md() removes component captions of ordinal models with caption = ''", {
+  # insight 1.5.4.10 is needed to remove captions stored as attributes
+  skip_if_not_installed("insight", minimum_version = "1.5.4.10")
+  mp <- model_parameters(m1)
+  out <- print_md(mp, caption = "")
+  expect_false(any(startsWith(out, "Table:")))
+})
+
 test_that("model_parameters.clmm, exponentiate works w/o component column", {
   data(wine, package = "ordinal")
   mox <- ordinal::clmm(rating ~ temp + contact + (1 | judge), data = wine)
@@ -101,4 +124,19 @@ test_that("model_parameters.clmm, exponentiate works w/o component column", {
   expect_equal(out2$Coefficient, c(0.19717, 4.54199, 68.61606, 440.87991, 21.39156, 6.26441, 1.13113), tolerance = 1e-4)
   expect_identical(attributes(out1)$coefficient_name, "Log-Odds")
   expect_identical(attributes(out2)$coefficient_name, "Odds Ratio")
+})
+
+test_that("model_parameters.clmm, bootstrap returns fixed effects", {
+  skip_if_not_installed("boot")
+  data(wine, package = "ordinal")
+  mox <- ordinal::clmm(rating ~ temp + contact + (1 | judge), data = wine)
+  set.seed(123)
+  expect_message(
+    model_parameters(mox, bootstrap = TRUE, iterations = 20),
+    "Bootstrapping only returns fixed effects"
+  )
+  set.seed(123)
+  out <- model_parameters(mox, bootstrap = TRUE, iterations = 20, verbose = FALSE)
+  expect_identical(out$Parameter, c("1|2", "2|3", "3|4", "4|5", "tempwarm", "contactyes"))
+  expect_identical(unique(out$Effects), "fixed")
 })

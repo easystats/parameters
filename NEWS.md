@@ -1,3 +1,44 @@
+# parameters (devel)
+
+## Changes
+
+* `model_parameters()` now saves information about the type of HC-vcov
+  calculation as attribute.
+
+* `model_parameters()` now raises a warning instead of a message when the
+  `vcocv` is supplied to calculate sandwich standard errors, but not supported
+  by the model class.
+
+## Bug fixes
+
+* `model_parameters(..., bootstrap = TRUE)` no longer fails for `clmm` models
+  from *ordinal*. Like other mixed models, it now returns only the fixed
+  effects and says so in a message (#1056).
+
+* `model_parameters()` no longer fails for models fitted with `stats::arima()`.
+
+* `print()` and `print_md()` now show a user-supplied `caption` for models
+  that have no default caption, such as models fitted with `lm()` (#749).
+
+* With *insight* 1.5.4.10 or later, `caption = ""` in `print()` and
+  `print_md()` now removes the "Fixed Effects" and "Random Effects" captions
+  of mixed models (easystats/insight#930).
+
+* `model_parameters(..., effects = "grouplevel")` now formats categorical
+  random-slope labels consistently across all grouping levels.
+
+* `standard_error()` and hence `model_parameters()` returned wrong (recycled)
+  standard errors for models of class `glmmTMB` fitted with the new `ordinal()`
+  family, because the thresholds are not part of the summary coefficient table.
+  Standard errors are now taken from `insight::get_varcov()`, which returns
+  them on the threshold scale via the delta method (requires *insight* > 1.5.4
+  and *glmmTMB* >= 1.1.15).
+
+* `format_parameters()` and `model_parameters()` now keep the names of terms
+  with a colon inside a function call, such as `lag(log(emp), 1:2)` in *plm*
+  models. Before, the colon split these terms like interactions. A term like
+  `lag(log(x))` is also no longer formatted as a log-transformed term (#502).
+
 # parameters 0.29.3
 
 ## Changes

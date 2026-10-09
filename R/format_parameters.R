@@ -158,7 +158,7 @@ format_parameters.parameters_model <- function(model, ...) {
         pattern <- "(:(?![0-9]+$))"
         components <- unlist(strsplit(name, pattern, perl = TRUE), use.names = FALSE)
       } else {
-        components <- unlist(strsplit(name, ":", fixed = TRUE), use.names = FALSE)
+        components <- .split_interaction(name)
       }
       is_nested <- types$Type[i] == "nested"
       is_simple <- types$Type[i] == "simple"
@@ -487,6 +487,11 @@ format_parameters.parameters_model <- function(model, ...) {
         }
       }
     }
+    # for some models (e.g., Arima), the data is a time series, not a data
+    # frame. There are no labels then, so we keep the default pretty names
+    if (!is.data.frame(mf)) {
+      mf <- data.frame()
+    }
     resp <- insight::find_response(model, combine = FALSE)
     mf <- mf[, setdiff(colnames(mf), resp), drop = FALSE]
 
@@ -553,12 +558,12 @@ format_parameters.parameters_model <- function(model, ...) {
         )
       }
       # check if we have any interactions, and if so, create combined labels
-      interactions <- pn[grepl(":", names(pn), fixed = TRUE)]
+      interactions <- pn[lengths(lapply(names(pn), .split_interaction)) > 1]
       if (length(interactions)) {
         labs <- NULL
         for (i in names(interactions)) {
           # extract single coefficient names from interaction term
-          out <- unlist(strsplit(i, ":", fixed = TRUE))
+          out <- .split_interaction(i)
           # combine labels; fall back to pretty_names when a component has no
           # label entry (e.g. for on-the-fly factor conversions like factor(kid5))
           labs <- c(
@@ -593,7 +598,9 @@ format_parameters.parameters_model <- function(model, ...) {
   # missing labels return original parameter name (e.g., variance components in mixed models)
   out <- stats::setNames(params$Parameter, params$Parameter)
   pretty_labels <- pretty_labels[names(pretty_labels) %in% params$Parameter]
-  out[match(names(pretty_labels), params$Parameter)] <- pretty_labels
+  label_idx <- match(params$Parameter, names(pretty_labels))
+  has_label <- !is.na(label_idx)
+  out[has_label] <- pretty_labels[label_idx[has_label]]
 
   out
 }

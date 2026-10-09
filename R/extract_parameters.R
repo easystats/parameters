@@ -23,6 +23,12 @@
 ) {
   dots <- list(...)
 
+  # ==== fall back to default vcov if `standard_error()` would ignore `vcov`
+
+  if (!.check_vcov_supported(model, vcov, verbose)) {
+    vcov <- vcov_args <- NULL
+  }
+
   # ==== check if standardization is required and package available
 
   if (isTRUE(standardize)) {
@@ -457,6 +463,11 @@
   ...
 ) {
   dots <- list(...)
+
+  # ==== fall back to default vcov if `standard_error()` would ignore `vcov`
+  if (!.check_vcov_supported(model, vcov, verbose)) {
+    vcov <- vcov_args <- NULL
+  }
 
   special_ci_methods <- c("betwithin", "satterthwaite", "ml1", "kenward", "kr")
 
