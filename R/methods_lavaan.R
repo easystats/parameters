@@ -56,9 +56,28 @@ model_parameters.blavaan <- function(
   verbose = TRUE,
   ...
 ) {
+  # standardized parameters are summarized from the standardized draws. The
+  # post-hoc methods of `standardize_parameters()` do not work for SEM.
+  posterior <- model
+  if (isFALSE(standardize)) {
+    standardize <- NULL
+  }
+  if (!is.null(standardize)) {
+    if (isTRUE(standardize) || isTRUE(standardize %in% c("all", "std.all"))) {
+      posterior <- .blavaan_standardized_draws(model)
+      test <- .remove_scale_dependent_tests(test, verbose)
+    } else if (verbose) {
+      insight::format_warning(
+        "`standardize` should be one of `TRUE`, \"all\" or \"std.all\" for models from package `blavaan`.", # nolint
+        "Returning unstandardized parameters."
+      )
+    }
+    standardize <- NULL
+  }
+
   # Processing
   params <- .extract_parameters_bayesian(
-    model,
+    posterior,
     centrality = centrality,
     dispersion = dispersion,
     ci = ci,
@@ -74,6 +93,13 @@ model_parameters.blavaan <- function(
     verbose = verbose,
     ...
   )
+
+  # draws have no component information, so we take it from the model
+  if (is.null(params$Component)) {
+    cp <- insight::clean_parameters(model)
+    params$Component <- cp$Component[match(params$Parameter, cp$Parameter)]
+    params <- datawizard::data_relocate(params, "Component", after = "Parameter")
+  }
 
   # Filter
   if (!all(component == "all")) {
@@ -94,6 +120,23 @@ model_parameters.blavaan <- function(
   class(params) <- c("parameters_sem", "see_parameters_sem", class(params))
 
   params
+}
+
+
+.blavaan_standardized_draws <- function(model) {
+  # older versions of insight give the standardized draws shifted names
+  if (.insight_version() < "1.5.4.17") {
+    insight::format_error(
+      "Standardized parameters for models from package `blavaan` require package `insight` version 1.5.4.17 or higher.", # nolint
+      "Please update `insight`, for example with `install.packages(\"insight\", repos = \"https://easystats.r-universe.dev\")`." # nolint
+    )
+  }
+  insight::get_parameters(model, standardize = TRUE)
+}
+
+
+.insight_version <- function() {
+  utils::packageVersion("insight")
 }
 
 

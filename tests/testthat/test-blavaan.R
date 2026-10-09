@@ -71,7 +71,7 @@ test_that("model_parameters, blavaan, standardized, compare with lavaan", {
     out <- model_parameters(m_single, standardize = s)
     loadings <- out$Median[match(paste0(ml$lhs, ml$op, ml$rhs), out$Parameter)]
     expect_length(loadings, 3)
-    expect_equal(loadings, ml$est.std, tolerance = 0.1, scale = 1)
+    expect_lt(max(abs(loadings - ml$est.std)), 0.1)
   }
 })
 
