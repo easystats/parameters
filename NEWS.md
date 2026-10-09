@@ -11,6 +11,10 @@
 
 ## Bug fixes
 
+* `model_parameters(..., bootstrap = TRUE)` no longer fails for `clmm` models
+  from *ordinal*. Like other mixed models, it now returns only the fixed
+  effects and says so in a message (#1056).
+
 * `model_parameters()` no longer fails for models fitted with `stats::arima()`.
 
 * `print()` and `print_md()` now show a user-supplied `caption` for models
