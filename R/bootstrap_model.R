@@ -6,9 +6,11 @@
 #' @param iterations The number of draws to simulate/bootstrap.
 #' @param type Character string specifying the type of bootstrap. For mixed models
 #'   of class `merMod` or `glmmTMB`, may be `"parametric"` (default) or
-#'   `"semiparametric"` (see `?lme4::bootMer` for details). For all
-#'   other models, see argument `sim` in `?boot::boot` (defaults to
-#'   `"ordinary"`).
+#'   `"semiparametric"` (see `?lme4::bootMer` for details). `"semiparametric"`
+#'   is only available for `merMod` models. It resamples the residuals and keeps
+#'   the random effects at their estimated values (`use.u = TRUE` in
+#'   `lme4::bootMer()`). For all other models, see argument `sim` in
+#'   `?boot::boot` (defaults to `"ordinary"`).
 #' @param parallel The type of parallel operation to be used (if any).
 #' @param n_cpus Number of processes to be used in parallel operation.
 #' @param cluster Optional cluster when `parallel = "snow"`. See `?lme4::bootMer`
@@ -162,6 +164,15 @@ bootstrap_model.merMod <- function(
   type <- insight::validate_argument(type, c("parametric", "semiparametric"))
   parallel <- insight::validate_argument(parallel, c("no", "multicore", "snow"))
 
+  # lme4::bootMer() only implements semiparametric bootstrapping with
+  # use.u = TRUE, and that path does not support glmmTMB models
+  if (type == "semiparametric" && inherits(model, "glmmTMB")) {
+    insight::format_error(
+      "Semiparametric bootstrapping is not available for models from package `glmmTMB`. Use `type = \"parametric\"`, or fit the model with `lme4::lmer()`." # nolint
+    )
+  }
+  use_u <- type == "semiparametric"
+
   boot_function <- function(model) {
     params <- insight::get_parameters(model, verbose = FALSE)
     n_params <- insight::n_parameters(model)
@@ -194,6 +205,7 @@ bootstrap_model.merMod <- function(
       boot_function,
       nsim = iterations,
       type = type,
+      use.u = use_u,
       parallel = parallel,
       ncpus = n_cpus,
       cl = cluster
@@ -205,6 +217,7 @@ bootstrap_model.merMod <- function(
       nsim = iterations,
       verbose = FALSE,
       type = type,
+      use.u = use_u,
       parallel = parallel,
       ncpus = n_cpus,
       cl = cluster
