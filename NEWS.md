@@ -11,6 +11,10 @@
 
 ## Bug fixes
 
+* `model_parameters()` and `ci()` no longer fail for `merModList` models from
+  *merTools* with the error "formal argument "component" matched by multiple
+  actual arguments" (#1199).
+
 * `model_parameters(..., bootstrap = TRUE)` no longer fails for `clmm` models
   from *ordinal*. Like other mixed models, it now returns only the fixed
   effects and says so in a message (#1056).
