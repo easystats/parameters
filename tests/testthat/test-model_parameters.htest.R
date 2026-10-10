@@ -42,6 +42,24 @@ test_that("model_parameters.htest", {
   expect_equal(params$Difference, 2.0573, tolerance = 0.05)
 })
 
+test_that("model_parameters.htest, rank correlations keep a CI the htest object carries", {
+  set.seed(1986)
+  x <- rnorm(50)
+  y <- rnorm(50)
+
+  for (method in c("spearman", "kendall")) {
+    ht <- cor.test(x, y, method = method)
+    params <- model_parameters(ht)
+    expect_false(any(c("CI", "CI_low", "CI_high") %in% colnames(params)))
+
+    ht$conf.int <- structure(c(-0.25, 0.30), conf.level = 0.95)
+    params <- model_parameters(ht)
+    expect_true(all(c("CI", "CI_low", "CI_high") %in% colnames(params)))
+    expect_equal(params$CI_low, -0.25, tolerance = 1e-8)
+    expect_equal(params$CI_high, 0.30, tolerance = 1e-8)
+  }
+})
+
 test_that("model_parameters.htest-2", {
   x <- c(A = 20, B = 15, C = 25)
   mp <- model_parameters(chisq.test(x))
