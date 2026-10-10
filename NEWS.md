@@ -11,6 +11,11 @@
 
 ## Bug fixes
 
+* `bootstrap_model()` and `bootstrap_parameters()` with
+  `type = "semiparametric"` no longer fail for models from *lme4*. For models
+  from *glmmTMB*, this type now gives an informative error, because
+  `lme4::bootMer()` does not support it for these models (#1242).
+
 * `model_parameters(..., bootstrap = TRUE)` no longer fails for `clmm` models
   from *ordinal*. Like other mixed models, it now returns only the fixed
   effects and says so in a message (#1056).

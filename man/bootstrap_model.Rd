@@ -26,10 +26,12 @@ bootstrap_model(model, iterations = 1000, ...)
 \item{...}{Arguments passed to or from other methods.}
 
 \item{type}{Character string specifying the type of bootstrap. For mixed models
-of class \code{merMod} or \code{glmmTMB}, may be \code{"parametric"} (default) or
-\code{"semiparametric"} (see \code{?lme4::bootMer} for details). For all
-other models, see argument \code{sim} in \code{?boot::boot} (defaults to
-\code{"ordinary"}).}
+of class \code{merMod} or \code{glmmTMB}, may be \code{"parametric"} (default). For
+\code{merMod} models only, may also be \code{"semiparametric"} (see \code{?lme4::bootMer}
+for details). Semiparametric bootstrapping resamples the residuals and keeps
+the random effects at their estimated values (\code{use.u = TRUE} in
+\code{lme4::bootMer()}). For all other models, see argument \code{sim} in
+\code{?boot::boot} (defaults to \code{"ordinary"}).}
 
 \item{parallel}{The type of parallel operation to be used (if any).}
 
