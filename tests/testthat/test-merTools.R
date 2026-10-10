@@ -23,4 +23,9 @@ test_that("model_parameters.merModList", {
 
   ci_out <- ci(mod, component = "conditional")
   expect_identical(ci_out$Parameter, c("(Intercept)", "Days"))
+
+  # `dof` is passed on once, not twice
+  ci_dof <- ci(mod, dof = 10)
+  ci_inf <- ci(mod, dof = Inf)
+  expect_true(all(ci_dof$CI_high - ci_dof$CI_low > ci_inf$CI_high - ci_inf$CI_low))
 })

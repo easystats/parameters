@@ -27,8 +27,8 @@ model_parameters.merModList <- function(model,
 
 
 #' @export
-ci.merModList <- function(x, ci = 0.95, component = "conditional", ...) {
-  .ci_generic(model = x, ci = ci, dof = NULL, component = component, ...)
+ci.merModList <- function(x, ci = 0.95, dof = NULL, component = "conditional", ...) {
+  .ci_generic(model = x, ci = ci, dof = dof, component = component, ...)
 }
 
 
