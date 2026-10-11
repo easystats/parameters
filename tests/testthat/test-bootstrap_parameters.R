@@ -25,3 +25,27 @@ test_that("bootstrap_model intercept-only", {
     tolerance = 1e-2
   )
 })
+
+test_that("bootstrap_model semiparametric for merMod", {
+  skip_if_not_installed("lme4")
+  data(sleepstudy, package = "lme4")
+  m <- lme4::lmer(Reaction ~ Days + (1 | Subject), data = sleepstudy)
+  set.seed(123)
+  out <- bootstrap_model(m, iterations = 20, type = "semiparametric")
+  expect_named(out, c("(Intercept)", "Days"))
+  expect_identical(nrow(out), 20L)
+  set.seed(123)
+  out <- bootstrap_parameters(m, iterations = 20, type = "semiparametric")
+  expect_identical(out$Parameter, c("(Intercept)", "Days"))
+})
+
+test_that("bootstrap_model semiparametric errors for glmmTMB", {
+  skip_if_not_installed("glmmTMB")
+  skip_if_not_installed("lme4")
+  data(sleepstudy, package = "lme4")
+  m <- glmmTMB::glmmTMB(Reaction ~ Days + (1 | Subject), data = sleepstudy)
+  expect_error(
+    bootstrap_model(m, iterations = 5, type = "semiparametric"),
+    regex = "not available for models from"
+  )
+})

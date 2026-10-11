@@ -15,6 +15,26 @@
   `range` when the model was fitted inside a function. Functions that look up
   the original model by its name now also find it in the calling functions.
 
+* `bootstrap_model()` and `bootstrap_parameters()` with
+  `type = "semiparametric"` no longer fail for models from *lme4*. For models
+  from *glmmTMB*, this type now gives an informative error, because
+  `lme4::bootMer()` does not support it for these models (#1242).
+
+* `model_parameters()` and `ci()` no longer fail for `merModList` models from
+  *merTools* with the error "formal argument "component" matched by multiple
+  actual arguments" (#1199).
+
+* If the `htest` object of a Spearman or Kendall correlation test carries a
+  confidence interval, `model_parameters()` now returns it. Before, only
+  Pearson correlations showed a confidence interval (#1003).
+
+* `model_parameters()` for models from *blavaan* now works with
+  `standardize = TRUE`, `"all"` or `"std.all"` and summarizes the standardized
+  posterior draws. This requires *insight* 1.5.4.17 or later. Older versions
+  give an error that asks you to update. Other values of `standardize` (except
+  `FALSE` or `NULL`) return unstandardized parameters. With `verbose = TRUE`,
+  they also give a warning.
+
 * `model_parameters(..., bootstrap = TRUE)` no longer fails for `clmm` models
   from *ordinal*. Like other mixed models, it now returns only the fixed
   effects and says so in a message (#1056).
