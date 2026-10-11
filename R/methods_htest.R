@@ -226,8 +226,6 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
     out$t <- model$statistic
     out$df_error <- model$parameter
     out$p <- model$p.value
-    out$CI_low <- model$conf.int[1]
-    out$CI_high <- model$conf.int[2]
   } else if (grepl("Spearman", model$method, fixed = TRUE)) {
     out$rho <- model$estimate
     out$S <- model$statistic
@@ -239,6 +237,12 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
     out$z <- model$statistic
     out$df_error <- model$parameter
     out$p <- model$p.value
+  }
+
+  # Use the CI whenever the htest object carries one, not only for Pearson
+  if (!is.null(model$conf.int)) {
+    out$CI_low <- model$conf.int[1]
+    out$CI_high <- model$conf.int[2]
   }
 
   out$Method <- model$method
