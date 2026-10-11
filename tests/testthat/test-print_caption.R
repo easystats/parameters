@@ -1,12 +1,26 @@
 skip_on_cran()
 skip_if_not_installed("lme4")
-# insight 1.5.4.10 is needed to remove captions stored as attributes
-skip_if_not_installed("insight", minimum_version = "1.5.4.10")
 
 m <- lme4::lmer(Reaction ~ Days + (1 | Subject), data = lme4::sleepstudy)
 mp <- model_parameters(m)
 
+test_that("caption = '' removes the caption of a single table", {
+  mp_fixed <- model_parameters(m, effects = "fixed")
+
+  out <- utils::capture.output(print(mp_fixed))
+  expect_true(any(startsWith(out, "# Fixed Effects")))
+  out <- print_md(mp_fixed)
+  expect_true("Table: Fixed Effects" %in% out)
+
+  out <- utils::capture.output(print(mp_fixed, caption = ""))
+  expect_false(any(startsWith(out, "#")))
+  out <- print_md(mp_fixed, caption = "")
+  expect_false(any(startsWith(out, "Table:")))
+})
+
 test_that("print_md() with caption = '' removes component captions", {
+  # insight 1.5.4.10 is needed to remove captions stored as attributes
+  skip_if_not_installed("insight", minimum_version = "1.5.4.10")
   out <- print_md(mp)
   expect_true("Table: Fixed Effects" %in% out)
   expect_true("Table: Random Effects" %in% out)
@@ -16,6 +30,7 @@ test_that("print_md() with caption = '' removes component captions", {
 })
 
 test_that("print() with caption = '' removes component captions", {
+  skip_if_not_installed("insight", minimum_version = "1.5.4.10")
   out <- utils::capture.output(print(mp))
   expect_true(any(startsWith(out, "# Fixed Effects")))
   expect_true(any(startsWith(out, "# Random Effects")))
@@ -26,6 +41,7 @@ test_that("print() with caption = '' removes component captions", {
 })
 
 test_that("caption = '' removes component captions of within-between models", {
+  skip_if_not_installed("insight", minimum_version = "1.5.4.10")
   skip_if_not_installed("glmmTMB")
   data(qol_cancer, package = "parameters")
   d <- cbind(qol_cancer, datawizard::demean(qol_cancer, select = "phq4", by = "ID"))
@@ -47,6 +63,7 @@ test_that("caption = '' removes component captions of within-between models", {
 })
 
 test_that("user-supplied caption is printed for models without default caption", {
+  skip_if_not_installed("insight", minimum_version = "1.5.4.10")
   mp3 <- model_parameters(lm(mpg ~ wt, data = mtcars))
 
   out <- print_md(mp3)
