@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.29.3.15</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.29.3.19</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -93,10 +93,12 @@
 
 <dt id="arg-type">type<a class="anchor" aria-label="anchor" href="#arg-type"></a></dt>
 <dd><p>Character string specifying the type of bootstrap. For mixed models
-of class <code>merMod</code> or <code>glmmTMB</code>, may be <code>"parametric"</code> (default) or
-<code>"semiparametric"</code> (see <code><a href="https://rdrr.io/pkg/lme4/man/bootMer.html" class="external-link">?lme4::bootMer</a></code> for details). For all
-other models, see argument <code>sim</code> in <code><a href="https://rdrr.io/pkg/boot/man/boot.html" class="external-link">?boot::boot</a></code> (defaults to
-<code>"ordinary"</code>).</p></dd>
+of class <code>merMod</code> or <code>glmmTMB</code>, may be <code>"parametric"</code> (default). For
+<code>merMod</code> models only, may also be <code>"semiparametric"</code> (see <code><a href="https://rdrr.io/pkg/lme4/man/bootMer.html" class="external-link">?lme4::bootMer</a></code>
+for details). Semiparametric bootstrapping resamples the residuals and keeps
+the random effects at their estimated values (<code>use.u = TRUE</code> in
+<code><a href="https://rdrr.io/pkg/lme4/man/bootMer.html" class="external-link">lme4::bootMer()</a></code>). For all other models, see argument <code>sim</code> in
+<code><a href="https://rdrr.io/pkg/boot/man/boot.html" class="external-link">?boot::boot</a></code> (defaults to <code>"ordinary"</code>).</p></dd>
 
 
 <dt id="arg-parallel">parallel<a class="anchor" aria-label="anchor" href="#arg-parallel"></a></dt>

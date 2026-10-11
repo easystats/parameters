@@ -38,10 +38,13 @@ bootstrap_model(
 - type:
 
   Character string specifying the type of bootstrap. For mixed models of
-  class `merMod` or `glmmTMB`, may be `"parametric"` (default) or
-  `"semiparametric"` (see
+  class `merMod` or `glmmTMB`, may be `"parametric"` (default). For
+  `merMod` models only, may also be `"semiparametric"` (see
   [`?lme4::bootMer`](https://rdrr.io/pkg/lme4/man/bootMer.html) for
-  details). For all other models, see argument `sim` in
+  details). Semiparametric bootstrapping resamples the residuals and
+  keeps the random effects at their estimated values (`use.u = TRUE` in
+  [`lme4::bootMer()`](https://rdrr.io/pkg/lme4/man/bootMer.html)). For
+  all other models, see argument `sim` in
   [`?boot::boot`](https://rdrr.io/pkg/boot/man/boot.html) (defaults to
   `"ordinary"`).
 
