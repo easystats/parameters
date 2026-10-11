@@ -15,6 +15,17 @@
   *merTools* with the error "formal argument "component" matched by multiple
   actual arguments" (#1199).
 
+* If the `htest` object of a Spearman or Kendall correlation test carries a
+  confidence interval, `model_parameters()` now returns it. Before, only
+  Pearson correlations showed a confidence interval (#1003).
+
+* `model_parameters()` for models from *blavaan* now works with
+  `standardize = TRUE`, `"all"` or `"std.all"` and summarizes the standardized
+  posterior draws. This requires *insight* 1.5.4.17 or later. Older versions
+  give an error that asks you to update. Other values of `standardize` (except
+  `FALSE` or `NULL`) return unstandardized parameters. With `verbose = TRUE`,
+  they also give a warning.
+
 * `model_parameters(..., bootstrap = TRUE)` no longer fails for `clmm` models
   from *ordinal*. Like other mixed models, it now returns only the fixed
   effects and says so in a message (#1056).

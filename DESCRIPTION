@@ -101,6 +101,7 @@ Suggests:
     betareg,
     BH,
     biglm,
+    blavaan,
     blme,
     boot,
     brglm2,
