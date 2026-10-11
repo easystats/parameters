@@ -13,8 +13,10 @@ test_that("caption = '' removes the caption of a single table", {
   expect_true("Table: Fixed Effects" %in% out)
 
   out <- utils::capture.output(print(mp_fixed, caption = ""))
+  expect_true(any(startsWith(out, "Parameter")))
   expect_false(any(startsWith(out, "#")))
   out <- print_md(mp_fixed, caption = "")
+  expect_true(any(startsWith(out, "|Parameter")))
   expect_false(any(startsWith(out, "Table:")))
 })
 
@@ -88,9 +90,11 @@ test_that("caption = '' removes captions of tables with an empty title attribute
   expect_true(all(c("Table: mpg response", "Table: hp response") %in% out))
 
   out <- utils::capture.output(print(mp4, caption = ""))
-  expect_false(any(grepl("response", out, fixed = TRUE)))
+  expect_true(any(startsWith(out, "Parameter")))
+  expect_false(any(grepl("^#.*response", out)))
   out <- print_md(mp4, caption = "")
-  expect_false(any(grepl("response", out, fixed = TRUE)))
+  expect_true(any(startsWith(out, "|Parameter")))
+  expect_false(any(grepl("^Table:.*response", out)))
 })
 
 test_that("print_html() with caption = '' removes the title and keeps row groups", {
