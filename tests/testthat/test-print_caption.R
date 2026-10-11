@@ -76,3 +76,42 @@ test_that("user-supplied caption is printed for models without default caption",
   out <- utils::capture.output(print(mp3, caption = "My caption"))
   expect_true(any(grepl("My caption", out, fixed = TRUE)))
 })
+
+test_that("caption = '' removes captions of tables with an empty title attribute", {
+  skip_if_not_installed("insight", minimum_version = "1.5.4.10")
+  mp4 <- model_parameters(aov(cbind(mpg, hp) ~ factor(cyl), data = mtcars))
+  expect_identical(attributes(mp4)$title, "")
+
+  out <- utils::capture.output(print(mp4))
+  expect_true(all(c("# mpg response", "# hp response") %in% out))
+  out <- print_md(mp4)
+  expect_true(all(c("Table: mpg response", "Table: hp response") %in% out))
+
+  out <- utils::capture.output(print(mp4, caption = ""))
+  expect_false(any(grepl("response", out, fixed = TRUE)))
+  out <- print_md(mp4, caption = "")
+  expect_false(any(grepl("response", out, fixed = TRUE)))
+})
+
+test_that("print_html() with caption = '' removes the title and keeps row groups", {
+  skip_if_not_installed("gt")
+  out <- print_html(mp)
+  expect_identical(out[["_heading"]]$title, "Model Summary")
+  expect_identical(trimws(out[["_row_groups"]]), c("Fixed Effects", "Random Effects"))
+
+  out <- print_html(mp, caption = "")
+  expect_null(out[["_heading"]]$title)
+  expect_identical(trimws(out[["_row_groups"]]), c("Fixed Effects", "Random Effects"))
+})
+
+test_that("print_html() with tinytable and caption = '' removes the title", {
+  skip_if_not_installed("tinytable")
+  out <- print_html(mp, backend = "tt")
+  expect_identical(out@caption, "Model Summary")
+
+  out <- print_html(mp, backend = "tt", caption = "")
+  expect_null(out@caption)
+  html <- tinytable::save_tt(out, "html")
+  expect_true(grepl("Fixed Effects", html, fixed = TRUE))
+  expect_true(grepl("Random Effects", html, fixed = TRUE))
+})
