@@ -11,6 +11,10 @@
 
 ## Bug fixes
 
+* If the `htest` object of a Spearman or Kendall correlation test carries a
+  confidence interval, `model_parameters()` now returns it. Before, only
+  Pearson correlations showed a confidence interval (#1003).
+
 * `model_parameters()` for models from *blavaan* now works with
   `standardize = TRUE`, `"all"` or `"std.all"` and summarizes the standardized
   posterior draws. This requires *insight* 1.5.4.17 or later. Older versions
