@@ -236,7 +236,10 @@
                     ifnotfound = stop(gettextf("%s not found", sQuote(x)), domain = NA, call. = FALSE),
                     minframe = 1L,
                     inherits = FALSE) {
-  x <- insight::safe_deparse(x)
+  # deparsing a string would add quotes, so `get0()` would look for `"\"m\""`
+  if (!is.character(x)) {
+    x <- insight::safe_deparse(x)
+  }
   n <- sys.nframe()
   myObj <- structure(list(.b = as.raw(7)), foo = 47L)
   while (n > minframe) {

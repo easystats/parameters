@@ -11,6 +11,10 @@
 
 ## Bug fixes
 
+* `equivalence_test()` for *lavaan* models no longer fails with an error about
+  `range` when the model was fitted inside a function. Functions that look up
+  the original model by its name now also find it in the calling functions.
+
 * `bootstrap_model()` and `bootstrap_parameters()` with
   `type = "semiparametric"` no longer fail for models from *lme4*. For models
   from *glmmTMB*, this type now gives an informative error, because
