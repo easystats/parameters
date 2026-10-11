@@ -11,6 +11,10 @@
 
 ## Bug fixes
 
+* `model_parameters()` and `ci()` no longer fail for `merModList` models from
+  *merTools* with the error "formal argument "component" matched by multiple
+  actual arguments" (#1199).
+
 * If the `htest` object of a Spearman or Kendall correlation test carries a
   confidence interval, `model_parameters()` now returns it. Before, only
   Pearson correlations showed a confidence interval (#1003).

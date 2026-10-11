@@ -176,6 +176,7 @@ Suggests:
     MCMCglmm,
     mediation,
     merDeriv,
+    merTools,
     metaBMA,
     metafor,
     mfx,
