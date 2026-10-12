@@ -4,7 +4,10 @@ skip_if_not_installed("lmerTest")
 skip_if_not_installed("pbkrtest")
 
 data("carrots", package = "lmerTest")
-m1 <- lmerTest::lmer(Preference ~ sens2 + Homesize + (1 + sens2 | Consumer), data = carrots)
+m1 <- lmerTest::lmer(
+  Preference ~ sens2 + Homesize + (1 + sens2 | Consumer),
+  data = carrots
+)
 
 test_that("model_parameters, satterthwaite", {
   params <- model_parameters(m1, effects = "fixed", ci_method = "satterthwaite")
