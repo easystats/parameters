@@ -1,5 +1,9 @@
 # parameters (devel)
 
+## Breaking Changes
+
+* `model_parameters()`, `ci()`, `standard_error()`, and `p_value()` now default to the Satterthwaite approximation for supported Gaussian mixed models instead of residual/Wald-style inference. This is a breaking change (#989).
+
 ## Changes
 
 * `model_parameters()` now saves information about the type of HC-vcov

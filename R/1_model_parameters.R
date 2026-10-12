@@ -196,6 +196,7 @@
 #' - Applies to *linear mixed models*. CIs computed using the
 #'   Wald method (SE and a *t-distribution with Satterthwaite df*); p-values
 #'   computed using the Wald method with a *t-distribution with Satterthwaite df*.
+#'   This is the default method for supported Gaussian mixed models (when `ci_method = NULL`).
 #'
 #' `"kenward"`
 #' - Applies to *linear mixed models*. CIs computed using the Wald

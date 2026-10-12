@@ -3,56 +3,13 @@
 #' @export
 model_parameters.merMod <- model_parameters.coxme
 
-# helper ----------------------------------------------------------------------
-
-.add_random_effects_lme4 <- function(
-  model,
-  params,
-  ci,
-  ci_method,
-  ci_random,
-  effects,
-  group_level,
-  verbose = TRUE,
-  ...
-) {
-  params_random <- params_variance <- NULL
-
-  # only proceed if random effects are requested
-  if (effects %in% c("random", "all")) {
-    # group level estimates (BLUPs) or random effects variances?
-    if (isTRUE(group_level)) {
-      params_random <- .extract_random_parameters(model, ci = ci, effects = effects)
-    } else {
-      params_variance <- .extract_random_variances(
-        model,
-        ci = ci,
-        effects = effects,
-        ci_method = ci_method,
-        ci_random = ci_random,
-        verbose = verbose
-      )
-    }
-
-    # merge random and fixed effects, if necessary
-    if (!is.null(params) && (!is.null(params_random) || !is.null(params_variance))) {
-      params$Level <- NA
-      params$Group <- ""
-
-      if (is.null(params_random)) {
-        params <- params[match(colnames(params_variance), colnames(params))]
-      } else {
-        params <- params[match(colnames(params_random), colnames(params))]
-      }
-    }
-  }
-
-  rbind(params, params_random, params_variance)
-}
-
 
 #' @export
-ci.merMod <- function(x, ci = 0.95, dof = NULL, method = "wald", iterations = 500, ...) {
+ci.merMod <- function(x, ci = 0.95, dof = NULL, method = NULL, iterations = 500, ...) {
+  if (is.null(method)) {
+    method <- .default_ci_method_mixed(x, fallback = "wald")
+  }
+
   method <- tolower(method)
   method <- insight::validate_argument(
     method,
@@ -109,7 +66,7 @@ standard_error.merMod <- function(
   }
 
   if (is.null(method)) {
-    method <- "wald"
+    method <- .default_ci_method_mixed(model, fallback = "wald")
   } else if (
     (method == "robust" && is.null(vcov)) ||
       # deprecated argument
@@ -133,6 +90,15 @@ standard_error.merMod <- function(
     out <- se_mixed_default(model)
   }
   out
+}
+
+#' @export
+p_value.merMod <- function(model, method = NULL, ...) {
+  if (is.null(method)) {
+    method <- .default_ci_method_mixed(model, fallback = "wald")
+  }
+
+  p_value.default(model, method = method, ...)
 }
 
 
@@ -173,5 +139,65 @@ se_mixed_default <- function(model) {
 }
 
 
-#' @export
-p_value.merMod <- p_value.cpglmm
+.default_ci_method_mixed <- function(model, bootstrap = FALSE, fallback = NULL) {
+  if (isTRUE(bootstrap)) {
+    return("quantile")
+  }
+
+  model_info <- insight::model_info(model, verbose = FALSE)
+
+  if (isTRUE(model_info$is_mixed) && isTRUE(model_info$is_linear)) {
+    return("satterthwaite")
+  }
+
+  if (!is.null(fallback)) {
+    return(fallback)
+  }
+
+  switch(insight::find_statistic(model), `t-statistic` = "residual", "wald")
+}
+
+.add_random_effects_lme4 <- function(
+  model,
+  params,
+  ci,
+  ci_method,
+  ci_random,
+  effects,
+  group_level,
+  verbose = TRUE,
+  ...
+) {
+  params_random <- params_variance <- NULL
+
+  # only proceed if random effects are requested
+  if (effects %in% c("random", "all")) {
+    # group level estimates (BLUPs) or random effects variances?
+    if (isTRUE(group_level)) {
+      params_random <- .extract_random_parameters(model, ci = ci, effects = effects)
+    } else {
+      params_variance <- .extract_random_variances(
+        model,
+        ci = ci,
+        effects = effects,
+        ci_method = ci_method,
+        ci_random = ci_random,
+        verbose = verbose
+      )
+    }
+
+    # merge random and fixed effects, if necessary
+    if (!is.null(params) && (!is.null(params_random) || !is.null(params_variance))) {
+      params$Level <- NA
+      params$Group <- ""
+
+      if (is.null(params_random)) {
+        params <- params[match(colnames(params_variance), colnames(params))]
+      } else {
+        params <- params[match(colnames(params_random), colnames(params))]
+      }
+    }
+  }
+
+  rbind(params, params_random, params_variance)
+}

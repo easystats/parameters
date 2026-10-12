@@ -7,7 +7,7 @@
 \method{model_parameters}{glmmTMB}(
   model,
   ci = 0.95,
-  ci_method = "wald",
+  ci_method = NULL,
   ci_random = NULL,
   bootstrap = FALSE,
   iterations = 1000,
@@ -402,6 +402,7 @@ CIs and p-values instead.
 \item Applies to \emph{linear mixed models}. CIs computed using the
 Wald method (SE and a \emph{t-distribution with Satterthwaite df}); p-values
 computed using the Wald method with a \emph{t-distribution with Satterthwaite df}.
+This is the default method for supported Gaussian mixed models (when \code{ci_method = NULL}).
 }
 
 \code{"kenward"}

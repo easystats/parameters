@@ -168,7 +168,7 @@
 model_parameters.glmmTMB <- function(
   model,
   ci = 0.95,
-  ci_method = "wald",
+  ci_method = NULL,
   ci_random = NULL,
   bootstrap = FALSE,
   iterations = 1000,
@@ -189,6 +189,10 @@ model_parameters.glmmTMB <- function(
   ...
 ) {
   insight::check_if_installed("glmmTMB")
+
+  if (is.null(ci_method)) {
+    ci_method <- .default_ci_method_mixed(model, bootstrap = bootstrap, fallback = "wald")
+  }
 
   # p-values, CI and se might be based on different df-methods
   ci_method <- insight::validate_argument(
@@ -521,19 +525,23 @@ ci.glmmTMB <- function(
   x,
   ci = 0.95,
   dof = NULL,
-  method = "wald",
+  method = NULL,
   component = "all",
   verbose = TRUE,
   ...
 ) {
-  method <- insight::validate_argument(
-    tolower(method),
-    # fmt: skip
-    c(
+  if (is.null(method)) {
+    method <- .default_ci_method_mixed(x, fallback = "wald")
+  } else {
+    method <- insight::validate_argument(
+      tolower(method),
+      # fmt: skip
+      c(
       "wald", "normal", "residual", "ml1", "betwithin", "satterthwaite",
       "kenward", "kr", "boot", "profile", "uniroot", "robust"
     )
-  )
+    )
+  }
 
   component <- insight::validate_argument(
     component,
@@ -600,6 +608,9 @@ standard_error.glmmTMB <- function(
   } else if (!is.null(vcov)) {
     .se_robust_glmmTMB(model, component, vcov, vcov_args, verbose, ...)
   } else {
+    if (is.null(method)) {
+      method <- .default_ci_method_mixed(model, fallback = "wald")
+    }
     .se_fixed_effects_glmmTMB(model, component, method, verbose)
   }
 }
@@ -827,4 +838,32 @@ simulate_parameters.glmmTMB <- function(
   attr(out, "centrality") <- centrality
 
   out
+}
+
+
+#' @export
+p_value.glmmTMB <- function(
+  model,
+  dof = NULL,
+  method = NULL,
+  component = "all",
+  vcov = NULL,
+  vcov_args = NULL,
+  verbose = TRUE,
+  ...
+) {
+  if (is.null(method) && is.null(vcov)) {
+    method <- .default_ci_method_mixed(model, fallback = "wald")
+  }
+
+  p_value.default(
+    model = model,
+    dof = dof,
+    method = method,
+    component = component,
+    vcov = vcov,
+    vcov_args = vcov_args,
+    verbose = verbose,
+    ...
+  )
 }
