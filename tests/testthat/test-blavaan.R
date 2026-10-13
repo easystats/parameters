@@ -149,7 +149,7 @@ test_that("model_parameters, blavaan, std.lv and std.nox", {
       # model has an exogenous covariate
       if (type == "std.nox" && nm != "pred") {
         expect_length(w, 1)
-        expect_match(w, "no exogenous covariates", fixed = TRUE)
+        expect_match(gsub("\\s+", " ", w), "no exogenous covariates", fixed = TRUE)
       } else {
         expect_length(w, 0)
       }

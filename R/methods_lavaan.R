@@ -64,18 +64,19 @@ model_parameters.blavaan <- function(
     standardize <- NULL
   }
   if (!is.null(standardize)) {
-    if (isTRUE(standardize) || isTRUE(standardize %in% c("all", "std.all"))) {
+    std_type <- .blavaan_std_type(standardize)
+    if (!is.null(std_type)) {
       if (isTRUE(test == "all")) {
         insight::format_error(
           "`test = \"all\"` is not supported when standardizing;",
           "Please specify the tests you want to perform using the `test` argument."
         )
       }
-      posterior <- .blavaan_standardized_draws(model)
+      posterior <- .blavaan_standardized_draws(model, type = std_type, verbose = verbose)
       test <- .remove_scale_dependent_tests(test, verbose)
     } else if (verbose) {
       insight::format_warning(
-        "`standardize` should be one of `TRUE`, \"all\" or \"std.all\" for models from package `blavaan`.", # nolint
+        "`standardize` should be one of `TRUE`, \"all\", \"std.all\", \"latent\", \"std.lv\", \"no_exogenous\" or \"std.nox\" for models from package `blavaan`.", # nolint
         "Returning unstandardized parameters."
       )
     }
@@ -130,7 +131,29 @@ model_parameters.blavaan <- function(
 }
 
 
-.blavaan_standardized_draws <- function(model) {
+# the type of `blavaan::standardizedPosterior()` for a value of `standardize`,
+# mapped as in `model_parameters.lavaan()`, or `NULL` for unsupported values
+.blavaan_std_type <- function(standardize) {
+  if (isTRUE(standardize)) {
+    return("std.all")
+  }
+  if (!is.character(standardize) || length(standardize) != 1L) {
+    return(NULL)
+  }
+  switch(
+    standardize,
+    all = ,
+    std.all = "std.all",
+    latent = ,
+    std.lv = "std.lv",
+    no_exogenous = ,
+    std.nox = "std.nox",
+    NULL
+  )
+}
+
+
+.blavaan_standardized_draws <- function(model, type = "std.all", verbose = TRUE) {
   # older versions of insight give the standardized draws shifted names
   if (.insight_version() < "1.5.4.17") {
     insight::format_error(
@@ -138,7 +161,40 @@ model_parameters.blavaan <- function(
       "Please update `insight`, for example with `install.packages(\"insight\", repos = \"https://easystats.r-universe.dev\")`." # nolint
     )
   }
-  insight::get_parameters(model, standardize = TRUE)
+  if (type == "std.all") {
+    return(insight::get_parameters(model, standardize = TRUE))
+  }
+
+  # older versions of insight do not pass `type` on to blavaan
+  if (.insight_version() < "1.5.4.29") {
+    insight::format_error(
+      paste0(
+        "Standardized parameters of type \"", type,
+        "\" for models from package `blavaan` require package `insight` version 1.5.4.29 or higher."
+      ),
+      "Please update `insight`, for example with `install.packages(\"insight\", repos = \"https://easystats.r-universe.dev\")`." # nolint
+    )
+  }
+
+  # lavaan warns for each draw when the model has no exogenous covariates,
+  # because std.nox then equals std.all. We warn once instead.
+  no_exogenous <- FALSE
+  draws <- withCallingHandlers(
+    insight::get_parameters(model, standardize = TRUE, type = type),
+    warning = function(w) {
+      msg <- gsub("\\s+", " ", conditionMessage(w))
+      if (grepl("`std.nox' values are identical to `std.all' values", msg, fixed = TRUE)) {
+        no_exogenous <<- TRUE
+        invokeRestart("muffleWarning")
+      }
+    }
+  )
+  if (no_exogenous && verbose) {
+    insight::format_warning(
+      "Standardized parameters of type \"std.nox\" are identical to those of type \"std.all\", because the model has no exogenous covariates." # nolint
+    )
+  }
+  draws
 }
 
 
