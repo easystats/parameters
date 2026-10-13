@@ -38,9 +38,10 @@ model_pred <- "visual =~ x1 + x2 + x3\nvisual ~ ageyr"
   fit
 }
 m_single <- suppressMessages(suppressWarnings(.fit_blavaan()))
-m_groups <- suppressMessages(suppressWarnings(
-  .fit_blavaan(group = "school", group.equal = "loadings")
-))
+m_groups <- suppressMessages(suppressWarnings(.fit_blavaan(
+  group = "school",
+  group.equal = "loadings"
+)))
 # a regression on an observed predictor, where std.nox differs from std.all
 m_pred <- suppressMessages(suppressWarnings(.fit_blavaan(fixed.x = TRUE, sem = TRUE)))
 
@@ -137,9 +138,11 @@ test_that("model_parameters, blavaan, std.lv and std.nox", {
     for (s in names(std_types)) {
       type <- std_types[[s]]
       # lavaan warns for each draw when std.nox equals std.all
-      std_names <- colnames(suppressWarnings(
-        insight::get_parameters(m, standardize = TRUE, type = type)
-      ))
+      std_names <- colnames(suppressWarnings(insight::get_parameters(
+        m,
+        standardize = TRUE,
+        type = type
+      )))
       std_draws <- suppressWarnings(blavaan::standardizedPosterior(m, type = type))
       w <- capture_warnings({
         out <- model_parameters(m, standardize = s)
@@ -219,9 +222,12 @@ test_that("model_parameters, blavaan, std.lv and std.nox, tests and verbose", {
     expect_true(any(grepl("Scale-dependent inferential statistics", w, fixed = TRUE)))
     expect_false(any(c("ROPE_Percentage", "ROPE_low") %in% colnames(out)))
     expect_true("pd" %in% colnames(out))
-    expect_no_condition(
-      model_parameters(m_single, standardize = s, test = c("pd", "rope"), verbose = FALSE)
-    )
+    expect_no_condition(model_parameters(
+      m_single,
+      standardize = s,
+      test = c("pd", "rope"),
+      verbose = FALSE
+    ))
   }
 })
 
@@ -336,5 +342,9 @@ test_that("model_parameters, blavaan, std.nox warning in other wording", {
   w <- capture_warnings(model_parameters(m_single, standardize = "std.nox"))
   expect_length(w, 1)
   expect_match(gsub("\\s+", " ", w), "no exogenous covariates", fixed = TRUE)
-  expect_no_condition(model_parameters(m_single, standardize = "std.nox", verbose = FALSE))
+  expect_no_condition(model_parameters(
+    m_single,
+    standardize = "std.nox",
+    verbose = FALSE
+  ))
 })

@@ -158,7 +158,8 @@ model_parameters.blavaan <- function(
   if (type != "std.all" && .insight_version() < "1.5.4.29") {
     insight::format_error(
       paste0(
-        "Standardized parameters of type \"", type,
+        "Standardized parameters of type \"",
+        type,
         "\" for models from package `blavaan` require package `insight` version 1.5.4.29 or higher."
       ),
       "Please update `insight`, for example with `install.packages(\"insight\", repos = \"https://easystats.r-universe.dev\")`." # nolint
