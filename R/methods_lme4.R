@@ -1,55 +1,7 @@
-############# .merMod -----------------
+# merMod -----------------------------------------------------------------
 
 #' @export
 model_parameters.merMod <- model_parameters.coxme
-
-# helper ----------------------------------------------------------------------
-
-.add_random_effects_lme4 <- function(
-  model,
-  params,
-  ci,
-  ci_method,
-  ci_random,
-  effects,
-  group_level,
-  verbose = TRUE,
-  ...
-) {
-  params_random <- params_variance <- NULL
-
-  # only proceed if random effects are requested
-  if (effects %in% c("random", "all")) {
-    # group level estimates (BLUPs) or random effects variances?
-    if (isTRUE(group_level)) {
-      params_random <- .extract_random_parameters(model, ci = ci, effects = effects)
-    } else {
-      params_variance <- .extract_random_variances(
-        model,
-        ci = ci,
-        effects = effects,
-        ci_method = ci_method,
-        ci_random = ci_random,
-        verbose = verbose
-      )
-    }
-
-    # merge random and fixed effects, if necessary
-    if (!is.null(params) && (!is.null(params_random) || !is.null(params_variance))) {
-      params$Level <- NA
-      params$Group <- ""
-
-      if (is.null(params_random)) {
-        params <- params[match(colnames(params_variance), colnames(params))]
-      } else {
-        params <- params[match(colnames(params_random), colnames(params))]
-      }
-    }
-  }
-
-  rbind(params, params_random, params_variance)
-}
-
 
 #' @export
 ci.merMod <- function(x, ci = 0.95, dof = NULL, method = "wald", iterations = 500, ...) {
@@ -135,8 +87,91 @@ standard_error.merMod <- function(
   out
 }
 
+#' @export
+p_value.merMod <- p_value.cpglmm
+
+
+# lmerMod and lmerModTest -----------------------------------------------------------------
+
+#' @export
+model_parameters.lmerMod <- function() {
+  NextMethod(
+    "model_parameters",
+    model,
+    ci_method = .attempt_satterthwaite_method(ci_method)
+  )
+}
+formals(model_parameters.lmerMod) <- formals(model_parameters.merMod)
+formals(model_parameters.lmerMod)$ci_method <- NULL
+
+#' @export
+ci.lmerMod <- function() {
+  NextMethod("ci", x, method = .attempt_satterthwaite_method(method))
+}
+formals(ci.lmerMod) <- formals(ci.merMod)
+formals(ci.lmerMod)$method <- NULL
+
+#' @export
+standard_error.lmerMod <- function() {
+  NextMethod("standard_error", model, method = .attempt_satterthwaite_method(method))
+}
+formals(standard_error.lmerMod) <- formals(standard_error.merMod)
+formals(standard_error.lmerMod)$method <- NULL
+
+#' @export
+p_value.lmerMod <- function() {
+  NextMethod("p_value", model, method = .attempt_satterthwaite_method(method))
+}
+formals(p_value.lmerMod) <- formals(p_value.merMod)
+formals(p_value.lmerMod)$method <- NULL
+
 
 # helpers --------------
+
+.add_random_effects_lme4 <- function(
+  model,
+  params,
+  ci,
+  ci_method,
+  ci_random,
+  effects,
+  group_level,
+  verbose = TRUE,
+  ...
+) {
+  params_random <- params_variance <- NULL
+
+  # only proceed if random effects are requested
+  if (effects %in% c("random", "all")) {
+    # group level estimates (BLUPs) or random effects variances?
+    if (isTRUE(group_level)) {
+      params_random <- .extract_random_parameters(model, ci = ci, effects = effects)
+    } else {
+      params_variance <- .extract_random_variances(
+        model,
+        ci = ci,
+        effects = effects,
+        ci_method = ci_method,
+        ci_random = ci_random,
+        verbose = verbose
+      )
+    }
+
+    # merge random and fixed effects, if necessary
+    if (!is.null(params) && (!is.null(params_random) || !is.null(params_variance))) {
+      params$Level <- NA
+      params$Group <- ""
+
+      if (is.null(params_random)) {
+        params <- params[match(colnames(params_variance), colnames(params))]
+      } else {
+        params <- params[match(colnames(params_random), colnames(params))]
+      }
+    }
+  }
+
+  rbind(params, params_random, params_variance)
+}
 
 .standard_errors_random <- function(model) {
   insight::check_if_installed("lme4")
@@ -172,6 +207,21 @@ se_mixed_default <- function(model) {
   .data_frame(Parameter = params, SE = .get_se_from_summary(model))
 }
 
+.attempt_satterthwaite_method <- function(method, fallback = "wald") {
+  if (!is.null(method)) {
+    return(method)
+  }
 
-#' @export
-p_value.merMod <- p_value.cpglmm
+  if (
+    insight::check_if_installed(
+      package = "lmerTest",
+      reason = "for Satterthwaite df (default)",
+      stop = FALSE,
+      prompt = TRUE
+    )
+  ) {
+    return("satterthwaite")
+  }
+
+  return(fallback)
+}
