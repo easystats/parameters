@@ -240,14 +240,21 @@ se_mixed_default <- function(model) {
     return(method)
   }
 
-  if (
-    insight::check_if_installed(
-      package = "lmerTest",
-      reason = "for Satterthwaite df (default)",
-      stop = FALSE,
-      prompt = TRUE
-    )
-  ) {
+  installed <- insight::check_if_installed(
+    package = "lmerTest",
+    reason = "for Satterthwaite df (default)",
+    stop = FALSE,
+    prompt = TRUE
+  )
+
+  # This is a workaround for the fact that check_if_installed() returns FALSE
+  # even if the package is not installed, but the user chooses to install it. In
+  # that case, we need to check again if the package is actually installed.
+  if (!installed) {
+    installed <- requireNamespace("lmerTest", quietly = TRUE)
+  }
+
+  if (installed) {
     return("satterthwaite")
   }
 
