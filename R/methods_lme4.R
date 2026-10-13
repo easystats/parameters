@@ -94,36 +94,64 @@ p_value.merMod <- p_value.cpglmm
 # lmerMod and lmerModTest -----------------------------------------------------------------
 
 #' @export
-model_parameters.lmerMod <- function() {
-  NextMethod(
-    "model_parameters",
-    model,
-    ci_method = .attempt_satterthwaite_method(ci_method)
-  )
+model_parameters.lmerMod <- function(
+  model,
+  ci = 0.95,
+  ci_method = NULL,
+  ci_random = NULL,
+  bootstrap = FALSE,
+  iterations = 1000,
+  standardize = NULL,
+  effects = "all",
+  group_level = FALSE,
+  exponentiate = FALSE,
+  p_adjust = NULL,
+  vcov = NULL,
+  vcov_args = NULL,
+  wb_component = FALSE,
+  include_info = getOption("parameters_mixed_info", FALSE),
+  include_sigma = FALSE,
+  keep = NULL,
+  drop = NULL,
+  verbose = TRUE,
+  ...
+) {
+  cl <- match.call()
+  cl[[1]] <- model_parameters.merMod
+  cl$ci_method <- .attempt_satterthwaite_method(ci_method)
+  eval.parent(cl)
 }
-formals(model_parameters.lmerMod) <- formals(model_parameters.merMod)
-formals(model_parameters.lmerMod)$ci_method <- NULL
 
 #' @export
-ci.lmerMod <- function() {
-  NextMethod("ci", x, method = .attempt_satterthwaite_method(method))
+ci.lmerMod <- function(x, ci = 0.95, dof = NULL, method = NULL, iterations = 500, ...) {
+  cl <- match.call()
+  cl[[1]] <- ci.merMod
+  cl$method <- .attempt_satterthwaite_method(method)
+  eval.parent(cl)
 }
-formals(ci.lmerMod) <- formals(ci.merMod)
-formals(ci.lmerMod)$method <- NULL
 
 #' @export
-standard_error.lmerMod <- function() {
-  NextMethod("standard_error", model, method = .attempt_satterthwaite_method(method))
+standard_error.lmerMod <- function(
+  model,
+  effects = "fixed",
+  method = NULL,
+  vcov = NULL,
+  vcov_args = NULL,
+  ...
+) {
+  cl <- match.call()
+  cl[[1]] <- standard_error.merMod
+  cl$method <- .attempt_satterthwaite_method(method)
+  eval.parent(cl)
 }
-formals(standard_error.lmerMod) <- formals(standard_error.merMod)
-formals(standard_error.lmerMod)$method <- NULL
 
 #' @export
-p_value.lmerMod <- function() {
-  NextMethod("p_value", model, method = .attempt_satterthwaite_method(method))
+p_value.lmerMod <- function(model, method = NULL, ...) {
+  cl <- match.call()
+  cl[[1]] <- p_value.merMod
+  cl$method <- .attempt_satterthwaite_method(method)
+  eval.parent(cl)
 }
-formals(p_value.lmerMod) <- formals(p_value.merMod)
-formals(p_value.lmerMod)$method <- NULL
 
 
 # helpers --------------
