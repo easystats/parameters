@@ -118,7 +118,7 @@ model_parameters.lmerMod <- function(
 ) {
   cl <- match.call()
   cl[[1]] <- model_parameters.merMod
-  cl$ci_method <- .attempt_satterthwaite_method(ci_method)
+  cl$ci_method <- .attempt_satterthwaite_method(ci_method, bootstrap = bootstrap)
   eval.parent(cl)
 }
 
@@ -235,16 +235,15 @@ se_mixed_default <- function(model) {
   .data_frame(Parameter = params, SE = .get_se_from_summary(model))
 }
 
-.attempt_satterthwaite_method <- function(method, fallback = "wald") {
-  if (!is.null(method)) {
+.attempt_satterthwaite_method <- function(method, fallback = "wald", bootstrap = FALSE) {
+  if (!is.null(method) || bootstrap) {
     return(method)
   }
 
   installed <- insight::check_if_installed(
     package = "lmerTest",
     reason = "for Satterthwaite df (default)",
-    stop = FALSE,
-    prompt = TRUE
+    stop = FALSE
   )
 
   # This is a workaround for the fact that check_if_installed() returns FALSE
