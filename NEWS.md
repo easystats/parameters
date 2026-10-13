@@ -1,5 +1,12 @@
 # parameters (devel)
 
+## Breaking Changes
+
+* `model_parameters()`, `ci()`, `standard_error()`, and `p_value()` now default
+  to the Satterthwaite approximation for `lmerMod` and `lmerModTest` models when
+  `{lmerTest}` is available, making the outputs more consistent with `summary()`
+  (#989).
+
 ## Changes
 
 * `model_parameters()` now saves information about the type of HC-vcov
