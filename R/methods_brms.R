@@ -51,9 +51,10 @@
 #' the matching `type` (see [`blavaan::standardizedPosterior()`]), without the
 #' `ESS` and `Rhat` columns. This requires package **insight** version 1.5.4.17
 #' or higher, and version 1.5.4.29 or higher for `"latent"`, `"std.lv"`,
-#' `"no_exogenous"` and `"std.nox"`. Other values of `standardize` (except
-#' `FALSE` or `NULL`) return unstandardized parameters, with a warning when
-#' `verbose = TRUE`.
+#' `"no_exogenous"` and `"std.nox"`. If the values for `"no_exogenous"` or
+#' `"std.nox"` equal those for `"std.all"`, a warning says so when
+#' `verbose = TRUE`. Other values of `standardize` (except `FALSE` or `NULL`)
+#' return unstandardized parameters, with a warning when `verbose = TRUE`.
 #'
 #' There is also a
 #' [`plot()`-method](https://easystats.github.io/see/articles/parameters.html)

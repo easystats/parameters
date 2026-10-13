@@ -154,6 +154,16 @@ model_parameters.blavaan <- function(
 
 
 .blavaan_standardized_draws <- function(model, type = "std.all", verbose = TRUE) {
+  # older versions of insight do not pass `type` on to blavaan
+  if (type != "std.all" && .insight_version() < "1.5.4.29") {
+    insight::format_error(
+      paste0(
+        "Standardized parameters of type \"", type,
+        "\" for models from package `blavaan` require package `insight` version 1.5.4.29 or higher."
+      ),
+      "Please update `insight`, for example with `install.packages(\"insight\", repos = \"https://easystats.r-universe.dev\")`." # nolint
+    )
+  }
   # older versions of insight give the standardized draws shifted names
   if (.insight_version() < "1.5.4.17") {
     insight::format_error(
@@ -165,27 +175,17 @@ model_parameters.blavaan <- function(
     return(insight::get_parameters(model, standardize = TRUE))
   }
 
-  # older versions of insight do not pass `type` on to blavaan
-  if (.insight_version() < "1.5.4.29") {
-    insight::format_error(
-      paste0(
-        "Standardized parameters of type \"", type,
-        "\" for models from package `blavaan` require package `insight` version 1.5.4.29 or higher."
-      ),
-      "Please update `insight`, for example with `install.packages(\"insight\", repos = \"https://easystats.r-universe.dev\")`." # nolint
-    )
-  }
-
   # lavaan warns for each draw when std.nox equals std.all, that is, when the
   # model has no exogenous covariates or was fit with `fixed.x = FALSE`. We
-  # warn once instead, with lavaan's reason.
+  # warn once instead, with lavaan's reason. The match uses only the names
+  # of the types and of `fixed.x`, which a translated message keeps.
   reason <- NULL
   draws <- withCallingHandlers(
     insight::get_parameters(model, standardize = TRUE, type = type),
     warning = function(w) {
-      msg <- gsub("\\s+", " ", conditionMessage(w))
-      if (grepl("`std.nox' values are identical to `std.all' values", msg, fixed = TRUE)) {
-        reason <<- if (grepl("fixed.x = FALSE", msg, fixed = TRUE)) {
+      msg <- conditionMessage(w)
+      if (grepl("std.nox", msg, fixed = TRUE) && grepl("std.all", msg, fixed = TRUE)) {
+        reason <<- if (grepl("fixed.x", msg, fixed = TRUE)) {
           "the model was fit with `fixed.x = FALSE`"
         } else {
           "the model has no exogenous covariates"

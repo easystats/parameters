@@ -237,9 +237,10 @@ The returned parameters then summarize the standardized posterior draws of
 the matching \code{type} (see \code{\link[blavaan:standardizedPosterior]{blavaan::standardizedPosterior()}}), without the
 \code{ESS} and \code{Rhat} columns. This requires package \strong{insight} version 1.5.4.17
 or higher, and version 1.5.4.29 or higher for \code{"latent"}, \code{"std.lv"},
-\code{"no_exogenous"} and \code{"std.nox"}. Other values of \code{standardize} (except
-\code{FALSE} or \code{NULL}) return unstandardized parameters, with a warning when
-\code{verbose = TRUE}.
+\code{"no_exogenous"} and \code{"std.nox"}. If the values for \code{"no_exogenous"} or
+\code{"std.nox"} equal those for \code{"std.all"}, a warning says so when
+\code{verbose = TRUE}. Other values of \code{standardize} (except \code{FALSE} or \code{NULL})
+return unstandardized parameters, with a warning when \code{verbose = TRUE}.
 
 There is also a
 \href{https://easystats.github.io/see/articles/parameters.html}{\code{plot()}-method}

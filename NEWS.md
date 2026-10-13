@@ -38,7 +38,9 @@
   models, `standardize = "latent"` or `"std.lv"` and `"no_exogenous"` or
   `"std.nox"` summarize the draws of the matching `type` of
   `blavaan::standardizedPosterior()`. These values require *insight* 1.5.4.29
-  or later. Older versions give an error that asks you to update. Other values
+  or later. If the `"std.nox"` values equal the `"std.all"` values, you get
+  one warning instead of one from *lavaan* for each draw. Older versions of
+  *insight* give an error that asks you to update. Other values
   of `standardize` (except `FALSE` or `NULL`) return unstandardized parameters.
   With `verbose = TRUE`, they also give a warning.
 

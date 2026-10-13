@@ -304,4 +304,37 @@ test_that("model_parameters, blavaan, std.lv and std.nox, old insight", {
     )
   }
   expect_no_error(model_parameters(m_single, standardize = "std.all"))
+
+  # below 1.5.4.17, the error for the new values still names the version they need
+  local_mocked_bindings(.insight_version = function() package_version("1.5.4.10"))
+  for (s in names(std_types)) {
+    expect_error(
+      model_parameters(m_single, standardize = s),
+      regexp = "1.5.4.29",
+      fixed = TRUE
+    )
+  }
+})
+
+
+test_that("model_parameters, blavaan, std.nox warning in other wording", {
+  skip_if_not_installed("insight", minimum_version = "1.5.4.29")
+  # a translated or reworded lavaan warning keeps the names of the types
+  get_parameters_insight <- insight::get_parameters
+  local_mocked_bindings(
+    get_parameters = function(x, ...) {
+      if (!isTRUE(list(...)$standardize)) {
+        return(get_parameters_insight(x, ...))
+      }
+      for (i in 1:3) {
+        warning("Die Werte von `std.nox' sind identisch mit `std.all'.", call. = FALSE)
+      }
+      suppressWarnings(get_parameters_insight(x, ...))
+    },
+    .package = "insight"
+  )
+  w <- capture_warnings(model_parameters(m_single, standardize = "std.nox"))
+  expect_length(w, 1)
+  expect_match(gsub("\\s+", " ", w), "no exogenous covariates", fixed = TRUE)
+  expect_no_condition(model_parameters(m_single, standardize = "std.nox", verbose = FALSE))
 })
