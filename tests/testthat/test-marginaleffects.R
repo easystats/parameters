@@ -415,3 +415,37 @@ test_that("predictions, don't remove Type column when it's a variable", {
     c("Type", "Response", "Probability", "SE", "CI_low", "CI_high", "t", "df")
   )
 })
+
+
+test_that("preserve focal terms with same name as reserved words", {
+  d <- iris
+  d$type <- factor(rep(c("a", "b", "c"), 50))
+  d$t <- d$type
+  m1 <- lm(Sepal.Width ~ type * Petal.Length, data = d)
+  m2 <- lm(Sepal.Width ~ t * Petal.Length, data = d)
+
+  out <- model_parameters(marginaleffects::predictions(m1, by = "type"))
+  expect_identical(as.character(out$type), c("a", "b", "c"))
+  expect_false("Type" %in% colnames(out))
+
+  out <- model_parameters(marginaleffects::avg_comparisons(
+    m1,
+    variables = "Petal.Length",
+    by = "type"
+  ))
+  expect_identical(as.character(out$type), c("a", "b", "c"))
+  expect_false("Type" %in% colnames(out))
+  expect_null(attr(out, "prediction_type"))
+
+  out <- model_parameters(marginaleffects::avg_slopes(
+    m2,
+    variables = "Petal.Length",
+    by = "t"
+  ))
+  expect_identical(as.character(out$t), c("a", "b", "c"))
+  expect_false("Statistic.1" %in% colnames(out))
+
+  skip_if_not_installed("modelbased")
+  out <- model_parameters(modelbased::get_marginalmeans(m1, "type"))
+  expect_identical(as.character(out$type), c("a", "b", "c"))
+})
