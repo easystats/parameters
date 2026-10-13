@@ -11,6 +11,10 @@
 
 ## Bug fixes
 
+* `model_parameters()` for objects from *marginaleffects* no longer drops or
+  renames columns of focal terms or `by` variables whose names equal column
+  names that the output uses, such as `type` or `t`.
+
 * `equivalence_test()` for *lavaan* models no longer fails with an error about
   `range` when the model was fitted inside a function. Functions that look up
   the original model by its name now also find it in the calling functions.
