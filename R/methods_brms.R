@@ -46,11 +46,14 @@
 #' arguments `diagnostic`, `bf_prior` and `priors` are ignored.
 #'
 #' For models from **blavaan**, `standardize` can be `TRUE`, `"all"` or
-#' `"std.all"`. The returned parameters then summarize the standardized
-#' posterior draws (see [`blavaan::standardizedPosterior()`]), without the
+#' `"std.all"`, `"latent"` or `"std.lv"`, and `"no_exogenous"` or `"std.nox"`.
+#' The returned parameters then summarize the standardized posterior draws of
+#' the matching `type` (see [`blavaan::standardizedPosterior()`]), without the
 #' `ESS` and `Rhat` columns. This requires package **insight** version 1.5.4.17
-#' or higher. Other values of `standardize` (except `FALSE` or `NULL`) return
-#' unstandardized parameters, with a warning when `verbose = TRUE`.
+#' or higher, and version 1.5.4.29 or higher for `"latent"`, `"std.lv"`,
+#' `"no_exogenous"` and `"std.nox"`. Other values of `standardize` (except
+#' `FALSE` or `NULL`) return unstandardized parameters, with a warning when
+#' `verbose = TRUE`.
 #'
 #' There is also a
 #' [`plot()`-method](https://easystats.github.io/see/articles/parameters.html)
