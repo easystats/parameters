@@ -177,6 +177,20 @@ test_that("model_parameters, blavaan, std.lv and std.nox", {
 })
 
 
+test_that("model_parameters, blavaan, std.nox with fixed.x = FALSE", {
+  skip_if_not_installed("insight", minimum_version = "1.5.4.29")
+  # the model has an exogenous covariate, but std.nox still equals std.all
+  m_free <- suppressMessages(suppressWarnings(.fit_blavaan(fixed.x = FALSE, sem = TRUE)))
+  w <- capture_warnings({
+    out <- model_parameters(m_free, standardize = "std.nox")
+  })
+  expect_length(w, 1)
+  expect_match(gsub("\\s+", " ", w), "fit with `fixed.x = FALSE`", fixed = TRUE)
+  expect_no_match(gsub("\\s+", " ", w), "no exogenous covariates", fixed = TRUE)
+  expect_no_condition(model_parameters(m_free, standardize = "std.nox", verbose = FALSE))
+})
+
+
 test_that("model_parameters, blavaan, std.lv and std.nox, compare with lavaan", {
   skip_if_not_installed("insight", minimum_version = "1.5.4.29")
   m_ml <- lavaan::cfa(model, data = HolzingerSwineford1939)

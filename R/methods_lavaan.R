@@ -176,23 +176,30 @@ model_parameters.blavaan <- function(
     )
   }
 
-  # lavaan warns for each draw when the model has no exogenous covariates,
-  # because std.nox then equals std.all. We warn once instead.
-  no_exogenous <- FALSE
+  # lavaan warns for each draw when std.nox equals std.all, that is, when the
+  # model has no exogenous covariates or was fit with `fixed.x = FALSE`. We
+  # warn once instead, with lavaan's reason.
+  reason <- NULL
   draws <- withCallingHandlers(
     insight::get_parameters(model, standardize = TRUE, type = type),
     warning = function(w) {
       msg <- gsub("\\s+", " ", conditionMessage(w))
       if (grepl("`std.nox' values are identical to `std.all' values", msg, fixed = TRUE)) {
-        no_exogenous <<- TRUE
+        reason <<- if (grepl("fixed.x = FALSE", msg, fixed = TRUE)) {
+          "the model was fit with `fixed.x = FALSE`"
+        } else {
+          "the model has no exogenous covariates"
+        }
         invokeRestart("muffleWarning")
       }
     }
   )
-  if (no_exogenous && verbose) {
-    insight::format_warning(
-      "Standardized parameters of type \"std.nox\" are identical to those of type \"std.all\", because the model has no exogenous covariates." # nolint
-    )
+  if (!is.null(reason) && verbose) {
+    insight::format_warning(paste0(
+      "Standardized parameters of type \"std.nox\" are identical to those of type \"std.all\", because ",
+      reason,
+      "."
+    ))
   }
   draws
 }
