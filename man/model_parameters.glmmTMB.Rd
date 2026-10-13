@@ -402,6 +402,8 @@ CIs and p-values instead.
 \item Applies to \emph{linear mixed models}. CIs computed using the
 Wald method (SE and a \emph{t-distribution with Satterthwaite df}); p-values
 computed using the Wald method with a \emph{t-distribution with Satterthwaite df}.
+This is the default for \code{lmerMod} and \code{lmerModLmerTest} when the corresponding
+method argument (\code{ci_method} or \code{method}) is \code{NULL}.
 }
 
 \code{"kenward"}
