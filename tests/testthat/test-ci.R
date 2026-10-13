@@ -1,7 +1,4 @@
-test_that("ci", {
-  skip_if_not_installed("lme4")
-  skip_if_not_installed("lmerTest")
-
+test_that("ci for lm and glm", {
   model <- lm(mpg ~ wt, data = mtcars)
   expect_equal(suppressMessages(ci(model))[1, 3], 33.4505, tolerance = 0.01)
   expect_equal(
@@ -12,6 +9,10 @@ test_that("ci", {
 
   model <- glm(vs ~ wt, family = "binomial", data = mtcars)
   expect_equal(suppressMessages(ci(model))[1, 3], 1.934013, tolerance = 0.01)
+})
+
+test_that("ci for mixed models", {
+  skip_if_not_installed("lme4")
 
   model <- lme4::lmer(wt ~ cyl + (1 | gear), data = mtcars)
   expect_equal(
@@ -22,8 +23,6 @@ test_that("ci", {
 
   model <- lme4::lmer(wt ~ cyl + (1 | gear), data = mtcars)
   expect_equal(ci(model, method = "wald")[1, 3], -0.3795646, tolerance = 0.01)
-  expect_equal(ci(model)[1, 3], -0.4674279, tolerance = 0.01)
-  expect_identical(ci(model), ci(model, method = "satterthwaite"))
 
   set.seed(1)
   val <- ci(model, method = "boot")[1, 3]
@@ -36,6 +35,14 @@ test_that("ci", {
   expect_equal(ci(model)[1, 3], -48.14195, tolerance = 0.01)
 })
 
+test_that("ci default satterthwaite", {
+  skip_if_not_installed("lme4")
+  skip_if_not_installed("lmerTest")
+
+  model <- lme4::lmer(wt ~ cyl + (1 | gear), data = mtcars)
+  expect_equal(ci(model)[1, 3], -0.4674279, tolerance = 0.01)
+  expect_identical(ci(model), ci(model, method = "satterthwaite"))
+})
 
 test_that("vs. sandwich & lmtest", {
   skip_if_not_installed("sandwich")
