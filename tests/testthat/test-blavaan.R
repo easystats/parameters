@@ -291,7 +291,7 @@ test_that("model_parameters, blavaan, multiple groups with equal loadings", {
 
 
 test_that("model_parameters, blavaan, standardized, old insight", {
-  local_mocked_bindings(.insight_version = function() package_version("1.6.0"))
+  local_mocked_bindings(.insight_version = function() package_version("1.5.4"))
   expect_error(
     model_parameters(m_single, standardize = TRUE),
     regexp = "1.6.0",
@@ -301,7 +301,7 @@ test_that("model_parameters, blavaan, standardized, old insight", {
 
 
 test_that("model_parameters, blavaan, std.lv and std.nox, old insight", {
-  local_mocked_bindings(.insight_version = function() package_version("1.6.0"))
+  local_mocked_bindings(.insight_version = function() package_version("1.5.4"))
   for (s in names(std_types)) {
     expect_error(
       model_parameters(m_single, standardize = s),
@@ -312,7 +312,7 @@ test_that("model_parameters, blavaan, std.lv and std.nox, old insight", {
   expect_no_error(model_parameters(m_single, standardize = "std.all"))
 
   # below 1.6.0, the error for the new values still names the version they need
-  local_mocked_bindings(.insight_version = function() package_version("1.6.0"))
+  local_mocked_bindings(.insight_version = function() package_version("1.5.4"))
   for (s in names(std_types)) {
     expect_error(
       model_parameters(m_single, standardize = s),
