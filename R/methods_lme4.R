@@ -118,15 +118,30 @@ model_parameters.lmerMod <- function(
 ) {
   cl <- match.call()
   cl[[1]] <- model_parameters.merMod
-  cl$ci_method <- .attempt_satterthwaite_method(ci_method, bootstrap = bootstrap)
+  cl$ci_method <- .attempt_satterthwaite_method(
+    ci_method,
+    bootstrap = bootstrap,
+    vcov = vcov
+  )
   eval.parent(cl)
 }
 
 #' @export
-ci.lmerMod <- function(x, ci = 0.95, dof = NULL, method = NULL, iterations = 500, ...) {
+ci.lmerMod <- function(
+  x,
+  ci = 0.95,
+  dof = NULL,
+  method = NULL,
+  iterations = 500,
+  component = "all",
+  vcov = NULL,
+  vcov_args = NULL,
+  verbose = TRUE,
+  ...
+) {
   cl <- match.call()
   cl[[1]] <- ci.merMod
-  cl$method <- .attempt_satterthwaite_method(method)
+  cl$method <- .attempt_satterthwaite_method(method, vcov = vcov)
   eval.parent(cl)
 }
 
@@ -141,15 +156,24 @@ standard_error.lmerMod <- function(
 ) {
   cl <- match.call()
   cl[[1]] <- standard_error.merMod
-  cl$method <- .attempt_satterthwaite_method(method)
+  cl$method <- .attempt_satterthwaite_method(method, vcov = vcov)
   eval.parent(cl)
 }
 
 #' @export
-p_value.lmerMod <- function(model, method = NULL, ...) {
+p_value.lmerMod <- function(
+  model,
+  dof = NULL,
+  method = NULL,
+  component = "all",
+  vcov = NULL,
+  vcov_args = NULL,
+  verbose = TRUE,
+  ...
+) {
   cl <- match.call()
   cl[[1]] <- p_value.merMod
-  cl$method <- .attempt_satterthwaite_method(method)
+  cl$method <- .attempt_satterthwaite_method(method, vcov = vcov)
   eval.parent(cl)
 }
 
@@ -235,8 +259,13 @@ se_mixed_default <- function(model) {
   .data_frame(Parameter = params, SE = .get_se_from_summary(model))
 }
 
-.attempt_satterthwaite_method <- function(method, fallback = "wald", bootstrap = FALSE) {
-  if (!is.null(method) || bootstrap) {
+.attempt_satterthwaite_method <- function(
+  method,
+  fallback = "wald",
+  bootstrap = FALSE,
+  vcov = NULL
+) {
+  if (!is.null(method) || bootstrap || !is.null(vcov)) {
     return(method)
   }
 
