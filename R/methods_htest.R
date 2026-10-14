@@ -149,9 +149,17 @@ model_parameters.TukeyHSD <- function(model, verbose = TRUE, ...) {
   )
   rownames(parameters) <- NULL
 
-  parameters <- .add_htest_attributes(parameters, model, p_adjust = "tukey", ...)
+  # p-values are already Tukey-adjusted, so a "p_adjust" argument is ignored
+  dots <- list(...)
+  dots$p_adjust <- NULL
+  parameters <- do.call(
+    .add_htest_attributes,
+    c(list(parameters, model, p_adjust = "tukey"), dots)
+  )
   # no "# Fixed Effects" headline
   attr(parameters, "no_caption") <- TRUE
+  attr(parameters, "parameter_names") <- c("Term", "Contrast")
+  attr(parameters, "object_name") <- insight::safe_deparse_symbol(substitute(model))
   class(parameters) <- c("parameters_model", "see_parameters_model", class(parameters))
 
   parameters

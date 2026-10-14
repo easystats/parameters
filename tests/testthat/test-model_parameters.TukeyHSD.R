@@ -35,6 +35,19 @@ test_that("model_parameters.TukeyHSD", {
   expect_equal(params$CI, rep(0.9, 19))
 })
 
+test_that("model_parameters.TukeyHSD, p_adjust, summary and plot", {
+  params <- model_parameters(x1, p_adjust = "holm")
+  expect_equal(params$p, unname(x1$tension[, "p adj"]))
+  expect_identical(attr(params, "p_adjust"), "tukey")
+
+  out <- capture.output(summary(model_parameters(x1)))
+  expect_true(any(grepl("Contrast", out, fixed = TRUE)))
+  expect_true(any(grepl("M-H", out, fixed = TRUE)))
+
+  skip_if_not_installed("see")
+  expect_s3_class(plot(model_parameters(x1)), "ggplot")
+})
+
 test_that("print model_parameters.TukeyHSD", {
   for (x in list(x1, x2)) {
     out <- capture.output(print(model_parameters(x)))
