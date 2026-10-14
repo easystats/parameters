@@ -91,7 +91,7 @@ standard_error.merMod <- function(
 p_value.merMod <- p_value.cpglmm
 
 
-# lmerMod and lmerModTest -----------------------------------------------------------------
+# lmerMod (and lmerModLmerTest) -----------------------------------------------------------------
 
 #' @export
 model_parameters.lmerMod <- function(
