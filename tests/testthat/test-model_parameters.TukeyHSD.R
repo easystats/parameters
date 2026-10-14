@@ -63,6 +63,10 @@ test_that("print model_parameters.TukeyHSD", {
   out2 <- capture.output(print(model_parameters(x2)))
   expect_true(any(grepl("90% CI", out2, fixed = TRUE)))
   expect_false(any(grepl("95% CI", out2, fixed = TRUE)))
+
+  out <- capture.output(print(model_parameters(x1, verbose = FALSE)))
+  expect_false(any(grepl("p-value adjustment method", out, fixed = TRUE)))
+  expect_true(any(grepl("M-H", out, fixed = TRUE)))
 })
 
 test_that("print model_parameters.TukeyHSD, snapshots", {

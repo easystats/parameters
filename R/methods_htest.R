@@ -159,6 +159,8 @@ model_parameters.TukeyHSD <- function(model, verbose = TRUE, ...) {
   # no "# Fixed Effects" headline
   attr(parameters, "no_caption") <- TRUE
   attr(parameters, "parameter_names") <- c("Term", "Contrast")
+  # the print footer reads this attribute
+  attr(parameters, "verbose") <- verbose
   attr(parameters, "object_name") <- insight::safe_deparse_symbol(substitute(model))
   class(parameters) <- c("parameters_model", "see_parameters_model", class(parameters))
 
