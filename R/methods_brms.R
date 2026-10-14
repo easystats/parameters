@@ -45,16 +45,15 @@
 #' `priors` refer to the *original* `model`. If `model` is a data frame,
 #' arguments `diagnostic`, `bf_prior` and `priors` are ignored.
 #'
-#' For models from **blavaan**, `standardize` can be `TRUE`, `"all"` or
-#' `"std.all"`, `"latent"` or `"std.lv"`, and `"no_exogenous"` or `"std.nox"`.
-#' The returned parameters then summarize the standardized posterior draws of
-#' the matching `type` (see [`blavaan::standardizedPosterior()`]), without the
-#' `ESS` and `Rhat` columns. This requires package **insight** version 1.5.4.17
-#' or higher, and version 1.5.4.29 or higher for `"latent"`, `"std.lv"`,
-#' `"no_exogenous"` and `"std.nox"`. If the values for `"no_exogenous"` or
-#' `"std.nox"` equal those for `"std.all"`, a warning says so when
-#' `verbose = TRUE`. Other values of `standardize` (except `FALSE` or `NULL`)
-#' return unstandardized parameters, with a warning when `verbose = TRUE`.
+#' For **blavaan** models, `standardize` accepts `TRUE`, `"all"` (or
+#' `"std.all"`), `"latent"` (or `"std.lv"`), and `"no_exogenous"` (or
+#' `"std.nox"`). Returned parameters summarize the standardized posterior draws
+#' for the matching `type` (see [`blavaan::standardizedPosterior()`]), omitting
+#' `ESS` and `Rhat`. This requires package **insight** (>= 1.6.0). When
+#' `verbose = TRUE`, a warning is issued if `"no_exogenous"` / `"std.nox"`
+#' produces estimates identical to `"std.all"`. Any other unrecognized value
+#' (aside from `FALSE` or `NULL`) returns unstandardized parameters and triggers
+#' a warning when `verbose = TRUE`.
 #'
 #' There is also a
 #' [`plot()`-method](https://easystats.github.io/see/articles/parameters.html)

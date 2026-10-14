@@ -34,10 +34,10 @@
 
 * `model_parameters()` for models from *blavaan* now works with
   `standardize = TRUE`, `"all"` or `"std.all"` and summarizes the standardized
-  posterior draws. This requires *insight* 1.5.4.17 or later. As for *lavaan*
+  posterior draws. This requires *insight* 1.6.0 or later. As for *lavaan*
   models, `standardize = "latent"` or `"std.lv"` and `"no_exogenous"` or
   `"std.nox"` summarize the draws of the matching `type` of
-  `blavaan::standardizedPosterior()`. These values require *insight* 1.5.4.29
+  `blavaan::standardizedPosterior()`. These values require *insight* 1.6.0
   or later. If the `"std.nox"` values equal the `"std.all"` values, you get
   one warning instead of one from *lavaan* for each draw. Older versions of
   *insight* give an error that asks you to update. Other values
@@ -53,7 +53,7 @@
 * `print()` and `print_md()` now show a user-supplied `caption` for models
   that have no default caption, such as models fitted with `lm()` (#749).
 
-* With *insight* 1.5.4.10 or later, `caption = ""` in `print()` and
+* With *insight* 1.6.0 or later, `caption = ""` in `print()` and
   `print_md()` now removes the "Fixed Effects" and "Random Effects" captions
   of mixed models (easystats/insight#930).
 

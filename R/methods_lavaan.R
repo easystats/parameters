@@ -76,7 +76,7 @@ model_parameters.blavaan <- function(
       test <- .remove_scale_dependent_tests(test, verbose)
     } else if (verbose) {
       insight::format_warning(
-        "`standardize` should be one of `TRUE`, \"all\", \"std.all\", \"latent\", \"std.lv\", \"no_exogenous\" or \"std.nox\" for models from package `blavaan`.", # nolint
+        "`standardize` should be one of `TRUE`, \"all\", \"std.all\", \"latent\", \"std.lv\", \"no_exogenous\" or \"std.nox\" for models from package `blavaan`.",
         "Returning unstandardized parameters."
       )
     }
@@ -155,21 +155,21 @@ model_parameters.blavaan <- function(
 
 .blavaan_standardized_draws <- function(model, type = "std.all", verbose = TRUE) {
   # older versions of insight do not pass `type` on to blavaan
-  if (type != "std.all" && .insight_version() < "1.5.4.29") {
+  if (type != "std.all" && .insight_version() < "1.6.0") {
     insight::format_error(
       paste0(
         "Standardized parameters of type \"",
         type,
-        "\" for models from package `blavaan` require package `insight` version 1.5.4.29 or higher."
+        "\" for models from package `blavaan` require package `insight` version 1.6.0 or higher."
       ),
-      "Please update `insight`, for example with `install.packages(\"insight\", repos = \"https://easystats.r-universe.dev\")`." # nolint
+      "Please update `insight`, for example with `install.packages(\"insight\", repos = \"https://easystats.r-universe.dev\")`."
     )
   }
   # older versions of insight give the standardized draws shifted names
-  if (.insight_version() < "1.5.4.17") {
+  if (.insight_version() < "1.6.0") {
     insight::format_error(
-      "Standardized parameters for models from package `blavaan` require package `insight` version 1.5.4.17 or higher.", # nolint
-      "Please update `insight`, for example with `install.packages(\"insight\", repos = \"https://easystats.r-universe.dev\")`." # nolint
+      "Standardized parameters for models from package `blavaan` require package `insight` version 1.6.0 or higher.",
+      "Please update `insight`, for example with `install.packages(\"insight\", repos = \"https://easystats.r-universe.dev\")`."
     )
   }
   if (type == "std.all") {

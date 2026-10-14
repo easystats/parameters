@@ -3,28 +3,51 @@ skip_on_cran()
 skip_if_not_installed("ordinal")
 d <- data.frame(
   Stim = c(
-    "New", "New", "New", "New", "New", "New",
-    "Old", "Old", "Old", "Old", "Old", "Old"
+    "New",
+    "New",
+    "New",
+    "New",
+    "New",
+    "New",
+    "Old",
+    "Old",
+    "Old",
+    "Old",
+    "Old",
+    "Old"
   ),
   Response = c(
-    "Confidence1", "Confidence2", "Confidence3", "Confidence4",
-    "Confidence5", "Confidence6", "Confidence1", "Confidence2",
-    "Confidence3", "Confidence4", "Confidence5", "Confidence6"
+    "Confidence1",
+    "Confidence2",
+    "Confidence3",
+    "Confidence4",
+    "Confidence5",
+    "Confidence6",
+    "Confidence1",
+    "Confidence2",
+    "Confidence3",
+    "Confidence4",
+    "Confidence5",
+    "Confidence6"
   ),
   w = c(320, 295, 243, 206, 174, 159, 136, 188, 208, 256, 302, 333),
   stringsAsFactors = FALSE
 )
 
-m1 <- ordinal::clm(ordered(Response) ~ Stim,
+m1 <- ordinal::clm(
+  ordered(Response) ~ Stim,
   scale = ~Stim,
   link = "probit",
-  data = d, weights = w
+  data = d,
+  weights = w
 )
 
-m2 <- ordinal::clm2(ordered(Response) ~ Stim,
+m2 <- ordinal::clm2(
+  ordered(Response) ~ Stim,
   scale = ~Stim,
   link = "probit",
-  data = d, weights = w
+  data = d,
+  weights = w
 )
 
 
@@ -33,15 +56,27 @@ test_that("model_parameters.clm", {
   expect_equal(
     mp$Parameter,
     c(
-      "Confidence1|Confidence2", "Confidence2|Confidence3", "Confidence3|Confidence4",
-      "Confidence4|Confidence5", "Confidence5|Confidence6", "StimOld",
+      "Confidence1|Confidence2",
+      "Confidence2|Confidence3",
+      "Confidence3|Confidence4",
+      "Confidence4|Confidence5",
+      "Confidence5|Confidence6",
+      "StimOld",
       "StimOld"
     ),
     tolerance = 1e-4
   )
   expect_equal(
     mp$Component,
-    c("intercept", "intercept", "intercept", "intercept", "intercept", "location", "scale"),
+    c(
+      "intercept",
+      "intercept",
+      "intercept",
+      "intercept",
+      "intercept",
+      "location",
+      "scale"
+    ),
     tolerance = 1e-4
   )
   expect_equal(
@@ -65,15 +100,27 @@ test_that("model_parameters.clm2", {
   expect_equal(
     mp$Parameter,
     c(
-      "Confidence1|Confidence2", "Confidence2|Confidence3", "Confidence3|Confidence4",
-      "Confidence4|Confidence5", "Confidence5|Confidence6", "StimOld",
+      "Confidence1|Confidence2",
+      "Confidence2|Confidence3",
+      "Confidence3|Confidence4",
+      "Confidence4|Confidence5",
+      "Confidence5|Confidence6",
+      "StimOld",
       "StimOld"
     ),
     tolerance = 1e-4
   )
   expect_equal(
     mp$Component,
-    c("intercept", "intercept", "intercept", "intercept", "intercept", "location", "scale"),
+    c(
+      "intercept",
+      "intercept",
+      "intercept",
+      "intercept",
+      "intercept",
+      "location",
+      "scale"
+    ),
     tolerance = 1e-4
   )
   expect_equal(
@@ -108,8 +155,8 @@ test_that("print() and print_md() keep component captions of ordinal models", {
 })
 
 test_that("print_md() removes component captions of ordinal models with caption = ''", {
-  # insight 1.5.4.10 is needed to remove captions stored as attributes
-  skip_if_not_installed("insight", minimum_version = "1.5.4.10")
+  # insight 1.6.0 is needed to remove captions stored as attributes
+  skip_if_not_installed("insight", minimum_version = "1.6.0")
   mp <- model_parameters(m1)
   out <- print_md(mp, caption = "")
   expect_false(any(startsWith(out, "Table:")))
@@ -120,8 +167,16 @@ test_that("model_parameters.clmm, exponentiate works w/o component column", {
   mox <- ordinal::clmm(rating ~ temp + contact + (1 | judge), data = wine)
   out1 <- model_parameters(mox, exponentiate = FALSE)
   out2 <- model_parameters(mox, exponentiate = TRUE)
-  expect_equal(out1$Coefficient, c(-1.62367, 1.51337, 4.22853, 6.08877, 3.063, 1.83488, 1.13113), tolerance = 1e-4)
-  expect_equal(out2$Coefficient, c(0.19717, 4.54199, 68.61606, 440.87991, 21.39156, 6.26441, 1.13113), tolerance = 1e-4)
+  expect_equal(
+    out1$Coefficient,
+    c(-1.62367, 1.51337, 4.22853, 6.08877, 3.063, 1.83488, 1.13113),
+    tolerance = 1e-4
+  )
+  expect_equal(
+    out2$Coefficient,
+    c(0.19717, 4.54199, 68.61606, 440.87991, 21.39156, 6.26441, 1.13113),
+    tolerance = 1e-4
+  )
   expect_identical(attributes(out1)$coefficient_name, "Log-Odds")
   expect_identical(attributes(out2)$coefficient_name, "Odds Ratio")
 })

@@ -1040,20 +1040,26 @@ export(standardize_parameters)
 export(standardize_posteriors)
 export(supported_models)
 export(visualisation_recipe)
-importFrom(bayestestR,ci)
-importFrom(bayestestR,equivalence_test)
-importFrom(bayestestR,p_direction)
-importFrom(bayestestR,p_significance)
-importFrom(datawizard,demean)
-importFrom(datawizard,describe_distribution)
-importFrom(datawizard,kurtosis)
-importFrom(datawizard,rescale_weights)
-importFrom(datawizard,skewness)
-importFrom(datawizard,visualisation_recipe)
+importFrom(bayestestR,
+  ci,
+  equivalence_test,
+  p_direction,
+  p_significance
+)
+importFrom(datawizard,
+  demean,
+  describe_distribution,
+  kurtosis,
+  rescale_weights,
+  skewness,
+  visualisation_recipe
+)
 importFrom(graphics,plot)
-importFrom(insight,display)
-importFrom(insight,n_parameters)
-importFrom(insight,print_html)
-importFrom(insight,print_md)
-importFrom(insight,standardize_names)
-importFrom(insight,supported_models)
+importFrom(insight,
+  display,
+  n_parameters,
+  print_html,
+  print_md,
+  standardize_names,
+  supported_models
+)

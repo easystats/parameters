@@ -1,7 +1,7 @@
 skip_on_cran()
 skip_if_not_installed("blavaan")
 skip_if_not_installed("lavaan")
-skip_if_not_installed("insight", minimum_version = "1.5.4.17")
+skip_if_not_installed("insight", minimum_version = "1.6.0")
 skip_if_not_installed("withr")
 
 data(HolzingerSwineford1939, package = "lavaan")
@@ -130,7 +130,7 @@ test_that("model_parameters, blavaan, unsupported standardize values", {
 
 
 test_that("model_parameters, blavaan, std.lv and std.nox", {
-  skip_if_not_installed("insight", minimum_version = "1.5.4.29")
+  skip_if_not_installed("insight", minimum_version = "1.6.0")
   models <- list(single = m_single, groups = m_groups, pred = m_pred)
   for (nm in names(models)) {
     m <- models[[nm]]
@@ -181,7 +181,7 @@ test_that("model_parameters, blavaan, std.lv and std.nox", {
 
 
 test_that("model_parameters, blavaan, std.nox with fixed.x = FALSE", {
-  skip_if_not_installed("insight", minimum_version = "1.5.4.29")
+  skip_if_not_installed("insight", minimum_version = "1.6.0")
   # the model has an exogenous covariate, but std.nox still equals std.all
   m_free <- suppressMessages(suppressWarnings(.fit_blavaan(fixed.x = FALSE, sem = TRUE)))
   w <- capture_warnings({
@@ -195,7 +195,7 @@ test_that("model_parameters, blavaan, std.nox with fixed.x = FALSE", {
 
 
 test_that("model_parameters, blavaan, std.lv and std.nox, compare with lavaan", {
-  skip_if_not_installed("insight", minimum_version = "1.5.4.29")
+  skip_if_not_installed("insight", minimum_version = "1.6.0")
   m_ml <- lavaan::cfa(model, data = HolzingerSwineford1939)
   for (s in names(std_types)) {
     ml <- suppressWarnings(lavaan::standardizedSolution(m_ml, type = std_types[[s]]))
@@ -209,7 +209,7 @@ test_that("model_parameters, blavaan, std.lv and std.nox, compare with lavaan", 
 
 
 test_that("model_parameters, blavaan, std.lv and std.nox, tests and verbose", {
-  skip_if_not_installed("insight", minimum_version = "1.5.4.29")
+  skip_if_not_installed("insight", minimum_version = "1.6.0")
   for (s in names(std_types)) {
     expect_error(
       model_parameters(m_single, standardize = s, test = "all"),
@@ -233,7 +233,7 @@ test_that("model_parameters, blavaan, std.lv and std.nox, tests and verbose", {
 
 
 test_that("model_parameters, blavaan, standardized, type passed to insight", {
-  skip_if_not_installed("insight", minimum_version = "1.5.4.29")
+  skip_if_not_installed("insight", minimum_version = "1.6.0")
   # record the arguments of each standardized call to insight
   calls <- list()
   get_parameters_insight <- insight::get_parameters
@@ -291,32 +291,32 @@ test_that("model_parameters, blavaan, multiple groups with equal loadings", {
 
 
 test_that("model_parameters, blavaan, standardized, old insight", {
-  local_mocked_bindings(.insight_version = function() package_version("1.5.4.10"))
+  local_mocked_bindings(.insight_version = function() package_version("1.6.0"))
   expect_error(
     model_parameters(m_single, standardize = TRUE),
-    regexp = "1.5.4.17",
+    regexp = "1.6.0",
     fixed = TRUE
   )
 })
 
 
 test_that("model_parameters, blavaan, std.lv and std.nox, old insight", {
-  local_mocked_bindings(.insight_version = function() package_version("1.5.4.17"))
+  local_mocked_bindings(.insight_version = function() package_version("1.6.0"))
   for (s in names(std_types)) {
     expect_error(
       model_parameters(m_single, standardize = s),
-      regexp = "1.5.4.29",
+      regexp = "1.6.0",
       fixed = TRUE
     )
   }
   expect_no_error(model_parameters(m_single, standardize = "std.all"))
 
-  # below 1.5.4.17, the error for the new values still names the version they need
-  local_mocked_bindings(.insight_version = function() package_version("1.5.4.10"))
+  # below 1.6.0, the error for the new values still names the version they need
+  local_mocked_bindings(.insight_version = function() package_version("1.6.0"))
   for (s in names(std_types)) {
     expect_error(
       model_parameters(m_single, standardize = s),
-      regexp = "1.5.4.29",
+      regexp = "1.6.0",
       fixed = TRUE
     )
   }
@@ -324,7 +324,7 @@ test_that("model_parameters, blavaan, std.lv and std.nox, old insight", {
 
 
 test_that("model_parameters, blavaan, std.nox warning in other wording", {
-  skip_if_not_installed("insight", minimum_version = "1.5.4.29")
+  skip_if_not_installed("insight", minimum_version = "1.6.0")
   # a translated or reworded lavaan warning keeps the names of the types
   get_parameters_insight <- insight::get_parameters
   local_mocked_bindings(
