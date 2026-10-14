@@ -5,7 +5,10 @@ test_that("model_parameters.TukeyHSD", {
   for (x in list(x1, x2)) {
     params <- model_parameters(x)
     expect_s3_class(params, "data.frame")
-    expect_named(params, c("Term", "Contrast", "Coefficient", "CI", "CI_low", "CI_high", "p"))
+    expect_named(
+      params,
+      c("Term", "Contrast", "Coefficient", "CI", "CI_low", "CI_high", "p")
+    )
 
     terms <- rep(names(x), vapply(x, nrow, integer(1)))
     mats <- do.call(rbind, unclass(x))
@@ -39,11 +42,17 @@ test_that("print model_parameters.TukeyHSD", {
     out <- out[nzchar(trimws(out))]
     expect_identical(out[length(out)], "p-value adjustment method: Tukey")
   }
-  expect_true(any(grepl("95% CI", capture.output(print(model_parameters(x1))), fixed = TRUE)))
+  expect_true(any(grepl(
+    "95% CI",
+    capture.output(print(model_parameters(x1))),
+    fixed = TRUE
+  )))
   out2 <- capture.output(print(model_parameters(x2)))
   expect_true(any(grepl("90% CI", out2, fixed = TRUE)))
   expect_false(any(grepl("95% CI", out2, fixed = TRUE)))
+})
 
+test_that("print model_parameters.TukeyHSD, snapshots", {
   expect_snapshot(print(model_parameters(x1)))
   expect_snapshot(print(model_parameters(x2)))
 })

@@ -2,7 +2,9 @@
 #'
 #' Parameters of h-tests (correlations, t-tests, chi-squared, ...).
 #'
-#' @param model Object of class `htest` or `pairwise.htest`.
+#' @param model Object of class `htest`, `pairwise.htest`, or `TukeyHSD`. For
+#'   `TukeyHSD` objects, the confidence level of the intervals is the
+#'   `conf.level` that was used in `TukeyHSD()`.
 #' @param bootstrap Should estimates be bootstrapped?
 #' @param ci Level of confidence intervals for effect size statistic. Currently
 #'   only applies to objects from `chisq.test()` or `oneway.test()`.
@@ -32,6 +34,9 @@
 #' smokers <- c(83, 90, 129, 70)
 #' patients <- c(86, 93, 136, 82)
 #' model <- suppressWarnings(pairwise.prop.test(smokers, patients))
+#' model_parameters(model)
+#'
+#' model <- TukeyHSD(aov(breaks ~ wool + tension, data = warpbreaks), "tension")
 #' model_parameters(model)
 #'
 #' model <- suppressWarnings(chisq.test(table(mtcars$am, mtcars$cyl)))
@@ -114,6 +119,39 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
   parameters <- stats::na.omit(parameters)
 
   parameters <- .add_htest_attributes(parameters, model, p_adjust = model$p.adjust.method)
+  class(parameters) <- c("parameters_model", "see_parameters_model", class(parameters))
+
+  parameters
+}
+
+
+# .TukeyHSD --------------------
+
+#' @rdname model_parameters.htest
+#' @export
+model_parameters.TukeyHSD <- function(model, verbose = TRUE, ...) {
+  # one matrix per term, with columns "diff", "lwr", "upr" and "p adj"
+  parameters <- do.call(
+    rbind,
+    lapply(names(model), function(term) {
+      m <- model[[term]]
+      data.frame(
+        Term = rep(term, nrow(m)),
+        Contrast = rownames(m),
+        Coefficient = unname(m[, "diff"]),
+        CI = attr(model, "conf.level"),
+        CI_low = unname(m[, "lwr"]),
+        CI_high = unname(m[, "upr"]),
+        p = unname(m[, "p adj"]),
+        stringsAsFactors = FALSE
+      )
+    })
+  )
+  rownames(parameters) <- NULL
+
+  parameters <- .add_htest_attributes(parameters, model, p_adjust = "tukey", ...)
+  # no "# Fixed Effects" headline
+  attr(parameters, "no_caption") <- TRUE
   class(parameters) <- c("parameters_model", "see_parameters_model", class(parameters))
 
   parameters
