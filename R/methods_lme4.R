@@ -118,11 +118,13 @@ model_parameters.lmerMod <- function(
 ) {
   cl <- match.call()
   cl[[1]] <- model_parameters.merMod
+  cl$model <- .attempt_to_lmerModLmerTest(model)
   cl$ci_method <- .attempt_satterthwaite_method(
     ci_method,
-    model,
+    cl$model,
     effects,
-    bootstrap = bootstrap
+    bootstrap = bootstrap,
+    verbose = verbose
   )
   eval.parent(cl)
 }
@@ -142,7 +144,8 @@ ci.lmerMod <- function(
 ) {
   cl <- match.call()
   cl[[1]] <- ci.merMod
-  cl$method <- .attempt_satterthwaite_method(method, x, effects)
+  cl$x <- .attempt_to_lmerModLmerTest(x)
+  cl$method <- .attempt_satterthwaite_method(method, cl$x, effects, verbose = verbose)
   eval.parent(cl)
 }
 
@@ -153,11 +156,13 @@ standard_error.lmerMod <- function(
   method = NULL,
   vcov = NULL,
   vcov_args = NULL,
+  verbose = TRUE,
   ...
 ) {
   cl <- match.call()
   cl[[1]] <- standard_error.merMod
-  cl$method <- .attempt_satterthwaite_method(method, model, effects)
+  cl$model <- .attempt_to_lmerModLmerTest(model)
+  cl$method <- .attempt_satterthwaite_method(method, cl$model, effects, verbose = verbose)
   eval.parent(cl)
 }
 
@@ -174,7 +179,8 @@ p_value.lmerMod <- function(
 ) {
   cl <- match.call()
   cl[[1]] <- p_value.merMod
-  cl$method <- .attempt_satterthwaite_method(method, model, effects)
+  cl$model <- .attempt_to_lmerModLmerTest(model)
+  cl$method <- .attempt_satterthwaite_method(method, cl$model, effects, verbose = verbose)
   eval.parent(cl)
 }
 
@@ -260,24 +266,44 @@ se_mixed_default <- function(model) {
   .data_frame(Parameter = params, SE = .get_se_from_summary(model))
 }
 
+.attempt_to_lmerModLmerTest <- function(model) {
+  if (
+    inherits(model, "lmerModLmerTest") || !requireNamespace("lmerTest", quietly = TRUE)
+  ) {
+    return(model)
+  }
+
+  tryCatch(lmerTest::as_lmerModLmerTest(model), error = function(e) model)
+}
+
 .attempt_satterthwaite_method <- function(
   method,
   model,
   effects,
   fallback = "wald",
-  bootstrap = FALSE
+  bootstrap = FALSE,
+  verbose = TRUE
 ) {
-  is_right_class <- inherits(model, "lmerMod") &&
-    !inherits(model, c("blmerMod", "wblm", "rlmerMod"))
-
-  if (!is.null(method) || !is_right_class || effects == "random" || bootstrap) {
+  # Cases where we don't want to interfere
+  if (!is.null(method) || effects == "random" || isTRUE(bootstrap)) {
     return(method)
   }
 
+  if (inherits(model, "lmerModLmerTest")) {
+    return("satterthwaite")
+  }
+
+  # Then the model is DEFNITLY NOT coercible because we already tried to coerce it
+  if (requireNamespace("lmerTest", quietly = TRUE)) {
+    return(fallback)
+  }
+
+  # Model is potentially coercible if lmerTest were installed?
   installed <- insight::check_if_installed(
     package = "lmerTest",
     reason = "for Satterthwaite df (default)",
-    stop = FALSE
+    stop = FALSE,
+    prompt = interactive() && isTRUE(verbose)
   )
 
   # This is a workaround for the fact that check_if_installed() returns FALSE
@@ -287,7 +313,8 @@ se_mixed_default <- function(model) {
     installed <- requireNamespace("lmerTest", quietly = TRUE)
   }
 
-  if (installed) {
+  # if lmerTest is newly installed, and the model is coercible...
+  if (installed && inherits(.attempt_to_lmerModLmerTest(model, "lmerModLmerTest"))) {
     return("satterthwaite")
   }
 
