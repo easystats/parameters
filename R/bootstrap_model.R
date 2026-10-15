@@ -36,8 +36,9 @@
 #' model has several grouping factors that are all nested in one factor, the
 #' clusters are the levels of that factor. Grouping factors that are not nested
 #' in one factor give an error. A grouping factor that is also a fixed effect
-#' gives an error, unless the formula nests it in the resampled factor (for
-#' example `cond` in `random = ~ 1 | subject/cond`). With few clusters, the
+#' gives an error, unless the formula has it only in interactions with the
+#' resampled factor (for example `cond` in `random = ~ 1 | subject/cond`, which
+#' has the grouping terms `subject` and `subject:cond`). With few clusters, the
 #' cluster bootstrap has few independent units to resample, and its standard
 #' errors can be too small.
 #'
@@ -300,8 +301,8 @@ bootstrap_model.default <- function(
   }
 
   # A drawn cluster gets new labels in the top factor. A lower factor needs new
-  # labels too, unless each `:` term it occurs in also has the top factor, which
-  # then keeps the copies of a cluster apart.
+  # labels too, unless it occurs only in `:` terms that also have the top
+  # factor, which then keep the copies of a cluster apart.
   needs_relabel <- vapply(
     columns,
     function(g) {

@@ -162,7 +162,8 @@ test_that("bootstrap_model errors if refits do not return the parameters", {
   m <- ordinal::clmm(rating ~ temp + (1 | judge), data = wine)
   get_parameters <- insight::get_parameters
   # rename the parameters from the n-th call on: the first call reads the
-  # model, the second the refit on all clusters, and later ones the draws
+  # model, the second the refit on all clusters, the third the refit of
+  # boot::boot() on the original clusters, and later ones the draws
   rename_from <- function(n) {
     calls <- 0
     function(x, ...) {
