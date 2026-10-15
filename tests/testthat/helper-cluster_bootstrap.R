@@ -15,8 +15,11 @@
     })
     d <- do.call(rbind, pieces)
     d[[group]] <- factor(d[[group]], levels = unique(d[[group]]))
+    # evaluate the call from the global environment, because the environment of
+    # helper files does not see packages that a test attaches
+    refit_call <- stats::update(model, data = d, evaluate = FALSE)
     fit <- tryCatch(
-      suppressWarnings(suppressMessages(stats::update(model, data = d))),
+      suppressWarnings(suppressMessages(eval(refit_call, list(d = d), globalenv()))),
       error = function(e) NULL
     )
     if (is.null(fit)) {
