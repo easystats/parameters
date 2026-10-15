@@ -31,9 +31,9 @@ of class \code{merMod} or \code{glmmTMB}, may be \code{"parametric"} (default). 
 for details). Semiparametric bootstrapping resamples the residuals and keeps
 the random effects at their estimated values (\code{use.u = TRUE} in
 \code{lme4::bootMer()}). For all other models, see argument \code{sim} in
-\code{?boot::boot} (defaults to \code{"ordinary"}). For other mixed models, only
-\code{"ordinary"}, \code{"balanced"} and \code{"parametric"} are available, and
-\code{"parametric"} resamples single rows, not clusters (see 'Details').}
+\code{?boot::boot} (defaults to \code{"ordinary"}). For other mixed models,
+\code{"ordinary"} and \code{"balanced"} resample whole clusters (see 'Details'), and
+\code{"permutation"} and \code{"antithetic"} are not available.}
 
 \item{parallel}{The type of parallel operation to be used (if any).}
 
@@ -59,13 +59,13 @@ obtain bootstrapped samples. \code{bootstrap_parameters()} summarizes the
 bootstrapped model estimates.
 
 Other mixed models (for example from \strong{ordinal}, \strong{cplm} or \strong{nlme}) use
-a cluster bootstrap: each sample draws whole clusters (the levels of the
-grouping factor) with replacement, not single rows. A cluster that is drawn
-twice counts as two clusters. If the model has several grouping factors that
-are all nested in one factor, the clusters are the levels of that factor.
-Grouping factors that are not nested in one factor give an error. With few
-clusters, the cluster bootstrap is less accurate, because each sample can
-only draw from these few clusters.
+a cluster bootstrap when \code{type} is \code{"ordinary"} or \code{"balanced"}: each sample
+draws whole clusters (the levels of the grouping factor) with replacement,
+not single rows. A cluster that is drawn twice counts as two clusters. If the
+model has several grouping factors that are all nested in one factor, the
+clusters are the levels of that factor. Grouping factors that are not nested
+in one factor give an error. With few clusters, the cluster bootstrap has few
+independent units to resample, and its standard errors can be too small.
 }
 \section{Using with \strong{emmeans}}{
 

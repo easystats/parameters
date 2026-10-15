@@ -18,3 +18,14 @@ test_that("model_parameters.cpglmm", {
 
   unloadNamespace("cplm")
 })
+
+test_that("bootstrap_model resamples clusters for cpglmm", {
+  skip_if_not_installed("cplm")
+  skip_if_not_installed("boot")
+  withr::defer(unloadNamespace("cplm"))
+  # update() needs cpglmm() on the search path
+  withr::local_package("cplm")
+  data("FineRoot", package = "cplm")
+  m <- cpglmm(RLD ~ Stock + Spacing + (1 | Plant), data = FineRoot)
+  .expect_cluster_bootstrap(m, FineRoot, "Plant")
+})

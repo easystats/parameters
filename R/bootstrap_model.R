@@ -10,9 +10,9 @@
 #'   for details). Semiparametric bootstrapping resamples the residuals and keeps
 #'   the random effects at their estimated values (`use.u = TRUE` in
 #'   `lme4::bootMer()`). For all other models, see argument `sim` in
-#'   `?boot::boot` (defaults to `"ordinary"`). For other mixed models, only
-#'   `"ordinary"`, `"balanced"` and `"parametric"` are available, and
-#'   `"parametric"` resamples single rows, not clusters (see 'Details').
+#'   `?boot::boot` (defaults to `"ordinary"`). For other mixed models,
+#'   `"ordinary"` and `"balanced"` resample whole clusters (see 'Details'), and
+#'   `"permutation"` and `"antithetic"` are not available.
 #' @param parallel The type of parallel operation to be used (if any).
 #' @param n_cpus Number of processes to be used in parallel operation.
 #' @param cluster Optional cluster when `parallel = "snow"`. See `?lme4::bootMer`
@@ -30,13 +30,13 @@
 #' bootstrapped model estimates.
 #'
 #' Other mixed models (for example from **ordinal**, **cplm** or **nlme**) use
-#' a cluster bootstrap: each sample draws whole clusters (the levels of the
-#' grouping factor) with replacement, not single rows. A cluster that is drawn
-#' twice counts as two clusters. If the model has several grouping factors that
-#' are all nested in one factor, the clusters are the levels of that factor.
-#' Grouping factors that are not nested in one factor give an error. With few
-#' clusters, the cluster bootstrap is less accurate, because each sample can
-#' only draw from these few clusters.
+#' a cluster bootstrap when `type` is `"ordinary"` or `"balanced"`: each sample
+#' draws whole clusters (the levels of the grouping factor) with replacement,
+#' not single rows. A cluster that is drawn twice counts as two clusters. If the
+#' model has several grouping factors that are all nested in one factor, the
+#' clusters are the levels of that factor. Grouping factors that are not nested
+#' in one factor give an error. With few clusters, the cluster bootstrap has few
+#' independent units to resample, and its standard errors can be too small.
 #'
 #' @section Using with **emmeans**:
 #' The output can be passed directly to the various functions from the
@@ -247,7 +247,7 @@ bootstrap_model.default <- function(
     cl = cluster
   )
 
-  # the refit on all clusters failed: show the error
+  # if the refit on all clusters failed with an error, show that error
   if (all(is.na(results$t0))) {
     refit(seq_along(clusters), catch = FALSE)
   }
@@ -264,8 +264,9 @@ bootstrap_model.default <- function(
 
 # Find the grouping factors of a mixed model, and the top factor that all of
 # them nest in. Factors that occur only in `:` terms of the formula (which `/`
-# creates) are nested in the other factors of those terms. Other factors are
-# nested if each of their levels occurs within one level of the top factor.
+# creates) count as nested in the other factors of those terms, because the
+# cells of a `:` term nest in each of its factors. Other factors are nested if
+# each of their levels occurs within one level of the top factor.
 .bootstrap_cluster_groups <- function(model, data) {
   terms <- unique(insight::find_random(model, split_nested = FALSE, flatten = TRUE))
   columns <- unique(insight::find_random(model, split_nested = TRUE, flatten = TRUE))
