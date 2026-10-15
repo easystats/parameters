@@ -279,15 +279,20 @@ model_parameters.predictions <- function(
 }
 
 
-# give "by" variables their original names back. If an output column already
-# has that name, the variable gets the suffix ".1"
+# give "by" variables their original names back. If an output column or
+# another "by" variable already has that name, the variable gets the suffix
+# ".1" (or ".2", ..., if that name is taken, too)
 .restore_by_columns <- function(x, by_names) {
   for (temporary in names(by_names)) {
     original <- by_names[[temporary]]
-    if (original %in% colnames(x)) {
-      original <- paste0(original, ".1")
+    taken <- c(setdiff(colnames(x), names(by_names)), setdiff(by_names, original))
+    new_name <- original
+    i <- 0
+    while (new_name %in% taken) {
+      i <- i + 1
+      new_name <- paste0(original, ".", i)
     }
-    colnames(x)[colnames(x) == temporary] <- original
+    colnames(x)[colnames(x) == temporary] <- new_name
   }
   x
 }

@@ -452,21 +452,22 @@ test_that("preserve focal terms with same name as reserved words", {
 
 
 # slopes, comparisons and predictions with a "by" variable called `name`
-.by_variable_calls <- function(name) {
+.by_variable_calls <- function(name, calls = c("slopes", "comparisons", "predictions")) {
   d <- iris
   d$v <- factor(rep(c("a", "b", "c"), 50))
   colnames(d)[colnames(d) == "v"] <- name
   f <- stats::as.formula(paste0("Sepal.Width ~ `", name, "` * Petal.Length"))
   m <- lm(f, data = d)
-  list(
-    slopes = marginaleffects::avg_slopes(m, variables = "Petal.Length", by = name),
-    comparisons = marginaleffects::avg_comparisons(
-      m,
-      variables = "Petal.Length",
-      by = name
-    ),
-    predictions = marginaleffects::predictions(m, by = name)
+  out <- list(
+    slopes = function() {
+      marginaleffects::avg_slopes(m, variables = "Petal.Length", by = name)
+    },
+    comparisons = function() {
+      marginaleffects::avg_comparisons(m, variables = "Petal.Length", by = name)
+    },
+    predictions = function() marginaleffects::predictions(m, by = name)
   )
+  lapply(out[calls], function(f) f())
 }
 
 
@@ -482,7 +483,7 @@ test_that("by variables named like output columns get the suffix .1", {
     expect_gt(length(clash_names), 3)
     for (name in clash_names) {
       label <- paste(call, name)
-      out <- as.data.frame(model_parameters(.by_variable_calls(name)[[call]]))
+      out <- as.data.frame(model_parameters(.by_variable_calls(name, call)[[call]]))
       expected <- reference
       colnames(expected)[colnames(expected) == "safe_var"] <- paste0(name, ".1")
       expect_identical(colnames(out), colnames(expected), info = label)
@@ -515,6 +516,29 @@ test_that("print with a by variable named p", {
       "^(< \\.001|> \\.999|0\\.\\d{3})$",
       info = call
     )
+  }
+})
+
+
+test_that("by variables named x and x.1 get unique names", {
+  d <- iris
+  d$p <- factor(rep(c("a", "b", "c"), 50))
+  d$p.1 <- factor(rep(c("x", "y"), 75))
+  m <- lm(Sepal.Width ~ p * p.1 * Petal.Length, data = d)
+  calls <- list(
+    slopes = marginaleffects::avg_slopes(
+      m,
+      variables = "Petal.Length",
+      by = c("p", "p.1")
+    ),
+    predictions = marginaleffects::predictions(m, by = c("p.1", "p"))
+  )
+  for (call in names(calls)) {
+    out <- model_parameters(calls[[call]])
+    expect_false(anyDuplicated(colnames(out)) > 0, info = call)
+    expect_true(is.numeric(out$p), info = call)
+    expect_identical(sort(unique(as.character(out$p.1))), c("x", "y"), info = call)
+    expect_identical(sort(unique(as.character(out$p.2))), c("a", "b", "c"), info = call)
   }
 })
 
