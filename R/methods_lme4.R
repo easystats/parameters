@@ -261,7 +261,9 @@ se_mixed_default <- function(model) {
   fallback = "wald",
   bootstrap = FALSE
 ) {
-  if (effects == "random" || !is.null(method) || bootstrap) {
+  if (
+    !is.null(method) || !inherits(model, "lmerMod") || effects == "random" || bootstrap
+  ) {
     return(method)
   }
 
