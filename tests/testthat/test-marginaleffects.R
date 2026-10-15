@@ -543,6 +543,22 @@ test_that("by variables named x and x.1 get unique names", {
 })
 
 
+test_that("grouped hypothesis with a by variable named p", {
+  d <- iris
+  d$p <- factor(rep(c("a", "b", "c"), 50))
+  d$g <- factor(rep(c("x", "y"), 75))
+  m <- lm(Sepal.Width ~ p * g * Petal.Length, data = d)
+  out <- model_parameters(marginaleffects::avg_predictions(
+    m,
+    by = c("g", "p"),
+    hypothesis = ~ pairwise | p
+  ))
+  expect_true(is.numeric(out$p))
+  expect_true(all(out$p >= 0 & out$p <= 1))
+  expect_identical(as.character(out$p.1), c("a", "b", "c"))
+})
+
+
 test_that("by variables with free names keep them", {
   for (name in c("type", "t", "safe_var")) {
     calls <- .by_variable_calls(name)
