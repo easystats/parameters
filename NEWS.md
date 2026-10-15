@@ -1,4 +1,4 @@
-# parameters (devel)
+# parameters 0.30.0
 
 ## Changes
 
@@ -50,7 +50,7 @@
 * `print()` and `print_md()` now show a user-supplied `caption` for models
   that have no default caption, such as models fitted with `lm()` (#749).
 
-* With *insight* 1.5.4.10 or later, `caption = ""` in `print()` and
+* With *insight* 1.6.0 or later, `caption = ""` in `print()` and
   `print_md()` now removes the "Fixed Effects" and "Random Effects" captions
   of mixed models (easystats/insight#930).
 
