@@ -267,9 +267,8 @@ se_mixed_default <- function(model) {
   fallback = "wald",
   bootstrap = FALSE
 ) {
-  if (
-    !is.null(method) || !inherits(model, "lmerMod") || effects == "random" || bootstrap
-  ) {
+  is_right_class <- inherits(model, "lmerMod") && !inherits(model, c("blmerMod", "wblm"))
+  if (!is.null(method) || !is_right_class || effects == "random" || bootstrap) {
     return(method)
   }
 
