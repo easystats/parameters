@@ -23,8 +23,8 @@
 )
 }
 \arguments{
-\item{model}{Object of class \code{\link[=aov]{aov()}}, \code{\link[=anova]{anova()}}, \code{aovlist}, \code{Gam},
-\code{\link[=manova]{manova()}}, \code{Anova.mlm}, \code{afex_aov} or \code{maov}.}
+\item{model}{Object of class \code{\link[stats:aov]{stats::aov()}}, \code{\link[stats:anova]{stats::anova()}}, \code{aovlist},
+\code{Gam}, \code{\link[=manova]{manova()}}, \code{Anova.mlm}, \code{afex_aov} or \code{maov}.}
 
 \item{type}{Numeric, type of sums of squares. May be 1, 2 or 3. If 2 or 3,
 ANOVA-tables using \code{car::Anova()} will be returned. (Ignored for

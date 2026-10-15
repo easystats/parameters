@@ -4,8 +4,8 @@
 
 #' Parameters from ANOVAs
 #'
-#' @param model Object of class [aov()], [anova()], `aovlist`, `Gam`,
-#'   [manova()], `Anova.mlm`, `afex_aov` or `maov`.
+#' @param model Object of class [`stats::aov()`], [`stats::anova()`], `aovlist`,
+#'   `Gam`, [manova()], `Anova.mlm`, `afex_aov` or `maov`.
 #' @param es_type The effect size of interest. Not that possibly not all
 #'   effect sizes are applicable to the model object. See 'Details'. For Anova
 #'   models, can also be a character vector with multiple effect size names.
@@ -98,21 +98,23 @@
 #' )
 #' }
 #' @export
-model_parameters.aov <- function(model,
-                                 type = NULL,
-                                 df_error = NULL,
-                                 ci = NULL,
-                                 alternative = NULL,
-                                 p_adjust = NULL,
-                                 test = NULL,
-                                 power = FALSE,
-                                 es_type = NULL,
-                                 keep = NULL,
-                                 drop = NULL,
-                                 include_intercept = FALSE,
-                                 table_wide = FALSE,
-                                 verbose = TRUE,
-                                 ...) {
+model_parameters.aov <- function(
+  model,
+  type = NULL,
+  df_error = NULL,
+  ci = NULL,
+  alternative = NULL,
+  p_adjust = NULL,
+  test = NULL,
+  power = FALSE,
+  es_type = NULL,
+  keep = NULL,
+  drop = NULL,
+  include_intercept = FALSE,
+  table_wide = FALSE,
+  verbose = TRUE,
+  ...
+) {
   # save model object, for later checks
   original_model <- model
   object_name <- insight::safe_deparse_symbol(substitute(model))
@@ -121,7 +123,9 @@ model_parameters.aov <- function(model,
     if (requireNamespace("car", quietly = TRUE)) {
       model <- car::Anova(model, type = type)
     } else {
-      insight::format_warning("Package {.pkg car} required for type-2 or type-3 Anova. Defaulting to type-1.")
+      insight::format_warning(
+        "Package {.pkg car} required for type-2 or type-3 Anova. Defaulting to type-1."
+      )
     }
   }
 
@@ -168,11 +172,7 @@ model_parameters.aov <- function(model,
 
   # filter parameters
   if (!is.null(keep) || !is.null(drop)) {
-    params <- .filter_parameters(params,
-      keep = keep,
-      drop = drop,
-      verbose = verbose
-    )
+    params <- .filter_parameters(params, keep = keep, drop = drop, verbose = verbose)
   }
 
   # wide or long?
@@ -181,7 +181,14 @@ model_parameters.aov <- function(model,
   }
 
   # add attributes
-  params <- .add_anova_attributes(params, model, ci, test = test, alternative = alternative, ...)
+  params <- .add_anova_attributes(
+    params,
+    model,
+    ci,
+    test = test,
+    alternative = alternative,
+    ...
+  )
 
   class(params) <- c("parameters_model", "see_parameters_model", class(params))
   attr(params, "object_name") <- object_name
@@ -193,10 +200,7 @@ model_parameters.aov <- function(model,
 standard_error.aov <- function(model, ...) {
   params <- model_parameters(model)
 
-  .data_frame(
-    Parameter = params$Parameter,
-    SE = params$SE
-  )
+  .data_frame(Parameter = params$Parameter, SE = params$SE)
 }
 
 
@@ -220,10 +224,7 @@ p_value.aov <- function(model, ...) {
     return(NA)
   }
 
-  .data_frame(
-    Parameter = params$Parameter,
-    p = params$p
-  )
+  .data_frame(Parameter = params$Parameter, p = params$p)
 }
 
 
@@ -254,16 +255,18 @@ model_parameters.aovlist <- model_parameters.aov
 # .afex_aov  ------
 
 #' @export
-model_parameters.afex_aov <- function(model,
-                                      es_type = NULL,
-                                      df_error = NULL,
-                                      type = NULL,
-                                      keep = NULL,
-                                      drop = NULL,
-                                      include_intercept = FALSE,
-                                      p_adjust = NULL,
-                                      verbose = TRUE,
-                                      ...) {
+model_parameters.afex_aov <- function(
+  model,
+  es_type = NULL,
+  df_error = NULL,
+  type = NULL,
+  keep = NULL,
+  drop = NULL,
+  include_intercept = FALSE,
+  p_adjust = NULL,
+  verbose = TRUE,
+  ...
+) {
   if (inherits(model$Anova, "Anova.mlm")) {
     params <- model$anova_table
     with_df_and_p <- summary(model$Anova)$univariate.tests
@@ -310,11 +313,7 @@ model_parameters.afex_aov <- function(model,
 
   # filter parameters
   if (!is.null(keep) || !is.null(drop)) {
-    out <- .filter_parameters(out,
-      keep = keep,
-      drop = drop,
-      verbose = verbose
-    )
+    out <- .filter_parameters(out, keep = keep, drop = drop, verbose = verbose)
   }
 
   if (!"Method" %in% names(out)) {
@@ -353,15 +352,7 @@ model_parameters.seqanova.svyglm <- model_parameters.aov
         return(type)
       }
       # nolint start
-      switch(type,
-        `1` = ,
-        `I` = 1,
-        `2` = ,
-        `II` = 2,
-        `3` = ,
-        `III` = 3,
-        1
-      )
+      switch(type, `1` = , `I` = 1, `2` = , `II` = 2, `3` = , `III` = 3, 1)
       # nolint end
     }
 
@@ -375,11 +366,23 @@ model_parameters.seqanova.svyglm <- model_parameters.aov
     } else if (!is.null(attr(model, "heading"))) {
       heading <- attr(model, "heading")[1]
       if (grepl("(.*)Type (.*) Wald(.*)", heading)) {
-        type <- type_to_numeric(insight::trim_ws(gsub("(.*)Type (.*) Wald(.*)", "\\2", heading)))
+        type <- type_to_numeric(insight::trim_ws(gsub(
+          "(.*)Type (.*) Wald(.*)",
+          "\\2",
+          heading
+        )))
       } else if (grepl("Type (.*) Analysis(.*)", heading)) {
-        type <- type_to_numeric(insight::trim_ws(gsub("Type (.*) Analysis(.*)", "\\1", heading)))
+        type <- type_to_numeric(insight::trim_ws(gsub(
+          "Type (.*) Analysis(.*)",
+          "\\1",
+          heading
+        )))
       } else if (grepl("(.*)Type (.*) tests(.*)", heading)) {
-        type <- type_to_numeric(insight::trim_ws(gsub("(.*)Type (.*) tests(.*)", "\\2", heading)))
+        type <- type_to_numeric(insight::trim_ws(gsub(
+          "(.*)Type (.*) tests(.*)",
+          "\\2",
+          heading
+        )))
       }
     } else if ("type" %in% names(model) && !is.null(model$type)) {
       type <- type_to_numeric(model$type)
@@ -401,12 +404,17 @@ model_parameters.seqanova.svyglm <- model_parameters.aov
       ci_low <- which(endsWith(colnames(params), "CI_low"))
       ci_high <- which(endsWith(colnames(params), "CI_high"))
       if (length(ci_low) && length(ci_high)) {
-        bound <- if (alternative == "less") params[[ci_low[1]]][1] else params[[ci_high[1]]][1]
+        bound <- if (alternative == "less") {
+          params[[ci_low[1]]][1]
+        } else {
+          params[[ci_high[1]]][1]
+        }
         bound <- insight::format_value(bound, digits = 2)
         side <- if (alternative == "less") "lower" else "upper"
         alternative_footer <- sprintf(
           "One-sided CIs: %s bound fixed at [%s].",
-          side, bound
+          side,
+          bound
         )
       }
     }
@@ -441,21 +449,28 @@ model_parameters.seqanova.svyglm <- model_parameters.aov
     if (is.null(predictors)) {
       treatment_contrasts_or_not_centered <- FALSE
     } else {
-      treatment_contrasts_or_not_centered <- vapply(predictors, function(i) {
-        if (is.factor(i)) {
-          cn <- stats::contrasts(i)
-          if (is.null(cn) || (all(cn %in% c(0, 1)))) {
+      treatment_contrasts_or_not_centered <- vapply(
+        predictors,
+        function(i) {
+          if (is.factor(i)) {
+            cn <- stats::contrasts(i)
+            if (is.null(cn) || (all(cn %in% c(0, 1)))) {
+              return(TRUE)
+            }
+          } else if (abs(mean(i, na.rm = TRUE)) > 1e-2) {
             return(TRUE)
           }
-        } else if (abs(mean(i, na.rm = TRUE)) > 1e-2) {
-          return(TRUE)
-        }
-        FALSE
-      }, TRUE)
+          FALSE
+        },
+        TRUE
+      )
     }
 
     # successfully checked predictors, or if not possible, at least found interactions?
-    if (!is.null(interaction_terms) && (any(treatment_contrasts_or_not_centered) || is.null(predictors))) {
+    if (
+      !is.null(interaction_terms) &&
+        (any(treatment_contrasts_or_not_centered) || is.null(predictors))
+    ) {
       insight::format_alert(
         "Type 3 ANOVAs only give sensible and informative results when covariates are mean-centered and factors are coded with orthogonal contrasts (such as those produced by `contr.sum`, `contr.poly`, or `contr.helmert`, but *not* by the default `contr.treatment`)." # nolint
       )
@@ -464,14 +479,16 @@ model_parameters.seqanova.svyglm <- model_parameters.aov
 }
 
 
-.effectsizes_for_aov <- function(model,
-                                 params,
-                                 es_type = NULL,
-                                 df_error = NULL,
-                                 ci = NULL,
-                                 alternative = NULL,
-                                 verbose = TRUE,
-                                 ...) {
+.effectsizes_for_aov <- function(
+  model,
+  params,
+  es_type = NULL,
+  df_error = NULL,
+  ci = NULL,
+  alternative = NULL,
+  verbose = TRUE,
+  ...
+) {
   # user actually does not want to compute effect sizes
   if (is.null(es_type)) {
     return(params)
@@ -485,8 +502,11 @@ model_parameters.seqanova.svyglm <- model_parameters.aov
   insight::check_if_installed("effectsize")
 
   # set error-df, when provided.
-  if (!is.null(df_error) && is.data.frame(model) &&
-    !any(c("DenDF", "den Df", "denDF", "df_error") %in% colnames(model))) {
+  if (
+    !is.null(df_error) &&
+      is.data.frame(model) &&
+      !any(c("DenDF", "den Df", "denDF", "df_error") %in% colnames(model))
+  ) {
     if (length(df_error) > nrow(model)) {
       insight::format_error(
         "Number of degrees of freedom in argument `df_error` is larger than number of parameters."
@@ -544,7 +564,10 @@ model_parameters.seqanova.svyglm <- model_parameters.aov
     fx,
     all.x = TRUE,
     sort = FALSE,
-    by = intersect(c("Response", "Group", "Parameter"), intersect(colnames(params), colnames(fx)))
+    by = intersect(
+      c("Response", "Group", "Parameter"),
+      intersect(colnames(params), colnames(fx))
+    )
   )
   params <- params[order(params$.id), ]
   params$.id <- NULL
