@@ -29,9 +29,9 @@ model_parameters(
 
 - model:
 
-  Object of class [`aov()`](https://rdrr.io/r/stats/aov.html),
-  [`anova()`](https://rdrr.io/r/stats/anova.html), `aovlist`, `Gam`,
-  [`manova()`](https://rdrr.io/r/stats/manova.html), `Anova.mlm`,
+  Object of class [`stats::aov()`](https://rdrr.io/r/stats/aov.html),
+  [`stats::anova()`](https://rdrr.io/r/stats/anova.html), `aovlist`,
+  `Gam`, [`manova()`](https://rdrr.io/r/stats/manova.html), `Anova.mlm`,
   `afex_aov` or `maov`.
 
 - type:
