@@ -1,5 +1,126 @@
 # Changelog
 
+## parameters 0.30.0
+
+### Changes
+
+- [`model_parameters()`](https://easystats.github.io/parameters/reference/model_parameters.md)
+  now supports objects from
+  [`TukeyHSD()`](https://rdrr.io/r/stats/TukeyHSD.html)
+  ([\#738](https://github.com/easystats/parameters/issues/738)).
+
+- [`model_parameters()`](https://easystats.github.io/parameters/reference/model_parameters.md)
+  now saves information about the type of HC-vcov calculation as
+  attribute.
+
+- [`model_parameters()`](https://easystats.github.io/parameters/reference/model_parameters.md)
+  now raises a warning instead of a message when the `vcocv` is supplied
+  to calculate sandwich standard errors, but not supported by the model
+  class.
+
+### Bug fixes
+
+- [`model_parameters()`](https://easystats.github.io/parameters/reference/model_parameters.md)
+  for objects from *marginaleffects* no longer drops or renames columns
+  of focal terms or `by` variables whose names equal column names that
+  the output uses, such as `type` or `t`.
+
+- [`model_parameters()`](https://easystats.github.io/parameters/reference/model_parameters.md)
+  for objects from *marginaleffects*: a `by` variable with the name of
+  an output column, such as `p` or `SE`, is now returned as `p.1` or
+  `SE.1`. The output column keeps its name. This does not apply to
+  Bayesian models. It also does not apply to the `predictions()` columns
+  `Predicted`, `SE`, `CI_low` and `CI_high`, which *marginaleffects*
+  itself overwrites.
+
+- [`equivalence_test()`](https://easystats.github.io/bayestestR/reference/equivalence_test.html)
+  for *lavaan* models no longer fails with an error about `range` when
+  the model was fitted inside a function. Functions that look up the
+  original model by its name now also find it in the calling functions.
+
+- [`bootstrap_model()`](https://easystats.github.io/parameters/reference/bootstrap_model.md)
+  and
+  [`bootstrap_parameters()`](https://easystats.github.io/parameters/reference/bootstrap_parameters.md)
+  with `type = "semiparametric"` no longer fail for models from *lme4*.
+  For models from *glmmTMB*, this type now gives an informative error,
+  because [`lme4::bootMer()`](https://rdrr.io/pkg/lme4/man/bootMer.html)
+  does not support it for these models
+  ([\#1242](https://github.com/easystats/parameters/issues/1242)).
+
+- [`model_parameters()`](https://easystats.github.io/parameters/reference/model_parameters.md)
+  and [`ci()`](https://easystats.github.io/bayestestR/reference/ci.html)
+  no longer fail for `merModList` models from *merTools* with the error
+  “formal argument”component” matched by multiple actual arguments”
+  ([\#1199](https://github.com/easystats/parameters/issues/1199)).
+
+- If the `htest` object of a Spearman or Kendall correlation test
+  carries a confidence interval,
+  [`model_parameters()`](https://easystats.github.io/parameters/reference/model_parameters.md)
+  now returns it. Before, only Pearson correlations showed a confidence
+  interval
+  ([\#1003](https://github.com/easystats/parameters/issues/1003)).
+
+- [`model_parameters()`](https://easystats.github.io/parameters/reference/model_parameters.md)
+  for models from *blavaan* now works with `standardize = TRUE`, `"all"`
+  or `"std.all"` and summarizes the standardized posterior draws. This
+  requires *insight* 1.6.0 or later. As for *lavaan* models,
+  `standardize = "latent"` or `"std.lv"` and `"no_exogenous"` or
+  `"std.nox"` summarize the draws of the matching `type` of
+  [`blavaan::standardizedPosterior()`](https://blavaan.org/reference/standardizedPosterior.html).
+  These values require *insight* 1.6.0 or later. If the `"std.nox"`
+  values equal the `"std.all"` values, you get one warning instead of
+  one from *lavaan* for each draw. Older versions of *insight* give an
+  error that asks you to update. Other values of `standardize` (except
+  `FALSE` or `NULL`) return unstandardized parameters. With
+  `verbose = TRUE`, they also give a warning.
+
+- `model_parameters(..., bootstrap = TRUE)` no longer fails for `clmm`
+  models from *ordinal*. Like other mixed models, it now returns only
+  the fixed effects and says so in a message
+  ([\#1056](https://github.com/easystats/parameters/issues/1056)).
+
+- [`model_parameters()`](https://easystats.github.io/parameters/reference/model_parameters.md)
+  no longer fails for models fitted with
+  [`stats::arima()`](https://rdrr.io/r/stats/arima.html).
+
+- [`print()`](https://rdrr.io/r/base/print.html) and
+  [`print_md()`](https://easystats.github.io/insight/reference/display.html)
+  now show a user-supplied `caption` for models that have no default
+  caption, such as models fitted with
+  [`lm()`](https://rdrr.io/r/stats/lm.html)
+  ([\#749](https://github.com/easystats/parameters/issues/749)).
+
+- With *insight* 1.6.0 or later, `caption = ""` in
+  [`print()`](https://rdrr.io/r/base/print.html) and
+  [`print_md()`](https://easystats.github.io/insight/reference/display.html)
+  now removes the “Fixed Effects” and “Random Effects” captions of mixed
+  models (easystats/insight#930).
+
+- `model_parameters(..., effects = "grouplevel")` now formats
+  categorical random-slope labels consistently across all grouping
+  levels.
+
+- [`standard_error()`](https://easystats.github.io/parameters/reference/standard_error.md)
+  and hence
+  [`model_parameters()`](https://easystats.github.io/parameters/reference/model_parameters.md)
+  returned wrong (recycled) standard errors for models of class
+  `glmmTMB` fitted with the new
+  [`ordinal()`](https://rdrr.io/pkg/glmmTMB/man/nbinom2.html) family,
+  because the thresholds are not part of the summary coefficient table.
+  Standard errors are now taken from
+  [`insight::get_varcov()`](https://easystats.github.io/insight/reference/get_varcov.html),
+  which returns them on the threshold scale via the delta method
+  (requires *insight* \> 1.5.4 and *glmmTMB* \>= 1.1.15).
+
+- [`format_parameters()`](https://easystats.github.io/parameters/reference/format_parameters.md)
+  and
+  [`model_parameters()`](https://easystats.github.io/parameters/reference/model_parameters.md)
+  now keep the names of terms with a colon inside a function call, such
+  as `lag(log(emp), 1:2)` in *plm* models. Before, the colon split these
+  terms like interactions. A term like `lag(log(x))` is also no longer
+  formatted as a log-transformed term
+  ([\#502](https://github.com/easystats/parameters/issues/502)).
+
 ## parameters 0.29.3
 
 CRAN release: 2026-09-02
