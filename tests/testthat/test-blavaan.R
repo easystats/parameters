@@ -59,7 +59,8 @@ std_types <- c(
 }
 
 # names of the columns of standardized draws that are not constant, that is,
-# whose range is above a tolerance relative to their median
+# whose range is above a tolerance, relative to their median, or absolute when
+# the median is below 1 in size
 .nonconstant_names <- function(draws) {
   constant <- vapply(
     draws,
@@ -391,8 +392,8 @@ test_that("model_parameters, blavaan, standardized, constant draws are dropped",
     }
   }
 
-  # standardized latent variances are fixed at 1, loadings and residual
-  # variances are not
+  # the standardized variance of the exogenous latent variable is fixed at 1,
+  # loadings and residual variances are not
   for (type in c("std.all", "std.lv")) {
     out <- model_parameters(m_single, standardize = type)
     expect_false("visual~~visual" %in% out$Parameter)
@@ -568,6 +569,14 @@ test_that("model_parameters, blavaan, standardized, test names", {
     regexp = "is not supported when standardizing",
     fixed = TRUE
   )
+
+  # no tests, as in bayestestR
+  for (tt in list(NULL, FALSE, "none")) {
+    expect_no_error({
+      out <- model_parameters(m_single, standardize = "std.all", test = tt)
+    })
+    expect_false(any(c("pd", "ps") %in% colnames(out)))
+  }
 
   # the removal for other models keeps p_significance
   expect_identical(.remove_scale_dependent_tests(c("pd", "ps")), c("pd", "ps"))

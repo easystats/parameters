@@ -54,11 +54,12 @@
 #' produces estimates identical to `"std.all"`. Any other unrecognized value
 #' (aside from `FALSE` or `NULL`) returns unstandardized parameters and triggers
 #' a warning when `verbose = TRUE`. The output drops parameters with fixed or
-#' constant standardized draws, such as standardized latent variances. It also
-#' drops tests that depend on the scale of the parameters: `p_significance`,
-#' the ROPE tests and Bayes factors. `ci_method = "si"` raises an error. When
-#' `verbose = TRUE`, `print()` adds a line that names the standardization type.
-#' Also when `verbose = TRUE`, an explicit `diagnostic` triggers a warning,
+#' constant standardized draws, such as the standardized variances of exogenous
+#' latent variables. It also drops tests that depend on the scale of the
+#' parameters: `p_significance`, the ROPE tests and Bayes factors.
+#' `ci_method = "si"` raises an error. When `verbose = TRUE`, `print()` adds a
+#' line that names the standardization type. Also when `verbose = TRUE`, an
+#' explicit `diagnostic` other than `NULL`, `FALSE` or `"none"` triggers a warning,
 #' because the standardized draws carry no chain information.
 #'
 #' There is also a

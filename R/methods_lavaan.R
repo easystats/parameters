@@ -75,6 +75,9 @@ model_parameters.blavaan <- function(
         )
       }
       # match test names as bayestestR does, for example "ROPE" or "psig"
+      if (!is.null(test) && length(test) == 1 && (isFALSE(test) || identical(tolower(test), "none"))) {
+        test <- NULL
+      }
       if (!is.null(test)) {
         test <- match.arg(
           tolower(test),
@@ -103,10 +106,12 @@ model_parameters.blavaan <- function(
         }
       }
       posterior <- .blavaan_standardized_draws(model, type = std_type, verbose = verbose)
-      # fixed parameters, such as standardized latent variances, have constant
-      # draws, for which the posterior summaries are not defined
+      # fixed parameters, such as the standardized variances of exogenous
+      # latent variables, have constant draws, for which the posterior
+      # summaries are not defined
       posterior <- posterior[!vapply(posterior, .is_constant_draw, logical(1))]
-      # p_significance uses a threshold on the scale of the raw parameters
+      # the threshold of p_significance (by default 0.1) is not tied to the
+      # scale of the standardized parameters
       test <- .remove_scale_dependent_tests(
         test,
         verbose,
@@ -171,8 +176,8 @@ model_parameters.blavaan <- function(
 }
 
 
-# a column of draws is constant if its range is within a tolerance relative to
-# its median
+# a column of draws is constant if its range is within a tolerance, relative to
+# its median, or absolute when the median is below 1 in size
 .is_constant_draw <- function(x) {
   diff(range(x)) <= sqrt(.Machine$double.eps) * max(1, abs(stats::median(x)))
 }
