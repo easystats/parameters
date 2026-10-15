@@ -1,7 +1,7 @@
 Type: Package
 Package: parameters
 Title: Processing of Model Parameters
-Version: 0.29.3.27
+Version: 0.29.3.25
 Authors@R:
     c(person(given = "Daniel",
              family = "Lüdecke",
