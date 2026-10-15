@@ -16,6 +16,9 @@ model_parameters(
   ...
 )
 
+# S3 method for class 'TukeyHSD'
+model_parameters(model, verbose = TRUE, ...)
+
 # S3 method for class 'coeftest'
 model_parameters(
   model,
@@ -32,7 +35,10 @@ model_parameters(
 
 - model:
 
-  Object of class `htest` or `pairwise.htest`.
+  Object of class `htest`, `pairwise.htest`, or `TukeyHSD`. For
+  `TukeyHSD` objects, the confidence level of the intervals is the
+  `conf.level` that was used in
+  [`TukeyHSD()`](https://rdrr.io/r/stats/TukeyHSD.html).
 
 - ci:
 
@@ -300,6 +306,16 @@ model_parameters(model)
 #> 4      |      3 | 0.124 
 #> 
 #> p-value adjustment method: Holm (1979)
+
+model <- TukeyHSD(aov(breaks ~ wool + tension, data = warpbreaks), "tension")
+model_parameters(model)
+#> Term    | Contrast | Coefficient |          95% CI |     p
+#> ----------------------------------------------------------
+#> tension |      M-L |      -10.00 | [-19.35, -0.65] | 0.034
+#> tension |      H-L |      -14.72 | [-24.08, -5.37] | 0.001
+#> tension |      H-M |       -4.72 | [-14.08,  4.63] | 0.447
+#> 
+#> p-value adjustment method: Tukey
 
 model <- suppressWarnings(chisq.test(table(mtcars$am, mtcars$cyl)))
 model_parameters(model, es_type = "cramers_v")

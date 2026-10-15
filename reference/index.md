@@ -85,6 +85,7 @@
   : Parameters from Meta-Analysis
 
 - [`model_parameters(`*`<htest>`*`)`](https://easystats.github.io/parameters/reference/model_parameters.htest.md)
+  [`model_parameters(`*`<TukeyHSD>`*`)`](https://easystats.github.io/parameters/reference/model_parameters.htest.md)
   [`model_parameters(`*`<coeftest>`*`)`](https://easystats.github.io/parameters/reference/model_parameters.htest.md)
   : Parameters from hypothesis tests
 
