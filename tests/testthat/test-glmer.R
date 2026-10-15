@@ -82,7 +82,6 @@ test_that("model_parameters.glmer betwithin", {
 test_that("robust SE/VCOV, using FPC", {
   skip_if(packageVersion("insight") <= "1.5.0")
   data(sleepstudy, package = "lme4")
-  data(sleepstudy, package = "lmerTest")
   model <- lme4::lmer(Reaction ~ Days + (1 + Days | Subject), data = sleepstudy)
   out <- standard_error(model, vcov = "fpc", vcov_args = list(population_size = 500))
   expect_equal(
@@ -95,11 +94,6 @@ test_that("robust SE/VCOV, using FPC", {
     ignore_attr = TRUE,
     tolerance = 1e-4
   )
-  out <- model_parameters(
-    model,
-    ci_method = "s",
-    vcov = "fpc",
-    vcov_args = list(population_size = 500)
-  )
+  out <- model_parameters(model, vcov = "fpc", vcov_args = list(population_size = 500))
   expect_snapshot(print(out, table_width = Inf))
 })

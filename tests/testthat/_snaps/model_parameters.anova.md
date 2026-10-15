@@ -26,3 +26,33 @@
       
       Anova Table (Type 3 tests)
 
+# anova survey
+
+    Code
+      print(model_parameters(out))
+    Output
+      # Fixed Effects
+      
+      Parameter | DEff | Chi2(1) | df (error) |     p
+      -----------------------------------------------
+      ell       | 0.77 |    1.13 |         38 | 0.236
+      meals     | 1.24 |    4.82 |         37 | 0.058
+      ell:meals | 1.48 |   16.52 |         36 | 0.002
+      
+      Anova Table (Type 1 tests)
+
+---
+
+    Code
+      print(model_parameters(out))
+    Output
+      # Fixed Effects
+      
+      Parameter | df | df (error) |    F |     p
+      ------------------------------------------
+      ell       |  1 |         38 | 1.47 | 0.234
+      meals     |  1 |         37 | 3.54 | 0.068
+      ell:meals |  1 |         36 | 9.10 | 0.005
+      
+      Anova Table (Type 1 tests)
+

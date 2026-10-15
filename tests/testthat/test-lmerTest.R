@@ -28,7 +28,11 @@ test_that("model_parameters, kenward", {
 
 test_that("mixed-model defaults use satterthwaite for lmerMod", {
   params_default <- model_parameters(m1, effects = "fixed")
-  params_satterthwaite <- model_parameters(m1, effects = "fixed", ci_method = "s")
+  params_satterthwaite <- model_parameters(
+    m1,
+    effects = "fixed",
+    ci_method = "satterthwaite"
+  )
   params_wald <- model_parameters(m1, effects = "fixed", ci_method = "wald")
 
   expect_identical(params_default, params_satterthwaite)
