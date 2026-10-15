@@ -18,7 +18,7 @@ test_that("model_parameters.mixed", {
   expect_identical(c(nrow(params), ncol(params)), c(2L, 10L))
   expect_equal(params$CI_high, c(1.6373105660317, 0.554067677205595), tolerance = 1e-3)
 
-  params <- model_parameters(m1, effects = "fixed")
+  params <- model_parameters(m1, ci_method = "wald", effects = "fixed")
   expect_identical(c(nrow(params), ncol(params)), c(2L, 10L))
   expect_equal(params$CI_high, c(1.68181, 0.56083), tolerance = 1e-3)
 
@@ -45,11 +45,6 @@ test_that("model_parameters.mixed", {
   expect_equal(params$CI_low, lme4_ci$`2.5 %`, tolerance = 1e-4)
 
   params <- model_parameters(m1, ci = c(0.8, 0.9), ci_method = "wald", effects = "fixed")
-  expect_identical(c(nrow(params), ncol(params)), c(2L, 11L))
-  expect_equal(params$CI_high_0.8, c(1.31154, 0.50455), tolerance = 1e-3)
-  expect_equal(params$CI_high_0.9, c(1.50707, 0.53427), tolerance = 1e-3)
-
-  params <- model_parameters(m1, ci = c(0.8, 0.9), effects = "fixed")
   expect_identical(c(nrow(params), ncol(params)), c(2L, 11L))
   expect_equal(params$CI_high_0.8, c(1.31154, 0.50455), tolerance = 1e-3)
   expect_equal(params$CI_high_0.9, c(1.50707, 0.53427), tolerance = 1e-3)

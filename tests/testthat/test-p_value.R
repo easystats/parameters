@@ -10,7 +10,6 @@ test_that("p_value", {
 })
 
 
-
 skip_on_cran()
 
 test_that("p_value", {
@@ -122,10 +121,10 @@ test_that("p_value", {
   skip_if(is.null(model))
   expect_equal(p_value(model)$p[2], 0, tolerance = 0.01)
 
-
   # Mixed models
+  skip_if_not_installed("lmerTest")
   model <- lme4::lmer(wt ~ cyl + (1 | gear), data = mtcars)
-  expect_equal(p_value(model)$p[1], 0.206219, tolerance = 0.01)
+  expect_equal(p_value(model)$p[1], 0.2242536, tolerance = 0.01)
   expect_equal(p_value(model, method = "normal")$p[1], 0.1956467, tolerance = 0.01)
   expect_equal(p_value(model, method = "kr")$p[1], 0.319398, tolerance = 0.01)
 

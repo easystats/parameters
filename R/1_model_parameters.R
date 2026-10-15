@@ -196,6 +196,12 @@
 #' - Applies to *linear mixed models*. CIs computed using the
 #'   Wald method (SE and a *t-distribution with Satterthwaite df*); p-values
 #'   computed using the Wald method with a *t-distribution with Satterthwaite df*.
+#'   This is the default for `lmerMod` and `lmerModLmerTest` when the corresponding
+#'   method argument (`ci_method` or `method`) is `NULL`, `bootstrap = FALSE`,
+#'   and `effects` is not `"random"`. It requires the *lmerTest* package. If
+#'   *lmerTest* is not installed, or if Satterthwaite degrees of freedom cannot
+#'   be computed (for example, because the data used to fit the model is no
+#'   longer available), the Wald method is used instead.
 #'
 #' `"kenward"`
 #' - Applies to *linear mixed models*. CIs computed using the Wald

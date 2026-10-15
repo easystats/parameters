@@ -3,26 +3,26 @@
     Code
       model_parameters(model, effects = "fixed", wb_component = TRUE)
     Output
-      Parameter   | Coefficient |   SE |         95% CI | t(558) |      p
-      -------------------------------------------------------------------
-      (Intercept) |       71.53 | 1.56 | [68.48, 74.59] |  45.98 | < .001
-      time        |        1.09 | 0.64 | [-0.17,  2.34] |   1.70 | 0.089 
+      Parameter   | Coefficient |   SE |         95% CI |     t |     df |      p
+      ---------------------------------------------------------------------------
+      (Intercept) |       71.53 | 1.56 | [68.48, 74.59] | 45.98 | 559.94 | < .001
+      time        |        1.09 | 0.64 | [-0.17,  2.34] |  1.70 | 374.00 | 0.089 
       
       # Within-Effects
       
-      Parameter   | Coefficient |   SE |         95% CI | t(558) |      p
-      -------------------------------------------------------------------
-      phq4 within |       -3.66 | 0.41 | [-4.46, -2.86] |  -8.95 | < .001
+      Parameter   | Coefficient |   SE |         95% CI | t(374.00) |      p
+      ----------------------------------------------------------------------
+      phq4 within |       -3.66 | 0.41 | [-4.46, -2.86] |     -8.95 | < .001
       
       # Between-Effects
       
-      Parameter    | Coefficient |   SE |         95% CI | t(558) |      p
-      --------------------------------------------------------------------
-      phq4 between |       -6.28 | 0.50 | [-7.27, -5.30] | -12.53 | < .001
+      Parameter    | Coefficient |   SE |         95% CI | t(186.00) |      p
+      -----------------------------------------------------------------------
+      phq4 between |       -6.28 | 0.50 | [-7.27, -5.29] |    -12.53 | < .001
     Message
       
       Uncertainty intervals (equal-tailed) and p-values (two-tailed) computed
-        using a Wald t-distribution approximation.
+        using a Wald t-distribution with Satterthwaite approximation.
 
 ---
 
@@ -31,16 +31,16 @@
     Output
       # Fixed Effects
       
-      Parameter    | Coefficient |   SE |         95% CI | t(558) |      p
-      --------------------------------------------------------------------
-      (Intercept)  |       71.53 | 1.56 | [68.48, 74.59] |  45.98 | < .001
-      time         |        1.09 | 0.64 | [-0.17,  2.34] |   1.70 | 0.089 
-      phq4 within  |       -3.66 | 0.41 | [-4.46, -2.86] |  -8.95 | < .001
-      phq4 between |       -6.28 | 0.50 | [-7.27, -5.30] | -12.53 | < .001
+      Parameter    | Coefficient |   SE |         95% CI |      t |     df |      p
+      -----------------------------------------------------------------------------
+      (Intercept)  |       71.53 | 1.56 | [68.48, 74.59] |  45.98 | 559.94 | < .001
+      time         |        1.09 | 0.64 | [-0.17,  2.34] |   1.70 | 374.00 | 0.089 
+      phq4 within  |       -3.66 | 0.41 | [-4.46, -2.86] |  -8.95 | 374.00 | < .001
+      phq4 between |       -6.28 | 0.50 | [-7.27, -5.29] | -12.53 | 186.00 | < .001
     Message
       
       Uncertainty intervals (equal-tailed) and p-values (two-tailed) computed
-        using a Wald t-distribution approximation.
+        using a Wald t-distribution with Satterthwaite approximation.
 
 # print-model_parameters-2
 
@@ -49,10 +49,10 @@
     Output
       # Fixed Effects
       
-      Parameter   | Coefficient |   SE |        95% CI | t(28) |      p
-      -----------------------------------------------------------------
-      (Intercept) |        0.65 | 0.50 | [-0.38, 1.68] |  1.29 | 0.206 
-      cyl         |        0.40 | 0.08 | [ 0.25, 0.56] |  5.29 | < .001
+      Parameter   | Coefficient |   SE |        95% CI |    t |    df |      p
+      ------------------------------------------------------------------------
+      (Intercept) |        0.65 | 0.50 | [-0.47, 1.77] | 1.29 | 10.17 | 0.224 
+      cyl         |        0.40 | 0.08 | [ 0.24, 0.57] | 5.29 | 16.13 | < .001
       
       # Random Effects
       
@@ -63,9 +63,9 @@
     Message
       
       Uncertainty intervals (equal-tailed) and p-values (two-tailed) computed
-        using a Wald t-distribution approximation. Uncertainty intervals for
-        random effect variances computed using a Wald z-distribution
-        approximation.
+        using a Wald t-distribution with Satterthwaite approximation.
+        Uncertainty intervals for random effect variances computed using a Wald
+        z-distribution approximation.
 
 ---
 
@@ -74,10 +74,10 @@
     Output
       # Fixed Effects
       
-      Parameter   | Coefficient |   SE |        95% CI | t(28) |      p
-      -----------------------------------------------------------------
-      (Intercept) |        0.65 | 0.50 | [-0.38, 1.68] |  1.29 | 0.206 
-      cyl         |        0.40 | 0.08 | [ 0.25, 0.56] |  5.29 | < .001
+      Parameter   | Coefficient |   SE |        95% CI |    t |    df |      p
+      ------------------------------------------------------------------------
+      (Intercept) |        0.65 | 0.50 | [-0.47, 1.77] | 1.29 | 10.17 | 0.224 
+      cyl         |        0.40 | 0.08 | [ 0.24, 0.57] | 5.29 | 16.13 | < .001
       
       # Random Effects
       
@@ -88,9 +88,9 @@
     Message
       
       Uncertainty intervals (equal-tailed) and p-values (two-tailed) computed
-        using a Wald t-distribution approximation. Uncertainty intervals for
-        random effect variances computed using a Wald z-distribution
-        approximation.
+        using a Wald t-distribution with Satterthwaite approximation.
+        Uncertainty intervals for random effect variances computed using a Wald
+        z-distribution approximation.
 
 ---
 
@@ -99,10 +99,10 @@
     Output
       # Fixed Effects
       
-      Parameter   | Coefficient |   SE |        95% CI | t(28) |      p
-      -----------------------------------------------------------------
-      (Intercept) |        0.65 | 0.50 | [-0.38, 1.68] |  1.29 | 0.206 
-      cyl         |        0.40 | 0.08 | [ 0.25, 0.56] |  5.29 | < .001
+      Parameter   | Coefficient |   SE |        95% CI |    t |    df |      p
+      ------------------------------------------------------------------------
+      (Intercept) |        0.65 | 0.50 | [-0.47, 1.77] | 1.29 | 10.17 | 0.224 
+      cyl         |        0.40 | 0.08 | [ 0.24, 0.57] | 5.29 | 16.13 | < .001
       
       Model: wt ~ cyl (32 Observations)
       Sigma: 0.594 (df = 28)
@@ -111,7 +111,7 @@
     Message
       
       Uncertainty intervals (equal-tailed) and p-values (two-tailed) computed
-        using a Wald t-distribution approximation.
+        using a Wald t-distribution with Satterthwaite approximation.
 
 ---
 
@@ -120,10 +120,10 @@
     Output
       # Fixed Effects
       
-      Parameter   | Coefficient |   SE |        95% CI | t(28) |      p
-      -----------------------------------------------------------------
-      (Intercept) |        0.65 | 0.50 | [-0.38, 1.68] |  1.29 | 0.206 
-      cyl         |        0.40 | 0.08 | [ 0.25, 0.56] |  5.29 | < .001
+      Parameter   | Coefficient |   SE |        95% CI |    t |    df |      p
+      ------------------------------------------------------------------------
+      (Intercept) |        0.65 | 0.50 | [-0.47, 1.77] | 1.29 | 10.17 | 0.224 
+      cyl         |        0.40 | 0.08 | [ 0.24, 0.57] | 5.29 | 16.13 | < .001
       
       Model: wt ~ cyl (32 Observations)
       Sigma: 0.594 (df = 28)
@@ -132,5 +132,5 @@
     Message
       
       Uncertainty intervals (equal-tailed) and p-values (two-tailed) computed
-        using a Wald t-distribution approximation.
+        using a Wald t-distribution with Satterthwaite approximation.
 

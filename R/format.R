@@ -865,7 +865,8 @@ format.parameters_sem <- function(
   show_re_msg <- (identical(model_class, "glmmTMB") &&
     (!string_method %in% c("Wald z-", "Wald normal") ||
       !ci_method %in% c("wald", "normal"))) ||
-    ((identical(model_class, "lmerMod") || identical(model_class, "glmerMod")) &&
+    (length(model_class) == 1L &&
+      model_class %in% c("lmerMod", "lmerModLmerTest", "glmerMod") &&
       !ci_method %in% c("wald", "normal", "profile", "boot"))
 
   if (
