@@ -1,4 +1,4 @@
-# parameters (devel)
+# parameters 0.30.0
 
 ## Breaking Changes
 
@@ -24,6 +24,13 @@
   renames columns of focal terms or `by` variables whose names equal column
   names that the output uses, such as `type` or `t`.
 
+* `model_parameters()` for objects from *marginaleffects*: a `by` variable
+  with the name of an output column, such as `p` or `SE`, is now returned as
+  `p.1` or `SE.1`. The output column keeps its name. This does not apply to
+  Bayesian models. It also does not apply to the `predictions()` columns
+  `Predicted`, `SE`, `CI_low` and `CI_high`, which *marginaleffects* itself
+  overwrites.
+
 * `equivalence_test()` for *lavaan* models no longer fails with an error about
   `range` when the model was fitted inside a function. Functions that look up
   the original model by its name now also find it in the calling functions.
@@ -43,10 +50,15 @@
 
 * `model_parameters()` for models from *blavaan* now works with
   `standardize = TRUE`, `"all"` or `"std.all"` and summarizes the standardized
-  posterior draws. This requires *insight* 1.5.4.17 or later. Older versions
-  give an error that asks you to update. Other values of `standardize` (except
-  `FALSE` or `NULL`) return unstandardized parameters. With `verbose = TRUE`,
-  they also give a warning.
+  posterior draws. This requires *insight* 1.6.0 or later. As for *lavaan*
+  models, `standardize = "latent"` or `"std.lv"` and `"no_exogenous"` or
+  `"std.nox"` summarize the draws of the matching `type` of
+  `blavaan::standardizedPosterior()`. These values require *insight* 1.6.0
+  or later. If the `"std.nox"` values equal the `"std.all"` values, you get
+  one warning instead of one from *lavaan* for each draw. Older versions of
+  *insight* give an error that asks you to update. Other values
+  of `standardize` (except `FALSE` or `NULL`) return unstandardized parameters.
+  With `verbose = TRUE`, they also give a warning.
 
 * `model_parameters(..., bootstrap = TRUE)` no longer fails for `clmm` models
   from *ordinal*. Like other mixed models, it now returns only the fixed
@@ -57,7 +69,7 @@
 * `print()` and `print_md()` now show a user-supplied `caption` for models
   that have no default caption, such as models fitted with `lm()` (#749).
 
-* With *insight* 1.5.4.10 or later, `caption = ""` in `print()` and
+* With *insight* 1.6.0 or later, `caption = ""` in `print()` and
   `print_md()` now removes the "Fixed Effects" and "Random Effects" captions
   of mixed models (easystats/insight#930).
 
