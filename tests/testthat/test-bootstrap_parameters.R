@@ -58,6 +58,7 @@ test_that("bootstrap_model resamples clusters for clmm", {
 test_that("bootstrap_model resamples clusters for lme", {
   skip_if_not_installed("nlme")
   skip_if_not_installed("lme4")
+  skip_if_not_installed("withr")
   withr::local_package("nlme")
   data(sleepstudy, package = "lme4")
   m1 <- nlme::lme(Reaction ~ Days, random = ~ 1 | Subject, data = sleepstudy)
@@ -69,6 +70,7 @@ test_that("bootstrap_model resamples clusters for lme", {
 
 test_that("bootstrap_model cluster draws match the mean of cluster means", {
   skip_if_not_installed("nlme")
+  skip_if_not_installed("withr")
   withr::local_package("nlme")
   set.seed(2)
   d <- data.frame(
@@ -131,8 +133,34 @@ test_that("bootstrap_model resamples the factor with the most clusters", {
   .expect_cluster_bootstrap(m, wine, "judge")
 })
 
+test_that("bootstrap_model resamples a factor that is not a fixed effect", {
+  skip_if_not_installed("ordinal")
+  data(wine, package = "ordinal")
+  # judge (9 levels) and temp (2 levels) both qualify, but judge is a fixed
+  # effect here
+  m <- ordinal::clmm(rating ~ judge + (1 | judge:temp), data = wine)
+  groups <- .bootstrap_cluster_groups(m, insight::get_data(m, verbose = FALSE))
+  expect_identical(groups$top, "temp")
+  expect_identical(groups$relabel, "temp")
+})
+
+test_that("bootstrap_model resamples a factor that others nest in through a middle factor", {
+  skip_if_not_installed("ordinal")
+  # 12 teachers in 4 schools, and students 1 to 5 in each teacher's class; the
+  # formula nests student in teacher, and the data nest teacher in school
+  set.seed(5)
+  d <- expand.grid(obs = 1:2, student = factor(1:5), teacher = factor(1:12))
+  d$school <- factor((as.numeric(d$teacher) - 1) %/% 3 + 1)
+  d$x <- rnorm(nrow(d))
+  latent <- d$x + rnorm(4)[d$school] + rnorm(12)[d$teacher] + rnorm(nrow(d))
+  d$rating <- cut(latent, c(-Inf, -1, 0, 1, Inf), ordered_result = TRUE)
+  m <- ordinal::clmm(rating ~ x + (1 | school) + (1 | teacher / student), data = d)
+  .expect_cluster_bootstrap(m, d, "school", relabel = c("school", "teacher", "student"))
+})
+
 test_that("bootstrap_model keeps nested grouping factors that are fixed effects", {
   skip_if_not_installed("nlme")
+  skip_if_not_installed("withr")
   withr::local_package("nlme")
   set.seed(3)
   d <- data.frame(
@@ -161,23 +189,24 @@ test_that("bootstrap_model errors if refits do not return the parameters", {
   data(wine, package = "ordinal")
   m <- ordinal::clmm(rating ~ temp + (1 | judge), data = wine)
   get_parameters <- insight::get_parameters
-  # rename the parameters from the n-th call on: the first call reads the
-  # model, the second the refit on all clusters, the third the refit of
-  # boot::boot() on the original clusters, and later ones the draws
+  # rename the parameters of refitted models from the n-th refit on: the first
+  # refit is on all clusters, and later ones are the draws
   rename_from <- function(n) {
-    calls <- 0
+    refits <- 0
     function(x, ...) {
-      calls <<- calls + 1
       out <- get_parameters(x, ...)
-      if (calls >= n) {
-        out$Parameter <- paste0(out$Parameter, "_x")
+      if (!identical(x, m)) {
+        refits <<- refits + 1
+        if (refits >= n) {
+          out$Parameter <- paste0(out$Parameter, "_x")
+        }
       }
       out
     }
   }
-  local_mocked_bindings(get_parameters = rename_from(2), .package = "insight")
+  local_mocked_bindings(get_parameters = rename_from(1), .package = "insight")
   expect_error(bootstrap_model(m, iterations = 3), regex = "does not return the parameters")
-  local_mocked_bindings(get_parameters = rename_from(3), .package = "insight")
+  local_mocked_bindings(get_parameters = rename_from(2), .package = "insight")
   expect_error(bootstrap_model(m, iterations = 3), regex = "None of the bootstrap samples")
 })
 

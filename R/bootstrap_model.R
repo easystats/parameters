@@ -33,8 +33,10 @@
 #' a cluster bootstrap when `type` is `"ordinary"` or `"balanced"`: each sample
 #' draws whole clusters (the levels of the grouping factor) with replacement,
 #' not single rows. A cluster that is drawn twice counts as two clusters. If the
-#' model has several grouping factors that are all nested in one factor, the
-#' clusters are the levels of that factor. Grouping factors that are not nested
+#' model has several grouping factors that are all nested in one factor,
+#' directly or through other factors, the clusters are the levels of that
+#' factor. If several factors qualify, the one with the most levels that is not
+#' a fixed effect is used. Grouping factors that are not nested
 #' in one factor give an error. A grouping factor that is also a fixed effect
 #' gives an error, unless the formula has it only in interactions with the
 #' resampled factor (for example `cond` in `random = ~ 1 | subject/cond`, which
@@ -245,15 +247,28 @@ bootstrap_model.default <- function(
 
   # refit on all clusters once, so that a model that cannot be refit fails
   # before the bootstrap runs
-  if (anyNA(refit(seq_along(clusters), catch = FALSE))) {
+  all_clusters <- seq_along(clusters)
+  all_clusters_estimates <- refit(all_clusters, catch = FALSE)
+  if (anyNA(all_clusters_estimates)) {
     insight::format_error(
       "Refitting the model on its clusters does not return the parameters of the model, so the model cannot be bootstrapped by cluster." # nolint
     )
   }
 
+  # boot::boot() first calls the statistic on all clusters, which is the refit
+  # above, so its result is reused
+  first_call <- TRUE
+  statistic <- function(x, indices) {
+    if (first_call && identical(indices, all_clusters)) {
+      first_call <<- FALSE
+      return(all_clusters_estimates)
+    }
+    refit(indices)
+  }
+
   results <- boot::boot(
-    data = seq_along(clusters),
-    statistic = function(x, indices) refit(indices),
+    data = all_clusters,
+    statistic = statistic,
     R = iterations,
     sim = type,
     parallel = parallel,
@@ -294,10 +309,11 @@ bootstrap_model.default <- function(
   }
 
   interaction_terms <- strsplit(terms[grepl(":", terms, fixed = TRUE)], ":", fixed = TRUE)
+  fixed_predictors <- insight::find_predictors(model, effects = "fixed", flatten = TRUE)
   top <- if (length(columns) == 1L) {
     columns
   } else {
-    .bootstrap_top_factor(columns, terms, data)
+    .bootstrap_top_factor(columns, terms, data, fixed = fixed_predictors)
   }
 
   # A drawn cluster gets new labels in the top factor. A lower factor needs new
@@ -318,10 +334,7 @@ bootstrap_model.default <- function(
   )
   relabel <- columns[needs_relabel]
 
-  fixed <- intersect(
-    relabel,
-    insight::find_predictors(model, effects = "fixed", flatten = TRUE)
-  )
+  fixed <- intersect(relabel, fixed_predictors)
   if (length(fixed)) {
     insight::format_error(paste0(
       "Cluster bootstrapping gives each drawn cluster new labels in ",
@@ -338,7 +351,7 @@ bootstrap_model.default <- function(
 # as nested in the other factors of those terms, because the cells of a `:` term
 # nest in each of its factors. Other factors are nested if each of their levels
 # occurs within one level of the top factor.
-.bootstrap_top_factor <- function(columns, terms, data) {
+.bootstrap_top_factor <- function(columns, terms, data, fixed = NULL) {
   interaction_terms <- strsplit(terms[grepl(":", terms, fixed = TRUE)], ":", fixed = TRUE)
 
   nests_in <- function(inner, outer) {
@@ -350,13 +363,16 @@ bootstrap_model.default <- function(
     in_formula || in_data
   }
 
-  is_top <- vapply(
+  # nested[i, j]: factor i nests in factor j, directly or through other factors
+  nested <- outer(
     columns,
-    function(outer) {
-      all(vapply(setdiff(columns, outer), nests_in, logical(1), outer = outer))
-    },
-    logical(1)
+    columns,
+    Vectorize(function(inner, outer) inner == outer || nests_in(inner, outer))
   )
+  for (k in seq_along(columns)) {
+    nested <- nested | outer(nested[, k], nested[k, ], `&`)
+  }
+  is_top <- apply(nested, 2, all)
 
   if (!any(is_top)) {
     insight::format_error(paste0(
@@ -367,8 +383,12 @@ bootstrap_model.default <- function(
     ))
   }
 
-  # with more than one candidate, the factor with the most clusters
+  # with more than one candidate, a factor that is not a fixed effect, and then
+  # the factor with the most clusters
   candidates <- columns[is_top]
+  if (any(!candidates %in% fixed)) {
+    candidates <- candidates[!candidates %in% fixed]
+  }
   n_levels <- vapply(candidates, function(x) length(unique(data[[x]])), integer(1))
   candidates[which.max(n_levels)]
 }

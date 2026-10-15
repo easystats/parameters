@@ -23,6 +23,9 @@ test_that("bootstrap_model resamples clusters for cpglmm", {
   skip_on_cran()
   skip_if_not_installed("cplm")
   skip_if_not_installed("boot")
+  skip_if_not_installed("withr")
+  # cplm's S4 class "mcmc" masks the one from BayesFactor, so cplm is unloaded
+  # again, and this test stays in a file that runs after the BayesFactor tests
   withr::defer(unloadNamespace("cplm"))
   # update() needs cpglmm() on the search path
   withr::local_package("cplm")

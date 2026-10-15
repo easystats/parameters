@@ -62,8 +62,10 @@ Other mixed models (for example from \strong{ordinal}, \strong{cplm} or \strong{
 a cluster bootstrap when \code{type} is \code{"ordinary"} or \code{"balanced"}: each sample
 draws whole clusters (the levels of the grouping factor) with replacement,
 not single rows. A cluster that is drawn twice counts as two clusters. If the
-model has several grouping factors that are all nested in one factor, the
-clusters are the levels of that factor. Grouping factors that are not nested
+model has several grouping factors that are all nested in one factor,
+directly or through other factors, the clusters are the levels of that
+factor. If several factors qualify, the one with the most levels that is not
+a fixed effect is used. Grouping factors that are not nested
 in one factor give an error. A grouping factor that is also a fixed effect
 gives an error, unless the formula has it only in interactions with the
 resampled factor (for example \code{cond} in \code{random = ~ 1 | subject/cond}, which
