@@ -4,8 +4,8 @@
 
 #' Parameters from ANOVAs
 #'
-#' @param model Object of class [stats::aov()], [stats::anova()], `aovlist`,
-#'   `Gam`, [stats::manova()], `Anova.mlm`, `afex_aov` or `maov`.
+#' @param model Object of class [`stats::aov()`], [`stats::anova()`], `aovlist`,
+#'   `Gam`, [manova()], `Anova.mlm`, `afex_aov` or `maov`.
 #' @param es_type The effect size of interest. Not that possibly not all
 #'   effect sizes are applicable to the model object. See 'Details'. For Anova
 #'   models, can also be a character vector with multiple effect size names.
