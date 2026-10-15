@@ -11,7 +11,7 @@
 #'   the random effects at their estimated values (`use.u = TRUE` in
 #'   `lme4::bootMer()`). For all other models, see argument `sim` in
 #'   `?boot::boot` (defaults to `"ordinary"`). For other mixed models,
-#'   `"ordinary"` and `"balanced"` resample whole clusters (see 'Details'), and
+#'   `"ordinary"` and `"balanced"` resample whole clusters (see section Details), and
 #'   `"permutation"` and `"antithetic"` are not available.
 #' @param parallel The type of parallel operation to be used (if any).
 #' @param n_cpus Number of processes to be used in parallel operation.

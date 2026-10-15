@@ -205,9 +205,15 @@ test_that("bootstrap_model errors if refits do not return the parameters", {
     }
   }
   local_mocked_bindings(get_parameters = rename_from(1), .package = "insight")
-  expect_error(bootstrap_model(m, iterations = 3), regex = "does not return the parameters")
+  expect_error(
+    bootstrap_model(m, iterations = 3),
+    regex = "does not return the parameters"
+  )
   local_mocked_bindings(get_parameters = rename_from(2), .package = "insight")
-  expect_error(bootstrap_model(m, iterations = 3), regex = "None of the bootstrap samples")
+  expect_error(
+    bootstrap_model(m, iterations = 3),
+    regex = "None of the bootstrap samples"
+  )
 })
 
 test_that("bootstrap_model errors for permutation type in mixed models", {

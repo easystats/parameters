@@ -32,7 +32,7 @@ for details). Semiparametric bootstrapping resamples the residuals and keeps
 the random effects at their estimated values (\code{use.u = TRUE} in
 \code{lme4::bootMer()}). For all other models, see argument \code{sim} in
 \code{?boot::boot} (defaults to \code{"ordinary"}). For other mixed models,
-\code{"ordinary"} and \code{"balanced"} resample whole clusters (see 'Details'), and
+\code{"ordinary"} and \code{"balanced"} resample whole clusters (see section Details), and
 \code{"permutation"} and \code{"antithetic"} are not available.}
 
 \item{parallel}{The type of parallel operation to be used (if any).}
