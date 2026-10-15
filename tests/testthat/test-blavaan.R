@@ -388,7 +388,7 @@ test_that("model_parameters, blavaan, standardized, constant draws are dropped",
       }
       expected <- .nonconstant_names(.std_draws(m, type))
       expect_setequal(out$Parameter, expected)
-      expect_identical(nrow(out), length(expected))
+      expect_shape(out, nrow = length(expected))
     }
   }
 
@@ -492,8 +492,7 @@ test_that("model_parameters, blavaan, standardized, print footer", {
 test_that("model_parameters, blavaan, standardized, diagnostic", {
   skip_if_not_installed("insight", minimum_version = "1.6.0")
   .diagnostic_warnings <- function(w) {
-    w <- .squish(w)
-    w[grepl("diagnostic", w, fixed = TRUE)]
+    grep("diagnostic", .squish(w), fixed = TRUE, value = TRUE)
   }
   for (s in c("std.all", "std.nox")) {
     for (d in list("ESS", "Rhat", "MCSE", c("ESS", "Rhat"))) {
