@@ -118,7 +118,7 @@ test_that("model_parameters, simultaenous confidence intervals", {
     data = qol_cancer
   )
   set.seed(123)
-  mp <- model_parameters(model, p_adjust = "sup-t")
+  mp <- model_parameters(model, p_adjust = "sup-t", ci_method = "wald")
   expect_equal(mp$p, c(0, 0.27904, 0, 0, NA, NA), tolerance = 1e-3)
   expect_equal(
     mp$CI_low,
