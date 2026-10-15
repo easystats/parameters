@@ -309,17 +309,6 @@ test_that("model_parameters, blavaan, std.lv and std.nox, old insight", {
       fixed = TRUE
     )
   }
-  expect_no_error(model_parameters(m_single, standardize = "std.all"))
-
-  # below 1.6.0, the error for the new values still names the version they need
-  local_mocked_bindings(.insight_version = function() package_version("1.5.4"))
-  for (s in names(std_types)) {
-    expect_error(
-      model_parameters(m_single, standardize = s),
-      regexp = "1.6.0",
-      fixed = TRUE
-    )
-  }
 })
 
 

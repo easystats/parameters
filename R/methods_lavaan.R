@@ -179,14 +179,15 @@ model_parameters.blavaan <- function(
   # lavaan warns for each draw when std.nox equals std.all, that is, when the
   # model has no exogenous covariates or was fit with `fixed.x = FALSE`. We
   # warn once instead, with lavaan's reason. The match uses only the names
-  # of the types and of `fixed.x`, which a translated message keeps.
+  # of the types and of `fixed.x`, which a translated message keeps. lavaan
+  # 0.7-3 and later write `fixed_x` in this message.
   reason <- NULL
   draws <- withCallingHandlers(
     insight::get_parameters(model, standardize = TRUE, type = type),
     warning = function(w) {
       msg <- conditionMessage(w)
       if (grepl("std.nox", msg, fixed = TRUE) && grepl("std.all", msg, fixed = TRUE)) {
-        reason <<- if (grepl("fixed.x", msg, fixed = TRUE)) {
+        reason <<- if (grepl("fixed[._]x", msg)) {
           "the model was fit with `fixed.x = FALSE`"
         } else {
           "the model has no exogenous covariates"
