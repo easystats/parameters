@@ -94,6 +94,11 @@ test_that("robust SE/VCOV, using FPC", {
     ignore_attr = TRUE,
     tolerance = 1e-4
   )
-  out <- model_parameters(model, vcov = "fpc", vcov_args = list(population_size = 500))
+  out <- model_parameters(
+    model,
+    ci_method = "s",
+    vcov = "fpc",
+    vcov_args = list(population_size = 500)
+  )
   expect_snapshot(print(out, table_width = Inf))
 })
