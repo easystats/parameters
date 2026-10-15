@@ -142,7 +142,7 @@ ci.lmerMod <- function(
 ) {
   cl <- match.call()
   cl[[1]] <- ci.merMod
-  cl$method <- .attempt_satterthwaite_method(method, model, effects)
+  cl$method <- .attempt_satterthwaite_method(method, x, effects)
   eval.parent(cl)
 }
 
