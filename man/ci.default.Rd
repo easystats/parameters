@@ -142,7 +142,11 @@ CIs and p-values instead.
 Wald method (SE and a \emph{t-distribution with Satterthwaite df}); p-values
 computed using the Wald method with a \emph{t-distribution with Satterthwaite df}.
 This is the default for \code{lmerMod} and \code{lmerModLmerTest} when the corresponding
-method argument (\code{ci_method} or \code{method}) is \code{NULL}.
+method argument (\code{ci_method} or \code{method}) is \code{NULL}, \code{bootstrap = FALSE},
+and \code{effects} is not \code{"random"}. It requires the \emph{lmerTest} package. If
+\emph{lmerTest} is not installed, or if Satterthwaite degrees of freedom cannot
+be computed (for example, because the data used to fit the model is no
+longer available), the Wald method is used instead.
 }
 
 \code{"kenward"}

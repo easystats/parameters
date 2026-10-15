@@ -118,15 +118,15 @@ model_parameters.lmerMod <- function(
 ) {
   cl <- match.call()
   cl[[1]] <- model_parameters.merMod
-  cl$model <- .attempt_to_lmerModLmerTest(model)
-  cl$ci_method <- .attempt_satterthwaite_method(
-    ci_method,
-    cl$model,
-    effects,
+  .eval_satterthwaite_default(
+    cl,
+    method_arg = "ci_method",
+    method = ci_method,
+    effects = effects,
     bootstrap = bootstrap,
-    verbose = verbose
+    verbose = verbose,
+    envir = parent.frame()
   )
-  eval.parent(cl)
 }
 
 #' @export
@@ -144,9 +144,14 @@ ci.lmerMod <- function(
 ) {
   cl <- match.call()
   cl[[1]] <- ci.merMod
-  cl$x <- .attempt_to_lmerModLmerTest(x)
-  cl$method <- .attempt_satterthwaite_method(method, cl$x, effects, verbose = verbose)
-  eval.parent(cl)
+  .eval_satterthwaite_default(
+    cl,
+    method_arg = "method",
+    method = method,
+    effects = effects,
+    verbose = verbose,
+    envir = parent.frame()
+  )
 }
 
 #' @export
@@ -161,9 +166,14 @@ standard_error.lmerMod <- function(
 ) {
   cl <- match.call()
   cl[[1]] <- standard_error.merMod
-  cl$model <- .attempt_to_lmerModLmerTest(model)
-  cl$method <- .attempt_satterthwaite_method(method, cl$model, effects, verbose = verbose)
-  eval.parent(cl)
+  .eval_satterthwaite_default(
+    cl,
+    method_arg = "method",
+    method = method,
+    effects = effects,
+    verbose = verbose,
+    envir = parent.frame()
+  )
 }
 
 #' @export
@@ -179,9 +189,14 @@ p_value.lmerMod <- function(
 ) {
   cl <- match.call()
   cl[[1]] <- p_value.merMod
-  cl$model <- .attempt_to_lmerModLmerTest(model)
-  cl$method <- .attempt_satterthwaite_method(method, cl$model, effects, verbose = verbose)
-  eval.parent(cl)
+  .eval_satterthwaite_default(
+    cl,
+    method_arg = "method",
+    method = method,
+    effects = effects,
+    verbose = verbose,
+    envir = parent.frame()
+  )
 }
 
 
@@ -266,57 +281,52 @@ se_mixed_default <- function(model) {
   .data_frame(Parameter = params, SE = .get_se_from_summary(model))
 }
 
-.attempt_to_lmerModLmerTest <- function(model) {
+# Evaluates a call to a merMod method, using Satterthwaite df when the user did
+# not choose a method. If Satterthwaite df cannot be computed, for example
+# because lmerTest cannot rebuild the deviance function when the data is no
+# longer available, the call is evaluated again with the merMod default.
+.eval_satterthwaite_default <- function(
+  cl,
+  method_arg,
+  method,
+  effects = "all",
+  bootstrap = FALSE,
+  verbose = TRUE,
+  envir = parent.frame()
+) {
+  # cases where we don't want to interfere
   if (
-    inherits(model, "lmerModLmerTest") || !requireNamespace("lmerTest", quietly = TRUE)
+    !is.null(method) ||
+      identical(effects, "random") ||
+      isTRUE(bootstrap) ||
+      !.check_lmerTest(verbose)
   ) {
-    return(model)
+    return(eval(cl, envir))
   }
 
-  tryCatch(lmerTest::as_lmerModLmerTest(model), error = function(e) model)
+  cl[[method_arg]] <- "satterthwaite"
+  tryCatch(eval(cl, envir), error = function(e) {
+    cl[[method_arg]] <- NULL
+    # if the default method fails as well, the error is not specific to
+    # Satterthwaite df, so we report the original error
+    out <- tryCatch(eval(cl, envir), error = function(e2) stop(e))
+    if (verbose) {
+      insight::format_alert(paste0(
+        "Could not compute Satterthwaite degrees of freedom (",
+        conditionMessage(e),
+        "). Falling back to the Wald method."
+      ))
+    }
+    out
+  })
 }
 
-.attempt_satterthwaite_method <- function(
-  method,
-  model,
-  effects,
-  fallback = "wald",
-  bootstrap = FALSE,
-  verbose = TRUE
-) {
-  # Cases where we don't want to interfere
-  if (!is.null(method) || effects == "random" || isTRUE(bootstrap)) {
-    return(method)
-  }
-
-  if (inherits(model, "lmerModLmerTest")) {
-    return("satterthwaite")
-  }
-
-  # Then the model is DEFNITLY NOT coercible because we already tried to coerce it
-  if (requireNamespace("lmerTest", quietly = TRUE)) {
-    return(fallback)
-  }
-
-  # Model is potentially coercible if lmerTest were installed?
-  installed <- insight::check_if_installed(
-    package = "lmerTest",
-    reason = "for Satterthwaite df (default)",
+.check_lmerTest <- function(verbose = TRUE) {
+  insight::check_if_installed(
+    "lmerTest",
+    reason = "for Satterthwaite degrees of freedom (the default for linear mixed models)",
     stop = FALSE,
-    prompt = interactive() && isTRUE(verbose)
+    quietly = !verbose,
+    prompt = FALSE
   )
-
-  # This is a workaround for the fact that check_if_installed() returns FALSE
-  # even if the package is not installed, but the user chooses to install it. In
-  # that case, we need to check again if the package is actually installed.
-  if (!installed) {
-    installed <- requireNamespace("lmerTest", quietly = TRUE)
-  }
-
-  # if lmerTest is newly installed, and the model is coercible...
-  if (installed && inherits(.attempt_to_lmerModLmerTest(model, "lmerModLmerTest"))) {
-    return("satterthwaite")
-  }
-
-  return(fallback)
 }
