@@ -31,7 +31,9 @@ of class \code{merMod} or \code{glmmTMB}, may be \code{"parametric"} (default). 
 for details). Semiparametric bootstrapping resamples the residuals and keeps
 the random effects at their estimated values (\code{use.u = TRUE} in
 \code{lme4::bootMer()}). For all other models, see argument \code{sim} in
-\code{?boot::boot} (defaults to \code{"ordinary"}).}
+\code{?boot::boot} (defaults to \code{"ordinary"}). For other mixed models, only
+\code{"ordinary"}, \code{"balanced"} and \code{"parametric"} are available, and
+\code{"parametric"} resamples single rows, not clusters (see 'Details').}
 
 \item{parallel}{The type of parallel operation to be used (if any).}
 
@@ -55,6 +57,15 @@ the model with the bootstrapped samples. For \code{merMod} objects (\strong{lme4
 or models from \strong{glmmTMB}, the \code{lme4::bootMer()} function is used to
 obtain bootstrapped samples. \code{bootstrap_parameters()} summarizes the
 bootstrapped model estimates.
+
+Other mixed models (for example from \strong{ordinal}, \strong{cplm} or \strong{nlme}) use
+a cluster bootstrap: each sample draws whole clusters (the levels of the
+grouping factor) with replacement, not single rows. A cluster that is drawn
+twice counts as two clusters. If the model has several grouping factors that
+are all nested in one factor, the clusters are the levels of that factor.
+Grouping factors that are not nested in one factor give an error. With few
+clusters, the cluster bootstrap is less accurate, because each sample can
+only draw from these few clusters.
 }
 \section{Using with \strong{emmeans}}{
 

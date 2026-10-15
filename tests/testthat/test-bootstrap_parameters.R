@@ -39,6 +39,158 @@ test_that("bootstrap_model semiparametric for merMod", {
   expect_identical(out$Parameter, c("(Intercept)", "Days"))
 })
 
+# Recompute a cluster bootstrap by hand. The draws come from boot::boot() with
+# the same seed, number of clusters and `sim`. The drawn clusters are stacked in
+# draw order, and each gets a label from its draw position. Draws whose refit
+# does not return every parameter are dropped.
+.refit_cluster_draws <- function(model, data, group, iterations, seed, sim = "ordinary") {
+  clusters <- unique(as.character(data[[group]]))
+  set.seed(seed)
+  draws <- boot::boot(seq_along(clusters), function(x, i) i, R = iterations, sim = sim)$t
+  n_params <- insight::n_parameters(model)
+  out <- lapply(seq_len(nrow(draws)), function(r) {
+    pieces <- lapply(seq_len(ncol(draws)), function(i) {
+      x <- data[as.character(data[[group]]) == clusters[draws[r, i]], , drop = FALSE]
+      x[[group]] <- paste(i, x[[group]], sep = "_")
+      x
+    })
+    d <- do.call(rbind, pieces)
+    d[[group]] <- factor(d[[group]], levels = unique(d[[group]]))
+    fit <- tryCatch(
+      suppressWarnings(suppressMessages(stats::update(model, data = d))),
+      error = function(e) NULL
+    )
+    if (is.null(fit)) {
+      return(rep(NA_real_, n_params))
+    }
+    est <- insight::get_parameters(fit, verbose = FALSE)$Estimate
+    if (length(est) == n_params) est else rep(NA_real_, n_params)
+  })
+  out <- do.call(rbind, out)
+  out[stats::complete.cases(out), , drop = FALSE]
+}
+
+.expect_cluster_bootstrap <- function(model, data, group, sim = "ordinary") {
+  set.seed(42)
+  out <- bootstrap_model(model, iterations = 20, type = sim)
+  expected <- .refit_cluster_draws(model, data, group, 20, 42, sim = sim)
+  expect_identical(nrow(out), nrow(expected))
+  expect_equal(unname(as.matrix(out)), unname(expected), tolerance = 1e-6)
+}
+
+test_that("bootstrap_model resamples clusters for clmm", {
+  skip_if_not_installed("ordinal")
+  data(wine, package = "ordinal")
+  m <- ordinal::clmm(rating ~ temp + contact + (1 | judge), data = wine)
+  .expect_cluster_bootstrap(m, wine, "judge")
+
+  set.seed(42)
+  draws <- bootstrap_model(m, iterations = 20)
+  set.seed(42)
+  out <- model_parameters(m, bootstrap = TRUE, iterations = 20, verbose = FALSE)
+  expected <- bootstrap_parameters(draws)
+  expect_equal(out$Coefficient, expected$Coefficient, tolerance = 1e-10)
+  expect_equal(out$CI_low, expected$CI_low, tolerance = 1e-10)
+  expect_equal(out$CI_high, expected$CI_high, tolerance = 1e-10)
+})
+
+test_that("bootstrap_model resamples clusters for lme", {
+  skip_if_not_installed("nlme")
+  skip_if_not_installed("lme4")
+  withr::local_package("nlme")
+  data(sleepstudy, package = "lme4")
+  m1 <- nlme::lme(Reaction ~ Days, random = ~ 1 | Subject, data = sleepstudy)
+  .expect_cluster_bootstrap(m1, sleepstudy, "Subject")
+  .expect_cluster_bootstrap(m1, sleepstudy, "Subject", sim = "balanced")
+  m2 <- nlme::lme(Reaction ~ Days, random = ~ Days | Subject, data = sleepstudy)
+  .expect_cluster_bootstrap(m2, sleepstudy, "Subject")
+})
+
+test_that("bootstrap_model resamples clusters for cpglmm", {
+  skip_if_not_installed("cplm")
+  withr::local_package("cplm")
+  data(FineRoot, package = "cplm")
+  m <- cpglmm(RLD ~ Stock + Spacing + (1 | Plant), data = FineRoot)
+  .expect_cluster_bootstrap(m, FineRoot, "Plant")
+})
+
+test_that("bootstrap_model cluster draws match the mean of cluster means", {
+  skip_if_not_installed("nlme")
+  withr::local_package("nlme")
+  set.seed(2)
+  d <- data.frame(
+    g1 = factor(rep(1:6, each = 8)),
+    g2 = factor(rep(rep(1:2, each = 4), times = 6))
+  )
+  d$y <- rnorm(6)[d$g1] + rnorm(12)[interaction(d$g1, d$g2)] + rnorm(48)
+  # Each g1 cluster has 8 rows, and each g2 group within it has 4 rows. The
+  # covariance matrix of y then has identical blocks for the g1 clusters, and
+  # the generalized least squares weights are equal for all rows. Thus the
+  # intercept of an intercept-only model is the mean of the g1 cluster means,
+  # and this holds for every draw, because a draw also has equal cluster sizes.
+  cluster_means <- tapply(d$y, d$g1, mean)
+  clusters <- unique(as.character(d$g1))
+
+  models <- list(
+    nlme::lme(y ~ 1, random = ~ 1 | g1, data = d),
+    nlme::lme(y ~ 1, random = ~ 1 | g1 / g2, data = d)
+  )
+  for (m in models) {
+    set.seed(7)
+    out <- bootstrap_model(m, iterations = 20)
+    set.seed(7)
+    draws <- boot::boot(seq_along(clusters), function(x, i) i, R = 20)$t
+    expected <- apply(draws, 1, function(i) mean(cluster_means[clusters[i]]))
+    expect_identical(nrow(out), 20L)
+    expect_equal(out[["(Intercept)"]], unname(expected), tolerance = 1e-8)
+  }
+})
+
+test_that("bootstrap_model errors for grouping factors that do not nest", {
+  skip_if_not_installed("ordinal")
+  data(wine, package = "ordinal")
+  m <- ordinal::clmm(rating ~ temp + (1 | judge) + (1 | bottle), data = wine)
+  expect_error(bootstrap_model(m, iterations = 5), regex = "`judge`.*`bottle`")
+
+  # panels of judges, with judge 3 in two panels
+  wine$panel <- factor(c(1, 1, 1, 2, 2, 2, 3, 3, 3)[wine$judge])
+  wine$panel[wine$judge == "3" & wine$temp == "warm"] <- "2"
+  m <- ordinal::clmm(rating ~ temp + (1 | panel) + (1 | judge), data = wine)
+  expect_error(bootstrap_model(m, iterations = 5), regex = "`panel`.*`judge`")
+})
+
+test_that("bootstrap_model errors for permutation type in mixed models", {
+  skip_if_not_installed("ordinal")
+  data(wine, package = "ordinal")
+  m <- ordinal::clmm(rating ~ temp + (1 | judge), data = wine)
+  expect_error(
+    bootstrap_model(m, iterations = 5, type = "permutation"),
+    regex = "\"permutation\""
+  )
+})
+
+test_that("bootstrap_model shows the error if the refit on all clusters fails", {
+  skip_if_not_installed("nlme")
+  skip_if_not_installed("lme4")
+  skip_if("package:nlme" %in% search(), "nlme is attached")
+  data(sleepstudy, package = "lme4")
+  # without nlme attached, update() cannot find `lme.formula()`
+  m <- nlme::lme(Reaction ~ Days, random = ~ 1 | Subject, data = sleepstudy)
+  expect_error(bootstrap_model(m, iterations = 2), regex = "lme.formula")
+})
+
+test_that("bootstrap_model resamples rows for models without clusters", {
+  m <- lm(mpg ~ wt + hp, data = mtcars)
+  set.seed(42)
+  out <- bootstrap_model(m, iterations = 20)
+  set.seed(42)
+  draws <- boot::boot(seq_len(nrow(mtcars)), function(x, i) i, R = 20)$t
+  expected <- t(apply(draws, 1, function(i) {
+    stats::coef(stats::lm(mpg ~ wt + hp, data = mtcars[i, ]))
+  }))
+  expect_equal(unname(as.matrix(out)), unname(expected), tolerance = 1e-10)
+})
+
 test_that("bootstrap_model semiparametric errors for glmmTMB", {
   skip_if_not_installed("glmmTMB")
   skip_if_not_installed("lme4")

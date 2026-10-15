@@ -10,7 +10,9 @@
 #'   for details). Semiparametric bootstrapping resamples the residuals and keeps
 #'   the random effects at their estimated values (`use.u = TRUE` in
 #'   `lme4::bootMer()`). For all other models, see argument `sim` in
-#'   `?boot::boot` (defaults to `"ordinary"`).
+#'   `?boot::boot` (defaults to `"ordinary"`). For other mixed models, only
+#'   `"ordinary"`, `"balanced"` and `"parametric"` are available, and
+#'   `"parametric"` resamples single rows, not clusters (see 'Details').
 #' @param parallel The type of parallel operation to be used (if any).
 #' @param n_cpus Number of processes to be used in parallel operation.
 #' @param cluster Optional cluster when `parallel = "snow"`. See `?lme4::bootMer`
@@ -26,6 +28,15 @@
 #' or models from **glmmTMB**, the `lme4::bootMer()` function is used to
 #' obtain bootstrapped samples. `bootstrap_parameters()` summarizes the
 #' bootstrapped model estimates.
+#'
+#' Other mixed models (for example from **ordinal**, **cplm** or **nlme**) use
+#' a cluster bootstrap: each sample draws whole clusters (the levels of the
+#' grouping factor) with replacement, not single rows. A cluster that is drawn
+#' twice counts as two clusters. If the model has several grouping factors that
+#' are all nested in one factor, the clusters are the levels of that factor.
+#' Grouping factors that are not nested in one factor give an error. With few
+#' clusters, the cluster bootstrap is less accurate, because each sample can
+#' only draw from these few clusters.
 #'
 #' @section Using with **emmeans**:
 #' The output can be passed directly to the various functions from the
@@ -79,6 +90,19 @@ bootstrap_model.default <- function(
     c("ordinary", "parametric", "balanced", "permutation", "antithetic")
   )
   parallel <- insight::validate_argument(parallel, c("no", "multicore", "snow"))
+
+  # mixed models resample whole clusters, not single rows
+  if (type != "parametric" && insight::is_mixed_model(model)) {
+    return(.bootstrap_clusters(
+      model,
+      iterations = iterations,
+      type = type,
+      parallel = parallel,
+      n_cpus = n_cpus,
+      cluster = cluster,
+      verbose = verbose
+    ))
+  }
 
   model_data <- data <- insight::get_data(model, verbose = FALSE) # nolint
   model_response <- insight::find_response(model)
@@ -145,6 +169,153 @@ bootstrap_model.default <- function(
   class(out) <- unique(c("bootstrap_model", "see_bootstrap_model", class(out)))
   attr(out, "original_model") <- model
   out
+}
+
+
+# cluster bootstrap for mixed models ------------------------------------------
+
+.bootstrap_clusters <- function(
+  model,
+  iterations = 1000,
+  type = "ordinary",
+  parallel = "no",
+  n_cpus = 1,
+  cluster = NULL,
+  verbose = FALSE
+) {
+  if (type %in% c("permutation", "antithetic")) {
+    insight::format_error(paste0(
+      "`type = \"",
+      type,
+      "\"` is not available for mixed models, because their bootstrap resamples",
+      " whole clusters. Use `type = \"ordinary\"` or `type = \"balanced\"`."
+    ))
+  }
+
+  model_data <- insight::get_data(model, verbose = FALSE)
+  groups <- .bootstrap_cluster_groups(model, model_data)
+
+  # rows of each cluster of the top grouping factor, in data order
+  top <- as.character(model_data[[groups$top]])
+  clusters <- unique(top)
+  cluster_rows <- split(seq_len(nrow(model_data)), factor(top, levels = clusters))
+  n_params <- insight::n_parameters(model)
+
+  # stack the drawn clusters in draw order, and label each by its draw
+  # position, so that a cluster drawn twice counts as two clusters
+  refit <- function(indices, catch = TRUE) {
+    pieces <- lapply(seq_along(indices), function(i) {
+      x <- model_data[cluster_rows[[indices[i]]], , drop = FALSE]
+      for (g in groups$columns) {
+        x[[g]] <- paste(i, x[[g]], sep = "_")
+      }
+      x
+    })
+    d <- do.call(rbind, pieces)
+    for (g in groups$columns) {
+      d[[g]] <- factor(d[[g]], levels = unique(d[[g]]))
+    }
+
+    fit <- if (verbose) {
+      tryCatch(stats::update(model, data = d), error = function(e) {
+        if (catch) NULL else stop(e)
+      })
+    } else {
+      tryCatch(
+        suppressWarnings(suppressMessages(stats::update(model, data = d))),
+        error = function(e) if (catch) NULL else stop(e)
+      )
+    }
+    if (is.null(fit)) {
+      return(rep.int(NA_real_, n_params))
+    }
+
+    params <- insight::get_parameters(fit, verbose = FALSE)
+    if (nrow(params) != n_params) {
+      return(rep.int(NA_real_, n_params))
+    }
+    params$Estimate
+  }
+
+  results <- boot::boot(
+    data = seq_along(clusters),
+    statistic = function(x, indices) refit(indices),
+    R = iterations,
+    sim = type,
+    parallel = parallel,
+    ncpus = n_cpus,
+    cl = cluster
+  )
+
+  # the refit on all clusters failed: show the error
+  if (all(is.na(results$t0))) {
+    refit(seq_along(clusters), catch = FALSE)
+  }
+
+  out <- as.data.frame(results$t)
+  out <- out[stats::complete.cases(out), , drop = FALSE]
+
+  names(out) <- insight::get_parameters(model, verbose = FALSE)$Parameter
+  class(out) <- unique(c("bootstrap_model", "see_bootstrap_model", class(out)))
+  attr(out, "original_model") <- model
+  out
+}
+
+
+# Find the grouping factors of a mixed model, and the top factor that all of
+# them nest in. Factors that occur only in `:` terms of the formula (which `/`
+# creates) are nested in the other factors of those terms. Other factors are
+# nested if each of their levels occurs within one level of the top factor.
+.bootstrap_cluster_groups <- function(model, data) {
+  terms <- unique(insight::find_random(model, split_nested = FALSE, flatten = TRUE))
+  columns <- unique(insight::find_random(model, split_nested = TRUE, flatten = TRUE))
+
+  not_found <- setdiff(columns, colnames(data))
+  if (length(not_found)) {
+    insight::format_error(paste0(
+      "Cluster bootstrapping needs the grouping factors as columns of the model",
+      " data. Not found: ",
+      datawizard::text_concatenate(not_found, enclose = "`"),
+      "."
+    ))
+  }
+
+  if (length(columns) == 1L) {
+    return(list(top = columns, columns = columns))
+  }
+
+  interaction_terms <- strsplit(terms[grepl(":", terms, fixed = TRUE)], ":", fixed = TRUE)
+
+  nests_in <- function(inner, outer) {
+    in_formula <- !inner %in% terms &&
+      any(vapply(interaction_terms, function(x) all(c(inner, outer) %in% x), logical(1)))
+    in_data <- all(
+      lengths(lapply(split(data[[outer]], data[[inner]], drop = TRUE), unique)) == 1L
+    )
+    in_formula || in_data
+  }
+
+  is_top <- vapply(
+    columns,
+    function(outer) {
+      all(vapply(setdiff(columns, outer), nests_in, logical(1), outer = outer))
+    },
+    logical(1)
+  )
+
+  if (!any(is_top)) {
+    insight::format_error(paste0(
+      "Cluster bootstrapping needs grouping factors that are all nested in one",
+      " factor. The grouping factors ",
+      datawizard::text_concatenate(columns, enclose = "`"),
+      " are not."
+    ))
+  }
+
+  # with more than one candidate, the factor with the fewest levels
+  candidates <- columns[is_top]
+  n_levels <- vapply(candidates, function(x) length(unique(data[[x]])), integer(1))
+  list(top = candidates[which.min(n_levels)], columns = columns)
 }
 
 
