@@ -195,14 +195,19 @@ test_that("model_parameters, blavaan, std.lv and std.nox", {
     }
   }
 
-  # on the predictor model, std.nox does not standardize the observed predictor
+  # on the predictor model, std.nox does not standardize the observed
+  # predictor, so its regression coefficient differs. The variance of the
+  # predictor is fixed in both types and has no row
   nox <- model_parameters(m_pred, standardize = "std.nox")
   all <- model_parameters(m_pred, standardize = "std.all")
+  expect_length(nox$Median[nox$Parameter == "visual~ageyr"], 1)
+  expect_length(all$Median[all$Parameter == "visual~ageyr"], 1)
   expect_false(isTRUE(all.equal(
-    nox$Median[nox$Parameter == "ageyr~~ageyr"],
-    all$Median[all$Parameter == "ageyr~~ageyr"],
+    nox$Median[nox$Parameter == "visual~ageyr"],
+    all$Median[all$Parameter == "visual~ageyr"],
     tolerance = 1e-8
   )))
+  expect_false("ageyr~~ageyr" %in% c(nox$Parameter, all$Parameter))
 })
 
 
