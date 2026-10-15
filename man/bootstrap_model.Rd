@@ -64,8 +64,11 @@ draws whole clusters (the levels of the grouping factor) with replacement,
 not single rows. A cluster that is drawn twice counts as two clusters. If the
 model has several grouping factors that are all nested in one factor, the
 clusters are the levels of that factor. Grouping factors that are not nested
-in one factor give an error. With few clusters, the cluster bootstrap has few
-independent units to resample, and its standard errors can be too small.
+in one factor give an error. A grouping factor that is also a fixed effect
+gives an error, unless the formula nests it in the resampled factor (for
+example \code{cond} in \code{random = ~ 1 | subject/cond}). With few clusters, the
+cluster bootstrap has few independent units to resample, and its standard
+errors can be too small.
 }
 \section{Using with \strong{emmeans}}{
 

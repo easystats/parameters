@@ -112,6 +112,74 @@ test_that("bootstrap_model errors for grouping factors that do not nest", {
   expect_error(bootstrap_model(m, iterations = 5), regex = "`panel`.*`judge`")
 })
 
+test_that("bootstrap_model resamples the factor that others nest in by data", {
+  skip_if_not_installed("ordinal")
+  data(wine, package = "ordinal")
+  # panels of three judges each, as separate terms of the formula; a panel that
+  # is drawn twice needs new judge labels too
+  wine$panel <- factor(c(1, 1, 1, 2, 2, 2, 3, 3, 3)[wine$judge])
+  m <- ordinal::clmm(rating ~ temp + (1 | panel) + (1 | judge), data = wine)
+  .expect_cluster_bootstrap(m, wine, "panel", relabel = c("panel", "judge"))
+})
+
+test_that("bootstrap_model resamples the factor with the most clusters", {
+  skip_if_not_installed("ordinal")
+  data(wine, package = "ordinal")
+  # the cells of judge:temp nest in both factors; judge has 9 levels and temp 2,
+  # and temp keeps its labels, because the term also has judge
+  m <- ordinal::clmm(rating ~ temp + (1 | judge:temp), data = wine)
+  .expect_cluster_bootstrap(m, wine, "judge")
+})
+
+test_that("bootstrap_model keeps nested grouping factors that are fixed effects", {
+  skip_if_not_installed("nlme")
+  withr::local_package("nlme")
+  set.seed(3)
+  d <- data.frame(
+    subject = factor(rep(1:10, each = 4)),
+    cond = factor(rep(c("a", "b"), 20))
+  )
+  d$y <- rnorm(10)[d$subject] + (d$cond == "b") + rnorm(40)
+  m <- nlme::lme(y ~ cond, random = ~ 1 | subject / cond, data = d)
+  .expect_cluster_bootstrap(m, d, "subject")
+  set.seed(42)
+  expect_identical(nrow(bootstrap_model(m, iterations = 20)), 20L)
+})
+
+test_that("bootstrap_model errors for relabelled grouping factors that are fixed effects", {
+  skip_if_not_installed("nlme")
+  skip_if_not_installed("lme4")
+  data(sleepstudy, package = "lme4")
+  d <- sleepstudy
+  d$grp <- factor(as.numeric(d$Subject) > 9)
+  m <- nlme::lme(Reaction ~ Days + grp, random = ~ 1 | grp / Subject, data = d)
+  expect_error(bootstrap_model(m, iterations = 5), regex = "labels in `grp`")
+})
+
+test_that("bootstrap_model errors if refits do not return the parameters", {
+  skip_if_not_installed("ordinal")
+  data(wine, package = "ordinal")
+  m <- ordinal::clmm(rating ~ temp + (1 | judge), data = wine)
+  get_parameters <- insight::get_parameters
+  # rename the parameters from the n-th call on: the first call reads the
+  # model, the second the refit on all clusters, and later ones the draws
+  rename_from <- function(n) {
+    calls <- 0
+    function(x, ...) {
+      calls <<- calls + 1
+      out <- get_parameters(x, ...)
+      if (calls >= n) {
+        out$Parameter <- paste0(out$Parameter, "_x")
+      }
+      out
+    }
+  }
+  local_mocked_bindings(get_parameters = rename_from(2), .package = "insight")
+  expect_error(bootstrap_model(m, iterations = 3), regex = "does not return the parameters")
+  local_mocked_bindings(get_parameters = rename_from(3), .package = "insight")
+  expect_error(bootstrap_model(m, iterations = 3), regex = "None of the bootstrap samples")
+})
+
 test_that("bootstrap_model errors for permutation type in mixed models", {
   skip_if_not_installed("ordinal")
   data(wine, package = "ordinal")

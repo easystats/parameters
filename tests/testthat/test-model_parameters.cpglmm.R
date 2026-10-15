@@ -20,6 +20,7 @@ test_that("model_parameters.cpglmm", {
 })
 
 test_that("bootstrap_model resamples clusters for cpglmm", {
+  skip_on_cran()
   skip_if_not_installed("cplm")
   skip_if_not_installed("boot")
   withr::defer(unloadNamespace("cplm"))
