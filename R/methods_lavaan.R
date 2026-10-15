@@ -68,23 +68,38 @@ model_parameters.blavaan <- function(
     std_type <- .blavaan_std_type(standardize)
     if (!is.null(std_type)) {
       # standardized draws have no prior draws
-      if (any(tolower(ci_method) == "si")) {
+      if ("si" %in% tolower(ci_method)) {
         insight::format_error(
           "`ci_method = \"si\"` is not supported when standardizing.",
           "Please use another `ci_method`, for example \"eti\" or \"hdi\"."
         )
       }
       # match test names as bayestestR does, for example "ROPE" or "psig"
-      if (!is.null(test) && length(test) == 1 && (isFALSE(test) || identical(tolower(test), "none"))) {
+      no_test <- length(test) == 1 && (isFALSE(test) || identical(tolower(test), "none"))
+      if (length(test) == 0 || no_test) {
         test <- NULL
       }
       if (!is.null(test)) {
         test <- match.arg(
           tolower(test),
           c(
-            "pd", "p_direction", "pdir", "mpe", "ps", "psig", "p_significance",
-            "p_rope", "rope", "equivalence", "equivalence_test", "equitest", "bf",
-            "bayesfactor", "bayes_factor", "p_map", "all"
+            "pd",
+            "p_direction",
+            "pdir",
+            "mpe",
+            "ps",
+            "psig",
+            "p_significance",
+            "p_rope",
+            "rope",
+            "equivalence",
+            "equivalence_test",
+            "equitest",
+            "bf",
+            "bayesfactor",
+            "bayes_factor",
+            "p_map",
+            "all"
           ),
           several.ok = TRUE
         )
@@ -97,7 +112,9 @@ model_parameters.blavaan <- function(
       }
       # standardized draws come without chain information
       if (!missing(diagnostic) && verbose) {
-        given <- diagnostic[!is.na(diagnostic) & !tolower(diagnostic) %in% c("none", "false")]
+        given <- diagnostic[
+          !is.na(diagnostic) & !tolower(diagnostic) %in% c("none", "false")
+        ]
         if (length(given) > 0) {
           insight::format_warning(
             "`diagnostic` cannot be computed for standardized parameters of models from package `blavaan`, because their draws have no chain information.",
@@ -110,6 +127,11 @@ model_parameters.blavaan <- function(
       # latent variables, have constant draws, for which the posterior
       # summaries are not defined
       posterior <- posterior[!vapply(posterior, .is_constant_draw, logical(1))]
+      if (ncol(posterior) == 0) {
+        insight::format_error(
+          "All standardized parameters of this model are fixed, so there is nothing to summarize."
+        )
+      }
       # the threshold of p_significance (by default 0.1) is not tied to the
       # scale of the standardized parameters
       test <- .remove_scale_dependent_tests(
@@ -179,6 +201,10 @@ model_parameters.blavaan <- function(
 # a column of draws is constant if its range is within a tolerance, relative to
 # its median, or absolute when the median is below 1 in size
 .is_constant_draw <- function(x) {
+  # draws with missing values are kept, as before
+  if (anyNA(x)) {
+    return(FALSE)
+  }
   diff(range(x)) <= sqrt(.Machine$double.eps) * max(1, abs(stats::median(x)))
 }
 

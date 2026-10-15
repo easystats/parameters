@@ -404,6 +404,39 @@ test_that("model_parameters, blavaan, standardized, constant draws are dropped",
 })
 
 
+test_that("model_parameters, blavaan, standardized, missing and all-constant draws", {
+  skip_if_not_installed("insight", minimum_version = "1.6.0")
+  real <- insight::get_parameters(m_single, standardize = TRUE)
+  draws <- NULL
+  get_parameters_insight <- insight::get_parameters
+  local_mocked_bindings(
+    get_parameters = function(x, ...) {
+      if (isTRUE(list(...)$standardize)) {
+        return(draws)
+      }
+      get_parameters_insight(x, ...)
+    },
+    .package = "insight"
+  )
+
+  # a column with a missing draw is kept, and constant columns are dropped
+  draws <- real
+  draws[["visual=~x2"]][1] <- NaN
+  out <- suppressWarnings(model_parameters(m_single, standardize = TRUE))
+  expect_true("visual=~x2" %in% out$Parameter)
+  expect_false("visual~~visual" %in% out$Parameter)
+
+  # if every column is constant, the error says so
+  draws <- real
+  draws[] <- lapply(draws, function(x) rep(1, length(x)))
+  expect_error(
+    model_parameters(m_single, standardize = TRUE),
+    regexp = "All standardized parameters of this model are fixed",
+    fixed = TRUE
+  )
+})
+
+
 test_that("model_parameters, blavaan, standardized, MAP", {
   skip_if_not_installed("insight", minimum_version = "1.6.0")
   msg <- capture_messages({
@@ -429,7 +462,9 @@ test_that("model_parameters, blavaan, standardized, print footer", {
       verbose = TRUE
     ))
     printed <- trimws(capture.output(print(out)))
-    expect_true(paste0("Parameters are standardized (type: ", types[i], ").") %in% printed)
+    expect_true(
+      paste0("Parameters are standardized (type: ", types[i], ").") %in% printed
+    )
   }
 
   .has_footer <- function(x) {
@@ -444,7 +479,11 @@ test_that("model_parameters, blavaan, standardized, print footer", {
     fixed = TRUE
   )
   expect_false(.has_footer(out))
-  expect_false(.has_footer(model_parameters(m_single, standardize = "std.all", verbose = FALSE)))
+  expect_false(.has_footer(model_parameters(
+    m_single,
+    standardize = "std.all",
+    verbose = FALSE
+  )))
   m_ml <- lavaan::cfa(model, data = HolzingerSwineford1939)
   expect_false(.has_footer(model_parameters(m_ml, standardize = TRUE)))
 })
@@ -515,14 +554,20 @@ test_that("model_parameters, blavaan, standardized, ci_method si", {
 
   # without standardization, the error does not apply
   err <- tryCatch(
-    suppressMessages(suppressWarnings(
-      model_parameters(m_single, standardize = "basic", ci_method = "si")
-    )),
+    suppressMessages(suppressWarnings(model_parameters(
+      m_single,
+      standardize = "basic",
+      ci_method = "si"
+    ))),
     error = function(e) e
   )
   expect_false(
     inherits(err, "error") &&
-      grepl("is not supported when standardizing", .squish(conditionMessage(err)), fixed = TRUE)
+      grepl(
+        "is not supported when standardizing",
+        .squish(conditionMessage(err)),
+        fixed = TRUE
+      )
   )
 })
 
@@ -551,7 +596,11 @@ test_that("model_parameters, blavaan, standardized, test names", {
     ))
     # for "psig", bayestestR returns no ps column, so only the warning tells
     # whether the test was removed
-    expect_true(any(grepl("Scale-dependent inferential statistics", .squish(w), fixed = TRUE)))
+    expect_true(any(grepl(
+      "Scale-dependent inferential statistics",
+      .squish(w),
+      fixed = TRUE
+    )))
 
     msg <- capture_messages({
       w <- capture_warnings(model_parameters(
@@ -571,7 +620,7 @@ test_that("model_parameters, blavaan, standardized, test names", {
   )
 
   # no tests, as in bayestestR
-  for (tt in list(NULL, FALSE, "none")) {
+  for (tt in list(NULL, FALSE, "none", character(0))) {
     expect_no_error({
       out <- model_parameters(m_single, standardize = "std.all", test = tt)
     })
