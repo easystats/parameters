@@ -11,7 +11,7 @@ the output."><meta property="og:image" content="https://easystats.github.io/para
 
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.29.3.27</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.29.3.25</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -328,12 +328,15 @@ names.</p></dd>
     <p>When <code>standardize = "refit"</code>, columns <code>diagnostic</code>, <code>bf_prior</code> and
 <code>priors</code> refer to the <em>original</em> <code>model</code>. If <code>model</code> is a data frame,
 arguments <code>diagnostic</code>, <code>bf_prior</code> and <code>priors</code> are ignored.</p>
-<p>For models from <strong>blavaan</strong>, <code>standardize</code> can be <code>TRUE</code>, <code>"all"</code> or
-<code>"std.all"</code>. The returned parameters then summarize the standardized
-posterior draws (see <code><a href="https://blavaan.org/reference/standardizedPosterior.html" class="external-link">blavaan::standardizedPosterior()</a></code>), without the
-<code>ESS</code> and <code>Rhat</code> columns. This requires package <strong>insight</strong> version 1.5.4.17
-or higher. Other values of <code>standardize</code> (except <code>FALSE</code> or <code>NULL</code>) return
-unstandardized parameters, with a warning when <code>verbose = TRUE</code>.</p>
+<p>For <strong>blavaan</strong> models, <code>standardize</code> accepts <code>TRUE</code>, <code>"all"</code> (or
+<code>"std.all"</code>), <code>"latent"</code> (or <code>"std.lv"</code>), and <code>"no_exogenous"</code> (or
+<code>"std.nox"</code>). Returned parameters summarize the standardized posterior draws
+for the matching <code>type</code> (see <code><a href="https://blavaan.org/reference/standardizedPosterior.html" class="external-link">blavaan::standardizedPosterior()</a></code>), omitting
+<code>ESS</code> and <code>Rhat</code>. This requires package <strong>insight</strong> (&gt;= 1.6.0). When
+<code>verbose = TRUE</code>, a warning is issued if <code>"no_exogenous"</code> / <code>"std.nox"</code>
+produces estimates identical to <code>"std.all"</code>. Any other unrecognized value
+(aside from <code>FALSE</code> or <code>NULL</code>) returns unstandardized parameters and triggers
+a warning when <code>verbose = TRUE</code>.</p>
 <p>There is also a
 <a href="https://easystats.github.io/see/articles/parameters.html" class="external-link"><code>plot()</code>-method</a>
 implemented in the <a href="https://easystats.github.io/see/" class="external-link"><strong>see</strong>-package</a>.</p>
