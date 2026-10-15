@@ -1,3 +1,17 @@
+# parameters (devel)
+
+## Changes
+
+* `model_parameters()` for models from *blavaan* with `standardize` no longer
+  returns rows for parameters with fixed or constant standardized draws, such
+  as standardized latent variances. `print()` now says that the parameters are
+  standardized and names the type. The output no longer has tests that depend
+  on the scale of the parameters: `p_significance`, the ROPE tests and Bayes
+  factors. Test names now match as in *bayestestR*, so the output also drops
+  `test = "ROPE"`. An explicit `diagnostic` now gives a warning, because the
+  standardized draws have no chain information. `ci_method = "si"` now gives
+  an error.
+
 # parameters 0.30.0
 
 ## Changes
