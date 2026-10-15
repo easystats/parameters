@@ -118,7 +118,12 @@ model_parameters.lmerMod <- function(
 ) {
   cl <- match.call()
   cl[[1]] <- model_parameters.merMod
-  cl$ci_method <- .attempt_satterthwaite_method(ci_method, effects, bootstrap = bootstrap)
+  cl$ci_method <- .attempt_satterthwaite_method(
+    ci_method,
+    model,
+    effects,
+    bootstrap = bootstrap
+  )
   eval.parent(cl)
 }
 
@@ -137,7 +142,7 @@ ci.lmerMod <- function(
 ) {
   cl <- match.call()
   cl[[1]] <- ci.merMod
-  cl$method <- .attempt_satterthwaite_method(method, effects)
+  cl$method <- .attempt_satterthwaite_method(method, model, effects)
   eval.parent(cl)
 }
 
@@ -152,7 +157,7 @@ standard_error.lmerMod <- function(
 ) {
   cl <- match.call()
   cl[[1]] <- standard_error.merMod
-  cl$method <- .attempt_satterthwaite_method(method, effects)
+  cl$method <- .attempt_satterthwaite_method(method, model, effects)
   eval.parent(cl)
 }
 
@@ -169,7 +174,7 @@ p_value.lmerMod <- function(
 ) {
   cl <- match.call()
   cl[[1]] <- p_value.merMod
-  cl$method <- .attempt_satterthwaite_method(method, effects)
+  cl$method <- .attempt_satterthwaite_method(method, model, effects)
   eval.parent(cl)
 }
 
@@ -257,13 +262,12 @@ se_mixed_default <- function(model) {
 
 .attempt_satterthwaite_method <- function(
   method,
+  model,
   effects,
   fallback = "wald",
   bootstrap = FALSE
 ) {
-  if (
-    !is.null(method) || !inherits(model, "lmerMod") || effects == "random" || bootstrap
-  ) {
+  if (!is.null(method) || !inherits(x, "lmerMod") || effects == "random" || bootstrap) {
     return(method)
   }
 
