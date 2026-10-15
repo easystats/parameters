@@ -9,6 +9,8 @@
 
 ## Changes
 
+* `model_parameters()` now supports objects from `TukeyHSD()` (#738).
+
 * `model_parameters()` now saves information about the type of HC-vcov
   calculation as attribute.
 
