@@ -17,6 +17,10 @@
   renames columns of focal terms or `by` variables whose names equal column
   names that the output uses, such as `type` or `t`.
 
+* `model_parameters()` for objects from *marginaleffects*: a `by` variable
+  with the name of an output column, such as `p` or `SE`, is now returned as
+  `p.1` or `SE.1`. The output column keeps its name.
+
 * `equivalence_test()` for *lavaan* models no longer fails with an error about
   `range` when the model was fitted inside a function. Functions that look up
   the original model by its name now also find it in the calling functions.
