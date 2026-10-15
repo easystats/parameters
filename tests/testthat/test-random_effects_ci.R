@@ -30,7 +30,7 @@ m5 <- suppressMessages(lme4::lmer(
 
 expect_message(
   {
-    mp1 <- model_parameters(m1, ci_random = TRUE, effects = "random")
+    mp1 <- model_parameters(m1, ci_random = TRUE, ci_method = "wald")
   },
   regex = "meaningful"
 )
@@ -62,6 +62,8 @@ test_that("random effects CIs, two slopes, categorical", {
   expect_equal(
     mp1$CI_low,
     c(
+      28.7559334902632, 4.97904339539053, -1.95014363947862, -2.70058819820767,
+      -3.62294029941172, -2.69095690811178,
       4.28813, 0.21457, 0.5742, 0.28738, 0.02089, 1e-05, 0.55402, 0,
       0, 0.2781, 0.38107, 0.00945, -0.65343, -0.7222, -1, -0.99521,
       -0.97784, -1, -1, -1, -1, -1, -1, -0.99594, -1, -0.90229, -0.99736,
@@ -75,6 +77,12 @@ test_that("random effects CIs, two slopes, categorical", {
   expect_identical(
     mp1$Parameter,
     c(
+      "(Intercept)",
+      "temperature.L",
+      "temperature.Q",
+      "temperature.C",
+      "temperature^4",
+      "temperature^5",
       "SD (Intercept)",
       "SD (Intercept)",
       "SD (temperature.L)",
@@ -124,6 +132,12 @@ test_that("random effects CIs, two slopes, categorical", {
   expect_identical(
     mp1$Group,
     c(
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
       "replicate",
       "recipe",
       "replicate",
