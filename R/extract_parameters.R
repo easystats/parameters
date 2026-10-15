@@ -522,7 +522,8 @@
         ci = ci,
         vcov = vcov,
         vcov_args = vcov_args,
-        verbose = verbose
+        verbose = verbose,
+        ci_method = ci_method
       )
       fun_args <- c(fun_args, dots)
       ci_df <- suppressMessages(do.call("ci", fun_args))
