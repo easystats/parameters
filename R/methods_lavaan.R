@@ -60,20 +60,85 @@ model_parameters.blavaan <- function(
   # methods of `standardize_parameters()`, including "refit", do not work for
   # SEM.
   posterior <- model
+  std_type <- NULL
   if (isFALSE(standardize)) {
     standardize <- NULL
   }
   if (!is.null(standardize)) {
     std_type <- .blavaan_std_type(standardize)
     if (!is.null(std_type)) {
-      if (isTRUE(test == "all")) {
+      # standardized draws have no prior draws
+      if ("si" %in% tolower(ci_method)) {
+        insight::format_error(
+          "`ci_method = \"si\"` is not supported when standardizing.",
+          "Please use another `ci_method`, for example \"eti\" or \"hdi\"."
+        )
+      }
+      # match test names as bayestestR does, for example "ROPE" or "psig"
+      no_test <- length(test) == 1 && (isFALSE(test) || identical(tolower(test), "none"))
+      if (length(test) == 0 || no_test) {
+        test <- NULL
+      }
+      if (!is.null(test)) {
+        test <- match.arg(
+          tolower(test),
+          c(
+            "pd",
+            "p_direction",
+            "pdir",
+            "mpe",
+            "ps",
+            "psig",
+            "p_significance",
+            "p_rope",
+            "rope",
+            "equivalence",
+            "equivalence_test",
+            "equitest",
+            "bf",
+            "bayesfactor",
+            "bayes_factor",
+            "p_map",
+            "all"
+          ),
+          several.ok = TRUE
+        )
+      }
+      if ("all" %in% test) {
         insight::format_error(
           "`test = \"all\"` is not supported when standardizing;",
           "Please specify the tests you want to perform using the `test` argument."
         )
       }
+      # standardized draws come without chain information
+      if (!missing(diagnostic) && verbose) {
+        given <- diagnostic[
+          !is.na(diagnostic) & !tolower(diagnostic) %in% c("none", "false")
+        ]
+        if (length(given) > 0) {
+          insight::format_warning(
+            "`diagnostic` cannot be computed for standardized parameters of models from package `blavaan`, because their draws have no chain information.",
+            paste0("Not returned: ", toString(paste0("`", given, "`")), ".")
+          )
+        }
+      }
       posterior <- .blavaan_standardized_draws(model, type = std_type, verbose = verbose)
-      test <- .remove_scale_dependent_tests(test, verbose)
+      # fixed parameters, such as the standardized variances of exogenous
+      # latent variables, have constant draws, for which the posterior
+      # summaries are not defined
+      posterior <- posterior[!vapply(posterior, .is_constant_draw, logical(1))]
+      if (ncol(posterior) == 0) {
+        insight::format_error(
+          "All standardized parameters of this model are fixed, so there is nothing to summarize."
+        )
+      }
+      # the threshold of p_significance (by default 0.1) is not tied to the
+      # scale of the standardized parameters
+      test <- .remove_scale_dependent_tests(
+        test,
+        verbose,
+        also = c("ps", "psig", "p_significance", "equivalence")
+      )
     } else if (verbose) {
       insight::format_warning(
         "`standardize` should be one of `TRUE`, \"all\", \"std.all\", \"latent\", \"std.lv\", \"no_exogenous\" or \"std.nox\" for models from package `blavaan`.",
@@ -125,9 +190,22 @@ model_parameters.blavaan <- function(
   )
 
   attr(params, "object_name") <- insight::safe_deparse_symbol(substitute(model))
+  # the type of standardization, for the footer of `print()`
+  attr(params, "std_type") <- std_type
   class(params) <- c("parameters_sem", "see_parameters_sem", class(params))
 
   params
+}
+
+
+# a column of draws is constant if its range is within a tolerance, relative to
+# its median, or absolute when the median is below 1 in size
+.is_constant_draw <- function(x) {
+  # draws with missing values are kept, as before
+  if (anyNA(x)) {
+    return(FALSE)
+  }
+  diff(range(x)) <= sqrt(.Machine$double.eps) * max(1, abs(stats::median(x)))
 }
 
 
@@ -285,6 +363,10 @@ print.parameters_sem <- function(x, digits = 2, ci_digits = digits, p_digits = 3
   cat(insight::export_table(formatted_table, format = "text", ...))
 
   if (isTRUE(verbose)) {
+    std_type <- attributes(x)$std_type
+    if (!is.null(std_type)) {
+      cat(paste0("\nParameters are standardized (type: ", std_type, ").\n"))
+    }
     .print_footer_cimethod(x)
   }
 
