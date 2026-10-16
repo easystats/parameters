@@ -140,7 +140,11 @@ test_that("model_parameters.BFBayesFactor", {
 test_that("model_parameters.BFBayesFactor, BF for multiple models", {
   skip_if_not_installed("BayesFactor")
   set.seed(123)
-  model <- BayesFactor::regressionBF(mpg ~ wt + hp + qsec, data = mtcars, progress = FALSE)
+  model <- BayesFactor::regressionBF(
+    mpg ~ wt + hp + qsec,
+    data = mtcars,
+    progress = FALSE
+  )
   mp <- suppressMessages(model_parameters(model, verbose = FALSE))
   bf_first <- BayesFactor::extractBF(model[1], onlybf = TRUE)
   expect_identical(nrow(mp), 7L)
