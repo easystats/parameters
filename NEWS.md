@@ -14,6 +14,13 @@
   `"none"` now gives a warning, because the standardized draws have no chain
   information. `ci_method = "si"` now gives an error.
 
+## Bug fixes
+
+* `model_parameters()` for *BayesFactor* objects with more than one model, for
+  example from `regressionBF()` or `anovaBF()`, now shows the Bayes factor of
+  the first model in every row. The parameters also come from that model. Before
+  this fix, the rows showed the Bayes factors of all models (#1084).
+
 # parameters 0.30.0
 
 ## Changes
