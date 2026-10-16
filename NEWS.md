@@ -1,8 +1,18 @@
-# parameters 0.30.0
+# parameters (devel)
 
 ## Changes
 
-* `model_parameters()` now supports objects from `TukeyHSD()` (#738).
+* `model_parameters()` for models from *blavaan* with `standardize` no longer
+  returns rows for parameters with fixed or constant standardized draws, such
+  as the standardized variances of exogenous latent variables. `print()` now
+  says that the parameters are standardized and names the type. The output now
+  also drops `p_significance`, because its result depends on the scale of the
+  parameters. Version 0.30.0 already dropped the ROPE tests and Bayes factors.
+  Test names now match as in *bayestestR*. If you give these tests in other
+  spellings, for example `test = "ROPE"`, the output also drops them. If
+  `verbose = TRUE`, an explicit `diagnostic` other than `NULL`, `FALSE` or
+  `"none"` now gives a warning, because the standardized draws have no chain
+  information. `ci_method = "si"` now gives an error.
 
 * For mixed models without their own bootstrap method, `bootstrap_model()` now
   resamples whole clusters instead of single rows, with `type = "ordinary"`
@@ -10,6 +20,12 @@
   *ordinal*, *cplm* or *nlme*. This also changes `bootstrap_parameters()` and
   `model_parameters()` with `bootstrap = TRUE`. Grouping factors that are not
   nested in one factor give an error.
+
+# parameters 0.30.0
+
+## Changes
+
+* `model_parameters()` now supports objects from `TukeyHSD()` (#738).
 
 * `model_parameters()` now saves information about the type of HC-vcov
   calculation as attribute.

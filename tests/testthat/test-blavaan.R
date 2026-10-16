@@ -58,6 +58,33 @@ std_types <- c(
   regmatches(x, regexpr("=~|~~|~1|~", x))
 }
 
+# names of the columns of standardized draws that are not constant, that is,
+# whose range is above a tolerance, relative to their median, or absolute when
+# the median is below 1 in size
+.nonconstant_names <- function(draws) {
+  constant <- vapply(
+    draws,
+    function(x) {
+      diff(range(x)) <= sqrt(.Machine$double.eps) * max(1, abs(stats::median(x)))
+    },
+    logical(1)
+  )
+  colnames(draws)[!constant]
+}
+
+# standardized draws of a blavaan type, as `model_parameters()` requests them
+.std_draws <- function(m, type) {
+  if (type == "std.all") {
+    insight::get_parameters(m, standardize = TRUE)
+  } else {
+    # lavaan warns for each draw when std.nox equals std.all
+    suppressWarnings(insight::get_parameters(m, standardize = TRUE, type = type))
+  }
+}
+
+# whitespace-normalized condition messages
+.squish <- function(x) gsub("\\s+", " ", x)
+
 
 test_that("model_parameters, blavaan, standardized", {
   for (m in list(m_single, m_groups, m_pred)) {
@@ -68,7 +95,7 @@ test_that("model_parameters, blavaan, standardized", {
     for (s in list(TRUE, "all", "std.all")) {
       out <- model_parameters(m, standardize = s)
       expect_s3_class(out, "parameters_sem")
-      expect_setequal(out$Parameter, std_names)
+      expect_setequal(out$Parameter, .nonconstant_names(.std_draws(m, "std.all")))
       expect_false(any(c("ESS", "Rhat") %in% colnames(out)))
 
       # medians are the medians of the standardized draws
@@ -158,7 +185,7 @@ test_that("model_parameters, blavaan, std.lv and std.nox", {
       }
 
       # medians are the medians of the draws of the matching type
-      expect_setequal(out$Parameter, std_names)
+      expect_setequal(out$Parameter, .nonconstant_names(.std_draws(m, type)))
       expected <- apply(std_draws[, match(out$Parameter, std_names)], 2, stats::median)
       expect_equal(out$Median, unname(expected), tolerance = 1e-8)
 
@@ -169,14 +196,19 @@ test_that("model_parameters, blavaan, std.lv and std.nox", {
     }
   }
 
-  # on the predictor model, std.nox does not standardize the observed predictor
+  # on the predictor model, std.nox does not standardize the observed
+  # predictor, so its regression coefficient differs. The variance of the
+  # predictor is fixed in both types and has no row
   nox <- model_parameters(m_pred, standardize = "std.nox")
   all <- model_parameters(m_pred, standardize = "std.all")
+  expect_length(nox$Median[nox$Parameter == "visual~ageyr"], 1)
+  expect_length(all$Median[all$Parameter == "visual~ageyr"], 1)
   expect_false(isTRUE(all.equal(
-    nox$Median[nox$Parameter == "ageyr~~ageyr"],
-    all$Median[all$Parameter == "ageyr~~ageyr"],
+    nox$Median[nox$Parameter == "visual~ageyr"],
+    all$Median[all$Parameter == "visual~ageyr"],
     tolerance = 1e-8
   )))
+  expect_false("ageyr~~ageyr" %in% c(nox$Parameter, all$Parameter))
 })
 
 
@@ -336,4 +368,264 @@ test_that("model_parameters, blavaan, std.nox warning in other wording", {
     standardize = "std.nox",
     verbose = FALSE
   ))
+})
+
+
+test_that("model_parameters, blavaan, standardized, constant draws are dropped", {
+  skip_if_not_installed("insight", minimum_version = "1.6.0")
+  models <- list(single = m_single, groups = m_groups, pred = m_pred)
+  for (nm in names(models)) {
+    m <- models[[nm]]
+    for (type in c("std.all", "std.lv", "std.nox")) {
+      w <- capture_warnings({
+        out <- model_parameters(m, standardize = type)
+      })
+      if (type == "std.nox" && nm != "pred") {
+        expect_length(w, 1)
+        expect_match(.squish(w), "no exogenous covariates", fixed = TRUE)
+      } else {
+        expect_length(w, 0)
+      }
+      expected <- .nonconstant_names(.std_draws(m, type))
+      expect_setequal(out$Parameter, expected)
+      expect_shape(out, nrow = length(expected))
+    }
+  }
+
+  # the standardized variance of the exogenous latent variable is fixed at 1,
+  # loadings and residual variances are not
+  for (type in c("std.all", "std.lv")) {
+    out <- model_parameters(m_single, standardize = type)
+    expect_false("visual~~visual" %in% out$Parameter)
+    expect_true(all(c("visual=~x2", "x1~~x1") %in% out$Parameter))
+  }
+  out <- model_parameters(m_groups, standardize = "std.all")
+  expect_false(any(startsWith(out$Parameter, "visual~~visual")))
+})
+
+
+test_that("model_parameters, blavaan, standardized, missing and all-constant draws", {
+  skip_if_not_installed("insight", minimum_version = "1.6.0")
+  real <- insight::get_parameters(m_single, standardize = TRUE)
+  draws <- NULL
+  get_parameters_insight <- insight::get_parameters
+  local_mocked_bindings(
+    get_parameters = function(x, ...) {
+      if (isTRUE(list(...)$standardize)) {
+        return(draws)
+      }
+      get_parameters_insight(x, ...)
+    },
+    .package = "insight"
+  )
+
+  # a column with a missing draw is kept, and constant columns are dropped
+  draws <- real
+  draws[["visual=~x2"]][1] <- NaN
+  out <- suppressWarnings(model_parameters(m_single, standardize = TRUE))
+  expect_true("visual=~x2" %in% out$Parameter)
+  expect_false("visual~~visual" %in% out$Parameter)
+
+  # if every column is constant, the error says so
+  draws <- real
+  draws[] <- lapply(draws, function(x) rep(1, length(x)))
+  expect_error(
+    model_parameters(m_single, standardize = TRUE),
+    regexp = "All standardized parameters of this model are fixed",
+    fixed = TRUE
+  )
+})
+
+
+test_that("model_parameters, blavaan, standardized, MAP", {
+  skip_if_not_installed("insight", minimum_version = "1.6.0")
+  msg <- capture_messages({
+    w <- capture_warnings({
+      out <- model_parameters(m_single, standardize = TRUE, centrality = "all")
+    })
+  })
+  expect_false(anyNA(out$MAP))
+  expect_false(any(grepl("Could not calculate MAP", .squish(c(msg, w)), fixed = TRUE)))
+})
+
+
+test_that("model_parameters, blavaan, standardized, print footer", {
+  skip_if_not_installed("insight", minimum_version = "1.6.0")
+  withr::local_options(width = 300)
+  values <- list(TRUE, "all", "std.all", "latent", "std.lv", "no_exogenous", "std.nox")
+  types <- c("std.all", "std.all", "std.all", "std.lv", "std.lv", "std.nox", "std.nox")
+  for (i in seq_along(values)) {
+    # m_single has no exogenous covariates, so std.nox warns
+    out <- suppressWarnings(model_parameters(
+      m_single,
+      standardize = values[[i]],
+      verbose = TRUE
+    ))
+    printed <- trimws(capture.output(print(out)))
+    expect_true(
+      paste0("Parameters are standardized (type: ", types[i], ").") %in% printed
+    )
+  }
+
+  .has_footer <- function(x) {
+    any(grepl("Parameters are standardized", capture.output(print(x)), fixed = TRUE))
+  }
+  expect_false(.has_footer(model_parameters(m_single, standardize = NULL)))
+  expect_warning(
+    {
+      out <- model_parameters(m_single, standardize = "basic")
+    },
+    regexp = "Returning unstandardized parameters",
+    fixed = TRUE
+  )
+  expect_false(.has_footer(out))
+  expect_false(.has_footer(model_parameters(
+    m_single,
+    standardize = "std.all",
+    verbose = FALSE
+  )))
+  m_ml <- lavaan::cfa(model, data = HolzingerSwineford1939)
+  expect_false(.has_footer(model_parameters(m_ml, standardize = TRUE)))
+})
+
+
+test_that("model_parameters, blavaan, standardized, diagnostic", {
+  skip_if_not_installed("insight", minimum_version = "1.6.0")
+  .diagnostic_warnings <- function(w) {
+    grep("diagnostic", .squish(w), fixed = TRUE, value = TRUE)
+  }
+  for (s in c("std.all", "std.nox")) {
+    for (d in list("ESS", "Rhat", "MCSE", c("ESS", "Rhat"))) {
+      w <- capture_warnings({
+        out <- model_parameters(m_single, standardize = s, diagnostic = d)
+      })
+      dw <- .diagnostic_warnings(w)
+      expect_length(dw, 1)
+      for (one in d) {
+        expect_match(dw, paste0("`", one, "`"), fixed = TRUE)
+      }
+      expect_false(any(c("ESS", "Rhat") %in% colnames(out)))
+    }
+
+    # no warning when diagnostic is not given or is switched off
+    for (d in list(NULL, FALSE, "none")) {
+      w <- capture_warnings(model_parameters(m_single, standardize = s, diagnostic = d))
+      expect_length(.diagnostic_warnings(w), 0)
+    }
+    w <- capture_warnings(model_parameters(m_single, standardize = s))
+    expect_length(.diagnostic_warnings(w), 0)
+    expect_no_warning(model_parameters(
+      m_single,
+      standardize = s,
+      diagnostic = "ESS",
+      verbose = FALSE
+    ))
+  }
+
+  w <- capture_warnings(model_parameters(m_single, diagnostic = "ESS"))
+  expect_length(.diagnostic_warnings(w), 0)
+})
+
+
+test_that("model_parameters, blavaan, standardized, ci_method si", {
+  skip_if_not_installed("insight", minimum_version = "1.6.0")
+  for (cm in c("si", "SI")) {
+    w <- character()
+    err <- tryCatch(
+      withCallingHandlers(
+        model_parameters(m_single, standardize = "std.all", ci_method = cm),
+        warning = function(cnd) {
+          w <<- c(w, conditionMessage(cnd))
+          invokeRestart("muffleWarning")
+        }
+      ),
+      error = function(e) e
+    )
+    expect_s3_class(err, "error")
+    expect_match(.squish(conditionMessage(err)), "ci_method = \"si\"", fixed = TRUE)
+    expect_match(
+      .squish(conditionMessage(err)),
+      "is not supported when standardizing",
+      fixed = TRUE
+    )
+    expect_false(any(grepl("Prior not specified", .squish(w), fixed = TRUE)))
+  }
+
+  # without standardization, the error does not apply
+  err <- tryCatch(
+    suppressMessages(suppressWarnings(model_parameters(
+      m_single,
+      standardize = "basic",
+      ci_method = "si"
+    ))),
+    error = function(e) e
+  )
+  expect_false(
+    inherits(err, "error") &&
+      grepl(
+        "is not supported when standardizing",
+        .squish(conditionMessage(err)),
+        fixed = TRUE
+      )
+  )
+})
+
+
+test_that("model_parameters, blavaan, standardized, test names", {
+  skip_if_not_installed("insight", minimum_version = "1.6.0")
+  tests <- list(
+    c("pd", "ps"),
+    c("pd", "psig"),
+    c("pd", "p_significance"),
+    c("pd", "PS"),
+    c("pd", "p_signif"),
+    c("pd", "ROPE"),
+    c("pd", "equivalence"),
+    c("pd", "p_rope"),
+    c("pd", "EQUITEST"),
+    c("pd", "BF")
+  )
+  for (tt in tests) {
+    w <- capture_warnings({
+      out <- model_parameters(m_single, standardize = "std.all", test = tt)
+    })
+    expect_true("pd" %in% colnames(out))
+    expect_false(any(
+      c("ps", "ROPE_Percentage", "p_ROPE", "ROPE_Equivalence") %in% colnames(out)
+    ))
+    # for "psig", bayestestR returns no ps column, so only the warning tells
+    # whether the test was removed
+    expect_true(any(grepl(
+      "Scale-dependent inferential statistics",
+      .squish(w),
+      fixed = TRUE
+    )))
+
+    msg <- capture_messages({
+      w <- capture_warnings(model_parameters(
+        m_single,
+        standardize = "std.all",
+        test = tt,
+        verbose = FALSE
+      ))
+    })
+    expect_false(any(grepl("Scale-dependent", .squish(c(msg, w)), fixed = TRUE)))
+  }
+
+  expect_error(
+    model_parameters(m_single, standardize = "std.all", test = "ALL"),
+    regexp = "is not supported when standardizing",
+    fixed = TRUE
+  )
+
+  # no tests, as in bayestestR
+  for (tt in list(NULL, FALSE, "none", character(0))) {
+    expect_no_error({
+      out <- model_parameters(m_single, standardize = "std.all", test = tt)
+    })
+    expect_false(any(c("pd", "ps") %in% colnames(out)))
+  }
+
+  # the removal for other models keeps p_significance
+  expect_identical(.remove_scale_dependent_tests(c("pd", "ps")), c("pd", "ps"))
 })
