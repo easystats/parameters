@@ -2,6 +2,8 @@
 
 ## parameters 0.30.0
 
+CRAN release: 2026-10-15
+
 ### Changes
 
 - [`model_parameters()`](https://easystats.github.io/parameters/reference/model_parameters.md)

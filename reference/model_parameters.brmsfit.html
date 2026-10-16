@@ -11,7 +11,7 @@ the output."><meta property="og:image" content="https://easystats.github.io/para
 
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.30.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.30.0.3</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -54,7 +54,7 @@ the output."><meta property="og:image" content="https://easystats.github.io/para
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Parameters from Bayesian Models</h1>
-      <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/v0.30.0/R/methods_base.R" class="external-link"><code>R/methods_base.R</code></a>, <a href="https://github.com/easystats/parameters/blob/v0.30.0/R/methods_brms.R" class="external-link"><code>R/methods_brms.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/main/R/methods_base.R" class="external-link"><code>R/methods_base.R</code></a>, <a href="https://github.com/easystats/parameters/blob/main/R/methods_brms.R" class="external-link"><code>R/methods_brms.R</code></a></small>
       <div class="d-none name"><code>model_parameters.brmsfit.Rd</code></div>
     </div>
 
@@ -336,7 +336,14 @@ for the matching <code>type</code> (see <code><a href="https://blavaan.org/refer
 <code>verbose = TRUE</code>, a warning is issued if <code>"no_exogenous"</code> / <code>"std.nox"</code>
 produces estimates identical to <code>"std.all"</code>. Any other unrecognized value
 (aside from <code>FALSE</code> or <code>NULL</code>) returns unstandardized parameters and triggers
-a warning when <code>verbose = TRUE</code>.</p>
+a warning when <code>verbose = TRUE</code>. The output drops parameters with fixed or
+constant standardized draws, such as the standardized variances of exogenous
+latent variables. It also drops tests that depend on the scale of the
+parameters: <code>p_significance</code>, the ROPE tests and Bayes factors.
+<code>ci_method = "si"</code> raises an error. When <code>verbose = TRUE</code>, <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code> adds a
+line that names the standardization type. Also when <code>verbose = TRUE</code>, an
+explicit <code>diagnostic</code> other than <code>NULL</code>, <code>FALSE</code> or <code>"none"</code> triggers a warning,
+because the standardized draws carry no chain information.</p>
 <p>There is also a
 <a href="https://easystats.github.io/see/articles/parameters.html" class="external-link"><code>plot()</code>-method</a>
 implemented in the <a href="https://easystats.github.io/see/" class="external-link"><strong>see</strong>-package</a>.</p>
