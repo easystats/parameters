@@ -46,8 +46,9 @@ format_p_adjust <- function(method) {
 }
 
 
-# returns `p_adjust` if it is a method that can be applied to `model`, else
-# `NULL`, so that the footer does not name a method that was not applied
+# returns `p_adjust` if it is a known method that is available for `model`,
+# else `NULL`, so that the footer does not name an unknown method, or "mvt"
+# for objects that are not from emmeans
 .valid_p_adjust <- function(p_adjust, model = NULL) {
   if (
     !is.character(p_adjust) ||

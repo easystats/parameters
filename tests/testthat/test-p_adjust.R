@@ -118,6 +118,7 @@ test_that("model_parameters, p-adjust, method names in any letter case", {
   mp <- model_parameters(model, p_adjust = "NONE")
   expect_equal(mp$p, p_raw, tolerance = 1e-10, ignore_attr = TRUE)
   out <- capture.output(print(mp))
+  expect_true(any(startsWith(out, "Parameter")))
   expect_false(any(grepl("p-value adjustment method", out, fixed = TRUE)))
 
   skip_if_not_installed("emmeans")
@@ -159,6 +160,16 @@ test_that("model_parameters, emmeans, p-adjust mvt", {
   # balanced design, all pairwise comparisons: mvt and Tukey agree
   p_tukey <- summary(pw_by, adjust = "tukey")$p.value
   expect_lt(max(abs(mp$p - p_tukey)), 1e-3)
+
+  # estimated means, which by default have no p-values in emmeans
+  m2 <- lm(I(mpg - 20) ~ factor(cyl), data = mtcars)
+  emm <- emmeans::emmeans(m2, ~cyl)
+  set.seed(123)
+  mp <- model_parameters(emm, p_adjust = "mvt")
+  set.seed(123)
+  p_mvt <- summary(emm, adjust = "mvt", infer = c(FALSE, TRUE))$p.value
+  expect_equal(mp$p, p_mvt, tolerance = 1e-10)
+  expect_false(isTRUE(all.equal(mp$p, model_parameters(emm)$p)))
 })
 
 
@@ -195,6 +206,7 @@ test_that("model_parameters, p-adjust, unsupported methods", {
   mp <- suppressMessages(model_parameters(model, p_adjust = "mvt"))
   expect_equal(mp$p, mp_none$p, tolerance = 1e-10)
   out <- capture.output(print(mp))
+  expect_true(any(startsWith(out, "Parameter")))
   expect_false(any(grepl("p-value adjustment method", out, fixed = TRUE)))
 
   expect_message(
@@ -204,6 +216,7 @@ test_that("model_parameters, p-adjust, unsupported methods", {
   )
   mp <- suppressMessages(model_parameters(model, p_adjust = "foo"))
   out <- capture.output(print(mp))
+  expect_true(any(startsWith(out, "Parameter")))
   expect_false(any(grepl("p-value adjustment method", out, fixed = TRUE)))
 
   skip_if_not_installed("emmeans")
@@ -216,6 +229,7 @@ test_that("model_parameters, p-adjust, unsupported methods", {
   )
   mp <- suppressMessages(model_parameters(pw, p_adjust = "foo"))
   out <- capture.output(print(mp))
+  expect_true(any(startsWith(out, "contrast")))
   expect_false(any(grepl("p-value adjustment method", out, fixed = TRUE)))
 })
 
