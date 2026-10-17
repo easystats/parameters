@@ -114,6 +114,11 @@ test_that("model_parameters, p-adjust, method names in any letter case", {
       ignore_attr = TRUE
     )
   }
+  expect_silent(model_parameters(model, p_adjust = "NONE"))
+  mp <- model_parameters(model, p_adjust = "NONE")
+  expect_equal(mp$p, p_raw, tolerance = 1e-10, ignore_attr = TRUE)
+  out <- capture.output(print(mp))
+  expect_false(any(grepl("p-value adjustment method", out, fixed = TRUE)))
 
   skip_if_not_installed("emmeans")
   m <- lm(mpg ~ factor(cyl) + hp, data = mtcars)

@@ -63,7 +63,7 @@ format_p_adjust <- function(method) {
 
 .p_adjust <- function(params, p_adjust, model = NULL, verbose = TRUE) {
   # check if we have any adjustment at all, and a p-column
-  if (!is.null(p_adjust) && "p" %in% colnames(params) && p_adjust != "none") {
+  if (!is.null(p_adjust) && "p" %in% colnames(params) && tolower(p_adjust) != "none") {
     # prepare arguments
     all_methods <- .p_adjust_methods()
 
