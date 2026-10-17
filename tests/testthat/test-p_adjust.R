@@ -163,15 +163,16 @@ test_that("model_parameters, emmeans, p-adjust mvt stored in the object", {
 
   m <- lm(mpg ~ factor(cyl) + hp, data = mtcars)
   pw <- pairs(emmeans::emmeans(m, ~cyl), adjust = "mvt")
+  expect_no_message(model_parameters(pw))
   set.seed(123)
-  expect_no_message(mp <- model_parameters(pw))
+  mp <- model_parameters(pw)
   set.seed(123)
   p_mvt <- summary(pw, adjust = "mvt", infer = c(FALSE, TRUE))$p.value
   expect_equal(mp$p, p_mvt, tolerance = 1e-10)
 
   el <- emmeans::emmeans(m, pairwise ~ cyl, adjust = "mvt")
-  set.seed(123)
-  expect_no_message(mp <- model_parameters(el))
+  expect_no_message(model_parameters(el))
+  mp <- model_parameters(el)
   p_mvt <- summary(el$contrasts, adjust = "mvt", infer = c(FALSE, TRUE))$p.value
   expect_lt(max(abs(mp$p[mp$Component == "contrasts"] - p_mvt)), 1e-3)
 })
@@ -182,19 +183,21 @@ test_that("model_parameters, p-adjust, unsupported methods", {
   mp_none <- model_parameters(model)
 
   expect_message(
-    mp <- model_parameters(model, p_adjust = "mvt"),
+    model_parameters(model, p_adjust = "mvt"),
     "only available for objects from package `emmeans`",
     fixed = TRUE
   )
+  mp <- suppressMessages(model_parameters(model, p_adjust = "mvt"))
   expect_equal(mp$p, mp_none$p, tolerance = 1e-10)
   out <- capture.output(print(mp))
   expect_false(any(grepl("p-value adjustment method", out, fixed = TRUE)))
 
   expect_message(
-    mp <- model_parameters(model, p_adjust = "foo"),
+    model_parameters(model, p_adjust = "foo"),
     "`p_adjust` must be one of",
     fixed = TRUE
   )
+  mp <- suppressMessages(model_parameters(model, p_adjust = "foo"))
   out <- capture.output(print(mp))
   expect_false(any(grepl("p-value adjustment method", out, fixed = TRUE)))
 
@@ -202,10 +205,11 @@ test_that("model_parameters, p-adjust, unsupported methods", {
   m <- lm(mpg ~ factor(cyl) + hp, data = mtcars)
   pw <- pairs(emmeans::emmeans(m, ~cyl))
   expect_message(
-    mp <- model_parameters(pw, p_adjust = "foo"),
+    model_parameters(pw, p_adjust = "foo"),
     "`p_adjust` must be one of",
     fixed = TRUE
   )
+  mp <- suppressMessages(model_parameters(pw, p_adjust = "foo"))
   out <- capture.output(print(mp))
   expect_false(any(grepl("p-value adjustment method", out, fixed = TRUE)))
 })

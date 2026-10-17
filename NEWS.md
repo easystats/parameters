@@ -14,6 +14,16 @@
   `"none"` now gives a warning, because the standardized draws have no chain
   information. `ci_method = "si"` now gives an error.
 
+* `model_parameters()` for objects from *emmeans* supports `p_adjust = "mvt"`,
+  which adjusts p-values based on the multivariate t distribution (#854).
+
+## Bug fixes
+
+* The `p_adjust` argument in `model_parameters()` now accepts the methods from
+  `stats::p.adjust.methods` in any letter case, for example `"bh"`. Before,
+  this failed with an error. An invalid value for `p_adjust` no longer shows the
+  method in the footer of the printed output (#854).
+
 # parameters 0.30.0
 
 ## Changes
