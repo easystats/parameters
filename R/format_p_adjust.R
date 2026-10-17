@@ -27,6 +27,7 @@ format_p_adjust <- function(method) {
     scheffe = "Scheffe",
     sidak = "Sidak",
     `sup-t` = "Simultaneous confidence bands",
+    mvt = "Multivariate t",
     method
   )
 }
@@ -34,13 +35,46 @@ format_p_adjust <- function(method) {
 
 # p-value adjustment -----
 
+.p_adjust_methods <- function() {
+  c(stats::p.adjust.methods, "tukey", "scheffe", "sidak", "sup-t", "mvt")
+}
+
+
+# "mvt" is computed by emmeans, so it only works for emmeans objects
+.is_mvt_without_emmeans <- function(p_adjust, model) {
+  identical(tolower(p_adjust), "mvt") && !inherits(model, c("emmGrid", "emm_list"))
+}
+
+
+# returns `p_adjust` if it is a method that can be applied to `model`, else
+# `NULL`, so that the footer does not name a method that was not applied
+.valid_p_adjust <- function(p_adjust, model = NULL) {
+  if (
+    !is.character(p_adjust) ||
+      length(p_adjust) != 1 ||
+      !tolower(p_adjust) %in% tolower(.p_adjust_methods()) ||
+      .is_mvt_without_emmeans(p_adjust, model)
+  ) {
+    return(NULL)
+  }
+  p_adjust
+}
+
+
 .p_adjust <- function(params, p_adjust, model = NULL, verbose = TRUE) {
   # check if we have any adjustment at all, and a p-column
   if (!is.null(p_adjust) && "p" %in% colnames(params) && p_adjust != "none") {
-    ## TODO add "mvt" method from emmeans
-
     # prepare arguments
-    all_methods <- c(stats::p.adjust.methods, "tukey", "scheffe", "sidak", "sup-t")
+    all_methods <- .p_adjust_methods()
+
+    if (.is_mvt_without_emmeans(p_adjust, model)) {
+      if (verbose) {
+        insight::format_alert(
+          "`p_adjust = \"mvt\"` is only available for objects from package `emmeans`. P-values were not adjusted." # nolint
+        )
+      }
+      return(params)
+    }
 
     # for interaction terms, e.g. for "by" argument in emmeans
     # pairwise comparison, we have to adjust the rank resp. the
@@ -56,8 +90,13 @@ format_p_adjust <- function(method) {
       stat_column <- stat_column[!is.na(stat_column)]
 
       if (tolower(p_adjust) %in% tolower(stats::p.adjust.methods)) {
-        # base R adjustments
-        params$p <- stats::p.adjust(params$p, method = p_adjust)
+        # base R adjustments, which need the method name in the spelling of
+        # `stats::p.adjust.methods`, e.g. "BH" and not "bh"
+        base_methods <- stats::p.adjust.methods
+        params$p <- stats::p.adjust(
+          params$p,
+          method = base_methods[tolower(base_methods) == tolower(p_adjust)]
+        )
       } else if (tolower(p_adjust) == "tukey") {
         # tukey adjustment
         result <- .p_adjust_tukey(params, stat_column, rank_adjust, verbose)
@@ -72,6 +111,9 @@ format_p_adjust <- function(method) {
       } else if (tolower(p_adjust) == "sup-t") {
         # sup-t adjustment
         params <- .p_adjust_supt(model, params)
+      } else if (tolower(p_adjust) == "mvt") {
+        # multivariate t adjustment, computed by emmeans
+        params <- .p_adjust_mvt(model, params)
       }
 
       if (
@@ -183,6 +225,20 @@ format_p_adjust <- function(method) {
       df2 = params[[df_column]],
       lower.tail = FALSE
     )
+  }
+  params
+}
+
+
+# mvt adjustment -----
+
+.p_adjust_mvt <- function(model, params) {
+  # emmeans adjusts each "by" group as a separate family. With
+  # `infer = c(FALSE, TRUE)`, no CIs are computed, so no random numbers are
+  # drawn for the CIs before the p-values
+  p_mvt <- .safe(summary(model, adjust = "mvt", infer = c(FALSE, TRUE))$p.value)
+  if (!is.null(p_mvt) && length(p_mvt) == nrow(params)) {
+    params$p <- p_mvt
   }
   params
 }
