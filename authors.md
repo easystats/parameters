@@ -24,7 +24,7 @@
 - **[Vincent Arel-Bundock](https://arelbundock.com/)**. Contributor.
   [](https://orcid.org/0000-0003-2042-7063)
 
-- **Jeffrey Girard**. Contributor.
+- **[Jeffrey Girard](https://jmgirard.com)**. Contributor.
   [](https://orcid.org/0000-0002-7359-3746)
 
 - **Christina Maimone**. Reviewer.
