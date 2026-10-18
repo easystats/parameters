@@ -110,8 +110,7 @@ bootstrap_model.default <- function(
     ))
   }
 
-  model_data <- data <- insight::get_data(model, verbose = FALSE) # nolint
-  model_response <- insight::find_response(model)
+  data <- insight::get_data(model, verbose = FALSE)
 
   boot_function <- function(model, data, indices) {
     d <- data[indices, , drop = FALSE] # allows boot to select sample
@@ -137,15 +136,18 @@ bootstrap_model.default <- function(
   }
 
   if (type == "parametric") {
-    f <- function(x, mle) {
-      out <- model_data
-      resp <- stats::simulate(x, nsim = 1)
-      out[[model_response]] <- resp
-      out
+    model_response <- .check_parametric_bootstrap(model, data)
+    # boot() calls ran.gen(data, mle), then statistic() with the generated
+    # data and no indices
+    f <- function(data, mle) {
+      data[[model_response]] <- stats::simulate(model, nsim = 1)[[1]]
+      data
     }
     results <- boot::boot(
       data = data,
-      statistic = boot_function,
+      statistic = function(data, model) {
+        boot_function(model, data, seq_len(nrow(data)))
+      },
       R = iterations,
       sim = type,
       parallel = parallel,
@@ -175,6 +177,65 @@ bootstrap_model.default <- function(
   class(out) <- unique(c("bootstrap_model", "see_bootstrap_model", class(out)))
   attr(out, "original_model") <- model
   out
+}
+
+
+# parametric bootstrap checks --------------------------------------------------
+
+# returns the name of the response column, or errors if simulate() cannot draw
+# new responses for this model
+.check_parametric_bootstrap <- function(model, data) {
+  model_class <- class(model)[1]
+  response <- insight::find_formula(model, verbose = FALSE)$conditional[[2]]
+  if (!is.name(response) || !as.character(response) %in% colnames(data)) {
+    insight::format_error(paste0(
+      "Parametric bootstrapping is not available for this model, because the",
+      " response `",
+      insight::safe_deparse(response),
+      "` is not one column of the data. Use `type = \"ordinary\"` instead."
+    ))
+  }
+
+  # simulate() draws random numbers, so restore the seed afterwards
+  old_seed <- get0(".Random.seed", envir = globalenv(), inherits = FALSE)
+  on.exit(
+    {
+      if (is.null(old_seed)) {
+        rm(".Random.seed", envir = globalenv())
+      } else {
+        assign(".Random.seed", old_seed, envir = globalenv())
+      }
+    },
+    add = TRUE
+  )
+  simulated <- tryCatch(stats::simulate(model, nsim = 1), error = function(e) e)
+
+  if (inherits(simulated, "error")) {
+    insight::format_error(paste0(
+      "Parametric bootstrapping is not available for this model, because",
+      " `simulate()` does not work for models of class `",
+      model_class,
+      "` (",
+      conditionMessage(simulated),
+      "). Use `type = \"ordinary\"` instead."
+    ))
+  }
+  if (
+    !is.data.frame(simulated) ||
+      ncol(simulated) != 1 ||
+      !is.null(dim(simulated[[1]])) ||
+      !is.numeric(simulated[[1]]) ||
+      nrow(simulated) != nrow(data)
+  ) {
+    insight::format_error(paste0(
+      "Parametric bootstrapping is not available for this model, because",
+      " `simulate()` does not return one response per row for models of class `",
+      model_class,
+      "`. Use `type = \"ordinary\"` instead."
+    ))
+  }
+
+  as.character(response)
 }
 
 

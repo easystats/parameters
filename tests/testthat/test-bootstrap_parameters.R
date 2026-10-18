@@ -311,50 +311,64 @@ test_that("bootstrap_parameters parametric returns a row per coefficient", {
   expect_false(anyNA(out$CI_high))
 })
 
+# the error message wraps at the console width, so spaces in `pattern` match
+# any white space
+.expect_parametric_error <- function(model, pattern) {
+  expect_error(
+    bootstrap_model(model, iterations = 5, type = "parametric"),
+    regexp = gsub(" ", "\\s+", pattern, fixed = TRUE)
+  )
+}
+
 test_that("bootstrap_model parametric errors for models without usable simulate()", {
   skip_if_not_installed("ordinal")
   skip_if_not_installed("nlme")
   data(wine, package = "ordinal")
   data(Orthodont, package = "nlme")
+  use_ordinary <- ".*Use `type = \"ordinary\"` instead"
 
-  m <- ordinal::clm(rating ~ temp, data = wine)
-  expect_error(
-    bootstrap_model(m, iterations = 5, type = "parametric"),
-    regex = "`simulate\\(\\)` does not work for models of class `clm`.*type = \"ordinary\""
+  .expect_parametric_error(
+    ordinal::clm(rating ~ temp, data = wine),
+    paste0("`simulate\\(\\)` does not work for models of class `clm`", use_ordinary)
   )
-  m <- ordinal::clmm(rating ~ temp + (1 | judge), data = wine)
-  expect_error(
-    bootstrap_model(m, iterations = 5, type = "parametric"),
-    regex = "`simulate\\(\\)` does not work for models of class `clmm`.*type = \"ordinary\""
+  .expect_parametric_error(
+    ordinal::clmm(rating ~ temp + (1 | judge), data = wine),
+    paste0("`simulate\\(\\)` does not work for models of class `clmm`", use_ordinary)
   )
-  m <- nlme::lme(distance ~ age, random = ~ 1 | Subject, data = Orthodont)
-  expect_error(
-    bootstrap_model(m, iterations = 5, type = "parametric"),
-    regex = "`simulate\\(\\)` does not return one response per row for models of class `lme`.*type = \"ordinary\""
+  .expect_parametric_error(
+    nlme::lme(distance ~ age, random = ~ 1 | Subject, data = Orthodont),
+    paste0(
+      "`simulate\\(\\)` does not return one response per row for models of class `lme`",
+      use_ordinary
+    )
   )
-  m <- glm(carb ~ wt, family = quasipoisson, data = mtcars)
-  expect_error(
-    bootstrap_model(m, iterations = 5, type = "parametric"),
-    regex = "`simulate\\(\\)` does not work for models of class `glm`.*quasipoisson.*type = \"ordinary\""
+  .expect_parametric_error(
+    glm(carb ~ wt, family = quasipoisson, data = mtcars),
+    paste0(
+      "`simulate\\(\\)` does not work for models of class `glm` \\(family 'quasipoisson' not implemented\\)",
+      use_ordinary
+    )
   )
 })
 
 test_that("bootstrap_model parametric errors for responses that are not a data column", {
   skip_if_not_installed("lme4")
   data(cbpp, package = "lme4")
-  m <- lm(log(mpg) ~ wt, data = mtcars)
-  expect_error(
-    bootstrap_model(m, iterations = 5, type = "parametric"),
-    regex = "response `log\\(mpg\\)` is not one column of the data.*type = \"ordinary\""
+  use_ordinary <- ".*Use `type = \"ordinary\"` instead"
+
+  .expect_parametric_error(
+    lm(log(mpg) ~ wt, data = mtcars),
+    paste0("response `log\\(mpg\\)` is not one column of the data", use_ordinary)
   )
-  m <- lm(scale(mpg) ~ wt, data = mtcars)
-  expect_error(
-    bootstrap_model(m, iterations = 5, type = "parametric"),
-    regex = "response `scale\\(mpg\\)` is not one column of the data.*type = \"ordinary\""
+  .expect_parametric_error(
+    lm(scale(mpg) ~ wt, data = mtcars),
+    paste0("response `scale\\(mpg\\)` is not one column of the data", use_ordinary)
   )
-  m <- glm(cbind(incidence, size - incidence) ~ period, family = binomial, data = cbpp)
-  expect_error(
-    bootstrap_model(m, iterations = 5, type = "parametric"),
-    regex = "response `cbind\\(incidence, size - incidence\\)` is not one column of the data.*type = \"ordinary\""
+  .expect_parametric_error(
+    glm(cbind(incidence, size - incidence) ~ period, family = binomial, data = cbpp),
+    paste0(
+      "response `cbind\\(incidence, size - incidence\\)` is not one column of the data",
+      use_ordinary
+    )
   )
 })
