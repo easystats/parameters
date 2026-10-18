@@ -26,6 +26,11 @@
 
 ## Bug fixes
 
+* `model_parameters()` for *BayesFactor* objects with more than one model, for
+  example from `regressionBF()` or `anovaBF()`, now shows the Bayes factor of
+  the first model in every row. The parameters also come from that model. Before
+  this fix, the rows showed the Bayes factors of all models (#1084).
+
 * The `p_adjust` argument in `model_parameters()` now accepts the methods from
   `stats::p.adjust.methods` in any letter case, for example `"bh"`. Before,
   this failed with an error. An invalid value for `p_adjust` no longer shows the
