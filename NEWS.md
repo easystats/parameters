@@ -23,6 +23,11 @@
 
 ## Bug fixes
 
+* `model_parameters()` for *BayesFactor* objects with more than one model, for
+  example from `regressionBF()` or `anovaBF()`, now shows the Bayes factor of
+  the first model in every row. The parameters also come from that model. Before
+  this fix, the rows showed the Bayes factors of all models (#1084).
+
 * `bootstrap_model()` with `type = "parametric"` no longer fails for models
   without their own bootstrap method, such as `lm` or `glm`. It now draws new
   responses with `simulate()` and refits the model to them. Two kinds of model

@@ -111,10 +111,11 @@ model_parameters.BFBayesFactor <- function(model,
     }
   )
 
-  # Extract BF
+  # Extract BF - posteriors are taken from the first numerator model, so we
+  # only use the BF of that model, see #1084
   tryCatch(
     {
-      bfm <- as.data.frame(bayestestR::bayesfactor_models(model)[-1, ])
+      bfm <- as.data.frame(bayestestR::bayesfactor_models(model)[-1, ])[1, ]
       if (is.null(bfm$log_BF)) {
         out$BF <- bfm$BF
       } else {
