@@ -14,6 +14,13 @@
   `"none"` now gives a warning, because the standardized draws have no chain
   information. `ci_method = "si"` now gives an error.
 
+* For mixed models without their own bootstrap method, `bootstrap_model()` now
+  resamples whole clusters instead of single rows, with `type = "ordinary"`
+  (the default) or `type = "balanced"`. Examples are models from
+  *ordinal*, *cplm* or *nlme*. This also changes `bootstrap_parameters()` and
+  `model_parameters()` with `bootstrap = TRUE`. Grouping factors that are not
+  nested in one factor give an error.
+
 ## Bug fixes
 
 * `model_parameters()` for *BayesFactor* objects with more than one model, for
