@@ -258,3 +258,103 @@ test_that("bootstrap_model semiparametric errors for glmmTMB", {
     regex = "not available for models from"
   )
 })
+
+# refit the model to responses drawn with simulate(), one draw per iteration
+.parametric_draws <- function(model, data, response, iterations) {
+  t(vapply(
+    seq_len(iterations),
+    function(i) {
+      d <- data
+      d[[response]] <- stats::simulate(model, nsim = 1)[[1]]
+      stats::coef(stats::update(model, data = d))
+    },
+    numeric(length(stats::coef(model)))
+  ))
+}
+
+test_that("bootstrap_model parametric refits to simulated responses", {
+  m <- lm(mpg ~ wt + hp, data = mtcars)
+  set.seed(42)
+  out <- bootstrap_model(m, iterations = 50, type = "parametric")
+  set.seed(42)
+  expected <- .parametric_draws(m, mtcars, "mpg", 50)
+  expect_named(out, c("(Intercept)", "wt", "hp"))
+  expect_equal(unname(as.matrix(out)), unname(expected), tolerance = 1e-10)
+
+  m <- glm(carb ~ wt, family = poisson, data = mtcars)
+  set.seed(42)
+  out <- bootstrap_model(m, iterations = 50, type = "parametric")
+  set.seed(42)
+  expected <- .parametric_draws(m, mtcars, "carb", 50)
+  expect_named(out, c("(Intercept)", "wt"))
+  expect_equal(unname(as.matrix(out)), unname(expected), tolerance = 1e-10)
+})
+
+test_that("bootstrap_model parametric draws match the lm sampling distribution", {
+  # simulate.lm() draws y* = X b + e with e ~ N(0, sigma^2), so the refitted
+  # coefficients have covariance sigma^2 (X'X)^-1, which is vcov(m)
+  m <- lm(mpg ~ wt + hp, data = mtcars)
+  set.seed(123)
+  out <- bootstrap_model(m, iterations = 1000, type = "parametric")
+  se <- sqrt(diag(stats::vcov(m)))
+  expect_equal(unname(apply(out, 2, stats::sd) / se), rep(1, 3), tolerance = 0.1)
+  expect_lt(max(abs(colMeans(out) - stats::coef(m)) / se), 0.2)
+})
+
+test_that("bootstrap_parameters parametric returns a row per coefficient", {
+  m <- lm(mpg ~ wt + hp, data = mtcars)
+  set.seed(42)
+  out <- bootstrap_parameters(m, iterations = 50, type = "parametric")
+  expect_identical(out$Parameter, c("(Intercept)", "wt", "hp"))
+  expect_false(anyNA(out$Coefficient))
+  expect_false(anyNA(out$CI_low))
+  expect_false(anyNA(out$CI_high))
+})
+
+test_that("bootstrap_model parametric errors for models without usable simulate()", {
+  skip_if_not_installed("ordinal")
+  skip_if_not_installed("nlme")
+  data(wine, package = "ordinal")
+  data(Orthodont, package = "nlme")
+
+  m <- ordinal::clm(rating ~ temp, data = wine)
+  expect_error(
+    bootstrap_model(m, iterations = 5, type = "parametric"),
+    regex = "`simulate\\(\\)` does not work for models of class `clm`.*type = \"ordinary\""
+  )
+  m <- ordinal::clmm(rating ~ temp + (1 | judge), data = wine)
+  expect_error(
+    bootstrap_model(m, iterations = 5, type = "parametric"),
+    regex = "`simulate\\(\\)` does not work for models of class `clmm`.*type = \"ordinary\""
+  )
+  m <- nlme::lme(distance ~ age, random = ~ 1 | Subject, data = Orthodont)
+  expect_error(
+    bootstrap_model(m, iterations = 5, type = "parametric"),
+    regex = "`simulate\\(\\)` does not return one response per row for models of class `lme`.*type = \"ordinary\""
+  )
+  m <- glm(carb ~ wt, family = quasipoisson, data = mtcars)
+  expect_error(
+    bootstrap_model(m, iterations = 5, type = "parametric"),
+    regex = "`simulate\\(\\)` does not work for models of class `glm`.*quasipoisson.*type = \"ordinary\""
+  )
+})
+
+test_that("bootstrap_model parametric errors for responses that are not a data column", {
+  skip_if_not_installed("lme4")
+  data(cbpp, package = "lme4")
+  m <- lm(log(mpg) ~ wt, data = mtcars)
+  expect_error(
+    bootstrap_model(m, iterations = 5, type = "parametric"),
+    regex = "response `log\\(mpg\\)` is not one column of the data.*type = \"ordinary\""
+  )
+  m <- lm(scale(mpg) ~ wt, data = mtcars)
+  expect_error(
+    bootstrap_model(m, iterations = 5, type = "parametric"),
+    regex = "response `scale\\(mpg\\)` is not one column of the data.*type = \"ordinary\""
+  )
+  m <- glm(cbind(incidence, size - incidence) ~ period, family = binomial, data = cbpp)
+  expect_error(
+    bootstrap_model(m, iterations = 5, type = "parametric"),
+    regex = "response `cbind\\(incidence, size - incidence\\)` is not one column of the data.*type = \"ordinary\""
+  )
+})
