@@ -21,6 +21,16 @@
   `model_parameters()` with `bootstrap = TRUE`. Grouping factors that are not
   nested in one factor give an error.
 
+## Bug fixes
+
+* `bootstrap_model()` with `type = "parametric"` no longer fails for models
+  without their own bootstrap method, such as `lm` or `glm`. It now draws new
+  responses with `simulate()` and refits the model to them. Two kinds of model
+  give an error that suggests `type = "ordinary"`. In the first kind,
+  `simulate()` does not return one numeric response per row. In the second
+  kind, the response in the formula is not one column of the data, for example
+  `log(y)` or `cbind()`.
+
 # parameters 0.30.0
 
 ## Changes

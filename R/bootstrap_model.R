@@ -10,7 +10,12 @@
 #'   for details). Semiparametric bootstrapping resamples the residuals and keeps
 #'   the random effects at their estimated values (`use.u = TRUE` in
 #'   `lme4::bootMer()`). For all other models, see argument `sim` in
-#'   `?boot::boot` (defaults to `"ordinary"`). For other mixed models,
+#'   `?boot::boot` (defaults to `"ordinary"`). For these models, `"parametric"`
+#'   draws new responses with `simulate()` and refits the model to them. Two
+#'   kinds of model give an error. For the first kind, `simulate()` has no
+#'   method, fails, or does not return one numeric response per row. For the
+#'   second kind, the response in the formula is not one column of the data,
+#'   for example `log(y)` or `cbind()`. For other mixed models,
 #'   `"ordinary"` and `"balanced"` resample whole clusters (see section Details), and
 #'   `"permutation"` and `"antithetic"` are not available.
 #' @param parallel The type of parallel operation to be used (if any).
@@ -110,7 +115,7 @@ bootstrap_model.default <- function(
     ))
   }
 
-  data <- insight::get_data(model, verbose = FALSE)
+  data <- insight::get_data(model, verbose = FALSE) # nolint
 
   boot_function <- function(model, data, indices) {
     d <- data[indices, , drop = FALSE] # allows boot to select sample
@@ -199,12 +204,10 @@ bootstrap_model.default <- function(
   # simulate() draws random numbers, so restore the seed afterwards
   old_seed <- get0(".Random.seed", envir = globalenv(), inherits = FALSE)
   on.exit(
-    {
-      if (is.null(old_seed)) {
-        rm(".Random.seed", envir = globalenv())
-      } else {
-        assign(".Random.seed", old_seed, envir = globalenv())
-      }
+    if (is.null(old_seed)) {
+      rm(".Random.seed", envir = globalenv())
+    } else {
+      assign(".Random.seed", old_seed, envir = globalenv())
     },
     add = TRUE
   )
