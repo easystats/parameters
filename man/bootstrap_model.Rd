@@ -31,8 +31,9 @@ of class \code{merMod} or \code{glmmTMB}, may be \code{"parametric"} (default). 
 for details). Semiparametric bootstrapping resamples the residuals and keeps
 the random effects at their estimated values (\code{use.u = TRUE} in
 \code{lme4::bootMer()}). For all other models, see argument \code{sim} in
-\code{?boot::boot} (defaults to \code{"ordinary"}). For these models, \code{"parametric"}
-draws new responses with \code{simulate()} and refits the model to them. Two
+\code{?boot::boot} (defaults to \code{"ordinary"}). For models without their own
+method, including other mixed models, \code{"parametric"} draws new responses
+with \code{simulate()} and refits the model to them. Two
 kinds of model give an error. For the first kind, \code{simulate()} has no
 method, fails, or does not return one numeric response per row. For the
 second kind, the response in the formula is not one column of the data,

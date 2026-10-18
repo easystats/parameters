@@ -351,6 +351,37 @@ test_that("bootstrap_model parametric errors for models without usable simulate(
   )
 })
 
+test_that("bootstrap_model parametric errors if simulate() and the data differ in rows", {
+  m <- lm(Ozone ~ Wind, data = airquality, na.action = na.exclude)
+  .expect_parametric_error(
+    m,
+    "`simulate\\(\\)` returns 153 responses, but the model data has 116 rows.*Use `type = \"ordinary\"` instead"
+  )
+  # rows with missing values that are dropped from both are fine
+  set.seed(42)
+  out <- bootstrap_model(
+    lm(Ozone ~ Wind, data = airquality),
+    iterations = 5,
+    type = "parametric"
+  )
+  expect_shape(out, dim = c(5L, 2L))
+})
+
+test_that("bootstrap_model parametric gives no warning if no seed exists yet", {
+  skip_if_not_installed("ordinal")
+  skip_if_not_installed("withr")
+  data(wine, package = "ordinal")
+  m <- ordinal::clm(rating ~ temp, data = wine)
+  withr::with_preserve_seed({
+    rm(".Random.seed", envir = globalenv())
+    expect_no_warning(.expect_parametric_error(
+      m,
+      "does not work for models of class `clm`"
+    ))
+    expect_false(exists(".Random.seed", envir = globalenv(), inherits = FALSE))
+  })
+})
+
 test_that("bootstrap_model parametric errors for responses that are not a data column", {
   skip_if_not_installed("lme4")
   data(cbpp, package = "lme4")

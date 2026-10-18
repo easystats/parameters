@@ -10,8 +10,9 @@
 #'   for details). Semiparametric bootstrapping resamples the residuals and keeps
 #'   the random effects at their estimated values (`use.u = TRUE` in
 #'   `lme4::bootMer()`). For all other models, see argument `sim` in
-#'   `?boot::boot` (defaults to `"ordinary"`). For these models, `"parametric"`
-#'   draws new responses with `simulate()` and refits the model to them. Two
+#'   `?boot::boot` (defaults to `"ordinary"`). For models without their own
+#'   method, including other mixed models, `"parametric"` draws new responses
+#'   with `simulate()` and refits the model to them. Two
 #'   kinds of model give an error. For the first kind, `simulate()` has no
 #'   method, fails, or does not return one numeric response per row. For the
 #'   second kind, the response in the formula is not one column of the data,
@@ -205,7 +206,9 @@ bootstrap_model.default <- function(
   old_seed <- get0(".Random.seed", envir = globalenv(), inherits = FALSE)
   on.exit(
     if (is.null(old_seed)) {
-      rm(".Random.seed", envir = globalenv())
+      if (exists(".Random.seed", envir = globalenv(), inherits = FALSE)) {
+        rm(".Random.seed", envir = globalenv())
+      }
     } else {
       assign(".Random.seed", old_seed, envir = globalenv())
     },
@@ -227,14 +230,24 @@ bootstrap_model.default <- function(
     !is.data.frame(simulated) ||
       ncol(simulated) != 1 ||
       !is.null(dim(simulated[[1]])) ||
-      !is.numeric(simulated[[1]]) ||
-      nrow(simulated) != nrow(data)
+      !is.numeric(simulated[[1]])
   ) {
     insight::format_error(paste0(
       "Parametric bootstrapping is not available for this model, because",
       " `simulate()` does not return one numeric response per row for models of class `",
       model_class,
       "`. Use `type = \"ordinary\"` instead."
+    ))
+  }
+  if (nrow(simulated) != nrow(data)) {
+    insight::format_error(paste0(
+      "Parametric bootstrapping is not available for this model, because",
+      " `simulate()` returns ",
+      nrow(simulated),
+      " responses, but the model data has ",
+      nrow(data),
+      " rows. This can happen with `na.action = na.exclude` or `subset`.",
+      " Use `type = \"ordinary\"` instead."
     ))
   }
 
