@@ -46,7 +46,9 @@ bootstrap_model(
   [`lme4::bootMer()`](https://rdrr.io/pkg/lme4/man/bootMer.html)). For
   all other models, see argument `sim` in
   [`?boot::boot`](https://rdrr.io/pkg/boot/man/boot.html) (defaults to
-  `"ordinary"`).
+  `"ordinary"`). For other mixed models, `"ordinary"` and `"balanced"`
+  resample whole clusters (see section Details), and `"permutation"` and
+  `"antithetic"` are not available.
 
 - parallel:
 
@@ -81,6 +83,21 @@ or models from **glmmTMB**, the
 is used to obtain bootstrapped samples.
 [`bootstrap_parameters()`](https://easystats.github.io/parameters/reference/bootstrap_parameters.md)
 summarizes the bootstrapped model estimates.
+
+Other mixed models (for example from **ordinal**, **cplm** or **nlme**)
+use a cluster bootstrap when `type` is `"ordinary"` or `"balanced"`:
+each sample draws whole clusters (the levels of the grouping factor)
+with replacement, not single rows. A cluster that is drawn twice counts
+as two clusters. If the model has several grouping factors that are all
+nested in one factor, directly or through other factors, the clusters
+are the levels of that factor. If several factors qualify, the one with
+the most levels that is not a fixed effect is used. Grouping factors
+that are not nested in one factor give an error. A grouping factor that
+is also a fixed effect gives an error, unless the formula has it only in
+interactions with the resampled factor (for example `cond` in
+`random = ~ 1 | subject/cond`, which has the grouping terms `subject`
+and `subject:cond`). With few clusters, the cluster bootstrap has few
+independent units to resample, and its standard errors can be too small.
 
 ## Using with **emmeans**
 

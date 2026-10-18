@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.30.0.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.30.0.5</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -98,7 +98,9 @@ of class <code>merMod</code> or <code>glmmTMB</code>, may be <code>"parametric"<
 for details). Semiparametric bootstrapping resamples the residuals and keeps
 the random effects at their estimated values (<code>use.u = TRUE</code> in
 <code><a href="https://rdrr.io/pkg/lme4/man/bootMer.html" class="external-link">lme4::bootMer()</a></code>). For all other models, see argument <code>sim</code> in
-<code><a href="https://rdrr.io/pkg/boot/man/boot.html" class="external-link">?boot::boot</a></code> (defaults to <code>"ordinary"</code>).</p></dd>
+<code><a href="https://rdrr.io/pkg/boot/man/boot.html" class="external-link">?boot::boot</a></code> (defaults to <code>"ordinary"</code>). For other mixed models,
+<code>"ordinary"</code> and <code>"balanced"</code> resample whole clusters (see section Details), and
+<code>"permutation"</code> and <code>"antithetic"</code> are not available.</p></dd>
 
 
 <dt id="arg-parallel">parallel<a class="anchor" aria-label="anchor" href="#arg-parallel"></a></dt>
@@ -130,6 +132,20 @@ the model with the bootstrapped samples. For <code>merMod</code> objects (<stron
 or models from <strong>glmmTMB</strong>, the <code><a href="https://rdrr.io/pkg/lme4/man/bootMer.html" class="external-link">lme4::bootMer()</a></code> function is used to
 obtain bootstrapped samples. <code><a href="bootstrap_parameters.html">bootstrap_parameters()</a></code> summarizes the
 bootstrapped model estimates.</p>
+<p>Other mixed models (for example from <strong>ordinal</strong>, <strong>cplm</strong> or <strong>nlme</strong>) use
+a cluster bootstrap when <code>type</code> is <code>"ordinary"</code> or <code>"balanced"</code>: each sample
+draws whole clusters (the levels of the grouping factor) with replacement,
+not single rows. A cluster that is drawn twice counts as two clusters. If the
+model has several grouping factors that are all nested in one factor,
+directly or through other factors, the clusters are the levels of that
+factor. If several factors qualify, the one with the most levels that is not
+a fixed effect is used. Grouping factors that are not nested
+in one factor give an error. A grouping factor that is also a fixed effect
+gives an error, unless the formula has it only in interactions with the
+resampled factor (for example <code>cond</code> in <code>random = ~ 1 | subject/cond</code>, which
+has the grouping terms <code>subject</code> and <code>subject:cond</code>). With few clusters, the
+cluster bootstrap has few independent units to resample, and its standard
+errors can be too small.</p>
     </div>
     <div class="section level2">
     <h2 id="using-with-emmeans">Using with <strong>emmeans</strong><a class="anchor" aria-label="anchor" href="#using-with-emmeans"></a></h2>
