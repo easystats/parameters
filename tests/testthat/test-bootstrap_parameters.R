@@ -338,7 +338,7 @@ test_that("bootstrap_model parametric errors for models without usable simulate(
   .expect_parametric_error(
     nlme::lme(distance ~ age, random = ~ 1 | Subject, data = Orthodont),
     paste0(
-      "`simulate\\(\\)` does not return one response per row for models of class `lme`",
+      "`simulate\\(\\)` does not return one numeric response per row for models of class `lme`",
       use_ordinary
     )
   )

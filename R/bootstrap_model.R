@@ -187,8 +187,8 @@ bootstrap_model.default <- function(
 
 # parametric bootstrap checks --------------------------------------------------
 
-# returns the name of the response column, or errors if simulate() cannot draw
-# new responses for this model
+# returns the name of the response column, or errors if the response is not one
+# data column or simulate() cannot draw new responses for this model
 .check_parametric_bootstrap <- function(model, data) {
   model_class <- class(model)[1]
   response <- insight::find_formula(model, verbose = FALSE)$conditional[[2]]
@@ -232,7 +232,7 @@ bootstrap_model.default <- function(
   ) {
     insight::format_error(paste0(
       "Parametric bootstrapping is not available for this model, because",
-      " `simulate()` does not return one response per row for models of class `",
+      " `simulate()` does not return one numeric response per row for models of class `",
       model_class,
       "`. Use `type = \"ordinary\"` instead."
     ))
