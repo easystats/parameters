@@ -28,9 +28,8 @@
   responses with `simulate()` and refits the model to them. Two kinds of model
   give an error that suggests `type = "ordinary"`. In the first kind,
   `simulate()` has no method, fails, or does not return one numeric response
-  per row. In the second
-  kind, the response in the formula is not one column of the data, for example
-  `log(y)` or `cbind()`.
+  per row. In the second kind, the response in the formula is not one column
+  of the data, for example `log(y)` or `cbind()`.
 
 # parameters 0.30.0
 
