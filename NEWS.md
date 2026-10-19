@@ -1,4 +1,4 @@
-# parameters 0.30.0
+# parameters (devel)
 
 ## Breaking Changes
 
@@ -8,6 +8,52 @@
 * `model_parameters()`, `ci()`, `standard_error()`, and `p_value()` now default
   to the Satterthwaite approximation for `lmerModLmerTest` models and suggest
   doing so for `lmerMod` models (#989).
+
+## Changes
+
+* `model_parameters()` for models from *blavaan* with `standardize` no longer
+  returns rows for parameters with fixed or constant standardized draws, such
+  as the standardized variances of exogenous latent variables. `print()` now
+  says that the parameters are standardized and names the type. The output now
+  also drops `p_significance`, because its result depends on the scale of the
+  parameters. Version 0.30.0 already dropped the ROPE tests and Bayes factors.
+  Test names now match as in *bayestestR*. If you give these tests in other
+  spellings, for example `test = "ROPE"`, the output also drops them. If
+  `verbose = TRUE`, an explicit `diagnostic` other than `NULL`, `FALSE` or
+  `"none"` now gives a warning, because the standardized draws have no chain
+  information. `ci_method = "si"` now gives an error.
+
+* For mixed models without their own bootstrap method, `bootstrap_model()` now
+  resamples whole clusters instead of single rows, with `type = "ordinary"`
+  (the default) or `type = "balanced"`. Examples are models from
+  *ordinal*, *cplm* or *nlme*. This also changes `bootstrap_parameters()` and
+  `model_parameters()` with `bootstrap = TRUE`. Grouping factors that are not
+  nested in one factor give an error.
+
+* `model_parameters()` for objects from *emmeans* supports `p_adjust = "mvt"`,
+  which adjusts p-values based on the multivariate t distribution (#854).
+
+## Bug fixes
+
+* `model_parameters()` for *BayesFactor* objects with more than one model, for
+  example from `regressionBF()` or `anovaBF()`, now shows the Bayes factor of
+  the first model in every row. The parameters also come from that model. Before
+  this fix, the rows showed the Bayes factors of all models (#1084).
+
+* `bootstrap_model()` with `type = "parametric"` no longer fails for models
+  without their own bootstrap method, such as `lm` or `glm`. It now draws new
+  responses with `simulate()` and refits the model to them. Two kinds of model
+  give an error that suggests `type = "ordinary"`. In the first kind,
+  `simulate()` has no method, fails, or does not return one numeric response
+  per row. In the second kind, the response in the formula is not one column
+  of the data, for example `log(y)` or `cbind()`.
+
+* The `p_adjust` argument in `model_parameters()` now accepts the methods from
+  `stats::p.adjust.methods` in any letter case, for example `"bh"`. Before,
+  this failed with an error. An invalid value for `p_adjust` no longer shows the
+  method in the footer of the printed output (#854).
+
+# parameters 0.30.0
 
 ## Changes
 

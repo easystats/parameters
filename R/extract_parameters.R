@@ -926,7 +926,7 @@
 
 
 #' @keywords internal
-.remove_scale_dependent_tests <- function(test, verbose = TRUE) {
+.remove_scale_dependent_tests <- function(test, verbose = TRUE, also = NULL) {
   scale_dependent <- c(
     "bf",
     "bayesfactor",
@@ -934,7 +934,8 @@
     "rope",
     "p_rope",
     "equivalence_test",
-    "equitest"
+    "equitest",
+    also
   )
   if (any(scale_dependent %in% test)) {
     test <- setdiff(test, scale_dependent)

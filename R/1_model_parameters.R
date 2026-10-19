@@ -472,7 +472,15 @@ parameters <- model_parameters
 #'   adjustment methods are `"tukey"`, `"scheffe"`, `"sidak"`, `"sup-t"`, and
 #'   `"none"` to explicitly disable adjustment for `emmGrid` objects (from
 #'   **emmeans**). `"sup-t"` computes simultaneous confidence bands, also called
-#'   sup-t confidence band (Montiel Olea & Plagborg-Møller, 2019).
+#'   sup-t confidence band (Montiel Olea & Plagborg-Møller, 2019). `"mvt"` is
+#'   only available for objects from **emmeans** (`emmGrid` and `emm_list`). It
+#'   adjusts p-values based on the multivariate t distribution, using
+#'   `summary(<emmGrid>, adjust = "mvt")`, where each `by` group is a separate
+#'   family. Confidence intervals are not adjusted. **emmeans** computes these
+#'   p-values by simulation, so they vary slightly between calls. For the same
+#'   values on each call, use `set.seed()` first. Method names from
+#'   `stats::p.adjust.methods` can be in any letter case, for example `"bh"`
+#'   instead of `"BH"`.
 #' @param ci_method Method for computing degrees of freedom for
 #'   confidence intervals (CI) and the related p-values. Allowed are following
 #'   options (which vary depending on the model class): `"residual"`,

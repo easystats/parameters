@@ -81,7 +81,7 @@
   attr(params, "model_class") <- as.character(class(model))
   attr(params, "bootstrap") <- bootstrap
   attr(params, "iterations") <- iterations
-  attr(params, "p_adjust") <- p_adjust
+  attr(params, "p_adjust") <- .valid_p_adjust(p_adjust, model)
   attr(params, "robust_vcov") <- !is.null(dot.arguments$vcov)
   attr(params, "robust_vcov_type") <- dot.arguments$vcov
   attr(params, "ignore_group") <- isFALSE(group_level)
@@ -484,7 +484,7 @@
   attr(params, "model_class") <- class(model)
   attr(params, "anova_type") <- .anova_type(model)
   attr(params, "text_alternative") <- .anova_alternative(params, alternative)
-  attr(params, "p_adjust") <- p_adjust
+  attr(params, "p_adjust") <- .valid_p_adjust(p_adjust, model)
 
   if (inherits(model, "Anova.mlm") && !identical(test, "univariate")) {
     attr(params, "anova_test") <- model$test
