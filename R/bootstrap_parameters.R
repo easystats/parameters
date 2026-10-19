@@ -123,12 +123,16 @@ model_parameters.bootstrap_model <- bootstrap_parameters.bootstrap_model
     return(params)
   }
   draw_names <- c(fixed_names$conditional, paste0(fixed_names$zero_inflated, "_zi"))
+  # columns that users added to the draws, like linear combinations, keep
+  # their names
   idx <- match(params$Parameter, draw_names)
-  params$Parameter <- c(fixed_names$conditional, fixed_names$zero_inflated)[idx]
-  params$Component <- rep(
+  found <- !is.na(idx)
+  params$Parameter[found] <- c(fixed_names$conditional, fixed_names$zero_inflated)[idx[found]]
+  params$Component <- "conditional"
+  params$Component[found] <- rep(
     c("conditional", "zero_inflated"),
     c(length(fixed_names$conditional), length(fixed_names$zero_inflated))
-  )[idx]
+  )[idx[found]]
   params
 }
 

@@ -132,6 +132,10 @@
 #' For models where the dispersion parameter and the residual variance are
 #' the same, only the residual variance is shown in the output.
 #'
+#' With `bootstrap = TRUE`, the output has no dispersion parameters, because
+#' the bootstrapped draws include only the conditional and zero-inflation
+#' parameters. `component = "dispersion"` then gives an error.
+#'
 #' @seealso [insight::standardize_names()] to
 #'   rename columns into a consistent, standardized naming scheme.
 #'

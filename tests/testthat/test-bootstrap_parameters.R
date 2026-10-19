@@ -480,6 +480,8 @@ test_that("bootstrap_parameters returns components of glmmTMB models", {
     }
   }
 
+  skip_if_not_installed("withr")
+  withr::local_options(width = 300)
   set.seed(123)
   mp <- model_parameters(
     .fit_zi_glmmTMB(),
@@ -493,6 +495,23 @@ test_that("bootstrap_parameters returns components of glmmTMB models", {
   zi_rows <- printed[seq_along(printed) > min(zi_start, Inf)]
   expect_length(grep("^\\(Intercept\\)\\s+\\|", zi_rows), 1)
   expect_length(grep("^mined \\[no\\]\\s+\\|", zi_rows), 1)
+})
+
+test_that("bootstrap_parameters keeps added columns of glmmTMB draws", {
+  skip_if_not_installed("glmmTMB")
+  set.seed(123)
+  b <- bootstrap_model(.fit_zi_glmmTMB(), iterations = 5)
+  b$lin_comb <- b$minedno - b$minedno_zi
+  out <- bootstrap_parameters(b)
+  expect_identical(
+    out$Parameter,
+    c("(Intercept)", "minedno", "(Intercept)", "minedno", "lin_comb")
+  )
+  expect_identical(
+    out$Component,
+    c("conditional", "conditional", "zero_inflated", "zero_inflated", "conditional")
+  )
+  expect_equal(out$Coefficient[5], median(b$lin_comb), tolerance = 1e-10)
 })
 
 test_that("bootstrap_parameters matches each glmmTMB draw to its parameter", {

@@ -305,6 +305,10 @@ sigma(model)^2         # 0.09902987
 
 For models where the dispersion parameter and the residual variance are
 the same, only the residual variance is shown in the output.
+
+With \code{bootstrap = TRUE}, the output has no dispersion parameters, because
+the bootstrapped draws include only the conditional and zero-inflation
+parameters. \code{component = "dispersion"} then gives an error.
 }
 
 \section{Model components}{
