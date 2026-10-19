@@ -118,15 +118,14 @@ model_parameters.lmerMod <- function(
 ) {
   cl <- match.call()
   cl[[1]] <- model_parameters.merMod
-  .eval_satterthwaite_default(
-    cl,
-    method_arg = "ci_method",
+  cl$ci_method <- .check_ci_method(
+    model,
     method = ci_method,
     effects = effects,
     bootstrap = bootstrap,
-    verbose = verbose,
-    envir = parent.frame()
+    verbose = verbose
   )
+  eval.parent(cl)
 }
 
 #' @export
@@ -144,14 +143,13 @@ ci.lmerMod <- function(
 ) {
   cl <- match.call()
   cl[[1]] <- ci.merMod
-  .eval_satterthwaite_default(
-    cl,
-    method_arg = "method",
+  cl$ci_method <- .check_ci_method(
+    x,
     method = method,
     effects = effects,
-    verbose = verbose,
-    envir = parent.frame()
+    verbose = verbose
   )
+  eval.parent(cl)
 }
 
 #' @export
@@ -166,14 +164,13 @@ standard_error.lmerMod <- function(
 ) {
   cl <- match.call()
   cl[[1]] <- standard_error.merMod
-  .eval_satterthwaite_default(
-    cl,
-    method_arg = "method",
+  cl$ci_method <- .check_ci_method(
+    model,
     method = method,
     effects = effects,
-    verbose = verbose,
-    envir = parent.frame()
+    verbose = verbose
   )
+  eval.parent(cl)
 }
 
 #' @export
@@ -189,14 +186,13 @@ p_value.lmerMod <- function(
 ) {
   cl <- match.call()
   cl[[1]] <- p_value.merMod
-  .eval_satterthwaite_default(
-    cl,
-    method_arg = "method",
+  cl$ci_method <- .check_ci_method(
+    model,
     method = method,
     effects = effects,
-    verbose = verbose,
-    envir = parent.frame()
+    verbose = verbose
   )
+  eval.parent(cl)
 }
 
 
@@ -281,52 +277,34 @@ se_mixed_default <- function(model) {
   .data_frame(Parameter = params, SE = .get_se_from_summary(model))
 }
 
-# Evaluates a call to a merMod method, using Satterthwaite df when the user did
-# not choose a method. If Satterthwaite df cannot be computed, for example
-# because lmerTest cannot rebuild the deviance function when the data is no
-# longer available, the call is evaluated again with the merMod default.
-.eval_satterthwaite_default <- function(
-  cl,
-  method_arg,
+.check_ci_method <- function(
+  model,
   method,
   effects = "all",
   bootstrap = FALSE,
   verbose = TRUE,
-  envir = parent.frame()
+  fallback = "wald"
 ) {
-  # cases where we don't want to interfere
-  if (
-    !is.null(method) ||
-      identical(effects, "random") ||
-      isTRUE(bootstrap) ||
-      !.check_lmerTest(verbose)
-  ) {
-    return(eval(cl, envir))
+  if (!is.null(method) || isTRUE(bootstrap) || identical(effects, "random")) {
+    return(method)
   }
 
-  cl[[method_arg]] <- "satterthwaite"
-  tryCatch(eval(cl, envir), error = function(e) {
-    cl[[method_arg]] <- NULL
-    # if the default method fails as well, the error is not specific to
-    # Satterthwaite df, so we report the original error
-    out <- tryCatch(eval(cl, envir), error = function(e2) stop(e))
-    if (verbose) {
-      insight::format_alert(paste0(
-        "Could not compute Satterthwaite degrees of freedom (",
-        conditionMessage(e),
-        "). Falling back to the Wald method."
-      ))
-    }
-    out
-  })
-}
+  mod_class <- class(model)
+  if (identical(mod_class, "lmerModLmerTest")) {
+    return("satterthwaite")
+  }
 
-.check_lmerTest <- function(verbose = TRUE) {
-  insight::check_if_installed(
-    "lmerTest",
-    reason = "for Satterthwaite degrees of freedom (the default for linear mixed models)",
-    stop = FALSE,
-    quietly = !verbose,
-    prompt = FALSE
-  )
+  if (
+    isTRUE(verbose) &&
+      !isTRUE(getOption(".suggest_satterthwaite_for_lmerMod")) &&
+      identical(mod_class, "lmerMod")
+  ) {
+    insight::format_alert(
+      'Concider setting `ci_method = "satterthwaite"` for better covarage and type-1 error control.',
+      "This message will only show once per session."
+    )
+    options(.suggest_satterthwaite_for_lmerMod = FALSE)
+  }
+
+  return(fallback)
 }
