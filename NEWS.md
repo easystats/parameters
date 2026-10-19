@@ -2,6 +2,9 @@
 
 ## Breaking Changes
 
+* `compare_parameters()`'s `ci_method` now defaults to `NULL`, so the value is
+  potentially set by the models' unique methods.
+
 * `model_parameters()`, `ci()`, `standard_error()`, and `p_value()` now default
   to the Satterthwaite approximation for `lmerModLmerTest` models and suggest
   doing so for `lmerMod` models (#989).
