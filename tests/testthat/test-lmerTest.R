@@ -49,7 +49,7 @@ test_that("mixed-model defaults use satterthwaite for lmerModLmerTest", {
 test_that("satterthwaite default keeps a robust vcov", {
   skip_if_not_installed("clubSandwich")
   data("sleepstudy", package = "lme4")
-  m <- lme4::lmer(Reaction ~ Days + (1 | Subject), data = sleepstudy)
+  m <- lmerTest::lmer(Reaction ~ Days + (1 | Subject), data = sleepstudy)
   out <- model_parameters(
     m,
     effects = "fixed",
@@ -80,6 +80,8 @@ test_that("glmer", {
 test_that("lmerMod with lme4 give a warning once", {
   data("sleepstudy", package = "lme4")
   m <- lme4::lmer(Reaction ~ Days + (1 | Subject), data = sleepstudy)
-  expect_message(ci(m))
+  # other tests in this session may already have shown the message
+  withr::local_options(.suggest_satterthwaite_for_lmerMod = TRUE)
+  expect_message(ci(m), "satterthwaite")
   expect_no_message(ci(m))
 })

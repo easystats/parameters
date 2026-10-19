@@ -304,7 +304,7 @@ se_mixed_default <- function(model) {
       setequal(mod_class, "lmerMod")
   ) {
     insight::format_alert(
-      'Concider setting `ci_method = "satterthwaite"` for better covarage and type-1 error control.',
+      'Consider setting `ci_method = "satterthwaite"` for better coverage and type-1 error control.',
       "This message will only show once per session."
     )
     options(.suggest_satterthwaite_for_lmerMod = FALSE)
