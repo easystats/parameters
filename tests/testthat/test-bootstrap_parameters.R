@@ -258,3 +258,148 @@ test_that("bootstrap_model semiparametric errors for glmmTMB", {
     regex = "not available for models from"
   )
 })
+
+# refit the model to responses drawn with simulate(), one draw per iteration
+.parametric_draws <- function(model, data, response, iterations) {
+  t(vapply(
+    seq_len(iterations),
+    function(i) {
+      d <- data
+      d[[response]] <- stats::simulate(model, nsim = 1)[[1]]
+      stats::coef(stats::update(model, data = d))
+    },
+    numeric(length(stats::coef(model)))
+  ))
+}
+
+test_that("bootstrap_model parametric refits to simulated responses", {
+  m <- lm(mpg ~ wt + hp, data = mtcars)
+  set.seed(42)
+  out <- bootstrap_model(m, iterations = 50, type = "parametric")
+  set.seed(42)
+  expected <- .parametric_draws(m, mtcars, "mpg", 50)
+  expect_named(out, c("(Intercept)", "wt", "hp"))
+  expect_equal(unname(as.matrix(out)), unname(expected), tolerance = 1e-10)
+
+  m <- glm(carb ~ wt, family = poisson, data = mtcars)
+  set.seed(42)
+  out <- bootstrap_model(m, iterations = 50, type = "parametric")
+  set.seed(42)
+  expected <- .parametric_draws(m, mtcars, "carb", 50)
+  expect_named(out, c("(Intercept)", "wt"))
+  expect_equal(unname(as.matrix(out)), unname(expected), tolerance = 1e-10)
+})
+
+test_that("bootstrap_model parametric draws match the lm sampling distribution", {
+  # simulate.lm() draws y* = X b + e with e ~ N(0, sigma^2), so the refitted
+  # coefficients have covariance sigma^2 (X'X)^-1, which is vcov(m)
+  m <- lm(mpg ~ wt + hp, data = mtcars)
+  set.seed(123)
+  out <- bootstrap_model(m, iterations = 1000, type = "parametric")
+  se <- sqrt(diag(stats::vcov(m)))
+  expect_equal(unname(apply(out, 2, stats::sd) / se), rep(1, 3), tolerance = 0.1)
+  expect_lt(max(abs(colMeans(out) - stats::coef(m)) / se), 0.2)
+})
+
+test_that("bootstrap_parameters parametric returns a row per coefficient", {
+  m <- lm(mpg ~ wt + hp, data = mtcars)
+  set.seed(42)
+  out <- bootstrap_parameters(m, iterations = 50, type = "parametric")
+  expect_identical(out$Parameter, c("(Intercept)", "wt", "hp"))
+  expect_false(anyNA(out$Coefficient))
+  expect_false(anyNA(out$CI_low))
+  expect_false(anyNA(out$CI_high))
+})
+
+# the error message wraps at the console width, so spaces in `pattern` match
+# any white space
+.expect_parametric_error <- function(model, pattern) {
+  expect_error(
+    bootstrap_model(model, iterations = 5, type = "parametric"),
+    regexp = gsub(" ", "\\s+", pattern, fixed = TRUE)
+  )
+}
+
+test_that("bootstrap_model parametric errors for models without usable simulate()", {
+  skip_if_not_installed("ordinal")
+  skip_if_not_installed("nlme")
+  data(wine, package = "ordinal")
+  data(Orthodont, package = "nlme")
+  use_ordinary <- ".*Use `type = \"ordinary\"` instead"
+
+  .expect_parametric_error(
+    ordinal::clm(rating ~ temp, data = wine),
+    paste0("`simulate\\(\\)` does not work for models of class `clm`", use_ordinary)
+  )
+  .expect_parametric_error(
+    ordinal::clmm(rating ~ temp + (1 | judge), data = wine),
+    paste0("`simulate\\(\\)` does not work for models of class `clmm`", use_ordinary)
+  )
+  .expect_parametric_error(
+    nlme::lme(distance ~ age, random = ~ 1 | Subject, data = Orthodont),
+    paste0(
+      "`simulate\\(\\)` does not return one numeric response per row for models of class `lme`",
+      use_ordinary
+    )
+  )
+  .expect_parametric_error(
+    glm(carb ~ wt, family = quasipoisson, data = mtcars),
+    paste0(
+      "`simulate\\(\\)` does not work for models of class `glm` \\(family 'quasipoisson' not implemented\\)",
+      use_ordinary
+    )
+  )
+})
+
+test_that("bootstrap_model parametric errors if simulate() and the data differ in rows", {
+  m <- lm(Ozone ~ Wind, data = airquality, na.action = na.exclude)
+  .expect_parametric_error(
+    m,
+    "`simulate\\(\\)` returns 153 responses, but the model data has 116 rows.*Use `type = \"ordinary\"` instead"
+  )
+  # rows with missing values that are dropped from both are fine
+  set.seed(42)
+  out <- bootstrap_model(
+    lm(Ozone ~ Wind, data = airquality),
+    iterations = 5,
+    type = "parametric"
+  )
+  expect_shape(out, dim = c(5L, 2L))
+})
+
+test_that("bootstrap_model parametric gives no warning if no seed exists yet", {
+  skip_if_not_installed("ordinal")
+  skip_if_not_installed("withr")
+  data(wine, package = "ordinal")
+  m <- ordinal::clm(rating ~ temp, data = wine)
+  withr::with_preserve_seed({
+    rm(".Random.seed", envir = globalenv())
+    expect_no_warning(.expect_parametric_error(
+      m,
+      "does not work for models of class `clm`"
+    ))
+    expect_false(exists(".Random.seed", envir = globalenv(), inherits = FALSE))
+  })
+})
+
+test_that("bootstrap_model parametric errors for responses that are not a data column", {
+  skip_if_not_installed("lme4")
+  data(cbpp, package = "lme4")
+  use_ordinary <- ".*Use `type = \"ordinary\"` instead"
+
+  .expect_parametric_error(
+    lm(log(mpg) ~ wt, data = mtcars),
+    paste0("response `log\\(mpg\\)` is not one column of the data", use_ordinary)
+  )
+  .expect_parametric_error(
+    lm(scale(mpg) ~ wt, data = mtcars),
+    paste0("response `scale\\(mpg\\)` is not one column of the data", use_ordinary)
+  )
+  .expect_parametric_error(
+    glm(cbind(incidence, size - incidence) ~ period, family = binomial, data = cbpp),
+    paste0(
+      "response `cbind\\(incidence, size - incidence\\)` is not one column of the data",
+      use_ordinary
+    )
+  )
+})
