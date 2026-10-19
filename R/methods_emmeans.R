@@ -24,6 +24,13 @@ model_parameters.emmGrid <- function(model,
     p_adjust <- emm_padjust
   }
 
+  # `.p_adjust()` applies the adjustment below. The calls before it get a copy
+  # without the adjustment stored in the object. Else they compute it, and for
+  # "mvt" this draws random numbers, so the "mvt" p-values would no longer
+  # match those of emmeans for the same seed.
+  model_unadjusted <- model
+  model_unadjusted@misc$adjust <- "none"
+
   s <- summary(model, level = ci, adjust = "none")
   params <- as.data.frame(s)
 
@@ -47,9 +54,9 @@ model_parameters.emmGrid <- function(model,
     statistic <- NULL
   } else {
     # we assume frequentist here...
-    statistic <- insight::get_statistic(model, ci = ci, adjust = "none")
-    SE <- standard_error(model)
-    p <- p_value(model, ci = ci, adjust = "none")
+    statistic <- insight::get_statistic(model_unadjusted, ci = ci, adjust = "none")
+    SE <- standard_error(model_unadjusted)
+    p <- p_value(model_unadjusted, ci = ci, adjust = "none")
 
     params$Statistic <- statistic$Statistic
     params$SE <- SE$SE

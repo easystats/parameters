@@ -587,7 +587,11 @@ format.parameters_sem <- function(
   }
 
   if (
-    "p" %in% colnames(x) && isTRUE(verbose) && !is.null(p_adjust) && p_adjust != "none"
+    "p" %in%
+      colnames(x) &&
+      isTRUE(verbose) &&
+      !is.null(p_adjust) &&
+      tolower(p_adjust) != "none"
   ) {
     footer <- .add_footer_text(
       footer,
