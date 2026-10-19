@@ -39,6 +39,17 @@
   per row. In the second kind, the response in the formula is not one column
   of the data, for example `log(y)` or `cbind()`.
 
+* `bootstrap_model()`, `bootstrap_parameters()` and `model_parameters()` with
+  `bootstrap = TRUE` now name the zero-inflation parameters of *glmmTMB*
+  models and show them in their own component. Before this fix, these rows
+  were named `NA` or had no name. In `bootstrap_model()`, the columns of the
+  zero-inflation parameters get the suffix `_zi`, as in `simulate_model()`.
+  `model_parameters()` with `bootstrap = TRUE` now uses the `component`
+  argument, and `component = "dispersion"` gives an error. Its output no longer
+  has a dispersion row, because the bootstrap draws have no dispersion
+  parameters. The footer now says that the intervals are bootstrap intervals
+  (#1284).
+
 * The `p_adjust` argument in `model_parameters()` now accepts the methods from
   `stats::p.adjust.methods` in any letter case, for example `"bh"`. Before,
   this failed with an error. An invalid value for `p_adjust` no longer shows the

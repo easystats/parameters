@@ -98,6 +98,7 @@ bootstrap_parameters.bootstrap_model <- function(
     ci_method = ci_method,
     ...
   )
+  out <- .add_component_bootstrap_glmmTMB(out, attr(model, "original_model"))
 
   class(out) <- c("bootstrap_parameters", "parameters_model", class(out))
   attr(out, "boot_samples") <- model
@@ -110,6 +111,26 @@ model_parameters.bootstrap_model <- bootstrap_parameters.bootstrap_model
 
 
 # utilities --------------------------------------------------------------------
+
+# bootstrap_model() names the zero-inflation draws of glmmTMB models
+# "<name>_zi". Restore the names and add the component, as in model_parameters()
+.add_component_bootstrap_glmmTMB <- function(params, model) {
+  if (!inherits(model, "glmmTMB")) {
+    return(params)
+  }
+  fixed_names <- insight::find_parameters(model, effects = "fixed")
+  if (!length(fixed_names$zero_inflated)) {
+    return(params)
+  }
+  draw_names <- c(fixed_names$conditional, paste0(fixed_names$zero_inflated, "_zi"))
+  idx <- match(params$Parameter, draw_names)
+  params$Parameter <- c(fixed_names$conditional, fixed_names$zero_inflated)[idx]
+  params$Component <- rep(
+    c("conditional", "zero_inflated"),
+    c(length(fixed_names$conditional), length(fixed_names$zero_inflated))
+  )[idx]
+  params
+}
 
 #' @keywords internal
 .summary_bootstrap <- function(data, test, centrality, ci, ci_method, ...) {

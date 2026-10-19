@@ -498,12 +498,17 @@ test_that("bootstrap_parameters returns components of glmmTMB models", {
 test_that("bootstrap_parameters matches each glmmTMB draw to its parameter", {
   skip_if_not_installed("glmmTMB")
   m <- .fit_zi_glmmTMB(ziformula = ~cover)
-  estimates <- insight::get_parameters(m)$Estimate
+  params <- insight::get_parameters(m)
   set.seed(123)
   out <- bootstrap_parameters(m, iterations = 50)
-  distances <- abs(outer(out$Coefficient, estimates, "-"))
+  own <- match(
+    paste(out$Parameter, out$Component),
+    paste(params$Parameter, params$Component)
+  )
+  distances <- abs(outer(out$Coefficient, params$Estimate, "-"))
   closest <- apply(distances, 1, function(d) which.min(d)[1])
-  expect_identical(closest, seq_along(estimates))
+  expect_identical(closest, own)
+  expect_false(anyNA(own))
 })
 
 test_that("model_parameters with bootstrap uses component for glmmTMB", {
@@ -522,6 +527,10 @@ test_that("model_parameters with bootstrap uses component for glmmTMB", {
     expect_identical(out$Parameter, expected$Parameter)
     expect_identical(out$Component, expected$Component)
   }
+  expect_error(
+    model_parameters(m, bootstrap = TRUE, iterations = 5, component = "dispersion"),
+    "Bootstrapping\\s+does\\s+not\\s+return\\s+dispersion\\s+parameters"
+  )
 })
 
 test_that("model_parameters with bootstrap prints a bootstrap footer for glmmTMB", {
@@ -529,8 +538,8 @@ test_that("model_parameters with bootstrap prints a bootstrap footer for glmmTMB
   for (m in list(.fit_zi_glmmTMB(), .fit_zi_glmmTMB(ziformula = ~0))) {
     set.seed(123)
     mp <- model_parameters(m, bootstrap = TRUE, iterations = 20, effects = "fixed")
-    messages <- capture_messages(printed <- capture.output(print(mp)))
-    printed <- paste(c(printed, messages), collapse = " ")
+    printed <- evaluate_promise(print(mp))
+    printed <- paste(c(printed$output, printed$messages), collapse = " ")
     expect_match(printed, "bootstrap", fixed = TRUE)
     expect_no_match(printed, "Wald", fixed = TRUE)
   }
