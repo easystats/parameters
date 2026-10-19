@@ -127,7 +127,8 @@ model_parameters.bootstrap_model <- bootstrap_parameters.bootstrap_model
   # their names
   idx <- match(params$Parameter, draw_names)
   found <- !is.na(idx)
-  params$Parameter[found] <- c(fixed_names$conditional, fixed_names$zero_inflated)[idx[found]]
+  fixed_parameters <- c(fixed_names$conditional, fixed_names$zero_inflated)
+  params$Parameter[found] <- fixed_parameters[idx[found]]
   params$Component <- "conditional"
   params$Component[found] <- rep(
     c("conditional", "zero_inflated"),
