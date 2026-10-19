@@ -46,9 +46,17 @@ bootstrap_model(
   [`lme4::bootMer()`](https://rdrr.io/pkg/lme4/man/bootMer.html)). For
   all other models, see argument `sim` in
   [`?boot::boot`](https://rdrr.io/pkg/boot/man/boot.html) (defaults to
-  `"ordinary"`). For other mixed models, `"ordinary"` and `"balanced"`
-  resample whole clusters (see section Details), and `"permutation"` and
-  `"antithetic"` are not available.
+  `"ordinary"`). For models without their own method, including other
+  mixed models, `"parametric"` draws new responses with
+  [`simulate()`](https://rdrr.io/r/stats/simulate.html) and refits the
+  model to them. Two kinds of model give an error. For the first kind,
+  [`simulate()`](https://rdrr.io/r/stats/simulate.html) has no method,
+  fails, or does not return one numeric response per row. For the second
+  kind, the response in the formula is not one column of the data, for
+  example `log(y)` or [`cbind()`](https://rdrr.io/r/base/cbind.html).
+  For other mixed models, `"ordinary"` and `"balanced"` resample whole
+  clusters (see section Details), and `"permutation"` and `"antithetic"`
+  are not available.
 
 - parallel:
 

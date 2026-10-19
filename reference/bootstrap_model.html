@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.30.0.9</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.30.0.10</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -98,7 +98,13 @@ of class <code>merMod</code> or <code>glmmTMB</code>, may be <code>"parametric"<
 for details). Semiparametric bootstrapping resamples the residuals and keeps
 the random effects at their estimated values (<code>use.u = TRUE</code> in
 <code><a href="https://rdrr.io/pkg/lme4/man/bootMer.html" class="external-link">lme4::bootMer()</a></code>). For all other models, see argument <code>sim</code> in
-<code><a href="https://rdrr.io/pkg/boot/man/boot.html" class="external-link">?boot::boot</a></code> (defaults to <code>"ordinary"</code>). For other mixed models,
+<code><a href="https://rdrr.io/pkg/boot/man/boot.html" class="external-link">?boot::boot</a></code> (defaults to <code>"ordinary"</code>). For models without their own
+method, including other mixed models, <code>"parametric"</code> draws new responses
+with <code><a href="https://rdrr.io/r/stats/simulate.html" class="external-link">simulate()</a></code> and refits the model to them. Two
+kinds of model give an error. For the first kind, <code><a href="https://rdrr.io/r/stats/simulate.html" class="external-link">simulate()</a></code> has no
+method, fails, or does not return one numeric response per row. For the
+second kind, the response in the formula is not one column of the data,
+for example <code>log(y)</code> or <code><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind()</a></code>. For other mixed models,
 <code>"ordinary"</code> and <code>"balanced"</code> resample whole clusters (see section Details), and
 <code>"permutation"</code> and <code>"antithetic"</code> are not available.</p></dd>
 
