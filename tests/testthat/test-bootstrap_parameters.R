@@ -403,3 +403,135 @@ test_that("bootstrap_model parametric errors for responses that are not a data c
     )
   )
 })
+
+.fit_zi_glmmTMB <- function(ziformula = ~mined, ...) {
+  data(Salamanders, package = "glmmTMB")
+  glmmTMB::glmmTMB(
+    count ~ mined + (1 | site),
+    ziformula = ziformula,
+    family = poisson,
+    data = Salamanders,
+    ...
+  )
+}
+
+.fit_zi_disp_glmmTMB <- function() {
+  data(Salamanders, package = "glmmTMB")
+  glmmTMB::glmmTMB(
+    count ~ mined + (1 | site),
+    ziformula = ~mined,
+    dispformula = ~mined,
+    family = glmmTMB::nbinom2,
+    data = Salamanders
+  )
+}
+
+test_that("bootstrap_model names zero-inflation columns of glmmTMB models", {
+  skip_if_not_installed("glmmTMB")
+  skip_if_not_installed("lme4")
+  zi_names <- c("(Intercept)", "minedno", "(Intercept)_zi", "minedno_zi")
+
+  set.seed(123)
+  expect_named(bootstrap_model(.fit_zi_glmmTMB(), iterations = 5), zi_names)
+  set.seed(123)
+  expect_named(bootstrap_model(.fit_zi_disp_glmmTMB(), iterations = 5), zi_names)
+  set.seed(123)
+  expect_named(
+    bootstrap_model(.fit_zi_glmmTMB(ziformula = ~cover), iterations = 5),
+    c("(Intercept)", "minedno", "(Intercept)_zi", "cover_zi")
+  )
+
+  m_cond <- .fit_zi_glmmTMB(ziformula = ~0)
+  set.seed(123)
+  expect_named(
+    bootstrap_model(m_cond, iterations = 5),
+    insight::find_parameters(m_cond, effects = "fixed")$conditional
+  )
+  data(sleepstudy, package = "lme4")
+  m_lmer <- lme4::lmer(Reaction ~ Days + (1 | Subject), data = sleepstudy)
+  set.seed(123)
+  expect_named(
+    bootstrap_model(m_lmer, iterations = 5),
+    insight::find_parameters(m_lmer, effects = "fixed")$conditional
+  )
+})
+
+test_that("bootstrap_parameters returns components of glmmTMB models", {
+  skip_if_not_installed("glmmTMB")
+  for (m in list(.fit_zi_glmmTMB(), .fit_zi_disp_glmmTMB())) {
+    params <- insight::get_parameters(m)
+    params <- params[params$Component != "dispersion", ]
+    set.seed(123)
+    out <- list(
+      bootstrap_parameters(m, iterations = 20),
+      model_parameters(m, bootstrap = TRUE, iterations = 20, effects = "fixed"),
+      model_parameters(
+        m,
+        bootstrap = TRUE,
+        iterations = 20,
+        effects = "fixed",
+        exponentiate = TRUE
+      )
+    )
+    for (x in out) {
+      expect_identical(x$Parameter, params$Parameter)
+      expect_identical(x$Component, params$Component)
+      expect_false(anyNA(x$Coefficient))
+    }
+  }
+
+  set.seed(123)
+  mp <- model_parameters(
+    .fit_zi_glmmTMB(),
+    bootstrap = TRUE,
+    iterations = 20,
+    effects = "fixed"
+  )
+  printed <- capture.output(print(mp))
+  zi_start <- grep("# Zero-Inflation", printed, fixed = TRUE)
+  expect_length(zi_start, 1)
+  zi_rows <- printed[seq_along(printed) > min(zi_start, Inf)]
+  expect_length(grep("^\\(Intercept\\)\\s+\\|", zi_rows), 1)
+  expect_length(grep("^mined \\[no\\]\\s+\\|", zi_rows), 1)
+})
+
+test_that("bootstrap_parameters matches each glmmTMB draw to its parameter", {
+  skip_if_not_installed("glmmTMB")
+  m <- .fit_zi_glmmTMB(ziformula = ~cover)
+  estimates <- insight::get_parameters(m)$Estimate
+  set.seed(123)
+  out <- bootstrap_parameters(m, iterations = 50)
+  distances <- abs(outer(out$Coefficient, estimates, "-"))
+  closest <- apply(distances, 1, function(d) which.min(d)[1])
+  expect_identical(closest, seq_along(estimates))
+})
+
+test_that("model_parameters with bootstrap uses component for glmmTMB", {
+  skip_if_not_installed("glmmTMB")
+  m <- .fit_zi_glmmTMB()
+  for (comp in c("conditional", "zi")) {
+    expected <- model_parameters(m, component = comp, effects = "fixed")
+    set.seed(123)
+    out <- model_parameters(
+      m,
+      bootstrap = TRUE,
+      iterations = 20,
+      component = comp,
+      effects = "fixed"
+    )
+    expect_identical(out$Parameter, expected$Parameter)
+    expect_identical(out$Component, expected$Component)
+  }
+})
+
+test_that("model_parameters with bootstrap prints a bootstrap footer for glmmTMB", {
+  skip_if_not_installed("glmmTMB")
+  for (m in list(.fit_zi_glmmTMB(), .fit_zi_glmmTMB(ziformula = ~0))) {
+    set.seed(123)
+    mp <- model_parameters(m, bootstrap = TRUE, iterations = 20, effects = "fixed")
+    messages <- capture_messages(printed <- capture.output(print(mp)))
+    printed <- paste(c(printed, messages), collapse = " ")
+    expect_match(printed, "bootstrap", fixed = TRUE)
+    expect_no_match(printed, "Wald", fixed = TRUE)
+  }
+})
