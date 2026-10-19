@@ -42,13 +42,15 @@
 * `bootstrap_model()`, `bootstrap_parameters()` and `model_parameters()` with
   `bootstrap = TRUE` now name the zero-inflation parameters of *glmmTMB*
   models and show them in their own component. Before this fix, these rows
-  were named `NA` or had no name. In `bootstrap_model()`, the columns of the
-  zero-inflation parameters get the suffix `_zi`, as in `simulate_model()`.
+  were named `NA` or `NA.1` or had no name, and one zero-inflation estimate
+  was missing. In `bootstrap_model()`, the columns of the zero-inflation
+  parameters get the suffix `_zi`, as in `simulate_model()`.
   `model_parameters()` with `bootstrap = TRUE` now uses the `component`
-  argument, and `component = "dispersion"` gives an error. Its output no longer
-  has a dispersion row, because the bootstrap draws have no dispersion
-  parameters. The footer now says that the intervals are bootstrap intervals
-  (#1284).
+  argument. For models with a zero-inflation or dispersion formula,
+  `component = "dispersion"` gives an error, because the bootstrap draws have
+  no dispersion parameters. For the same reason, the output no longer has a
+  dispersion row with Wald intervals. The footer now says that the intervals
+  are bootstrap intervals (#1284).
 
 * The `p_adjust` argument in `model_parameters()` now accepts the methods from
   `stats::p.adjust.methods` in any letter case, for example `"bh"`. Before,
