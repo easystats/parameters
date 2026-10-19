@@ -10,7 +10,7 @@ m1 <- lmerTest::lmer(
 )
 
 test_that("model_parameters, satterthwaite", {
-  params <- model_parameters(m1, effects = "fixed", ci_method = "satterthwaite")
+  params <- model_parameters(m1, effects = "fixed")
   s <- summary(m1)
   expect_equal(params$df, as.vector(s$coefficients[, "df"]), tolerance = 1e-4)
   expect_equal(params$t, as.vector(s$coefficients[, "t value"]), tolerance = 1e-4)
@@ -26,7 +26,7 @@ test_that("model_parameters, kenward", {
 })
 
 
-test_that("mixed-model defaults use satterthwaite for lmerMod", {
+test_that("mixed-model defaults use satterthwaite for lmerModLmerTest", {
   params_default <- model_parameters(m1, effects = "fixed")
   params_satterthwaite <- model_parameters(
     m1,
@@ -43,15 +43,6 @@ test_that("mixed-model defaults use satterthwaite for lmerMod", {
   expect_identical(ci(m1), ci(m1, method = "satterthwaite"))
   expect_identical(standard_error(m1), standard_error(m1, method = "satterthwaite"))
   expect_identical(p_value(m1), p_value(m1, method = "satterthwaite"))
-
-  glmer_model <- lme4::glmer(vs ~ cyl + (1 | gear), data = mtcars, family = "binomial")
-
-  expect_identical(ci(glmer_model), ci(glmer_model, method = "wald"))
-  expect_identical(
-    standard_error(glmer_model),
-    standard_error(glmer_model, method = "wald")
-  )
-  expect_identical(p_value(glmer_model), p_value(glmer_model, method = "wald"))
 })
 
 
@@ -62,6 +53,7 @@ test_that("satterthwaite default keeps a robust vcov", {
   out <- model_parameters(
     m,
     effects = "fixed",
+    ci_method = "satterthwaite",
     vcov = "CR0",
     vcov_args = list(cluster = sleepstudy$Subject)
   )
@@ -74,46 +66,20 @@ test_that("satterthwaite default keeps a robust vcov", {
   expect_equal(out_ci$CI_low, out$CI_low, tolerance = 1e-6)
 })
 
+test_that("glmer", {
+  glmer_model <- lme4::glmer(vs ~ cyl + (1 | gear), data = mtcars, family = "binomial")
 
-test_that("satterthwaite default falls back to wald without the model data", {
-  # fit the models in an environment and remove the data afterwards, as with
-  # a model that was saved with saveRDS() and loaded in a new session
-  e <- new.env()
-  local(
-    {
-      d <- lme4::sleepstudy
-      m_lme4 <- lme4::lmer(Reaction ~ Days + (1 | Subject), data = d)
-      m_lmerTest <- lmerTest::lmer(Reaction ~ Days + (1 | Subject), data = d)
-    },
-    envir = e
+  expect_identical(ci(glmer_model), ci(glmer_model, method = "wald"))
+  expect_identical(
+    standard_error(glmer_model),
+    standard_error(glmer_model, method = "wald")
   )
-  rm("d", envir = e)
-
-  for (m in list(e$m_lme4, e$m_lmerTest)) {
-    expect_message(out <- model_parameters(m, effects = "fixed"), regex = "Satterthwaite")
-    expect_equal(
-      out$CI_low,
-      model_parameters(m, effects = "fixed", ci_method = "residual")$CI_low,
-      tolerance = 1e-6
-    )
-    expect_message(out <- ci(m), regex = "Satterthwaite")
-    expect_identical(out, ci(m, method = "wald"))
-    expect_message(out <- p_value(m), regex = "Satterthwaite")
-    expect_identical(out, p_value(m, method = "wald"))
-    expect_silent(model_parameters(m, effects = "fixed", verbose = FALSE))
-    expect_error(model_parameters(m, ci_method = "satterthwaite"))
-  }
+  expect_identical(p_value(glmer_model), p_value(glmer_model, method = "wald"))
 })
 
-
-test_that("satterthwaite default is skipped without lmerTest", {
+test_that("lmerMod with lme4 give a warning once", {
   data("sleepstudy", package = "lme4")
   m <- lme4::lmer(Reaction ~ Days + (1 | Subject), data = sleepstudy)
-  local_mocked_bindings(.check_lmerTest = function(verbose = TRUE) FALSE)
-  expect_identical(ci(m), ci(m, method = "wald"))
-  expect_identical(p_value(m), p_value(m, method = "wald"))
-  expect_identical(
-    model_parameters(m, effects = "fixed"),
-    model_parameters(m, effects = "fixed", ci_method = "residual")
-  )
+  expect_message(ci(m))
+  expect_no_message(ci(m))
 })

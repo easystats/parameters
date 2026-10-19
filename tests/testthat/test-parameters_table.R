@@ -14,8 +14,7 @@ test_that("parameters_table 2", {
   skip_if_not_installed("lme4")
   x <- model_parameters(
     lme4::lmer(Sepal.Length ~ Petal.Length + (1 | Species), data = iris),
-    effects = "fixed",
-    ci_method = "wald"
+    effects = "fixed"
   )
   tab <- insight::format_table(x)
   expect_true(all(

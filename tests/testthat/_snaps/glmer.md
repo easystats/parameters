@@ -74,10 +74,10 @@
     Output
       # Fixed Effects
       
-      Parameter   | Coefficient |   SE |           95% CI | t(17.00) |      p
-      -----------------------------------------------------------------------
-      (Intercept) |      251.41 | 6.48 | [237.72, 265.09] |    38.77 | < .001
-      Days        |       10.47 | 1.49 | [  7.32,  13.62] |     7.01 | < .001
+      Parameter   | Coefficient |   SE |           95% CI | t(174) |      p
+      ---------------------------------------------------------------------
+      (Intercept) |      251.41 | 6.48 | [238.61, 264.20] |  38.77 | < .001
+      Days        |       10.47 | 1.49 | [  7.52,  13.42] |   7.01 | < .001
       
       # Random Effects
       
@@ -90,9 +90,9 @@
     Message
       
       Uncertainty intervals (equal-tailed) and p-values (two-tailed) computed
-        using a Wald t-distribution with Satterthwaite approximation.
-        Uncertainty intervals for random effect variances computed using a Wald
-        z-distribution approximation.
+        using a Wald t-distribution approximation. Uncertainty intervals for
+        random effect variances computed using a Wald z-distribution
+        approximation.
 
 ---
 

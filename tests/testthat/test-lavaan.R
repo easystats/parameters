@@ -86,7 +86,7 @@ test_that("simulate_model and equivalence_test work for lavaan", {
   )
 
   set.seed(123)
-  out <- equivalence_test(m, range = c(-0.2, 0.2))
+  out <- equivalence_test(m, range = c(-0.2, 0.2), ci_method = "ETI")
   expect_identical(
     capture.output(out),
     c(

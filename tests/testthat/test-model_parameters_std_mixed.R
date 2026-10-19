@@ -59,8 +59,7 @@ test_that("model_parameters, standardize-refit", {
     model,
     standardize = "refit",
     verbose = FALSE,
-    effects = "fixed",
-    ci_method = "wald"
+    effects = "fixed"
   )
   expect_equal(c(nrow(params), ncol(params)), c(7, 10))
   expect_equal(
@@ -83,14 +82,12 @@ test_that("model_parameters, standardize-refit", {
     model,
     standardize = "refit",
     verbose = FALSE,
-    effects = "all",
-    ci_method = "wald"
+    effects = "all"
   )
   paramsZ <- model_parameters(
     effectsize::standardize(model),
     effects = "all",
-    verbose = FALSE,
-    ci_method = "wald"
+    verbose = FALSE
   )
   expect_equal(paramsZ, params, ignore_attr = TRUE)
 })
@@ -100,8 +97,7 @@ test_that("model_parameters, standardize-posthoc", {
     model,
     standardize = "posthoc",
     verbose = FALSE,
-    effects = "fixed",
-    ci_method = "wald"
+    effects = "fixed"
   )
   expect_equal(c(nrow(params), ncol(params)), c(7, 10))
   expect_equal(
@@ -219,8 +215,7 @@ test_that("model_parameters, standardize-basic", {
     model,
     standardize = "basic",
     verbose = FALSE,
-    effects = "fixed",
-    ci_method = "wald"
+    effects = "fixed"
   )
   expect_equal(
     params$CI_high,
@@ -236,7 +231,6 @@ test_that("model_parameters, standardize-refit robust", {
     standardize = "refit",
     effects = "fixed",
     vcov = "CR",
-    ci_method = "wald",
     vcov_args = list(type = "CR1", cluster = iris$grp),
     verbose = FALSE
   )

@@ -123,7 +123,8 @@ model_parameters.lmerMod <- function(
     method = ci_method,
     effects = effects,
     bootstrap = bootstrap,
-    verbose = verbose
+    verbose = verbose,
+    fallback = NULL # this is the default for merMod
   )
   eval.parent(cl)
 }
@@ -143,11 +144,12 @@ ci.lmerMod <- function(
 ) {
   cl <- match.call()
   cl[[1]] <- ci.merMod
-  cl$ci_method <- .check_ci_method(
+  cl$method <- .check_ci_method(
     x,
     method = method,
     effects = effects,
-    verbose = verbose
+    verbose = verbose,
+    fallback = "wald" # this is the default for merMod
   )
   eval.parent(cl)
 }
@@ -164,11 +166,12 @@ standard_error.lmerMod <- function(
 ) {
   cl <- match.call()
   cl[[1]] <- standard_error.merMod
-  cl$ci_method <- .check_ci_method(
+  cl$method <- .check_ci_method(
     model,
     method = method,
     effects = effects,
-    verbose = verbose
+    verbose = verbose,
+    fallback = NULL # this is the default for merMod
   )
   eval.parent(cl)
 }
@@ -186,11 +189,12 @@ p_value.lmerMod <- function(
 ) {
   cl <- match.call()
   cl[[1]] <- p_value.merMod
-  cl$ci_method <- .check_ci_method(
+  cl$method <- .check_ci_method(
     model,
     method = method,
     effects = effects,
-    verbose = verbose
+    verbose = verbose,
+    fallback = "wald" # this is the default for merMod
   )
   eval.parent(cl)
 }
@@ -283,21 +287,21 @@ se_mixed_default <- function(model) {
   effects = "all",
   bootstrap = FALSE,
   verbose = TRUE,
-  fallback = "wald"
+  fallback = NULL
 ) {
   if (!is.null(method) || isTRUE(bootstrap) || identical(effects, "random")) {
     return(method)
   }
 
   mod_class <- class(model)
-  if (identical(mod_class, "lmerModLmerTest")) {
+  if (setequal(mod_class, "lmerModLmerTest")) {
     return("satterthwaite")
   }
 
   if (
     isTRUE(verbose) &&
-      !isTRUE(getOption(".suggest_satterthwaite_for_lmerMod")) &&
-      identical(mod_class, "lmerMod")
+      isTRUE(getOption(".suggest_satterthwaite_for_lmerMod", default = TRUE)) &&
+      setequal(mod_class, "lmerMod")
   ) {
     insight::format_alert(
       'Concider setting `ci_method = "satterthwaite"` for better covarage and type-1 error control.',

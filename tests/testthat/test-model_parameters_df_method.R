@@ -30,27 +30,30 @@ mp2 <- model_parameters(model, digits = 5, ci_method = "s", effects = "fixed")
 mp3 <- model_parameters(model, digits = 5, ci_method = "kr", effects = "fixed")
 mp4 <- model_parameters(model, digits = 5, ci_method = "wald", effects = "fixed")
 mp5 <- model_parameters(model3, digits = 5, ci_method = "kr", effects = "fixed")
-mp6 <- model_parameters(model3, digits = 5, ci_method = "residual", effects = "fixed")
+mp6 <- model_parameters(
+  model3,
+  digits = 5,
+  ci_method = "satterthwaite",
+  effects = "fixed"
+)
 
-test_that("model_parameters, ci_method default (satterthwaite)", {
+test_that("model_parameters, ci_method default (residual)", {
   expect_equal(
     mp0$SE,
     c(2.77457, 3.69574, 3.521, 0.01574, 1.58514, 0.86316, 0.02973, 0.01668),
     tolerance = 1e-3
   )
-  expect_equal(mp0$df, c(24, 24, 24, 24, 24, 24, 24, 24), tolerance = 1e-3)
+  expect_equal(mp0$df, c(22, 22, 22, 22, 22, 22, 22, 22), tolerance = 1e-3)
   expect_equal(
     mp0$p,
-    c(0, 0.00236, 0.14179, 0.16979, 0.84763, 0.00542, 0.00136, 0.32563),
+    c(0, 0.00258, 0.14297, 0.17095, 0.84778, 0.00578, 0.00151, 0.32653),
     tolerance = 1e-3
   )
   expect_equal(
     mp0$CI_low,
-    c(24.57489, 4.93385, -1.91805, -0.05477, -2.96368, -4.41987, -0.16904, -0.05117),
+    c(24.54722, 4.89698, -1.95317, -0.05493, -2.97949, -4.42848, -0.16933, -0.05133),
     tolerance = 1e-3
   )
-  expect_equal(mp0$SE, mp6$SE, tolerance = 1e-3)
-  expect_equal(mp0$df_error, mp2$df_error, tolerance = 1e-3)
 })
 
 test_that("model_parameters, ci_method normal", {
@@ -72,23 +75,25 @@ test_that("model_parameters, ci_method normal", {
   )
 })
 
-test_that("model_parameters, ci_method residual", {
+test_that("model_parameters, ci_method satterthwaite", {
   expect_equal(
-    mp6$SE,
+    mp2$SE,
     c(2.77457, 3.69574, 3.521, 0.01574, 1.58514, 0.86316, 0.02973, 0.01668),
     tolerance = 1e-3
   )
-  expect_equal(mp6$df, c(22, 22, 22, 22, 22, 22, 22, 22), tolerance = 1e-3)
+  expect_equal(mp2$df, c(24, 24, 24, 24, 24, 24, 24, 24), tolerance = 1e-3)
   expect_equal(
-    mp6$p,
-    c(0, 0.00258, 0.14297, 0.17095, 0.84778, 0.00578, 0.00151, 0.32653),
+    mp2$p,
+    c(0, 0.00236, 0.14179, 0.16979, 0.84763, 0.00542, 0.00136, 0.32563),
     tolerance = 1e-3
   )
   expect_equal(
-    mp6$CI_low,
-    c(24.54722, 4.89698, -1.95317, -0.05493, -2.97949, -4.42848, -0.16933, -0.05133),
+    mp2$CI_low,
+    c(24.57489, 4.93385, -1.91805, -0.05477, -2.96368, -4.41987, -0.16904, -0.05117),
     tolerance = 1e-3
   )
+  expect_equal(mp2$SE, mp6$SE, tolerance = 1e-3)
+  expect_equal(mp2$df_error, mp6$df_error, tolerance = 1e-3)
 })
 
 test_that("model_parameters, ci_method kenward", {
