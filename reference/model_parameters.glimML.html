@@ -9,7 +9,7 @@ previous categories yet."><meta property="og:image" content="https://easystats.g
 
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.30.0.8</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.30.0.9</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -155,7 +155,15 @@ p-values. See <code><a href="https://rdrr.io/r/stats/p.adjust.html" class="exter
 adjustment methods are <code>"tukey"</code>, <code>"scheffe"</code>, <code>"sidak"</code>, <code>"sup-t"</code>, and
 <code>"none"</code> to explicitly disable adjustment for <code>emmGrid</code> objects (from
 <strong>emmeans</strong>). <code>"sup-t"</code> computes simultaneous confidence bands, also called
-sup-t confidence band (Montiel Olea &amp; Plagborg-Møller, 2019).</p></dd>
+sup-t confidence band (Montiel Olea &amp; Plagborg-Møller, 2019). <code>"mvt"</code> is
+only available for objects from <strong>emmeans</strong> (<code>emmGrid</code> and <code>emm_list</code>). It
+adjusts p-values based on the multivariate t distribution, using
+<code>summary(&lt;emmGrid&gt;, adjust = "mvt")</code>, where each <code>by</code> group is a separate
+family. Confidence intervals are not adjusted. <strong>emmeans</strong> computes these
+p-values by simulation, so they vary slightly between calls. For the same
+values on each call, use <code><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed()</a></code> first. Method names from
+<code><a href="https://rdrr.io/r/stats/p.adjust.html" class="external-link">stats::p.adjust.methods</a></code> can be in any letter case, for example <code>"bh"</code>
+instead of <code>"BH"</code>.</p></dd>
 
 
 <dt id="arg-include-info">include_info<a class="anchor" aria-label="anchor" href="#arg-include-info"></a></dt>

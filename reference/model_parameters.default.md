@@ -116,7 +116,17 @@ model_parameters(
   `"scheffe"`, `"sidak"`, `"sup-t"`, and `"none"` to explicitly disable
   adjustment for `emmGrid` objects (from **emmeans**). `"sup-t"`
   computes simultaneous confidence bands, also called sup-t confidence
-  band (Montiel Olea & Plagborg-Møller, 2019).
+  band (Montiel Olea & Plagborg-Møller, 2019). `"mvt"` is only available
+  for objects from **emmeans** (`emmGrid` and `emm_list`). It adjusts
+  p-values based on the multivariate t distribution, using
+  `summary(<emmGrid>, adjust = "mvt")`, where each `by` group is a
+  separate family. Confidence intervals are not adjusted. **emmeans**
+  computes these p-values by simulation, so they vary slightly between
+  calls. For the same values on each call, use
+  [`set.seed()`](https://rdrr.io/r/base/Random.html) first. Method names
+  from
+  [`stats::p.adjust.methods`](https://rdrr.io/r/stats/p.adjust.html) can
+  be in any letter case, for example `"bh"` instead of `"BH"`.
 
 - vcov:
 
@@ -428,7 +438,7 @@ model_parameters(model, bootstrap = TRUE)
 model_parameters(model, standardize = "refit")
 #> Parameter   | Coefficient |   SE |         95% CI |    t(29) |      p
 #> ---------------------------------------------------------------------
-#> (Intercept) |    6.14e-17 | 0.08 | [-0.15,  0.15] | 8.15e-16 | > .999
+#> (Intercept) |    5.37e-17 | 0.08 | [-0.15,  0.15] | 7.13e-16 | > .999
 #> wt          |       -0.52 | 0.12 | [-0.77, -0.27] |    -4.22 | < .001
 #> cyl         |       -0.45 | 0.12 | [-0.70, -0.20] |    -3.64 | 0.001 
 #> 
