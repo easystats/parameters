@@ -185,7 +185,8 @@ compare_parameters <- function(
           model,
           exclude = c("bmerMod", "bayesx", "blmerMod", "bglmerMod")
         ) &&
-          !ci_method %in% c("hdi", "quantile", "ci", "eti", "si", "bci", "bcai")
+          (is.null(ci_method) ||
+            !ci_method %in% c("hdi", "quantile", "ci", "eti", "si", "bci", "bcai"))
       ) {
         # nolint
         ci_method_tmp <- "eti"
