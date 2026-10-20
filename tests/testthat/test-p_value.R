@@ -10,7 +10,6 @@ test_that("p_value", {
 })
 
 
-
 skip_on_cran()
 
 test_that("p_value", {
@@ -121,7 +120,6 @@ test_that("p_value", {
   model <- insight::download_model("anova_lmerMod_6")
   skip_if(is.null(model))
   expect_equal(p_value(model)$p[2], 0, tolerance = 0.01)
-
 
   # Mixed models
   model <- lme4::lmer(wt ~ cyl + (1 | gear), data = mtcars)

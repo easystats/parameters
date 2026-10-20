@@ -41,7 +41,7 @@
   } else if (method == "betwithin") {
     return(ci_betwithin(model, ci = ci))
   } else if (method == "satterthwaite") {
-    return(ci_satterthwaite(model, ci = ci))
+    return(ci_satterthwaite(model, ci = ci, vcov = vcov, vcov_args = vcov_args, ...))
   } else if (method %in% c("kenward", "kr")) {
     return(ci_kenward(model, ci = ci))
   }

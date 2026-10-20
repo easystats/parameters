@@ -1,8 +1,6 @@
 # classes: .cpglm, .bcpglm, .zcpglm, .cpglmm
 
-
 ########## .zcpglm ---------------
-
 
 #' @title Parameters from Zero-Inflated Models
 #' @name model_parameters.zcpglm
@@ -68,23 +66,31 @@
 #' model_parameters(model)
 #' @return A data frame of indices related to the model's parameters.
 #' @export
-model_parameters.zcpglm <- function(model,
-                                    ci = 0.95,
-                                    bootstrap = FALSE,
-                                    iterations = 1000,
-                                    component = "all",
-                                    standardize = NULL,
-                                    exponentiate = FALSE,
-                                    p_adjust = NULL,
-                                    include_info = getOption("parameters_info", FALSE),
-                                    keep = NULL,
-                                    drop = NULL,
-                                    verbose = TRUE,
-                                    ...) {
-  component <- insight::validate_argument(component, c("all", "conditional", "zi", "zero_inflated"))
+model_parameters.zcpglm <- function(
+  model,
+  ci = 0.95,
+  bootstrap = FALSE,
+  iterations = 1000,
+  component = "all",
+  standardize = NULL,
+  exponentiate = FALSE,
+  p_adjust = NULL,
+  include_info = getOption("parameters_info", FALSE),
+  keep = NULL,
+  drop = NULL,
+  verbose = TRUE,
+  ...
+) {
+  component <- insight::validate_argument(
+    component,
+    c("all", "conditional", "zi", "zero_inflated")
+  )
 
   # fix argument, if model has no zi-part
-  if (!insight::model_info(model, verbose = FALSE)$is_zero_inflated && component != "conditional") {
+  if (
+    !insight::model_info(model, verbose = FALSE)$is_zero_inflated &&
+      component != "conditional"
+  ) {
     component <- "conditional"
   }
 
@@ -200,10 +206,7 @@ p_value.cpglm <- function(model, ...) {
   junk <- utils::capture.output(stats <- cplm::summary(model)$coefficients) # nolint
   params <- insight::get_parameters(model)
 
-  .data_frame(
-    Parameter = params$Parameter,
-    p = as.vector(stats[, "Pr(>|t|)"])
-  )
+  .data_frame(Parameter = params$Parameter, p = as.vector(stats[, "Pr(>|t|)"]))
 }
 
 
@@ -214,32 +217,31 @@ standard_error.cpglm <- function(model, ...) {
   junk <- utils::capture.output(stats <- cplm::summary(model)$coefficients) # nolint
   params <- insight::get_parameters(model)
 
-  .data_frame(
-    Parameter = params$Parameter,
-    SE = as.vector(stats[, "Std. Error"])
-  )
+  .data_frame(Parameter = params$Parameter, SE = as.vector(stats[, "Std. Error"]))
 }
 
 
 ########## .cpglmm ---------------
 
 #' @export
-model_parameters.cpglmm <- function(model,
-                                    ci = 0.95,
-                                    ci_method = NULL,
-                                    ci_random = NULL,
-                                    bootstrap = FALSE,
-                                    iterations = 1000,
-                                    standardize = NULL,
-                                    effects = "all",
-                                    group_level = FALSE,
-                                    exponentiate = FALSE,
-                                    p_adjust = NULL,
-                                    include_sigma = FALSE,
-                                    keep = NULL,
-                                    drop = NULL,
-                                    verbose = TRUE,
-                                    ...) {
+model_parameters.cpglmm <- function(
+  model,
+  ci = 0.95,
+  ci_method = NULL,
+  ci_random = NULL,
+  bootstrap = FALSE,
+  iterations = 1000,
+  standardize = NULL,
+  effects = "all",
+  group_level = FALSE,
+  exponentiate = FALSE,
+  p_adjust = NULL,
+  include_sigma = FALSE,
+  keep = NULL,
+  drop = NULL,
+  verbose = TRUE,
+  ...
+) {
   # p-values, CI and se might be based on different df-methods
   ci_method <- .check_df_method(ci_method)
   effects <- insight::validate_argument(effects, c("fixed", "random", "all"))
@@ -247,7 +249,9 @@ model_parameters.cpglmm <- function(model,
   # standardize only works for fixed effects...
   if (!is.null(standardize) && standardize != "refit") {
     if (!missing(effects) && effects != "fixed" && verbose) {
-      insight::format_alert("Standardizing coefficients only works for fixed effects of the mixed model.")
+      insight::format_alert(
+        "Standardizing coefficients only works for fixed effects of the mixed model."
+      )
     }
     effects <- "fixed"
   }
@@ -292,10 +296,7 @@ standard_error.cpglmm <- function(model, ...) {
   stats <- cplm::summary(model)$coefs
   params <- insight::get_parameters(model)
 
-  .data_frame(
-    Parameter = params$Parameter,
-    SE = as.vector(stats[, "Std. Error"])
-  )
+  .data_frame(Parameter = params$Parameter, SE = as.vector(stats[, "Std. Error"]))
 }
 
 
@@ -305,15 +306,14 @@ standard_error.cpglmm <- function(model, ...) {
   if (!is.null(df_method)) {
     df_method <- tolower(df_method)
     if (df_method %in% c("satterthwaite", "kenward", "kr")) {
-      insight::format_alert("Satterthwaite or Kenward-Rogers approximation of degrees of freedom is only available for linear mixed models.")
+      insight::format_alert(
+        "Satterthwaite or Kenward-Rogers approximation of degrees of freedom is only available for linear mixed models."
+      )
       df_method <- "wald"
     }
     df_method <- insight::validate_argument(
       df_method,
-      c(
-        "wald", "normal", "residual", "ml1", "betwithin", "profile",
-        "boot", "uniroot"
-      )
+      c("wald", "normal", "residual", "ml1", "betwithin", "profile", "boot", "uniroot")
     )
   }
   df_method

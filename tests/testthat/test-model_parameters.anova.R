@@ -1,15 +1,17 @@
 skip_on_cran()
 
-m <- glm(am ~ mpg + hp + factor(cyl),
-  data = mtcars, family = binomial()
-)
+m <- glm(am ~ mpg + hp + factor(cyl), data = mtcars, family = binomial())
 
 test_that("model_parameters.anova", {
   a <- anova(m, test = "Chisq")
   mp <- model_parameters(a)
 
   expect_named(mp, c("Parameter", "df", "Deviance", "df_error", "Deviance_error", "p"))
-  expect_equal(mp$Deviance_error, c(43.22973, 29.67517, 19.23255, 10.48692), tolerance = 1e-3)
+  expect_equal(
+    mp$Deviance_error,
+    c(43.22973, 29.67517, 19.23255, 10.48692),
+    tolerance = 1e-3
+  )
   expect_equal(mp$p, c(NA, 0.00023, 0.00123, 0.01262), tolerance = 1e-3)
   expect_snapshot(mp)
 })
@@ -27,7 +29,10 @@ test_that("model_parameters.anova for mixed models", {
   skip_if_not_installed("lmerTest")
   m <- lmerTest::lmer(mpg ~ wt + (1 | gear), data = mtcars)
   out <- parameters::model_parameters(anova(m))
-  expect_named(out, c("Parameter", "Sum_Squares", "df", "df_error", "Mean_Square", "F", "p"))
+  expect_named(
+    out,
+    c("Parameter", "Sum_Squares", "df", "df_error", "Mean_Square", "F", "p")
+  )
   expect_equal(out$df_error, 21.92272, tolerance = 1e-4)
 })
 
@@ -95,12 +100,16 @@ test_that("model_parameters_Anova.mlm-2", {
 
 test_that("model_parameters_Anova-effectsize", {
   skip_if_not_installed("lme4")
+  skip_if_not_installed("lmerTest")
   skip_if_not_installed("effectsize")
 
   df <- iris
   df$Sepal.Big <- ifelse(df$Sepal.Width >= 3, "Yes", "No")
 
-  mm <- suppressMessages(lme4::lmer(Sepal.Length ~ Sepal.Big + Petal.Width + (1 | Species), data = df))
+  mm <- suppressMessages(lme4::lmer(
+    Sepal.Length ~ Sepal.Big + Petal.Width + (1 | Species),
+    data = df
+  ))
   model <- anova(mm)
 
   # parameters table including effect sizes
@@ -114,8 +123,14 @@ test_that("model_parameters_Anova-effectsize", {
   expect_identical(
     colnames(mp),
     c(
-      "Parameter", "Sum_Squares", "df", "Mean_Square", "F", "Eta2_partial",
-      "Eta2_CI_low", "Eta2_CI_high"
+      "Parameter",
+      "Sum_Squares",
+      "df",
+      "Mean_Square",
+      "F",
+      "Eta2_partial",
+      "Eta2_CI_low",
+      "Eta2_CI_high"
     )
   )
   expect_equal(mp$Eta2_partial, c(0.03262, 0.6778), tolerance = 1e-3)
@@ -146,15 +161,13 @@ test_that("anova type | lm", {
   m <- lm(mpg ~ factor(cyl) + hp + disp, mtcars)
   expect_warning(model_parameters(aov(m)), regexp = NA) # no need for warning, because no interactions
 
-  m <- lm(mpg ~ factor(cyl) * scale(disp, TRUE, FALSE) + scale(disp, TRUE, FALSE),
+  m <- lm(
+    mpg ~ factor(cyl) * scale(disp, TRUE, FALSE) + scale(disp, TRUE, FALSE),
     mtcars,
     contrasts = list("factor(cyl)" = contr.helmert)
   )
   a3 <- car::Anova(m, type = 3)
-  expect_message(
-    model_parameters(a3),
-    "Type 3 ANOVAs only give"
-  )
+  expect_message(model_parameters(a3), "Type 3 ANOVAs only give")
 })
 
 test_that("anova type | mlm", {
@@ -198,7 +211,9 @@ test_that("anova type | lme4", {
 
   m1 <- lme4::lmer(mpg ~ factor(cyl) * hp + disp + (1 | gear), mtcars)
   suppressMessages({
-    m2 <- lme4::glmer(carb ~ factor(cyl) * hp + disp + (1 | gear), mtcars,
+    m2 <- lme4::glmer(
+      carb ~ factor(cyl) * hp + disp + (1 | gear),
+      mtcars,
       family = poisson()
     )
   })
@@ -238,9 +253,13 @@ test_that("anova type | afex + Anova.mlm", {
   data(obk.long, package = "afex")
 
   suppressMessages({
-    m <- afex::aov_ez("id", "value", obk.long,
+    m <- afex::aov_ez(
+      "id",
+      "value",
+      obk.long,
       between = c("treatment", "gender"),
-      within = c("phase", "hour"), observed = "gender"
+      within = c("phase", "hour"),
+      observed = "gender"
     )
   })
 
@@ -256,7 +275,10 @@ test_that("anova rms", {
 
   expect_identical(attr(mp, "anova_type"), 2)
   expect_identical(mp$Parameter, c("cyl", "disp", "hp", "drat", "Total", "Residuals"))
-  expect_identical(colnames(mp), c("Parameter", "Sum_Squares_Partial", "df", "Mean_Square", "F", "p"))
+  expect_identical(
+    colnames(mp),
+    c("Parameter", "Sum_Squares_Partial", "df", "Mean_Square", "F", "p")
+  )
   expect_equal(mp$Sum_Squares_Partial, data.frame(a)$Partial.SS, tolerance = 1e-3)
 })
 

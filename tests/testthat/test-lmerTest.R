@@ -4,10 +4,13 @@ skip_if_not_installed("lmerTest")
 skip_if_not_installed("pbkrtest")
 
 data("carrots", package = "lmerTest")
-m1 <- lmerTest::lmer(Preference ~ sens2 + Homesize + (1 + sens2 | Consumer), data = carrots)
+m1 <- lmerTest::lmer(
+  Preference ~ sens2 + Homesize + (1 + sens2 | Consumer),
+  data = carrots
+)
 
 test_that("model_parameters, satterthwaite", {
-  params <- model_parameters(m1, effects = "fixed", ci_method = "satterthwaite")
+  params <- model_parameters(m1, effects = "fixed")
   s <- summary(m1)
   expect_equal(params$df, as.vector(s$coefficients[, "df"]), tolerance = 1e-4)
   expect_equal(params$t, as.vector(s$coefficients[, "t value"]), tolerance = 1e-4)
@@ -20,4 +23,65 @@ test_that("model_parameters, kenward", {
   expect_equal(params$df, as.vector(s$coefficients[, "df"]), tolerance = 1e-4)
   expect_equal(params$t, as.vector(s$coefficients[, "t value"]), tolerance = 1e-4)
   expect_equal(params$p, as.vector(s$coefficients[, "Pr(>|t|)"]), tolerance = 1e-4)
+})
+
+
+test_that("mixed-model defaults use satterthwaite for lmerModLmerTest", {
+  params_default <- model_parameters(m1, effects = "fixed")
+  params_satterthwaite <- model_parameters(
+    m1,
+    effects = "fixed",
+    ci_method = "satterthwaite"
+  )
+  params_wald <- model_parameters(m1, effects = "fixed", ci_method = "wald")
+
+  expect_identical(params_default, params_satterthwaite)
+  expect_false(identical(params_default, params_wald))
+  expect_true(all(params_wald$p < params_default$p))
+  expect_identical(params_wald$t, params_default$t)
+
+  expect_identical(ci(m1), ci(m1, method = "satterthwaite"))
+  expect_identical(standard_error(m1), standard_error(m1, method = "satterthwaite"))
+  expect_identical(p_value(m1), p_value(m1, method = "satterthwaite"))
+})
+
+
+test_that("satterthwaite default keeps a robust vcov", {
+  skip_if_not_installed("clubSandwich")
+  data("sleepstudy", package = "lme4")
+  m <- lmerTest::lmer(Reaction ~ Days + (1 | Subject), data = sleepstudy)
+  out <- model_parameters(
+    m,
+    effects = "fixed",
+    ci_method = "satterthwaite",
+    vcov = "CR0",
+    vcov_args = list(cluster = sleepstudy$Subject)
+  )
+  expect_equal(
+    out$CI_low,
+    out$Coefficient - stats::qt(0.975, out$df_error) * out$SE,
+    tolerance = 1e-6
+  )
+  out_ci <- ci(m, vcov = "CR0", vcov_args = list(cluster = sleepstudy$Subject))
+  expect_equal(out_ci$CI_low, out$CI_low, tolerance = 1e-6)
+})
+
+test_that("glmer", {
+  glmer_model <- lme4::glmer(vs ~ cyl + (1 | gear), data = mtcars, family = "binomial")
+
+  expect_identical(ci(glmer_model), ci(glmer_model, method = "wald"))
+  expect_identical(
+    standard_error(glmer_model),
+    standard_error(glmer_model, method = "wald")
+  )
+  expect_identical(p_value(glmer_model), p_value(glmer_model, method = "wald"))
+})
+
+test_that("lmerMod with lme4 give a warning once", {
+  data("sleepstudy", package = "lme4")
+  m <- lme4::lmer(Reaction ~ Days + (1 | Subject), data = sleepstudy)
+  # other tests in this session may already have shown the message
+  withr::local_options(.suggest_satterthwaite_for_lmerMod = TRUE)
+  expect_message(ci(m), "satterthwaite")
+  expect_no_message(ci(m))
 })
