@@ -1,14 +1,10 @@
 skip_if_not_installed("datawizard")
 
 test_that("standard_error returns the SE of skewness and kurtosis output", {
-  inputs <- list(
-    vector = function(f) f(mtcars$mpg),
-    bootstrap = function(f) f(mtcars$mpg, iterations = 50L),
-    data_frame = function(f) f(mtcars[c("mpg", "cyl", "disp")])
-  )
+  inputs <- list(vector = mtcars$mpg, data_frame = mtcars[c("mpg", "cyl", "disp")])
   for (f in list(datawizard::skewness, datawizard::kurtosis)) {
     for (input in inputs) {
-      out <- input(f)
+      out <- f(input)
       se <- standard_error(out)
       expect_type(se, "double")
       expect_null(names(se))
@@ -29,6 +25,17 @@ test_that("standard_error returns the SE of skewness and kurtosis output", {
   expect_identical(standard_error(x), c(0.25, 0.3))
   class(x) <- c("parameters_kurtosis", "data.frame")
   expect_identical(standard_error(x), c(0.25, 0.3))
+})
+
+test_that("standard_error returns the bootstrapped SE", {
+  skip_if_not_installed("boot")
+  for (f in list(datawizard::skewness, datawizard::kurtosis)) {
+    out <- f(mtcars$mpg, iterations = 50L)
+    se <- standard_error(out)
+    expect_type(se, "double")
+    expect_null(names(se))
+    expect_identical(se, out$SE)
+  }
 })
 
 # datawizard after 1.4.1 adds the classes "datawizard_skewness" and
