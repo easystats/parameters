@@ -522,7 +522,8 @@
         ci = ci,
         vcov = vcov,
         vcov_args = vcov_args,
-        verbose = verbose
+        verbose = verbose,
+        method = ci_method
       )
       fun_args <- c(fun_args, dots)
       ci_df <- suppressMessages(do.call("ci", fun_args))
@@ -567,7 +568,13 @@
 
   # p value
   if (!is.null(vcov)) {
-    fun_args <- list(model, vcov = vcov, vcov_args = vcov_args, verbose = verbose)
+    fun_args <- list(
+      model,
+      vcov = vcov,
+      vcov_args = vcov_args,
+      verbose = verbose,
+      method = ci_method
+    )
     fun_args <- c(fun_args, dots)
     parameters <- merge(
       parameters,
@@ -588,7 +595,7 @@
   } else {
     parameters <- merge(
       parameters,
-      p_value(model, dof = dof, effects = "fixed"),
+      p_value(model, dof = dof, method = ci_method, effects = "fixed"),
       by = "Parameter",
       sort = FALSE
     )

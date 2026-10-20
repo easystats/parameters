@@ -396,7 +396,12 @@ test_that("robust-ci lmer", {
     Sepal.Length ~ Species * Sepal.Width + Petal.Length + (1 | grp),
     data = iris
   )
-  ci1 <- ci(m, vcov = "vcovCR", vcov_args = list(type = "CR1", cluster = iris$grp))
+  ci1 <- ci(
+    m,
+    method = "wald",
+    vcov = "vcovCR",
+    vcov_args = list(type = "CR1", cluster = iris$grp)
+  )
   # robust CI manually
   params <- insight::get_parameters(m)
   se <- sqrt(diag(clubSandwich::vcovCR(m, type = "CR1", cluster = iris$grp)))
