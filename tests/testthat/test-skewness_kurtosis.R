@@ -20,7 +20,9 @@ test_that("standard_error returns the SE of skewness and kurtosis output", {
   expect_length(standard_error(out), 3L)
 })
 
-test_that("standard_error works for the datawizard class names", {
+# datawizard after 1.4.1 adds the classes "datawizard_skewness" and
+# "datawizard_kurtosis" before the "parameters_*" classes
+test_that("standard_error works for the datawizard_* classes", {
   s <- datawizard::skewness(mtcars$mpg)
   class(s) <- c("datawizard_skewness", "data.frame")
   expect_identical(standard_error(s), s$SE)
