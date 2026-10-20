@@ -1,7 +1,6 @@
 skip_if_not_installed("datawizard")
 
 test_that("standard_error returns the SE of skewness and kurtosis output", {
-  set.seed(123L)
   inputs <- list(
     vector = function(f) f(mtcars$mpg),
     bootstrap = function(f) f(mtcars$mpg, iterations = 50L),
@@ -18,6 +17,18 @@ test_that("standard_error returns the SE of skewness and kurtosis output", {
   }
   out <- datawizard::skewness(mtcars[c("mpg", "cyl", "disp")])
   expect_length(standard_error(out), 3L)
+
+  # known values, independent of how datawizard computes them
+  x <- data.frame(
+    Parameter = c("a", "b"),
+    Skewness = c(0.5, 1.5),
+    SE = c(0.25, 0.3),
+    stringsAsFactors = FALSE
+  )
+  class(x) <- c("parameters_skewness", "data.frame")
+  expect_identical(standard_error(x), c(0.25, 0.3))
+  class(x) <- c("parameters_kurtosis", "data.frame")
+  expect_identical(standard_error(x), c(0.25, 0.3))
 })
 
 # datawizard after 1.4.1 adds the classes "datawizard_skewness" and
