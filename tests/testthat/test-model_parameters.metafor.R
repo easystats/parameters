@@ -14,13 +14,32 @@ test_that("model_parameters.metafor", {
   )
   expect_identical(
     colnames(params),
-    c("Parameter", "Coefficient", "SE", "CI", "CI_low", "CI_high", "z", "p", "Weight", "Method")
+    c(
+      "Parameter",
+      "Coefficient",
+      "SE",
+      "CI",
+      "CI_low",
+      "CI_high",
+      "z",
+      "p",
+      "Weight",
+      "Method"
+    )
   )
-  expect_equal(params$Coefficient, c(0.111, 0.245, 0.8, 1.1, 0.03, 0.43769), tolerance = 1e-3)
+  expect_equal(
+    params$Coefficient,
+    c(0.111, 0.245, 0.8, 1.1, 0.03, 0.43769),
+    tolerance = 1e-3
+  )
   expect_equal(params$Weight, c(400, 81.16224, 1e+06, 25, 10000, NA), tolerance = 1e-3)
   # test message on unsupported arguments
-  expect_message(model_parameters(model, vcov = "vcovHC"), regex = "Following arguments")
+  expect_warning(model_parameters(model, vcov = "vcovHC"), regex = "is not supported")
   # test standardize
   params <- model_parameters(model, standardize = "refit")
-  expect_equal(params$Coefficient, c(0.111, 0.245, 0.8, 1.1, 0.03, -0.5613041), tolerance = 1e-3)
+  expect_equal(
+    params$Coefficient,
+    c(0.111, 0.245, 0.8, 1.1, 0.03, -0.5613041),
+    tolerance = 1e-3
+  )
 })

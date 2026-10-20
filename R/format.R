@@ -587,7 +587,11 @@ format.parameters_sem <- function(
   }
 
   if (
-    "p" %in% colnames(x) && isTRUE(verbose) && !is.null(p_adjust) && p_adjust != "none"
+    "p" %in%
+      colnames(x) &&
+      isTRUE(verbose) &&
+      !is.null(p_adjust) &&
+      tolower(p_adjust) != "none"
   ) {
     footer <- .add_footer_text(
       footer,
@@ -865,7 +869,8 @@ format.parameters_sem <- function(
   show_re_msg <- (identical(model_class, "glmmTMB") &&
     (!string_method %in% c("Wald z-", "Wald normal") ||
       !ci_method %in% c("wald", "normal"))) ||
-    ((identical(model_class, "lmerMod") || identical(model_class, "glmerMod")) &&
+    (length(model_class) == 1L &&
+      model_class %in% c("lmerMod", "lmerModLmerTest", "glmerMod") &&
       !ci_method %in% c("wald", "normal", "profile", "boot"))
 
   if (

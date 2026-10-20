@@ -167,29 +167,30 @@ parameters_type <- function(model, ...) {
 
 #' @keywords internal
 .parameters_type <- function(name, data, reference) {
-  if (grepl(":", name, fixed = TRUE)) {
-    # Split
-    var <- unlist(strsplit(name, ":", fixed = TRUE))
-    if (length(var) > 2) {
-      var <- c(utils::tail(var, 1), paste0(utils::head(var, -1), collapse = ":"))
-    } else {
-      var <- rev(var)
-    }
+  # Split, ignoring colons inside function calls
+  var <- .split_interaction(name)
 
-    # Check if any is factor
-    types <- unlist(lapply(
-      var,
-      function(x, data, reference) .parameters_type_basic(x, data, reference)[1],
-      data = data,
-      reference = reference
-    ))
-    link <- ifelse(any("factor" %in% types), "Difference", "Association")
-    # Get type
-    main <- .parameters_type_basic(var[1], data, reference)
-    return(c("interaction", link, main[3], main[4], main[5], var[2]))
-  } else {
-    .parameters_type_basic(name, data, reference)
+  if (length(var) <= 1) {
+    return(.parameters_type_basic(name, data, reference))
   }
+
+  if (length(var) > 2) {
+    var <- c(utils::tail(var, 1), paste0(utils::head(var, -1), collapse = ":"))
+  } else {
+    var <- rev(var)
+  }
+
+  # Check if any is factor
+  types <- unlist(lapply(
+    var,
+    function(x, data, reference) .parameters_type_basic(x, data, reference)[1],
+    data = data,
+    reference = reference
+  ))
+  link <- ifelse(any("factor" %in% types), "Difference", "Association")
+  # Get type
+  main <- .parameters_type_basic(var[1], data, reference)
+  c("interaction", link, main[3], main[4], main[5], var[2])
 }
 
 
@@ -260,7 +261,7 @@ parameters_type <- function(model, ...) {
     return(c(type, "Association", name, var, degree, NA))
 
     # log-transformation
-  } else if (grepl("(log|logb|log1p|log2|log10)\\(", name)) {
+  } else if (grepl("^(log|logb|log1p|log2|log10)\\(", name)) {
     type <- "logarithm"
     var <- gsub("(log|logb|log1p|log2|log10)\\((.*)\\)", "\\2", name)
     if (grepl(",", var, fixed = TRUE)) {
@@ -269,7 +270,7 @@ parameters_type <- function(model, ...) {
     return(c(type, "Association", name, var, NA, NA))
 
     # exp-transformation
-  } else if (grepl("(exp|expm1)\\(", name)) {
+  } else if (grepl("^(exp|expm1)\\(", name)) {
     type <- "exponentiation"
     var <- gsub("(exp|expm1)\\((.*)\\)", "\\2", name)
     if (grepl(",", var, fixed = TRUE)) {
@@ -278,7 +279,7 @@ parameters_type <- function(model, ...) {
     return(c(type, "Association", name, var, NA, NA))
 
     # sqrt-transformation
-  } else if (grepl("sqrt(", name, fixed = TRUE)) {
+  } else if (startsWith(name, "sqrt(")) {
     type <- "squareroot"
     var <- gsub("sqrt\\((.*)\\)", "\\1", name)
     if (grepl(",", var, fixed = TRUE)) {

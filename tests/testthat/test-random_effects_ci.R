@@ -30,26 +30,26 @@ m5 <- suppressMessages(lme4::lmer(
 
 expect_message(
   {
-    mp1 <- model_parameters(m1, ci_random = TRUE)
+    mp1 <- model_parameters(m1, ci_random = TRUE, ci_method = "wald")
   },
   regex = "meaningful"
 )
-mp2 <- model_parameters(m2, ci_random = TRUE)
+mp2 <- model_parameters(m2, ci_random = TRUE, effects = "random")
 expect_message(
   {
-    mp3 <- model_parameters(m3, ci_random = TRUE)
-  },
-  regex = "meaningful"
-)
-expect_message(
-  {
-    mp4 <- model_parameters(m4, ci_random = TRUE)
+    mp3 <- model_parameters(m3, ci_random = TRUE, effects = "random")
   },
   regex = "meaningful"
 )
 expect_message(
   {
-    mp5 <- model_parameters(m5, ci_random = TRUE)
+    mp4 <- model_parameters(m4, ci_random = TRUE, effects = "random")
+  },
+  regex = "meaningful"
+)
+expect_message(
+  {
+    mp5 <- model_parameters(m5, ci_random = TRUE, effects = "random")
   },
   regex = "meaningful"
 )
@@ -62,7 +62,8 @@ test_that("random effects CIs, two slopes, categorical", {
   expect_equal(
     mp1$CI_low,
     c(
-      28.75405, 4.97865, -1.95011, -2.70111, -3.62199, -2.69102,
+      28.7559334902632, 4.97904339539053, -1.95014363947862, -2.70058819820767,
+      -3.62294029941172, -2.69095690811178,
       4.28813, 0.21457, 0.5742, 0.28738, 0.02089, 1e-05, 0.55402, 0,
       0, 0.2781, 0.38107, 0.00945, -0.65343, -0.7222, -1, -0.99521,
       -0.97784, -1, -1, -1, -1, -1, -1, -0.99594, -1, -0.90229, -0.99736,
@@ -190,24 +191,17 @@ test_that("random effects CIs, two slopes, categorical", {
 test_that("random effects CIs, simple slope", {
   expect_equal(
     mp2$CI_low,
-    c(237.93546, 7.41637, 15.5817, 3.91828, -0.50907, 22.80044),
+    c(15.5817, 3.91828, -0.50907, 22.80044),
     tolerance = 1e-3,
     ignore_attr = TRUE
   )
 
   expect_identical(
     mp2$Parameter,
-    c(
-      "(Intercept)",
-      "Days",
-      "SD (Intercept)",
-      "SD (Days)",
-      "Cor (Intercept~Days)",
-      "SD (Observations)"
-    )
+    c("SD (Intercept)", "SD (Days)", "Cor (Intercept~Days)", "SD (Observations)")
   )
 
-  expect_identical(mp2$Group, c("", "", "Subject", "Subject", "Subject", "Residual"))
+  expect_identical(mp2$Group, c("Subject", "Subject", "Subject", "Residual"))
 })
 
 
@@ -215,40 +209,15 @@ test_that("random effects CIs, simple slope", {
 
 test_that("random effects CIs, categorical slope-1", {
   expect_equal(
-    mp3$CI_low[14:28],
+    mp3$CI_low[8:22],
     c(-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 7.09933),
     tolerance = 1e-2,
     ignore_attr = TRUE
   )
 
-  expect_equal(
-    mp3$CI_low[1:12],
-    c(
-      30.91139,
-      4.33247,
-      -2.6798,
-      -3.20703,
-      -4.07681,
-      -3.27237,
-      0.06301,
-      0,
-      0,
-      0.1192,
-      0.32213,
-      0
-    ),
-    tolerance = 1e-2,
-    ignore_attr = TRUE
-  )
   expect_identical(
     mp3$Parameter,
     c(
-      "(Intercept)",
-      "temperature.L",
-      "temperature.Q",
-      "temperature.C",
-      "temperature^4",
-      "temperature^5",
       "SD (Intercept)",
       "SD (temperature.L)",
       "SD (temperature.Q)",
@@ -277,12 +246,6 @@ test_that("random effects CIs, categorical slope-1", {
   expect_identical(
     mp3$Group,
     c(
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
       "recipe",
       "recipe",
       "recipe",
@@ -317,7 +280,6 @@ test_that("random effects CIs, categorical slope-2", {
   expect_equal(
     mp4$CI_low,
     c(
-      28.88447, 4.96795, -1.93231, -1.98596, -2.68856, -2.55248,
       4.28006, 0.51326, 0.23954, 0.01238, 0, 0.5001, -0.68888, -0.74701,
       -1, -0.99746, -0.98211, -1, -0.99788, -1, -0.92289, -0.99878,
       -1, -0.98562, -1, -1, -1, 4.21137
@@ -329,12 +291,6 @@ test_that("random effects CIs, categorical slope-2", {
   expect_identical(
     mp4$Parameter,
     c(
-      "(Intercept)",
-      "temperature.L",
-      "temperature.Q",
-      "temperature.C",
-      "temperature^4",
-      "temperature^5",
       "SD (Intercept)",
       "SD (temperature.L)",
       "SD (temperature.Q)",
@@ -363,12 +319,6 @@ test_that("random effects CIs, categorical slope-2", {
   expect_identical(
     mp4$Group,
     c(
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
       "replicate",
       "replicate",
       "replicate",
@@ -401,7 +351,7 @@ test_that("random effects CIs, categorical slope-2", {
 test_that("random effects CIs, double slope", {
   expect_equal(
     mp5$CI_low,
-    c(237.99863, 7.4022, 12.63814, 3.91669, 0, -0.58599, -1, -1, 22.65226),
+    c(12.63814, 3.91669, 0, -0.58599, -1, -1, 22.65226),
     tolerance = 1e-3,
     ignore_attr = TRUE
   )
@@ -409,8 +359,6 @@ test_that("random effects CIs, double slope", {
   expect_identical(
     mp5$Parameter,
     c(
-      "(Intercept)",
-      "Days",
       "SD (Intercept)",
       "SD (Days)",
       "SD (Months)",
@@ -423,17 +371,7 @@ test_that("random effects CIs, double slope", {
 
   expect_identical(
     mp5$Group,
-    c(
-      "",
-      "",
-      "Subject",
-      "Subject",
-      "Subject",
-      "Subject",
-      "Subject",
-      "Subject",
-      "Residual"
-    )
+    c("Subject", "Subject", "Subject", "Subject", "Subject", "Subject", "Residual")
   )
 })
 
@@ -447,37 +385,22 @@ test_that("random effects CIs, simple slope", {
   m2 <- lme4::lmer(Reaction ~ Days + (0 + Days | Subject), data = sleepstudy)
   m5 <- lme4::lmer(Reaction ~ Days + (0 + Days + Months | Subject), data = sleepstudy)
 
-  mp2 <- model_parameters(m2)
-  mp5 <- model_parameters(m5)
-  expect_equal(
-    mp2$CI_low,
-    c(243.47155, 6.77765, 5.09041, 26.01525),
-    tolerance = 1e-3,
-    ignore_attr = TRUE
-  )
+  mp2 <- model_parameters(m2, effects = "random")
+  mp5 <- model_parameters(m5, effects = "random")
+  expect_equal(mp2$CI_low, c(5.09041, 26.01525), tolerance = 1e-3, ignore_attr = TRUE)
 
-  expect_identical(
-    mp2$Parameter,
-    c("(Intercept)", "Days", "SD (Days)", "SD (Observations)")
-  )
+  expect_identical(mp2$Parameter, c("SD (Days)", "SD (Observations)"))
 
   expect_equal(
     mp5$CI_low,
-    c(241.61021, 7.43503, 4.11446, 2.69857, -0.40595, 24.632),
+    c(4.11446, 2.69857, -0.40595, 24.632),
     tolerance = 1e-3,
     ignore_attr = TRUE
   )
 
   expect_identical(
     mp5$Parameter,
-    c(
-      "(Intercept)",
-      "Days",
-      "SD (Days)",
-      "SD (Months)",
-      "Cor (Days~Months)",
-      "SD (Observations)"
-    )
+    c("SD (Days)", "SD (Months)", "Cor (Days~Months)", "SD (Observations)")
   )
 })
 
@@ -491,13 +414,13 @@ test_that("random effects CIs, poly slope", {
       data = cake
     )
   })
-  mp <- model_parameters(m, ci_random = TRUE)
+  mp <- model_parameters(m, ci_random = TRUE, effects = "random")
 
   # fmt: skip
   expect_equal(
     mp$CI_low,
     c(
-      28.78854, 33.56292, -12.84337, 4.27419, 0.16217, 2.30959, 0.87852,
+      4.27419, 0.16217, 2.30959, 0.87852,
       -0.81742, -0.80941, -1, 4.32856
     ),
     tolerance = 1e-3,
@@ -507,9 +430,6 @@ test_that("random effects CIs, poly slope", {
   expect_identical(
     mp$Parameter,
     c(
-      "(Intercept)",
-      "poly(temp, 2)1",
-      "poly(temp, 2)2",
       "SD (Intercept)",
       "SD (Intercept)",
       "SD (poly(temp, 2)1)",
@@ -533,7 +453,7 @@ test_that("random effects CIs, poly categorical slope", {
     angle ~ poly(temp, 2) + (poly(temp, 2) | replicate) + (temperature | recipe),
     data = cake
   )
-  mp <- model_parameters(m, effects = "random", ci = TRUE)
+  mp <- model_parameters(m, effects = "random", ci_random = TRUE)
 
   # fmt: skip
   expect_equal(

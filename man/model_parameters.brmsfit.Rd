@@ -231,6 +231,23 @@ When \code{standardize = "refit"}, columns \code{diagnostic}, \code{bf_prior} an
 \code{priors} refer to the \emph{original} \code{model}. If \code{model} is a data frame,
 arguments \code{diagnostic}, \code{bf_prior} and \code{priors} are ignored.
 
+For \strong{blavaan} models, \code{standardize} accepts \code{TRUE}, \code{"all"} (or
+\code{"std.all"}), \code{"latent"} (or \code{"std.lv"}), and \code{"no_exogenous"} (or
+\code{"std.nox"}). Returned parameters summarize the standardized posterior draws
+for the matching \code{type} (see \code{\link[blavaan:standardizedPosterior]{blavaan::standardizedPosterior()}}), omitting
+\code{ESS} and \code{Rhat}. This requires package \strong{insight} (>= 1.6.0). When
+\code{verbose = TRUE}, a warning is issued if \code{"no_exogenous"} / \code{"std.nox"}
+produces estimates identical to \code{"std.all"}. Any other unrecognized value
+(aside from \code{FALSE} or \code{NULL}) returns unstandardized parameters and triggers
+a warning when \code{verbose = TRUE}. The output drops parameters with fixed or
+constant standardized draws, such as the standardized variances of exogenous
+latent variables. It also drops tests that depend on the scale of the
+parameters: \code{p_significance}, the ROPE tests and Bayes factors.
+\code{ci_method = "si"} raises an error. When \code{verbose = TRUE}, \code{print()} adds a
+line that names the standardization type. Also when \code{verbose = TRUE}, an
+explicit \code{diagnostic} other than \code{NULL}, \code{FALSE} or \code{"none"} triggers a warning,
+because the standardized draws carry no chain information.
+
 There is also a
 \href{https://easystats.github.io/see/articles/parameters.html}{\code{plot()}-method}
 implemented in the \href{https://easystats.github.io/see/}{\strong{see}-package}.
@@ -291,6 +308,9 @@ CIs and p-values instead.
 \item Applies to \emph{linear mixed models}. CIs computed using the
 Wald method (SE and a \emph{t-distribution with Satterthwaite df}); p-values
 computed using the Wald method with a \emph{t-distribution with Satterthwaite df}.
+This is the default for \code{lmerModLmerTest} models when the corresponding
+method argument (\code{ci_method} or \code{method}) is \code{NULL} (and
+\code{bootstrap = FALSE}).
 }
 
 \code{"kenward"}

@@ -100,6 +100,140 @@ test_that("model_parameters, emmeans, p-adjust", {
 })
 
 
+test_that("model_parameters, p-adjust, method names in any letter case", {
+  methods <- c(bh = "BH", by = "BY", Holm = "holm")
+
+  model <- lm(mpg ~ wt + cyl + gear + hp, data = mtcars)
+  p_raw <- coef(summary(model))[, 4]
+  for (method in names(methods)) {
+    mp <- model_parameters(model, p_adjust = method)
+    expect_equal(
+      mp$p,
+      stats::p.adjust(p_raw, methods[[method]]),
+      tolerance = 1e-10,
+      ignore_attr = TRUE
+    )
+  }
+  expect_silent(model_parameters(model, p_adjust = "NONE"))
+  mp <- model_parameters(model, p_adjust = "NONE")
+  expect_equal(mp$p, p_raw, tolerance = 1e-10, ignore_attr = TRUE)
+  out <- capture.output(print(mp))
+  expect_true(any(startsWith(out, "Parameter")))
+  expect_false(any(grepl("p-value adjustment method", out, fixed = TRUE)))
+
+  skip_if_not_installed("emmeans")
+  m <- lm(mpg ~ factor(cyl) + hp, data = mtcars)
+  pw <- pairs(emmeans::emmeans(m, ~cyl))
+  p_raw <- summary(pw, adjust = "none")$p.value
+  for (method in names(methods)) {
+    mp <- model_parameters(pw, p_adjust = method)
+    expect_equal(mp$p, stats::p.adjust(p_raw, methods[[method]]), tolerance = 1e-10)
+  }
+})
+
+
+test_that("model_parameters, emmeans, p-adjust mvt", {
+  skip_if_not_installed("emmeans")
+  skip_if_not_installed("mvtnorm")
+
+  m <- lm(mpg ~ factor(cyl) + hp, data = mtcars)
+  pw <- pairs(emmeans::emmeans(m, ~cyl))
+  set.seed(123)
+  mp <- model_parameters(pw, p_adjust = "mvt")
+  set.seed(123)
+  p_mvt <- summary(pw, adjust = "mvt", infer = c(FALSE, TRUE))$p.value
+  expect_equal(mp$p, p_mvt, tolerance = 1e-10)
+  mp_none <- model_parameters(pw, p_adjust = "none")
+  expect_equal(mp$CI_low, mp_none$CI_low, tolerance = 1e-10)
+  expect_equal(mp$CI_high, mp_none$CI_high, tolerance = 1e-10)
+  out <- capture.output(print(mp))
+  expect_true(any(grepl("p-value adjustment method: Multivariate t", out, fixed = TRUE)))
+
+  # each "by" group is a separate family
+  w <- lm(breaks ~ wool * tension, data = warpbreaks)
+  pw_by <- pairs(emmeans::emmeans(w, ~ tension | wool))
+  set.seed(123)
+  mp <- model_parameters(pw_by, p_adjust = "mvt")
+  set.seed(123)
+  p_mvt <- summary(pw_by, adjust = "mvt", infer = c(FALSE, TRUE))$p.value
+  expect_equal(mp$p, p_mvt, tolerance = 1e-10)
+  # balanced design, all pairwise comparisons: mvt and Tukey agree
+  p_tukey <- summary(pw_by, adjust = "tukey")$p.value
+  expect_lt(max(abs(mp$p - p_tukey)), 1e-3)
+
+  # estimated means, which by default have no p-values in emmeans
+  m2 <- lm(I(mpg - 20) ~ factor(cyl), data = mtcars)
+  emm <- emmeans::emmeans(m2, ~cyl)
+  set.seed(123)
+  mp <- model_parameters(emm, p_adjust = "mvt")
+  set.seed(123)
+  p_mvt <- summary(emm, adjust = "mvt", infer = c(FALSE, TRUE))$p.value
+  expect_equal(mp$p, p_mvt, tolerance = 1e-10)
+  expect_false(isTRUE(all.equal(mp$p, model_parameters(emm)$p)))
+})
+
+
+test_that("model_parameters, emmeans, p-adjust mvt stored in the object", {
+  skip_if_not_installed("emmeans")
+  skip_if_not_installed("mvtnorm")
+
+  m <- lm(mpg ~ factor(cyl) + hp, data = mtcars)
+  pw <- pairs(emmeans::emmeans(m, ~cyl), adjust = "mvt")
+  expect_no_message(model_parameters(pw))
+  set.seed(123)
+  mp <- model_parameters(pw)
+  set.seed(123)
+  p_mvt <- summary(pw, adjust = "mvt", infer = c(FALSE, TRUE))$p.value
+  expect_equal(mp$p, p_mvt, tolerance = 1e-10)
+
+  el <- emmeans::emmeans(m, pairwise ~ cyl, adjust = "mvt")
+  expect_no_message(model_parameters(el))
+  mp <- model_parameters(el)
+  p_mvt <- summary(el$contrasts, adjust = "mvt", infer = c(FALSE, TRUE))$p.value
+  expect_lt(max(abs(mp$p[mp$Component == "contrasts"] - p_mvt)), 1e-3)
+})
+
+
+test_that("model_parameters, p-adjust, unsupported methods", {
+  model <- lm(mpg ~ wt + cyl + gear + hp, data = mtcars)
+  mp_none <- model_parameters(model)
+
+  expect_message(
+    model_parameters(model, p_adjust = "mvt"),
+    "only available for objects from package `emmeans`",
+    fixed = TRUE
+  )
+  mp <- suppressMessages(model_parameters(model, p_adjust = "mvt"))
+  expect_equal(mp$p, mp_none$p, tolerance = 1e-10)
+  out <- capture.output(print(mp))
+  expect_true(any(startsWith(out, "Parameter")))
+  expect_false(any(grepl("p-value adjustment method", out, fixed = TRUE)))
+
+  expect_message(
+    model_parameters(model, p_adjust = "foo"),
+    "`p_adjust` must be one of",
+    fixed = TRUE
+  )
+  mp <- suppressMessages(model_parameters(model, p_adjust = "foo"))
+  out <- capture.output(print(mp))
+  expect_true(any(startsWith(out, "Parameter")))
+  expect_false(any(grepl("p-value adjustment method", out, fixed = TRUE)))
+
+  skip_if_not_installed("emmeans")
+  m <- lm(mpg ~ factor(cyl) + hp, data = mtcars)
+  pw <- pairs(emmeans::emmeans(m, ~cyl))
+  expect_message(
+    model_parameters(pw, p_adjust = "foo"),
+    "`p_adjust` must be one of",
+    fixed = TRUE
+  )
+  mp <- suppressMessages(model_parameters(pw, p_adjust = "foo"))
+  out <- capture.output(print(mp))
+  expect_true(any(startsWith(out, "contrast")))
+  expect_false(any(grepl("p-value adjustment method", out, fixed = TRUE)))
+})
+
+
 test_that("model_parameters, simultaenous confidence intervals", {
   skip_if_not_installed("mvtnorm")
   m <- lm(mpg ~ wt + hp, data = mtcars)

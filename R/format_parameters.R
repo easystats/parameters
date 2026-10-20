@@ -158,7 +158,7 @@ format_parameters.parameters_model <- function(model, ...) {
         pattern <- "(:(?![0-9]+$))"
         components <- unlist(strsplit(name, pattern, perl = TRUE), use.names = FALSE)
       } else {
-        components <- unlist(strsplit(name, ":", fixed = TRUE), use.names = FALSE)
+        components <- .split_interaction(name)
       }
       is_nested <- types$Type[i] == "nested"
       is_simple <- types$Type[i] == "simple"

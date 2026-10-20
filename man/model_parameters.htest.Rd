@@ -2,6 +2,7 @@
 % Please edit documentation in R/methods_htest.R, R/methods_lmtest.R
 \name{model_parameters.htest}
 \alias{model_parameters.htest}
+\alias{model_parameters.TukeyHSD}
 \alias{model_parameters.coeftest}
 \title{Parameters from hypothesis tests}
 \usage{
@@ -15,6 +16,8 @@
   ...
 )
 
+\method{model_parameters}{TukeyHSD}(model, verbose = TRUE, ...)
+
 \method{model_parameters}{coeftest}(
   model,
   ci = 0.95,
@@ -26,7 +29,9 @@
 )
 }
 \arguments{
-\item{model}{Object of class \code{htest} or \code{pairwise.htest}.}
+\item{model}{Object of class \code{htest}, \code{pairwise.htest}, or \code{TukeyHSD}. For
+\code{TukeyHSD} objects, the confidence level of the intervals is the
+\code{conf.level} that was used in \code{TukeyHSD()}.}
 
 \item{ci}{Level of confidence intervals for effect size statistic. Currently
 only applies to objects from \code{chisq.test()} or \code{oneway.test()}.}
@@ -157,6 +162,9 @@ model_parameters(model)
 smokers <- c(83, 90, 129, 70)
 patients <- c(86, 93, 136, 82)
 model <- suppressWarnings(pairwise.prop.test(smokers, patients))
+model_parameters(model)
+
+model <- TukeyHSD(aov(breaks ~ wool + tension, data = warpbreaks), "tension")
 model_parameters(model)
 
 model <- suppressWarnings(chisq.test(table(mtcars$am, mtcars$cyl)))

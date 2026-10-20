@@ -84,7 +84,15 @@ p-values. See \code{\link[stats:p.adjust]{stats::p.adjust()}} for details. Furth
 adjustment methods are \code{"tukey"}, \code{"scheffe"}, \code{"sidak"}, \code{"sup-t"}, and
 \code{"none"} to explicitly disable adjustment for \code{emmGrid} objects (from
 \strong{emmeans}). \code{"sup-t"} computes simultaneous confidence bands, also called
-sup-t confidence band (Montiel Olea & Plagborg-Møller, 2019).}
+sup-t confidence band (Montiel Olea & Plagborg-Møller, 2019). \code{"mvt"} is
+only available for objects from \strong{emmeans} (\code{emmGrid} and \code{emm_list}). It
+adjusts p-values based on the multivariate t distribution, using
+\verb{summary(<emmGrid>, adjust = "mvt")}, where each \code{by} group is a separate
+family. Confidence intervals are not adjusted. \strong{emmeans} computes these
+p-values by simulation, so they vary slightly between calls. For the same
+values on each call, use \code{set.seed()} first. Method names from
+\code{stats::p.adjust.methods} can be in any letter case, for example \code{"bh"}
+instead of \code{"BH"}.}
 
 \item{vcov}{Variance-covariance matrix used to compute uncertainty estimates
 (e.g., for robust standard errors). This argument accepts a covariance
@@ -226,6 +234,9 @@ CIs and p-values instead.
 \item Applies to \emph{linear mixed models}. CIs computed using the
 Wald method (SE and a \emph{t-distribution with Satterthwaite df}); p-values
 computed using the Wald method with a \emph{t-distribution with Satterthwaite df}.
+This is the default for \code{lmerModLmerTest} models when the corresponding
+method argument (\code{ci_method} or \code{method}) is \code{NULL} (and
+\code{bootstrap = FALSE}).
 }
 
 \code{"kenward"}

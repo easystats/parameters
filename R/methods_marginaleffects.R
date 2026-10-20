@@ -39,7 +39,16 @@ model_parameters.marginaleffects <- function(
     out <- out[, !colnames(out) %in% to_remove, drop = FALSE]
   }
 
-  out <- .rename_reserved_marginaleffects(out)
+  # "by" variables get temporary names, so that the renaming steps below do
+  # not change them. Their names are restored at the end.
+  by_names <- .by_column_names(out, model, is_bayesian)
+  colnames(out)[match(by_names, colnames(out))] <- names(by_names)
+
+  # subsetting drops the "focal_terms" attribute, so we take it from the model
+  out <- .rename_reserved_marginaleffects(
+    out,
+    focal_terms = union(attributes(model)$focal_terms, .keep_me_columns(model))
+  )
 
   # need to standardize names for non-Bayesian models. Bayesian models have
   # been processed through describe_posterior() already
@@ -97,6 +106,9 @@ model_parameters.marginaleffects <- function(
     out
   )
 
+  # restore names of "by" variables, after the "CI" column was added
+  out <- .restore_by_columns(out, by_names)
+
   class(out) <- c("parameters_model", "see_parameters_model", class(out))
   out
 }
@@ -135,11 +147,20 @@ model_parameters.predictions <- function(
       ...
     ))
     by_cols <- NULL
+    by_names <- NULL
   } else {
     # columns we want to keep
     by_cols <- .keep_me_columns(model)
+    # "by" variables get temporary names, so that the renaming steps below do
+    # not change them. Their names are restored at the end.
+    out <- model
+    by_names <- .by_column_names(out, model, is_bayesian)
+    colnames(out)[match(by_names, colnames(out))] <- names(by_names)
     # handle non-Bayesian models
-    out <- .rename_reserved_marginaleffects(model)
+    out <- .rename_reserved_marginaleffects(
+      out,
+      focal_terms = union(attributes(model)$focal_terms, by_cols)
+    )
     out <- datawizard::data_rename(out, "estimate", "predicted")
     out <- datawizard::data_relocate(out, "predicted", before = 1)
     out <- insight::standardize_names(out, style = "easystats")
@@ -158,11 +179,13 @@ model_parameters.predictions <- function(
     out$Type <- NULL
   }
 
-  # find at-variables
+  # find at-variables, by their temporary names
   at_variables <- insight::compact_character(c(
     marginaleffects::components(model, "variable_names_by"),
     marginaleffects::components(model, "variable_names_by_hypothesis")
   ))
+  temporary <- names(by_names)[match(at_variables, by_names)]
+  at_variables[!is.na(temporary)] <- temporary[!is.na(temporary)]
 
   # find cofficient name - differs for Bayesian models
   coef_name <- intersect(c("Predicted", "Coefficient"), colnames(out))[1]
@@ -205,28 +228,73 @@ model_parameters.predictions <- function(
   # exponentiate coefficients and SE/CI, if requested
   out <- .exponentiate_parameters(out, model = NULL, exponentiate)
 
+  # restore names of "by" variables, after the "CI" column was added
+  out <- .restore_by_columns(out, by_names)
+
   class(out) <- c("parameters_model", "see_parameters_model", class(out))
   out
 }
 
 
-.rename_reserved_marginaleffects <- function(model) {
-  # get focal terms - we might escape column names where focal terms
-  # equal "reserved" names, like t- or z-statistic
-  focal_terms <- attributes(model)$focal_terms
-  reserved <- c("t", "z")
-  renamed_focal <- NULL
+.rename_reserved_marginaleffects <- function(model, focal_terms = NULL) {
+  # we might escape column names where focal terms equal "reserved" names,
+  # like t- or z-statistic, i.e. names that "standardize_names()" would change
+  focal_terms <- intersect(focal_terms, colnames(model))
+  if (!length(focal_terms)) {
+    return(model)
+  }
+  standardized <- colnames(insight::standardize_names(
+    as.data.frame(model)[0, focal_terms, drop = FALSE],
+    style = "easystats"
+  ))
+  reserved <- focal_terms[focal_terms != standardized]
 
   # any focal terms equals reserved words? if so, rename
-  if (any(reserved %in% focal_terms)) {
-    renamed_focal <- focal_terms[focal_terms %in% reserved]
+  if (length(reserved)) {
     model <- datawizard::data_rename(
       model,
-      select = renamed_focal,
-      replacement = paste0(renamed_focal, "#####")
+      select = reserved,
+      replacement = paste0(reserved, "#####")
     )
   }
   model
+}
+
+
+# temporary names for the columns of "by" variables, as a named vector: the
+# names are the temporary names, the values are the original names
+.by_column_names <- function(x, model, is_bayesian = FALSE) {
+  if (is_bayesian) {
+    return(NULL)
+  }
+  by_cols <- union(
+    marginaleffects::components(model, "variable_names_by"),
+    marginaleffects::components(model, "variable_names_by_hypothesis")
+  )
+  by_cols <- intersect(by_cols, colnames(x))
+  if (!length(by_cols)) {
+    return(NULL)
+  }
+  stats::setNames(by_cols, paste0("..by_variable_", seq_along(by_cols)))
+}
+
+
+# give "by" variables their original names back. If an output column or
+# another "by" variable already has that name, the variable gets the suffix
+# ".1" (or ".2", ..., if that name is taken, too)
+.restore_by_columns <- function(x, by_names) {
+  for (temporary in names(by_names)) {
+    original <- by_names[[temporary]]
+    taken <- c(setdiff(colnames(x), names(by_names)), setdiff(by_names, original))
+    new_name <- original
+    i <- 0
+    while (new_name %in% taken) {
+      i <- i + 1
+      new_name <- paste0(original, ".", i)
+    }
+    colnames(x)[colnames(x) == temporary] <- new_name
+  }
+  x
 }
 
 

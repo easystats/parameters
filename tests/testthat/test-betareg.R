@@ -34,7 +34,7 @@ test_that("betareg", {
   expect_equal(p_value(m2)$p, c(0.00542, 5e-05, 8e-04, 1e-05), tolerance = 1e-3)
 
   # check vcov args
-  expect_message({
+  expect_warning({
     out <- model_parameters(m1, vcov = "vcovHAC")
   })
   expect_equal(out$SE, unname(coef(summary(m1))[[1]][, 2]), tolerance = 1e-3)

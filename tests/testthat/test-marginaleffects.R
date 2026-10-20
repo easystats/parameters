@@ -415,3 +415,158 @@ test_that("predictions, don't remove Type column when it's a variable", {
     c("Type", "Response", "Probability", "SE", "CI_low", "CI_high", "t", "df")
   )
 })
+
+
+test_that("preserve focal terms with same name as reserved words", {
+  d <- iris
+  d$type <- factor(rep(c("a", "b", "c"), 50))
+  d$t <- d$type
+  m1 <- lm(Sepal.Width ~ type * Petal.Length, data = d)
+  m2 <- lm(Sepal.Width ~ t * Petal.Length, data = d)
+
+  out <- model_parameters(marginaleffects::predictions(m1, by = "type"))
+  expect_identical(as.character(out$type), c("a", "b", "c"))
+  expect_false("Type" %in% colnames(out))
+
+  out <- model_parameters(marginaleffects::avg_comparisons(
+    m1,
+    variables = "Petal.Length",
+    by = "type"
+  ))
+  expect_identical(as.character(out$type), c("a", "b", "c"))
+  expect_false("Type" %in% colnames(out))
+  expect_null(attr(out, "prediction_type"))
+
+  out <- model_parameters(marginaleffects::avg_slopes(
+    m2,
+    variables = "Petal.Length",
+    by = "t"
+  ))
+  expect_identical(as.character(out$t), c("a", "b", "c"))
+  expect_false("Statistic.1" %in% colnames(out))
+
+  skip_if_not_installed("modelbased")
+  out <- model_parameters(modelbased::get_marginalmeans(m1, "type"))
+  expect_identical(as.character(out$type), c("a", "b", "c"))
+})
+
+
+# slopes, comparisons and predictions with a "by" variable called `name`
+.by_variable_calls <- function(name, calls = c("slopes", "comparisons", "predictions")) {
+  d <- iris
+  d$v <- factor(rep(c("a", "b", "c"), 50))
+  colnames(d)[colnames(d) == "v"] <- name
+  f <- stats::as.formula(paste0("Sepal.Width ~ `", name, "` * Petal.Length"))
+  m <- lm(f, data = d)
+  out <- list(
+    slopes = function() {
+      marginaleffects::avg_slopes(m, variables = "Petal.Length", by = name)
+    },
+    comparisons = function() {
+      marginaleffects::avg_comparisons(m, variables = "Petal.Length", by = name)
+    },
+    predictions = function() marginaleffects::predictions(m, by = name)
+  )
+  lapply(out[calls], function(f) f())
+}
+
+
+test_that("by variables named like output columns get the suffix .1", {
+  neutral <- lapply(.by_variable_calls("safe_var"), model_parameters)
+  for (call in names(neutral)) {
+    reference <- as.data.frame(neutral[[call]])
+    clash_names <- setdiff(colnames(reference), c("safe_var", "df"))
+    # marginaleffects itself overwrites these columns in predictions()
+    if (call == "predictions") {
+      clash_names <- setdiff(clash_names, c("Predicted", "SE", "CI_low", "CI_high"))
+    }
+    expect_gt(length(clash_names), 3)
+    for (name in clash_names) {
+      label <- paste(call, name)
+      out <- as.data.frame(model_parameters(.by_variable_calls(name, call)[[call]]))
+      expected <- reference
+      colnames(expected)[colnames(expected) == "safe_var"] <- paste0(name, ".1")
+      expect_identical(colnames(out), colnames(expected), info = label)
+      expect_equal(out, expected, ignore_attr = TRUE, info = label)
+      expect_true(is.factor(out[[paste0(name, ".1")]]), info = label)
+    }
+  }
+})
+
+
+test_that("print with a by variable named p", {
+  # a wide console, so that the table is printed in one block
+  withr::local_options(width = 300)
+  calls <- .by_variable_calls("p")
+  for (call in names(calls)) {
+    out <- model_parameters(calls[[call]])
+    printed <- capture.output(print(out))
+    rows <- grep("|", printed, fixed = TRUE, value = TRUE)
+    cells <- lapply(strsplit(rows, "|", fixed = TRUE), trimws)
+    header <- cells[[1]]
+    body <- cells[-1]
+    expect_true(all(c("p", "p.1") %in% header), info = call)
+    expect_identical(
+      vapply(body, function(x) x[header == "p.1"], character(1)),
+      c("a", "b", "c"),
+      info = call
+    )
+    expect_match(
+      vapply(body, function(x) x[header == "p"], character(1)),
+      "^(< \\.001|> \\.999|0\\.\\d{3})$",
+      info = call
+    )
+  }
+})
+
+
+test_that("by variables named x and x.1 get unique names", {
+  d <- iris
+  d$p <- factor(rep(c("a", "b", "c"), 50))
+  d$p.1 <- factor(rep(c("x", "y"), 75))
+  m <- lm(Sepal.Width ~ p * p.1 * Petal.Length, data = d)
+  calls <- list(
+    slopes = marginaleffects::avg_slopes(
+      m,
+      variables = "Petal.Length",
+      by = c("p", "p.1")
+    ),
+    predictions = marginaleffects::predictions(m, by = c("p.1", "p"))
+  )
+  for (call in names(calls)) {
+    out <- model_parameters(calls[[call]])
+    expect_false(anyDuplicated(colnames(out)) > 0, info = call)
+    expect_true(is.numeric(out$p), info = call)
+    expect_identical(sort(unique(as.character(out$p.1))), c("x", "y"), info = call)
+    expect_identical(sort(unique(as.character(out$p.2))), c("a", "b", "c"), info = call)
+  }
+})
+
+
+test_that("grouped hypothesis with a by variable named p", {
+  d <- iris
+  d$p <- factor(rep(c("a", "b", "c"), 50))
+  d$g <- factor(rep(c("x", "y"), 75))
+  m <- lm(Sepal.Width ~ p * g * Petal.Length, data = d)
+  out <- model_parameters(marginaleffects::avg_predictions(
+    m,
+    by = c("g", "p"),
+    hypothesis = ~ pairwise | p
+  ))
+  expect_true(is.numeric(out$p))
+  expect_true(all(out$p >= 0 & out$p <= 1))
+  expect_identical(as.character(out$p.1), c("a", "b", "c"))
+})
+
+
+test_that("by variables with free names keep them", {
+  for (name in c("type", "t", "safe_var")) {
+    calls <- .by_variable_calls(name)
+    for (call in names(calls)) {
+      label <- paste(call, name)
+      out <- model_parameters(calls[[call]])
+      expect_identical(as.character(out[[name]]), c("a", "b", "c"), info = label)
+      expect_false(any(endsWith(colnames(out), ".1")), info = label)
+    }
+  }
+})

@@ -12,7 +12,7 @@ compare_parameters(
   component = "conditional",
   standardize = NULL,
   exponentiate = FALSE,
-  ci_method = "wald",
+  ci_method = NULL,
   p_adjust = NULL,
   select = NULL,
   column_names = NULL,
@@ -32,7 +32,7 @@ compare_models(
   component = "conditional",
   standardize = NULL,
   exponentiate = FALSE,
-  ci_method = "wald",
+  ci_method = NULL,
   p_adjust = NULL,
   select = NULL,
   column_names = NULL,
@@ -111,7 +111,15 @@ p-values. See \code{\link[stats:p.adjust]{stats::p.adjust()}} for details. Furth
 adjustment methods are \code{"tukey"}, \code{"scheffe"}, \code{"sidak"}, \code{"sup-t"}, and
 \code{"none"} to explicitly disable adjustment for \code{emmGrid} objects (from
 \strong{emmeans}). \code{"sup-t"} computes simultaneous confidence bands, also called
-sup-t confidence band (Montiel Olea & Plagborg-Møller, 2019).}
+sup-t confidence band (Montiel Olea & Plagborg-Møller, 2019). \code{"mvt"} is
+only available for objects from \strong{emmeans} (\code{emmGrid} and \code{emm_list}). It
+adjusts p-values based on the multivariate t distribution, using
+\verb{summary(<emmGrid>, adjust = "mvt")}, where each \code{by} group is a separate
+family. Confidence intervals are not adjusted. \strong{emmeans} computes these
+p-values by simulation, so they vary slightly between calls. For the same
+values on each call, use \code{set.seed()} first. Method names from
+\code{stats::p.adjust.methods} can be in any letter case, for example \code{"bh"}
+instead of \code{"BH"}.}
 
 \item{select}{Determines which columns and and which layout columns are
 printed. There are three options for this argument:

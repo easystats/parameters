@@ -1,11 +1,128 @@
 # parameters (devel)
 
+## Breaking Changes
+
+* `compare_parameters()`'s `ci_method` now defaults to `NULL`, so the value is
+  potentially set by the models' unique methods.
+
+* `model_parameters()`, `ci()`, `standard_error()`, and `p_value()` now default
+  to the Satterthwaite approximation for `lmerModLmerTest` models and suggest
+  doing so for `lmerMod` models (#989).
+
 ## Changes
+
+* `model_parameters()` for models from *blavaan* with `standardize` no longer
+  returns rows for parameters with fixed or constant standardized draws, such
+  as the standardized variances of exogenous latent variables. `print()` now
+  says that the parameters are standardized and names the type. The output now
+  also drops `p_significance`, because its result depends on the scale of the
+  parameters. Version 0.30.0 already dropped the ROPE tests and Bayes factors.
+  Test names now match as in *bayestestR*. If you give these tests in other
+  spellings, for example `test = "ROPE"`, the output also drops them. If
+  `verbose = TRUE`, an explicit `diagnostic` other than `NULL`, `FALSE` or
+  `"none"` now gives a warning, because the standardized draws have no chain
+  information. `ci_method = "si"` now gives an error.
+
+* For mixed models without their own bootstrap method, `bootstrap_model()` now
+  resamples whole clusters instead of single rows, with `type = "ordinary"`
+  (the default) or `type = "balanced"`. Examples are models from
+  *ordinal*, *cplm* or *nlme*. This also changes `bootstrap_parameters()` and
+  `model_parameters()` with `bootstrap = TRUE`. Grouping factors that are not
+  nested in one factor give an error.
+
+* `model_parameters()` for objects from *emmeans* supports `p_adjust = "mvt"`,
+  which adjusts p-values based on the multivariate t distribution (#854).
+
+## Bug fixes
+
+* `model_parameters()` for *BayesFactor* objects with more than one model, for
+  example from `regressionBF()` or `anovaBF()`, now shows the Bayes factor of
+  the first model in every row. The parameters also come from that model. Before
+  this fix, the rows showed the Bayes factors of all models (#1084).
+
+* `bootstrap_model()` with `type = "parametric"` no longer fails for models
+  without their own bootstrap method, such as `lm` or `glm`. It now draws new
+  responses with `simulate()` and refits the model to them. Two kinds of model
+  give an error that suggests `type = "ordinary"`. In the first kind,
+  `simulate()` has no method, fails, or does not return one numeric response
+  per row. In the second kind, the response in the formula is not one column
+  of the data, for example `log(y)` or `cbind()`.
+
+* The `p_adjust` argument in `model_parameters()` now accepts the methods from
+  `stats::p.adjust.methods` in any letter case, for example `"bh"`. Before,
+  this failed with an error. An invalid value for `p_adjust` no longer shows the
+  method in the footer of the printed output (#854).
+
+# parameters 0.30.0
+
+## Changes
+
+* `model_parameters()` now supports objects from `TukeyHSD()` (#738).
 
 * `model_parameters()` now saves information about the type of HC-vcov
   calculation as attribute.
 
+* `model_parameters()` now raises a warning instead of a message when the
+  `vcocv` is supplied to calculate sandwich standard errors, but not supported
+  by the model class.
+
 ## Bug fixes
+
+* `model_parameters()` for objects from *marginaleffects* no longer drops or
+  renames columns of focal terms or `by` variables whose names equal column
+  names that the output uses, such as `type` or `t`.
+
+* `model_parameters()` for objects from *marginaleffects*: a `by` variable
+  with the name of an output column, such as `p` or `SE`, is now returned as
+  `p.1` or `SE.1`. The output column keeps its name. This does not apply to
+  Bayesian models. It also does not apply to the `predictions()` columns
+  `Predicted`, `SE`, `CI_low` and `CI_high`, which *marginaleffects* itself
+  overwrites.
+
+* `equivalence_test()` for *lavaan* models no longer fails with an error about
+  `range` when the model was fitted inside a function. Functions that look up
+  the original model by its name now also find it in the calling functions.
+
+* `bootstrap_model()` and `bootstrap_parameters()` with
+  `type = "semiparametric"` no longer fail for models from *lme4*. For models
+  from *glmmTMB*, this type now gives an informative error, because
+  `lme4::bootMer()` does not support it for these models (#1242).
+
+* `model_parameters()` and `ci()` no longer fail for `merModList` models from
+  *merTools* with the error "formal argument "component" matched by multiple
+  actual arguments" (#1199).
+
+* If the `htest` object of a Spearman or Kendall correlation test carries a
+  confidence interval, `model_parameters()` now returns it. Before, only
+  Pearson correlations showed a confidence interval (#1003).
+
+* `model_parameters()` for models from *blavaan* now works with
+  `standardize = TRUE`, `"all"` or `"std.all"` and summarizes the standardized
+  posterior draws. This requires *insight* 1.6.0 or later. As for *lavaan*
+  models, `standardize = "latent"` or `"std.lv"` and `"no_exogenous"` or
+  `"std.nox"` summarize the draws of the matching `type` of
+  `blavaan::standardizedPosterior()`. These values require *insight* 1.6.0
+  or later. If the `"std.nox"` values equal the `"std.all"` values, you get
+  one warning instead of one from *lavaan* for each draw. Older versions of
+  *insight* give an error that asks you to update. Other values
+  of `standardize` (except `FALSE` or `NULL`) return unstandardized parameters.
+  With `verbose = TRUE`, they also give a warning.
+
+* `model_parameters(..., bootstrap = TRUE)` no longer fails for `clmm` models
+  from *ordinal*. Like other mixed models, it now returns only the fixed
+  effects and says so in a message (#1056).
+
+* `model_parameters()` no longer fails for models fitted with `stats::arima()`.
+
+* `print()` and `print_md()` now show a user-supplied `caption` for models
+  that have no default caption, such as models fitted with `lm()` (#749).
+
+* With *insight* 1.6.0 or later, `caption = ""` in `print()` and
+  `print_md()` now removes the "Fixed Effects" and "Random Effects" captions
+  of mixed models (easystats/insight#930).
+
+* `model_parameters(..., effects = "grouplevel")` now formats categorical
+  random-slope labels consistently across all grouping levels.
 
 * `standard_error()` and hence `model_parameters()` returned wrong (recycled)
   standard errors for models of class `glmmTMB` fitted with the new `ordinal()`
@@ -13,6 +130,11 @@
   Standard errors are now taken from `insight::get_varcov()`, which returns
   them on the threshold scale via the delta method (requires *insight* > 1.5.4
   and *glmmTMB* >= 1.1.15).
+
+* `format_parameters()` and `model_parameters()` now keep the names of terms
+  with a colon inside a function call, such as `lag(log(emp), 1:2)` in *plm*
+  models. Before, the colon split these terms like interactions. A term like
+  `lag(log(x))` is also no longer formatted as a log-transformed term (#502).
 
 # parameters 0.29.3
 

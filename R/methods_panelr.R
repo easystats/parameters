@@ -171,6 +171,16 @@ p_value.wbgee <- p_value.wbm
     )
     params$Effects <- "fixed"
     att <- attributes(params)
+
+    # bootstrapped parameters have different columns than random effects
+    if (isTRUE(bootstrap) && effects != "fixed") {
+      effects <- "fixed"
+      if (verbose) {
+        insight::format_alert(
+          "Bootstrapping only returns fixed effects of the mixed model."
+        )
+      }
+    }
   }
 
   if (effects %in% c("random", "all") && isTRUE(group_level)) {

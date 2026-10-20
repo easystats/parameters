@@ -2,7 +2,9 @@
 #'
 #' Parameters of h-tests (correlations, t-tests, chi-squared, ...).
 #'
-#' @param model Object of class `htest` or `pairwise.htest`.
+#' @param model Object of class `htest`, `pairwise.htest`, or `TukeyHSD`. For
+#'   `TukeyHSD` objects, the confidence level of the intervals is the
+#'   `conf.level` that was used in `TukeyHSD()`.
 #' @param bootstrap Should estimates be bootstrapped?
 #' @param ci Level of confidence intervals for effect size statistic. Currently
 #'   only applies to objects from `chisq.test()` or `oneway.test()`.
@@ -32,6 +34,9 @@
 #' smokers <- c(83, 90, 129, 70)
 #' patients <- c(86, 93, 136, 82)
 #' model <- suppressWarnings(pairwise.prop.test(smokers, patients))
+#' model_parameters(model)
+#'
+#' model <- TukeyHSD(aov(breaks ~ wool + tension, data = warpbreaks), "tension")
 #' model_parameters(model)
 #'
 #' model <- suppressWarnings(chisq.test(table(mtcars$am, mtcars$cyl)))
@@ -114,6 +119,49 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
   parameters <- stats::na.omit(parameters)
 
   parameters <- .add_htest_attributes(parameters, model, p_adjust = model$p.adjust.method)
+  class(parameters) <- c("parameters_model", "see_parameters_model", class(parameters))
+
+  parameters
+}
+
+
+# .TukeyHSD --------------------
+
+#' @rdname model_parameters.htest
+#' @export
+model_parameters.TukeyHSD <- function(model, verbose = TRUE, ...) {
+  # one matrix per term, with columns "diff", "lwr", "upr" and "p adj"
+  parameters <- do.call(
+    rbind,
+    lapply(names(model), function(term) {
+      m <- model[[term]]
+      data.frame(
+        Term = rep(term, nrow(m)),
+        Contrast = rownames(m),
+        Coefficient = unname(m[, "diff"]),
+        CI = attr(model, "conf.level"),
+        CI_low = unname(m[, "lwr"]),
+        CI_high = unname(m[, "upr"]),
+        p = unname(m[, "p adj"]),
+        stringsAsFactors = FALSE
+      )
+    })
+  )
+  rownames(parameters) <- NULL
+
+  # p-values are already Tukey-adjusted, so a "p_adjust" argument is ignored
+  dots <- list(...)
+  dots$p_adjust <- NULL
+  parameters <- do.call(
+    .add_htest_attributes,
+    c(list(parameters, model, p_adjust = "tukey"), dots)
+  )
+  # no "# Fixed Effects" headline
+  attr(parameters, "no_caption") <- TRUE
+  attr(parameters, "parameter_names") <- c("Term", "Contrast")
+  # the print footer reads this attribute
+  attr(parameters, "verbose") <- verbose
+  attr(parameters, "object_name") <- insight::safe_deparse_symbol(substitute(model))
   class(parameters) <- c("parameters_model", "see_parameters_model", class(parameters))
 
   parameters
@@ -226,8 +274,6 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
     out$t <- model$statistic
     out$df_error <- model$parameter
     out$p <- model$p.value
-    out$CI_low <- model$conf.int[1]
-    out$CI_high <- model$conf.int[2]
   } else if (grepl("Spearman", model$method, fixed = TRUE)) {
     out$rho <- model$estimate
     out$S <- model$statistic
@@ -239,6 +285,12 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
     out$z <- model$statistic
     out$df_error <- model$parameter
     out$p <- model$p.value
+  }
+
+  # Use the CI whenever the htest object carries one, not only for Pearson
+  if (!is.null(model$conf.int)) {
+    out$CI_low <- model$conf.int[1]
+    out$CI_high <- model$conf.int[2]
   }
 
   out$Method <- model$method

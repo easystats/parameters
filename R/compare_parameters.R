@@ -69,23 +69,25 @@
 #' compare_parameters(list("linear model" = m1, "logistic reg." = m2))
 #' }
 #' @export
-compare_parameters <- function(...,
-                               ci = 0.95,
-                               effects = "fixed",
-                               component = "conditional",
-                               standardize = NULL,
-                               exponentiate = FALSE,
-                               ci_method = "wald",
-                               p_adjust = NULL,
-                               select = NULL,
-                               column_names = NULL,
-                               pretty_names = TRUE,
-                               coefficient_names = NULL,
-                               keep = NULL,
-                               drop = NULL,
-                               include_reference = FALSE,
-                               groups = NULL,
-                               verbose = TRUE) {
+compare_parameters <- function(
+  ...,
+  ci = 0.95,
+  effects = "fixed",
+  component = "conditional",
+  standardize = NULL,
+  exponentiate = FALSE,
+  ci_method = NULL,
+  p_adjust = NULL,
+  select = NULL,
+  column_names = NULL,
+  pretty_names = TRUE,
+  coefficient_names = NULL,
+  keep = NULL,
+  drop = NULL,
+  include_reference = FALSE,
+  groups = NULL,
+  verbose = TRUE
+) {
   models <- list(...)
 
   if (length(models) == 1) {
@@ -117,14 +119,23 @@ compare_parameters <- function(...,
     }
   }
 
-  supported_models <- vapply(models, function(i) {
-    insight::is_model_supported(i) || inherits(i, "lavaan") || inherits(i, "parameters_model")
-  }, TRUE)
+  supported_models <- vapply(
+    models,
+    function(i) {
+      insight::is_model_supported(i) ||
+        inherits(i, "lavaan") ||
+        inherits(i, "parameters_model")
+    },
+    TRUE
+  )
 
   if (!all(supported_models)) {
     if (verbose) {
       insight::format_alert(
-        sprintf("Following objects are not supported: %s", toString(model_names[!supported_models])),
+        sprintf(
+          "Following objects are not supported: %s",
+          toString(model_names[!supported_models])
+        ),
         "Dropping unsupported models now."
       )
     }
@@ -169,7 +180,15 @@ compare_parameters <- function(...,
       dat <- model
     } else {
       # set default-ci_type for Bayesian models
-      if (insight::is_bayesian_model(model, exclude = c("bmerMod", "bayesx", "blmerMod", "bglmerMod")) && !ci_method %in% c("hdi", "quantile", "ci", "eti", "si", "bci", "bcai")) { # nolint
+      if (
+        insight::is_bayesian_model(
+          model,
+          exclude = c("bmerMod", "bayesx", "blmerMod", "bglmerMod")
+        ) &&
+          (is.null(ci_method) ||
+            !ci_method %in% c("hdi", "quantile", "ci", "eti", "si", "bci", "bcai"))
+      ) {
+        # nolint
         ci_method_tmp <- "eti"
       } else {
         ci_method_tmp <- ci_method
@@ -217,7 +236,10 @@ compare_parameters <- function(...,
 
     # add zi-suffix to parameter names
     if (any(dat$Component == "zero_inflated")) {
-      dat$Parameter[dat$Component == "zero_inflated"] <- paste0(dat$Parameter[dat$Component == "zero_inflated"], " (zi)")
+      dat$Parameter[dat$Component == "zero_inflated"] <- paste0(
+        dat$Parameter[dat$Component == "zero_inflated"],
+        " (zi)"
+      )
     }
 
     # add suffix
@@ -235,15 +257,28 @@ compare_parameters <- function(...,
   names(object_attributes) <- model_names
 
   # merge all data frames
-  all_models <- suppressWarnings(Reduce(function(x, y) {
-    merge(x, y, all = TRUE, sort = FALSE, by = c("Parameter", "Component", "Effects", "Group"))
-  }, m))
+  all_models <- suppressWarnings(Reduce(
+    function(x, y) {
+      merge(
+        x,
+        y,
+        all = TRUE,
+        sort = FALSE,
+        by = c("Parameter", "Component", "Effects", "Group")
+      )
+    },
+    m
+  ))
 
   # find columns with model numbers and create new variable "params_order",
   # which is pasted together of all model-column indices. Take lowest index of
   # all model-column indices, which then indicates order of parameters/rows.
   model_cols <- which(startsWith(colnames(all_models), "model"))
-  params_order <- as.numeric(substr(gsub("NA", "", do.call(paste0, all_models[model_cols]), fixed = TRUE), 0, 1))
+  params_order <- as.numeric(substr(
+    gsub("NA", "", do.call(paste0, all_models[model_cols]), fixed = TRUE),
+    0,
+    1
+  ))
 
   all_models <- all_models[order(params_order), ]
   all_models[model_cols] <- NULL
@@ -253,11 +288,20 @@ compare_parameters <- function(...,
     all_models$Group <- NULL
   }
 
-  attr(all_models, "model_names") <- gsub("\"", "", unlist(lapply(model_names, insight::safe_deparse)), fixed = TRUE)
+  attr(all_models, "model_names") <- gsub(
+    "\"",
+    "",
+    unlist(lapply(model_names, insight::safe_deparse)),
+    fixed = TRUE
+  )
   attr(all_models, "output_style") <- select
   attr(all_models, "all_attributes") <- object_attributes
   attr(all_models, "parameter_groups") <- groups
-  class(all_models) <- c("compare_parameters", "see_compare_parameters", unique(class(all_models)))
+  class(all_models) <- c(
+    "compare_parameters",
+    "see_compare_parameters",
+    unique(class(all_models))
+  )
 
   all_models
 }
@@ -270,11 +314,12 @@ compare_models <- compare_parameters
 
 # helper ----------------------------
 
-
 .set_pretty_names <- function(x, pretty_names) {
   # check if pretty names should be replaced by value labels
   # (if we have labelled data)
-  if (isTRUE(getOption("parameters_labels", FALSE)) || identical(pretty_names, "labels")) {
+  if (
+    isTRUE(getOption("parameters_labels", FALSE)) || identical(pretty_names, "labels")
+  ) {
     attr(x, "pretty_names") <- attr(x, "pretty_labels", exact = TRUE)
     pretty_names <- TRUE
   }
@@ -288,7 +333,9 @@ compare_models <- compare_parameters
       match_pretty_names <- match(names(att$pretty_names), x$Parameter)
       match_pretty_names <- match_pretty_names[!is.na(match_pretty_names)]
       if (length(match_pretty_names)) {
-        x$Parameter[match_pretty_names] <- att$pretty_names[x$Parameter[match_pretty_names]]
+        x$Parameter[match_pretty_names] <- att$pretty_names[x$Parameter[
+          match_pretty_names
+        ]]
       }
     } else {
       match_pretty_names <- att$pretty_names[x$Parameter]
@@ -296,7 +343,9 @@ compare_models <- compare_parameters
         match_pretty_names <- match(names(att$pretty_names), x$Parameter)
         match_pretty_names <- match_pretty_names[!is.na(match_pretty_names)]
         if (length(match_pretty_names)) {
-          x$Parameter[match_pretty_names] <- att$pretty_names[x$Parameter[match_pretty_names]]
+          x$Parameter[match_pretty_names] <- att$pretty_names[x$Parameter[
+            match_pretty_names
+          ]]
         }
       } else {
         x$Parameter <- att$pretty_names[x$Parameter]

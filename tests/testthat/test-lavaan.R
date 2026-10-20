@@ -64,7 +64,7 @@ test_that("standardized no CI", {
 
 test_that("simulate_model and equivalence_test work for lavaan", {
   skip_on_cran()
-  skip_if_not_installed("bayestestR")
+  skip_if_not_installed("bayestestR", minimum_version = "0.19.0.2")
   skip_if_not_installed("lavaan")
   skip_if_not_installed("insight", minimum_version = "1.5.2")
 
@@ -86,7 +86,7 @@ test_that("simulate_model and equivalence_test work for lavaan", {
   )
 
   set.seed(123)
-  out <- equivalence_test(m, range = c(-0.2, 0.2))
+  out <- equivalence_test(m, range = c(-0.2, 0.2), ci_method = "ETI")
   expect_identical(
     capture.output(out),
     c(
@@ -94,7 +94,7 @@ test_that("simulate_model and equivalence_test work for lavaan", {
       "",
       "  ROPE: [-0.20 0.20]",
       "",
-      "Parameter |        H0 | inside ROPE |      95% HDI",
+      "Parameter |        H0 | inside ROPE |      95% ETI",
       "--------------------------------------------------",
       "y~x       | Undecided |     23.05 % | [0.09, 0.42]",
       "y~~y      |  Rejected |      0.00 % | [0.43, 0.76]",
@@ -102,4 +102,23 @@ test_that("simulate_model and equivalence_test work for lavaan", {
       ""
     )
   )
+})
+
+test_that("equivalence_test finds a lavaan model defined inside a function", {
+  skip_on_cran()
+  skip_if_not_installed("bayestestR")
+  skip_if_not_installed("lavaan")
+
+  # the default ROPE range needs the model, which is looked up by name
+  # in the calling frames
+  fit_and_test <- function() {
+    set.seed(123)
+    d <- data.frame(x = rnorm(100))
+    d$y <- 0.3 * d$x + rnorm(100, 0, 0.8)
+    m <- lavaan::sem("y ~ x", data = d)
+    equivalence_test(m, iterations = 10, verbose = FALSE)
+  }
+  out <- fit_and_test()
+  expect_s3_class(out, "equivalence_test")
+  expect_identical(out$Parameter, c("y~x", "y~~y"))
 })
