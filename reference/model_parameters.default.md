@@ -296,6 +296,9 @@ bootstrap ("`boot"`) CIs and p-values instead.
 - Applies to *linear mixed models*. CIs computed using the Wald method
   (SE and a *t-distribution with Satterthwaite df*); p-values computed
   using the Wald method with a *t-distribution with Satterthwaite df*.
+  This is the default for `lmerModLmerTest` models when the
+  corresponding method argument (`ci_method` or `method`) is `NULL` (and
+  `bootstrap = FALSE`).
 
 `"kenward"`
 
@@ -438,7 +441,7 @@ model_parameters(model, bootstrap = TRUE)
 model_parameters(model, standardize = "refit")
 #> Parameter   | Coefficient |   SE |         95% CI |    t(29) |      p
 #> ---------------------------------------------------------------------
-#> (Intercept) |    5.37e-17 | 0.08 | [-0.15,  0.15] | 7.13e-16 | > .999
+#> (Intercept) |    6.14e-17 | 0.08 | [-0.15,  0.15] | 8.15e-16 | > .999
 #> wt          |       -0.52 | 0.12 | [-0.77, -0.27] |    -4.22 | < .001
 #> cyl         |       -0.45 | 0.12 | [-0.70, -0.20] |    -3.64 | 0.001 
 #> 

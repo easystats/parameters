@@ -309,7 +309,7 @@ of models and packages, including mixed models and Bayesian models.
 `#> `\
 `#> Parameter         | Coefficient`\
 `#> -------------------------------`\
-`#> SD (Intercept: t) |    4.61e-04`\
+`#> SD (Intercept: t) |    4.60e-04`\
 `#> SD (Residual)     |`
 
 ### Bayesian Models
@@ -352,8 +352,8 @@ the arguments `effects` and `component` arguments.
 `  refresh ``=`` ``0`\
 `)``)`\
 `#> Running /opt/R/4.6.1/lib/R/bin/R CMD SHLIB foo.c`\
-`#> using C compiler: ‘gcc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0’`\
-`#> gcc -std=gnu2x -I"/opt/R/4.6.1/lib/R/include" -DNDEBUG   -I"/home/runner/work/_temp/Library/Rcpp/include/"  -I"/home/runner/work/_temp/Library/RcppEigen/include/"  -I"/home/runner/work/_temp/Library/RcppEigen/include/unsupported"  -I"/home/runner/work/_temp/Library/BH/include" -I"/home/runner/work/_temp/Library/StanHeaders/include/src/"  -I"/home/runner/work/_temp/Library/StanHeaders/include/"  -I"/home/runner/work/_temp/Library/RcppParallel/include/" -DRCPP_PARALLEL_USE_TBB=1 -DTBB_INTERFACE_NEW -I/home/runner/work/_temp/Library/RcppParallel/include -I"/home/runner/work/_temp/Library/rstan/include" -DEIGEN_NO_DEBUG  -DBOOST_DISABLE_ASSERTS  -DBOOST_PENDING_INTEGER_LOG2_HPP  -DSTAN_THREADS  -DUSE_STANC3 -DSTRICT_R_HEADERS  -DBOOST_PHOENIX_NO_VARIADIC_EXPRESSION  -D_HAS_AUTO_PTR_ETC=0  -include '/home/runner/work/_temp/Library/StanHeaders/include/stan/math/prim/fun/Eigen.hpp'  -D_REENTRANT -DRCPP_PARALLEL_USE_TBB=1   -I/usr/local/include    -fpic  -g -O2  -c foo.c -o foo.o`\
+`#> using C compiler: ‘gcc (Ubuntu 15.2.0-16ubuntu1) 15.2.0’`\
+`#> gcc -I"/opt/R/4.6.1/lib/R/include" -DNDEBUG   -I"/home/runner/work/_temp/Library/Rcpp/include/"  -I"/home/runner/work/_temp/Library/RcppEigen/include/"  -I"/home/runner/work/_temp/Library/RcppEigen/include/unsupported"  -I"/home/runner/work/_temp/Library/BH/include" -I"/home/runner/work/_temp/Library/StanHeaders/include/src/"  -I"/home/runner/work/_temp/Library/StanHeaders/include/"  -I"/home/runner/work/_temp/Library/RcppParallel/include/" -DRCPP_PARALLEL_USE_TBB=1 -DTBB_INTERFACE_NEW -I/home/runner/work/_temp/Library/RcppParallel/include -I"/home/runner/work/_temp/Library/rstan/include" -DEIGEN_NO_DEBUG  -DBOOST_DISABLE_ASSERTS  -DBOOST_PENDING_INTEGER_LOG2_HPP  -DSTAN_THREADS  -DUSE_STANC3 -DSTRICT_R_HEADERS  -DBOOST_PHOENIX_NO_VARIADIC_EXPRESSION  -D_HAS_AUTO_PTR_ETC=0  -include '/home/runner/work/_temp/Library/StanHeaders/include/stan/math/prim/fun/Eigen.hpp'  -D_REENTRANT -DRCPP_PARALLEL_USE_TBB=1   -I/usr/local/include    -fpic  -g -O2  -c foo.c -o foo.o`\
 `#> In file included from <command-line>:`\
 `#> /home/runner/work/_temp/Library/StanHeaders/include/stan/math/prim/fun/Eigen.hpp:3:10: fatal error: stdexcept: No such file or directory`\
 `#>     3 | #include <stdexcept>`\
@@ -366,40 +366,40 @@ the arguments `effects` and `component` arguments.
 `#> `\
 `#> Parameter   | Median |         95% CI |     pd |  Rhat | ESS (tail)`\
 `#> -------------------------------------------------------------------`\
-`#> (Intercept) |  -0.85 | [-1.59, -0.26] | 99.50% | 1.005 |        162`\
-`#> persons     |   0.85 | [ 0.64,  1.11] |   100% | 1.046 |        108`\
-`#> child       |  -1.15 | [-1.33, -0.97] |   100% | 1.005 |       1898`\
-`#> camper1     |   0.73 | [ 0.56,  0.91] |   100% | 1.009 |       2154`\
+`#> (Intercept) |  -0.85 | [-1.67, -0.10] | 98.15% | 1.006 |        336`\
+`#> persons     |   0.84 | [ 0.59,  1.09] |   100% | 1.007 |        351`\
+`#> child       |  -1.15 | [-1.35, -0.97] |   100% | 1.001 |       2369`\
+`#> camper1     |   0.73 | [ 0.55,  0.92] |   100% | 1.002 |       2614`\
 \
 [`parameters`](https://easystats.github.io/parameters/reference/model_parameters.md)`(``model``, effects ``=`` ``"all"``, component ``=`` ``"all"``, verbose ``=`` ``FALSE``)`\
 `#> # Fixed Effects`\
 `#> `\
 `#> Parameter   | Median |         95% CI |     pd |  Rhat | ESS (tail)`\
 `#> -------------------------------------------------------------------`\
-`#> (Intercept) |  -0.85 | [-1.59, -0.26] | 99.50% | 1.005 |        162`\
-`#> persons     |   0.85 | [ 0.64,  1.11] |   100% | 1.046 |        108`\
-`#> child       |  -1.15 | [-1.33, -0.97] |   100% | 1.005 |       1898`\
-`#> camper1     |   0.73 | [ 0.56,  0.91] |   100% | 1.009 |       2154`\
+`#> (Intercept) |  -0.85 | [-1.67, -0.10] | 98.15% | 1.006 |        336`\
+`#> persons     |   0.84 | [ 0.59,  1.09] |   100% | 1.007 |        351`\
+`#> child       |  -1.15 | [-1.35, -0.97] |   100% | 1.001 |       2369`\
+`#> camper1     |   0.73 | [ 0.55,  0.92] |   100% | 1.002 |       2614`\
 `#> `\
 `#> # Zero-Inflation Parameters`\
 `#> `\
 `#> Parameter   | Median |         95% CI |     pd |  Rhat | ESS (tail)`\
 `#> -------------------------------------------------------------------`\
-`#> (Intercept) |  -0.65 | [-2.18,  0.80] | 86.48% | 1.005 |       1627`\
-`#> child       |   1.89 | [ 1.27,  2.55] |   100% | 1.000 |       2440`\
-`#> camper1     |  -0.79 | [-1.54, -0.13] | 98.83% | 1.006 |       1489`\
+`#> (Intercept) |  -0.67 | [-2.27,  0.75] | 85.28% | 1.002 |       2183`\
+`#> child       |   1.86 | [ 1.22,  2.56] |   100% | 1.001 |       1967`\
+`#> camper1     |  -0.82 | [-1.56, -0.10] | 98.85% | 1.001 |       1186`\
 `#> `\
 `#> # Random Effects Variances`\
 `#> `\
 `#> Parameter               | Median |       95% CI |   pd |  Rhat | ESS (tail)`\
 `#> ---------------------------------------------------------------------------`\
-`#> SD (Intercept: persons) |   0.12 | [0.01, 0.92] | 100% | 1.060 |         37`\
+`#> SD (Intercept: persons) |   0.11 | [0.00, 0.74] | 100% | 1.006 |        339`\
 `#> `\
 `#> # Zero-Inflation Random Effects`\
 `#> `\
 `#> Parameter                  | Median |       95% CI |   pd |  Rhat | ESS (tail)`\
 `#> ------------------------------------------------------------------------------`\
-`#> SD (zi_Intercept: persons) |   1.30 | [0.56, 3.80] | 100% | 1.003 |        484`
+`#> SD (zi_Intercept: persons) |   1.32 | [0.55, 3.71] | 100% | 1.004 |       1881`
 
 To include information about the random effect parameters (group
 levels), set `group_level = TRUE`:
@@ -416,16 +416,16 @@ levels), set `group_level = TRUE`:
 `#> `\
 `#> Parameter   | Median |         95% CI |     pd |  Rhat | ESS (tail)`\
 `#> -------------------------------------------------------------------`\
-`#> (Intercept) |  -0.85 | [-1.59, -0.26] | 99.50% | 1.005 |        162`\
-`#> persons     |   0.85 | [ 0.64,  1.11] |   100% | 1.046 |        108`\
-`#> child       |  -1.15 | [-1.33, -0.97] |   100% | 1.005 |       1898`\
-`#> camper1     |   0.73 | [ 0.56,  0.91] |   100% | 1.009 |       2154`\
+`#> (Intercept) |  -0.85 | [-1.67, -0.10] | 98.15% | 1.006 |        336`\
+`#> persons     |   0.84 | [ 0.59,  1.09] |   100% | 1.007 |        351`\
+`#> child       |  -1.15 | [-1.35, -0.97] |   100% | 1.001 |       2369`\
+`#> camper1     |   0.73 | [ 0.55,  0.92] |   100% | 1.002 |       2614`\
 `#> `\
 `#> # Random Effects: persons`\
 `#> `\
 `#> Parameter   | Median |       95% CI |   pd |  Rhat | ESS (tail)`\
 `#> ---------------------------------------------------------------`\
-`#> (Intercept) |   0.12 | [0.01, 0.92] | 100% | 1.060 |         37`
+`#> (Intercept) |   0.11 | [0.00, 0.74] | 100% | 1.006 |        339`
 
 ## Structural Models (PCA, EFA, CFA, SEM…)
 

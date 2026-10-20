@@ -156,10 +156,10 @@ standard_error(model,
   vcov_args = list(cluster = iris$Species)
 )
 #>                        Parameter           SE
-#> 1                    (Intercept) 2.505042e-15
-#> 2                   Sepal.Length 5.010641e-16
-#> 3              Speciesversicolor 2.569665e-15
-#> 4               Speciesvirginica 6.109570e-15
-#> 5 Sepal.Length:Speciesversicolor 5.104241e-16
-#> 6  Sepal.Length:Speciesvirginica 9.830228e-16
+#> 1                    (Intercept) 1.899355e-15
+#> 2                   Sepal.Length 3.791739e-16
+#> 3              Speciesversicolor 2.176618e-15
+#> 4               Speciesvirginica 2.325405e-15
+#> 5 Sepal.Length:Speciesversicolor 4.187729e-16
+#> 6  Sepal.Length:Speciesvirginica 4.286746e-16
 ```
