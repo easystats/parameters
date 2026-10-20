@@ -1,3 +1,21 @@
+# model_parameters.mixed
+
+    Code
+      print(model_parameters(model, effects = "fixed", ci_method = "satterthwaite"))
+    Output
+      # Fixed Effects
+      
+      Parameter    | Coefficient |   SE |         95% CI |      t |     df |      p
+      -----------------------------------------------------------------------------
+      (Intercept)  |       71.53 | 1.56 | [68.48, 74.59] |  45.98 | 559.94 | < .001
+      time         |        1.09 | 0.64 | [-0.17,  2.34] |   1.70 | 374.00 | 0.089 
+      phq4 within  |       -3.66 | 0.41 | [-4.46, -2.86] |  -8.95 | 374.00 | < .001
+      phq4 between |       -6.28 | 0.50 | [-7.27, -5.29] | -12.53 | 186.00 | < .001
+    Message
+      
+      Uncertainty intervals (equal-tailed) and p-values (two-tailed) computed
+        using a Wald t-distribution with Satterthwaite approximation.
+
 # print-model_parameters-1
 
     Code

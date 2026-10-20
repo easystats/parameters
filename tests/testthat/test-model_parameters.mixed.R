@@ -190,6 +190,12 @@ withr::with_options(
       ignore_attr = TRUE,
       tolerance = 1e-4
     )
+
+    expect_snapshot(print(model_parameters(
+      model,
+      effects = "fixed",
+      ci_method = "satterthwaite"
+    )))
   })
 )
 
