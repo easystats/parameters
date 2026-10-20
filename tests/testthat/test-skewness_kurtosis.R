@@ -1,11 +1,11 @@
 skip_if_not_installed("datawizard")
 
 test_that("standard_error returns the SE of skewness and kurtosis output", {
-  set.seed(123)
+  set.seed(123L)
   inputs <- list(
     vector = function(f) f(mtcars$mpg),
-    bootstrap = function(f) f(mtcars$mpg, iterations = 50),
-    data_frame = function(f) f(mtcars[1:3])
+    bootstrap = function(f) f(mtcars$mpg, iterations = 50L),
+    data_frame = function(f) f(mtcars[c("mpg", "cyl", "disp")])
   )
   for (f in list(datawizard::skewness, datawizard::kurtosis)) {
     for (input in inputs) {
@@ -16,7 +16,8 @@ test_that("standard_error returns the SE of skewness and kurtosis output", {
       expect_identical(se, out$SE)
     }
   }
-  expect_length(standard_error(datawizard::skewness(mtcars[1:3])), 3)
+  out <- datawizard::skewness(mtcars[c("mpg", "cyl", "disp")])
+  expect_length(standard_error(out), 3L)
 })
 
 test_that("standard_error works for the datawizard class names", {
@@ -30,9 +31,11 @@ test_that("standard_error works for the datawizard class names", {
 })
 
 test_that("standard_error reads the SE attribute of old objects", {
-  s <- structure(0.67, SE = 0.39, class = c("parameters_skewness", "numeric"))
+  s <- 0.67
+  attr(s, "SE") <- 0.39
+  class(s) <- c("parameters_skewness", "numeric")
   expect_identical(standard_error(s), 0.39)
 
-  k <- structure(0.67, SE = 0.39, class = c("parameters_kurtosis", "numeric"))
-  expect_identical(standard_error(k), 0.39)
+  class(s) <- c("parameters_kurtosis", "numeric")
+  expect_identical(standard_error(s), 0.39)
 })
