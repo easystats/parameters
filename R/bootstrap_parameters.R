@@ -112,8 +112,7 @@ model_parameters.bootstrap_model <- bootstrap_parameters.bootstrap_model
 
 # utilities --------------------------------------------------------------------
 
-# bootstrap_model() names the zero-inflation draws of glmmTMB models
-# "<name>_zi". Restore the names and add the component, as in model_parameters()
+# restore names of zero-inflation parameters ("_zi" suffix) and add component
 .add_component_bootstrap_glmmTMB <- function(params, model) {
   if (!inherits(model, "glmmTMB")) {
     return(params)
@@ -123,8 +122,7 @@ model_parameters.bootstrap_model <- bootstrap_parameters.bootstrap_model
     return(params)
   }
   draw_names <- c(fixed_names$conditional, paste0(fixed_names$zero_inflated, "_zi"))
-  # columns that users added to the draws, like linear combinations, keep
-  # their names
+  # user-added columns (e.g. linear combinations) keep their names
   idx <- match(params$Parameter, draw_names)
   found <- !is.na(idx)
   fixed_parameters <- c(fixed_names$conditional, fixed_names$zero_inflated)

@@ -132,9 +132,8 @@
 #' For models where the dispersion parameter and the residual variance are
 #' the same, only the residual variance is shown in the output.
 #'
-#' With `bootstrap = TRUE`, the output has no dispersion parameters, because
-#' the bootstrapped draws include only the conditional and zero-inflation
-#' parameters. `component = "dispersion"` then gives an error.
+#' With `bootstrap = TRUE`, dispersion parameters are not included in the
+#' output.
 #'
 #' @seealso [insight::standardize_names()] to
 #'   rename columns into a consistent, standardized naming scheme.
@@ -314,8 +313,7 @@ model_parameters.glmmTMB <- function(
       params <- do.call(".extract_parameters_generic", fun_args)
     }
 
-    # add dispersion parameter. bootstrapped draws have no dispersion
-    # parameters, so we don't add a row with Wald intervals for them
+    # add dispersion parameter (not for bootstrapped draws, which have none)
     if (!bootstrap) {
       out <- .add_dispersion_param_glmmTMB(model, params, effects, component, ci, verbose)
       params <- out$params
