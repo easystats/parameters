@@ -1,8 +1,6 @@
 #' @export
 standard_error.parameters_skewness <- function(model, ...) {
-  # datawizard returns a data frame with an "SE" column; objects from early
-  # versions of skewness() and kurtosis() in parameters, before these functions
-  # moved to datawizard, stored the standard error in an attribute
+  # datawizard returns SE as column, older objects stored it as attribute
   if ("SE" %in% names(model)) {
     model$SE
   } else {
