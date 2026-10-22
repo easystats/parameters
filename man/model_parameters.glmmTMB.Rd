@@ -305,6 +305,9 @@ sigma(model)^2         # 0.09902987
 
 For models where the dispersion parameter and the residual variance are
 the same, only the residual variance is shown in the output.
+
+With \code{bootstrap = TRUE}, dispersion parameters are not included in the
+output.
 }
 
 \section{Model components}{
