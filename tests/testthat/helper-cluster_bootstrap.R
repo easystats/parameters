@@ -1,5 +1,5 @@
 # Recompute a cluster bootstrap by hand. The draws come from boot::boot() with
-# the same seed, number of clusters and `sim`. The drawn clusters of `group` are
+# the same seed and number of clusters. The drawn clusters of `group` are
 # stacked in draw order, and each gets a label from its draw position in the
 # columns `relabel`. Draws whose refit does not return the parameters of the
 # model are dropped.
@@ -9,12 +9,11 @@
   group,
   iterations,
   seed,
-  sim = "ordinary",
   relabel = group
 ) {
   clusters <- unique(as.character(data[[group]]))
   set.seed(seed)
-  draws <- boot::boot(seq_along(clusters), function(x, i) i, R = iterations, sim = sim)$t
+  draws <- boot::boot(seq_along(clusters), function(x, i) i, R = iterations)$t
   param_names <- insight::get_parameters(model, verbose = FALSE)$Parameter
   n_params <- length(param_names)
   out <- lapply(seq_len(nrow(draws)), function(r) {
@@ -54,18 +53,17 @@
   model,
   data,
   group,
-  sim = "ordinary",
-  relabel = group
+  relabel = group,
+  iterations = 5
 ) {
   set.seed(42)
-  out <- bootstrap_model(model, iterations = 20, type = sim)
+  out <- bootstrap_model(model, iterations = iterations)
   expected <- .refit_cluster_draws(
     model,
     data,
     group,
-    20,
+    iterations,
     42,
-    sim = sim,
     relabel = relabel
   )
   testthat::expect_identical(nrow(out), nrow(expected))

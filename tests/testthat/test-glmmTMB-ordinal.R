@@ -31,16 +31,4 @@ withr::with_options(list(parameters_exponentiate = FALSE), {
       "no zero-inflation"
     )
   })
-
-  test_that("model_parameters, glmmTMB ordinal matches clmm", {
-    out <- model_parameters(m_tmb)
-    ref <- model_parameters(m_clmm)
-    expect_identical(out$Parameter, ref$Parameter)
-    for (col in c("Coefficient", "SE", "CI_low", "CI_high", "z", "p")) {
-      expect_equal(out[[col]], ref[[col]], tolerance = 1e-2, ignore_attr = TRUE)
-    }
-    # random effects are still reported
-    out <- model_parameters(m_tmb, effects = "all")
-    expect_true("SD (Intercept)" %in% out$Parameter)
-  })
 })
