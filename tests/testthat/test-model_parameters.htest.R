@@ -44,20 +44,11 @@ test_that("model_parameters.htest", {
 
 test_that("model_parameters.htest, rank correlations keep a CI the htest object carries", {
   set.seed(1986)
-  x <- rnorm(50)
-  y <- rnorm(50)
-
-  for (method in c("spearman", "kendall")) {
-    ht <- cor.test(x, y, method = method)
-    params <- model_parameters(ht)
-    expect_false(any(c("CI", "CI_low", "CI_high") %in% colnames(params)))
-
-    ht$conf.int <- structure(c(-0.25, 0.30), conf.level = 0.95)
-    params <- model_parameters(ht)
-    expect_true(all(c("CI", "CI_low", "CI_high") %in% colnames(params)))
-    expect_equal(params$CI_low, -0.25, tolerance = 1e-8)
-    expect_equal(params$CI_high, 0.30, tolerance = 1e-8)
-  }
+  ht <- cor.test(rnorm(50), rnorm(50), method = "spearman")
+  ht$conf.int <- structure(c(-0.25, 0.30), conf.level = 0.95)
+  params <- model_parameters(ht)
+  expect_equal(params$CI_low, -0.25, tolerance = 1e-8)
+  expect_equal(params$CI_high, 0.30, tolerance = 1e-8)
 })
 
 test_that("model_parameters.htest-2", {

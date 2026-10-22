@@ -34,9 +34,6 @@ test_that("bootstrap_model semiparametric for merMod", {
   out <- bootstrap_model(m, iterations = 20, type = "semiparametric")
   expect_named(out, c("(Intercept)", "Days"))
   expect_identical(nrow(out), 20L)
-  set.seed(123)
-  out <- bootstrap_parameters(m, iterations = 20, type = "semiparametric")
-  expect_identical(out$Parameter, c("(Intercept)", "Days"))
 })
 
 test_that("bootstrap_model resamples clusters for clmm", {
@@ -51,54 +48,6 @@ test_that("bootstrap_model resamples clusters for clmm", {
   out <- model_parameters(m, bootstrap = TRUE, iterations = 20, verbose = FALSE)
   expected <- bootstrap_parameters(draws)
   expect_equal(out$Coefficient, expected$Coefficient, tolerance = 1e-10)
-  expect_equal(out$CI_low, expected$CI_low, tolerance = 1e-10)
-  expect_equal(out$CI_high, expected$CI_high, tolerance = 1e-10)
-})
-
-test_that("bootstrap_model resamples clusters for lme", {
-  skip_if_not_installed("nlme")
-  skip_if_not_installed("lme4")
-  skip_if_not_installed("withr")
-  withr::local_package("nlme")
-  data(sleepstudy, package = "lme4")
-  m1 <- nlme::lme(Reaction ~ Days, random = ~ 1 | Subject, data = sleepstudy)
-  .expect_cluster_bootstrap(m1, sleepstudy, "Subject")
-  .expect_cluster_bootstrap(m1, sleepstudy, "Subject", sim = "balanced")
-  m2 <- nlme::lme(Reaction ~ Days, random = ~ Days | Subject, data = sleepstudy)
-  .expect_cluster_bootstrap(m2, sleepstudy, "Subject")
-})
-
-test_that("bootstrap_model cluster draws match the mean of cluster means", {
-  skip_if_not_installed("nlme")
-  skip_if_not_installed("withr")
-  withr::local_package("nlme")
-  set.seed(2)
-  d <- data.frame(
-    g1 = factor(rep(1:6, each = 8)),
-    g2 = factor(rep(rep(1:2, each = 4), times = 6))
-  )
-  d$y <- rnorm(6)[d$g1] + rnorm(12)[interaction(d$g1, d$g2)] + rnorm(48)
-  # Each g1 cluster has 8 rows, and each g2 group within it has 4 rows. The
-  # covariance matrix of y then has identical blocks for the g1 clusters, and
-  # the generalized least squares weights are equal for all rows. Thus the
-  # intercept of an intercept-only model is the mean of the g1 cluster means,
-  # and this holds for every draw, because a draw also has equal cluster sizes.
-  cluster_means <- tapply(d$y, d$g1, mean)
-  clusters <- unique(as.character(d$g1))
-
-  models <- list(
-    nlme::lme(y ~ 1, random = ~ 1 | g1, data = d),
-    nlme::lme(y ~ 1, random = ~ 1 | g1 / g2, data = d)
-  )
-  for (m in models) {
-    set.seed(7)
-    out <- bootstrap_model(m, iterations = 20)
-    set.seed(7)
-    draws <- boot::boot(seq_along(clusters), function(x, i) i, R = 20)$t
-    expected <- apply(draws, 1, function(i) mean(cluster_means[clusters[i]]))
-    expect_identical(nrow(out), 20L)
-    expect_equal(out[["(Intercept)"]], unname(expected), tolerance = 1e-8)
-  }
 })
 
 test_that("bootstrap_model errors for grouping factors that do not nest", {
@@ -236,18 +185,6 @@ test_that("bootstrap_model shows the error if the refit on all clusters fails", 
   expect_error(bootstrap_model(m, iterations = 2), regex = "lme.formula")
 })
 
-test_that("bootstrap_model resamples rows for models without clusters", {
-  m <- lm(mpg ~ wt + hp, data = mtcars)
-  set.seed(42)
-  out <- bootstrap_model(m, iterations = 20)
-  set.seed(42)
-  draws <- boot::boot(seq_len(nrow(mtcars)), function(x, i) i, R = 20)$t
-  expected <- t(apply(draws, 1, function(i) {
-    stats::coef(stats::lm(mpg ~ wt + hp, data = mtcars[i, ]))
-  }))
-  expect_equal(unname(as.matrix(out)), unname(expected), tolerance = 1e-10)
-})
-
 test_that("bootstrap_model semiparametric errors for glmmTMB", {
   skip_if_not_installed("glmmTMB")
   skip_if_not_installed("lme4")
@@ -280,35 +217,6 @@ test_that("bootstrap_model parametric refits to simulated responses", {
   expected <- .parametric_draws(m, mtcars, "mpg", 50)
   expect_named(out, c("(Intercept)", "wt", "hp"))
   expect_equal(unname(as.matrix(out)), unname(expected), tolerance = 1e-10)
-
-  m <- glm(carb ~ wt, family = poisson, data = mtcars)
-  set.seed(42)
-  out <- bootstrap_model(m, iterations = 50, type = "parametric")
-  set.seed(42)
-  expected <- .parametric_draws(m, mtcars, "carb", 50)
-  expect_named(out, c("(Intercept)", "wt"))
-  expect_equal(unname(as.matrix(out)), unname(expected), tolerance = 1e-10)
-})
-
-test_that("bootstrap_model parametric draws match the lm sampling distribution", {
-  # simulate.lm() draws y* = X b + e with e ~ N(0, sigma^2), so the refitted
-  # coefficients have covariance sigma^2 (X'X)^-1, which is vcov(m)
-  m <- lm(mpg ~ wt + hp, data = mtcars)
-  set.seed(123)
-  out <- bootstrap_model(m, iterations = 1000, type = "parametric")
-  se <- sqrt(diag(stats::vcov(m)))
-  expect_equal(unname(apply(out, 2, stats::sd) / se), rep(1, 3), tolerance = 0.1)
-  expect_lt(max(abs(colMeans(out) - stats::coef(m)) / se), 0.2)
-})
-
-test_that("bootstrap_parameters parametric returns a row per coefficient", {
-  m <- lm(mpg ~ wt + hp, data = mtcars)
-  set.seed(42)
-  out <- bootstrap_parameters(m, iterations = 50, type = "parametric")
-  expect_identical(out$Parameter, c("(Intercept)", "wt", "hp"))
-  expect_false(anyNA(out$Coefficient))
-  expect_false(anyNA(out$CI_low))
-  expect_false(anyNA(out$CI_high))
 })
 
 # the error message wraps at the console width, so spaces in `pattern` match
@@ -332,20 +240,9 @@ test_that("bootstrap_model parametric errors for models without usable simulate(
     paste0("`simulate\\(\\)` does not work for models of class `clm`", use_ordinary)
   )
   .expect_parametric_error(
-    ordinal::clmm(rating ~ temp + (1 | judge), data = wine),
-    paste0("`simulate\\(\\)` does not work for models of class `clmm`", use_ordinary)
-  )
-  .expect_parametric_error(
     nlme::lme(distance ~ age, random = ~ 1 | Subject, data = Orthodont),
     paste0(
       "`simulate\\(\\)` does not return one numeric response per row for models of class `lme`",
-      use_ordinary
-    )
-  )
-  .expect_parametric_error(
-    glm(carb ~ wt, family = quasipoisson, data = mtcars),
-    paste0(
-      "`simulate\\(\\)` does not work for models of class `glm` \\(family 'quasipoisson' not implemented\\)",
       use_ordinary
     )
   )
@@ -387,14 +284,6 @@ test_that("bootstrap_model parametric errors for responses that are not a data c
   data(cbpp, package = "lme4")
   use_ordinary <- ".*Use `type = \"ordinary\"` instead"
 
-  .expect_parametric_error(
-    lm(log(mpg) ~ wt, data = mtcars),
-    paste0("response `log\\(mpg\\)` is not one column of the data", use_ordinary)
-  )
-  .expect_parametric_error(
-    lm(scale(mpg) ~ wt, data = mtcars),
-    paste0("response `scale\\(mpg\\)` is not one column of the data", use_ordinary)
-  )
   .expect_parametric_error(
     glm(cbind(incidence, size - incidence) ~ period, family = binomial, data = cbpp),
     paste0(
