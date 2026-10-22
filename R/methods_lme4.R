@@ -1,55 +1,7 @@
-############# .merMod -----------------
+# merMod -----------------------------------------------------------------
 
 #' @export
 model_parameters.merMod <- model_parameters.coxme
-
-# helper ----------------------------------------------------------------------
-
-.add_random_effects_lme4 <- function(
-  model,
-  params,
-  ci,
-  ci_method,
-  ci_random,
-  effects,
-  group_level,
-  verbose = TRUE,
-  ...
-) {
-  params_random <- params_variance <- NULL
-
-  # only proceed if random effects are requested
-  if (effects %in% c("random", "all")) {
-    # group level estimates (BLUPs) or random effects variances?
-    if (isTRUE(group_level)) {
-      params_random <- .extract_random_parameters(model, ci = ci, effects = effects)
-    } else {
-      params_variance <- .extract_random_variances(
-        model,
-        ci = ci,
-        effects = effects,
-        ci_method = ci_method,
-        ci_random = ci_random,
-        verbose = verbose
-      )
-    }
-
-    # merge random and fixed effects, if necessary
-    if (!is.null(params) && (!is.null(params_random) || !is.null(params_variance))) {
-      params$Level <- NA
-      params$Group <- ""
-
-      if (is.null(params_random)) {
-        params <- params[match(colnames(params_variance), colnames(params))]
-      } else {
-        params <- params[match(colnames(params_random), colnames(params))]
-      }
-    }
-  }
-
-  rbind(params, params_random, params_variance)
-}
-
 
 #' @export
 ci.merMod <- function(x, ci = 0.95, dof = NULL, method = "wald", iterations = 500, ...) {
@@ -135,8 +87,165 @@ standard_error.merMod <- function(
   out
 }
 
+#' @export
+p_value.merMod <- p_value.cpglmm
+
+
+# lmerMod (and lmerModLmerTest) -----------------------------------------------------------------
+
+#' @export
+model_parameters.lmerMod <- function(
+  model,
+  ci = 0.95,
+  ci_method = NULL,
+  ci_random = NULL,
+  bootstrap = FALSE,
+  iterations = 1000,
+  standardize = NULL,
+  effects = "all",
+  group_level = FALSE,
+  exponentiate = FALSE,
+  p_adjust = NULL,
+  vcov = NULL,
+  vcov_args = NULL,
+  wb_component = FALSE,
+  include_info = getOption("parameters_mixed_info", FALSE),
+  include_sigma = FALSE,
+  keep = NULL,
+  drop = NULL,
+  verbose = TRUE,
+  ...
+) {
+  cl <- match.call()
+  cl[[1]] <- model_parameters.merMod
+  cl$ci_method <- .check_ci_method(
+    model,
+    method = ci_method,
+    effects = effects,
+    bootstrap = bootstrap,
+    verbose = verbose,
+    fallback = NULL # this is the default for merMod
+  )
+  eval.parent(cl)
+}
+
+#' @export
+ci.lmerMod <- function(
+  x,
+  ci = 0.95,
+  dof = NULL,
+  method = NULL,
+  iterations = 500,
+  effects = "all",
+  vcov = NULL,
+  vcov_args = NULL,
+  verbose = TRUE,
+  ...
+) {
+  cl <- match.call()
+  cl[[1]] <- ci.merMod
+  cl$method <- .check_ci_method(
+    x,
+    method = method,
+    effects = effects,
+    verbose = verbose,
+    fallback = "wald" # this is the default for merMod
+  )
+  eval.parent(cl)
+}
+
+#' @export
+standard_error.lmerMod <- function(
+  model,
+  effects = "fixed",
+  method = NULL,
+  vcov = NULL,
+  vcov_args = NULL,
+  verbose = TRUE,
+  ...
+) {
+  cl <- match.call()
+  cl[[1]] <- standard_error.merMod
+  cl$method <- .check_ci_method(
+    model,
+    method = method,
+    effects = effects,
+    verbose = verbose,
+    fallback = NULL # this is the default for merMod
+  )
+  eval.parent(cl)
+}
+
+#' @export
+p_value.lmerMod <- function(
+  model,
+  dof = NULL,
+  method = NULL,
+  effects = "all",
+  vcov = NULL,
+  vcov_args = NULL,
+  verbose = TRUE,
+  ...
+) {
+  cl <- match.call()
+  cl[[1]] <- p_value.merMod
+  cl$method <- .check_ci_method(
+    model,
+    method = method,
+    effects = effects,
+    verbose = verbose,
+    fallback = "wald" # this is the default for merMod
+  )
+  eval.parent(cl)
+}
+
 
 # helpers --------------
+
+.add_random_effects_lme4 <- function(
+  model,
+  params,
+  ci,
+  ci_method,
+  ci_random,
+  effects,
+  group_level,
+  verbose = TRUE,
+  ...
+) {
+  params_random <- params_variance <- NULL
+
+  # only proceed if random effects are requested
+  if (effects %in% c("random", "all")) {
+    # group level estimates (BLUPs) or random effects variances?
+    if (isTRUE(group_level)) {
+      params_random <- .extract_random_parameters(model, ci = ci, effects = effects)
+    } else {
+      params_variance <- .extract_random_variances(
+        model,
+        ci = ci,
+        effects = effects,
+        ci_method = ci_method,
+        ci_random = ci_random,
+        verbose = verbose
+      )
+    }
+
+    # merge random and fixed effects, if necessary
+    if (!is.null(params) && (!is.null(params_random) || !is.null(params_variance))) {
+      params$Level <- NA
+      params$Group <- ""
+
+      if (is.null(params_random)) {
+        params <- params[match(colnames(params_variance), colnames(params))]
+      } else {
+        params <- params[match(colnames(params_random), colnames(params))]
+      }
+    }
+  }
+
+  rbind(params, params_random, params_variance)
+}
 
 .standard_errors_random <- function(model) {
   insight::check_if_installed("lme4")
@@ -172,6 +281,34 @@ se_mixed_default <- function(model) {
   .data_frame(Parameter = params, SE = .get_se_from_summary(model))
 }
 
+.check_ci_method <- function(
+  model,
+  method,
+  effects = "all",
+  bootstrap = FALSE,
+  verbose = TRUE,
+  fallback = NULL
+) {
+  if (!is.null(method) || isTRUE(bootstrap) || identical(effects, "random")) {
+    return(method)
+  }
 
-#' @export
-p_value.merMod <- p_value.cpglmm
+  mod_class <- class(model)
+  if (setequal(mod_class, "lmerModLmerTest")) {
+    return("satterthwaite")
+  }
+
+  if (
+    isTRUE(verbose) &&
+      isTRUE(getOption(".suggest_satterthwaite_for_lmerMod", default = TRUE)) &&
+      setequal(mod_class, "lmerMod")
+  ) {
+    insight::format_alert(
+      'Consider setting `ci_method = "satterthwaite"` for better coverage and type-1 error control.',
+      "This message will only show once per session."
+    )
+    options(.suggest_satterthwaite_for_lmerMod = FALSE)
+  }
+
+  return(fallback)
+}

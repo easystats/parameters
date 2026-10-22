@@ -64,7 +64,7 @@ test_that("standardized no CI", {
 
 test_that("simulate_model and equivalence_test work for lavaan", {
   skip_on_cran()
-  skip_if_not_installed("bayestestR")
+  skip_if_not_installed("bayestestR", minimum_version = "0.19.0.2")
   skip_if_not_installed("lavaan")
   skip_if_not_installed("insight", minimum_version = "1.5.2")
 
@@ -86,7 +86,7 @@ test_that("simulate_model and equivalence_test work for lavaan", {
   )
 
   set.seed(123)
-  out <- equivalence_test(m, range = c(-0.2, 0.2))
+  out <- equivalence_test(m, range = c(-0.2, 0.2), ci_method = "ETI")
   expect_identical(
     capture.output(out),
     c(
@@ -94,7 +94,7 @@ test_that("simulate_model and equivalence_test work for lavaan", {
       "",
       "  ROPE: [-0.20 0.20]",
       "",
-      "Parameter |        H0 | inside ROPE |      95% HDI",
+      "Parameter |        H0 | inside ROPE |      95% ETI",
       "--------------------------------------------------",
       "y~x       | Undecided |     23.05 % | [0.09, 0.42]",
       "y~~y      |  Rejected |      0.00 % | [0.43, 0.76]",

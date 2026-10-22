@@ -142,7 +142,7 @@ test_that("random effects, lme4, cov-struct AR1", {
     y ~ 1 + (as.numeric(time) | id) + ar1(time + 0 | id),
     data = dat
   ))
-  out <- model_parameters(m_ar1, effects = "random", ci_random = 0.95, verbose = FALSE)
+  out <- model_parameters(m_ar1, effects = "random", verbose = FALSE)
   expect_named(
     out,
     c("Parameter", "Coefficient", "SE", "CI", "CI_low", "CI_high", "Effects", "Group")
@@ -164,8 +164,6 @@ test_that("random effects, lme4, cov-struct AR1", {
     c(0.3929, 0.0747, 0.9012, 0.1467, 0.242, 0.1319),
     tolerance = 1e-3
   )
-  out <- model_parameters(m_ar1, effects = "random", ci_random = FALSE, verbose = FALSE)
-  expect_named(out, c("Parameter", "Coefficient", "SE", "Effects", "Group", "CI"))
 })
 
 test_that("random effects, glmmTMB, cov-struct OU", {
