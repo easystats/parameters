@@ -391,6 +391,9 @@ Usually, these are the same but presented on different scales, e.g.
 For models where the dispersion parameter and the residual variance are
 the same, only the residual variance is shown in the output.
 
+With `bootstrap = TRUE`, dispersion parameters are not included in the
+output.
+
 ## Model components
 
 Possible values for the `component` argument depend on the model class.
