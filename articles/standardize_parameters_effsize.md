@@ -37,7 +37,7 @@ explicitly documented and detailed.
     > 
     > Parameter   | Std. Coef. |        95% CI
     > ----------------------------------------
-    > (Intercept) |  -9.80e-16 | [-0.21, 0.21]
+    > (Intercept) |  -8.48e-16 | [-0.21, 0.21]
     > complaints  |       0.83 | [ 0.61, 1.04]
 
 Standardizing the coefficient of this *simple* linear regression gives a
@@ -245,7 +245,7 @@ Let’s compare these to the standardized slopes:
     > 
     > Parameter   | Std. Coef. |        95% CI
     > ----------------------------------------
-    > (Intercept) |   2.77e-16 | [-0.03, 0.03]
+    > (Intercept) |   2.85e-16 | [-0.03, 0.03]
     > xtra hours  |       0.77 | [ 0.73, 0.81]
     > n comps     |       0.39 | [ 0.36, 0.42]
     > age         |       0.04 | [ 0.00, 0.07]
@@ -607,7 +607,7 @@ Or we can directly ask for the coefficients to be exponentiated:
 Gelman, Andrew. 2008. “Scaling Regression Inputs by Dividing by Two
 Standard Deviations.” *Statistics in Medicine* 27 (15): 2865–73.
 
-Hoffman, Lesa. 2015. *Longitudinal Analysis: Modeling Within-Person
+Hoffman, Lesa. 2015. *Longitudinal Analysis: Modeling within-Person
 Fluctuation and Change*. Routledge.
 
 Neter, John, William Wasserman, and Michael H Kutner. 1989. *Applied

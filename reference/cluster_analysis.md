@@ -50,9 +50,9 @@ cluster_analysis(
   [`hclust()`](https://rdrr.io/r/stats/hclust.html) or
   [`pvclust::pvclust()`](https://rdrr.io/pkg/pvclust/man/pvclust.html)),
   `dbscan` (DBSCAN using
-  [`dbscan::dbscan()`](http://michael.hahsler.net/dbscan/reference/dbscan.md)),
+  [`dbscan::dbscan()`](https://michael.hahsler.net/dbscan/reference/dbscan.html)),
   `hdbscan` (Hierarchical DBSCAN using
-  [`dbscan::hdbscan()`](http://michael.hahsler.net/dbscan/reference/hdbscan.md)),
+  [`dbscan::hdbscan()`](https://michael.hahsler.net/dbscan/reference/hdbscan.html)),
   or `mixture` (Mixture modeling using
   [`mclust::Mclust()`](https://mclust-org.github.io/mclust/reference/Mclust.html),
   which requires the user to run

@@ -309,7 +309,7 @@ of models and packages, including mixed models and Bayesian models.
 `#> `\
 `#> Parameter         | Coefficient`\
 `#> -------------------------------`\
-`#> SD (Intercept: t) |    4.61e-04`\
+`#> SD (Intercept: t) |    4.60e-04`\
 `#> SD (Residual)     |`
 
 ### Bayesian Models
