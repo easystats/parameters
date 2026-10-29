@@ -403,3 +403,68 @@ test_that("bootstrap_model parametric errors for responses that are not a data c
     )
   )
 })
+
+test_that("bootstrap_parameters returns zero-inflation components of glmmTMB models", {
+  skip_if_not_installed("glmmTMB")
+  data(Salamanders, package = "glmmTMB")
+  m <- glmmTMB::glmmTMB(
+    count ~ mined + (1 | site),
+    ziformula = ~mined,
+    family = poisson,
+    data = Salamanders
+  )
+  set.seed(123)
+  b <- bootstrap_model(m, iterations = 5)
+  expect_named(b, c("(Intercept)", "minedno", "(Intercept)_zi", "minedno_zi"))
+  b$lin_comb <- b$minedno - b$minedno_zi
+  out <- bootstrap_parameters(b)
+  expect_identical(
+    out$Parameter,
+    c("(Intercept)", "minedno", "(Intercept)", "minedno", "lin_comb")
+  )
+  expect_identical(
+    out$Component,
+    c("conditional", "conditional", "zero_inflated", "zero_inflated", "conditional")
+  )
+  estimates <- insight::get_parameters(m)$Estimate
+  expect_lt(max(abs(out$Coefficient[1:4] - estimates)), 0.5)
+})
+
+test_that("model_parameters with bootstrap uses component for glmmTMB", {
+  skip_if_not_installed("glmmTMB")
+  data(Salamanders, package = "glmmTMB")
+  m <- glmmTMB::glmmTMB(
+    count ~ mined + (1 | site),
+    ziformula = ~mined,
+    dispformula = ~mined,
+    family = glmmTMB::nbinom2,
+    data = Salamanders
+  )
+  for (comp in c("all", "conditional", "zi")) {
+    expected <- model_parameters(m, component = comp, effects = "fixed")
+    if (comp == "all") {
+      expected <- expected[expected$Component != "dispersion", ]
+    }
+    set.seed(123)
+    out <- model_parameters(
+      m,
+      bootstrap = TRUE,
+      iterations = 5,
+      component = comp,
+      effects = "fixed"
+    )
+    expect_identical(out$Parameter, expected$Parameter)
+    expect_identical(out$Component, expected$Component)
+  }
+  printed <- evaluate_promise(print(out))
+  expect_match(paste(printed$messages, collapse = " "), "bootstrap", fixed = TRUE)
+  expect_error(
+    model_parameters(m, bootstrap = TRUE, iterations = 5, component = "dispersion"),
+    "Bootstrapping\\s+does\\s+not\\s+return\\s+dispersion\\s+parameters"
+  )
+
+  m <- glmmTMB::glmmTMB(count ~ mined + (1 | site), family = poisson, data = Salamanders)
+  set.seed(123)
+  out <- model_parameters(m, bootstrap = TRUE, iterations = 5, effects = "fixed")
+  expect_identical(out$Parameter, c("(Intercept)", "minedno"))
+})

@@ -48,6 +48,11 @@
   per row. In the second kind, the response in the formula is not one column
   of the data, for example `log(y)` or `cbind()`.
 
+* Fixed issue where `bootstrap_parameters()` and `model_parameters()` with
+  `bootstrap = TRUE` mislabeled the zero-inflation parameters of *glmmTMB*
+  models. `bootstrap_model()` now adds the suffix `_zi` to these parameters,
+  and bootstrapped output no longer includes dispersion parameters (#1284).
+
 * The `p_adjust` argument in `model_parameters()` now accepts the methods from
   `stats::p.adjust.methods` in any letter case, for example `"bh"`. Before,
   this failed with an error. An invalid value for `p_adjust` no longer shows the

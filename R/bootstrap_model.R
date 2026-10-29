@@ -552,7 +552,12 @@ bootstrap_model.merMod <- function(
   out <- as.data.frame(results$t)
   out <- out[stats::complete.cases(out), ]
 
-  names(out) <- insight::find_parameters(model, effects = "fixed")$conditional
+  # zero-inflation parameters get the suffix "_zi", as in simulate_model()
+  fixed_names <- insight::find_parameters(model, effects = "fixed")
+  names(out) <- c(
+    fixed_names$conditional,
+    if (length(fixed_names$zero_inflated)) paste0(fixed_names$zero_inflated, "_zi")
+  )
   class(out) <- unique(c("bootstrap_model", "see_bootstrap_model", class(out)))
   attr(out, "original_model") <- model
   out

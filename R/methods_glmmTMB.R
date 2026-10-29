@@ -132,6 +132,9 @@
 #' For models where the dispersion parameter and the residual variance are
 #' the same, only the residual variance is shown in the output.
 #'
+#' With `bootstrap = TRUE`, dispersion parameters are not included in the
+#' output.
+#'
 #' @seealso [insight::standardize_names()] to
 #'   rename columns into a consistent, standardized naming scheme.
 #'
@@ -262,8 +265,21 @@ model_parameters.glmmTMB <- function(
 
   if (effects %in% c("fixed", "all")) {
     if (bootstrap) {
+      if (component == "dispersion") {
+        insight::format_error(
+          "Bootstrapping does not return dispersion parameters. Use `component = \"all\"`, `\"conditional\"` or `\"zi\"`." # nolint
+        )
+      }
       # bootstrapped parameters
       params <- bootstrap_parameters(model, iterations = iterations, ci = ci, ...)
+      # keep requested component, and drop the component column for
+      # the conditional component, as for the regular parameters
+      if (!is.null(params$Component)) {
+        params <- .filter_component(params, component)
+        if (component == "conditional") {
+          params$Component <- NULL
+        }
+      }
       if (effects != "fixed") {
         effects <- "fixed"
         if (verbose) {
@@ -297,10 +313,12 @@ model_parameters.glmmTMB <- function(
       params <- do.call(".extract_parameters_generic", fun_args)
     }
 
-    # add dispersion parameter
-    out <- .add_dispersion_param_glmmTMB(model, params, effects, component, ci, verbose)
-    params <- out$params
-    dispersion_param <- out$dispersion_param
+    # add dispersion parameter (not for bootstrapped draws, which have none)
+    if (!bootstrap) {
+      out <- .add_dispersion_param_glmmTMB(model, params, effects, component, ci, verbose)
+      params <- out$params
+      dispersion_param <- out$dispersion_param
+    }
 
     # exponentiate coefficients and SE/CI, if requested
     params <- .exponentiate_parameters(params, model, exponentiate)
@@ -344,11 +362,18 @@ model_parameters.glmmTMB <- function(
     attributes(params) <- utils::modifyList(att, attributes(params))
   }
 
+  # bootstrapped intervals are quantiles of the draws
+  if (bootstrap) {
+    ci_method <- "quantile"
+  }
+
   params <- .add_model_parameters_attributes(
     params,
     model,
     ci = ci,
     exponentiate,
+    bootstrap = bootstrap,
+    iterations = iterations,
     ci_method = ci_method,
     p_adjust = p_adjust,
     verbose = verbose,
