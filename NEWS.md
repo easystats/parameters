@@ -58,6 +58,9 @@
   this failed with an error. An invalid value for `p_adjust` no longer shows the
   method in the footer of the printed output (#854).
 
+* Fixed issue where `standard_error()` returned `NULL` for objects from
+  `datawizard::skewness()` and `datawizard::kurtosis()`.
+
 # parameters 0.30.0
 
 ## Changes
