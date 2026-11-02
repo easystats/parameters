@@ -332,7 +332,7 @@ standardize_info.default <- function(model,
     means <- deviations <- rep(NA_real_, length = length(names(model_matrix)))
     for (i in seq_along(names(model_matrix))) {
       variable <- names(model_matrix)[i]
-      if (isTRUE(types$Link[type_names == variable] == "Difference")) {
+      if (any(type_names == variable) && types$Link[type_names == variable] == "Difference") {
         parent_var <- types$Variable[type_names == variable]
         intercept <- unique(data[[parent_var]])[1]
         response_at_intercept <- response[data[[parent_var]] == intercept]
