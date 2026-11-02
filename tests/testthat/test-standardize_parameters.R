@@ -340,6 +340,33 @@ test_that("standardize_parameters (Bayes)", {
 })
 
 
+test_that("standardize_parameters (posthoc, brms)", {
+  skip_on_cran()
+  skip_if_not_installed("curl")
+  skip_if_offline()
+  skip_if_not_installed("httr2")
+  skip_if_not_installed("brms")
+  skip_if_not_installed("rstan")
+
+  m <- suppressWarnings(insight::download_model("brms_1"))
+  skip_if(is.null(m))
+
+  info <- standardize_info(m)
+  expect_equal(
+    info$Deviation_Smart[match(c("b_wt", "b_cyl"), info$Parameter)],
+    c(sd(mtcars$wt), sd(mtcars$cyl)),
+    tolerance = 1e-8
+  )
+
+  out <- standardize_parameters(m, method = "posthoc")
+  expect_equal(
+    out$Std_Median[out$Parameter == "b_wt"],
+    median(insight::get_parameters(m)$b_wt) * sd(mtcars$wt) / sd(mtcars$mpg),
+    tolerance = 1e-8
+  )
+})
+
+
 # Pseudo - GLMM --------------------------------
 test_that("standardize_parameters (Pseudo - GLMM)", {
   skip_if_not_installed("datawizard")

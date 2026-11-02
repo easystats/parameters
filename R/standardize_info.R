@@ -49,7 +49,7 @@ standardize_info.default <- function(model,
   } else {
     insight::find_parameters(model, effects = "fixed", flatten = TRUE, ...)
   }
-  types <- parameters_type(model)
+  types <- .parameters_type_model(model, remove_brms_prefix = TRUE)
   model_matrix <- as.data.frame(insight::get_modelmatrix(model))
   model_data <- insight::get_data(model, source = "mf", verbose = FALSE)
   wgts <- insight::get_weights(model, remove_na = TRUE)
@@ -232,7 +232,7 @@ standardize_info.default <- function(model,
     #     }
     #   }
     # }
-  } else if (type %in% c("interaction", "nested")) {
+  } else if (type %in% c("interaction", "nested") && !is.na(variable)) {
     if (is.numeric(data[, variable])) {
       info <- .compute_std_info(
         data = data,
@@ -328,11 +328,12 @@ standardize_info.default <- function(model,
       response <- stats::model.frame(model)[[1]]
     }
 
+    type_names <- .remove_brms_prefix(types$Parameter, model)
     means <- deviations <- rep(NA_real_, length = length(names(model_matrix)))
     for (i in seq_along(names(model_matrix))) {
       variable <- names(model_matrix)[i]
-      if (any(types$Parameter == variable) && types$Link[types$Parameter == variable] == "Difference") {
-        parent_var <- types$Variable[types$Parameter == variable]
+      if (isTRUE(types$Link[type_names == variable] == "Difference")) {
+        parent_var <- types$Variable[type_names == variable]
         intercept <- unique(data[[parent_var]])[1]
         response_at_intercept <- response[data[[parent_var]] == intercept]
         weights_at_intercept <- if (length(w)) w[data[[parent_var]] == intercept] else NULL
@@ -423,6 +424,7 @@ standardize_info.default <- function(model,
   within_vars <- gv[gv$Variation %in% c("both", "within"), "Variable"]
   id <- insight::get_random(model)[[1]]
   w <- insight::get_weights(model, remove_na = TRUE)
+  param_names <- .remove_brms_prefix(params, model)
 
   ## Find which parameters vary on level 1 ("within")
   is_within <- logical(length = length(params))
@@ -431,11 +433,11 @@ standardize_info.default <- function(model,
     if (types[i] == "intercept") { # nolint
       is_within[i] <- FALSE
     } else if (types[i] == "numeric") {
-      is_within[i] <- insight::clean_names(params[i]) %in% within_vars
+      is_within[i] <- insight::clean_names(param_names[i]) %in% within_vars
     } else if (types[i] == "factor") {
-      is_within[i] <- any(sapply(paste0("^", within_vars), grepl, insight::clean_names(params[i])))
+      is_within[i] <- any(sapply(paste0("^", within_vars), grepl, insight::clean_names(param_names[i])))
     } else if (types[i] == "interaction") {
-      ints <- unlist(strsplit(params[i], ":", fixed = TRUE))
+      ints <- unlist(strsplit(param_names[i], ":", fixed = TRUE))
       is_within[i] <- any(sapply(ints, function(int) {
         int <- insight::clean_names(int)
         int %in% within_vars | # numeric
@@ -448,7 +450,7 @@ standardize_info.default <- function(model,
   # only relevant to numeric predictors that can have variance
   check_within <- is_within & types == "numeric"
   if (any(check_within)) {
-    p_check_within <- params[check_within]
+    p_check_within <- param_names[check_within]
     temp_d <- data.frame(model_matrix[, p_check_within, drop = FALSE])
     colnames(temp_d) <- paste0("W", seq_len(ncol(temp_d))) # overwrite because can't deal with ":"
 
@@ -547,6 +549,16 @@ standardize_info.default <- function(model,
 
 
 # Utils -------------------------------------------------------------------
+
+
+# brms adds the prefix "b_" to the names of population-level parameters
+#' @keywords internal
+.remove_brms_prefix <- function(x, model) {
+  if (inherits(model, "brmsfit")) {
+    x <- sub("^b_", "", x)
+  }
+  x
+}
 
 
 #' @keywords internal
