@@ -232,7 +232,7 @@ standardize_info.default <- function(model,
     #     }
     #   }
     # }
-  } else if (type %in% c("interaction", "nested") && !is.na(variable)) {
+  } else if (type %in% c("interaction", "nested")) {
     if (is.numeric(data[, variable])) {
       info <- .compute_std_info(
         data = data,

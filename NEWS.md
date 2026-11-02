@@ -61,6 +61,12 @@
 * Fixed issue where `standard_error()` returned `NULL` for objects from
   `datawizard::skewness()` and `datawizard::kurtosis()`.
 
+* Fixed issue where `standardize_parameters()` and `standardize_posteriors()`
+  returned wrong values for `brmsfit` models. With `method = "posthoc"` or
+  `"smart"`, continuous predictors were not multiplied by their SD. With
+  `method = "smart"`, factor and logical predictors used the SD of the whole
+  response, unlike the same model from `lm()` (#1243).
+
 # parameters 0.30.0
 
 ## Changes
