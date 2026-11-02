@@ -365,6 +365,13 @@ test_that("standardize_parameters (posthoc, brms)", {
     tolerance = 1e-8
   )
 
+  posts <- standardize_posteriors(m, method = "posthoc")
+  expect_equal(
+    median(posts$b_wt),
+    median(insight::get_parameters(m)$b_wt) * sd(mtcars$wt) / sd(mtcars$mpg),
+    tolerance = 1e-8
+  )
+
   m <- suppressWarnings(insight::download_model("brms_4"))
   skip_if(is.null(m))
 
@@ -372,6 +379,14 @@ test_that("standardize_parameters (posthoc, brms)", {
   expect_equal(
     info$Deviation_Response_Smart[info$Parameter == "b_Speciesversicolor"],
     sd(iris$Sepal.Length[iris$Species == "setosa"]),
+    tolerance = 1e-8
+  )
+
+  out <- standardize_parameters(m, method = "smart")
+  expect_equal(
+    out$Std_Median[out$Parameter == "b_Speciesversicolor"],
+    median(insight::get_parameters(m)$b_Speciesversicolor) /
+      sd(iris$Sepal.Length[iris$Species == "setosa"]),
     tolerance = 1e-8
   )
 
