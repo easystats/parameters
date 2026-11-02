@@ -374,6 +374,16 @@ test_that("standardize_parameters (posthoc, brms)", {
     sd(iris$Sepal.Length[iris$Species == "setosa"]),
     tolerance = 1e-8
   )
+
+  m <- suppressWarnings(insight::download_model("brms_ordinal_1"))
+  skip_if(is.null(m))
+
+  out <- standardize_parameters(m, method = "posthoc")
+  expect_equal(
+    out$Std_Median[out$Parameter == "b_Intercept[1]"],
+    median(insight::get_parameters(m)$`b_Intercept[1]`),
+    tolerance = 1e-8
+  )
 })
 
 

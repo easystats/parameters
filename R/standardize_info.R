@@ -332,8 +332,14 @@ standardize_info.default <- function(model,
     means <- deviations <- rep(NA_real_, length = length(names(model_matrix)))
     for (i in seq_along(names(model_matrix))) {
       variable <- names(model_matrix)[i]
-      if (any(type_names == variable) && types$Link[type_names == variable] == "Difference") {
-        parent_var <- types$Variable[type_names == variable]
+      is_variable <- type_names == variable
+      # results are written by position, and the model matrix of a brms model
+      # can have fewer columns than parameters
+      if (inherits(model, "brmsfit")) {
+        is_variable <- is_variable & seq_along(type_names) == i
+      }
+      if (any(is_variable) && types$Link[is_variable] == "Difference") {
+        parent_var <- types$Variable[is_variable]
         intercept <- unique(data[[parent_var]])[1]
         response_at_intercept <- response[data[[parent_var]] == intercept]
         weights_at_intercept <- if (length(w)) w[data[[parent_var]] == intercept] else NULL
@@ -551,11 +557,12 @@ standardize_info.default <- function(model,
 # Utils -------------------------------------------------------------------
 
 
-# brms adds the prefix "b_" to the names of population-level parameters
+# brms adds the prefix "b_" to the names of population-level parameters.
+# Thresholds of ordinal models keep it, or they would count as intercepts.
 #' @keywords internal
 .remove_brms_prefix <- function(x, model) {
   if (inherits(model, "brmsfit")) {
-    x <- sub("^b_", "", x)
+    x <- sub("^b_(?!Intercept\\[)", "", x, perl = TRUE)
   }
   x
 }

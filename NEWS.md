@@ -66,7 +66,8 @@
   `method = "posthoc"` or `"smart"`, untransformed continuous predictors were
   not multiplied by their SD. With `method = "smart"`, factor, character and
   logical predictors of linear models used the SD of the whole response, unlike
-  the same model from `lm()` (#1243).
+  the same model from `lm()`. This fix does not cover terms that are converted
+  in the formula, such as `log(x)` or `factor(x)` (#1243).
 
 # parameters 0.30.0
 
