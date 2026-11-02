@@ -68,7 +68,7 @@
   logical predictors of linear models used the SD of the whole response, unlike
   the same model from `lm()`. This fix does not cover interaction terms or terms
   that are converted in the formula, such as `log(x)` or `factor(x)`. It also
-  does not cover factors that follow such a term (#1243).
+  does not cover predictors that follow such a term (#1243).
 
 # parameters 0.30.0
 
