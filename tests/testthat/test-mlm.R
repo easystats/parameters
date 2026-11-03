@@ -39,6 +39,32 @@ test_that("model_parameters,mlm", {
   expect_equal(mp$Parameter, c("(Intercept)", "cyl", "disp", "cyl:disp", "(Intercept)", "cyl", "disp", "cyl:disp"))
 })
 
+test_that("model_parameters,mlm,standardize", {
+  model <- lm(cbind(mpg, wt) ~ hp + factor(cyl), data = mtcars)
+
+  for (method in c("posthoc", "basic", "smart", "pseudo", "sdy")) {
+    expect_error(
+      model_parameters(model, standardize = method),
+      regexp = "Cannot post-hoc standardize"
+    )
+  }
+  expect_error(
+    standardize_parameters(model, method = "posthoc"),
+    regexp = "Cannot post-hoc standardize"
+  )
+
+  mp <- model_parameters(model, standardize = "refit")
+  expect_equal(mp$Response, rep(c("mpg", "wt"), each = 4))
+  expect_equal(
+    mp$Coefficient[mp$Parameter == "hp"],
+    c(
+      coef(lm(scale(mpg) ~ scale(hp) + factor(cyl), data = mtcars))[["scale(hp)"]],
+      coef(lm(scale(wt) ~ scale(hp) + factor(cyl), data = mtcars))[["scale(hp)"]]
+    ),
+    tolerance = 1e-3
+  )
+})
+
 test_that("sandwich standard errors", {
   skip_if_not_installed("sandwich")
   skip_if_not_installed("lmtest")
