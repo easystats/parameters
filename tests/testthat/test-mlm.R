@@ -42,12 +42,16 @@ test_that("model_parameters,mlm", {
 test_that("model_parameters,mlm,standardize", {
   model <- lm(cbind(mpg, wt) ~ hp + factor(cyl), data = mtcars)
 
-  for (method in c("posthoc", "basic", "smart")) {
+  for (method in c("posthoc", "basic", "smart", "pseudo", "sdy")) {
     expect_error(
       model_parameters(model, standardize = method),
       regexp = "Cannot post-hoc standardize"
     )
   }
+  expect_error(
+    standardize_parameters(model, method = "posthoc"),
+    regexp = "Cannot post-hoc standardize"
+  )
 
   mp <- model_parameters(model, standardize = "refit")
   expect_equal(mp$Response, rep(c("mpg", "wt"), each = 4))
