@@ -249,11 +249,6 @@ standardize_parameters.default <- function(
   coefficient_name <- attr(pars, "coefficient_name")
 
   if (method %in% c("posthoc", "smart", "basic", "classic", "pseudo", "sdy")) {
-    if (m_info$is_multivariate) {
-      insight::format_error(
-        "Cannot post-hoc standardize multivariate models. Try using method \"refit\" instead."
-      )
-    }
     if (method == "sdy" && !m_info$is_binomial) {
       insight::format_error(
         "Method \"sdy\" is only applicable to logistic regression models."
@@ -705,6 +700,12 @@ print_html.parameters_standardized <- function(x, digits = 2, ...) {
   include_response,
   verbose
 ) {
+  if (isTRUE(mi$is_multivariate)) {
+    insight::format_error(
+      "Cannot post-hoc standardize multivariate models. Try using method \"refit\" instead."
+    )
+  }
+
   # validation check for "pseudo"
   method <- .should_pseudo(method, model, mi)
 

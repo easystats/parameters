@@ -70,6 +70,14 @@
   that are converted in the formula, such as `log(x)` or `factor(x)`. It also
   does not cover predictors that follow such a term (#1243).
 
+* `model_parameters()` for multivariate models, for example
+  `lm(cbind(y1, y2) ~ x)`, now gives an error with a post-hoc `standardize`
+  method such as `"posthoc"`, `"basic"` or `"smart"`, as `standardize_parameters()`
+  already did. Before this fix, the results were wrong and no warning was shown.
+  The rows of the first response used the standard deviation of all responses
+  pooled. The rows of the other responses were not standardized.
+  `standardize = "refit"` still works for these models (#707).
+
 # parameters 0.30.0
 
 ## Changes
