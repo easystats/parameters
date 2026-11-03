@@ -33,19 +33,27 @@ standardise_info <- standardize_info
 
 #' @rdname standardize_info
 #' @export
-standardize_info.default <- function(model,
-                                     robust = FALSE,
-                                     two_sd = FALSE,
-                                     include_pseudo = FALSE,
-                                     verbose = TRUE,
-                                     ...) {
+standardize_info.default <- function(
+  model,
+  robust = FALSE,
+  two_sd = FALSE,
+  include_pseudo = FALSE,
+  verbose = TRUE,
+  ...
+) {
   # check for valid input
   .is_model_valid(model)
 
   mi <- .get_model_info(model, ...)
 
   params <- if (inherits(model, c("glmmTMB", "MixMod"))) {
-    insight::find_parameters(model, effects = "fixed", component = "conditional", flatten = TRUE, ...)
+    insight::find_parameters(
+      model,
+      effects = "fixed",
+      component = "conditional",
+      flatten = TRUE,
+      ...
+    )
   } else {
     insight::find_parameters(model, effects = "fixed", flatten = TRUE, ...)
   }
@@ -76,38 +84,56 @@ standardize_info.default <- function(model,
   )
 
   # Type of effect size
-  out$EffectSize_Type <- ifelse(types$Type == "interaction", "interaction",
-    ifelse(types$Link == "Association", "r", # nolint
-      ifelse(types$Link == "Difference", "d", NA) # nolint
-    )
+  out$EffectSize_Type <- ifelse(
+    types$Type == "interaction",
+    "interaction",
+    ifelse(types$Link == "Association", "r", ifelse(types$Link == "Difference", "d", NA))
   )
-
 
   # Response - Basic
   out <- merge(
     out,
     .std_info_response_basic(model, mi, params, robust = robust, w = wgts),
-    by = "Parameter", all = TRUE
+    by = "Parameter",
+    all = TRUE
   )
 
   # Response - Smart
   out <- merge(
     out,
-    .std_info_response_smart(model, mi, data = model_data, model_matrix, types, robust = robust, w = wgts),
-    by = "Parameter", all = TRUE
+    .std_info_response_smart(
+      model,
+      mi,
+      data = model_data,
+      model_matrix,
+      types,
+      robust = robust,
+      w = wgts
+    ),
+    by = "Parameter",
+    all = TRUE
   )
 
   # Basic
   out <- merge(
     out,
-    .std_info_predictors_basic(model, model_matrix, types, robust = robust, two_sd = two_sd, w = wgts),
-    by = "Parameter", all = TRUE
+    .std_info_predictors_basic(
+      model,
+      model_matrix,
+      types,
+      robust = robust,
+      two_sd = two_sd,
+      w = wgts
+    ),
+    by = "Parameter",
+    all = TRUE
   )
 
   # Smart
   out <- merge(
     out,
-    .std_info_predictors_smart(model,
+    .std_info_predictors_smart(
+      model,
       data = model_data,
       params,
       types,
@@ -115,14 +141,23 @@ standardize_info.default <- function(model,
       two_sd = two_sd,
       w = wgts
     ),
-    by = "Parameter", all = TRUE
+    by = "Parameter",
+    all = TRUE
   )
 
   # sdy (see Mood 2009, 10.1093/esr/jcp006)
   out <- merge(
     out,
-    .std_info_predictors_sdy(model, model_matrix, types, robust = robust, two_sd = two_sd, w = wgts),
-    by = "Parameter", all = TRUE
+    .std_info_predictors_sdy(
+      model,
+      model_matrix,
+      types,
+      robust = robust,
+      two_sd = two_sd,
+      w = wgts
+    ),
+    by = "Parameter",
+    all = TRUE
   )
 
   # Pseudo (for LMM)
@@ -130,7 +165,8 @@ standardize_info.default <- function(model,
     out <- merge(
       out,
       .std_info_pseudo(
-        model, mi,
+        model,
+        mi,
         params,
         model_matrix,
         data = model_data,
@@ -165,16 +201,17 @@ standardize_info.default <- function(model,
 
 # Predictors - Smart ------------------------------------------------------------
 
-
 #' @keywords internal
-.std_info_predictors_smart <- function(model,
-                                       data,
-                                       params,
-                                       types,
-                                       robust = FALSE,
-                                       two_sd = FALSE,
-                                       w = NULL,
-                                       ...) {
+.std_info_predictors_smart <- function(
+  model,
+  data,
+  params,
+  types,
+  robust = FALSE,
+  two_sd = FALSE,
+  w = NULL,
+  ...
+) {
   # Get deviations for all parameters
   means <- deviations <- rep(NA_real_, times = length(params))
   for (i in seq_along(params)) {
@@ -202,14 +239,16 @@ standardize_info.default <- function(model,
 
 
 #' @keywords internal
-.std_info_predictor_smart <- function(data,
-                                      variable,
-                                      type,
-                                      robust = FALSE,
-                                      two_sd = FALSE,
-                                      weights = NULL,
-                                      ...) {
-  if (type == "intercept") { # nolint
+.std_info_predictor_smart <- function(
+  data,
+  variable,
+  type,
+  robust = FALSE,
+  two_sd = FALSE,
+  weights = NULL,
+  ...
+) {
+  if (type == "intercept") {
     info <- list(sd = 0, mean = 0)
   } else if (type == "numeric") {
     info <- .compute_std_info(
@@ -256,15 +295,16 @@ standardize_info.default <- function(model,
 
 # Predictors - Basic ------------------------------------------------------------
 
-
 #' @keywords internal
-.std_info_predictors_basic <- function(model,
-                                       model_matrix,
-                                       types,
-                                       robust = FALSE,
-                                       two_sd = FALSE,
-                                       w = NULL,
-                                       ...) {
+.std_info_predictors_basic <- function(
+  model,
+  model_matrix,
+  types,
+  robust = FALSE,
+  two_sd = FALSE,
+  w = NULL,
+  ...
+) {
   # Get deviations for all parameters
   means <- deviations <- rep(NA_real_, length = length(names(model_matrix)))
   for (i in seq_along(names(model_matrix))) {
@@ -273,8 +313,11 @@ standardize_info.default <- function(model,
       means[i] <- deviations[i] <- 0
     } else {
       std_info <- .compute_std_info(
-        data = model_matrix, variable = variable,
-        robust = robust, two_sd = two_sd, weights = w
+        data = model_matrix,
+        variable = variable,
+        robust = robust,
+        two_sd = two_sd,
+        weights = w
       )
       deviations[i] <- std_info$sd
       means[i] <- std_info$mean
@@ -293,12 +336,8 @@ standardize_info.default <- function(model,
 
 # Predictors - sdy ------------------------------------------------------------
 
-
 #' @keywords internal
-.std_info_predictors_sdy <- function(model,
-                                     model_matrix,
-                                     types,
-                                     ...) {
+.std_info_predictors_sdy <- function(model, model_matrix, types, ...) {
   deviations <- NA_real_
   # fitted values
   fitted_values <- .safe(stats::fitted(model))
@@ -318,7 +357,16 @@ standardize_info.default <- function(model,
 # Response ------------------------------------------------------------
 
 #' @keywords internal
-.std_info_response_smart <- function(model, info, data, model_matrix, types, robust = FALSE, w = NULL, ...) {
+.std_info_response_smart <- function(
+  model,
+  info,
+  data,
+  model_matrix,
+  types,
+  robust = FALSE,
+  w = NULL,
+  ...
+) {
   if (info$is_linear) {
     if (inherits(model, c("gls", "lme"))) {
       response <- insight::get_response(model)
@@ -342,17 +390,19 @@ standardize_info.default <- function(model,
         parent_var <- types$Variable[is_variable]
         intercept <- unique(data[[parent_var]])[1]
         response_at_intercept <- response[data[[parent_var]] == intercept]
-        weights_at_intercept <- if (length(w)) w[data[[parent_var]] == intercept] else NULL
+        weights_at_intercept <- if (length(w)) {
+          w[data[[parent_var]] == intercept]
+        } else {
+          NULL
+        }
 
         std_info <- .compute_std_info(
           response = response_at_intercept,
-          robust = robust, weights = weights_at_intercept
+          robust = robust,
+          weights = weights_at_intercept
         )
       } else {
-        std_info <- .compute_std_info(
-          response = response,
-          robust = robust, weights = w
-        )
+        std_info <- .compute_std_info(response = response, robust = robust, weights = w)
       }
       deviations[i] <- std_info$sd
       means[i] <- std_info$mean
@@ -407,16 +457,18 @@ standardize_info.default <- function(model,
 
 # Pseudo (GLMM) -----------------------------------------------------------
 
-.std_info_pseudo <- function(model,
-                             mi,
-                             params,
-                             model_matrix,
-                             data,
-                             types,
-                             robust = FALSE,
-                             two_sd = FALSE,
-                             verbose = verbose,
-                             ...) {
+.std_info_pseudo <- function(
+  model,
+  mi,
+  params,
+  model_matrix,
+  data,
+  types,
+  robust = FALSE,
+  two_sd = FALSE,
+  verbose = verbose,
+  ...
+) {
   if (robust && verbose) {
     insight::format_alert("`robust` standardization not available for `pseudo` method.")
   }
@@ -436,17 +488,22 @@ standardize_info.default <- function(model,
   is_within <- logical(length = length(params))
   is_within[] <- NA
   for (i in seq_along(params)) {
-    if (types[i] == "intercept") { # nolint
+    if (types[i] == "intercept") {
       is_within[i] <- FALSE
     } else if (types[i] == "numeric") {
       is_within[i] <- insight::clean_names(param_names[i]) %in% within_vars
     } else if (types[i] == "factor") {
-      is_within[i] <- any(sapply(paste0("^", within_vars), grepl, insight::clean_names(param_names[i])))
+      is_within[i] <- any(sapply(
+        paste0("^", within_vars),
+        grepl,
+        insight::clean_names(param_names[i])
+      ))
     } else if (types[i] == "interaction") {
       ints <- unlist(strsplit(param_names[i], ":", fixed = TRUE))
       is_within[i] <- any(sapply(ints, function(int) {
         int <- insight::clean_names(int)
-        int %in% within_vars | # numeric
+        int %in%
+          within_vars | # numeric
           any(sapply(paste0("^", within_vars), grepl, int)) # factor
       }))
     }
@@ -460,16 +517,14 @@ standardize_info.default <- function(model,
     temp_d <- data.frame(model_matrix[, p_check_within, drop = FALSE])
     colnames(temp_d) <- paste0("W", seq_len(ncol(temp_d))) # overwrite because can't deal with ":"
 
-    dm <- datawizard::demean(cbind(id, temp_d),
-      select = colnames(temp_d),
-      by = "id"
-    )
+    dm <- datawizard::demean(cbind(id, temp_d), select = colnames(temp_d), by = "id")
     dm <- dm[, paste0(colnames(temp_d), "_between"), drop = FALSE]
 
     has_lvl2_var <- sapply(seq_along(colnames(temp_d)), function(i) {
       # If more than 1% of the variance in the within-var is between:
       stats::var(dm[, i]) / stats::var(temp_d[, i])
-    }) > 0.01
+    }) >
+      0.01
     also_between <- p_check_within[has_lvl2_var]
 
     if (length(also_between) && verbose) {
@@ -482,7 +537,6 @@ standardize_info.default <- function(model,
     }
   }
 
-
   ## Get 2 types of Deviation_Response_Pseudo
   sd_y_within <- sd_y_between <- 1
   if (mi$is_linear) {
@@ -494,18 +548,16 @@ standardize_info.default <- function(model,
     frm <- insight::find_formula(model)
     frm <- paste0(frm$conditional[2], " ~ (1|", rand_name, ")")
 
-    m0 <- suppressWarnings(suppressMessages(
-      lme4::lmer(stats::as.formula(frm),
-        weights = w,
-        data = data
-      )
-    ))
+    m0 <- suppressWarnings(suppressMessages(lme4::lmer(
+      stats::as.formula(frm),
+      weights = w,
+      data = data
+    )))
     m0v <- insight::get_variance(m0)
 
     sd_y_between <- unname(sqrt(m0v$var.intercept))
     sd_y_within <- unname(sqrt(m0v$var.residual))
   }
-
 
   ## Get scaling factors for each parameter
   Deviation_Response_Pseudo <- Deviation_Pseudo <- numeric(ncol(model_matrix))
@@ -556,7 +608,6 @@ standardize_info.default <- function(model,
 
 # Utils -------------------------------------------------------------------
 
-
 # brms adds the prefix "b_" to the names of population-level parameters.
 # Thresholds of ordinal models keep it, or they would count as intercepts.
 #' @keywords internal
@@ -569,12 +620,14 @@ standardize_info.default <- function(model,
 
 
 #' @keywords internal
-.compute_std_info <- function(data = NULL,
-                              variable = NULL,
-                              response = NULL,
-                              robust = FALSE,
-                              two_sd = FALSE,
-                              weights = NULL) {
+.compute_std_info <- function(
+  data = NULL,
+  variable = NULL,
+  response = NULL,
+  robust = FALSE,
+  two_sd = FALSE,
+  weights = NULL
+) {
   f <- if (two_sd) 2 else 1
   if (is.null(response)) {
     response <- as.numeric(data[, variable])
