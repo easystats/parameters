@@ -157,7 +157,7 @@ model_parameters(model)
 #> 
 #> Parameter  | Median |       95% CI |   pd |              Prior |       BF
 #> -------------------------------------------------------------------------
-#> Difference |   1.03 | [0.83, 1.23] | 100% | Cauchy (0 +- 0.71) | 8.93e+14
+#> Difference |   0.91 | [0.72, 1.09] | 100% | Cauchy (0 +- 0.71) | 8.64e+13
 #> 
 #> Uncertainty intervals (equal-tailed) and p-values (two-tailed)
 #>   computed using a MCMC distribution approximation.
@@ -166,11 +166,11 @@ model_parameters(model, es_type = "cohens_d", ci = 0.9)
 #> 
 #> Parameter  | Median |       90% CI | Cohen's d |     d 90% CI |   pd
 #> --------------------------------------------------------------------
-#> Difference |   1.03 | [0.87, 1.20] |      1.04 | [0.83, 1.25] | 100%
+#> Difference |   0.91 | [0.76, 1.06] |      0.99 | [0.79, 1.19] | 100%
 #> 
 #> Parameter  |              Prior |       BF
 #> ------------------------------------------
-#> Difference | Cauchy (0 +- 0.71) | 8.93e+14
+#> Difference | Cauchy (0 +- 0.71) | 8.64e+13
 #> 
 #> Uncertainty intervals (equal-tailed) and p-values (two-tailed)
 #>   computed using a MCMC distribution approximation.
@@ -192,7 +192,7 @@ model_parameters(bf,
 #> 
 #> Parameter |   SD | Cramer's V (adj.) | Cramers 95% CI
 #> -----------------------------------------------------
-#> Ratio     | 0.09 |              0.14 |   [0.00, 0.30]
+#> Ratio     | 0.08 |              0.14 |   [0.00, 0.30]
 #> 
 #> Parameter |                            Prior |   BF
 #> ---------------------------------------------------
