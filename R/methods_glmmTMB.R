@@ -203,6 +203,16 @@ model_parameters.glmmTMB <- function(
     )
   )
 
+  # there is no method for bootstrapped intervals, so `ci()` returns Wald intervals
+  if (ci_method == "boot" && !bootstrap) {
+    if (verbose) {
+      insight::format_alert(
+        "`ci_method = \"boot\"` only works for models of class `merMod`, so Wald intervals are returned. To bootstrap this model, use `bootstrap = TRUE`." # nolint
+      )
+    }
+    ci_method <- "wald"
+  }
+
   # which components to return?
   effects <- insight::validate_argument(
     effects,
@@ -567,6 +577,16 @@ ci.glmmTMB <- function(
 
   if (is.null(.check_component(x, component, verbose = verbose))) {
     return(NULL)
+  }
+
+  # there is no method for bootstrapped intervals, so return Wald intervals
+  if (method == "boot") {
+    if (verbose) {
+      insight::format_alert(
+        "`method = \"boot\"` only works for models of class `merMod`, so Wald intervals are returned. To bootstrap this model, use `bootstrap_parameters()`." # nolint
+      )
+    }
+    method <- "wald"
   }
 
   # profiled CIs
