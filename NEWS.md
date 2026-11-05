@@ -11,6 +11,17 @@
 
 ## Changes
 
+* *factoextra* is no longer needed. `n_clusters_elbow()`,
+  `n_clusters_silhouette()`, `n_clusters_gap()` and `n_clusters()` now compute
+  the within-cluster sum of squares, the silhouette width and the gap statistic
+  directly (with *cluster*). `cluster_analysis(method = "hkmeans")` runs the
+  hierarchical k-means itself. The results are the same as before. The
+  within-cluster sum of squares no longer needs the full distance matrix, so it
+  uses less memory for large data.
+
+* The `standardize` argument of `n_clusters()` and `cluster_analysis()` now
+  says which *mclust* models depend on the scale of the variables.
+
 * `model_parameters()` for models from *blavaan* with `standardize` no longer
   returns rows for parameters with fixed or constant standardized draws, such
   as the standardized variances of exogenous latent variables. `print()` now
@@ -34,6 +45,33 @@
   which adjusts p-values based on the multivariate t distribution (#854).
 
 ## Bug fixes
+
+* `n_clusters()` with `package = "mclust"` now gives one vote, for the solution
+  with the best BIC. Before, each of the three best solutions was a vote, and
+  only the one with the fewest clusters was kept for a given model, which was
+  often not the best one. The three best solutions and their BIC differences
+  are in the `"mclust_BIC"` attribute.
+
+* `n_clusters()` no longer silently drops all *NbClust* indices when other
+  arguments, such as `gap_method`, are given. It also no longer fails for
+  `gap_method` with the *easystats* methods.
+
+* `n_clusters()` no longer counts the silhouette index and the gap statistic
+  twice. When the *easystats* methods are used, the *NbClust* `"Silhouette"`
+  and `"gap"` (with `fast = FALSE`) indices are skipped. Before, one of the two
+  silhouette votes was dropped, silently, by the removal of duplicate names,
+  and the gap statistic had three votes.
+
+* `n_clusters()` with `package = "NbClust"` no longer resets the random seed of
+  the user. `NbClust::NbClust()` calls `set.seed(1)`, so the seed is now
+  restored afterwards.
+
+* `n_clusters()` with `package = "M3C"` or `package = "all"` now runs the *M3C*
+  method. Before, it was always skipped.
+
+* `n_clusters()` computes the gap statistic only once, which halves the time
+  of its bootstrap. Both rules for the number of clusters use the same gap
+  values.
 
 * `model_parameters()` for *BayesFactor* objects with more than one model, for
   example from `regressionBF()` or `anovaBF()`, now shows the Bayes factor of

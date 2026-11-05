@@ -29,7 +29,6 @@ if (!requireNamespace("NbClust", quietly = TRUE) ||
   !requireNamespace("fpc", quietly = TRUE) ||
   !requireNamespace("performance", quietly = TRUE) ||
   !requireNamespace("dbscan", quietly = TRUE) ||
-  !requireNamespace("factoextra", quietly = TRUE) ||
   !requireNamespace("pvclust", quietly = TRUE)) {
   knitr::opts_chunk$set(eval = FALSE)
 } else {
@@ -41,7 +40,6 @@ if (!requireNamespace("NbClust", quietly = TRUE) ||
   library(mclust)
   library(insight)
   library(dbscan)
-  library(factoextra)
   library(pvclust)
 }
 ```

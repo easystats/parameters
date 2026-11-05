@@ -1,5 +1,5 @@
 #' @rdname n_clusters
-#' @examplesIf require("see", quietly = TRUE) && require("factoextra", quietly = TRUE)
+#' @examples
 #' \donttest{
 #' x <- n_clusters_elbow(iris[1:4])
 #' x
@@ -17,7 +17,7 @@ n_clusters_elbow <- function(
   ...
 ) {
   t0 <- Sys.time()
-  out <- .n_clusters_factoextra(
+  out <- .n_clusters_curve(
     x,
     method = "wss",
     standardize = standardize,
@@ -45,8 +45,7 @@ n_clusters_elbow <- function(
 #' #
 #' # Gap method --------------------
 #' if (require("see", quietly = TRUE) &&
-#'   require("cluster", quietly = TRUE) &&
-#'   require("factoextra", quietly = TRUE)) {
+#'   require("cluster", quietly = TRUE)) {
 #'   x <- n_clusters_gap(iris[1:4])
 #'   x
 #'   as.data.frame(x)
@@ -64,7 +63,7 @@ n_clusters_gap <- function(x,
   insight::check_if_installed("cluster")
 
   t0 <- Sys.time()
-  rez <- .n_clusters_factoextra(
+  rez <- .n_clusters_curve(
     x,
     method = "gap_stat",
     standardize = standardize,
@@ -92,7 +91,7 @@ n_clusters_gap <- function(x,
 #' \donttest{
 #' #
 #' # Silhouette method --------------------------
-#' if (require("factoextra", quietly = TRUE)) {
+#' if (require("cluster", quietly = TRUE)) {
 #'   x <- n_clusters_silhouette(iris[1:4])
 #'   x
 #'   as.data.frame(x)
@@ -107,8 +106,10 @@ n_clusters_silhouette <- function(x,
                                   clustering_function = stats::kmeans,
                                   n_max = 10,
                                   ...) {
+  insight::check_if_installed("cluster")
+
   t0 <- Sys.time()
-  out <- .n_clusters_factoextra(
+  out <- .n_clusters_curve(
     x,
     method = "silhouette",
     standardize = standardize,
@@ -249,7 +250,7 @@ n_clusters_hclust <- function(x,
 # Utils -------------------------------------------------------------------
 
 #' @keywords internal
-.n_clusters_factoextra <- function(
+.n_clusters_curve <- function(
   x,
   method = "wss",
   standardize = TRUE,
@@ -258,6 +259,11 @@ n_clusters_hclust <- function(x,
   n_max = 10,
   ...
 ) {
+  # Same computations (and same random draws) as factoextra::fviz_nbclust(),
+  # without the dependency on factoextra (and its plotting dependencies)
+  if (n_max < 2) {
+    insight::format_error("`n_max` must be at least 2.")
+  }
   x <- .prepare_data_clustering(
     x,
     include_factors = include_factors,
@@ -265,17 +271,55 @@ n_clusters_hclust <- function(x,
     ...
   )
 
-  insight::check_if_installed("factoextra")
-
-  suppressWarnings(
-    factoextra::fviz_nbclust(
+  if (method == "gap_stat") {
+    gap <- cluster::clusGap(
       x,
-      clustering_function,
-      method = method,
-      k.max = n_max,
+      FUNcluster = clustering_function,
+      K.max = n_max,
+      B = 100,
       verbose = FALSE
-    )$data
-  )
+    )
+    out <- as.data.frame(gap$Tab)
+    out$clusters <- as.numeric(seq_len(nrow(out)))
+    out$ymin <- out$gap - out$SE.sim
+    out$ymax <- out$gap + out$SE.sim
+    return(out)
+  }
+
+  x <- as.matrix(x)
+  values <- rep(0, n_max)
+  if (method == "silhouette") {
+    distances <- stats::dist(x)
+    for (k in 2:n_max) {
+      clusters <- .get_cluster_vector(clustering_function(x, k))
+      sil <- cluster::silhouette(clusters, distances)
+      values[k] <- if (length(sil) == 1 && is.na(sil)) NA_real_ else mean(sil[, "sil_width"])
+    }
+  } else {
+    for (k in seq_len(n_max)) {
+      # the model with one cluster is also fitted, to keep the same random
+      # draws as before (only its total sum of squares is used)
+      clusters <- .get_cluster_vector(clustering_function(x, k))
+      values[k] <- sum(vapply(
+        split(seq_len(nrow(x)), clusters),
+        function(i) sum(scale(x[i, , drop = FALSE], scale = FALSE)^2),
+        numeric(1)
+      ))
+    }
+  }
+  data.frame(clusters = as.numeric(seq_len(n_max)), y = values)
+}
+
+
+#' @keywords internal
+.get_cluster_vector <- function(model) {
+  # kmeans() and hclust-based functions return `cluster`, while the functions
+  # from the cluster package (pam(), clara(), fanny()) return `clustering`
+  if (!is.null(model$cluster)) {
+    model$cluster
+  } else {
+    model$clustering
+  }
 }
 
 
