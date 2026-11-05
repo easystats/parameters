@@ -54,6 +54,12 @@
 #' @return A data frame.
 #' @export
 parameters_type <- function(model, ...) {
+  .parameters_type_model(model)
+}
+
+
+#' @keywords internal
+.parameters_type_model <- function(model, remove_brms_prefix = FALSE) {
   # Get info
   params <- data.frame(
     Parameter = insight::find_parameters(model, effects = "fixed", flatten = TRUE),
@@ -83,6 +89,9 @@ parameters_type <- function(model, ...) {
 
   # Remove "as.factor()", "log()" etc. from parameter names but save original parameter before
   original_parameter <- params$Parameter
+  if (remove_brms_prefix) {
+    params$Parameter <- .remove_brms_prefix(params$Parameter, model)
+  }
   params$Parameter <- .clean_parameter_names(params$Parameter, full = TRUE)
 
   ## TODO can we get rid of the count_ / zero_ prefix here?

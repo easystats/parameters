@@ -340,6 +340,113 @@ test_that("standardize_parameters (Bayes)", {
 })
 
 
+test_that("standardize_parameters (posthoc, brms)", {
+  skip_on_cran()
+  skip_if_not_installed("curl")
+  skip_if_offline()
+  skip_if_not_installed("httr2")
+  skip_if_not_installed("brms")
+  skip_if_not_installed("rstan")
+
+  m <- suppressWarnings(insight::download_model("brms_1"))
+  skip_if(is.null(m))
+
+  info <- standardize_info(m)
+  expect_equal(
+    info$Deviation_Smart[match(c("b_wt", "b_cyl"), info$Parameter)],
+    c(sd(mtcars$wt), sd(mtcars$cyl)),
+    tolerance = 1e-8
+  )
+
+  out <- standardize_parameters(m, method = "posthoc")
+  expect_equal(
+    out$Std_Median[out$Parameter == "b_wt"],
+    median(insight::get_parameters(m)$b_wt) * sd(mtcars$wt) / sd(mtcars$mpg),
+    tolerance = 1e-8
+  )
+
+  posts <- standardize_posteriors(m, method = "posthoc")
+  expect_equal(
+    median(posts$b_wt),
+    median(insight::get_parameters(m)$b_wt) * sd(mtcars$wt) / sd(mtcars$mpg),
+    tolerance = 1e-8
+  )
+
+  m <- suppressWarnings(insight::download_model("brms_4"))
+  skip_if(is.null(m))
+
+  info <- standardize_info(m)
+  expect_equal(
+    info$Deviation_Response_Smart[info$Parameter == "b_Speciesversicolor"],
+    sd(iris$Sepal.Length[iris$Species == "setosa"]),
+    tolerance = 1e-8
+  )
+
+  out <- standardize_parameters(m, method = "smart")
+  expect_equal(
+    out$Std_Median[out$Parameter == "b_Speciesversicolor"],
+    median(insight::get_parameters(m)$b_Speciesversicolor) /
+      sd(iris$Sepal.Length[iris$Species == "setosa"]),
+    tolerance = 1e-8
+  )
+
+  m <- suppressWarnings(insight::download_model("brms_ordinal_1"))
+  skip_if(is.null(m))
+
+  out <- standardize_parameters(m, method = "posthoc")
+  expect_equal(
+    out$Std_Median[out$Parameter == "b_Intercept[1]"],
+    median(insight::get_parameters(m)$`b_Intercept[1]`),
+    tolerance = 1e-8
+  )
+})
+
+
+test_that("standardize_parameters (brms, transformed terms revert to basic)", {
+  skip_on_cran()
+  skip_if_not_installed("curl")
+  skip_if_offline()
+  skip_if_not_installed("httr2")
+  skip_if_not_installed("brms")
+  skip_if_not_installed("rstan")
+
+  m <- suppressWarnings(insight::download_model("brms_1"))
+  skip_if(is.null(m))
+
+  # no downloadable fit has a transformed term, and the tests compile no Stan
+  # models, so only the formula is changed. This checks the revert, not the values.
+  m$formula <- brms::bf(mpg ~ I(wt^2) + cyl)
+  basic <- standardize_parameters(m, method = "basic")
+
+  expect_message(out <- standardize_parameters(m, method = "posthoc"), "Reverting")
+  expect_identical(attr(out, "std_method"), "basic")
+  expect_equal(out$Std_Median, basic$Std_Median, tolerance = 1e-8)
+
+  expect_message(out <- standardize_parameters(m, method = "smart"), "Reverting")
+  expect_equal(out$Std_Median, basic$Std_Median, tolerance = 1e-8)
+
+  expect_message(standardize_posteriors(m, method = "posthoc"), "Reverting")
+
+  # factors stay allowed, as for lm()
+  m <- suppressWarnings(insight::download_model("brms_5"))
+  skip_if(is.null(m))
+
+  expect_no_message(
+    out <- standardize_parameters(m, method = "posthoc"),
+    message = "Reverting"
+  )
+  expect_identical(attr(out, "std_method"), "posthoc")
+
+  # special terms have no `lm()` counterpart and keep the requested method
+  for (id in c("brms_mo2", "brms_smooth_1")) {
+    m <- suppressWarnings(insight::download_model(id))
+    skip_if(is.null(m))
+    out <- standardize_parameters(m, method = "posthoc")
+    expect_identical(attr(out, "std_method"), "posthoc")
+  }
+})
+
+
 # Pseudo - GLMM --------------------------------
 test_that("standardize_parameters (Pseudo - GLMM)", {
   skip_if_not_installed("datawizard")
