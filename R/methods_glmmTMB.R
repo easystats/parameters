@@ -203,15 +203,13 @@ model_parameters.glmmTMB <- function(
     )
   )
 
-  # there is no method for bootstrapped intervals, so `ci()` returns Wald intervals
-  if (ci_method == "boot" && !bootstrap) {
-    if (verbose) {
-      insight::format_alert(
-        "`ci_method = \"boot\"` only works for models of class `merMod`, so Wald intervals are returned. To bootstrap this model, use `bootstrap = TRUE`." # nolint
-      )
-    }
-    ci_method <- "wald"
-  }
+  ci_method <- .boot_to_wald_glmmTMB(
+    ci_method,
+    type = "ci_method",
+    advice = "`bootstrap = TRUE`",
+    bootstrap = bootstrap,
+    verbose = verbose
+  )
 
   # which components to return?
   effects <- insight::validate_argument(
@@ -405,6 +403,28 @@ model_parameters.glmmTMB <- function(
 
 # helper -----------------------------------------
 
+# there is no method for bootstrapped intervals, so `ci()` returns Wald intervals
+.boot_to_wald_glmmTMB <- function(
+  method,
+  type,
+  advice,
+  bootstrap = FALSE,
+  verbose = TRUE
+) {
+  if (method != "boot" || bootstrap) {
+    return(method)
+  }
+  if (verbose) {
+    insight::format_alert(sprintf(
+      "`%s = \"boot\"` only works for models of class `merMod`, so Wald intervals are returned. To bootstrap this model, use %s.", # nolint
+      type,
+      advice
+    ))
+  }
+  "wald"
+}
+
+
 # this functions adds the dispersion parameter, if it is not already
 # present in the output
 .add_dispersion_param_glmmTMB <- function(
@@ -579,15 +599,12 @@ ci.glmmTMB <- function(
     return(NULL)
   }
 
-  # there is no method for bootstrapped intervals, so return Wald intervals
-  if (method == "boot") {
-    if (verbose) {
-      insight::format_alert(
-        "`method = \"boot\"` only works for models of class `merMod`, so Wald intervals are returned. To bootstrap this model, use `bootstrap_parameters()`." # nolint
-      )
-    }
-    method <- "wald"
-  }
+  method <- .boot_to_wald_glmmTMB(
+    method,
+    type = "method",
+    advice = "`bootstrap_parameters()`",
+    verbose = verbose
+  )
 
   # profiled CIs
   if (method == "profile") {
