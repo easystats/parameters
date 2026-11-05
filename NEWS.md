@@ -80,6 +80,13 @@
   pooled. The rows of the other responses were not standardized.
   `standardize = "refit"` still works for these models (#707).
 
+* `ci()` with `method = "boot"` and `model_parameters()` with `ci_method = "boot"`
+  for *glmmTMB* models now give a message that this method only works for `merMod`
+  models. Before this fix, they returned Wald intervals with no message. The
+  footer of the printed output said that the intervals were from a parametric
+  bootstrap. The values do not change. To bootstrap these models, use
+  `bootstrap_parameters()` or `bootstrap = TRUE`.
+
 # parameters 0.30.0
 
 ## Changes

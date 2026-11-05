@@ -1150,4 +1150,22 @@ withr::with_options(list(parameters_exponentiate = FALSE), {
     out <- model_parameters(model, vcov = "fpc", vcov_args = list(population_size = 500))
     expect_snapshot(print(out, table_width = Inf))
   })
+
+  test_that("method boot gives Wald intervals with an alert", {
+    expect_message(
+      {
+        out <- ci(m2, method = "boot")
+      },
+      "only\\s+works\\s+for\\s+models\\s+of\\s+class"
+    )
+    expect_identical(out, ci(m2, method = "wald"))
+
+    expect_message(
+      {
+        out <- model_parameters(m2, ci_method = "boot", effects = "fixed")
+      },
+      "only\\s+works\\s+for\\s+models\\s+of\\s+class"
+    )
+    expect_identical(attr(out, "ci_method"), "Wald")
+  })
 })
