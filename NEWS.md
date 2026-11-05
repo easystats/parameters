@@ -66,12 +66,11 @@
   `method = "posthoc"` or `"smart"`, untransformed continuous predictors were
   not multiplied by their SD. With `method = "smart"`, factor, character and
   logical predictors of linear models used the SD of the whole response, unlike
-  the same model from `lm()`. This fix does not cover interaction terms or terms
-  that are converted in the formula, such as `log(x)` or `factor(x)`. It also
-  does not cover predictors that follow such a term. With a transformed term,
-  such as `log(x)`, `method = "posthoc"` and `"smart"` now revert to `"basic"`
-  with a message, as for `lm()`. The `"basic"` values for transformed and
-  interaction terms can still be wrong (#1243).
+  the same model from `lm()`. With a transformed term, such as `log(x)`,
+  `method = "posthoc"` and `"smart"` now revert to `"basic"` with a message, as
+  for `lm()`. The values for interaction terms and for terms that are converted
+  in the formula, such as `log(x)` or `factor(x)`, can still be wrong. The same
+  is true for predictors that follow such a term (#1243).
 
 * `model_parameters()` for multivariate models, for example
   `lm(cbind(y1, y2) ~ x)`, now gives an error with a post-hoc `standardize`

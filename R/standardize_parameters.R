@@ -852,8 +852,11 @@ print_html.parameters_standardized <- function(x, digits = 2, ...) {
   if (isTRUE(attr(f, "nl"))) {
     return(NULL)
   }
-  labels <- attr(stats::terms(f), "term.labels")
-  labels[!grepl("|", labels, fixed = TRUE) & !grepl("(^|:)(mo|s|t2|gp|mi)\\(", labels)]
+  term_labels <- attr(stats::terms(f), "term.labels")
+  term_labels[
+    !grepl("|", term_labels, fixed = TRUE) &
+      !grepl("(^|:)(mo|s|t2|gp|mi)\\(", term_labels)
+  ]
 }
 
 

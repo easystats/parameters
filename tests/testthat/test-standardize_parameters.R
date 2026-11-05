@@ -441,10 +441,8 @@ test_that("standardize_parameters (brms, transformed terms revert to basic)", {
   for (id in c("brms_mo2", "brms_smooth_1")) {
     m <- suppressWarnings(insight::download_model(id))
     skip_if(is.null(m))
-    expect_identical(
-      .cant_smart_or_posthoc("posthoc", m, insight::model_info(m), "b_Intercept"),
-      "posthoc"
-    )
+    out <- standardize_parameters(m, method = "posthoc")
+    expect_identical(attr(out, "std_method"), "posthoc")
   }
 })
 
