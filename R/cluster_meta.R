@@ -27,8 +27,12 @@
 #' @param rownames An optional vector of row.names for the matrix.
 #' @param ... Currently not used.
 #'
-#' @return A matrix containing all the pairwise (between each observation)
-#' probabilities of being clustered together by the methods.
+#' @return A symmetric matrix containing all the pairwise (between each
+#' observation) probabilities of being clustered together by the methods, i.e.,
+#' the share of solutions that put the two observations in the same cluster.
+#' Observations that are not assigned to a cluster (`NA` or `0`, e.g., noise
+#' in DBSCAN) are ignored for that solution, so the share is computed over the
+#' solutions that assign both observations. The diagonal is 1.
 #'
 #'
 #' @examples
@@ -96,32 +100,28 @@ cluster_meta <- function(list_of_clusters, rownames = NULL, ...) {
 
 #' @keywords internal
 .cluster_meta_matrix <- function(data) {
-  # Internal function
-  .get_prob <- function(x) {
-    if (anyNA(x)) {
-      NA
-    } else if (length(unique(x[!is.na(x)])) == 1) {
-      0
-    } else {
-      1
-    }
+  # For each solution, a one-hot matrix of cluster membership (with a row of
+  # zeros for unassigned observations) gives, by its cross-product, the pairs
+  # that are in the same cluster. Summed over solutions, and divided by the
+  # number of solutions that assign both observations, this gives the share of
+  # solutions that put each pair together.
+  n <- nrow(data)
+  together <- matrix(0, nrow = n, ncol = n)
+  assigned <- matrix(0, nrow = n, ncol = n)
+
+  for (solution in data) {
+    solution <- factor(solution)
+    valid <- !is.na(solution)
+    membership <- matrix(0, nrow = n, ncol = nlevels(solution))
+    membership[cbind(which(valid), as.integer(solution)[valid])] <- 1
+    together <- together + tcrossprod(membership)
+    assigned <- assigned + tcrossprod(as.numeric(valid))
   }
 
-  # Initialize matrix
-  m <- matrix(data = NA, nrow = nrow(data), ncol = nrow(data), dimnames = list(rev(row.names(data)), row.names(data)))
-
-  for (row in row.names(m)) {
-    for (col in colnames(m)) {
-      if (row == col) {
-        m[row, col] <- 0
-        next
-      }
-      subset_rows <- data[row.names(data) %in% c(row, col), ]
-      rez <- sapply(subset_rows[2:ncol(subset_rows)], .get_prob)
-      m[row, col] <- sum(rez, na.rm = TRUE) / length(stats::na.omit(rez))
-    }
-  }
-
+  # pairs that no solution assigns are NaN (0 / 0)
+  m <- together / assigned
+  diag(m) <- 1
+  dimnames(m) <- list(row.names(data), row.names(data))
   m
 }
 

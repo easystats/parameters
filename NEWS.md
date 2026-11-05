@@ -46,6 +46,18 @@
 
 ## Bug fixes
 
+* `cluster_meta()` is much faster: about 0.3 seconds for 1700 observations
+  and 3 solutions, instead of about 3 minutes. It also fixes three problems:
+  - It now returns what its documentation says: the share of solutions that
+    put two observations in the same cluster (the diagonal is 1). Before, it
+    returned the share of solutions that put them in *different* clusters
+    (the diagonal was 0), so `predict()` and the `as.dist(abs(m - 1))` of the
+    example used the opposite of a distance.
+  - The first solution is no longer ignored.
+  - The rows are no longer in reverse order. Before, the matrix was not
+    symmetric by position, so `as.dist()` (and thus `predict()`) paired the
+    wrong observations.
+
 * `n_clusters()` with `package = "mclust"` now gives one vote, for the solution
   with the best BIC. Before, each of the three best solutions was a vote, and
   only the one with the fewest clusters was kept for a given model, which was

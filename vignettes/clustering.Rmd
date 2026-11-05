@@ -277,7 +277,7 @@ probability_matrix <- cluster_meta(list_of_results)
 # Plot the matrix as a reordered heatmap
 heatmap(probability_matrix,
   scale = "none",
-  col = grDevices::hcl.colors(256, palette = "inferno")
+  col = grDevices::hcl.colors(256, palette = "inferno", rev = TRUE)
 )
 ```
 

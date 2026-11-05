@@ -14,8 +14,12 @@ cluster_meta(list_of_clusters, rownames = NULL, ...)
 \item{...}{Currently not used.}
 }
 \value{
-A matrix containing all the pairwise (between each observation)
-probabilities of being clustered together by the methods.
+A symmetric matrix containing all the pairwise (between each
+observation) probabilities of being clustered together by the methods, i.e.,
+the share of solutions that put the two observations in the same cluster.
+Observations that are not assigned to a cluster (\code{NA} or \code{0}, e.g., noise
+in DBSCAN) are ignored for that solution, so the share is computed over the
+solutions that assign both observations. The diagonal is 1.
 }
 \description{
 One of the core "issue" of statistical clustering is that, in many cases,
