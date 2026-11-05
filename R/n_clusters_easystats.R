@@ -100,12 +100,14 @@ n_clusters_gap <- function(x,
 #' }
 #' }
 #' @export
-n_clusters_silhouette <- function(x,
-                                  standardize = TRUE,
-                                  include_factors = FALSE,
-                                  clustering_function = stats::kmeans,
-                                  n_max = 10,
-                                  ...) {
+n_clusters_silhouette <- function(
+  x,
+  standardize = TRUE,
+  include_factors = FALSE,
+  clustering_function = stats::kmeans,
+  n_max = 10,
+  ...
+) {
   insight::check_if_installed("cluster")
 
   t0 <- Sys.time()
@@ -293,7 +295,11 @@ n_clusters_hclust <- function(x,
     for (k in 2:n_max) {
       clusters <- .get_cluster_vector(clustering_function(x, k))
       sil <- cluster::silhouette(clusters, distances)
-      values[k] <- if (length(sil) == 1 && is.na(sil)) NA_real_ else mean(sil[, "sil_width"])
+      values[k] <- if (length(sil) == 1 && is.na(sil)) {
+        NA_real_
+      } else {
+        mean(sil[, "sil_width"])
+      }
     }
   } else {
     for (k in seq_len(n_max)) {

@@ -132,6 +132,34 @@ test_that("n_clusters, NbClust does not reset the user's random seed", {
 })
 
 
+test_that("n_clusters, M3C does not reset the user's random seed", {
+  skip_on_cran()
+  skip_if_not_installed("M3C")
+  x <- .four_blobs()
+
+  withr::local_seed(123)
+  expected <- withr::with_preserve_seed(stats::runif(3))
+  n_clusters(x, package = "M3C", n_max = 4)
+  # M3C() calls set.seed(); the next draws are the same as without it
+  expect_identical(stats::runif(3), expected)
+})
+
+
+test_that(".restore_seed restores or removes the random seed", {
+  withr::local_seed(1)
+  old_seed <- get0(".Random.seed", envir = globalenv(), inherits = FALSE)
+  expected <- withr::with_preserve_seed(stats::runif(2))
+  set.seed(99)
+  .restore_seed(old_seed)
+  expect_identical(stats::runif(2), expected)
+
+  withr::with_preserve_seed({
+    .restore_seed(NULL)
+    expect_false(exists(".Random.seed", envir = globalenv(), inherits = FALSE))
+  })
+})
+
+
 test_that("n_clusters, `gap_method` does not break the easystats methods", {
   skip_on_cran()
   skip_if_not_installed("cluster")

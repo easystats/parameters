@@ -34,3 +34,23 @@ test_that("cluster_analysis, hkmeans", {
   expect_identical(unname(model$cluster), unname(km$cluster))
   expect_identical(predict(rez), unname(km$cluster))
 })
+
+test_that("cluster_analysis, hkmeans keeps the kmeans class and uses hc.metric", {
+  x <- datawizard::standardize(iris[1:4])
+  x[] <- lapply(x, as.numeric)
+
+  rez <- cluster_analysis(iris[1:4], n = 3, method = "hkmeans")
+  model <- attributes(rez)$model
+  expect_s3_class(model, c("hkmeans", "kmeans"), exact = TRUE)
+  # predict() on new data works (it uses the kmeans method)
+  expect_identical(predict(model, newdata = x), unname(model$cluster))
+
+  # the distance of the hierarchical clustering can be set with `hc.metric`
+  rez <- cluster_analysis(iris[1:4], n = 3, method = "hkmeans", hc.metric = "manhattan")
+  hc <- stats::hclust(stats::dist(x, method = "manhattan"), method = "complete")
+  expect_identical(attributes(rez)$model$hclust$merge, hc$merge)
+  groups <- stats::cutree(hc, k = 3)
+  centers <- stats::aggregate(x, list(groups), mean)[, -1]
+  km <- stats::kmeans(x, centers = centers, iter.max = 100)
+  expect_identical(predict(rez), unname(km$cluster))
+})

@@ -300,15 +300,25 @@ cluster_analysis <- function(x,
 
 
 #' @keywords internal
-.cluster_analysis_hkmeans <- function(cluster_data,
-                                      n = 2,
-                                      kmeans_method = "Hartigan-Wong",
-                                      hclust_method = "complete",
-                                      iterations = 100,
-                                      ...) {
+.cluster_analysis_hkmeans <- function(
+  cluster_data,
+  n = 2,
+  kmeans_method = "Hartigan-Wong",
+  hclust_method = "complete",
+  iterations = 100,
+  ...
+) {
   # Hierarchical k-means, as in factoextra::hkmeans(): the centers of the
-  # clusters from a hierarchical clustering are the initial centers of k-means
-  hc <- stats::hclust(stats::dist(cluster_data), method = hclust_method)
+  # clusters from a hierarchical clustering are the initial centers of k-means.
+  # As in factoextra::hkmeans(), the distance can be set with `hc.metric`.
+  hc_metric <- list(...)$hc.metric
+  if (is.null(hc_metric)) {
+    hc_metric <- "euclidean"
+  }
+  hc <- stats::hclust(
+    stats::dist(cluster_data, method = hc_metric),
+    method = hclust_method
+  )
   groups <- stats::cutree(hc, k = n)
   centers <- stats::aggregate(cluster_data, list(groups), mean)[, -1, drop = FALSE]
   model <- stats::kmeans(
@@ -317,7 +327,8 @@ cluster_analysis <- function(x,
     iter.max = iterations,
     algorithm = kmeans_method
   )
-  class(model) <- "hkmeans"
+  # keep the "kmeans" class, so that the kmeans methods (e.g., predict()) apply
+  class(model) <- c("hkmeans", class(model))
   model$data <- cluster_data
   model$hclust <- hc
   list(model = model, clusters = model$cluster)

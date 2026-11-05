@@ -15,9 +15,12 @@
   `n_clusters_silhouette()`, `n_clusters_gap()` and `n_clusters()` now compute
   the within-cluster sum of squares, the silhouette width and the gap statistic
   directly (with *cluster*). `cluster_analysis(method = "hkmeans")` runs the
-  hierarchical k-means itself. The results are the same as before. The
-  within-cluster sum of squares no longer needs the full distance matrix, so it
-  uses less memory for large data.
+  hierarchical k-means itself, and still accepts `hc.metric`. The results are
+  the same as before. The within-cluster sum of squares no longer needs the
+  full distance matrix, so it uses less memory for large data.
+
+* The model of `cluster_analysis(method = "hkmeans")` now also has the class
+  `"kmeans"`, so `predict()` with `newdata` works.
 
 * The `standardize` argument of `n_clusters()` and `cluster_analysis()` now
   says which *mclust* models depend on the scale of the variables.
@@ -79,7 +82,8 @@
   restored afterwards.
 
 * `n_clusters()` with `package = "M3C"` or `package = "all"` now runs the *M3C*
-  method. Before, it was always skipped.
+  method. Before, it was always skipped. Like the *NbClust* methods, it no
+  longer resets the random seed of the user (`M3C::M3C()` calls `set.seed()`).
 
 * `n_clusters()` computes the gap statistic only once, which halves the time
   of its bootstrap. Both rules for the number of clusters use the same gap
