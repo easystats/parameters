@@ -61,6 +61,14 @@
     symmetric by position, so `as.dist()` (and thus `predict()`) paired the
     wrong observations.
 
+* `predict()` for `cluster_meta()` gets a `method` argument for the linkage of
+  the hierarchical clustering, passed to `hclust()`. The default is now
+  `"average"` (it was `"complete"`), the usual choice for consensus matrices.
+  With few solutions, the matrix has many ties, and complete linkage cut the
+  tree arbitrarily. The results of `predict()` change, as they also do because
+  of the fixes to `cluster_meta()` above. The tree is returned in the `"tree"`
+  attribute, for instance to order a heatmap.
+
 * `n_clusters()` with `package = "mclust"` now gives one vote, for the solution
   with the best BIC. Before, each of the three best solutions was a vote, and
   only the one with the fewest clusters was kept for a given model, which was

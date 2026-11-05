@@ -107,5 +107,42 @@ test_that("cluster_meta, three clear groups are recovered by predict()", {
   s2 <- rep(c(2, 3, 1), each = 5)
   s3 <- c(rep(1, 10), rep(2, 5))
   m <- cluster_meta(list(s1, s2, s3))
-  expect_identical(unname(predict(m, n = 3)), s1)
+  expect_identical(as.vector(predict(m, n = 3)), s1)
+  expect_identical(as.vector(predict(m, n = 3, method = "complete")), s1)
+})
+
+
+test_that("predict.cluster_meta, linkage method and tree", {
+  # three solutions: the shares are 0, 1/3, 2/3 or 1, so many distances tie
+  s1 <- c(1, 2, 1, 1, 2, 1, 1, 1)
+  s2 <- c(2, 2, 3, 3, 1, 1, 1, 2)
+  s3 <- c(2, 2, 2, 1, 1, 1, 1, 1)
+  m <- cluster_meta(list(s1, s2, s3))
+  d <- stats::as.dist(1 - unclass(m))
+
+  # the default is average linkage
+  out <- predict(m, n = 2)
+  tree <- attributes(out)$tree
+  expect_s3_class(tree, "hclust")
+  expect_identical(tree$method, "average")
+  expect_identical(tree$merge, stats::hclust(d, method = "average")$merge)
+  expect_identical(
+    as.vector(out),
+    as.vector(stats::cutree(stats::hclust(d, method = "average"), k = 2))
+  )
+  expect_identical(names(out), as.character(1:8))
+
+  # the method is passed to hclust()
+  complete <- predict(m, n = 2, method = "complete")
+  expect_identical(attributes(complete)$tree$method, "complete")
+  expect_identical(
+    as.vector(complete),
+    as.vector(stats::cutree(stats::hclust(d, method = "complete"), k = 2))
+  )
+
+  # with ties, average and complete linkage give different partitions here
+  expect_identical(as.vector(out), c(1L, 1L, 2L, 2L, 2L, 2L, 2L, 2L))
+  expect_identical(as.vector(complete), c(1L, 1L, 1L, 1L, 2L, 2L, 2L, 1L))
+
+  expect_error(predict(m), "number of clusters")
 })
