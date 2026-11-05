@@ -402,6 +402,53 @@ test_that("standardize_parameters (posthoc, brms)", {
 })
 
 
+test_that("standardize_parameters (brms, transformed terms revert to basic)", {
+  skip_on_cran()
+  skip_if_not_installed("curl")
+  skip_if_offline()
+  skip_if_not_installed("httr2")
+  skip_if_not_installed("brms")
+  skip_if_not_installed("rstan")
+
+  m <- suppressWarnings(insight::download_model("brms_1"))
+  skip_if(is.null(m))
+
+  # no downloadable fit has a transformed term, and the tests compile no Stan
+  # models, so only the formula is changed. This checks the revert, not the values.
+  m$formula <- brms::bf(mpg ~ I(wt^2) + cyl)
+  basic <- standardize_parameters(m, method = "basic")
+
+  expect_message(out <- standardize_parameters(m, method = "posthoc"), "Reverting")
+  expect_identical(attr(out, "std_method"), "basic")
+  expect_equal(out$Std_Median, basic$Std_Median, tolerance = 1e-8)
+
+  expect_message(out <- standardize_parameters(m, method = "smart"), "Reverting")
+  expect_equal(out$Std_Median, basic$Std_Median, tolerance = 1e-8)
+
+  expect_message(standardize_posteriors(m, method = "posthoc"), "Reverting")
+
+  # factors stay allowed, as for lm()
+  m <- suppressWarnings(insight::download_model("brms_5"))
+  skip_if(is.null(m))
+
+  expect_no_message(
+    out <- standardize_parameters(m, method = "posthoc"),
+    message = "Reverting"
+  )
+  expect_identical(attr(out, "std_method"), "posthoc")
+
+  # special terms have no `lm()` counterpart and keep the requested method
+  for (id in c("brms_mo2", "brms_smooth_1")) {
+    m <- suppressWarnings(insight::download_model(id))
+    skip_if(is.null(m))
+    expect_identical(
+      .cant_smart_or_posthoc("posthoc", m, insight::model_info(m), "b_Intercept"),
+      "posthoc"
+    )
+  }
+})
+
+
 # Pseudo - GLMM --------------------------------
 test_that("standardize_parameters (Pseudo - GLMM)", {
   skip_if_not_installed("datawizard")

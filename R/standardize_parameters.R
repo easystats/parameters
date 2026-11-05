@@ -815,6 +815,11 @@ print_html.parameters_standardized <- function(x, digits = 2, ...) {
       can_posthocsmart <- TRUE
     }
 
+    # brms names hide transformations (`I(wt^2)` is `b_IwtE2`), so check the terms
+    if (inherits(model, "brmsfit")) {
+      params <- c(params, .brms_fixed_terms(model))
+    }
+
     # factors are allowed
     if (
       !cant_posthocsmart &&
@@ -836,6 +841,19 @@ print_html.parameters_standardized <- function(x, digits = 2, ...) {
     }
   }
   method
+}
+
+
+# Terms of the main formula, written as `lm()` would name them. Random terms,
+# nonlinear formulas and special terms such as `mo()` or `s()` are left out.
+#' @keywords internal
+.brms_fixed_terms <- function(model) {
+  f <- stats::formula(model)$formula
+  if (isTRUE(attr(f, "nl"))) {
+    return(NULL)
+  }
+  labels <- attr(stats::terms(f), "term.labels")
+  labels[!grepl("|", labels, fixed = TRUE) & !grepl("(^|:)(mo|s|t2|gp|mi)\\(", labels)]
 }
 
 
