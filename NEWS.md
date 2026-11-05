@@ -61,6 +61,17 @@
 * Fixed issue where `standard_error()` returned `NULL` for objects from
   `datawizard::skewness()` and `datawizard::kurtosis()`.
 
+* Fixed issue where `standardize_info()`, `standardize_parameters()` and
+  `standardize_posteriors()` returned wrong values for `brmsfit` models. With
+  `method = "posthoc"` or `"smart"`, untransformed continuous predictors were
+  not multiplied by their SD. With `method = "smart"`, factor, character and
+  logical predictors of linear models used the SD of the whole response, unlike
+  the same model from `lm()`. With a transformed term, such as `log(x)`,
+  `method = "posthoc"` and `"smart"` now revert to `"basic"` with a message, as
+  for `lm()`. The values for interaction terms and for terms that are converted
+  in the formula, such as `log(x)` or `factor(x)`, can still be wrong. The same
+  is true for predictors that follow such a term (#1243).
+
 * `model_parameters()` for multivariate models, for example
   `lm(cbind(y1, y2) ~ x)`, now gives an error with a post-hoc `standardize`
   method such as `"posthoc"`, `"basic"` or `"smart"`, as `standardize_parameters()`
