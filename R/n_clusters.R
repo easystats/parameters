@@ -19,6 +19,17 @@
 #'
 #' @param x A data frame.
 #' @param standardize Standardize the dataframe before clustering (default).
+#'   Most methods depend on the scale of the variables, so standardizing can
+#'   change their results. This is the case for k-means and for the
+#'   distance-based indices. It is also the case for most of the Gaussian
+#'   mixture models of *mclust* (`package = "mclust"` in `n_clusters()`,
+#'   `method = "mixture"` in `cluster_analysis()`). Only some models give the same fit
+#'   on standardized data: those with unconstrained (`VVV`), equal (`EEE`),
+#'   proportional (`VEE`), or diagonal (`EEI`, `VEI`, `EVI`, `VVI`) covariance
+#'   matrices. The spherical models (`EII`, `VII`) and the models with a
+#'   common shape or orientation but not both (`EVE`, `VVE`, `EEV`, `VEV`,
+#'   `EVV`) do not. For these, the selected model and number of clusters can
+#'   change with standardization.
 #' @param include_factors Logical, if `TRUE`, factors are converted to numerical
 #'   values in order to be included in the data for determining the number of
 #'   clusters. By default, factors are removed, because most methods that
@@ -86,14 +97,29 @@ n_clusters <- function(x,
   }
 
   if ("nbclust" %in% tolower(package)) {
-    out <- rbind(out, .n_clusters_NbClust(x, fast = fast, nbclust_method = nbclust_method, n_max = n_max, ...))
+    out <- rbind(
+      out,
+      .n_clusters_NbClust(
+        x,
+        fast = fast,
+        nbclust_method = nbclust_method,
+        n_max = n_max,
+        # the easystats methods already include the silhouette and the gap
+        # statistic, so these NbClust indices would count them twice
+        drop_easystats = "easystats" %in% tolower(package),
+        ...
+      )
+    )
   }
 
+  mclust_bic <- NULL
   if ("mclust" %in% tolower(package)) {
-    out <- rbind(out, .n_clusters_mclust(x, n_max = n_max, ...))
+    rez_mclust <- .n_clusters_mclust(x, n_max = n_max, ...)
+    mclust_bic <- attributes(rez_mclust)$BIC
+    out <- rbind(out, rez_mclust)
   }
 
-  if ("M3C" %in% tolower(package)) {
+  if ("m3c" %in% tolower(package)) {
     out <- rbind(out, .n_clusters_M3C(x, n_max = n_max, fast = fast))
   }
 
@@ -129,9 +155,13 @@ n_clusters <- function(x,
   )
 
   attr(out, "summary") <- by_clusters
-  attr(out, "n") <- min(as.numeric(as.character(
-    by_clusters[by_clusters$n_Methods == max(by_clusters$n_Methods), "n_Clusters"]
-  )))
+  if (!is.null(mclust_bic)) {
+    attr(out, "mclust_BIC") <- mclust_bic
+  }
+  attr(out, "n") <- min(as.numeric(as.character(by_clusters[
+    by_clusters$n_Methods == max(by_clusters$n_Methods),
+    "n_Clusters"
+  ])))
 
   class(out) <- c("n_clusters", "see_n_clusters", class(out))
   out
@@ -144,79 +174,143 @@ n_clusters <- function(x,
   t0 <- Sys.time()
   mclustBIC <- mclust::mclustBIC # this is needed as it is internally required by the following function
   BIC <- mclust::mclustBIC(x, G = 1:n_max, verbose = FALSE)
-  # Extract the best solutions as shown in summary(BIC)
-  out <- strsplit(names(unclass(summary(BIC))), split = ",", fixed = TRUE)
-  # Get separated vectors
-  models <- as.character(sapply(out, function(x) x[[1]]))
-  n <- as.numeric(sapply(out, function(x) x[[2]]))
+  # Best solutions, ranked by BIC, as shown in summary(BIC). Only the best one
+  # counts as a vote. The runner-ups are not separate solutions, and keeping
+  # them made n_clusters() keep the smallest k of a model instead of the best.
+  best <- summary(BIC, k = 3)
+  solutions <- strsplit(names(best), split = ",", fixed = TRUE)
+  models <- vapply(solutions, function(i) i[[1]], character(1))
+  n <- as.numeric(vapply(solutions, function(i) i[[2]], character(1)))
 
-  .data_frame(
-    n_Clusters = n,
-    Method = paste0("Mixture (", models, ")"),
+  out <- .data_frame(
+    n_Clusters = n[1],
+    Method = paste0("Mixture (", models[1], ")"),
     Package = "mclust",
     Duration = as.numeric(difftime(Sys.time(), t0, units = "secs"))
   )
+  # Keep the top solutions, to show how close the runner-ups are
+  attr(out, "BIC") <- .data_frame(
+    Model = models,
+    n_Clusters = n,
+    BIC = as.numeric(best),
+    BIC_diff = as.numeric(best) - as.numeric(best[1])
+  )
+  out
 }
 
 
 # Methods -----------------------------------------------------------------
 
-
 #' @keywords internal
-.n_clusters_easystats <- function(x, n_max = 10, ...) {
+.n_clusters_easystats <- function(x, n_max = 10, gap_method = NULL, ...) {
+  # `gap_method` is captured (and ignored) here, so that it is not passed twice
+  # to n_clusters_gap(): both rules are always reported by n_clusters().
   elb <- n_clusters_elbow(x, preprocess = FALSE, n_max = n_max, ...)
   sil <- n_clusters_silhouette(x, preprocess = FALSE, n_max = n_max, ...)
-  gap1 <- n_clusters_gap(x, preprocess = FALSE, gap_method = "firstSEmax", n_max = n_max, ...)
-  gap2 <- n_clusters_gap(x, preprocess = FALSE, gap_method = "globalSEmax", n_max = n_max, ...)
+  # The gap statistic (and its bootstrap) is computed once, and both rules
+  # for the number of clusters are applied to the same gap curve. Both rules
+  # share the same duration.
+  gap <- n_clusters_gap(
+    x,
+    preprocess = FALSE,
+    gap_method = "firstSEmax",
+    n_max = n_max,
+    ...
+  )
+  gap_global <- cluster::maxSE(f = gap$Gap, SE.f = gap$SE, method = "globalSEmax")
 
   .data_frame(
-    n_Clusters = c(
-      attributes(elb)$n,
-      attributes(sil)$n,
-      attributes(gap1)$n,
-      attributes(gap2)$n
-    ),
+    n_Clusters = c(attributes(elb)$n, attributes(sil)$n, attributes(gap)$n, gap_global),
     Method = c("Elbow", "Silhouette", "Gap_Maechler2012", "Gap_Dudoit2002"),
     Package = "easystats",
     Duration = c(
       attributes(elb)$duration,
       attributes(sil)$duration,
-      attributes(gap1)$duration,
-      attributes(gap2)$duration
+      attributes(gap)$duration,
+      attributes(gap)$duration
     )
   )
 }
 
 
 #' @keywords internal
-.n_clusters_NbClust <- function(x, fast = TRUE, nbclust_method = "kmeans", n_max = 10, indices = "all", ...) {
+.n_clusters_NbClust <- function(
+  x,
+  fast = TRUE,
+  nbclust_method = "kmeans",
+  n_max = 10,
+  indices = "all",
+  drop_easystats = FALSE,
+  ...
+) {
   insight::check_if_installed("NbClust")
+
+  # NbClust() calls set.seed(1) internally, which would reset the user's random
+  # number stream. Restore the seed afterwards.
+  old_seed <- get0(".Random.seed", envir = globalenv(), inherits = FALSE)
+  on.exit(.restore_seed(old_seed), add = TRUE)
 
   if (all(indices == "all")) {
     indices <- c(
-      "kl", "Ch", "Hartigan", "CCC", "Scott", "Marriot", "trcovw",
-      "Tracew", "Friedman", "Rubin", "Cindex", "DB", "Silhouette",
-      "Duda", "Pseudot2", "Beale", "Ratkowsky", "Ball", "PtBiserial",
-      "Frey", "Mcclain", "Dunn", "SDindex", "SDbw", "gap", "gamma",
-      "gplus", "tau"
+      "kl",
+      "Ch",
+      "Hartigan",
+      "CCC",
+      "Scott",
+      "Marriot",
+      "trcovw",
+      "Tracew",
+      "Friedman",
+      "Rubin",
+      "Cindex",
+      "DB",
+      "Silhouette",
+      "Duda",
+      "Pseudot2",
+      "Beale",
+      "Ratkowsky",
+      "Ball",
+      "PtBiserial",
+      "Frey",
+      "Mcclain",
+      "Dunn",
+      "SDindex",
+      "SDbw",
+      "gap",
+      "gamma",
+      "gplus",
+      "tau"
     )
     # c("hubert", "dindex") are graphical methods
   }
   if (fast) {
     indices <- indices[!indices %in% c("gap", "gamma", "gplus", "tau")]
   }
+  if (drop_easystats) {
+    indices <- indices[!tolower(indices) %in% c("silhouette", "gap")]
+  }
+
+  # Only pass the arguments that NbClust() accepts. Other arguments (meant for
+  # other methods, e.g. `gap_method`) made every call fail, and the errors are
+  # caught below, so all NbClust indices were silently dropped.
+  dots <- list(...)
+  nbclust_args <- setdiff(
+    names(formals(NbClust::NbClust)),
+    c("data", "index", "method", "max.nc")
+  )
+  dots <- dots[names(dots) %in% nbclust_args]
 
   out <- data.frame()
   for (idx in indices) {
     t0 <- Sys.time()
     n <- tryCatch(
       expr = {
-        .catch_warnings(NbClust::NbClust(
-          x,
-          index = tolower(idx),
-          method = nbclust_method,
-          max.nc = n_max,
-          ...
+        .catch_warnings(do.call(
+          NbClust::NbClust,
+          c(
+            list(data = x, index = tolower(idx), method = nbclust_method, max.nc = n_max),
+            dots
+          )
         ))
       },
       error = function(e) {
@@ -254,6 +348,11 @@ n_clusters <- function(x,
       "Package `M3C` required for this function to work. Please install it by first running `remotes::install_github('https://github.com/crj32/M3C')` (the package is not on CRAN)."
     ) # Not on CRAN (but on github and bioconductor)
   }
+
+  # M3C() calls set.seed() internally (seed = 123 by default), which would
+  # reset the user's random number stream. Restore the seed afterwards.
+  old_seed <- get0(".Random.seed", envir = globalenv(), inherits = FALSE)
+  on.exit(.restore_seed(old_seed), add = TRUE)
 
   data <- data.frame(t(x))
   colnames(data) <- paste0("x", seq(1, ncol(data))) # Add columns names as required by the package

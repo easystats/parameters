@@ -11,6 +11,20 @@
 
 ## Changes
 
+* *factoextra* is no longer needed. `n_clusters_elbow()`,
+  `n_clusters_silhouette()`, `n_clusters_gap()` and `n_clusters()` now compute
+  the within-cluster sum of squares, the silhouette width and the gap statistic
+  directly (with *cluster*). `cluster_analysis(method = "hkmeans")` runs the
+  hierarchical k-means itself, and still accepts `hc.metric`. The results are
+  the same as before. The within-cluster sum of squares no longer needs the
+  full distance matrix, so it uses less memory for large data.
+
+* The model of `cluster_analysis(method = "hkmeans")` now also has the class
+  `"kmeans"`, so `predict()` with `newdata` works.
+
+* The `standardize` argument of `n_clusters()` and `cluster_analysis()` now
+  says which *mclust* models depend on the scale of the variables.
+
 * `model_parameters()` for models from *blavaan* with `standardize` no longer
   returns rows for parameters with fixed or constant standardized draws, such
   as the standardized variances of exogenous latent variables. `print()` now
@@ -34,6 +48,54 @@
   which adjusts p-values based on the multivariate t distribution (#854).
 
 ## Bug fixes
+
+* `cluster_meta()` is much faster: about 0.3 seconds for 1700 observations
+  and 3 solutions, instead of about 3 minutes. It also fixes three problems:
+  - It now returns what its documentation says: the share of solutions that
+    put two observations in the same cluster (the diagonal is 1). Before, it
+    returned the share of solutions that put them in *different* clusters
+    (the diagonal was 0), so `predict()` and the `as.dist(abs(m - 1))` of the
+    example used the opposite of a distance.
+  - The first solution is no longer ignored.
+  - The rows are no longer in reverse order. Before, the matrix was not
+    symmetric by position, so `as.dist()` (and thus `predict()`) paired the
+    wrong observations.
+
+* `predict()` for `cluster_meta()` gets a `method` argument for the linkage of
+  the hierarchical clustering, passed to `hclust()`. The default is now
+  `"average"` (it was `"complete"`), the usual choice for consensus matrices.
+  With few solutions, the matrix has many ties, and complete linkage cut the
+  tree arbitrarily. The results of `predict()` change, as they also do because
+  of the fixes to `cluster_meta()` above. The tree is returned in the `"tree"`
+  attribute, for instance to order a heatmap.
+
+* `n_clusters()` with `package = "mclust"` now gives one vote, for the solution
+  with the best BIC. Before, each of the three best solutions was a vote, and
+  only the one with the fewest clusters was kept for a given model, which was
+  often not the best one. The three best solutions and their BIC differences
+  are in the `"mclust_BIC"` attribute.
+
+* `n_clusters()` no longer silently drops all *NbClust* indices when other
+  arguments, such as `gap_method`, are given. It also no longer fails for
+  `gap_method` with the *easystats* methods.
+
+* `n_clusters()` no longer counts the silhouette index and the gap statistic
+  twice. When the *easystats* methods are used, the *NbClust* `"Silhouette"`
+  and `"gap"` (with `fast = FALSE`) indices are skipped. Before, one of the two
+  silhouette votes was dropped, silently, by the removal of duplicate names,
+  and the gap statistic had three votes.
+
+* `n_clusters()` with `package = "NbClust"` no longer resets the random seed of
+  the user. `NbClust::NbClust()` calls `set.seed(1)`, so the seed is now
+  restored afterwards.
+
+* `n_clusters()` with `package = "M3C"` or `package = "all"` now runs the *M3C*
+  method. Before, it was always skipped. Like the *NbClust* methods, it no
+  longer resets the random seed of the user (`M3C::M3C()` calls `set.seed()`).
+
+* `n_clusters()` computes the gap statistic only once, which halves the time
+  of its bootstrap. Both rules for the number of clusters use the same gap
+  values.
 
 * `model_parameters()` for *BayesFactor* objects with more than one model, for
   example from `regressionBF()` or `anovaBF()`, now shows the Bayes factor of

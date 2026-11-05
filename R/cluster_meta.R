@@ -23,12 +23,38 @@
 #' hierarchical clustering (`hclust()`). See the example below.
 #'
 #'
+#' `predict()` extracts `n` clusters from this matrix. It runs a hierarchical
+#' clustering of `1 - object` (the share of solutions that put two observations
+#' in different clusters), and cuts the tree into `n` clusters. The default
+#' linkage is `"average"`, the usual choice for consensus matrices (Monti et
+#' al., 2003). When the matrix comes from a few solutions, it has few distinct
+#' values (e.g., 0, 1/3, 2/3 and 1 with three solutions). Many distances are
+#' then tied, and with `"complete"` linkage, where the tree is cut can depend
+#' on the order of the observations.
+#'
 #' @param list_of_clusters A list of vectors with the clustering assignments from various methods.
 #' @param rownames An optional vector of row.names for the matrix.
+#' @param object A `cluster_meta` matrix, as returned by `cluster_meta()`.
+#' @param n The number of clusters to extract.
+#' @param method The linkage (agglomeration) method of the hierarchical
+#'   clustering, passed to [`hclust()`]. Default is `"average"`.
 #' @param ... Currently not used.
 #'
-#' @return A matrix containing all the pairwise (between each observation)
-#' probabilities of being clustered together by the methods.
+#' @return A symmetric matrix containing all the pairwise (between each
+#' observation) probabilities of being clustered together by the methods, i.e.,
+#' the share of solutions that put the two observations in the same cluster.
+#' Observations that are not assigned to a cluster (`NA` or `0`, e.g., noise
+#' in DBSCAN) are ignored for that solution, so the share is computed over the
+#' solutions that assign both observations. The diagonal is 1.
+#'
+#' `predict()` returns a vector with the cluster of each observation. The
+#' tree (the [`hclust()`] object) is in its `"tree"` attribute, for instance to
+#' order the rows of a heatmap.
+#'
+#' @references
+#' Monti, S., Tamayo, P., Mesirov, J., & Golub, T. (2003). Consensus
+#' clustering: A resampling-based method for class discovery and visualization
+#' of gene expression microarray data. Machine Learning, 52(1), 91-118.
 #'
 #'
 #' @examples
@@ -49,12 +75,15 @@
 #' heatmap(m, scale = "none")
 #'
 #' # Extract 3 clusters
-#' predict(m, n = 3)
+#' clusters <- predict(m, n = 3)
+#' clusters
 #'
-#' # Convert to dissimilarity
-#' d <- as.dist(abs(m - 1))
-#' model <- hclust(d)
-#' plot(model, hang = -1)
+#' # The tree of the hierarchical clustering
+#' tree <- attributes(clusters)$tree
+#' plot(tree, hang = -1)
+#'
+#' # Heatmap ordered by this tree
+#' heatmap(m, Rowv = as.dendrogram(tree), symm = TRUE, scale = "none")
 #' }
 #' @export
 cluster_meta <- function(list_of_clusters, rownames = NULL, ...) {
@@ -96,45 +125,43 @@ cluster_meta <- function(list_of_clusters, rownames = NULL, ...) {
 
 #' @keywords internal
 .cluster_meta_matrix <- function(data) {
-  # Internal function
-  .get_prob <- function(x) {
-    if (anyNA(x)) {
-      NA
-    } else if (length(unique(x[!is.na(x)])) == 1) {
-      0
-    } else {
-      1
-    }
+  # For each solution, a one-hot matrix of cluster membership (with a row of
+  # zeros for unassigned observations) gives, by its cross-product, the pairs
+  # that are in the same cluster. Summed over solutions, and divided by the
+  # number of solutions that assign both observations, this gives the share of
+  # solutions that put each pair together.
+  n <- nrow(data)
+  together <- matrix(0, nrow = n, ncol = n)
+  assigned <- matrix(0, nrow = n, ncol = n)
+
+  for (solution in data) {
+    solution <- factor(solution)
+    valid <- !is.na(solution)
+    membership <- matrix(0, nrow = n, ncol = nlevels(solution))
+    membership[cbind(which(valid), as.integer(solution)[valid])] <- 1
+    together <- together + tcrossprod(membership)
+    assigned <- assigned + tcrossprod(as.numeric(valid))
   }
 
-  # Initialize matrix
-  m <- matrix(data = NA, nrow = nrow(data), ncol = nrow(data), dimnames = list(rev(row.names(data)), row.names(data)))
-
-  for (row in row.names(m)) {
-    for (col in colnames(m)) {
-      if (row == col) {
-        m[row, col] <- 0
-        next
-      }
-      subset_rows <- data[row.names(data) %in% c(row, col), ]
-      rez <- sapply(subset_rows[2:ncol(subset_rows)], .get_prob)
-      m[row, col] <- sum(rez, na.rm = TRUE) / length(stats::na.omit(rez))
-    }
-  }
-
+  # pairs that no solution assigns are NaN (0 / 0)
+  m <- together / assigned
+  diag(m) <- 1
+  dimnames(m) <- list(row.names(data), row.names(data))
   m
 }
 
 
 # Methods ----------------------------------------------------------------
 
+#' @rdname cluster_meta
 #' @export
-#' @inheritParams stats::predict
-predict.cluster_meta <- function(object, n = NULL, ...) {
+predict.cluster_meta <- function(object, n = NULL, method = "average", ...) {
   if (is.null(n)) {
     insight::format_error("The number of clusters to extract `n` must be entered.")
   }
-  d <- stats::as.dist(abs(object - 1))
-  model <- stats::hclust(d)
-  stats::cutree(model, k = n)
+  d <- stats::as.dist(1 - unclass(object))
+  tree <- stats::hclust(d, method = method)
+  out <- stats::cutree(tree, k = n)
+  attr(out, "tree") <- tree
+  out
 }

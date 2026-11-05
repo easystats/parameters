@@ -29,8 +29,9 @@ Note that this argument does not apply for unsupervised clustering methods
 like \code{dbscan}, \code{hdbscan}, \code{mixture}, \code{pvclust}, or \code{pamk}.}
 
 \item{method}{Method for computing the cluster analysis. Can be \code{"kmeans"}
-(default; k-means using \code{kmeans()}), \code{"hkmeans"} (hierarchical k-means
-using \code{factoextra::hkmeans()}), \code{pam} (K-Medoids using \code{cluster::pam()}),
+(default; k-means using \code{kmeans()}), \code{"hkmeans"} (hierarchical k-means,
+i.e., k-means started from the centers of a hierarchical clustering, as in
+\code{factoextra::hkmeans()}), \code{pam} (K-Medoids using \code{cluster::pam()}),
 \code{pamk} (K-Medoids that finds out the number of clusters), \code{"hclust"}
 (hierarchical clustering using \code{hclust()} or \code{pvclust::pvclust()}),
 \code{dbscan} (DBSCAN using \code{dbscan::dbscan()}), \code{hdbscan} (Hierarchical DBSCAN
@@ -43,7 +44,18 @@ values in order to be included in the data for determining the number of
 clusters. By default, factors are removed, because most methods that
 determine the number of clusters need numeric input only.}
 
-\item{standardize}{Standardize the dataframe before clustering (default).}
+\item{standardize}{Standardize the dataframe before clustering (default).
+Most methods depend on the scale of the variables, so standardizing can
+change their results. This is the case for k-means and for the
+distance-based indices. It is also the case for most of the Gaussian
+mixture models of \emph{mclust} (\code{package = "mclust"} in \code{n_clusters()},
+\code{method = "mixture"} in \code{cluster_analysis()}). Only some models give the same fit
+on standardized data: those with unconstrained (\code{VVV}), equal (\code{EEE}),
+proportional (\code{VEE}), or diagonal (\code{EEI}, \code{VEI}, \code{EVI}, \code{VVI}) covariance
+matrices. The spherical models (\code{EII}, \code{VII}) and the models with a
+common shape or orientation but not both (\code{EVE}, \code{VVE}, \code{EEV}, \code{VEV},
+\code{EVV}) do not. For these, the selected model and number of clusters can
+change with standardization.}
 
 \item{verbose}{Toggle warnings and messages.}
 
@@ -105,11 +117,9 @@ if (requireNamespace("MASS", quietly = TRUE)) {
 }
 
 # Hierarchical k-means (more robust k-means)
-if (require("factoextra", quietly = TRUE)) {
-  rez <- cluster_analysis(iris[1:4], n = 3, method = "hkmeans")
-  rez # Show results
-  predict(rez) # Get clusters
-}
+rez <- cluster_analysis(iris[1:4], n = 3, method = "hkmeans")
+rez # Show results
+predict(rez) # Get clusters
 
 # Hierarchical Clustering (hclust) ===========================
 rez <- cluster_analysis(iris[1:4], n = 3, method = "hclust")
