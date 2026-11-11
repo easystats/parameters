@@ -421,30 +421,30 @@ principal_components(mtcars[, 1:7], n = 4, sparse = TRUE)
 #> 
 #> Variable |   PC1 |   PC2 |   PC3 |   PC4 | Complexity
 #> -----------------------------------------------------
-#> mpg      | -0.92 |  0.03 | -0.11 | -0.31 |       1.27
-#> cyl      |  1.00 |  0.07 | -0.07 | -0.05 |       1.03
+#> mpg      | -0.91 |  0.03 | -0.11 | -0.31 |       1.27
+#> cyl      |  0.99 |  0.07 | -0.07 | -0.05 |       1.03
 #> disp     |  0.96 | -0.06 |  0.08 | -0.23 |       1.14
 #> hp       |  0.74 |  0.32 |  0.07 |  0.00 |       1.38
-#> drat     | -0.68 |  0.46 |  0.47 | -0.03 |       2.62
-#> wt       |  1.03 | -0.32 |  0.24 | -0.03 |       1.31
+#> drat     | -0.67 |  0.45 |  0.47 | -0.02 |       2.62
+#> wt       |  1.03 | -0.32 |  0.23 | -0.03 |       1.31
 #> qsec     | -0.49 | -0.85 |  0.17 |  0.00 |       1.69
 #> 
-#> The 4 principal components accounted for 96.42% of the total variance of the original data (PC1 = 72.75%, PC2 = 16.53%, PC3 = 4.91%, PC4 = 2.24%).
+#> The 4 principal components accounted for 96.42% of the total variance of the original data (PC1 = 72.69%, PC2 = 16.60%, PC3 = 4.90%, PC4 = 2.24%).
 #> 
 principal_components(mtcars[, 1:7], n = 4, sparse = "robust")
 #> # Loadings from Principal Component Analysis (no rotation)
 #> 
 #> Variable |   PC1 |   PC2 |   PC3 |   PC4 | Complexity
 #> -----------------------------------------------------
-#> mpg      | -0.92 |  0.03 | -0.11 | -0.31 |       1.27
-#> cyl      |  1.00 |  0.07 | -0.07 | -0.05 |       1.03
+#> mpg      | -0.91 |  0.03 | -0.11 | -0.31 |       1.27
+#> cyl      |  0.99 |  0.07 | -0.07 | -0.05 |       1.03
 #> disp     |  0.96 | -0.06 |  0.08 | -0.23 |       1.14
 #> hp       |  0.74 |  0.32 |  0.07 |  0.00 |       1.38
-#> drat     | -0.68 |  0.46 |  0.47 | -0.03 |       2.62
-#> wt       |  1.03 | -0.32 |  0.24 | -0.03 |       1.31
+#> drat     | -0.67 |  0.45 |  0.47 | -0.02 |       2.62
+#> wt       |  1.03 | -0.32 |  0.23 | -0.03 |       1.31
 #> qsec     | -0.49 | -0.85 |  0.17 |  0.00 |       1.69
 #> 
-#> The 4 principal components accounted for 96.42% of the total variance of the original data (PC1 = 72.75%, PC2 = 16.53%, PC3 = 4.91%, PC4 = 2.24%).
+#> The 4 principal components accounted for 96.42% of the total variance of the original data (PC1 = 72.69%, PC2 = 16.60%, PC3 = 4.90%, PC4 = 2.24%).
 #> 
 
 # Rotated PCA
