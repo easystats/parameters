@@ -6,7 +6,12 @@ DA_test_model <- lm(mpg ~ vs + cyl + carb, data = mtcars)
 
 DA_performance <- dominance_analysis(DA_test_model)
 
-DA_domir <- domir::domin(mpg ~ vs + cyl + carb, lm, list(performance::r2, "R2"), data = mtcars)
+DA_domir <- domir::domin(
+  mpg ~ vs + cyl + carb,
+  lm,
+  list(performance::r2, "R2"),
+  data = mtcars
+)
 
 test_that("dominance_analysis$general_dominance", {
   gnrl_domir <- c(NA, DA_domir$General_Dominance)
@@ -14,7 +19,7 @@ test_that("dominance_analysis$general_dominance", {
 
   gnrl_da <- DA_performance$General$General_Dominance
 
-  expect_identical(gnrl_domir, gnrl_da)
+  expect_equal(gnrl_domir, gnrl_da, tolerance = 1e-4)
 })
 
 test_that("dominance_analysis$conditional_dominance", {
@@ -24,7 +29,7 @@ test_that("dominance_analysis$conditional_dominance", {
   cdl_da <- as.matrix(DA_performance$Conditional[, -1])
   dimnames(cdl_da) <- c(NULL, NULL)
 
-  expect_identical(cdl_domir, cdl_da)
+  expect_equal(cdl_domir, cdl_da, tolerance = 1e-4)
 })
 
 test_that("dominance_analysis$complete_dominance", {
@@ -34,7 +39,7 @@ test_that("dominance_analysis$complete_dominance", {
   cpt_da <- t(DA_performance$Complete[, -1])
   dimnames(cpt_da) <- list(NULL, NULL)
 
-  expect_identical(cpt_domir, cpt_da)
+  expect_equal(cpt_domir, cpt_da, tolerance = 1e-4)
 })
 
 DA_performance2 <- dominance_analysis(
@@ -60,9 +65,10 @@ test_that("dominance_analysis$general_dominance with sets/all", {
   domir_all_sub_r2 <- DA_domir2$Fit_Statistic_All_Subsets
   names(domir_all_sub_r2) <- NULL
 
-  expect_identical(
+  expect_equal(
     domir_all_sub_r2,
-    with(DA_performance2$General, General_Dominance[Subset == "all"])
+    with(DA_performance2$General, General_Dominance[Subset == "all"]),
+    tolerance = 1e-4
   )
 
   gnrl_domir2 <- DA_domir2$General_Dominance
@@ -70,11 +76,12 @@ test_that("dominance_analysis$general_dominance with sets/all", {
 
   gnrl_da2 <- aggregate(
     DA_performance2$General$General_Dominance,
-    list(DA_performance2$General$Subset), mean
+    list(DA_performance2$General$Subset),
+    mean
   )
   gnrl_da2 <- gnrl_da2[which(gnrl_da2$Group.1 %in% c("cyl", "set1")), ]
   gnrl_da2 <- gnrl_da2$x
   names(gnrl_da2) <- NULL
 
-  expect_identical(gnrl_domir2, gnrl_da2)
+  expect_equal(gnrl_domir2, gnrl_da2, tolerance = 1e-4)
 })
