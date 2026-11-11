@@ -447,6 +447,32 @@ test_that("standardize_parameters (brms, transformed terms revert to basic)", {
 })
 
 
+test_that("standardize_parameters (brms, factor() terms)", {
+  skip_on_cran()
+  skip_if_not_installed("curl")
+  skip_if_offline()
+  skip_if_not_installed("httr2")
+  skip_if_not_installed("brms")
+  skip_if_not_installed("rstan")
+  skip_if(packageVersion("insight") < "1.7.0.2")
+
+  m <- suppressWarnings(insight::download_model("brms_5"))
+  skip_if(is.null(m))
+
+  b <- insight::get_parameters(m)
+  out <- standardize_parameters(m, method = "basic")
+  expect_equal(
+    out$Std_Median[match(c("b_factorcyl6", "b_factorcyl8"), out$Parameter)],
+    c(
+      median(b$b_factorcyl6) * sd(mtcars$cyl == 6),
+      median(b$b_factorcyl8) * sd(mtcars$cyl == 8)
+    ) /
+      sd(mtcars$mpg),
+    tolerance = 1e-8
+  )
+})
+
+
 # Pseudo - GLMM --------------------------------
 test_that("standardize_parameters (Pseudo - GLMM)", {
   skip_if_not_installed("datawizard")
