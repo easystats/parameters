@@ -2,9 +2,12 @@
 % Please edit documentation in R/cluster_meta.R
 \name{cluster_meta}
 \alias{cluster_meta}
+\alias{predict.cluster_meta}
 \title{Metaclustering}
 \usage{
 cluster_meta(list_of_clusters, rownames = NULL, ...)
+
+\method{predict}{cluster_meta}(object, n = NULL, method = "average", ...)
 }
 \arguments{
 \item{list_of_clusters}{A list of vectors with the clustering assignments from various methods.}
@@ -12,10 +15,25 @@ cluster_meta(list_of_clusters, rownames = NULL, ...)
 \item{rownames}{An optional vector of row.names for the matrix.}
 
 \item{...}{Currently not used.}
+
+\item{object}{A \code{cluster_meta} matrix, as returned by \code{cluster_meta()}.}
+
+\item{n}{The number of clusters to extract.}
+
+\item{method}{The linkage (agglomeration) method of the hierarchical
+clustering, passed to \code{\link[=hclust]{hclust()}}. Default is \code{"average"}.}
 }
 \value{
-A matrix containing all the pairwise (between each observation)
-probabilities of being clustered together by the methods.
+A symmetric matrix containing all the pairwise (between each
+observation) probabilities of being clustered together by the methods, i.e.,
+the share of solutions that put the two observations in the same cluster.
+Observations that are not assigned to a cluster (\code{NA} or \code{0}, e.g., noise
+in DBSCAN) are ignored for that solution, so the share is computed over the
+solutions that assign both observations. The diagonal is 1.
+
+\code{predict()} returns a vector with the cluster of each observation. The
+tree (the \code{\link[=hclust]{hclust()}} object) is in its \code{"tree"} attribute, for instance to
+order the rows of a heatmap.
 }
 \description{
 One of the core "issue" of statistical clustering is that, in many cases,
@@ -40,6 +58,15 @@ investigate how robust some clusters are under different algorithms.
 This metaclustering probability matrix can be transformed into a dissimilarity
 matrix (such as the one produced by \code{dist()}) and submitted for instance to
 hierarchical clustering (\code{hclust()}). See the example below.
+
+\code{predict()} extracts \code{n} clusters from this matrix. It runs a hierarchical
+clustering of \code{1 - object} (the share of solutions that put two observations
+in different clusters), and cuts the tree into \code{n} clusters. The default
+linkage is \code{"average"}, the usual choice for consensus matrices (Monti et
+al., 2003). When the matrix comes from a few solutions, it has few distinct
+values (e.g., 0, 1/3, 2/3 and 1 with three solutions). Many distances are
+then tied, and with \code{"complete"} linkage, where the tree is cut can depend
+on the order of the observations.
 }
 \examples{
 \donttest{
@@ -59,11 +86,19 @@ heatmap(m, Rowv = NA, Colv = NA, scale = "none") # Without reordering
 heatmap(m, scale = "none")
 
 # Extract 3 clusters
-predict(m, n = 3)
+clusters <- predict(m, n = 3)
+clusters
 
-# Convert to dissimilarity
-d <- as.dist(abs(m - 1))
-model <- hclust(d)
-plot(model, hang = -1)
+# The tree of the hierarchical clustering
+tree <- attributes(clusters)$tree
+plot(tree, hang = -1)
+
+# Heatmap ordered by this tree
+heatmap(m, Rowv = as.dendrogram(tree), symm = TRUE, scale = "none")
 }
+}
+\references{
+Monti, S., Tamayo, P., Mesirov, J., & Golub, T. (2003). Consensus
+clustering: A resampling-based method for class discovery and visualization
+of gene expression microarray data. Machine Learning, 52(1), 91-118.
 }

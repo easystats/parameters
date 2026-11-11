@@ -1,7 +1,7 @@
 Type: Package
 Package: parameters
 Title: Processing of Model Parameters
-Version: 0.30.0.16
+Version: 0.30.0.17
 Authors@R:
     c(person(given = "Daniel",
              family = "Lüdecke",
@@ -133,7 +133,6 @@ Suggests:
     emmeans (>= 1.7.0),
     epiR,
     estimatr,
-    factoextra,
     FactoMineR,
     faraway,
     fastICA,
