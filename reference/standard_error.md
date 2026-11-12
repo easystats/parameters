@@ -71,7 +71,7 @@ standard_error(model, re_test = TRUE, ...)
 
     - Heteroskedasticity-consistent: `"HC"`, `"HC0"`, `"HC1"`, `"HC2"`,
       `"HC3"`, `"HC4"`, `"HC4m"`, `"HC5"`. See
-      [`?sandwich::vcovHC`](https://rdrr.io/pkg/sandwich/man/vcovHC.html)
+      [`?sandwich::vcovHC`](https://zeileis.codeberg.page/sandwich/reference/vcovHC.html)
 
     - Cluster-robust: `"CR"`, `"CR0"`, `"CR1"`, `"CR1p"`, `"CR1S"`,
       `"CR2"`, `"CR3"`. See
@@ -79,7 +79,7 @@ standard_error(model, re_test = TRUE, ...)
 
     - Bootstrap: `"BS"`, `"xy"`, `"residual"`, `"wild"`, `"mammen"`,
       `"fractional"`, `"jackknife"`, `"norm"`, `"webb"`. See
-      [`?sandwich::vcovBS`](https://rdrr.io/pkg/sandwich/man/vcovBS.html)
+      [`?sandwich::vcovBS`](https://zeileis.codeberg.page/sandwich/reference/vcovBS.html)
 
     - Other `sandwich` package functions: `"HAC"`, `"PC"`, `"CL"`,
       `"OPG"`, `"PL"`.
@@ -90,7 +90,7 @@ standard_error(model, re_test = TRUE, ...)
   `vcov` argument. This function is typically supplied by the
   **sandwich** or **clubSandwich** packages. Please refer to their
   documentation (e.g.,
-  [`?sandwich::vcovHAC`](https://rdrr.io/pkg/sandwich/man/vcovHAC.html))
+  [`?sandwich::vcovHAC`](https://zeileis.codeberg.page/sandwich/reference/vcovHAC.html))
   to see the list of available arguments. If no estimation type
   (argument `type`) is given, the default type for `"HC"` equals the
   default from the **sandwich** package; for type `"CR"`, the default is
@@ -156,10 +156,10 @@ standard_error(model,
   vcov_args = list(cluster = iris$Species)
 )
 #>                        Parameter           SE
-#> 1                    (Intercept) 1.899355e-15
-#> 2                   Sepal.Length 3.791739e-16
-#> 3              Speciesversicolor 2.176618e-15
-#> 4               Speciesvirginica 2.325405e-15
-#> 5 Sepal.Length:Speciesversicolor 4.187729e-16
-#> 6  Sepal.Length:Speciesvirginica 4.286746e-16
+#> 1                    (Intercept) 4.036949e-15
+#> 2                   Sepal.Length 8.030719e-16
+#> 3              Speciesversicolor 4.050009e-15
+#> 4               Speciesvirginica 4.054970e-15
+#> 5 Sepal.Length:Speciesversicolor 8.050550e-16
+#> 6  Sepal.Length:Speciesvirginica 8.051123e-16
 ```

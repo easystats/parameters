@@ -33,7 +33,7 @@ arguments:
 2.  `vcov_args`: list of arguments passed to the *sandwich* or
     *clubSandwich* function used to compute the covariance matrix. See
     for example
-    [`?sandwich::vcovHAC`](https://rdrr.io/pkg/sandwich/man/vcovHAC.html)
+    [`?sandwich::vcovHAC`](https://zeileis.codeberg.page/sandwich/reference/vcovHAC.html)
 
 ## Linear Regression Models
 
@@ -79,7 +79,7 @@ coefficient estimate remains unchanged.
 `# compare standard errors to result from sandwich-package`\
 `mp``$``SE`\
 `#> [1] 5.93 0.43`\
-[`unname`](https://rdrr.io/r/base/unname.html)`(`[`sqrt`](https://rdrr.io/r/base/MathFun.html)`(`[`diag`](https://rdrr.io/r/base/diag.html)`(``sandwich``::`[`vcovHC`](https://rdrr.io/pkg/sandwich/man/vcovHC.html)`(``model``)``)``)``)`\
+[`unname`](https://rdrr.io/r/base/unname.html)`(`[`sqrt`](https://rdrr.io/r/base/MathFun.html)`(`[`diag`](https://rdrr.io/r/base/diag.html)`(``sandwich``::`[`vcovHC`](https://zeileis.codeberg.page/sandwich/reference/vcovHC.html)`(``model``)``)``)``)`\
 `#> [1] 5.93 0.43`
 
 ### Cluster-Robust Covariance Matrix Estimation (sandwich)
@@ -92,10 +92,10 @@ corresponding function with the content of `vcov_args` as arguments.
 
 The specific estimation type can be controlled by passing a `type`
 argument via `vcov_args`. See
-[`?sandwich::vcovCL`](https://rdrr.io/pkg/sandwich/man/vcovCL.html) for
-information about the different types of covariance matrices that this
-function can produce (`HC0` to `HC3`). In the next example, we use a
-clustered covariance matrix estimation with `HC1`-estimation type.
+[`?sandwich::vcovCL`](https://zeileis.codeberg.page/sandwich/reference/vcovCL.html)
+for information about the different types of covariance matrices that
+this function can produce (`HC0` to `HC3`). In the next example, we use
+a clustered covariance matrix estimation with `HC1`-estimation type.
 
 \
 `# let's create a more complicated model`\
@@ -133,13 +133,13 @@ clustered covariance matrix estimation with `HC1`-estimation type.
 `# compare standard errors to result from sandwich-package`\
 `mp``$``SE`\
 `#> [1] 0.422 0.111 0.653 0.587 0.079 0.123 0.111`\
-[`unname`](https://rdrr.io/r/base/unname.html)`(`[`sqrt`](https://rdrr.io/r/base/MathFun.html)`(`[`diag`](https://rdrr.io/r/base/diag.html)`(``sandwich``::`[`vcovCL`](https://rdrr.io/pkg/sandwich/man/vcovCL.html)`(``model``)``)``)``)`\
+[`unname`](https://rdrr.io/r/base/unname.html)`(`[`sqrt`](https://rdrr.io/r/base/MathFun.html)`(`[`diag`](https://rdrr.io/r/base/diag.html)`(``sandwich``::`[`vcovCL`](https://zeileis.codeberg.page/sandwich/reference/vcovCL.html)`(``model``)``)``)``)`\
 `#> [1] 0.422 0.111 0.653 0.587 0.079 0.123 0.111`
 
 Usually, clustered covariance matrix estimation is used when there is a
 cluster-structure in the data. The variable indicating the
 cluster-structure can be defined in
-[`sandwich::vcovCL()`](https://rdrr.io/pkg/sandwich/man/vcovCL.html)
+[`sandwich::vcovCL()`](https://zeileis.codeberg.page/sandwich/reference/vcovCL.html)
 with the `cluster`-argument. In
 [`model_parameters()`](https://easystats.github.io/parameters/reference/model_parameters.md),
 additional arguments that should be passed down to functions from the
@@ -179,7 +179,7 @@ additional arguments that should be passed down to functions from the
 `# compare standard errors to result from sandwich-package`\
 `mp``$``SE`\
 `#> [1] 0.337 0.072 0.519 0.264 0.072 0.097 0.051`\
-[`unname`](https://rdrr.io/r/base/unname.html)`(`[`sqrt`](https://rdrr.io/r/base/MathFun.html)`(`[`diag`](https://rdrr.io/r/base/diag.html)`(``sandwich``::`[`vcovCL`](https://rdrr.io/pkg/sandwich/man/vcovCL.html)`(``model``, cluster ``=`` ``iris``$``cluster``)``)``)``)`\
+[`unname`](https://rdrr.io/r/base/unname.html)`(`[`sqrt`](https://rdrr.io/r/base/MathFun.html)`(`[`diag`](https://rdrr.io/r/base/diag.html)`(``sandwich``::`[`vcovCL`](https://zeileis.codeberg.page/sandwich/reference/vcovCL.html)`(``model``, cluster ``=`` ``iris``$``cluster``)``)``)``)`\
 `#> [1] 0.337 0.072 0.519 0.264 0.072 0.097 0.051`
 
 ### Cluster-Robust Covariance Matrix Estimation (clubSandwich)
