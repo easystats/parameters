@@ -382,9 +382,10 @@ standardize_info.default <- function(
       variable <- names(model_matrix)[i]
       is_variable <- type_names == variable
       # results are written by position, and the model matrix of a brms model
-      # can have fewer columns than parameters
+      # can have fewer columns than parameters. Terms such as `factor(x)` have
+      # no type for brms models.
       if (inherits(model, "brmsfit")) {
-        is_variable <- is_variable & seq_along(type_names) == i
+        is_variable <- is_variable & seq_along(type_names) == i & !is.na(types$Link)
       }
       if (any(is_variable) && types$Link[is_variable] == "Difference") {
         parent_var <- types$Variable[is_variable]
