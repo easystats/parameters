@@ -2,12 +2,18 @@ test_that("pooled parameters", {
   skip_if_not_installed("mice")
   data("nhanes2", package = "mice")
   set.seed(123)
-  imp <- mice::mice(nhanes2, printFlag = FALSE)
+  # not "pmm", so the snapshot doesn't change when mice changes how pmm draws donors
+  imp <- mice::mice(nhanes2, method = c("", "norm", "logreg", "norm"), printFlag = FALSE)
   models <- lapply(1:5, function(i) {
     lm(bmi ~ age + hyp + chl, data = mice::complete(imp, action = i))
   })
   pp <- pool_parameters(models)
-  expect_equal(pp$df_error, c(9.2225, 8.1903, 3.6727, 10.264, 6.4385), tolerance = 1e-3)
+  m_mice <- with(data = imp, exp = lm(bmi ~ age + hyp + chl))
+  mice_summ <- summary(mice::pool(m_mice))
+  expect_equal(pp$Coefficient, mice_summ$estimate, tolerance = 1e-3)
+  expect_equal(pp$SE, mice_summ$std.error, tolerance = 1e-3)
+  expect_equal(pp$df_error, mice_summ$df, tolerance = 1e-3)
+  expect_equal(pp$p, mice_summ$p.value, tolerance = 1e-3)
   expect_snapshot(print(pp))
 })
 
@@ -64,6 +70,14 @@ test_that("pooled parameters, glmmTMB, components", {
     )
   })
 
+  # pooled estimates are the means of the estimates from each model
+  fixed_mean <- unname(rowMeans(sapply(models, function(m) {
+    unlist(glmmTMB::fixef(m)[c("cond", "disp")])
+  })))
+  sd_mean <- mean(sapply(models, function(m) {
+    attr(glmmTMB::VarCorr(m)$cond$t, "stddev")
+  }))
+
   out <- pool_parameters(models, component = "conditional")
   expect_named(
     out,
@@ -72,7 +86,7 @@ test_that("pooled parameters, glmmTMB, components", {
       "df_error", "p"
     )
   )
-  expect_equal(out$Coefficient, c(187.280225, -87.838969), tolerance = 1e-3)
+  expect_equal(out$Coefficient, fixed_mean[1:2], tolerance = 1e-3)
 
   out <- suppressMessages(pool_parameters(models, component = "all", effects = "all"))
   expect_named(
@@ -82,11 +96,7 @@ test_that("pooled parameters, glmmTMB, components", {
       "Statistic", "df_error", "p", "Component"
     )
   )
-  expect_equal(
-    out$Coefficient,
-    c(187.280225, -87.838969, 3.51576, -1.032665, 0.610992, NaN),
-    tolerance = 1e-3
-  )
+  expect_equal(out$Coefficient, c(fixed_mean, sd_mean, NaN), tolerance = 1e-3)
 
   out <- pool_parameters(models, component = "all", effects = "fixed")
   expect_named(
@@ -96,11 +106,7 @@ test_that("pooled parameters, glmmTMB, components", {
       "Statistic", "df_error", "p", "Component"
     )
   )
-  expect_equal(
-    out$Coefficient,
-    c(187.280225, -87.838969, 3.51576, -1.032665),
-    tolerance = 1e-3
-  )
+  expect_equal(out$Coefficient, fixed_mean, tolerance = 1e-3)
 })
 
 
@@ -131,11 +137,6 @@ test_that("pooled parameters, glmmTMB, zero-inflated", {
       "df_error", "p", "Component"
     )
   )
-  expect_equal(
-    out$Coefficient,
-    c(0.13409, 1.198551, -0.181912, 1.253029, -1.844026),
-    tolerance = 1e-3
-  )
 
   # validate against mice ---------------
   m_mice <- suppressWarnings(with(data = impdat, exp = glmmTMB::glmmTMB(
@@ -143,10 +144,18 @@ test_that("pooled parameters, glmmTMB, zero-inflated", {
     ziformula = ~mined,
     family = poisson()
   )))
-  mice_summ <- suppressWarnings(summary(mice::pool(m_mice, dfcom = Inf)))
+  mice_summ <- suppressWarnings(summary(mice::pool(
+    m_mice,
+    dfcom = stats::df.residual(models[[1]])
+  )))
   expect_equal(out$Coefficient, mice_summ$estimate, tolerance = 1e-3)
   expect_equal(out$SE, mice_summ$std.error, tolerance = 1e-3)
+  expect_equal(out$df_error, mice_summ$df, tolerance = 1e-3)
   expect_equal(out$p, mice_summ$p.value, tolerance = 1e-3)
+
+  sd_mean <- mean(sapply(models, function(m) {
+    attr(glmmTMB::VarCorr(m)$cond$site, "stddev")
+  }))
 
   out <- pool_parameters(models, component = "all", effects = "all")
   expect_named(
@@ -156,11 +165,7 @@ test_that("pooled parameters, glmmTMB, zero-inflated", {
       "Statistic", "df_error", "p", "Component"
     )
   )
-  expect_equal(
-    out$Coefficient,
-    c(0.13409, 1.198551, -0.181912, 1.253029, -1.844026, 0.158795),
-    tolerance = 1e-3
-  )
+  expect_equal(out$Coefficient, c(mice_summ$estimate, sd_mean), tolerance = 1e-3)
 
   out <- pool_parameters(models, component = "conditional", effects = "fixed")
   expect_named(
@@ -170,9 +175,5 @@ test_that("pooled parameters, glmmTMB, zero-inflated", {
       "Statistic", "df_error", "p"
     )
   )
-  expect_equal(
-    out$Coefficient,
-    c(0.13409, 1.198551, -0.181912),
-    tolerance = 1e-3
-  )
+  expect_equal(out$Coefficient, mice_summ$estimate[1:3], tolerance = 1e-3)
 })
