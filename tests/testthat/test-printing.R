@@ -323,7 +323,7 @@ withr::with_options(list(parameters_interaction = "*", easystats_table_width = I
     expect_identical(
       capture.output(print(out, select = "{coef}{stars}|[{ci}]")),
       c(
-        "Parameter     | Coefficient |            [CI]",
+        "Parameter     | Coefficient |        [95% CI]",
         "---------------------------------------------",
         "hp            |     -0.06** | [ -0.11, -0.02]",
         "gear [4]      |        3.10 | [ -5.90, 12.10]",
@@ -363,7 +363,7 @@ withr::with_options(list(parameters_interaction = "*", easystats_table_width = I
         select = "{coef}{stars}|[{ci}]"
       )),
       c(
-        "Parameter       | Coefficient |            [CI]",
+        "Parameter       | Coefficient |        [95% CI]",
         "-----------------------------------------------",
         "Engine          |             |                ",
         "  cyl [6]       |       -2.47 | [ -7.05,  2.12]",
@@ -391,7 +391,7 @@ withr::with_options(list(parameters_interaction = "*", easystats_table_width = I
         select = "{coef}{stars}|[{ci}]"
       )),
       c(
-        "Parameter        Coefficient             [CI]",
+        "Parameter        Coefficient         [95% CI]",
         "---------------------------------------------",
         "Engine                                       ",
         "  cyl [6]              -2.47  [ -7.05,  2.12]",
