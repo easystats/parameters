@@ -129,14 +129,15 @@ test_that("standardize_parameters (lm with ci)", {
 
   data("mtcars")
   m0 <- lm(mpg ~ cyl + factor(am), mtcars)
+  # smart scales factor(am) by the SD of mpg at am = 0, so only cyl matches refit
   expect_equal(
-    standardize_parameters(m0, method = "refit")[[2]][-1],
-    standardize_parameters(m0, method = "smart")[[2]][-1],
+    standardize_parameters(m0, method = "refit")[[2]][2],
+    standardize_parameters(m0, method = "smart")[[2]][2],
     tolerance = 0.01
   )
   expect_equal(
-    standardize_parameters(m0, method = "refit", two_sd = TRUE)[[2]][-1],
-    standardize_parameters(m0, method = "smart", two_sd = TRUE)[[2]][-1],
+    standardize_parameters(m0, method = "refit", two_sd = TRUE)[[2]][2],
+    standardize_parameters(m0, method = "smart", two_sd = TRUE)[[2]][2],
     tolerance = 0.01
   )
 })
@@ -154,6 +155,33 @@ test_that("standardize_parameters (aov)", {
   expect_equal(
     standardize_parameters(m_aov),
     standardize_parameters(m_lm),
+    ignore_attr = TRUE
+  )
+})
+
+
+# smart, reference level --------------------------------
+test_that("standardize_parameters (smart, reference level)", {
+  # the first row of mtcars has cyl 6, not the reference level 4
+  m <- lm(mpg ~ factor(cyl), data = mtcars)
+  out <- standardize_parameters(m, method = "smart")
+  expect_equal(
+    out$Std_Coefficient[-1],
+    coef(m)[-1] / sd(mtcars$mpg[mtcars$cyl == 4]),
+    tolerance = 1e-8,
+    ignore_attr = TRUE
+  )
+
+  d <- mtcars
+  d$cyl <- relevel(factor(d$cyl), "8")
+  d$am <- d$am == 1
+  m <- lm(mpg ~ cyl + am, data = d)
+  out <- standardize_parameters(m, method = "smart")
+  sd_ref <- c(rep(sd(d$mpg[d$cyl == "8"]), 2), sd(d$mpg[!d$am]))
+  expect_equal(
+    out$Std_Coefficient[-1],
+    coef(m)[-1] / sd_ref,
+    tolerance = 1e-8,
     ignore_attr = TRUE
   )
 })

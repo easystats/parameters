@@ -389,10 +389,10 @@ standardize_info.default <- function(
       }
       if (any(is_variable) && types$Link[is_variable] == "Difference") {
         parent_var <- types$Variable[is_variable]
-        intercept <- unique(data[[parent_var]])[1]
-        response_at_intercept <- response[data[[parent_var]] == intercept]
+        at_intercept <- .smart_at_reference(data[[parent_var]], parent_var, types)
+        response_at_intercept <- response[at_intercept]
         weights_at_intercept <- if (length(w)) {
-          w[data[[parent_var]] == intercept]
+          w[at_intercept]
         } else {
           NULL
         }
@@ -420,6 +420,23 @@ standardize_info.default <- function(
     Mean_Response_Smart = means,
     stringsAsFactors = FALSE
   )
+}
+
+
+# rows of the reference level, which is at the intercept. It is the one level
+# of the variable that has no coefficient. Levels are compared as character
+# strings, so this works for factors, character and logical variables.
+.smart_at_reference <- function(x, parent_var, types) {
+  coded_levels <- types$Level[which(
+    types$Variable == parent_var & types$Link == "Difference"
+  )]
+  reference <- setdiff(as.character(unique(x)), coded_levels)
+  if (length(reference) == 1) {
+    as.character(x) == reference
+  } else {
+    # no single reference level, e.g. for sum contrasts
+    x == unique(x)[1]
+  }
 }
 
 
