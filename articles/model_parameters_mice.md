@@ -46,7 +46,7 @@ the predictors. Then we impute the data, using
 
 \
 [`library`](https://rdrr.io/r/base/library.html)`(`[`lme4`](https://github.com/lme4/lme4/)`)`\
-[`library`](https://rdrr.io/r/base/library.html)`(`[`GLMMadaptive`](https://drizopoulos.github.io/GLMMadaptive/)`)`\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`GLMMadaptive`](https://github.com/drizopoulos/GLMMadaptive)`)`\
 \
 [`data`](https://rdrr.io/r/utils/data.html)`(``cbpp``)`\
 `cbpp``$``period``[`[`sample`](https://rdrr.io/r/base/sample.html)`(`[`seq_len`](https://rdrr.io/r/base/seq.html)`(`[`nrow`](https://rdrr.io/r/base/nrow.html)`(``cbpp``)``)``, size ``=`` ``10``)``]`` ``<-`` ``NA`\
@@ -57,7 +57,7 @@ Using `with` to compute multiple regression analyses for each imputed
 dataset fails.
 
 \
-`fit`` ``<-`` `[`with`](https://rdrr.io/r/base/with.html)`(``data ``=`` ``imputed_data``, expr ``=`` ``GLMMadaptive``::`[`mixed_model`](https://drizopoulos.github.io/GLMMadaptive/reference/mixed_model.html)`(`\
+`fit`` ``<-`` `[`with`](https://rdrr.io/r/base/with.html)`(``data ``=`` ``imputed_data``, expr ``=`` ``GLMMadaptive``::`[`mixed_model`](https://rdrr.io/pkg/GLMMadaptive/man/mixed_model.html)`(`\
 `  `[`cbind`](https://amices.org/mice/reference/cbind.html)`(``incidence``, ``size`` ``-`` ``incidence``)`` ``~`` ``period``,`\
 `  random ``=`` ``~`` ``1`` ``|`` ``herd``,`\
 `  family ``=`` ``binomial`\
@@ -89,7 +89,7 @@ The steps would be:
 
 \
 `models`` ``<-`` `[`lapply`](https://rdrr.io/r/base/lapply.html)`(``1``:``imputed_data``$``m``, ``function``(``i``)`` ``{`\
-`  `[`mixed_model`](https://drizopoulos.github.io/GLMMadaptive/reference/mixed_model.html)`(`\
+`  `[`mixed_model`](https://rdrr.io/pkg/GLMMadaptive/man/mixed_model.html)`(`\
 `    `[`cbind`](https://amices.org/mice/reference/cbind.html)`(``incidence``, ``size`` ``-`` ``incidence``)`` ``~`` ``period``,`\
 `    random ``=`` ``~`` ``1`` ``|`` ``herd``,`\
 `    data ``=`` `[`complete`](https://tidyr.tidyverse.org/reference/complete.html)`(``imputed_data``, action ``=`` ``i``)``,`\
@@ -164,8 +164,8 @@ It is also possible to compute summaries of pooled objects of class
     #> 
     #> Parameter   | Coefficient |   SE |          95% CI |     t |    df |      p
     #> ---------------------------------------------------------------------------
-    #> (Intercept) |       17.10 | 3.87 | [  8.63, 25.58] |  4.42 | 11.51 | < .001
-    #> age [40-59] |       -5.03 | 2.55 | [-11.44,  1.38] | -1.97 |  5.42 | 0.101 
-    #> age [60-99] |       -7.39 | 2.70 | [-13.87, -0.92] | -2.73 |  6.59 | 0.031 
-    #> hyp [yes]   |        1.36 | 2.44 | [ -4.27,  6.99] |  0.56 |  8.03 | 0.593 
-    #> chl         |        0.06 | 0.02 | [  0.01,  0.12] |  2.68 |  8.34 | 0.027
+    #> (Intercept) |       17.10 | 3.87 | [  8.62, 25.58] |  4.42 | 11.46 | < .001
+    #> age [40-59] |       -5.04 | 2.55 | [-11.45,  1.38] | -1.97 |  5.42 | 0.101 
+    #> age [60-99] |       -7.39 | 2.71 | [-13.88, -0.91] | -2.73 |  6.58 | 0.031 
+    #> hyp [yes]   |        1.36 | 2.44 | [ -4.27,  6.99] |  0.56 |  8.03 | 0.592 
+    #> chl         |        0.06 | 0.02 | [  0.01,  0.12] |  2.68 |  8.30 | 0.027

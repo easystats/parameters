@@ -269,7 +269,7 @@ standardize_parameters(model, method = "smart")
 #> Parameter        | Std. Coef. |         95% CI
 #> ----------------------------------------------
 #> (Intercept)      |       0.00 | [ 0.00,  0.00]
-#> supp [VC]        |      -1.00 | [-1.54, -0.46]
+#> supp [VC]        |      -1.25 | [-1.93, -0.57]
 #> dose             |       0.64 | [ 0.45,  0.84]
 #> supp [VC] × dose |       0.55 | [ 0.07,  1.02]
 standardize_parameters(model, method = "basic")

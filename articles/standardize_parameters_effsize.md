@@ -37,7 +37,7 @@ explicitly documented and detailed.
     > 
     > Parameter   | Std. Coef. |        95% CI
     > ----------------------------------------
-    > (Intercept) |  -8.48e-16 | [-0.21, 0.21]
+    > (Intercept) |  -9.80e-16 | [-0.21, 0.21]
     > complaints  |       0.83 | [ 0.61, 1.04]
 
 Standardizing the coefficient of this *simple* linear regression gives a
@@ -160,7 +160,7 @@ expressed in terms of SD of the reference group.
     > Parameter      | Std. Coef. |       95% CI
     > ------------------------------------------
     > (Intercept)    |       0.00 | [0.00, 0.00]
-    > am [Automatic] |       1.17 | [0.59, 1.76]
+    > am [Automatic] |       1.89 | [0.95, 2.83]
 
 \
 [`glass_delta`](https://easystats.github.io/effectsize/reference/cohens_d.html)`(``mpg`` ``~`` ``am``, data ``=`` ``mtcars``)`
@@ -245,7 +245,7 @@ Let’s compare these to the standardized slopes:
     > 
     > Parameter   | Std. Coef. |        95% CI
     > ----------------------------------------
-    > (Intercept) |   2.85e-16 | [-0.03, 0.03]
+    > (Intercept) |   2.77e-16 | [-0.03, 0.03]
     > xtra hours  |       0.77 | [ 0.73, 0.81]
     > n comps     |       0.39 | [ 0.36, 0.42]
     > age         |       0.04 | [ 0.00, 0.07]
@@ -465,8 +465,8 @@ factors are similar to a Glass’ *delta*.
     > (Intercept)    |       0.00 | [ 0.00, 0.00]
     > xtra hours     |       0.77 | [ 0.73, 0.81]
     > n comps        |       0.39 | [ 0.36, 0.43]
-    > age g [>30-35] |       0.06 | [-0.01, 0.14]
-    > age g [>35-45] |       0.10 | [-0.04, 0.23]
+    > age g [>30-35] |       0.10 | [-0.02, 0.21]
+    > age g [>35-45] |       0.15 | [-0.06, 0.35]
     > seniority      |       0.08 | [ 0.04, 0.12]
 
 ##### **`"basic"`**: Raw scaling of the model frame

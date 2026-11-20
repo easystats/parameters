@@ -294,7 +294,7 @@ if (require("mclust", quietly = TRUE)) {
   rez # Show results
   predict(rez) # Get clusters
 }
-#> Package 'mclust' version 6.1.3
+#> Package 'mclust' version 6.1.4
 #> Type 'citation("mclust")' for citing this R package in publications.
 #>   [1] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
 #>  [38] 1 1 1 1 1 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2

@@ -224,14 +224,14 @@ of models and packages, including mixed models and Bayesian models.
 ### Mixed Model with Zero-Inflation Model
 
 \
-[`library`](https://rdrr.io/r/base/library.html)`(`[`GLMMadaptive`](https://drizopoulos.github.io/GLMMadaptive/)`)`\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`GLMMadaptive`](https://github.com/drizopoulos/GLMMadaptive)`)`\
 [`library`](https://rdrr.io/r/base/library.html)`(`[`glmmTMB`](https://github.com/glmmTMB/glmmTMB)`)`\
 [`data`](https://rdrr.io/r/utils/data.html)`(``"Salamanders"``)`\
-`model`` ``<-`` `[`mixed_model`](https://drizopoulos.github.io/GLMMadaptive/reference/mixed_model.html)`(`\
+`model`` ``<-`` `[`mixed_model`](https://rdrr.io/pkg/GLMMadaptive/man/mixed_model.html)`(`\
 `  ``count`` ``~`` ``spp`` ``+`` ``mined``,`\
 `  random ``=`` ``~`` ``1`` ``|`` ``site``,`\
 `  zi_fixed ``=`` ``~`` ``spp`` ``+`` ``mined``,`\
-`  family ``=`` `[`zi.negative.binomial`](https://drizopoulos.github.io/GLMMadaptive/reference/extra_fams.html)`(``)``,`\
+`  family ``=`` `[`zi.negative.binomial`](https://rdrr.io/pkg/GLMMadaptive/man/extra_fams.html)`(``)``,`\
 `  data ``=`` ``Salamanders`\
 `)`\
 [`parameters`](https://easystats.github.io/parameters/reference/model_parameters.md)`(``model``)`\
@@ -309,7 +309,7 @@ of models and packages, including mixed models and Bayesian models.
 `#> `\
 `#> Parameter         | Coefficient`\
 `#> -------------------------------`\
-`#> SD (Intercept: t) |    4.60e-04`\
+`#> SD (Intercept: t) |    4.61e-04`\
 `#> SD (Residual)     |`
 
 ### Bayesian Models
