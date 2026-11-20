@@ -47,11 +47,11 @@ test_that("model_parameters, standardize-smart", {
   expect_shape(params, dim = c(4L, 9L))
   expect_equal(
     params$Std_Coefficient,
-    c(0, -0.61463, 2.41278, -0.85922),
+    c(0, -0.61463, 3.88069, -1.38195),
     tolerance = 1e-3
   )
-  expect_equal(params$SE, c(NA, 0.12755, 0.69148, 0.23428), tolerance = 1e-3)
-  expect_equal(params$CI_high, c(NA, -0.35336, 3.82922, -0.37931), tolerance = 0.1)
+  expect_equal(params$SE, c(NA, 0.12755, 1.11218, 0.37682), tolerance = 1e-3)
+  expect_equal(params$CI_high, c(NA, -0.35336, 6.15887, -0.61008), tolerance = 0.1)
 })
 
 test_that("model_parameters, glm", {

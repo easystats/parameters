@@ -87,6 +87,14 @@
   bootstrap. The values do not change. To bootstrap these models, use
   `bootstrap_parameters()` or `bootstrap = TRUE`.
 
+* Fixed issue where `standardize_parameters()` and `standardize_info()` with
+  `method = "smart"` returned wrong values for factor, character and logical
+  predictors. If the first row of the data was at another level, the effects
+  were scaled by the response SD at that level. They are now scaled by the
+  response SD at the reference level. For example, `lm(mpg ~ factor(cyl), mtcars)`
+  gave -4.76 for `factor(cyl)6`, and now gives -1.53. Sum and Helmert contrasts
+  have no reference level and do not change.
+
 # parameters 0.30.0
 
 ## Changes
