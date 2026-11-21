@@ -3,14 +3,7 @@
 # stacked in draw order, and each gets a label from its draw position in the
 # columns `relabel`. Draws whose refit does not return the parameters of the
 # model are dropped.
-.refit_cluster_draws <- function(
-  model,
-  data,
-  group,
-  iterations,
-  seed,
-  relabel = group
-) {
+.refit_cluster_draws <- function(model, data, group, iterations, seed, relabel = group) {
   clusters <- unique(as.character(data[[group]]))
   set.seed(seed)
   draws <- boot::boot(seq_along(clusters), function(x, i) i, R = iterations)$t
@@ -58,14 +51,17 @@
 ) {
   set.seed(42)
   out <- bootstrap_model(model, iterations = iterations)
-  expected <- .refit_cluster_draws(
-    model,
-    data,
-    group,
-    iterations,
-    42,
-    relabel = relabel
-  )
+  expected <- .refit_cluster_draws(model, data, group, iterations, 42, relabel = relabel)
   testthat::expect_identical(nrow(out), nrow(expected))
   testthat::expect_equal(unname(as.matrix(out)), unname(expected), tolerance = 1e-6)
+}
+
+
+# Variant for plot snapshots that differ between operating systems. Linux
+# snapshots live in `_snaps/linux/`, all others in `_snaps/windows`. Calling one
+# `expect_doppelganger()` per plot with this variant keeps the snapshot names
+# the same on every OS, so a local test run does not delete the snapshots of
+# the other OS.
+snapshot_variant <- function() {
+  switch(Sys.info()[["sysname"]], Linux = "linux", Windows = "windows", "mac")
 }

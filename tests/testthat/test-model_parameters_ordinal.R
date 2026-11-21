@@ -92,7 +92,7 @@ test_that("model_parameters.clm", {
     tolerance = 1e-4
   )
 
-  expect_snapshot(print(mp))
+  expect_snapshot(print(mp), variant = snapshot_variant())
 })
 
 test_that("model_parameters.clm2", {
@@ -136,7 +136,7 @@ test_that("model_parameters.clm2", {
     tolerance = 1e-4
   )
 
-  expect_snapshot(print(mp))
+  expect_snapshot(print(mp), variant = snapshot_variant())
 })
 
 test_that("print() and print_md() keep component captions of ordinal models", {

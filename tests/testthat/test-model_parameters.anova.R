@@ -13,7 +13,7 @@ test_that("model_parameters.anova", {
     tolerance = 1e-3
   )
   expect_equal(mp$p, c(NA, 0.00023, 0.00123, 0.01262), tolerance = 1e-3)
-  expect_snapshot(mp)
+  expect_snapshot(mp, variant = snapshot_variant())
 })
 
 test_that("model_parameters.anova", {
@@ -69,7 +69,7 @@ test_that("print-model_parameters", {
   skip_if_not_installed("car")
   a <- car::Anova(m, type = 3, test.statistic = "F")
   mp <- model_parameters(a)
-  expect_snapshot(mp)
+  expect_snapshot(mp, variant = snapshot_variant())
 })
 
 
@@ -310,9 +310,9 @@ withr::with_package(
     )
 
     out <- anova(model0)
-    expect_snapshot(print(model_parameters(out)))
+    expect_snapshot(print(model_parameters(out)), variant = snapshot_variant())
 
     out <- anova(model0, method = "Wald")
-    expect_snapshot(print(model_parameters(out)))
+    expect_snapshot(print(model_parameters(out)), variant = snapshot_variant())
   })
 )

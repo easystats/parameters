@@ -644,12 +644,16 @@ withr::with_options(list(parameters_exponentiate = FALSE), {
   # proper printing ---------------------
 
   test_that("print-model_parameters glmmTMB", {
-    skip_on_os(c("mac", "linux", "solaris"))
+    skip_on_os(c("mac", "solaris"))
     skip_if_not(getRversion() >= "4.3.3")
 
-    mp <- model_parameters(m4, effects = "fixed", component = "conditional")
+    mp <- suppressWarnings(model_parameters(
+      m4,
+      effects = "fixed",
+      component = "conditional"
+    ))
     out <- utils::capture.output(print(mp))
-    expect_snapshot(out[-5])
+    expect_snapshot(out[-5], variant = snapshot_variant())
 
     mp <- model_parameters(
       m4,
@@ -680,14 +684,22 @@ withr::with_options(list(parameters_exponentiate = FALSE), {
       )
     )
     expect_equal(mp$Coefficient, c(2.18, 1.0592, -0.9883), tolerance = 1e-3)
-    expect_equal(mp$CI_low, c(1.1599, 0.5946, NaN), tolerance = 1e-3)
+    expect_equal(
+      mp$CI_low,
+      switch(
+        snapshot_variant(),
+        windows = c(1.1599, 0.5946, NaN),
+        c(1.12106, 0.63094, NaN)
+      ),
+      tolerance = 1e-3
+    )
 
-    mp <- model_parameters(
+    mp <- suppressWarnings(model_parameters(
       m4,
       ci_random = TRUE,
       effects = "fixed",
       component = "zero_inflated"
-    )
+    ))
     out <- utils::capture.output(print(mp))
     expect_identical(
       attributes(mp)$pretty_labels,
@@ -706,7 +718,15 @@ withr::with_options(list(parameters_exponentiate = FALSE), {
       )
     )
     expect_equal(mp$Coefficient, c(-4.042, -1.3724, -4.829), tolerance = 1e-3)
-    expect_equal(mp$CI_low, c(-4.4415, -5.3849, -4.8295), tolerance = 1e-3)
+    expect_equal(
+      mp$CI_low,
+      switch(
+        snapshot_variant(),
+        windows = c(-4.4415, -5.3849, -4.8295),
+        c(-4.41256, -5.38401, NaN)
+      ),
+      tolerance = 1e-3
+    )
 
     mp <- model_parameters(
       m4,
@@ -737,15 +757,23 @@ withr::with_options(list(parameters_exponentiate = FALSE), {
       )
     )
     expect_equal(mp$Coefficient, c(5.8635, 12.518, 0.979), tolerance = 1e-3)
-    expect_equal(mp$CI_low, c(3.8307, 10.9496, NaN), tolerance = 1e-3)
+    expect_equal(
+      mp$CI_low,
+      switch(
+        snapshot_variant(),
+        windows = c(3.8307, 10.9496, NaN),
+        c(4.23757, 11.33107, 0.9776)
+      ),
+      tolerance = 1e-3
+    )
 
-    mp <- model_parameters(
+    mp <- suppressWarnings(model_parameters(
       m4,
       ci_random = TRUE,
       effects = "all",
       component = "conditional",
       verbose = FALSE
-    )
+    ))
     out <- utils::capture.output(print(mp))
     expect_identical(
       attributes(mp)$pretty_labels,
@@ -760,22 +788,42 @@ withr::with_options(list(parameters_exponentiate = FALSE), {
     )
     expect_identical(
       substr(out, 1, 30),
-      c(
-        "# Fixed Effects",
-        "",
-        "Parameter   | Log-Mean |   SE ",
-        "------------------------------",
-        "(Intercept) |     1.67 | 0.66 ",
-        "child       |    -1.04 | 0.09 ",
-        "camper [1]  |     0.27 | 0.09 ",
-        "",
-        "# Random Effects",
-        "",
-        "Parameter                   | ",
-        "------------------------------",
-        "SD (Intercept: persons)     | ",
-        "SD (xb: persons)            | ",
-        "Cor (Intercept~xb: persons) | "
+      switch(
+        snapshot_variant(),
+        windows = c(
+          "# Fixed Effects",
+          "",
+          "Parameter   | Log-Mean |   SE ",
+          "------------------------------",
+          "(Intercept) |     1.67 | 0.66 ",
+          "child       |    -1.04 | 0.09 ",
+          "camper [1]  |     0.27 | 0.09 ",
+          "",
+          "# Random Effects",
+          "",
+          "Parameter                   | ",
+          "------------------------------",
+          "SD (Intercept: persons)     | ",
+          "SD (xb: persons)            | ",
+          "Cor (Intercept~xb: persons) | "
+        ),
+        c(
+          "# Fixed Effects",
+          "",
+          "Parameter   | Log-Mean |   SE ",
+          "------------------------------",
+          "(Intercept) |     1.67 | 0.63 ",
+          "child       |    -1.04 | 0.09 ",
+          "camper [1]  |     0.27 | 0.09 ",
+          "",
+          "# Random Effects",
+          "",
+          "Parameter                   | ",
+          "------------------------------",
+          "SD (Intercept: persons)     | ",
+          "SD (xb: persons)            | ",
+          "Cor (Intercept~xb: persons) | "
+        )
       )
     )
     expect_equal(
@@ -785,17 +833,21 @@ withr::with_options(list(parameters_exponentiate = FALSE), {
     )
     expect_equal(
       mp$CI_low,
-      c(0.3884, -1.2188, 0.0826, 1.1599, 0.5946, NaN),
+      switch(
+        snapshot_variant(),
+        windows = c(0.38839, -1.21878, 0.08262, 1.1599, 0.59457, NaN),
+        c(0.43958, -1.21879, 0.09893, 1.12106, 0.63094, NaN)
+      ),
       tolerance = 1e-3
     )
 
-    mp <- model_parameters(
+    mp <- suppressWarnings(model_parameters(
       m4,
       effects = "all",
       ci_random = TRUE,
       component = "zero_inflated",
       verbose = FALSE
-    )
+    ))
     out <- utils::capture.output(print(mp))
     expect_identical(
       attributes(mp)$pretty_labels,
@@ -810,22 +862,42 @@ withr::with_options(list(parameters_exponentiate = FALSE), {
     )
     expect_identical(
       substr(out, 1, 30),
-      c(
-        "# Fixed Effects (Zero-Inflatio",
-        "",
-        "Parameter   | Log-Mean |      ",
-        "------------------------------",
-        "(Intercept) |    -4.04 |     0",
-        "child       |    -1.37 |     2",
-        "camper [1]  |    -4.83 | 2.25e",
-        "",
-        "# Random Effects (Zero-Inflati",
-        "",
-        "Parameter                   | ",
-        "------------------------------",
-        "SD (Intercept: persons)     | ",
-        "SD (zg: persons)            | ",
-        "Cor (Intercept~zg: persons) | "
+      switch(
+        snapshot_variant(),
+        windows = c(
+          "# Fixed Effects (Zero-Inflatio",
+          "",
+          "Parameter   | Log-Mean |      ",
+          "------------------------------",
+          "(Intercept) |    -4.04 |     0",
+          "child       |    -1.37 |     2",
+          "camper [1]  |    -4.83 | 2.25e",
+          "",
+          "# Random Effects (Zero-Inflati",
+          "",
+          "Parameter                   | ",
+          "------------------------------",
+          "SD (Intercept: persons)     | ",
+          "SD (zg: persons)            | ",
+          "Cor (Intercept~zg: persons) | "
+        ),
+        c(
+          "# Fixed Effects (Zero-Inflatio",
+          "",
+          "Parameter   | Log-Mean |   SE ",
+          "------------------------------",
+          "(Intercept) |    -4.04 | 0.19 ",
+          "child       |    -1.37 | 2.05 ",
+          "camper [1]  |    -4.83 |      ",
+          "",
+          "# Random Effects (Zero-Inflati",
+          "",
+          "Parameter                   | ",
+          "------------------------------",
+          "SD (Intercept: persons)     | ",
+          "SD (zg: persons)            | ",
+          "Cor (Intercept~zg: persons) | "
+        )
       )
     )
     expect_equal(
@@ -835,17 +907,21 @@ withr::with_options(list(parameters_exponentiate = FALSE), {
     )
     expect_equal(
       mp$CI_low,
-      c(-4.4415, -5.3849, -4.8295, 3.8307, 10.9496, NaN),
+      switch(
+        snapshot_variant(),
+        windows = c(-4.4415, -5.3849, -4.8295, 3.8307, 10.9496, NaN),
+        c(-4.41256, -5.38401, NaN, 4.23757, 11.33107, 0.9776)
+      ),
       tolerance = 1e-3
     )
 
-    mp <- model_parameters(
+    mp <- suppressWarnings(model_parameters(
       m4,
       effects = "all",
       component = "all",
       ci_random = TRUE,
       verbose = FALSE
-    )
+    ))
     out <- utils::capture.output(print(mp))
     expect_identical(
       attributes(mp)$pretty_labels,
@@ -866,74 +942,100 @@ withr::with_options(list(parameters_exponentiate = FALSE), {
     )
     expect_identical(
       substr(out, 1, 30),
-      c(
-        "# Fixed Effects (Count Model)",
-        "",
-        "Parameter   | Log-Mean |   SE ",
-        "------------------------------",
-        "(Intercept) |     1.67 | 0.66 ",
-        "child       |    -1.04 | 0.09 ",
-        "camper [1]  |     0.27 | 0.09 ",
-        "",
-        "# Fixed Effects (Zero-Inflatio",
-        "",
-        "Parameter   | Log-Odds |      ",
-        "------------------------------",
-        "(Intercept) |    -4.04 |     0",
-        "child       |    -1.37 |     2",
-        "camper [1]  |    -4.83 | 2.25e",
-        "",
-        "# Random Effects Variances",
-        "",
-        "Parameter                   | ",
-        "------------------------------",
-        "SD (Intercept: persons)     | ",
-        "SD (xb: persons)            | ",
-        "Cor (Intercept~xb: persons) | ",
-        "",
-        "# Random Effects (Zero-Inflati",
-        "",
-        "Parameter                   | ",
-        "------------------------------",
-        "SD (Intercept: persons)     | ",
-        "SD (zg: persons)            | ",
-        "Cor (Intercept~zg: persons) | "
+      switch(
+        snapshot_variant(),
+        windows = c(
+          "# Fixed Effects (Count Model)",
+          "",
+          "Parameter   | Log-Mean |   SE ",
+          "------------------------------",
+          "(Intercept) |     1.67 | 0.66 ",
+          "child       |    -1.04 | 0.09 ",
+          "camper [1]  |     0.27 | 0.09 ",
+          "",
+          "# Fixed Effects (Zero-Inflatio",
+          "",
+          "Parameter   | Log-Odds |      ",
+          "------------------------------",
+          "(Intercept) |    -4.04 |     0",
+          "child       |    -1.37 |     2",
+          "camper [1]  |    -4.83 | 2.25e",
+          "",
+          "# Random Effects Variances",
+          "",
+          "Parameter                   | ",
+          "------------------------------",
+          "SD (Intercept: persons)     | ",
+          "SD (xb: persons)            | ",
+          "Cor (Intercept~xb: persons) | ",
+          "",
+          "# Random Effects (Zero-Inflati",
+          "",
+          "Parameter                   | ",
+          "------------------------------",
+          "SD (Intercept: persons)     | ",
+          "SD (zg: persons)            | ",
+          "Cor (Intercept~zg: persons) | "
+        ),
+        c(
+          "# Fixed Effects (Count Model)",
+          "",
+          "Parameter   | Log-Mean |   SE ",
+          "------------------------------",
+          "(Intercept) |     1.67 | 0.63 ",
+          "child       |    -1.04 | 0.09 ",
+          "camper [1]  |     0.27 | 0.09 ",
+          "",
+          "# Fixed Effects (Zero-Inflatio",
+          "",
+          "Parameter   | Log-Odds |   SE ",
+          "------------------------------",
+          "(Intercept) |    -4.04 | 0.19 ",
+          "child       |    -1.37 | 2.05 ",
+          "camper [1]  |    -4.83 |      ",
+          "",
+          "# Random Effects Variances",
+          "",
+          "Parameter                   | ",
+          "------------------------------",
+          "SD (Intercept: persons)     | ",
+          "SD (xb: persons)            | ",
+          "Cor (Intercept~xb: persons) | ",
+          "",
+          "# Random Effects (Zero-Inflati",
+          "",
+          "Parameter                   | ",
+          "------------------------------",
+          "SD (Intercept: persons)     | ",
+          "SD (zg: persons)            | ",
+          "Cor (Intercept~zg: persons) | "
+        )
       )
     )
+    # fmt: skip
     expect_equal(
       mp$Coefficient,
       c(
-        1.6724,
-        -1.0426,
-        0.2684,
-        -4.042,
-        -1.3724,
-        -4.829,
-        2.18,
-        1.0592,
-        -0.9883,
-        5.8635,
-        12.518,
-        0.979
+        1.6724, -1.0426, 0.2684, -4.042, -1.3724, -4.829, 2.18,
+        1.0592, -0.9883, 5.8635, 12.518, 0.979
       ),
       tolerance = 1e-3
     )
+    # fmt: skip
     expect_equal(
       mp$CI_low,
-      c(
-        0.3884,
-        -1.2188,
-        0.0826,
-        -4.4415,
-        -5.3849,
-        -4.8295,
-        1.1599,
-        0.5946,
-        NaN,
-        3.8307,
-        10.9496,
-        NaN
-      ),
+      switch(
+        snapshot_variant(),
+        windows = c(
+          0.3884, -1.2188, 0.0826, -4.4415, -5.3849, -4.8295,
+          1.1599, 0.5946, NaN, 3.8307, 10.9496, NaN
+        ),
+        c(
+          0.43958, -1.21879, 0.09893, -4.41256, -5.38401, NaN, 1.12106,
+          0.63094, NaN, 4.23757, 11.33107, 0.9776
+        )
+      )
+      ,
       tolerance = 1e-3
     )
   })
@@ -941,12 +1043,12 @@ withr::with_options(list(parameters_exponentiate = FALSE), {
   # proper printing of digits ---------------------
 
   test_that("print-model_parameters glmmTMB digits", {
-    skip_on_os(c("mac", "linux", "solaris"))
+    skip_on_os(c("mac", "solaris"))
     skip_if_not(getRversion() >= "4.3.3")
 
     mp <- model_parameters(m4, ci_random = TRUE, effects = "all", component = "all")
     out <- utils::capture.output(print(mp, digits = 4, ci_digits = 5))
-    expect_snapshot(out[-c(5, 14)])
+    expect_snapshot(out[-c(5, 14)], variant = snapshot_variant())
 
     mp <- model_parameters(
       m4,
@@ -957,14 +1059,14 @@ withr::with_options(list(parameters_exponentiate = FALSE), {
       ci_digits = 5
     )
     out <- utils::capture.output(print(mp))
-    expect_snapshot(out[-c(5, 14)])
+    expect_snapshot(out[-c(5, 14)], variant = snapshot_variant())
   })
 
   # proper alignment of CIs ---------------------
   test_that("print-model_parameters glmmTMB CI alignment", {
     skip_if_not_installed("curl")
     skip_if_offline()
-    skip_on_os(c("mac", "linux", "solaris"))
+    skip_on_os(c("mac", "solaris"))
     skip_if_not(getRversion() >= "4.3.3")
 
     model_pr <- tryCatch(
@@ -991,14 +1093,14 @@ withr::with_options(list(parameters_exponentiate = FALSE), {
       component = "all",
       ci_random = TRUE
     )
-    expect_snapshot(print(mp))
+    expect_snapshot(print(mp), variant = snapshot_variant())
 
     mp <- model_parameters(model_pr, effects = "fixed", component = "all")
-    expect_snapshot(print(mp))
+    expect_snapshot(print(mp), variant = snapshot_variant())
   })
 
   test_that("model_parameters.mixed-all", {
-    skip_on_os(c("mac", "linux", "solaris"))
+    skip_on_os(c("mac", "solaris"))
     skip_if_not(getRversion() >= "4.3.3")
 
     params <- model_parameters(m4, effects = "all")
@@ -1075,17 +1177,17 @@ withr::with_options(list(parameters_exponentiate = FALSE), {
   })
 
   test_that("print-model_parameters", {
-    skip_on_os(c("mac", "linux", "solaris"))
+    skip_on_os(c("mac", "solaris"))
     skip_if_not(getRversion() >= "4.3.3")
 
     mp <- model_parameters(m1, effects = "fixed", verbose = FALSE)
-    expect_snapshot(mp)
+    expect_snapshot(mp, variant = snapshot_variant())
 
     mp <- model_parameters(m1, effects = "fixed", exponentiate = TRUE, verbose = FALSE)
-    expect_snapshot(mp)
+    expect_snapshot(mp, variant = snapshot_variant())
 
     mp <- model_parameters(m1, effects = "all", verbose = FALSE)
-    expect_snapshot(mp)
+    expect_snapshot(mp, variant = snapshot_variant())
   })
 
   test_that("print-model_parameters, random dispersion", {
@@ -1129,7 +1231,7 @@ withr::with_options(list(parameters_exponentiate = FALSE), {
     expect_equal(out1$SE, out2[1:6], ignore_attr = TRUE, tolerance = 1e-4)
 
     out <- model_parameters(m1, vcov = "HC0")
-    expect_snapshot(print(out, table_width = Inf))
+    expect_snapshot(print(out, table_width = Inf), variant = snapshot_variant())
 
     skip_if(packageVersion("insight") <= "1.5.0")
     skip_if_not_installed("lme4")
@@ -1148,7 +1250,7 @@ withr::with_options(list(parameters_exponentiate = FALSE), {
       tolerance = 1e-4
     )
     out <- model_parameters(model, vcov = "fpc", vcov_args = list(population_size = 500))
-    expect_snapshot(print(out, table_width = Inf))
+    expect_snapshot(print(out, table_width = Inf), variant = snapshot_variant())
   })
 
   test_that("method boot gives Wald intervals with an alert", {

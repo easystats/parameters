@@ -216,7 +216,7 @@ test_that("digits and ci_digits for marginaleffects", {
   out <- lm(mpg ~ wt, data = mtcars) |>
     marginaleffects::hypotheses(hypothesis = "10*wt = 0") |>
     model_parameters(digits = 1)
-  expect_snapshot(out)
+  expect_snapshot(out, variant = snapshot_variant())
 })
 
 
@@ -476,7 +476,10 @@ test_that("print with a by variable named p", {
   cells <- lapply(strsplit(rows, "|", fixed = TRUE), trimws)
   header <- cells[[1]]
   body <- cells[-1]
-  expect_identical(vapply(body, function(x) x[header == "p.1"], character(1)), c("a", "b", "c"))
+  expect_identical(
+    vapply(body, function(x) x[header == "p.1"], character(1)),
+    c("a", "b", "c")
+  )
   expect_match(
     vapply(body, function(x) x[header == "p"], character(1)),
     "^(< \\.001|> \\.999|0\\.\\d{3})$"

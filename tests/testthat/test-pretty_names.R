@@ -7,8 +7,11 @@ test_that("pretty_names", {
   expect_identical(
     attr(p, "pretty_labels"),
     c(
-      `(Intercept)` = "(Intercept)", hp = "Gross horsepower", `factor(cyl)4` = "cyl [4]",
-      `factor(cyl)6` = "cyl [6]", `factor(cyl)8` = "cyl [8]"
+      `(Intercept)` = "(Intercept)",
+      hp = "Gross horsepower",
+      `factor(cyl)4` = "cyl [4]",
+      `factor(cyl)6` = "cyl [6]",
+      `factor(cyl)8` = "cyl [8]"
     )
   )
 
@@ -16,7 +19,9 @@ test_that("pretty_names", {
   expect_identical(
     attr(p, "pretty_labels"),
     c(
-      `(Intercept)` = "(Intercept)", hp = "Gross horsepower", `factor(cyl)6` = "cyl [6]",
+      `(Intercept)` = "(Intercept)",
+      hp = "Gross horsepower",
+      `factor(cyl)6` = "cyl [6]",
       `factor(cyl)8` = "cyl [8]"
     )
   )
@@ -28,8 +33,11 @@ test_that("pretty_names", {
   expect_identical(
     attr(p, "pretty_labels"),
     c(
-      `(Intercept)` = "(Intercept)", wt = "wt", cyl4 = "Cylinders [4]",
-      cyl6 = "Cylinders [6]", cyl8 = "Cylinders [8]"
+      `(Intercept)` = "(Intercept)",
+      wt = "wt",
+      cyl4 = "Cylinders [4]",
+      cyl6 = "Cylinders [6]",
+      cyl8 = "Cylinders [8]"
     )
   )
 })
@@ -45,12 +53,21 @@ withr::with_options(
     X <- rbinom(N, 1, 0.5)
     M <- sample(c("a", "b", "c"), N, replace = TRUE)
     b <- runif(8, -1, 1)
-    Y <- rbinom(N, 1, prob = plogis(
-      b[1] + b[2] * X +
-        b[3] * (M == "b") + b[4] * (M == "b") + b[5] * (M == "c") +
-        b[6] * X * (M == "a") + b[7] * X + (M == "b") +
-        b[8] * X * (M == "c")
-    ))
+    Y <- rbinom(
+      N,
+      1,
+      prob = plogis(
+        b[1] +
+          b[2] * X +
+          b[3] * (M == "b") +
+          b[4] * (M == "b") +
+          b[5] * (M == "c") +
+          b[6] * X * (M == "a") +
+          b[7] * X +
+          (M == "b") +
+          b[8] * X * (M == "c")
+      )
+    )
     dat <- data.frame(Y, X, M, stringsAsFactors = FALSE)
     mod <- glm(Y ~ X * M, data = dat, family = binomial)
 
@@ -58,11 +75,15 @@ withr::with_options(
     expect_identical(
       attr(p, "pretty_labels"),
       c(
-        `(Intercept)` = "(Intercept)", X = "X", Mb = "M [b]", Mc = "M [c]",
-        `X:Mb` = "X * M [b]", `X:Mc` = "X * M [c]"
+        `(Intercept)` = "(Intercept)",
+        X = "X",
+        Mb = "M [b]",
+        Mc = "M [c]",
+        `X:Mb` = "X * M [b]",
+        `X:Mc` = "X * M [c]"
       )
     )
-    expect_snapshot(print(p))
+    expect_snapshot(print(p), variant = snapshot_variant())
   })
 )
 
@@ -79,7 +100,10 @@ withr::with_options(
       attr(mydf$mar, "label") <- "MyMarried"
 
       model <- pscl::zeroinfl(art ~ fem + mar, data = mydf)
-      expect_snapshot(print(model_parameters(model), pretty_names = "labels", zap_small = TRUE))
+      expect_snapshot(
+        print(model_parameters(model), pretty_names = "labels", zap_small = TRUE),
+        variant = snapshot_variant()
+      )
 
       # doesn't crash if pretty-labels is NULL
       mydf <- pscl::bioChemists

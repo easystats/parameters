@@ -12,8 +12,8 @@ test_that("model_parameters.logitr", {
     numMultiStarts = 5
   )
   params <- model_parameters(m, verbose = FALSE)
-  expect_snapshot(params, variant = "windows")
+  expect_snapshot(params, variant = snapshot_variant())
 
   params <- model_parameters(m, verbose = FALSE, ci_method = "residual")
-  expect_snapshot(params, variant = "windows")
+  expect_snapshot(params, variant = snapshot_variant())
 })

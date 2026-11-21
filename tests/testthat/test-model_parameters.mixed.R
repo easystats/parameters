@@ -76,7 +76,7 @@ test_that("model_parameters.mixed", {
 
 
 test_that("model_parameters.mixed bootstrap", {
-  skip_on_os(c("linux", "mac"))
+  skip_on_os("mac")
   skip_on_cran()
   set.seed(123)
   suppressWarnings(expect_message(
@@ -191,37 +191,44 @@ withr::with_options(
       tolerance = 1e-4
     )
 
-    expect_snapshot(print(model_parameters(
-      model,
-      effects = "fixed",
-      ci_method = "satterthwaite"
-    )))
+    expect_snapshot(
+      print(model_parameters(model, effects = "fixed", ci_method = "satterthwaite")),
+      variant = snapshot_variant()
+    )
   })
 )
 
 
 test_that("print-model_parameters-1", {
-  expect_snapshot(model_parameters(model, effects = "fixed", wb_component = TRUE))
-  expect_snapshot(model_parameters(model, effects = "fixed", wb_component = FALSE))
+  expect_snapshot(
+    model_parameters(model, effects = "fixed", wb_component = TRUE),
+    variant = snapshot_variant()
+  )
+  expect_snapshot(
+    model_parameters(model, effects = "fixed", wb_component = FALSE),
+    variant = snapshot_variant()
+  )
 })
 
 test_that("print-model_parameters-2", {
   skip_if_not_installed("merDeriv")
-  expect_snapshot(model_parameters(m1, effects = "all", wb_component = TRUE))
-  expect_snapshot(model_parameters(m1, effects = "all", wb_component = FALSE))
+  expect_snapshot(
+    model_parameters(m1, effects = "all", wb_component = TRUE),
+    variant = snapshot_variant()
+  )
+  expect_snapshot(
+    model_parameters(m1, effects = "all", wb_component = FALSE),
+    variant = snapshot_variant()
+  )
 
-  expect_snapshot(model_parameters(
-    m1,
-    effects = "fixed",
-    include_info = TRUE,
-    wb_component = TRUE
-  ))
-  expect_snapshot(model_parameters(
-    m1,
-    effects = "fixed",
-    include_info = TRUE,
-    wb_component = FALSE
-  ))
+  expect_snapshot(
+    model_parameters(m1, effects = "fixed", include_info = TRUE, wb_component = TRUE),
+    variant = snapshot_variant()
+  )
+  expect_snapshot(
+    model_parameters(m1, effects = "fixed", include_info = TRUE, wb_component = FALSE),
+    variant = snapshot_variant()
+  )
 })
 
 

@@ -14,6 +14,6 @@ withr::with_options(
       data = spruces
     )
     out <- model_parameters(fit1)
-    expect_snapshot(print(out))
+    expect_snapshot(print(out), variant = snapshot_variant())
   })
 )
