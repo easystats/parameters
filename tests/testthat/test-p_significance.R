@@ -12,7 +12,7 @@ withr::with_environment(
     x <- p_significance(m)
     expect_identical(c(nrow(x), ncol(x)), c(5L, 5L))
     expect_named(x, c("Parameter", "CI", "CI_low", "CI_high", "ps"))
-    expect_snapshot(print(x))
+    expect_snapshot(print(x), variant = snapshot_variant())
 
     mp <- model_parameters(m)
     set.seed(123)
@@ -37,7 +37,8 @@ withr::with_environment(
 test_that("p_significance, glmmTMB", {
   skip_if_not_installed("glmmTMB")
   data(Salamanders, package = "glmmTMB")
-  m1 <- glmmTMB::glmmTMB(count ~ mined + cover + (1 | site),
+  m1 <- glmmTMB::glmmTMB(
+    count ~ mined + cover + (1 | site),
     zi = ~mined,
     family = poisson,
     data = Salamanders
@@ -48,10 +49,7 @@ test_that("p_significance, glmmTMB", {
   expect_equal(out$ps, c(0.6451, 1, 0.9015, 1, 1), tolerance = 1e-4)
   expect_identical(
     out$Parameter,
-    c(
-      "(Intercept)_cond", "minedno_cond", "cover_cond", "(Intercept)_zi",
-      "minedno_zi"
-    )
+    c("(Intercept)_cond", "minedno_cond", "cover_cond", "(Intercept)_zi", "minedno_zi")
   )
 })
 
@@ -61,5 +59,5 @@ test_that("p_significance, robust", {
   m <- lm(mpg ~ gear + wt + cyl + hp, data = mtcars)
   set.seed(123)
   x <- p_significance(m, vcov = "HC3")
-  expect_snapshot(print(x))
+  expect_snapshot(print(x), variant = snapshot_variant())
 })

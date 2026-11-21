@@ -10,7 +10,13 @@ test_that("model_parameters.lm", {
   params <- model_parameters(model, ci = c(0.8, 0.9), verbose = FALSE)
   expect_identical(c(nrow(params), ncol(params)), c(2L, 10L))
 
-  params <- model_parameters(model, dispersion = TRUE, bootstrap = TRUE, iterations = 500, verbose = FALSE)
+  params <- model_parameters(
+    model,
+    dispersion = TRUE,
+    bootstrap = TRUE,
+    iterations = 500,
+    verbose = FALSE
+  )
   expect_identical(c(nrow(params), ncol(params)), c(2L, 7L))
 
   model <- lm(mpg ~ wt + cyl, data = mtcars)
@@ -21,14 +27,22 @@ test_that("model_parameters.lm", {
   params <- model_parameters(model, verbose = FALSE)
   expect_identical(c(nrow(params), ncol(params)), c(4L, 9L))
 
-  params <- model_parameters(model, component = "conditional", effects = "fixed", verbose = FALSE)
+  params <- model_parameters(
+    model,
+    component = "conditional",
+    effects = "fixed",
+    verbose = FALSE
+  )
 })
 
 test_that("print digits model_parameters.lm", {
   model <- lm(mpg ~ wt, data = mtcars)
   params <- model_parameters(model, digits = 4, ci_digits = 5, verbose = FALSE)
   out <- capture.output(print(params))
-  expect_identical(out[3], "(Intercept) |     37.2851 | 1.8776 | [33.45050, 41.11975] | 19.8576 | < .001")
+  expect_identical(
+    out[3],
+    "(Intercept) |     37.2851 | 1.8776 | [33.45050, 41.11975] | 19.8576 | < .001"
+  )
 })
 
 
@@ -37,10 +51,10 @@ test_that("print digits model_parameters.lm", {
   model <- lm(mpg ~ wt, data = mtcars)
 
   params <- model_parameters(model, include_info = TRUE, verbose = FALSE)
-  expect_snapshot(params)
+  expect_snapshot(params, variant = snapshot_variant())
 
   params <- model_parameters(model, include_info = FALSE, verbose = FALSE)
-  expect_snapshot(params)
+  expect_snapshot(params, variant = snapshot_variant())
 })
 
 test_that("model_parameters.glm - binomial", {
@@ -50,10 +64,20 @@ test_that("model_parameters.glm - binomial", {
   params <- model_parameters(model, verbose = FALSE)
   expect_identical(c(nrow(params), ncol(params)), c(3L, 9L))
 
-  params <- suppressWarnings(model_parameters(model, bootstrap = TRUE, iterations = 500, verbose = FALSE))
+  params <- suppressWarnings(model_parameters(
+    model,
+    bootstrap = TRUE,
+    iterations = 500,
+    verbose = FALSE
+  ))
   expect_identical(c(nrow(params), ncol(params)), c(3L, 6L))
 
-  params <- model_parameters(model, component = "conditional", effects = "fixed", verbose = FALSE)
+  params <- model_parameters(
+    model,
+    component = "conditional",
+    effects = "fixed",
+    verbose = FALSE
+  )
 })
 
 test_that("model_parameters.glm - binomial probit", {
@@ -73,7 +97,7 @@ test_that("model_parameters.glm - Gamma - print", {
   )
   m <- glm(lot1 ~ log(u), data = clotting, family = Gamma("log"))
   mp <- model_parameters(m, exponentiate = TRUE)
-  expect_snapshot(mp)
+  expect_snapshot(mp, variant = snapshot_variant())
 })
 
 test_that("model_parameters.glm - glm, identity link", {

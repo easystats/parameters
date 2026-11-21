@@ -13,32 +13,32 @@ withr::with_options(list(parameters_exponentiate = FALSE), {
     m1 <- insight::download_model("brms_1")
     skip_if(is.null(m1))
     mp1 <- model_parameters(m1, effects = "all", component = "all", centrality = "mean")
-    expect_snapshot(mp1)
+    expect_snapshot(mp1, variant = snapshot_variant())
 
     m2 <- insight::download_model("brms_mixed_1")
     skip_if(is.null(m2))
     mp2 <- model_parameters(m2, effects = "all", component = "all", centrality = "mean")
-    expect_snapshot(mp2)
+    expect_snapshot(mp2, variant = snapshot_variant())
 
     m3 <- insight::download_model("brms_mixed_2")
     skip_if(is.null(m3))
     mp3 <- model_parameters(m3, effects = "all", component = "all", centrality = "mean")
-    expect_snapshot(mp3)
+    expect_snapshot(mp3, variant = snapshot_variant())
 
     m4 <- insight::download_model("brms_mixed_3")
     skip_if(is.null(m4))
     mp4 <- model_parameters(m4, effects = "all", component = "all", centrality = "mean")
-    expect_snapshot(mp4)
+    expect_snapshot(mp4, variant = snapshot_variant())
 
     m5 <- insight::download_model("brms_mixed_4")
     skip_if(is.null(m5))
     mp5 <- model_parameters(m5, effects = "all", component = "all", centrality = "mean")
-    expect_snapshot(mp5)
+    expect_snapshot(mp5, variant = snapshot_variant())
 
     m6 <- insight::download_model("brms_mixed_7")
     skip_if(is.null(m6))
     mp6 <- model_parameters(m6, effects = "all", component = "all", centrality = "mean")
-    expect_snapshot(mp6)
+    expect_snapshot(mp6, variant = snapshot_variant())
 
     m7 <- insight::download_model("brms_zi_1")
     skip_if(is.null(m7))
@@ -49,26 +49,26 @@ withr::with_options(list(parameters_exponentiate = FALSE), {
       centrality = "mean",
       verbose = FALSE
     )
-    expect_snapshot(mp7)
+    expect_snapshot(mp7, variant = snapshot_variant())
 
     ## TODO: check why local results differ from snapshot
     # m8 <- insight::download_model("brms_zi_3")
     # mp8 <- model_parameters(m8, effects = "all", component = "all", centrality = "mean", verbose = FALSE)
-    # expect_snapshot(mp8)
+    # expect_snapshot(mp8, variant = snapshot_variant())
 
     m9 <- insight::download_model("brms_ordinal_1")
     skip_if(is.null(m9))
     mp9 <- model_parameters(m9, effects = "all", component = "all", centrality = "mean")
-    expect_snapshot(mp9)
+    expect_snapshot(mp9, variant = snapshot_variant())
   })
 
   test_that("print-information", {
     m <- insight::download_model("brms_1")
     skip_if(is.null(m))
     out <- model_parameters(m)
-    expect_snapshot(out)
+    expect_snapshot(out, variant = snapshot_variant())
     out <- model_parameters(m, ci_method = "HDI")
-    expect_snapshot(out)
+    expect_snapshot(out, variant = snapshot_variant())
     m <- insight::download_model("stanreg_glm_1")
     skip_if(is.null(m))
     out <- model_parameters(m)

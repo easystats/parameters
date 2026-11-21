@@ -7,7 +7,11 @@ set.seed(123)
 
 Crime$year <- as.factor(Crime$year)
 
-m1 <- suppressWarnings(plm::plm(lcrmrte ~ lprbarr + year | . - lprbarr + lmix, data = Crime, model = "random"))
+m1 <- suppressWarnings(plm::plm(
+  lcrmrte ~ lprbarr + year | . - lprbarr + lmix,
+  data = Crime,
+  model = "random"
+))
 
 m2 <- suppressWarnings(plm::plm(
   formula = log(gsp) ~ log(pcap) + log(pc) + log(emp) + unemp,
@@ -40,11 +44,7 @@ test_that("ci", {
     c(-3.73825, -0.12292, -0.05971, -0.13356, -0.18381, -0.17782, -0.11688, -0.03962),
     tolerance = 1e-3
   )
-  expect_equal(
-    ci(m2)$CI_low,
-    c(-0.08308, 0.2427, 0.70909, -0.00724),
-    tolerance = 1e-3
-  )
+  expect_equal(ci(m2)$CI_low, c(-0.08308, 0.2427, 0.70909, -0.00724), tolerance = 1e-3)
   expect_equal(ci(m3)$CI_low, -2.60478, tolerance = 1e-3)
 })
 
@@ -70,11 +70,7 @@ test_that("p_value", {
     c(0, 0.5285, 0.79456, 0.00262, 0, 0, 0.01558, 0.63395),
     tolerance = 1e-3
   )
-  expect_equal(
-    p_value(m2)$p,
-    c(0.36752, 0, 0, 0),
-    tolerance = 1e-3
-  )
+  expect_equal(p_value(m2)$p, c(0.36752, 0, 0, 0), tolerance = 1e-3)
   expect_equal(p_value(m3)$p, 0.53696, tolerance = 1e-3)
 })
 
@@ -97,9 +93,12 @@ test_that("model_parameters", {
 test_that("vcov standard errors", {
   skip_if_not_installed("sandwich")
   data("Grunfeld", package = "plm")
-  ran <- suppressWarnings(
-    plm::plm(value ~ capital + inv, data = Grunfeld, model = "random", effect = "twoways")
-  )
+  ran <- suppressWarnings(plm::plm(
+    value ~ capital + inv,
+    data = Grunfeld,
+    model = "random",
+    effect = "twoways"
+  ))
   out1 <- standard_error(ran)
   out2 <- standard_error(ran, vcov = "HC1")
   validate1 <- coef(summary(ran))[, 2]
@@ -108,15 +107,20 @@ test_that("vcov standard errors", {
   expect_equal(out1$SE, validate1, tolerance = 1e-3, ignore_attr = TRUE)
   expect_equal(out2$SE, validate2, tolerance = 1e-3, ignore_attr = TRUE)
 
-  expect_snapshot(print(model_parameters(ran)))
-  expect_snapshot(print(model_parameters(ran, vcov = "HC1")))
+  expect_snapshot(print(model_parameters(ran)), variant = snapshot_variant())
+  expect_snapshot(
+    print(model_parameters(ran, vcov = "HC1")),
+    variant = snapshot_variant()
+  )
 })
 
 
 test_that("vcov standard errors, methods", {
   data("Produc", package = "plm")
-  zz <- plm::plm(log(gsp) ~ log(pcap) + log(pc) + log(emp) + unemp,
-    data = Produc, model = "random"
+  zz <- plm::plm(
+    log(gsp) ~ log(pcap) + log(pc) + log(emp) + unemp,
+    data = Produc,
+    model = "random"
   )
 
   out1 <- standard_error(zz, vcov = "HC1")

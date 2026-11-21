@@ -33,7 +33,7 @@ test_that("Robust post hoc", {
 test_that("Preserve labels", {
   fit <- lm(Sepal.Length ~ Species, data = iris)
   out <- standardize_parameters(fit)
-  expect_snapshot(print(out))
+  expect_snapshot(print(out), variant = snapshot_variant())
 })
 
 # model_parameters -------------------------------

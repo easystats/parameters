@@ -17,17 +17,17 @@ withr::with_options(list(parameters_exponentiate = FALSE), {
 
   test_that("model_parameters.mclogit", {
     params <- model_parameters(m1)
-    expect_snapshot(params)
+    expect_snapshot(params, variant = snapshot_variant())
   })
   test_that("model_parameters.mblogit", {
     params <- model_parameters(m2)
-    expect_snapshot(params)
+    expect_snapshot(params, variant = snapshot_variant())
   })
 
   skip_on_os(c("mac", "linux"))
   test_that("simulate_parameters.mblogit", {
     set.seed(1234)
     params <- simulate_parameters(m2)
-    expect_snapshot(params)
+    expect_snapshot(params, variant = snapshot_variant())
   })
 })

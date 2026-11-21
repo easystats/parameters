@@ -4,7 +4,10 @@ skip_if_not_installed("panelr")
 data("WageData", package = "panelr")
 wages <- panelr::panel_data(WageData, id = id, wave = t)
 m1 <- panelr::wbm(lwage ~ lag(union) + wks | blk + fem | blk * lag(union), data = wages)
-m2 <- suppressWarnings(panelr::wbm(lwage ~ lag(union) + wks | blk + fem | blk * (t | id), data = wages))
+m2 <- suppressWarnings(panelr::wbm(
+  lwage ~ lag(union) + wks | blk + fem | blk * (t | id),
+  data = wages
+))
 
 test_that("ci", {
   expect_equal(
@@ -54,8 +57,16 @@ test_that("model_parameters", {
   expect_equal(
     model_parameters(m1, effects = "all")$Coefficient,
     c(
-      0.05825, -0.00164, 6.59813, -0.028, 0.00438, -0.22941, -0.44176,
-      -0.12732, 0.35399, 0.23264
+      0.05825,
+      -0.00164,
+      6.59813,
+      -0.028,
+      0.00438,
+      -0.22941,
+      -0.44176,
+      -0.12732,
+      0.35399,
+      0.23264
     ),
     tolerance = 1e-3
   )
@@ -73,5 +84,5 @@ test_that("model_parameters, asym", {
   data("teen_poverty", package = "panelr")
   teen <- panelr::long_panel(teen_poverty, begin = 1, end = 5)
   m4 <- panelr::asym(hours ~ lag(pov) + spouse, data = teen, use.wave = TRUE)
-  expect_snapshot(print(model_parameters(m4)))
+  expect_snapshot(print(model_parameters(m4)), variant = snapshot_variant())
 })

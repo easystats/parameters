@@ -201,14 +201,26 @@ withr::with_options(
 
 
 test_that("print-model_parameters-1", {
-  expect_snapshot(model_parameters(model, effects = "fixed", wb_component = TRUE))
-  expect_snapshot(model_parameters(model, effects = "fixed", wb_component = FALSE))
+  expect_snapshot(
+    model_parameters(model, effects = "fixed", wb_component = TRUE),
+    variant = snapshot_variant()
+  )
+  expect_snapshot(
+    model_parameters(model, effects = "fixed", wb_component = FALSE),
+    variant = snapshot_variant()
+  )
 })
 
 test_that("print-model_parameters-2", {
   skip_if_not_installed("merDeriv")
-  expect_snapshot(model_parameters(m1, effects = "all", wb_component = TRUE))
-  expect_snapshot(model_parameters(m1, effects = "all", wb_component = FALSE))
+  expect_snapshot(
+    model_parameters(m1, effects = "all", wb_component = TRUE),
+    variant = snapshot_variant()
+  )
+  expect_snapshot(
+    model_parameters(m1, effects = "all", wb_component = FALSE),
+    variant = snapshot_variant()
+  )
 
   expect_snapshot(model_parameters(
     m1,

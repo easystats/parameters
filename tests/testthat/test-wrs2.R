@@ -11,13 +11,25 @@ test_that("model_parameters.t1way", {
   expect_named(
     df_b,
     c(
-      "F", "df", "df_error", "p", "Method", "Estimate", "CI", "CI_low",
-      "CI_high", "Effectsize"
+      "F",
+      "df",
+      "df_error",
+      "p",
+      "Method",
+      "Estimate",
+      "CI",
+      "CI_low",
+      "CI_high",
+      "Effectsize"
     )
   )
 
   set.seed(123)
-  df_w <- model_parameters(WRS2::rmanova(WineTasting$Taste, WineTasting$Wine, WineTasting$Taster))
+  df_w <- model_parameters(WRS2::rmanova(
+    WineTasting$Taste,
+    WineTasting$Wine,
+    WineTasting$Taster
+  ))
   expect_named(df_w, c("F", "df", "df_error", "p", "Method"))
 })
 
@@ -29,8 +41,16 @@ test_that("model_parameters.yuen", {
   expect_named(
     df_b,
     c(
-      "t", "df_error", "p", "Method", "Difference", "CI", "Difference_CI_low",
-      "Difference_CI_high", "Estimate", "Effectsize"
+      "t",
+      "df_error",
+      "p",
+      "Method",
+      "Difference",
+      "CI",
+      "Difference_CI_low",
+      "Difference_CI_high",
+      "Estimate",
+      "Effectsize"
     )
   )
 
@@ -44,7 +64,13 @@ test_that("model_parameters.yuen", {
   expect_named(
     df_bt,
     c(
-      "t", "df_error", "p", "Method", "Difference", "CI", "Difference_CI_low",
+      "t",
+      "df_error",
+      "p",
+      "Method",
+      "Difference",
+      "CI",
+      "Difference_CI_low",
       "Difference_CI_high"
     )
   )
@@ -55,10 +81,14 @@ test_that("model_parameters.yuen", {
 test_that("model_parameters.mcp and robtab", {
   set.seed(123)
   df_b <- model_parameters(WRS2::lincon(libido ~ dose, data = viagra))
-  expect_snapshot(print(df_b, table_width = Inf))
+  expect_snapshot(print(df_b, table_width = Inf), variant = snapshot_variant())
 
   set.seed(123)
-  df_w <- model_parameters(WRS2::rmmcp(WineTasting$Taste, WineTasting$Wine, WineTasting$Taster))
+  df_w <- model_parameters(WRS2::rmmcp(
+    WineTasting$Taste,
+    WineTasting$Wine,
+    WineTasting$Taster
+  ))
 
   set.seed(123)
   df <- model_parameters(WRS2::discmcp(libido ~ dose, viagra, nboot = 100))
@@ -68,11 +98,7 @@ test_that("model_parameters.mcp and robtab", {
 
 test_that("model_parameters.AKP", {
   set.seed(123)
-  mod <- WRS2::akp.effect(
-    formula = wt ~ am,
-    data = mtcars,
-    EQVAR = FALSE
-  )
+  mod <- WRS2::akp.effect(formula = wt ~ am, data = mtcars, EQVAR = FALSE)
 })
 
 

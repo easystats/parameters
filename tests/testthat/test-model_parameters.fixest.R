@@ -21,22 +21,40 @@ test_that("model_parameters.fixest-1", {
 
   m1 <- fixest::feols(QoL ~ time + phq4 | ID, data = qol_cancer)
   m2 <- fixest::femlm(Euros ~ log(dist_km) | Origin + Destination + Product, data = trade)
-  m3 <- fixest::femlm(log1p(Euros) ~ log(dist_km) | Origin + Destination + Product, data = trade, family = "gaussian")
-  m4 <- fixest::feglm(Euros ~ log(dist_km) | Origin + Destination + Product, data = trade, family = "poisson")
-  m5 <- fixest::feols(Sepal.Width ~ Petal.Length | Species | Sepal.Length ~ Petal.Width, data = iris)
-  m6 <- fixest::feglm(dv ~ language | judge, data = d, cluster = "judge", family = "logit")
+  m3 <- fixest::femlm(
+    log1p(Euros) ~ log(dist_km) | Origin + Destination + Product,
+    data = trade,
+    family = "gaussian"
+  )
+  m4 <- fixest::feglm(
+    Euros ~ log(dist_km) | Origin + Destination + Product,
+    data = trade,
+    family = "poisson"
+  )
+  m5 <- fixest::feols(
+    Sepal.Width ~ Petal.Length | Species | Sepal.Length ~ Petal.Width,
+    data = iris
+  )
+  m6 <- fixest::feglm(
+    dv ~ language | judge,
+    data = d,
+    cluster = "judge",
+    family = "logit"
+  )
 
   params <- model_parameters(m1, verbose = FALSE)
   expect_identical(c(nrow(params), ncol(params)), c(2L, 9L))
   expect_equal(params$p, as.vector(fixest::pvalue(m1)), tolerance = 1e-4)
-  expect_equal(params$df_error[1], as.vector(fixest::degrees_freedom(m1, type = "t")), tolerance = 1e-4)
+  expect_equal(
+    params$df_error[1],
+    as.vector(fixest::degrees_freedom(m1, type = "t")),
+    tolerance = 1e-4
+  )
   expect_equal(params$Coefficient, as.vector(coef(m1)), tolerance = 1e-4)
 
   # currently, a bug for fixest 10.4 on R >= 4.3
   # skip_if_not(getRversion() < "4.2.0")
-  expect_snapshot(
-    model_parameters(m1, include_info = TRUE, verbose = FALSE)
-  )
+  expect_snapshot(model_parameters(m1, include_info = TRUE, verbose = FALSE))
 
   # Poission, df = Inf
   params <- model_parameters(m2, verbose = FALSE)
@@ -48,7 +66,11 @@ test_that("model_parameters.fixest-1", {
   params <- model_parameters(m3, verbose = FALSE)
   expect_identical(c(nrow(params), ncol(params)), c(1L, 9L))
   expect_equal(params$p, as.vector(fixest::pvalue(m3)), tolerance = 1e-4)
-  expect_equal(params$df_error[1], as.vector(fixest::degrees_freedom(m3, type = "t")), tolerance = 1e-4)
+  expect_equal(
+    params$df_error[1],
+    as.vector(fixest::degrees_freedom(m3, type = "t")),
+    tolerance = 1e-4
+  )
   expect_equal(params$Coefficient, as.vector(coef(m3)), tolerance = 1e-4)
 
   # Poission, df = Inf
@@ -61,7 +83,11 @@ test_that("model_parameters.fixest-1", {
   params <- model_parameters(m5, verbose = FALSE)
   expect_identical(c(nrow(params), ncol(params)), c(2L, 9L))
   expect_equal(params$p, as.vector(fixest::pvalue(m5)), tolerance = 1e-4)
-  expect_equal(params$df_error[1], as.vector(fixest::degrees_freedom(m5, type = "t")), tolerance = 1e-4)
+  expect_equal(
+    params$df_error[1],
+    as.vector(fixest::degrees_freedom(m5, type = "t")),
+    tolerance = 1e-4
+  )
   expect_equal(params$Coefficient, as.vector(coef(m5)), tolerance = 1e-4)
 
   # logit, df = Inf
@@ -82,13 +108,25 @@ test_that("model_parameters.fixest-2", {
   d <- Greene
   d$dv <- as.numeric(Greene$decision == "yes")
 
-  mod1 <- fixest::feglm(dv ~ language | judge,
+  mod1 <- fixest::feglm(
+    dv ~ language | judge,
     data = d,
-    cluster = "judge", family = "logit"
+    cluster = "judge",
+    family = "logit"
   )
   out1 <- model_parameters(mod1)
-  expect_equal(out1$p, as.vector(fixest::pvalue(mod1)), tolerance = 1e-4, ignore_attr = TRUE)
-  expect_equal(out1$SE, as.vector(sqrt(diag(vcov(mod1)))), tolerance = 1e-4, ignore_attr = TRUE)
+  expect_equal(
+    out1$p,
+    as.vector(fixest::pvalue(mod1)),
+    tolerance = 1e-4,
+    ignore_attr = TRUE
+  )
+  expect_equal(
+    out1$SE,
+    as.vector(sqrt(diag(vcov(mod1)))),
+    tolerance = 1e-4,
+    ignore_attr = TRUE
+  )
 })
 
 
@@ -113,8 +151,18 @@ test_that("robust standard errors", {
   # HC3 works since fixest 0.13.0
   skip_if_not_installed("fixest", minimum_version = "0.13.0")
   se4 <- sqrt(diag(vcov(mod, vcov = "HC3")))
-  expect_equal(standard_error(mod, vcov = "HC3")$SE, se4, ignore_attr = TRUE, tolerance = 1e-4)
-  expect_equal(parameters(mod, vcov = "HC3")$SE, se4, ignore_attr = TRUE, tolerance = 1e-4)
+  expect_equal(
+    standard_error(mod, vcov = "HC3")$SE,
+    se4,
+    ignore_attr = TRUE,
+    tolerance = 1e-4
+  )
+  expect_equal(
+    parameters(mod, vcov = "HC3")$SE,
+    se4,
+    ignore_attr = TRUE,
+    tolerance = 1e-4
+  )
 
   expect_error(parameters(mod, vcov = "hetero"), NA)
   expect_error(parameters(mod, vcov = "iid"), NA)
@@ -149,6 +197,6 @@ withr::with_options(
     data(Salamanders, package = "glmmTMB")
     mod <- fixest::fenegbin(count ~ mined + spp, data = Salamanders)
     out <- model_parameters(mod)
-    expect_snapshot(print(out))
+    expect_snapshot(print(out), variant = snapshot_variant())
   })
 )

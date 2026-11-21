@@ -14,7 +14,7 @@ test_that("pooled parameters", {
   expect_equal(pp$SE, mice_summ$std.error, tolerance = 1e-3)
   expect_equal(pp$df_error, mice_summ$df, tolerance = 1e-3)
   expect_equal(pp$p, mice_summ$p.value, tolerance = 1e-3)
-  expect_snapshot(print(pp))
+  expect_snapshot(print(pp), variant = snapshot_variant())
 })
 
 test_that("pooled parameters", {
@@ -81,10 +81,7 @@ test_that("pooled parameters, glmmTMB, components", {
   out <- pool_parameters(models, component = "conditional")
   expect_named(
     out,
-    c(
-      "Parameter", "Coefficient", "SE", "CI_low", "CI_high", "Statistic",
-      "df_error", "p"
-    )
+    c("Parameter", "Coefficient", "SE", "CI_low", "CI_high", "Statistic", "df_error", "p")
   )
   expect_equal(out$Coefficient, fixed_mean[1:2], tolerance = 1e-3)
 
@@ -92,8 +89,16 @@ test_that("pooled parameters, glmmTMB, components", {
   expect_named(
     out,
     c(
-      "Parameter", "Coefficient", "Effects", "SE", "CI_low", "CI_high",
-      "Statistic", "df_error", "p", "Component"
+      "Parameter",
+      "Coefficient",
+      "Effects",
+      "SE",
+      "CI_low",
+      "CI_high",
+      "Statistic",
+      "df_error",
+      "p",
+      "Component"
     )
   )
   expect_equal(out$Coefficient, c(fixed_mean, sd_mean, NaN), tolerance = 1e-3)
@@ -102,8 +107,15 @@ test_that("pooled parameters, glmmTMB, components", {
   expect_named(
     out,
     c(
-      "Parameter", "Coefficient", "SE", "CI_low", "CI_high",
-      "Statistic", "df_error", "p", "Component"
+      "Parameter",
+      "Coefficient",
+      "SE",
+      "CI_low",
+      "CI_high",
+      "Statistic",
+      "df_error",
+      "p",
+      "Component"
     )
   )
   expect_equal(out$Coefficient, fixed_mean, tolerance = 1e-3)
@@ -133,17 +145,27 @@ test_that("pooled parameters, glmmTMB, zero-inflated", {
   expect_named(
     out,
     c(
-      "Parameter", "Coefficient", "SE", "CI_low", "CI_high", "Statistic",
-      "df_error", "p", "Component"
+      "Parameter",
+      "Coefficient",
+      "SE",
+      "CI_low",
+      "CI_high",
+      "Statistic",
+      "df_error",
+      "p",
+      "Component"
     )
   )
 
   # validate against mice ---------------
-  m_mice <- suppressWarnings(with(data = impdat, exp = glmmTMB::glmmTMB(
-    count ~ mined + cover + (1 | site),
-    ziformula = ~mined,
-    family = poisson()
-  )))
+  m_mice <- suppressWarnings(with(
+    data = impdat,
+    exp = glmmTMB::glmmTMB(
+      count ~ mined + cover + (1 | site),
+      ziformula = ~mined,
+      family = poisson()
+    )
+  ))
   mice_summ <- suppressWarnings(summary(mice::pool(
     m_mice,
     dfcom = stats::df.residual(models[[1]])
@@ -161,8 +183,16 @@ test_that("pooled parameters, glmmTMB, zero-inflated", {
   expect_named(
     out,
     c(
-      "Parameter", "Coefficient", "Effects", "SE", "CI_low", "CI_high",
-      "Statistic", "df_error", "p", "Component"
+      "Parameter",
+      "Coefficient",
+      "Effects",
+      "SE",
+      "CI_low",
+      "CI_high",
+      "Statistic",
+      "df_error",
+      "p",
+      "Component"
     )
   )
   expect_equal(out$Coefficient, c(mice_summ$estimate, sd_mean), tolerance = 1e-3)
@@ -170,10 +200,7 @@ test_that("pooled parameters, glmmTMB, zero-inflated", {
   out <- pool_parameters(models, component = "conditional", effects = "fixed")
   expect_named(
     out,
-    c(
-      "Parameter", "Coefficient", "SE", "CI_low", "CI_high",
-      "Statistic", "df_error", "p"
-    )
+    c("Parameter", "Coefficient", "SE", "CI_low", "CI_high", "Statistic", "df_error", "p")
   )
   expect_equal(out$Coefficient, mice_summ$estimate[1:3], tolerance = 1e-3)
 })

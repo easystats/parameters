@@ -11,17 +11,13 @@ withr::with_environment(
   test_that("model_parameters svylme", {
     data(api, package = "survey")
     # two-stage cluster sample
-    dclus2 <- survey::svydesign(
-      id = ~ dnum + snum,
-      fpc = ~ fpc1 + fpc2,
-      data = apiclus2
-    )
+    dclus2 <- survey::svydesign(id = ~ dnum + snum, fpc = ~ fpc1 + fpc2, data = apiclus2)
     m <- svylme::svy2lme(
       api00 ~ ell + mobility + api99 + (1 + api99 | dnum),
       design = dclus2,
       method = "nested"
     )
     mp <- model_parameters(m)
-    expect_snapshot(print(mp))
+    expect_snapshot(print(mp), variant = snapshot_variant())
   })
 )
