@@ -76,7 +76,7 @@ test_that("model_parameters.mixed", {
 
 
 test_that("model_parameters.mixed bootstrap", {
-  skip_on_os(c("linux", "mac"))
+  skip_on_os("mac")
   skip_on_cran()
   set.seed(123)
   suppressWarnings(expect_message(

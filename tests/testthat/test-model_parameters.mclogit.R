@@ -24,7 +24,7 @@ withr::with_options(list(parameters_exponentiate = FALSE), {
     expect_snapshot(params, variant = snapshot_variant())
   })
 
-  skip_on_os(c("mac", "linux"))
+  skip_on_os("mac")
   test_that("simulate_parameters.mblogit", {
     set.seed(1234)
     params <- simulate_parameters(m2)
