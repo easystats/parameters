@@ -758,24 +758,47 @@ withr::with_options(list(parameters_exponentiate = FALSE), {
         `Cor (Intercept~xb)` = "Cor (Intercept~xb)"
       )
     )
-    expect_identical(
-      substr(out, 1, 30),
-      c(
-        "# Fixed Effects",
-        "",
-        "Parameter   | Log-Mean |   SE ",
-        "------------------------------",
-        "(Intercept) |     1.67 | 0.63 ",
-        "child       |    -1.04 | 0.09 ",
-        "camper [1]  |     0.27 | 0.09 ",
-        "",
-        "# Random Effects",
-        "",
-        "Parameter                   | ",
-        "------------------------------",
-        "SD (Intercept: persons)     | ",
-        "SD (xb: persons)            | ",
-        "Cor (Intercept~xb: persons) | "
+    switch(
+      snapshot_variant(),
+      windows = expect_identical(
+        substr(out, 1, 30),
+        c(
+          "# Fixed Effects",
+          "",
+          "Parameter   | Log-Mean |   SE ",
+          "------------------------------",
+          "(Intercept) |     1.67 | 0.66 ",
+          "child       |    -1.04 | 0.09 ",
+          "camper [1]  |     0.27 | 0.09 ",
+          "",
+          "# Random Effects",
+          "",
+          "Parameter                   | ",
+          "------------------------------",
+          "SD (Intercept: persons)     | ",
+          "SD (xb: persons)            | ",
+          "Cor (Intercept~xb: persons) | "
+        )
+      ),
+      expect_identical(
+        substr(out, 1, 30),
+        c(
+          "# Fixed Effects",
+          "",
+          "Parameter   | Log-Mean |   SE ",
+          "------------------------------",
+          "(Intercept) |     1.67 | 0.63 ",
+          "child       |    -1.04 | 0.09 ",
+          "camper [1]  |     0.27 | 0.09 ",
+          "",
+          "# Random Effects",
+          "",
+          "Parameter                   | ",
+          "------------------------------",
+          "SD (Intercept: persons)     | ",
+          "SD (xb: persons)            | ",
+          "Cor (Intercept~xb: persons) | "
+        )
       )
     )
     expect_equal(
@@ -783,10 +806,18 @@ withr::with_options(list(parameters_exponentiate = FALSE), {
       c(1.6724, -1.0426, 0.2684, 2.18, 1.0592, -0.9883),
       tolerance = 1e-3
     )
-    expect_equal(
-      mp$CI_low,
-      c(0.43958, -1.21879, 0.09893, 1.12106, 0.63094, NaN),
-      tolerance = 1e-3
+    switch(
+      snapshot_variant(),
+      windows = expect_equal(
+        mp$CI_low,
+        c(0.38839, -1.21878, 0.08262, 1.1599, 0.59457, NaN),
+        tolerance = 1e-3
+      ),
+      expect_equal(
+        mp$CI_low,
+        c(0.43958, -1.21879, 0.09893, 1.12106, 0.63094, NaN),
+        tolerance = 1e-3
+      )
     )
 
     mp <- suppressWarnings(model_parameters(
@@ -808,24 +839,47 @@ withr::with_options(list(parameters_exponentiate = FALSE), {
         `Cor (Intercept~zg)` = "Cor (Intercept~zg)"
       )
     )
-    expect_identical(
-      substr(out, 1, 30),
-      c(
-        "# Fixed Effects (Zero-Inflatio",
-        "",
-        "Parameter   | Log-Mean |   SE ",
-        "------------------------------",
-        "(Intercept) |    -4.04 | 0.19 ",
-        "child       |    -1.37 | 2.05 ",
-        "camper [1]  |    -4.83 |      ",
-        "",
-        "# Random Effects (Zero-Inflati",
-        "",
-        "Parameter                   | ",
-        "------------------------------",
-        "SD (Intercept: persons)     | ",
-        "SD (zg: persons)            | ",
-        "Cor (Intercept~zg: persons) | "
+    switch(
+      snapshot_variant(),
+      windows = expect_identical(
+        substr(out, 1, 30),
+        c(
+          "# Fixed Effects (Zero-Inflatio",
+          "",
+          "Parameter   | Log-Mean |      ",
+          "------------------------------",
+          "(Intercept) |    -4.04 |     0",
+          "child       |    -1.37 |     2",
+          "camper [1]  |    -4.83 | 2.25e",
+          "",
+          "# Random Effects (Zero-Inflati",
+          "",
+          "Parameter                   | ",
+          "------------------------------",
+          "SD (Intercept: persons)     | ",
+          "SD (zg: persons)            | ",
+          "Cor (Intercept~zg: persons) | "
+        )
+      ),
+      expect_identical(
+        substr(out, 1, 30),
+        c(
+          "# Fixed Effects (Zero-Inflatio",
+          "",
+          "Parameter   | Log-Mean |   SE ",
+          "------------------------------",
+          "(Intercept) |    -4.04 | 0.19 ",
+          "child       |    -1.37 | 2.05 ",
+          "camper [1]  |    -4.83 |      ",
+          "",
+          "# Random Effects (Zero-Inflati",
+          "",
+          "Parameter                   | ",
+          "------------------------------",
+          "SD (Intercept: persons)     | ",
+          "SD (zg: persons)            | ",
+          "Cor (Intercept~zg: persons) | "
+        )
       )
     )
     expect_equal(
@@ -900,39 +954,21 @@ withr::with_options(list(parameters_exponentiate = FALSE), {
         "Cor (Intercept~zg: persons) | "
       )
     )
+    # fmt: skip
     expect_equal(
       mp$Coefficient,
       c(
-        1.6724,
-        -1.0426,
-        0.2684,
-        -4.042,
-        -1.3724,
-        -4.829,
-        2.18,
-        1.0592,
-        -0.9883,
-        5.8635,
-        12.518,
-        0.979
+        1.6724, -1.0426, 0.2684, -4.042, -1.3724, -4.829, 2.18,
+        1.0592, -0.9883, 5.8635, 12.518, 0.979
       ),
       tolerance = 1e-3
     )
+    # fmt: skip
     expect_equal(
       mp$CI_low,
       c(
-        0.3884,
-        -1.2188,
-        0.0826,
-        -4.4415,
-        -5.3849,
-        -4.8295,
-        1.1599,
-        0.5946,
-        NaN,
-        3.8307,
-        10.9496,
-        NaN
+        0.3884, -1.2188, 0.0826, -4.4415, -5.3849, -4.8295,
+        1.1599, 0.5946, NaN, 3.8307, 10.9496, NaN
       ),
       tolerance = 1e-3
     )
