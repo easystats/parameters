@@ -13,15 +13,19 @@ test_that("include_reference, on-the-fly factors", {
   out1 <- model_parameters(m1, include_reference = TRUE)
   out2 <- model_parameters(m2, include_reference = TRUE)
 
-  expect_snapshot(print(out1))
-  expect_snapshot(print(out2))
+  expect_snapshot(print(out1), variant = snapshot_variant())
+  expect_snapshot(print(out2), variant = snapshot_variant())
 
-  expect_equal(attributes(out1)$pretty_names, attributes(out2)$pretty_names, ignore_attr = TRUE)
+  expect_equal(
+    attributes(out1)$pretty_names,
+    attributes(out2)$pretty_names,
+    ignore_attr = TRUE
+  )
   expect_equal(out1$Coefficient, out2$Coefficient, tolerance = 1e-4)
 
   out <- compare_parameters(m1, m2, include_reference = TRUE)
-  expect_snapshot(print_md(out))
-  expect_snapshot(display(out, format = "tt"))
+  expect_snapshot(print_md(out), variant = snapshot_variant())
+  expect_snapshot(display(out, format = "tt"), variant = snapshot_variant())
 })
 
 skip_if(getRversion() < "4.3.3")
@@ -42,7 +46,11 @@ test_that("include_reference, on-the-fly factors", {
     lm(formula = mpg ~ gear + am + hp) |>
     model_parameters(include_reference = TRUE)
 
-  expect_equal(attributes(out1)$pretty_names, attributes(out3)$pretty_names, ignore_attr = TRUE)
+  expect_equal(
+    attributes(out1)$pretty_names,
+    attributes(out3)$pretty_names,
+    ignore_attr = TRUE
+  )
 })
 
 test_that("include_reference, with pretty formatted cut", {
@@ -53,8 +61,10 @@ test_that("include_reference, with pretty formatted cut", {
   expect_identical(
     attributes(out)$pretty_names,
     c(
-      `(Intercept)` = "(Intercept)", `mpg_cut(0,20]` = "mpg cut [>0-20]",
-      `mpg_cut(20,30]` = "mpg cut [>20-30]", `mpg_cut(30,100]` = "mpg cut [>30-100]"
+      `(Intercept)` = "(Intercept)",
+      `mpg_cut(0,20]` = "mpg cut [>0-20]",
+      `mpg_cut(20,30]` = "mpg cut [>20-30]",
+      `mpg_cut(30,100]` = "mpg cut [>30-100]"
     )
   )
 })
@@ -64,46 +74,41 @@ test_that("include_reference, different contrasts", {
   mtcars$cyl <- factor(mtcars$cyl)
   mtcars$gear <- factor(mtcars$gear)
 
-  m <- lm(mpg ~ cyl + gear, data = mtcars, contrasts = list(cyl = datawizard::contr.deviation))
+  m <- lm(
+    mpg ~ cyl + gear,
+    data = mtcars,
+    contrasts = list(cyl = datawizard::contr.deviation)
+  )
   out <- model_parameters(m, include_reference = TRUE)
-  expect_snapshot(print(out))
+  expect_snapshot(print(out), variant = snapshot_variant())
 
   m <- lm(mpg ~ cyl + gear, data = mtcars)
   out <- model_parameters(m, include_reference = TRUE)
-  expect_snapshot(print(out))
+  expect_snapshot(print(out), variant = snapshot_variant())
 
   m <- lm(
     mpg ~ cyl + gear,
     data = mtcars,
-    contrasts = list(
-      cyl = datawizard::contr.deviation,
-      gear = contr.sum
-    )
+    contrasts = list(cyl = datawizard::contr.deviation, gear = contr.sum)
   )
   out <- model_parameters(m, include_reference = TRUE)
-  expect_snapshot(print(out))
+  expect_snapshot(print(out), variant = snapshot_variant())
 
   m <- lm(
     mpg ~ cyl + gear,
     data = mtcars,
-    contrasts = list(
-      cyl = contr.SAS,
-      gear = contr.sum
-    )
+    contrasts = list(cyl = contr.SAS, gear = contr.sum)
   )
   out <- model_parameters(m, include_reference = TRUE)
-  expect_snapshot(print(out))
+  expect_snapshot(print(out), variant = snapshot_variant())
 
   m <- lm(
     mpg ~ cyl + gear,
     data = mtcars,
-    contrasts = list(
-      cyl = contr.SAS,
-      gear = contr.treatment
-    )
+    contrasts = list(cyl = contr.SAS, gear = contr.treatment)
   )
   out <- model_parameters(m, include_reference = TRUE)
-  expect_snapshot(print(out))
+  expect_snapshot(print(out), variant = snapshot_variant())
 })
 
 
@@ -118,11 +123,16 @@ test_that("include_reference, random effects models", {
   )
 
   out <- model_parameters(fit_penguins, exponentiate = TRUE, include_reference = TRUE)
-  expect_snapshot(print(out))
+  expect_snapshot(print(out), variant = snapshot_variant())
 
   out <- model_parameters(fit_penguins, exponentiate = TRUE)
-  expect_snapshot(print(out, include_reference = TRUE))
+  expect_snapshot(print(out, include_reference = TRUE), variant = snapshot_variant())
 
-  out <- model_parameters(fit_penguins, effects = "fixed", exponentiate = TRUE, include_reference = TRUE)
-  expect_snapshot(print(out))
+  out <- model_parameters(
+    fit_penguins,
+    effects = "fixed",
+    exponentiate = TRUE,
+    include_reference = TRUE
+  )
+  expect_snapshot(print(out), variant = snapshot_variant())
 })
