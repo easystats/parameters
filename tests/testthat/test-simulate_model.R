@@ -1,4 +1,4 @@
-skip_on_os(c("mac", "linux", "solaris"))
+skip_on_os(c("mac", "solaris"))
 skip_if_not(getRversion() >= "4.0.0")
 skip_if_not_installed("sandwich")
 

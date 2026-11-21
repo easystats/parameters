@@ -644,7 +644,7 @@ withr::with_options(list(parameters_exponentiate = FALSE), {
   # proper printing ---------------------
 
   test_that("print-model_parameters glmmTMB", {
-    skip_on_os(c("mac", "linux", "solaris"))
+    skip_on_os(c("mac", "solaris"))
     skip_if_not(getRversion() >= "4.3.3")
 
     mp <- model_parameters(m4, effects = "fixed", component = "conditional")
@@ -941,7 +941,7 @@ withr::with_options(list(parameters_exponentiate = FALSE), {
   # proper printing of digits ---------------------
 
   test_that("print-model_parameters glmmTMB digits", {
-    skip_on_os(c("mac", "linux", "solaris"))
+    skip_on_os(c("mac", "solaris"))
     skip_if_not(getRversion() >= "4.3.3")
 
     mp <- model_parameters(m4, ci_random = TRUE, effects = "all", component = "all")
@@ -964,7 +964,7 @@ withr::with_options(list(parameters_exponentiate = FALSE), {
   test_that("print-model_parameters glmmTMB CI alignment", {
     skip_if_not_installed("curl")
     skip_if_offline()
-    skip_on_os(c("mac", "linux", "solaris"))
+    skip_on_os(c("mac", "solaris"))
     skip_if_not(getRversion() >= "4.3.3")
 
     model_pr <- tryCatch(
@@ -998,7 +998,7 @@ withr::with_options(list(parameters_exponentiate = FALSE), {
   })
 
   test_that("model_parameters.mixed-all", {
-    skip_on_os(c("mac", "linux", "solaris"))
+    skip_on_os(c("mac", "solaris"))
     skip_if_not(getRversion() >= "4.3.3")
 
     params <- model_parameters(m4, effects = "all")
@@ -1075,7 +1075,7 @@ withr::with_options(list(parameters_exponentiate = FALSE), {
   })
 
   test_that("print-model_parameters", {
-    skip_on_os(c("mac", "linux", "solaris"))
+    skip_on_os(c("mac", "solaris"))
     skip_if_not(getRversion() >= "4.3.3")
 
     mp <- model_parameters(m1, effects = "fixed", verbose = FALSE)

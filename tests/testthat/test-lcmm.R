@@ -1,5 +1,5 @@
 skip_on_cran()
-skip_on_os(c("mac", "linux", "solaris"))
+skip_on_os(c("mac", "solaris"))
 
 skip_if_not_installed("lcmm")
 skip_if_not_installed("datawizard")
