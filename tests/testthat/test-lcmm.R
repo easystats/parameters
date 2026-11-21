@@ -19,16 +19,43 @@ withr::with_options(
     )
     skip_if(is.null(out))
 
-    expect_snapshot(print(model_parameters(out$mx_linear), zap_small = TRUE))
-    expect_snapshot(print(model_parameters(out$mx_beta), zap_small = TRUE))
-    expect_snapshot(print(model_parameters(out$mx_splines), zap_small = TRUE))
+    expect_snapshot(
+      print(model_parameters(out$mx_linear), zap_small = TRUE),
+      variant = snapshot_variant()
+    )
+    expect_snapshot(
+      print(model_parameters(out$mx_beta), zap_small = TRUE),
+      variant = snapshot_variant()
+    )
+    expect_snapshot(
+      print(model_parameters(out$mx_splines), zap_small = TRUE),
+      variant = snapshot_variant()
+    )
 
-    expect_snapshot(print(model_parameters(out$m1_linear), zap_small = TRUE))
-    expect_snapshot(print(model_parameters(out$m1_beta), zap_small = TRUE))
-    expect_snapshot(print(model_parameters(out$m1_splines), zap_small = TRUE))
+    expect_snapshot(
+      print(model_parameters(out$m1_linear), zap_small = TRUE),
+      variant = snapshot_variant()
+    )
+    expect_snapshot(
+      print(model_parameters(out$m1_beta), zap_small = TRUE),
+      variant = snapshot_variant()
+    )
+    expect_snapshot(
+      print(model_parameters(out$m1_splines), zap_small = TRUE),
+      variant = snapshot_variant()
+    )
 
-    expect_snapshot(print(model_parameters(out$m2_linear), zap_small = TRUE))
-    expect_snapshot(print(model_parameters(out$m2_beta), zap_small = TRUE))
-    expect_snapshot(print(model_parameters(out$m2_splines), zap_small = TRUE))
+    expect_snapshot(
+      print(model_parameters(out$m2_linear), zap_small = TRUE),
+      variant = snapshot_variant()
+    )
+    expect_snapshot(
+      print(model_parameters(out$m2_beta), zap_small = TRUE),
+      variant = snapshot_variant()
+    )
+    expect_snapshot(
+      print(model_parameters(out$m2_splines), zap_small = TRUE),
+      variant = snapshot_variant()
+    )
   })
 )

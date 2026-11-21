@@ -13,9 +13,9 @@ withr::with_options(
     m <- suppressWarnings(insight::download_model("brms_bernoulli_1"))
     skip_if(is.null(m))
     out <- parameters::model_parameters(m, exponentiate = FALSE)
-    expect_snapshot(print(out))
+    expect_snapshot(print(out), variant = snapshot_variant())
     out <- parameters::model_parameters(m, exponentiate = TRUE)
-    expect_snapshot(print(out))
+    expect_snapshot(print(out), variant = snapshot_variant())
   })
 )
 

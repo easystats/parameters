@@ -52,8 +52,8 @@ test_that("factor_analysis", {
     standardize = TRUE,
     sort = TRUE
   )
-  expect_snapshot(print(summary(out)))
-  expect_snapshot(print_md(summary(out)))
+  expect_snapshot(print(summary(out)), variant = snapshot_variant())
+  expect_snapshot(print_md(summary(out)), variant = snapshot_variant())
 
   # check factor scores
   fc <- factor_scores(out)
@@ -139,9 +139,9 @@ test_that("omega", {
 
   model <- psych::omega(mtcars, nfactors = 3, plot = FALSE)
   out <- model_parameters(model)
-  expect_snapshot(print(out))
-  expect_snapshot(print_md(out))
+  expect_snapshot(print(out), variant = snapshot_variant())
+  expect_snapshot(print_md(out), variant = snapshot_variant())
 
-  expect_snapshot(print(summary(out)))
-  expect_snapshot(print_md(summary(out)))
+  expect_snapshot(print(summary(out)), variant = snapshot_variant())
+  expect_snapshot(print_md(summary(out)), variant = snapshot_variant())
 })
