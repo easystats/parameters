@@ -37,11 +37,7 @@ test_that("ci", {
     tolerance = 1e-3
   )
 
-  expect_equal(
-    ci(m2)$CI_low,
-    c(-1.8572, -1.59265, -1.76827, -2.41754),
-    tolerance = 1e-3
-  )
+  expect_equal(ci(m2)$CI_low, c(-1.8572, -1.59265, -1.76827, -2.41754), tolerance = 1e-3)
   expect_equal(
     ci(m2, component = "cond")$CI_low,
     c(-1.8572, -1.59265, -1.76827, -2.41754),
@@ -85,27 +81,15 @@ test_that("se", {
 
 
 test_that("p_value", {
-  expect_equal(
-    p_value(m1)$p,
-    c(0.0339, 0, 0, 0.86023, 1e-05, 0.02713),
-    tolerance = 1e-3
-  )
-  expect_equal(
-    p_value(m1, component = "cond")$p,
-    c(0.0339, 0, 0),
-    tolerance = 1e-3
-  )
+  expect_equal(p_value(m1)$p, c(0.0339, 0, 0, 0.86023, 1e-05, 0.02713), tolerance = 1e-3)
+  expect_equal(p_value(m1, component = "cond")$p, c(0.0339, 0, 0), tolerance = 1e-3)
   expect_equal(
     p_value(m1, component = "zi")$p,
     c(0.86023, 1e-05, 0.02713),
     tolerance = 1e-3
   )
 
-  expect_equal(
-    p_value(m2)$p,
-    c(0, 0.00123, 0.00056, 0.00022),
-    tolerance = 1e-3
-  )
+  expect_equal(p_value(m2)$p, c(0, 0.00123, 0.00056, 0.00022), tolerance = 1e-3)
   expect_equal(
     p_value(m2, component = "cond")$p,
     c(0, 0.00123, 0.00056, 0.00022),
@@ -130,7 +114,7 @@ test_that("model_parameters", {
 })
 
 test_that("model_parameters.mixed-ran_pars", {
-  skip_on_os(c("mac", "linux", "solaris"))
+  skip_on_os(c("mac", "solaris"))
   skip_if_not_installed("glmmTMB")
 
   data("Salamanders", package = "glmmTMB")
@@ -148,20 +132,40 @@ test_that("model_parameters.mixed-ran_pars", {
   expect_identical(c(nrow(params), ncol(params)), c(7L, 9L))
   expect_identical(
     colnames(params),
-    c("Parameter", "Coefficient", "SE", "CI", "CI_low", "CI_high", "Effects", "Group", "Component")
+    c(
+      "Parameter",
+      "Coefficient",
+      "SE",
+      "CI",
+      "CI_low",
+      "CI_high",
+      "Effects",
+      "Group",
+      "Component"
+    )
   )
   expect_identical(
     params$Parameter,
     c(
-      "SD (Intercept)", "SD (DOY)", "Cor (Intercept~DOY)", "SD (Observations)",
-      "SD (Intercept)", "SD (DOP)", "Cor (Intercept~DOP)"
+      "SD (Intercept)",
+      "SD (DOY)",
+      "Cor (Intercept~DOY)",
+      "SD (Observations)",
+      "SD (Intercept)",
+      "SD (DOP)",
+      "Cor (Intercept~DOP)"
     )
   )
   expect_identical(
     params$Component,
     c(
-      "conditional", "conditional", "conditional", "conditional",
-      "zero_inflated", "zero_inflated", "zero_inflated"
+      "conditional",
+      "conditional",
+      "conditional",
+      "conditional",
+      "zero_inflated",
+      "zero_inflated",
+      "zero_inflated"
     )
   )
   expect_equal(

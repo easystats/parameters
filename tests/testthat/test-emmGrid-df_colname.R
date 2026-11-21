@@ -17,25 +17,19 @@ es2 <- emmeans::eff_size(emm2, sigma = sigma(m2), edf = df.residual(m2))
 test_that("df", {
   expect_identical(
     colnames(model_parameters(es1)),
-    c(
-      "contrast", "Coefficient", "SE", "CI", "CI_low", "CI_high",
-      "t", "df_error", "p"
-    )
+    c("contrast", "Coefficient", "SE", "CI", "CI_low", "CI_high", "t", "df_error", "p")
   )
 
   expect_identical(
     colnames(model_parameters(es2)),
-    c(
-      "contrast", "Coefficient", "SE", "CI", "CI_low", "CI_high",
-      "z", "df_error", "p"
-    )
+    c("contrast", "Coefficient", "SE", "CI", "CI_low", "CI_high", "z", "df_error", "p")
   )
 })
 
 test_that("print model_parameters", {
   mp <- model_parameters(emm)
-  expect_snapshot(mp)
+  expect_snapshot(mp, variant = snapshot_variant())
 
   mp <- model_parameters(es1)
-  expect_snapshot(mp)
+  expect_snapshot(mp, variant = snapshot_variant())
 })

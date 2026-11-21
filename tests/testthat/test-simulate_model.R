@@ -1,4 +1,4 @@
-skip_on_os(c("mac", "linux", "solaris"))
+skip_on_os(c("mac", "solaris"))
 skip_if_not(getRversion() >= "4.0.0")
 skip_if_not_installed("sandwich")
 
@@ -38,7 +38,11 @@ test_that("simulate_model, glmmTMB", {
   )
   expect_equal(
     head(s$child),
-    c(-1.32181, -1.20023, -1.14522, -1.19874, -1.18592, -1.11841),
+    switch(
+      snapshot_variant(),
+      windows = c(-1.32181, -1.20023, -1.14522, -1.19874, -1.18592, -1.11841),
+      c(-1.21946, -1.23724, -1.10968, -1.14867, -1.04882, -1.11192)
+    ),
     tolerance = 1e-2
   )
   expect_equal(mean(s$camper1), 0.7308158, tolerance = 1e-1)
@@ -51,7 +55,11 @@ test_that("simulate_model, glmmTMB, conditional only", {
   expect_identical(colnames(s), c("(Intercept)", "child", "camper1"))
   expect_equal(
     head(s$child),
-    c(-1.32181, -1.20023, -1.14522, -1.19874, -1.18592, -1.11841),
+    switch(
+      snapshot_variant(),
+      windows = c(-1.32181, -1.20023, -1.14522, -1.19874, -1.18592, -1.11841),
+      c(-1.21946, -1.23724, -1.10968, -1.14867, -1.04882, -1.11192)
+    ),
     tolerance = 1e-2
   )
   expect_equal(mean(s$camper1), 0.717259, tolerance = 1e-1)

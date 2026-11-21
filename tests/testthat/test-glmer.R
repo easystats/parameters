@@ -22,12 +22,12 @@ test_that("print model_parameters", {
     parameters_exponentiate = TRUE,
     parameters_warning_exponentiate = TRUE
   ))
-  expect_snapshot(params)
+  expect_snapshot(params, variant = snapshot_variant())
 
   suppressMessages({
     mp <- model_parameters(model, effects = "all", exponentiate = TRUE)
   })
-  expect_snapshot(mp)
+  expect_snapshot(mp, variant = snapshot_variant())
 
   set.seed(123)
   model <- lme4::glmer(
@@ -37,7 +37,7 @@ test_that("print model_parameters", {
     nAGQ = 2
   )
   mp <- model_parameters(model, effects = "all")
-  expect_snapshot(mp)
+  expect_snapshot(mp, variant = snapshot_variant())
 })
 
 
@@ -96,12 +96,12 @@ test_that("robust SE/VCOV, using FPC", {
   )
   out <- model_parameters(model, vcov = "fpc", vcov_args = list(population_size = 500))
 
-  expect_snapshot(print(out, table_width = Inf))
+  expect_snapshot(print(out, table_width = Inf), variant = snapshot_variant())
   out <- model_parameters(
     model,
     ci_method = "wald",
     vcov = "fpc",
     vcov_args = list(population_size = 500)
   )
-  expect_snapshot(print(out, table_width = Inf))
+  expect_snapshot(print(out, table_width = Inf), variant = snapshot_variant())
 })

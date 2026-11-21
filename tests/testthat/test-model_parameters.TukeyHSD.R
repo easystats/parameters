@@ -33,6 +33,6 @@ test_that("print model_parameters.TukeyHSD", {
 })
 
 test_that("print model_parameters.TukeyHSD, snapshots", {
-  expect_snapshot(print(model_parameters(x1)))
-  expect_snapshot(print(model_parameters(x2)))
+  expect_snapshot(print(model_parameters(x1)), variant = snapshot_variant())
+  expect_snapshot(print(model_parameters(x2)), variant = snapshot_variant())
 })

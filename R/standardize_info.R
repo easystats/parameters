@@ -382,16 +382,24 @@ standardize_info.default <- function(
       variable <- names(model_matrix)[i]
       is_variable <- type_names == variable
       # results are written by position, and the model matrix of a brms model
-      # can have fewer columns than parameters
+      # can have fewer columns than parameters. Terms such as `factor(x)` have
+      # no type for brms models.
       if (inherits(model, "brmsfit")) {
-        is_variable <- is_variable & seq_along(type_names) == i
+        is_variable <- is_variable & seq_along(type_names) == i & !is.na(types$Link)
       }
       if (any(is_variable) && types$Link[is_variable] == "Difference") {
         parent_var <- types$Variable[is_variable]
-        intercept <- unique(data[[parent_var]])[1]
-        response_at_intercept <- response[data[[parent_var]] == intercept]
+        factor_columns <- type_names[which(
+          types$Variable == parent_var & types$Type %in% c("factor", "logical")
+        )]
+        at_intercept <- .smart_at_reference(
+          data[[parent_var]],
+          model_matrix,
+          factor_columns
+        )
+        response_at_intercept <- response[at_intercept]
         weights_at_intercept <- if (length(w)) {
-          w[data[[parent_var]] == intercept]
+          w[at_intercept]
         } else {
           NULL
         }
@@ -419,6 +427,21 @@ standardize_info.default <- function(
     Mean_Response_Smart = means,
     stringsAsFactors = FALSE
   )
+}
+
+
+# rows at the intercept have 0 in every model matrix column of the variable.
+# With treatment contrasts, these are the rows of the reference level.
+.smart_at_reference <- function(x, model_matrix, columns) {
+  columns <- intersect(columns, colnames(model_matrix))
+  if (length(columns) && nrow(model_matrix) == length(x)) {
+    at_intercept <- rowSums(model_matrix[columns] != 0) == 0
+    if (any(at_intercept) && length(unique(x[at_intercept])) == 1) {
+      return(at_intercept)
+    }
+  }
+  # no reference level, e.g. for sum contrasts
+  x == unique(x)[1]
 }
 
 
