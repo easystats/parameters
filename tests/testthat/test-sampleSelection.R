@@ -28,6 +28,12 @@ test_that("model_parameters", {
     data = Mroz87
   )
 
-  expect_snapshot(print(model_parameters(m1), zap_small = TRUE, table_width = Inf))
-  expect_snapshot(print(model_parameters(m2), zap_small = TRUE, table_width = Inf))
+  expect_snapshot(
+    print(model_parameters(m1), zap_small = TRUE, table_width = Inf),
+    variant = snapshot_variant()
+  )
+  expect_snapshot(
+    print(model_parameters(m2), zap_small = TRUE, table_width = Inf),
+    variant = snapshot_variant()
+  )
 })

@@ -19,19 +19,11 @@ test_that("ci", {
 })
 
 test_that("se", {
-  expect_equal(
-    standard_error(m1)$SE,
-    c(1.05856, 0.2632, 0.23857),
-    tolerance = 1e-4
-  )
+  expect_equal(standard_error(m1)$SE, c(1.05856, 0.2632, 0.23857), tolerance = 1e-4)
 })
 
 test_that("p_value", {
-  expect_equal(
-    p_value(m1)$p,
-    c(0, 1e-05, 0.24602),
-    tolerance = 1e-4
-  )
+  expect_equal(p_value(m1)$p, c(0, 1e-05, 0.24602), tolerance = 1e-4)
 })
 
 test_that("model_parameters", {
@@ -44,12 +36,10 @@ test_that("model_parameters", {
 
 test_that("print-model_parameters", {
   skip_if_not_installed("withr")
-  withr::local_options(
-    list(
-      parameters_exponentiate = TRUE,
-      parameters_warning_exponentiate = TRUE
-    )
-  )
+  withr::local_options(list(
+    parameters_exponentiate = TRUE,
+    parameters_warning_exponentiate = TRUE
+  ))
   tmp <- model_parameters(m1)
-  expect_snapshot(tmp)
+  expect_snapshot(tmp, variant = snapshot_variant())
 })

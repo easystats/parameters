@@ -17,7 +17,7 @@ withr::with_options(
       data = ordinal::wine
     )
     mp <- model_parameters(m1, verbose = FALSE)
-    expect_snapshot(suppressMessages(print(mp)))
+    expect_snapshot(suppressMessages(print(mp)), variant = snapshot_variant())
 
     # validate against coef
     out <- coef(summary(m1))

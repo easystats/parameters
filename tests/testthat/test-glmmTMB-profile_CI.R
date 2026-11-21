@@ -12,6 +12,6 @@ test_that("glmmTMB profiled and uniroot CI work", {
   expect_silent({
     mp2 <- model_parameters(m, ci_method = "profile")
   })
-  expect_snapshot(print(mp1))
-  expect_snapshot(print(mp2))
+  expect_snapshot(print(mp1), variant = snapshot_variant())
+  expect_snapshot(print(mp2), variant = snapshot_variant())
 })

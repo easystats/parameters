@@ -108,7 +108,11 @@ test_that("model_parameters, p-adjust, method names in any letter case", {
 
   mp <- model_parameters(model, p_adjust = "NONE")
   expect_equal(mp$p, p_raw, tolerance = 1e-10, ignore_attr = TRUE)
-  expect_false(any(grepl("p-value adjustment method", capture.output(print(mp)), fixed = TRUE)))
+  expect_false(any(grepl(
+    "p-value adjustment method",
+    capture.output(print(mp)),
+    fixed = TRUE
+  )))
 })
 
 
@@ -163,14 +167,22 @@ test_that("model_parameters, p-adjust, unsupported methods", {
     fixed = TRUE
   )
   expect_equal(mp$p, mp_none$p, tolerance = 1e-10)
-  expect_false(any(grepl("p-value adjustment method", capture.output(print(mp)), fixed = TRUE)))
+  expect_false(any(grepl(
+    "p-value adjustment method",
+    capture.output(print(mp)),
+    fixed = TRUE
+  )))
 
   expect_message(
     mp <- model_parameters(model, p_adjust = "foo"),
     "`p_adjust` must be one of",
     fixed = TRUE
   )
-  expect_false(any(grepl("p-value adjustment method", capture.output(print(mp)), fixed = TRUE)))
+  expect_false(any(grepl(
+    "p-value adjustment method",
+    capture.output(print(mp)),
+    fixed = TRUE
+  )))
 })
 
 
@@ -179,7 +191,7 @@ test_that("model_parameters, simultaenous confidence intervals", {
   m <- lm(mpg ~ wt + hp, data = mtcars)
   set.seed(123)
   out <- model_parameters(m, p_adjust = "sup-t")
-  expect_snapshot(print(out, zap_small = TRUE))
+  expect_snapshot(print(out, zap_small = TRUE), variant = snapshot_variant())
 
   skip_if_not_installed("lme4")
   data("qol_cancer")

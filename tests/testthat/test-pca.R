@@ -63,16 +63,22 @@ test_that("principal_components, 2", {
 
 test_that("print model_parameters pca", {
   data(mtcars)
-  expect_snapshot(print(principal_components(mtcars[, 1:4], n = "auto")))
-  expect_snapshot(print(
-    principal_components(mtcars[, 1:4], n = "auto"),
-    labels = c(
-      "Miles/(US) gallon",
-      "Number of cylinders",
-      "Displacement (cu.in.)",
-      "Gross horsepower"
-    )
-  ))
+  expect_snapshot(
+    print(principal_components(mtcars[, 1:4], n = "auto")),
+    variant = snapshot_variant()
+  )
+  expect_snapshot(
+    print(
+      principal_components(mtcars[, 1:4], n = "auto"),
+      labels = c(
+        "Miles/(US) gallon",
+        "Number of cylinders",
+        "Displacement (cu.in.)",
+        "Gross horsepower"
+      )
+    ),
+    variant = snapshot_variant()
+  )
 })
 
 

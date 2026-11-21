@@ -58,14 +58,26 @@ test_that("tinyplot.parameters_model snapshots", {
 
   model <- lm(mpg ~ wt + cyl + gear, data = mtcars)
   result <- model_parameters(model)
-  vdiffr::expect_doppelganger("tinyplot-forest 1", function() tinyplot::tinyplot(result))
-  vdiffr::expect_doppelganger("tinyplot-forest 2", function() {
-    tinyplot::tinyplot(result, sort = TRUE)
-  })
+  vdiffr::expect_doppelganger(
+    "tinyplot-forest 1",
+    function() tinyplot::tinyplot(result),
+    variant = snapshot_variant()
+  )
+  vdiffr::expect_doppelganger(
+    "tinyplot-forest 2",
+    function() {
+      tinyplot::tinyplot(result, sort = TRUE)
+    },
+    variant = snapshot_variant()
+  )
 
   model <- glm(am ~ wt + hp, data = mtcars, family = "binomial")
   result <- model_parameters(model, exponentiate = TRUE)
-  vdiffr::expect_doppelganger("tinyplot-forest exponentiated", function() {
-    tinyplot::tinyplot(result)
-  })
+  vdiffr::expect_doppelganger(
+    "tinyplot-forest exponentiated",
+    function() {
+      tinyplot::tinyplot(result)
+    },
+    variant = snapshot_variant()
+  )
 })

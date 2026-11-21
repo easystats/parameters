@@ -21,8 +21,12 @@ test_that("model_parameters.nestedLogit", {
   expect_identical(
     out$Parameter,
     c(
-      "(Intercept)", "hincome", "childrenpresent", "(Intercept)",
-      "hincome", "childrenpresent"
+      "(Intercept)",
+      "hincome",
+      "childrenpresent",
+      "(Intercept)",
+      "hincome",
+      "childrenpresent"
     )
   )
   expect_equal(
@@ -75,7 +79,7 @@ test_that("model_parameters.nestedLogit", {
 
 test_that("simulate_parameters.nestedLogit", {
   skip_if(getRversion() < "4.2.0")
-  skip_on_os(c("linux", "mac"))
+  skip_on_os("mac")
 
   data(Womenlf, package = "carData")
 

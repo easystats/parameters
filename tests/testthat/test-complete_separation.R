@@ -11,7 +11,7 @@ withr::with_options(
     )
     m_sep <- suppressWarnings(glm(y ~ x1 + x2, data = d_sep, family = binomial))
     out <- model_parameters(m_sep)
-    expect_snapshot(print(out))
+    expect_snapshot(print(out), variant = snapshot_variant())
   })
 )
 
@@ -21,7 +21,7 @@ withr::with_options(
     data(mtcars)
     m_sep2 <- suppressWarnings(glm(am ~ gear, data = mtcars, family = binomial))
     out <- model_parameters(m_sep2)
-    expect_snapshot(print(out))
+    expect_snapshot(print(out), variant = snapshot_variant())
   })
 )
 
@@ -30,8 +30,12 @@ withr::with_options(
   test_that("print warning about quasi complete separation", {
     data(mtcars)
     set.seed(323)
-    m_sep3 <- suppressWarnings(glm(vs ~ qsec, data = mtcars[sample.int(32, 27, replace = TRUE), ], family = binomial)) # nolint
+    m_sep3 <- suppressWarnings(glm(
+      vs ~ qsec,
+      data = mtcars[sample.int(32, 27, replace = TRUE), ],
+      family = binomial
+    )) # nolint
     out <- model_parameters(m_sep3)
-    expect_snapshot(print(out))
+    expect_snapshot(print(out), variant = snapshot_variant())
   })
 )

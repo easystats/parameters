@@ -9,7 +9,7 @@ test_that("p_direction", {
   x <- p_direction(m)
   expect_identical(c(nrow(x), ncol(x)), c(5L, 5L))
   expect_named(x, c("Parameter", "CI", "CI_low", "CI_high", "pd"))
-  expect_snapshot(print(x))
+  expect_snapshot(print(x), variant = snapshot_variant())
 
   set.seed(123)
   x <- p_direction(m, ci = 0.8)
@@ -37,7 +37,8 @@ test_that("p_direction", {
 test_that("p_direction, glmmTMB", {
   skip_if_not_installed("glmmTMB")
   data(Salamanders, package = "glmmTMB")
-  m1 <- glmmTMB::glmmTMB(count ~ mined + cover + (1 | site),
+  m1 <- glmmTMB::glmmTMB(
+    count ~ mined + cover + (1 | site),
     zi = ~mined,
     family = poisson,
     data = Salamanders
@@ -48,9 +49,6 @@ test_that("p_direction, glmmTMB", {
   expect_equal(out$pd, c(0.8245, 1, 0.9974, 1, 1), tolerance = 1e-4)
   expect_identical(
     out$Parameter,
-    c(
-      "(Intercept)_cond", "minedno_cond", "cover_cond", "(Intercept)_zi",
-      "minedno_zi"
-    )
+    c("(Intercept)_cond", "minedno_cond", "cover_cond", "(Intercept)_zi", "minedno_zi")
   )
 })

@@ -17,7 +17,7 @@ test_that("param ordinal", {
   pooled <- mice::pool(model)
 
   mp <- model_parameters(pooled)
-  expect_snapshot(print(mp))
+  expect_snapshot(print(mp), variant = snapshot_variant())
 })
 
 
@@ -28,9 +28,11 @@ test_that("param normal", {
   imp <- suppressWarnings(mice::mice(d$amp, m = 2, method = "cart", printFlag = FALSE))
   imp.l <- mice::complete(imp, action = "long")
   model <- list() ## Fit and pool models
-  for (i in 1:2) model[[i]] <- lm(mpg ~ disp + hp, data = imp.l, subset = .imp == i)
+  for (i in 1:2) {
+    model[[i]] <- lm(mpg ~ disp + hp, data = imp.l, subset = .imp == i)
+  }
   pooled <- mice::pool(model)
 
   mp <- model_parameters(pooled)
-  expect_snapshot(print(mp))
+  expect_snapshot(print(mp), variant = snapshot_variant())
 })
