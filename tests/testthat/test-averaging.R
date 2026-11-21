@@ -25,7 +25,7 @@ withr::with_options(
     )
     out <- MuMIn::model.avg(MuMIn::dredge(m1), fit = TRUE)
     mp <- model_parameters(out)
-    expect_snapshot(print(mp))
+    expect_snapshot(print(mp), variant = snapshot_helper())
   })
 )
 
@@ -43,7 +43,7 @@ test_that("ggpredict, glmmTMB averaging", {
   dr <- MuMIn::dredge(m)
   avg <- MuMIn::model.avg(object = dr, fit = TRUE)
   mp <- model_parameters(avg)
-  expect_snapshot(print(mp))
+  expect_snapshot(print(mp), variant = snapshot_helper())
 })
 
 
@@ -60,7 +60,7 @@ withr::with_options(
     dr <- subset(dr, !(has(mpg) & !has(I(mpg^2))))
     mod.avg.i <- MuMIn::model.avg(dr, fit = TRUE)
     mp <- model_parameters(mod.avg.i)
-    expect_snapshot(print(mp))
+    expect_snapshot(print(mp), variant = snapshot_helper())
   })
 )
 

@@ -8,7 +8,7 @@ test_that("bootstrap_parameters.bootstrap_model", {
   draws <- bootstrap_model(m_draws)
   draws$lin_comb <- draws$Sepal.Width - draws$Petal.Length
   out <- bootstrap_parameters(draws)
-  expect_snapshot(print(out))
+  expect_snapshot(print(out), variant = snapshot_helper())
 })
 
 test_that("bootstrap_model intercept-only", {
@@ -19,8 +19,26 @@ test_that("bootstrap_model intercept-only", {
   expect_equal(
     as.numeric(out),
     c(
-      6.3, 4.8, 7, 6, 6.3, 6.7, 6.6, 6.6, 6.1, 6.1, 6.3, 6.3, 6.1,
-      7.2, 5.9, 5.6, 5.7, 6.8, 6.7, 6.4
+      6.3,
+      4.8,
+      7,
+      6,
+      6.3,
+      6.7,
+      6.6,
+      6.6,
+      6.1,
+      6.1,
+      6.3,
+      6.3,
+      6.1,
+      7.2,
+      5.9,
+      5.6,
+      5.7,
+      6.8,
+      6.7,
+      6.4
     ),
     tolerance = 1e-2
   )

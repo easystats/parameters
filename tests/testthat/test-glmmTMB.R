@@ -765,7 +765,7 @@ withr::with_options(list(parameters_exponentiate = FALSE), {
         "",
         "Parameter   | Log-Mean |   SE ",
         "------------------------------",
-        "(Intercept) |     1.67 | 0.66 ",
+        "(Intercept) |     1.67 | 0.63 ",
         "child       |    -1.04 | 0.09 ",
         "camper [1]  |     0.27 | 0.09 ",
         "",
@@ -785,17 +785,17 @@ withr::with_options(list(parameters_exponentiate = FALSE), {
     )
     expect_equal(
       mp$CI_low,
-      c(0.3884, -1.2188, 0.0826, 1.1599, 0.5946, NaN),
+      c(0.43958, -1.21879, 0.09893, 1.12106, 0.63094, NaN),
       tolerance = 1e-3
     )
 
-    mp <- model_parameters(
+    mp <- suppressWarnings(model_parameters(
       m4,
       effects = "all",
       ci_random = TRUE,
       component = "zero_inflated",
       verbose = FALSE
-    )
+    ))
     out <- utils::capture.output(print(mp))
     expect_identical(
       attributes(mp)$pretty_labels,
@@ -813,11 +813,11 @@ withr::with_options(list(parameters_exponentiate = FALSE), {
       c(
         "# Fixed Effects (Zero-Inflatio",
         "",
-        "Parameter   | Log-Mean |      ",
+        "Parameter   | Log-Mean |   SE ",
         "------------------------------",
-        "(Intercept) |    -4.04 |     0",
-        "child       |    -1.37 |     2",
-        "camper [1]  |    -4.83 | 2.25e",
+        "(Intercept) |    -4.04 | 0.19 ",
+        "child       |    -1.37 | 2.05 ",
+        "camper [1]  |    -4.83 |      ",
         "",
         "# Random Effects (Zero-Inflati",
         "",

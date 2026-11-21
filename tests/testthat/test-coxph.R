@@ -88,7 +88,7 @@ withr::with_package(
       data = lung,
       tt = function(x, t, ...) survival::pspline(x + t / 365.25)
     )
-    expect_snapshot(print(model_parameters(mod)))
+    expect_snapshot(print(model_parameters(mod)), variant = snapshot_helper())
   })
 )
 

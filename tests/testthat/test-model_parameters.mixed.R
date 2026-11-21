@@ -191,11 +191,10 @@ withr::with_options(
       tolerance = 1e-4
     )
 
-    expect_snapshot(print(model_parameters(
-      model,
-      effects = "fixed",
-      ci_method = "satterthwaite"
-    )))
+    expect_snapshot(
+      print(model_parameters(model, effects = "fixed", ci_method = "satterthwaite")),
+      variant = snapshot_helper()
+    )
   })
 )
 
@@ -222,18 +221,14 @@ test_that("print-model_parameters-2", {
     variant = snapshot_variant()
   )
 
-  expect_snapshot(model_parameters(
-    m1,
-    effects = "fixed",
-    include_info = TRUE,
-    wb_component = TRUE
-  ))
-  expect_snapshot(model_parameters(
-    m1,
-    effects = "fixed",
-    include_info = TRUE,
-    wb_component = FALSE
-  ))
+  expect_snapshot(
+    model_parameters(m1, effects = "fixed", include_info = TRUE, wb_component = TRUE),
+    variant = snapshot_helper()
+  )
+  expect_snapshot(
+    model_parameters(m1, effects = "fixed", include_info = TRUE, wb_component = FALSE),
+    variant = snapshot_helper()
+  )
 })
 
 
