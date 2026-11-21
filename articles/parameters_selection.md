@@ -109,10 +109,10 @@ Let’s run a few checks using the
 `#>                   Species 3.98e+05 [2.83e+05, 4.55e+05]    25.12  2.51e-06`\
 `#>  Sepal.Width:Petal.Length  2183.98 [ 1537.68,  2477.75]    46.73  4.58e-04`\
 `#>   Sepal.Width:Petal.Width  1866.48 [ 1314.14,  2117.55]    43.20  5.36e-04`\
-`#>       Sepal.Width:Species 3.49e+05 [2.48e+05, 3.99e+05]   591.13  2.86e-06`\
+`#>       Sepal.Width:Species 3.49e+05 [2.48e+05, 3.99e+05]    24.31  2.86e-06`\
 `#>  Petal.Length:Petal.Width  4032.80 [ 2839.36,  4575.24]    63.50  2.48e-04`\
-`#>      Petal.Length:Species 1.23e+06 [8.73e+05, 1.40e+06]  1109.09  8.13e-07`\
-`#>       Petal.Width:Species 3.77e+05 [2.68e+05, 4.31e+05]   614.38  2.65e-06`\
+`#>      Petal.Length:Species 1.23e+06 [8.73e+05, 1.40e+06]    33.30  8.13e-07`\
+`#>       Petal.Width:Species 3.77e+05 [2.68e+05, 4.31e+05]    24.79  2.65e-06`\
 `#>  Tolerance 95% CI`\
 `#>      [0.03, 0.05]`\
 `#>      [0.00, 0.00]`\
