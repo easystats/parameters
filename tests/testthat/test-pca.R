@@ -77,7 +77,7 @@ test_that("print model_parameters pca", {
         "Gross horsepower"
       )
     ),
-    variant = snapshot_helper()
+    variant = snapshot_variant()
   )
 })
 

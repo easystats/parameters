@@ -28,8 +28,8 @@ test_that("df", {
 
 test_that("print model_parameters", {
   mp <- model_parameters(emm)
-  expect_snapshot(mp, variant = snapshot_helper())
+  expect_snapshot(mp, variant = snapshot_variant())
 
   mp <- model_parameters(es1)
-  expect_snapshot(mp, variant = snapshot_helper())
+  expect_snapshot(mp, variant = snapshot_variant())
 })

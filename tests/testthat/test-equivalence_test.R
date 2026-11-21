@@ -7,7 +7,7 @@ test_that("equivalence_test", {
   expect_identical(c(nrow(x), ncol(x)), c(5L, 9L))
 
   expect_type(capture.output(equivalence_test(m)), "character")
-  expect_snapshot(print(x), variant = snapshot_helper())
+  expect_snapshot(print(x), variant = snapshot_variant())
 })
 
 test_that("equivalence_test, robust", {
@@ -15,7 +15,7 @@ test_that("equivalence_test, robust", {
   data(mtcars)
   m <- lm(mpg ~ gear + wt + cyl + hp, data = mtcars)
   x <- equivalence_test(m, vcov = "HC3")
-  expect_snapshot(print(x), variant = snapshot_helper())
+  expect_snapshot(print(x), variant = snapshot_variant())
 })
 
 test_that("equivalence_test, robust", {

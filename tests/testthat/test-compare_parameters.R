@@ -152,7 +152,7 @@ withr::with_options(list(parameters_interaction = "*", easystats_table_width = I
   m1 <- lm(mpg ~ hp, mtcars)
   m2 <- lm(mpg ~ hp, mtcars)
   test_that("compare_parameters, proper printing for CI=NULL #820", {
-    expect_snapshot(compare_parameters(m1, m2, ci = NULL), variant = snapshot_helper())
+    expect_snapshot(compare_parameters(m1, m2, ci = NULL), variant = snapshot_variant())
   })
 
   skip_on_cran()
@@ -178,7 +178,7 @@ withr::with_options(list(parameters_interaction = "*", easystats_table_width = I
     )
 
     cp <- compare_parameters(m0, m1, m2, effects = "all", component = "all")
-    expect_snapshot(cp, variant = snapshot_helper())
+    expect_snapshot(cp, variant = snapshot_variant())
   })
 
   test_that("compare_parameters, print_md-1", {
@@ -202,7 +202,7 @@ withr::with_options(list(parameters_interaction = "*", easystats_table_width = I
       cp,
       groups = list(Groups = c(2, 3), Interactions = c(4, 5), Controls = 1)
     )
-    expect_snapshot(print(out), variant = snapshot_helper())
+    expect_snapshot(print(out), variant = snapshot_variant())
   })
 
   test_that("compare_parameters, print_md-2", {
@@ -227,7 +227,7 @@ withr::with_options(list(parameters_interaction = "*", easystats_table_width = I
       groups = list(Groups = c(2, 3), Interactions = c(4, 5), Controls = 1),
       format = "tt"
     )
-    expect_snapshot(print(out), variant = snapshot_helper())
+    expect_snapshot(print(out), variant = snapshot_variant())
   })
 
   test_that("compare_parameters, print_md-3", {
@@ -248,8 +248,8 @@ withr::with_options(list(parameters_interaction = "*", easystats_table_width = I
       drop = "^\\(Intercept",
       effects = "all"
     )
-    expect_snapshot(print_md(cp), variant = snapshot_helper())
-    expect_snapshot(display(cp, format = "tt"), variant = snapshot_helper())
+    expect_snapshot(print_md(cp), variant = snapshot_variant())
+    expect_snapshot(display(cp, format = "tt"), variant = snapshot_variant())
   })
 
   test_that("compare_parameters, print_md-4", {
@@ -272,7 +272,7 @@ withr::with_options(list(parameters_interaction = "*", easystats_table_width = I
       include_reference = TRUE
     )
     out <- print_md(cp, groups = list(Groups = 2:4, Interactions = 5:6, Controls = 1))
-    expect_snapshot(print(out), variant = snapshot_helper())
+    expect_snapshot(print(out), variant = snapshot_variant())
   })
 
   test_that("compare_parameters, print_md-5", {
@@ -289,7 +289,7 @@ withr::with_options(list(parameters_interaction = "*", easystats_table_width = I
     # with reference level
     cp <- compare_parameters(lm1, lm2, drop = "^\\(Intercept", include_reference = TRUE)
     out <- print_md(cp, groups = list(Groups = 2:4, Interactions = 5:6, Controls = 1))
-    expect_snapshot(print(out), variant = snapshot_helper())
+    expect_snapshot(print(out), variant = snapshot_variant())
 
     # error
     cp <- compare_parameters(

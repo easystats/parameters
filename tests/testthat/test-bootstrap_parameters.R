@@ -8,7 +8,7 @@ test_that("bootstrap_parameters.bootstrap_model", {
   draws <- bootstrap_model(m_draws)
   draws$lin_comb <- draws$Sepal.Width - draws$Petal.Length
   out <- bootstrap_parameters(draws)
-  expect_snapshot(print(out), variant = snapshot_helper())
+  expect_snapshot(print(out), variant = snapshot_variant())
 })
 
 test_that("bootstrap_model intercept-only", {
