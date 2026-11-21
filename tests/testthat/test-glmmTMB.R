@@ -649,7 +649,7 @@ withr::with_options(list(parameters_exponentiate = FALSE), {
 
     mp <- model_parameters(m4, effects = "fixed", component = "conditional")
     out <- utils::capture.output(print(mp))
-    expect_snapshot(out[-5])
+    expect_snapshot(out[-5], variant = snapshot_variant())
 
     mp <- model_parameters(
       m4,
@@ -946,7 +946,7 @@ withr::with_options(list(parameters_exponentiate = FALSE), {
 
     mp <- model_parameters(m4, ci_random = TRUE, effects = "all", component = "all")
     out <- utils::capture.output(print(mp, digits = 4, ci_digits = 5))
-    expect_snapshot(out[-c(5, 14)])
+    expect_snapshot(out[-c(5, 14)], variant = snapshot_variant())
 
     mp <- model_parameters(
       m4,
@@ -957,7 +957,7 @@ withr::with_options(list(parameters_exponentiate = FALSE), {
       ci_digits = 5
     )
     out <- utils::capture.output(print(mp))
-    expect_snapshot(out[-c(5, 14)])
+    expect_snapshot(out[-c(5, 14)], variant = snapshot_variant())
   })
 
   # proper alignment of CIs ---------------------
@@ -991,10 +991,10 @@ withr::with_options(list(parameters_exponentiate = FALSE), {
       component = "all",
       ci_random = TRUE
     )
-    expect_snapshot(print(mp))
+    expect_snapshot(print(mp), variant = snapshot_variant())
 
     mp <- model_parameters(model_pr, effects = "fixed", component = "all")
-    expect_snapshot(print(mp))
+    expect_snapshot(print(mp), variant = snapshot_variant())
   })
 
   test_that("model_parameters.mixed-all", {
@@ -1079,13 +1079,13 @@ withr::with_options(list(parameters_exponentiate = FALSE), {
     skip_if_not(getRversion() >= "4.3.3")
 
     mp <- model_parameters(m1, effects = "fixed", verbose = FALSE)
-    expect_snapshot(mp)
+    expect_snapshot(mp, variant = snapshot_variant())
 
     mp <- model_parameters(m1, effects = "fixed", exponentiate = TRUE, verbose = FALSE)
-    expect_snapshot(mp)
+    expect_snapshot(mp, variant = snapshot_variant())
 
     mp <- model_parameters(m1, effects = "all", verbose = FALSE)
-    expect_snapshot(mp)
+    expect_snapshot(mp, variant = snapshot_variant())
   })
 
   test_that("print-model_parameters, random dispersion", {
@@ -1129,7 +1129,7 @@ withr::with_options(list(parameters_exponentiate = FALSE), {
     expect_equal(out1$SE, out2[1:6], ignore_attr = TRUE, tolerance = 1e-4)
 
     out <- model_parameters(m1, vcov = "HC0")
-    expect_snapshot(print(out, table_width = Inf))
+    expect_snapshot(print(out, table_width = Inf), variant = snapshot_variant())
 
     skip_if(packageVersion("insight") <= "1.5.0")
     skip_if_not_installed("lme4")
@@ -1148,7 +1148,7 @@ withr::with_options(list(parameters_exponentiate = FALSE), {
       tolerance = 1e-4
     )
     out <- model_parameters(model, vcov = "fpc", vcov_args = list(population_size = 500))
-    expect_snapshot(print(out, table_width = Inf))
+    expect_snapshot(print(out, table_width = Inf), variant = snapshot_variant())
   })
 
   test_that("method boot gives Wald intervals with an alert", {
