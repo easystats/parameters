@@ -35,6 +35,9 @@
 
 ## Bug fixes
 
+* `model_parameters()` uses variable labels for coefficients in *multcomp*
+  hypothesis labels (#1139).
+
 * `model_parameters()` for *BayesFactor* objects with more than one model, for
   example from `regressionBF()` or `anovaBF()`, now shows the Bayes factor of
   the first model in every row. The parameters also come from that model. Before
