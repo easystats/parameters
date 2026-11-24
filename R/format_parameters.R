@@ -438,6 +438,9 @@ format_parameters.parameters_model <- function(model, ...) {
   if (is.null(model)) {
     model <- .get_object(params)
   }
+  if (inherits(model, "glht")) {
+    return(.format_glht_labels(params, model))
+  }
 
   # validation check
   if (!is.null(model) && insight::is_regression_model(model) && !is.data.frame(model)) {
@@ -602,6 +605,57 @@ format_parameters.parameters_model <- function(model, ...) {
   has_label <- !is.na(label_idx)
   out[has_label] <- pretty_labels[label_idx[has_label]]
 
+  out
+}
+
+
+.format_glht_labels <- function(params, model) {
+  out <- stats::setNames(params$Parameter, params$Parameter)
+  terms <- names(model$coef)
+  if (!length(terms)) {
+    return(out)
+  }
+  term_table <- .data_frame(Parameter = terms)
+  attr(term_table, "pretty_names") <- stats::setNames(terms, terms)
+  labels <- .format_value_labels(term_table, model$model)
+
+  keys <- paste(rownames(model$linfct), model$rhs)
+  keys[duplicated(keys) | duplicated(keys, fromLast = TRUE)] <- NA_character_
+  rows <- match(sub(" (==|<=|>=) ([^ ]+)$", " \\2", out), keys)
+  out[] <- vapply(
+    seq_along(out),
+    function(i) {
+      original <- out[[i]]
+      if (is.na(rows[i])) {
+        return(original)
+      }
+      used <- terms[which(model$linfct[rows[i], ] != 0)]
+      if (!length(used) || identical(unname(labels[used]), used)) {
+        return(original)
+      }
+
+      # Match whole coefficient names, with longer expressions before their parts.
+      used <- used[order(nchar(used), decreasing = TRUE)]
+      escaped <- gsub("([][{}()+*^$|\\\\?.])", "\\\\\\1", used)
+      pattern <- paste0(
+        "(?<![[:alnum:]_.])(?:",
+        paste(escaped, collapse = "|"),
+        ")(?![[:alnum:]_.])"
+      )
+      locations <- gregexpr(pattern, original, perl = TRUE)
+      matches <- regmatches(original, locations)[[1]]
+
+      # Matrix contrasts can carry arbitrary names. Relabel complete expressions.
+      masked <- original
+      regmatches(masked, locations) <- list(rep("0", length(matches)))
+      if (!setequal(matches, used) || !grepl("^[[:space:]0-9.eE+*/():<>=-]+$", masked)) {
+        return(original)
+      }
+      regmatches(original, locations) <- list(unname(labels[matches]))
+      original
+    },
+    character(1)
+  )
   out
 }
 
