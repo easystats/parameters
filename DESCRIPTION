@@ -133,7 +133,6 @@ Suggests:
     emmeans (>= 1.7.0),
     epiR,
     estimatr,
-    factoextra,
     FactoMineR,
     faraway,
     fastICA,

@@ -73,7 +73,18 @@ n_clusters_hclust(
 \arguments{
 \item{x}{A data frame.}
 
-\item{standardize}{Standardize the dataframe before clustering (default).}
+\item{standardize}{Standardize the dataframe before clustering (default).
+Most methods depend on the scale of the variables, so standardizing can
+change their results. This is the case for k-means and for the
+distance-based indices. It is also the case for most of the Gaussian
+mixture models of \emph{mclust} (\code{package = "mclust"} in \code{n_clusters()},
+\code{method = "mixture"} in \code{cluster_analysis()}). Only some models give the same fit
+on standardized data: those with unconstrained (\code{VVV}), equal (\code{EEE}),
+proportional (\code{VEE}), or diagonal (\code{EEI}, \code{VEI}, \code{EVI}, \code{VVI}) covariance
+matrices. The spherical models (\code{EII}, \code{VII}) and the models with a
+common shape or orientation but not both (\code{EVE}, \code{VVE}, \code{EEV}, \code{VEV},
+\code{EVV}) do not. For these, the selected model and number of clusters can
+change with standardization.}
 
 \item{include_factors}{Logical, if \code{TRUE}, factors are converted to numerical
 values in order to be included in the data for determining the number of
@@ -167,7 +178,6 @@ if (require("mclust", quietly = TRUE) && require("NbClust", quietly = TRUE) &&
   # n_clusters(iris[1:4], standardize = FALSE, package = "all", fast = FALSE)
 }
 }
-\dontshow{if (require("see", quietly = TRUE) && require("factoextra", quietly = TRUE)) withAutoprint(\{ # examplesIf}
 \donttest{
 x <- n_clusters_elbow(iris[1:4])
 x
@@ -175,13 +185,11 @@ as.data.frame(x)
 # plotting is also possible:
 # plot(x)
 }
-\dontshow{\}) # examplesIf}
 \donttest{
 #
 # Gap method --------------------
 if (require("see", quietly = TRUE) &&
-  require("cluster", quietly = TRUE) &&
-  require("factoextra", quietly = TRUE)) {
+  require("cluster", quietly = TRUE)) {
   x <- n_clusters_gap(iris[1:4])
   x
   as.data.frame(x)
@@ -191,7 +199,7 @@ if (require("see", quietly = TRUE) &&
 \donttest{
 #
 # Silhouette method --------------------------
-if (require("factoextra", quietly = TRUE)) {
+if (require("cluster", quietly = TRUE)) {
   x <- n_clusters_silhouette(iris[1:4])
   x
   as.data.frame(x)

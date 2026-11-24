@@ -14,8 +14,9 @@
 #' Note that this argument does not apply for unsupervised clustering methods
 #' like `dbscan`, `hdbscan`, `mixture`, `pvclust`, or `pamk`.
 #' @param method Method for computing the cluster analysis. Can be `"kmeans"`
-#'   (default; k-means using `kmeans()`), `"hkmeans"` (hierarchical k-means
-#'   using `factoextra::hkmeans()`), `pam` (K-Medoids using `cluster::pam()`),
+#'   (default; k-means using `kmeans()`), `"hkmeans"` (hierarchical k-means,
+#'   i.e., k-means started from the centers of a hierarchical clustering, as in
+#'   `factoextra::hkmeans()`), `pam` (K-Medoids using `cluster::pam()`),
 #'   `pamk` (K-Medoids that finds out the number of clusters), `"hclust"`
 #'   (hierarchical clustering using `hclust()` or `pvclust::pvclust()`),
 #'   `dbscan` (DBSCAN using `dbscan::dbscan()`), `hdbscan` (Hierarchical DBSCAN
@@ -80,11 +81,9 @@
 #' }
 #'
 #' # Hierarchical k-means (more robust k-means)
-#' if (require("factoextra", quietly = TRUE)) {
-#'   rez <- cluster_analysis(iris[1:4], n = 3, method = "hkmeans")
-#'   rez # Show results
-#'   predict(rez) # Get clusters
-#' }
+#' rez <- cluster_analysis(iris[1:4], n = 3, method = "hkmeans")
+#' rez # Show results
+#' predict(rez) # Get clusters
 #'
 #' # Hierarchical Clustering (hclust) ===========================
 #' rez <- cluster_analysis(iris[1:4], n = 3, method = "hclust")
@@ -301,17 +300,37 @@ cluster_analysis <- function(x,
 
 
 #' @keywords internal
-.cluster_analysis_hkmeans <- function(cluster_data,
-                                      n = 2,
-                                      kmeans_method = "Hartigan-Wong",
-                                      hclust_method = "complete",
-                                      iterations = 100,
-                                      ...) {
-  insight::check_if_installed("factoextra")
-  model <- factoextra::hkmeans(cluster_data,
-    k = n, km.algorithm = kmeans_method,
-    iter.max = iterations, hc.method = hclust_method, ...
+.cluster_analysis_hkmeans <- function(
+  cluster_data,
+  n = 2,
+  kmeans_method = "Hartigan-Wong",
+  hclust_method = "complete",
+  iterations = 100,
+  ...
+) {
+  # Hierarchical k-means, as in factoextra::hkmeans(): the centers of the
+  # clusters from a hierarchical clustering are the initial centers of k-means.
+  # As in factoextra::hkmeans(), the distance can be set with `hc.metric`.
+  hc_metric <- list(...)$hc.metric
+  if (is.null(hc_metric)) {
+    hc_metric <- "euclidean"
+  }
+  hc <- stats::hclust(
+    stats::dist(cluster_data, method = hc_metric),
+    method = hclust_method
   )
+  groups <- stats::cutree(hc, k = n)
+  centers <- stats::aggregate(cluster_data, list(groups), mean)[, -1, drop = FALSE]
+  model <- stats::kmeans(
+    cluster_data,
+    centers = centers,
+    iter.max = iterations,
+    algorithm = kmeans_method
+  )
+  # keep the "kmeans" class, so that the kmeans methods (e.g., predict()) apply
+  class(model) <- c("hkmeans", class(model))
+  model$data <- cluster_data
+  model$hclust <- hc
   list(model = model, clusters = model$cluster)
 }
 

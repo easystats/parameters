@@ -46,3 +46,17 @@
 
   x
 }
+
+
+#' @keywords internal
+.restore_seed <- function(old_seed) {
+  # Restores the random number stream saved (with `get0(".Random.seed", ...)`)
+  # before calling functions that call set.seed() internally
+  if (is.null(old_seed)) {
+    if (exists(".Random.seed", envir = globalenv(), inherits = FALSE)) {
+      rm(".Random.seed", envir = globalenv())
+    }
+  } else {
+    assign(".Random.seed", old_seed, envir = globalenv())
+  }
+}
