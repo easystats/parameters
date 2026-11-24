@@ -33,10 +33,10 @@
 * `model_parameters()` for objects from *emmeans* supports `p_adjust = "mvt"`,
   which adjusts p-values based on the multivariate t distribution (#854).
 
-## Bug fixes
-
 * `model_parameters()` uses variable labels for coefficients in *multcomp*
   hypothesis labels (#1139).
+
+## Bug fixes
 
 * `model_parameters()` for *BayesFactor* objects with more than one model, for
   example from `regressionBF()` or `anovaBF()`, now shows the Bayes factor of
