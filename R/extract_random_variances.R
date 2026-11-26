@@ -165,6 +165,7 @@
   ci_method = NULL,
   ci_random = NULL,
   verbose = FALSE,
+  iterations = 500,
   ...
 ) {
   # special handling for lme objects
@@ -348,7 +349,8 @@
       corr_param,
       sigma_param,
       component,
-      verbose = verbose
+      verbose = verbose,
+      iterations = iterations
     )
   } else if (effects == "random") {
     # no CI requested and we have only random effects variances? then we
@@ -526,7 +528,8 @@ as.data.frame.VarCorr.coxme <- function(x, row.names = NULL, optional = FALSE, .
   corr_param,
   sigma_param,
   component = NULL,
-  verbose = FALSE
+  verbose = FALSE,
+  iterations = 500
 ) {
   ## TODO needs to be removed once MCM > 0.1.5 is on CRAN
   if (startsWith(insight::safe_deparse(insight::get_call(model)), "mcm_lmer")) {
@@ -571,7 +574,8 @@ as.data.frame.VarCorr.coxme <- function(x, row.names = NULL, optional = FALSE, .
             parm = "theta_",
             oldNames = FALSE,
             method = ci_method,
-            level = ci
+            level = ci,
+            nsim = iterations
           )))
           colnames(var_ci) <- c("CI_low", "CI_high")
 

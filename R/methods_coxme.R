@@ -134,7 +134,8 @@ model_parameters.coxme <- function(
         include_sigma = include_sigma,
         include_info = include_info,
         vcov = vcov,
-        vcov_args = vcov_args
+        vcov_args = vcov_args,
+        iterations = iterations
       )
       fun_args <- c(fun_args, dots)
       params <- do.call(".extract_parameters_mixed", fun_args)
@@ -159,7 +160,8 @@ model_parameters.coxme <- function(
     ci_random,
     effects,
     group_level,
-    verbose
+    verbose,
+    iterations = iterations
   )
 
   # clean-up

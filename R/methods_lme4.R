@@ -211,6 +211,7 @@ p_value.lmerMod <- function(
   effects,
   group_level,
   verbose = TRUE,
+  iterations = 500,
   ...
 ) {
   params_random <- params_variance <- NULL
@@ -227,6 +228,7 @@ p_value.lmerMod <- function(
         effects = effects,
         ci_method = ci_method,
         ci_random = ci_random,
+        iterations = iterations,
         verbose = verbose
       )
     }

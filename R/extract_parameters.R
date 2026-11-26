@@ -459,6 +459,7 @@
   include_info = FALSE,
   vcov = NULL,
   vcov_args = NULL,
+  iterations = 500,
   verbose = TRUE,
   ...
 ) {
@@ -530,6 +531,14 @@
     } else if (ci_method %in% c("kenward", "kr")) {
       # special handling for KR-CIs, where we already have computed SE
       ci_df <- .ci_kenward_dof(model, ci = ci, df_kr = df_error)
+    } else if (identical(ci_method, "boot")) {
+      ci_df <- ci(
+        model,
+        ci = ci,
+        method = ci_method,
+        effects = "fixed",
+        iterations = iterations
+      )
     } else {
       ci_df <- ci(model, ci = ci, method = ci_method, effects = "fixed")
     }
