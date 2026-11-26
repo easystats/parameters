@@ -38,6 +38,12 @@
 
 ## Bug fixes
 
+* `model_parameters()` with `standardize` (other than `"refit"`) returned wrong
+  standardized coefficients when only some parameters were kept, for example
+  with `keep`, `parameters` or `component`. The kept rows were scaled with the
+  standard deviations of other parameters. For *glmmTMB* models with
+  zero-inflation, `component = "zi"` gave an error.
+
 * `model_parameters()` for *BayesFactor* objects with more than one model, for
   example from `regressionBF()` or `anovaBF()`, now shows the Bayes factor of
   the first model in every row. The parameters also come from that model. Before
