@@ -245,3 +245,34 @@ test_that("model_parameters.mixed-vcov-dpoMatrix", {
   params <- model_parameters(m1, vcov = V)
   expect_equal(params$SE, c(0.79, 0.1576, 0.2404, 0.0794), tolerance = 1e-2)
 })
+
+
+test_that("model_parameters.mixed-boot-iterations", {
+  set.seed(123)
+  out <- ci(m1, method = "boot", iterations = 20)
+  set.seed(123)
+  params <- suppressMessages(suppressWarnings(model_parameters(
+    m1,
+    ci_method = "boot",
+    iterations = 20,
+    effects = "fixed"
+  )))
+  expect_equal(params$CI_low, out$CI_low, tolerance = 1e-5)
+
+  set.seed(123)
+  out <- suppressMessages(suppressWarnings(lme4::confint.merMod(
+    m1,
+    parm = "theta_",
+    method = "boot",
+    nsim = 20,
+    oldNames = FALSE
+  )))
+  set.seed(123)
+  params <- suppressMessages(suppressWarnings(model_parameters(
+    m1,
+    ci_method = "boot",
+    iterations = 20,
+    effects = "random"
+  )))
+  expect_equal(params$CI_low, unname(out[, 1]), tolerance = 1e-5)
+})

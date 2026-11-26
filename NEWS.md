@@ -104,6 +104,12 @@
   gave -4.76 for `factor(cyl)6`, and now gives -1.53. Sum and Helmert contrasts
   have no reference level and do not change.
 
+* Fixed issue where `model_parameters()` with `ci_method = "boot"` for *lme4*
+  models ignored `iterations`. The bootstrapped confidence intervals of the
+  fixed effects and the random effect variances always used 500 replicates.
+  They now use `iterations`, so calls that do not set it use the documented
+  default of 1000 replicates. `ci()` still defaults to 500.
+
 # parameters 0.30.0
 
 ## Changes
