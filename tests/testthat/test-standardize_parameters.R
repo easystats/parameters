@@ -60,6 +60,51 @@ test_that("standardize_parameters (model_parameters)", {
   expect_equal(se1$CI_high, se2$CI_high, tolerance = 1e-4)
 })
 
+test_that("standardize_parameters (model_parameters, filtered rows)", {
+  model <- lm(mpg ~ cyl + am, data = mtcars)
+  full <- model_parameters(model, standardize = "posthoc")
+  kept <- model_parameters(model, standardize = "posthoc", keep = "am")
+  expect_equal(kept$Parameter, "am")
+  expect_equal(
+    kept$Std_Coefficient,
+    full$Std_Coefficient[full$Parameter == "am"],
+    tolerance = 1e-4
+  )
+
+  skip_if_not_installed("glmmTMB")
+  data(Salamanders, package = "glmmTMB")
+  model <- glmmTMB::glmmTMB(
+    count ~ mined + cover,
+    ziformula = ~mined,
+    family = poisson,
+    data = Salamanders
+  )
+  raw <- model_parameters(model, component = "zi")
+  zi <- suppressWarnings(suppressMessages(model_parameters(
+    model,
+    standardize = "posthoc",
+    component = "zi"
+  )))
+  expect_equal(zi$Std_Coefficient, raw$Coefficient, tolerance = 1e-4)
+})
+
+test_that("standardize_parameters (model_parameters, repeated names)", {
+  skip_if_not_installed("nnet")
+  model <- nnet::multinom(
+    Species ~ Sepal.Length + Petal.Width,
+    data = iris,
+    trace = FALSE
+  )
+  raw <- model_parameters(model)
+  std <- model_parameters(model, standardize = "basic")
+  i <- raw$Parameter == "Sepal.Length"
+  expect_equal(
+    std$Std_Coefficient[i],
+    raw$Coefficient[i] * sd(iris$Sepal.Length),
+    tolerance = 1e-4
+  )
+})
+
 # bootstrap_model ---------------------------------------------------------
 
 test_that("standardize_parameters (bootstrap_model)", {

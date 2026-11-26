@@ -724,11 +724,20 @@ print_html.parameters_standardized <- function(x, digits = 2, ...) {
     two_sd = two_sd,
     model_info = mi
   )
-  i_missing <- setdiff(seq_len(nrow(pars)), seq_len(nrow(deviations)))
-  unstd <- pars
-  if (length(i_missing)) {
-    deviations[i_missing, ] <- NA
+  # match rows by name, because `pars` can be filtered (e.g. `keep`)
+  matchable <- rep(TRUE, nrow(pars))
+  if (!is.null(pars$Effects)) {
+    matchable <- matchable & !is.na(pars$Effects) & pars$Effects == "fixed"
   }
+  # standardize_info() only covers the conditional component of these models
+  if (!is.null(pars$Component) && inherits(model, c("glmmTMB", "MixMod"))) {
+    matchable <- matchable & !is.na(pars$Component) & pars$Component == "conditional"
+  }
+  i_dev <- match(pars$Parameter, deviations$Parameter)
+  i_dev[!matchable] <- NA
+  deviations <- deviations[i_dev, , drop = FALSE]
+  i_missing <- which(is.na(i_dev))
+  unstd <- pars
 
   if (method == "basic") {
     # nolint
