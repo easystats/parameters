@@ -727,11 +727,11 @@ print_html.parameters_standardized <- function(x, digits = 2, ...) {
   # match rows by name, because `pars` can be filtered (e.g. `keep`)
   matchable <- rep(TRUE, nrow(pars))
   if (!is.null(pars$Effects)) {
-    matchable <- matchable & pars$Effects %in% "fixed"
+    matchable <- matchable & !is.na(pars$Effects) & pars$Effects == "fixed"
   }
   # standardize_info() only covers the conditional component of these models
   if (!is.null(pars$Component) && inherits(model, c("glmmTMB", "MixMod"))) {
-    matchable <- matchable & pars$Component %in% "conditional"
+    matchable <- matchable & !is.na(pars$Component) & pars$Component == "conditional"
   }
   i_dev <- match(pars$Parameter, deviations$Parameter)
   i_dev[!matchable] <- NA

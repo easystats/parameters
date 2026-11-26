@@ -80,9 +80,11 @@ test_that("standardize_parameters (model_parameters, filtered rows)", {
     data = Salamanders
   )
   raw <- model_parameters(model, component = "zi")
-  zi <- suppressWarnings(suppressMessages(
-    model_parameters(model, standardize = "posthoc", component = "zi")
-  ))
+  zi <- suppressWarnings(suppressMessages(model_parameters(
+    model,
+    standardize = "posthoc",
+    component = "zi"
+  )))
   expect_equal(zi$Std_Coefficient, raw$Coefficient, tolerance = 1e-4)
 })
 
