@@ -41,8 +41,10 @@
 * `model_parameters()` with `standardize` (other than `"refit"`) returned wrong
   standardized coefficients when only some parameters were kept, for example
   with `keep`, `parameters` or `component`. The kept rows were scaled with the
-  standard deviations of other parameters. For *glmmTMB* models with
-  zero-inflation, `component = "zi"` gave an error.
+  standard deviations of other parameters. For models with one set of
+  parameters per response level, such as `nnet::multinom()`, all levels after
+  the first were not standardized. For *glmmTMB* models with zero-inflation,
+  `component = "zi"` gave an error.
 
 * `model_parameters()` for *BayesFactor* objects with more than one model, for
   example from `regressionBF()` or `anovaBF()`, now shows the Bayes factor of

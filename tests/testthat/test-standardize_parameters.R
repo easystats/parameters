@@ -88,6 +88,23 @@ test_that("standardize_parameters (model_parameters, filtered rows)", {
   expect_equal(zi$Std_Coefficient, raw$Coefficient, tolerance = 1e-4)
 })
 
+test_that("standardize_parameters (model_parameters, repeated names)", {
+  skip_if_not_installed("nnet")
+  model <- nnet::multinom(
+    Species ~ Sepal.Length + Petal.Width,
+    data = iris,
+    trace = FALSE
+  )
+  raw <- model_parameters(model)
+  std <- model_parameters(model, standardize = "basic")
+  i <- raw$Parameter == "Sepal.Length"
+  expect_equal(
+    std$Std_Coefficient[i],
+    raw$Coefficient[i] * sd(iris$Sepal.Length),
+    tolerance = 1e-4
+  )
+})
+
 # bootstrap_model ---------------------------------------------------------
 
 test_that("standardize_parameters (bootstrap_model)", {
