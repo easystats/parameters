@@ -100,7 +100,13 @@ format_p_adjust <- function(method) {
         )
       } else if (tolower(p_adjust) == "tukey") {
         # tukey adjustment
-        result <- .p_adjust_tukey(params, stat_column, rank_adjust, verbose, model = model)
+        result <- .p_adjust_tukey(
+          params,
+          stat_column,
+          rank_adjust,
+          verbose,
+          model = model
+        )
         params <- result$params
         verbose <- result$verbose
       } else if (tolower(p_adjust) == "scheffe" && !is.null(model)) {
