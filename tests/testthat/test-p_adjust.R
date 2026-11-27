@@ -99,6 +99,26 @@ test_that("model_parameters, emmeans, p-adjust", {
   expect_equal(mp$p, as.data.frame(emm)$p.value, tolerance = 1e-4)
 })
 
+test_that("model_parameters, emmeans, tukey p-adjust with by variables", {
+  skip_if_not_installed("emmeans")
+  data(warpbreaks)
+  warp.lm <- lm(breaks ~ wool * tension, data = warpbreaks)
+
+  pw1 <- pairs(emmeans::emmeans(warp.lm, ~ tension | wool))
+  mp1 <- model_parameters(pw1)
+  expect_equal(mp1$p, as.data.frame(pw1)$p.value, tolerance = 1e-6)
+
+  pw2 <- pairs(emmeans::emmeans(warp.lm, ~ wool | tension))
+  expect_no_warning(mp2 <- model_parameters(pw2))
+  expect_equal(mp2$p, as.data.frame(pw2)$p.value, tolerance = 1e-6)
+
+  # Multiple by variables
+  m_mt <- lm(mpg ~ factor(cyl) * factor(vs) * factor(am), data = mtcars)
+  pw3 <- pairs(emmeans::emmeans(m_mt, ~ cyl | vs + am))
+  mp3 <- model_parameters(pw3)
+  expect_equal(mp3$p, as.data.frame(pw3)$p.value, tolerance = 1e-6)
+})
+
 
 test_that("model_parameters, p-adjust, method names in any letter case", {
   model <- lm(mpg ~ wt + cyl + gear + hp, data = mtcars)
