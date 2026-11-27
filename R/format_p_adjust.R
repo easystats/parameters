@@ -100,7 +100,7 @@ format_p_adjust <- function(method) {
         )
       } else if (tolower(p_adjust) == "tukey") {
         # tukey adjustment
-        result <- .p_adjust_tukey(params, stat_column, rank_adjust, verbose)
+        result <- .p_adjust_tukey(params, stat_column, rank_adjust, verbose, model = model)
         params <- result$params
         verbose <- result$verbose
       } else if (tolower(p_adjust) == "scheffe" && !is.null(model)) {
@@ -140,25 +140,36 @@ format_p_adjust <- function(method) {
   tryCatch(
     {
       correction <- 1
-      by_vars <- model@misc$by.vars
-      if (
-        !is.null(by_vars) && length(by_vars) > 0 && all(by_vars %in% colnames(params))
-      ) {
-        if (length(by_vars) == 1) {
-          correction <- insight::n_unique(params[[by_vars]])
+      if (identical(adjust, "tukey")) {
+        # For Tukey, ptukey() expects nmeans (the number of means compared in
+        # each family), not the number of "by" strata.
+        fam_size <- .safe(model@misc$famSize)
+        if (is.numeric(fam_size) && length(fam_size) == 1L && !is.na(fam_size)) {
+          correction <- fam_size
         } else {
-          # compute unique combinations of multiple by-variables
-          by_data <- params[by_vars]
-          by_groups <- interaction(by_data, drop = TRUE)
-          correction <- insight::n_unique(by_groups)
+          n_levels <- .safe(insight::n_unique(unlist(strsplit(
+            model@levels$contrast,
+            " - ",
+            fixed = TRUE
+          ))))
+          if (is.numeric(n_levels) && length(n_levels) == 1L && !is.na(n_levels)) {
+            correction <- n_levels
+          }
         }
-      } else if (identical(adjust, "tukey")) {
-        # correction <- .safe(prod(vapply(model@model.info$xlev, length, numeric(1))))
-        correction <- .safe(insight::n_unique(unlist(strsplit(
-          model@levels$contrast,
-          " - ",
-          fixed = TRUE
-        ))))
+      } else {
+        by_vars <- model@misc$by.vars
+        if (
+          !is.null(by_vars) && length(by_vars) > 0 && all(by_vars %in% colnames(params))
+        ) {
+          if (length(by_vars) == 1) {
+            correction <- insight::n_unique(params[[by_vars]])
+          } else {
+            # compute unique combinations of multiple by-variables
+            by_data <- params[by_vars]
+            by_groups <- interaction(by_data, drop = TRUE)
+            correction <- insight::n_unique(by_groups)
+          }
+        }
       }
 
       correction
@@ -172,7 +183,22 @@ format_p_adjust <- function(method) {
 
 # tukey adjustment -----
 
-.p_adjust_tukey <- function(params, stat_column, rank_adjust = 1, verbose = TRUE) {
+.p_adjust_tukey <- function(
+  params,
+  stat_column,
+  rank_adjust = 1,
+  verbose = TRUE,
+  model = NULL
+) {
+  # For pairwise emmeans objects, delegate to emmeans so each "by" stratum uses
+  # its own estimable family size (including varying family sizes with nonEst).
+  if (inherits(model, "emmGrid") && identical(.safe(model@misc$estType), "pairs")) {
+    p_tukey <- .safe(summary(model, adjust = "tukey", infer = c(FALSE, TRUE))$p.value)
+    if (!is.null(p_tukey) && length(p_tukey) == nrow(params)) {
+      params$p <- p_tukey
+      return(list(params = params, verbose = FALSE))
+    }
+  }
   df_column <- colnames(params)[stats::na.omit(match(
     c("df", "df_error"),
     colnames(params)
